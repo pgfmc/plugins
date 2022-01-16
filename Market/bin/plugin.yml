@@ -1,0 +1,11 @@
+name: Shop
+version: 4.0.0
+api-version: 1.18
+author: [bk, CrimsonDart]
+main: net.pgfmc.shop.Main
+description: Implements a global market to buy and sell
+commands:
+  market:
+    description: Global buy/sell shop
+    usage: /<command>
+    aliases: [m]
