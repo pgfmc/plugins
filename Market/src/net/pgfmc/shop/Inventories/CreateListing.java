@@ -21,10 +21,6 @@ public class CreateListing extends BaseInventory {
     }
 
     private void setPrice(ItemStack sell) {
-
-        //buttons = new Button[buttons.length];
-        //inv.clear();
-    	
     	
     	setAction(0, (p, e) -> {
             p.getInventory().addItem(sell);
