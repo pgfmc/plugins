@@ -12,5 +12,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="E:/github/javaLib/Core.jar"/>
+	<classpathentry kind="lib" path="E:/github/javaLib/Current Server Plugins/CoreProtect-20.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
