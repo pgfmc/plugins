@@ -4,15 +4,16 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.stream.Stream;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import net.coreprotect.CoreProtectAPI;
 import net.pgfmc.backup.Main;
 import net.pgfmc.core.CoreMain;
-import net.pgfmc.core.CoreMain.Machine;
 import net.pgfmc.core.Mixins;
 
 public class Backups {
@@ -28,7 +29,27 @@ public class Backups {
 	 */
 	public static void backup(Backup b)
 	{
-		if (!(CoreMain.machine == Machine.MAIN)) { return; }
+		// if (!(CoreMain.machine == Machine.MAIN)) { return; }
+		
+		System.out.println("Purging");
+		// Purge old CoreProtect data
+		CoreProtectAPI co = Main.plugin.getCoreProtect();
+		if (co != null) { co.performPurge(1209600); } // 14 days in seconds
+		
+		System.out.println("Purging 2.0");
+		// Remove log files
+		File logs = new File(CoreMain.pwd + File.separator + "logs");
+		for(File f: logs.listFiles())
+		{
+			if (!f.isDirectory() && f.lastModified() < new Date().getTime() - 172800000L) // Checks if older than 2 days in milliseconds
+			{
+				System.out.println("Deleting log: " + f.getName());
+				f.delete();
+			} else
+			{
+				System.out.println("Saving log: " + f.getName());
+			}
+		}
 		
 		System.out.println("Creating thread.");
 		
@@ -45,7 +66,7 @@ public class Backups {
 			public void run() {				
 				try {
 					String sourceDir = CoreMain.pwd;
-					String destDir = CoreMain.backupDir + b.backup.get("date") + File.separator;
+					String destDir = "C:\\Users\\bk\\Desktop\\BACKUPS";//CoreMain.backupDir + b.backup.get("date") + File.separator;
 					File source = new File(sourceDir);
 					File dest = new File(destDir);
 					dest.mkdirs();
