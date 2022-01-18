@@ -7,7 +7,7 @@ import java.util.Set;
 
 import com.sk89q.worldguard.util.collect.LongHash;
 
-import net.pgfmc.core.Vector4;
+import net.pgfmc.core.util.Vector4;
 import net.pgfmc.teams.ownable.block.OwnableBlock;
 
 /**

@@ -1,4 +1,4 @@
-package net.pgfmc.core;
+package net.pgfmc.core.util;
 
 import java.io.File;
 import java.io.IOException;

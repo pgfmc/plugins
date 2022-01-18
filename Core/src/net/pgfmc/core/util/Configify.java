@@ -1,12 +1,10 @@
-package net.pgfmc.core.configify;
+package net.pgfmc.core.util;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 
 import org.bukkit.configuration.file.FileConfiguration;
-
-import net.pgfmc.core.Mixins;
 
 public abstract class Configify {
 	

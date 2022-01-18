@@ -8,7 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
-import net.pgfmc.core.Vector4;
+import net.pgfmc.core.util.Vector4;
 
 public class SafeLocation implements Runnable {
 	

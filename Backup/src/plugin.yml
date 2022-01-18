@@ -13,12 +13,5 @@ commands:
   backup:
     usage: /<command>
     description: Backup the server files then restarts
+    aliases: [backupconfirm]
     permission: pgf.admin.backup
-  backupconfirm:
-    usage: /<command>
-    description: Confirm the backup
-    permission: pgf.admin.backup
-  restore:
-    usage: /<command>
-    description: restores a previous backup
-    permission: pgf.admin.restore

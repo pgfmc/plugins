@@ -1,4 +1,4 @@
-package net.pgfmc.core;
+package net.pgfmc.core.util;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +8,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+
+import net.pgfmc.core.CoreMain;
 
 public class DimManager {
 	

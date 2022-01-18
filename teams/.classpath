@@ -6,12 +6,12 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="E:/github/javaLib/External Dependencies/spigot-api-1.18.1-R0.1-SNAPSHOT.jar">
+	<classpathentry kind="lib" path="E:/github/.plugins/Dependencies/spigot-api-1.18.1-R0.1-SNAPSHOT.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="E:/github/javaLib/Core.jar" sourcepath="/PGF-Essentials">
+	<classpathentry kind="lib" path="E:/github/.plugins/Core.jar" sourcepath="/PGF-Essentials">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>

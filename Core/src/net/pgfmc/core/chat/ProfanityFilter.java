@@ -7,8 +7,8 @@ import java.util.Collections;
 import java.util.List;
 
 import net.pgfmc.core.CoreMain;
-import net.pgfmc.core.Mixins;
-import net.pgfmc.core.configify.Configify;
+import net.pgfmc.core.util.Configify;
+import net.pgfmc.core.util.Mixins;
 
 public class ProfanityFilter extends Configify {
 	

@@ -13,8 +13,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import net.pgfmc.core.DimManager;
 import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.util.DimManager;
 
 /**
  * Sends the player to a specific Multiverse World.
