@@ -14,6 +14,7 @@ import org.bukkit.command.CommandSender;
 import net.coreprotect.CoreProtectAPI;
 import net.pgfmc.backup.Main;
 import net.pgfmc.core.CoreMain;
+import net.pgfmc.core.CoreMain.Machine;
 import net.pgfmc.core.util.StringDate;
 import net.pgfmc.core.util.Zipper;
 
@@ -60,7 +61,7 @@ public class Backup implements CommandExecutor {
 	 */
 	public void backup()
 	{
-		// if (!(CoreMain.machine == Machine.MAIN)) { return; }
+		if (!(CoreMain.machine == Machine.MAIN)) { return; }
 		
 		System.out.println("Purging data");
 		
@@ -98,8 +99,8 @@ public class Backup implements CommandExecutor {
 						}
 					}
 					
-					Zipper.zip(CoreMain.pwd, "C:\\Users\\bk\\Desktop\\backupss\\" + StringDate.date() + ".zip");
-					// Zipper.zip(CoreMain.pwd, CoreMain.backupDir + File.separator + StringDate.date() + ".zip");
+					// Zipper.zip(CoreMain.pwd, "C:\\Users\\bk\\Desktop\\backupss\\" + StringDate.date() + ".zip");
+					Zipper.zip(CoreMain.pwd, CoreMain.backupDir + File.separator + StringDate.date() + ".zip");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
