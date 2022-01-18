@@ -6,7 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import net.pgfmc.core.Vector4;
+import net.pgfmc.core.util.Vector4;
 import net.pgfmc.teams.ownable.block.OwnableBlock;
 import net.pgfmc.teams.ownable.block.table.ClaimsTable;
 

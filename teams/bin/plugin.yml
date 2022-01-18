@@ -1,5 +1,5 @@
 name: Teams
-version: 4.0.3
+version: 4.2.0
 api-version: 1.18
 author: [bk, CrimsonDart]
 main: net.pgfmc.teams.Main

@@ -11,8 +11,8 @@ import net.dv8tion.jda.api.requests.restaction.AuditableRestAction;
 import net.pgfmc.bot.Discord;
 import net.pgfmc.bot.Main;
 import net.pgfmc.core.CoreMain;
-import net.pgfmc.core.Mixins;
 import net.pgfmc.core.CoreMain.Machine;
+import net.pgfmc.core.util.Mixins;
 
 public class OnReady implements EventListener {
 
