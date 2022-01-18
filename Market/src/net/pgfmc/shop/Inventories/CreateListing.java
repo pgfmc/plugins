@@ -36,9 +36,9 @@ public class CreateListing extends BaseInventory {
         setItem(3, Material.GRAY_CONCRETE);
         setItem(5, Material.GRAY_CONCRETE);
 
-        setItem(10, Material.RED_CONCRETE).n("");
-        setItem(11, Material.RED_CONCRETE).n("").a(5);
-        setItem(12, Material.RED_CONCRETE).n("").a(10);
+        setItem(10, Material.RED_CONCRETE).n(" ");
+        setItem(11, Material.RED_CONCRETE).n(" ").a(5);
+        setItem(12, Material.RED_CONCRETE).n(" ").a(10);
         
         setAction(13, (p, e) -> {
             if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
@@ -51,11 +51,11 @@ public class CreateListing extends BaseInventory {
         });
         setItem(13, Material.AIR);
         
-        setItem(14, Material.GREEN_CONCRETE).n("");
-        setItem(15, Material.GREEN_CONCRETE).n("").a(5);
-        setItem(16, Material.GREEN_CONCRETE).n("").a(10);
+        setItem(14, Material.GREEN_CONCRETE).n(" ");
+        setItem(15, Material.GREEN_CONCRETE).n(" ").a(5);
+        setItem(16, Material.GREEN_CONCRETE).n(" ").a(10);
         
-        setItem(22, Material.GRAY_CONCRETE).n("To set the price of your item, \nput an item in the slot above!");
+        setItem(22, Material.GRAY_CONCRETE).n("§7To set the price of your item,").l("§r§7put an item in the slot above!");
     }
 
     private void setOpen() {
