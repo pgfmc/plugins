@@ -3,7 +3,7 @@ package net.pgfmc.teams.ownable.block.table;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.pgfmc.core.Vector4;
+import net.pgfmc.core.util.Vector4;
 import net.pgfmc.teams.ownable.block.OwnableBlock;
 
 public class ContainerSection {

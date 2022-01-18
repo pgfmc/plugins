@@ -14,7 +14,6 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 
-import net.pgfmc.core.DimManager;
 import net.pgfmc.core.cmd.Blocked;
 import net.pgfmc.core.inventoryAPI.BaseInventory;
 import net.pgfmc.core.inventoryAPI.ListInventory;
@@ -25,6 +24,7 @@ import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.requestAPI.Request;
 import net.pgfmc.core.requestAPI.Requester;
 import net.pgfmc.core.requestAPI.Requester.Reason;
+import net.pgfmc.core.util.DimManager;
 import net.pgfmc.masterbook.Main;
 import net.pgfmc.survival.cmd.Afk;
 import net.pgfmc.teams.friends.Friends;
