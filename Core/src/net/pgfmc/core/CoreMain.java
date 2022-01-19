@@ -112,6 +112,8 @@ public class CoreMain extends JavaPlugin implements Listener {
 		switch (this.getServer().getPort()) {
 		case 25566: machine = Machine.TEST; break;
 		case 25567: machine = Machine.JIMBO; break;
+		case 25568: machine = Machine.TEST; break;
+		case 25569: machine = Machine.CRIMSON; break;
 		default: machine = Machine.MAIN; break;
 		}
 		
