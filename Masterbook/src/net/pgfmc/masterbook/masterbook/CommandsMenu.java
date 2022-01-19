@@ -325,7 +325,7 @@ public class CommandsMenu implements InventoryHolder {
 				p.performCommand("goto " + entry.getName());
 			};
 		}
-
+		
 		@Override
 		protected ItemStack toItem(World entry) {
 			return new ItemWrapper(Material.ENDER_PEARL).n("§r§9" + entry.getName()).gi();
