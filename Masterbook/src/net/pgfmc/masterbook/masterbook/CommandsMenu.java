@@ -14,6 +14,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 
+import net.pgfmc.core.CoreMain.PGFPlugin;
 import net.pgfmc.core.cmd.Blocked;
 import net.pgfmc.core.inventoryAPI.BaseInventory;
 import net.pgfmc.core.inventoryAPI.ListInventory;
@@ -33,15 +34,10 @@ import net.pgfmc.teleport.home.Homes;
 
 public class CommandsMenu implements InventoryHolder {
 	
-	private static boolean TEAMINIT = false;
-	
 	private PlayerData pd;
 	
 	public CommandsMenu(PlayerData pd) {
 		this.pd = pd;
-		if (!TEAMINIT) {
-			TEAMINIT = (Bukkit.getServer().getPluginManager().getPlugin("Teams").isEnabled());
-		}
 	}
 	
 	public class Homepage extends BaseInventory {
@@ -196,7 +192,7 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] [] [] [] XX [] [] []
 			 * home menu
 			 */
-			if (perms.contains("teams.friend.*") && TEAMINIT) {
+			if (perms.contains("teams.friend.*") && PGFPlugin.TEAMS.isEnabled()) {
 				
 				setAction(23, (p, e) -> {
 					p.openInventory(new FriendsList().getInventory());
@@ -210,7 +206,7 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] [] [] [] [] XX [] []
 			 * home menu
 			 */
-			if (perms.contains("bukkit.command.list") && TEAMINIT) {
+			if (perms.contains("bukkit.command.list") && PGFPlugin.TEAMS.isEnabled()) {
 				
 				setAction(24, (p, e) -> {
 					p.openInventory(new PlayerList().getInventory());
@@ -687,7 +683,7 @@ public class CommandsMenu implements InventoryHolder {
 					}
 				}
 				
-				if (perms.contains("teams.friend.*") && TEAMINIT) {
+				if (perms.contains("teams.friend.*") && PGFPlugin.TEAMS.isEnabled()) {
 					
 					Relation r = Friends.getRelation(pd, player);
 					if (r == Relation.FRIEND || r == Relation.FAVORITE) {
