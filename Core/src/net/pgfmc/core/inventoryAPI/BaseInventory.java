@@ -1,5 +1,7 @@
 package net.pgfmc.core.inventoryAPI;
 
+import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -7,6 +9,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import net.pgfmc.core.inventoryAPI.extra.Butto;
 import net.pgfmc.core.inventoryAPI.extra.ItemWrapper;
@@ -36,7 +39,7 @@ public class BaseInventory implements InventoryHolder {
 	/**
 	 * The inventory itself.
 	 */
-	private Inventory inv;
+	protected Inventory inv;
 	
 	public BaseInventory(SizeData size, String name) {
 		sizeD = size;
@@ -51,11 +54,48 @@ public class BaseInventory implements InventoryHolder {
 		buttons[slot] = b;
 	}
 	
-	public ItemWrapper setItem(int slot, ItemStack item) {
+	public ItemWrapper setItem(int slot, ItemStack itemS) {
 		if (slot + 1 > inv.getSize()) return null;
 		
-		
-		ItemWrapper iw = new ItemWrapper(item);
+		ItemWrapper iw = new ItemWrapper(itemS) {
+			@Override
+			public ItemWrapper a(int a) {
+				item.setAmount(a);
+				inv.setItem(slot, item);
+				return this;
+			}
+			
+			@Override
+			public ItemWrapper n(String name) {
+				ItemMeta imeta = item.getItemMeta();
+				imeta.setDisplayName(name);
+				item.setItemMeta(imeta);
+				inv.setItem(slot, item);
+				return this;
+			}
+			
+			@Override
+			public ItemWrapper l(String lore) {
+				ItemMeta imeta = item.getItemMeta();
+				
+				String[] lorelist = lore.split("\n");
+				ArrayList<String> liszt = new ArrayList<>(lorelist.length);
+				for (String s : lorelist) {
+					liszt.add(s);
+				}
+				imeta.setLore(liszt);
+				item.setItemMeta(imeta);
+				inv.setItem(slot, item);
+				return this;
+			}
+			
+			@Override
+			public ItemWrapper m(Material mat) {
+				item.setType(mat);
+				inv.setItem(slot, item);
+				return this;
+			}
+		};
 		inv.setItem(slot, iw.gi());
 		return iw;
 	}
@@ -63,7 +103,45 @@ public class BaseInventory implements InventoryHolder {
 	public ItemWrapper setItem(int slot, Material mat) {
 		if (slot + 1 > inv.getSize()) return null;
 		
-		ItemWrapper iw = new ItemWrapper(mat);
+		ItemWrapper iw = new ItemWrapper(mat) {
+			@Override
+			public ItemWrapper a(int a) {
+				item.setAmount(a);
+				inv.setItem(slot, item);
+				return this;
+			}
+			
+			@Override
+			public ItemWrapper n(String name) {
+				ItemMeta imeta = item.getItemMeta();
+				imeta.setDisplayName(name);
+				item.setItemMeta(imeta);
+				inv.setItem(slot, item);
+				return this;
+			}
+			
+			@Override
+			public ItemWrapper l(String lore) {
+				ItemMeta imeta = item.getItemMeta();
+				
+				String[] lorelist = lore.split("\n");
+				ArrayList<String> liszt = new ArrayList<>(lorelist.length);
+				for (String s : lorelist) {
+					liszt.add(s);
+				}
+				imeta.setLore(liszt);
+				item.setItemMeta(imeta);
+				inv.setItem(slot, item);
+				return this;
+			}
+			
+			@Override
+			public ItemWrapper m(Material mat) {
+				item.setType(mat);
+				inv.setItem(slot, item);
+				return this;
+			}
+		};
 		inv.setItem(slot, iw.gi());
 		return iw;
 	}
