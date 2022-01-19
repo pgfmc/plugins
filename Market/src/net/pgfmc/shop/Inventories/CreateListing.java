@@ -12,7 +12,6 @@ import net.pgfmc.core.playerdataAPI.PlayerData;
 public class CreateListing extends BaseInventory {
 
     PlayerData pd;
-    ItemStack price;
 
     public CreateListing(PlayerData pd) {
         super(SizeData.SMALL, "Sell Item!");
@@ -32,7 +31,6 @@ public class CreateListing extends BaseInventory {
         setAction(4, (p, e) -> {
         	p.getInventory().addItem(inv.getItem(4));
         	setOpen();
-        	price = null;
         });
         setItem(4, sell);
         
@@ -51,6 +49,8 @@ public class CreateListing extends BaseInventory {
         
         setAction(13, (p, e) -> {
             if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
+            	
+            	ItemStack price = inv.getItem(13);
                 if (price != null) {
                     price.setType(e.getCursor().getType());
                 } else {
@@ -114,6 +114,8 @@ public class CreateListing extends BaseInventory {
     
     private Butto priceAmount(int a) {
     	return (p, e) -> {
+    		
+    		ItemStack price = inv.getItem(13);
     		
     		if (price == null) return;
     		

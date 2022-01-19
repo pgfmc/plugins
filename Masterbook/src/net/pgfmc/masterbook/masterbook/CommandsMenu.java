@@ -320,7 +320,7 @@ public class CommandsMenu implements InventoryHolder {
 		}
 
 		@Override
-		protected Butto toAction(World entry, int slot) {
+		protected Butto toAction(World entry) {
 			return (p, e) -> {
 				p.performCommand("goto " + entry.getName());
 			};
@@ -386,7 +386,7 @@ public class CommandsMenu implements InventoryHolder {
 			}
 
 			@Override
-			protected Butto toAction(String entry, int slot) {
+			protected Butto toAction(String entry) {
 				
 				return (p, e) -> {
 					p.performCommand(dingus + entry);
@@ -461,7 +461,7 @@ public class CommandsMenu implements InventoryHolder {
 			}
 
 			@Override
-			protected Butto toAction(String entry, int slot) {
+			protected Butto toAction(String entry) {
 				
 				return (p, e) -> {
 					p.performCommand("delhome" + entry);
@@ -496,7 +496,7 @@ public class CommandsMenu implements InventoryHolder {
 		}
 
 		@Override
-		protected Butto toAction(Player entry, int slot) {
+		protected Butto toAction(Player entry) {
 			return (p, e) -> {
 				p.performCommand("tpa " + entry.getName());
 				p.openInventory(new Homepage().getInventory());
@@ -527,7 +527,7 @@ public class CommandsMenu implements InventoryHolder {
 		}
 		
 		@Override
-		protected Butto toAction(PlayerData entry, int slot) {
+		protected Butto toAction(PlayerData entry) {
 			return (p, d) -> {
 				p.openInventory(new FriendOptions(pd, entry).getInventory());
 			};
@@ -600,7 +600,7 @@ public class CommandsMenu implements InventoryHolder {
 		}
 		
 		@Override
-		protected Butto toAction(PlayerData entry, int slot) {
+		protected Butto toAction(PlayerData entry) {
 			return (p, e) -> {
 				p.openInventory(new PlayerOptions(entry).getInventory());
 			};
@@ -794,7 +794,7 @@ public class CommandsMenu implements InventoryHolder {
 		}
 
 		@Override
-		protected Butto toAction(Request entry, int slot) {
+		protected Butto toAction(Request entry) {
 			return (p, e) -> {
 				if (entry.expireNow(Reason.Accept) != false) {
 					entry.act();
