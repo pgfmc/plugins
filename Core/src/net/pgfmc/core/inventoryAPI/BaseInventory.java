@@ -39,7 +39,7 @@ public class BaseInventory implements InventoryHolder {
 	/**
 	 * The inventory itself.
 	 */
-	private Inventory inv;
+	protected Inventory inv;
 	
 	public BaseInventory(SizeData size, String name) {
 		sizeD = size;
