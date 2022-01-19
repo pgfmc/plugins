@@ -1,5 +1,5 @@
 name: PGF-Backup
-version: 4.0.0
+version: 4.2.3
 api-version: 1.18
 authors: [bk, CrimsonDart]
 website: play.pgfmc.net
@@ -13,12 +13,5 @@ commands:
   backup:
     usage: /<command>
     description: Backup the server files then restarts
+    aliases: [backupconfirm]
     permission: pgf.admin.backup
-  backupconfirm:
-    usage: /<command>
-    description: Confirm the backup
-    permission: pgf.admin.backup
-  restore:
-    usage: /<command>
-    description: restores a previous backup
-    permission: pgf.admin.restore

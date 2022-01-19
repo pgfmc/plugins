@@ -8,8 +8,8 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import net.pgfmc.core.Vector4;
 import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.util.Vector4;
 import net.pgfmc.teams.Main;
 import net.pgfmc.teams.ownable.Ownable.Lock;
 

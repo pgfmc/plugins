@@ -8,7 +8,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import net.dv8tion.jda.api.entities.Message;
 import net.pgfmc.bot.Discord;
 import net.pgfmc.bot.Main;
-import net.pgfmc.core.Mixins;
+import net.pgfmc.core.util.Mixins;
 
 public class StartStopMessageDelete {
 	

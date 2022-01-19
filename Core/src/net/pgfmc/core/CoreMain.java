@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerLoadEvent;
 import org.bukkit.event.server.ServerLoadEvent.LoadType;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 
@@ -22,9 +23,11 @@ import net.pgfmc.core.cmd.admin.Broadcast;
 import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.cmd.admin.Tagging;
 import net.pgfmc.core.cmd.donator.Nick;
-import net.pgfmc.core.configify.ReloadConfigify;
 import net.pgfmc.core.inventoryAPI.extra.InventoryPressEvent;
 import net.pgfmc.core.playerdataAPI.PlayerDataManager;
+import net.pgfmc.core.util.DimManager;
+import net.pgfmc.core.util.Mixins;
+import net.pgfmc.core.util.ReloadConfigify;
 
 /**
  * @author bk and CrimsonDart
@@ -43,8 +46,39 @@ public class CoreMain extends JavaPlugin implements Listener {
 	public static CoreMain plugin;
 	public static Scoreboard scoreboard;
 	
-	private static boolean isSurvivalEnabled;
-	private static boolean isBotEnabled;
+	public enum PGFPlugin {
+		BACKUP,
+		BOT,
+		CORE,
+		MARKET,
+		MASTERBOOK,
+		MODTOOLS,
+		SURVIVAL,
+		TEAMS,
+		TELEPORT;
+		
+		private boolean enabled = true;
+		
+		public void enable()
+		{
+			enabled = true;
+		}
+		
+		public void disable()
+		{
+			enabled = false;
+		}
+		
+		public boolean isEnabled()
+		{
+			return enabled;
+		}
+		
+		public Plugin getPlugin()
+		{
+			return Bukkit.getPluginManager().getPlugin("PGF-" + this.name());
+		}
+	}
 	
 	public enum Machine {
 		MAIN,
@@ -78,6 +112,8 @@ public class CoreMain extends JavaPlugin implements Listener {
 		switch (this.getServer().getPort()) {
 		case 25566: machine = Machine.TEST; break;
 		case 25567: machine = Machine.JIMBO; break;
+		case 25568: machine = Machine.TEST; break;
+		case 25569: machine = Machine.CRIMSON; break;
 		default: machine = Machine.MAIN; break;
 		}
 		
@@ -182,16 +218,24 @@ public class CoreMain extends JavaPlugin implements Listener {
 		if (e.getType() == LoadType.STARTUP) {
 			PlayerDataManager.InitializePD();
 		}
-		isSurvivalEnabled = Bukkit.getPluginManager().isPluginEnabled("PGF-Survival");
-		isBotEnabled = Bukkit.getPluginManager().isPluginEnabled("PGF-Bot");
-	}
-	
-	public static boolean isSurvivalEnabled() {
-		return isSurvivalEnabled;
-	}
-	
-	public static boolean isBotEnabled() {
-		return isBotEnabled;
+		
+		String ver = getDescription().getVersion();		
+		
+		for (PGFPlugin p : PGFPlugin.values())
+		{
+			Plugin pl = p.getPlugin();
+			if (pl == null)
+			{
+				Bukkit.getLogger().warning("[PGF-" + p.name() + "] is disabled!");
+				p.disable();
+				continue;
+			}
+			
+			if (!pl.getDescription().getVersion().equals(ver))
+			{
+				Bukkit.getLogger().warning("[" + pl.getName() + " (" + pl.getDescription().getVersion() + ")] does not match PGF-Core (" + ver + ") version!");
+			}
+		}
 	}
 }
 

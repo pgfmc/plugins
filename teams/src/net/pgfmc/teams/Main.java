@@ -4,9 +4,9 @@ import java.util.HashMap;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import net.pgfmc.core.Mixins;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.playerdataAPI.PlayerDataManager;
+import net.pgfmc.core.util.Mixins;
 import net.pgfmc.teams.duel.DuelEvents;
 import net.pgfmc.teams.friends.FavoriteCommand;
 import net.pgfmc.teams.friends.FriendAcceptCommand;
