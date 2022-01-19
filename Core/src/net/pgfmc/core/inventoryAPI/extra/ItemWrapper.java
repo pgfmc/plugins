@@ -9,7 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class ItemWrapper {
 	
-	ItemStack item;
+	protected ItemStack item;
 	
 	public ItemWrapper(ItemStack item) {
 		if (item == null) {
