@@ -26,7 +26,11 @@ public class MainScreen extends ListInventory<Listing> {
         setItem(53, Material.PLAYER_HEAD);
         setItem(52, Material.EMERALD);
         setItem(45, Material.TOTEM_OF_UNDYING);
-        setItem(46, Material.ANVIL);
+        
+        setAction(44, (p, e) -> {
+        	p.openInventory(new CreateListing(pd).getInventory());
+        });
+        setItem(44, Material.ANVIL);
         
     }
 
