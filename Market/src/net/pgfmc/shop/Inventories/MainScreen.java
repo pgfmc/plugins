@@ -42,7 +42,7 @@ public class MainScreen extends ListInventory<Listing> {
 	@Override
 	protected Butto toAction(Listing arg0) {
 		
-		if (arg0.getPlayer().getUniqueId().equals(pd.getUniqueId())) {
+		if (arg0.playerUuid.equals(pd.getUniqueId())) {
 			return (p, e) -> {
 				p.openInventory(new ListingBuy(arg0, pd).getInventory());
 			};
@@ -56,6 +56,6 @@ public class MainScreen extends ListInventory<Listing> {
 
 	@Override
 	protected ItemStack toItem(Listing arg0) {
-		return new ItemWrapper(arg0.getItem().getType()).n("§dCost: " + arg0.getPrice()).gi();
+		return new ItemWrapper(arg0.product.getType()).n("§dCost: " + arg0.getPrice()).gi();
 	}    
 }
