@@ -16,6 +16,6 @@ public class OnSlashCommand implements EventListener {
     public void onEvent(GenericEvent e) {
         if(!(e instanceof SlashCommandEvent)) return;
         List<Player> pl = new ArrayList<>(Bukkit.getOnlinePlayers());
-        ((SlashCommandEvent) e).reply("Here are the list of online players" + pl).queue();
+        ((SlashCommandEvent) e).reply("Online players: " + pl).queue();
     }
 }
