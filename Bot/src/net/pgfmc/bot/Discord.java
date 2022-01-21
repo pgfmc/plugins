@@ -20,6 +20,7 @@ import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.pgfmc.bot.listeners.OnMessageReceived;
 import net.pgfmc.bot.listeners.OnReady;
+import net.pgfmc.bot.listeners.OnSlashCommand;
 import net.pgfmc.bot.listeners.OnUpdateRole;
 
 public class Discord extends ListenerAdapter {
@@ -52,6 +53,7 @@ public class Discord extends ListenerAdapter {
 		builder.addEventListeners(new OnReady());
 		builder.addEventListeners(new OnMessageReceived());
 		builder.addEventListeners(new OnUpdateRole());
+		builder.addEventListeners(new OnSlashCommand());
 		
 		/*
 		 * 
