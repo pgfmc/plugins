@@ -63,7 +63,7 @@ public class OnReady implements EventListener {
 		}
 		
 		// Slash commands here
-		Discord.JDA.upsertCommand(new CommandData("list", "Show who's online.")).queue();
+		Discord.JDA.getGuildById(Discord.PGF_ID).upsertCommand(new CommandData("list", "Show who's online.")).queue();
 		
 	}
 	
