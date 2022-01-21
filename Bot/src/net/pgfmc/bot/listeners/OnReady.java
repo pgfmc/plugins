@@ -7,6 +7,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.requests.restaction.AuditableRestAction;
 import net.pgfmc.bot.Discord;
 import net.pgfmc.bot.Main;
@@ -34,6 +35,8 @@ public class OnReady implements EventListener {
 			database.set("channel", "771247931005206579");
 		}
 		Discord.setChannel(Discord.JDA.getTextChannelById(Discord.SERVER_CHANNEL));
+		
+		Discord.JDA.getGuildById("579055447437475851").upsertCommand(new CommandData("list", "Show who's online.")).queue();
 		
 		if (database.getString("delete") != null) { // deletes the "server stopping" message.
 			AuditableRestAction<Void> EEEE = Discord.getChannel().deleteMessageById(database.getString("delete"));
