@@ -21,7 +21,7 @@ public class OnReady implements EventListener {
 	public void onEvent(GenericEvent e) {
 		
 		if (!(e instanceof ReadyEvent)) { return; }
-			
+		
 		// auto delete stuff down below :\
 		FileConfiguration database = Mixins.getDatabase(Main.configPath);
 		
@@ -62,10 +62,9 @@ public class OnReady implements EventListener {
 			Discord.sendAlert(Discord.START_MESSAGE_EMBED);
 		}
 		
-		
-		
-		// Slash command
+		// Slash commands here
 		Discord.JDA.upsertCommand(new CommandData("list", "Show who's online.")).queue();
+		
 	}
 	
 	
