@@ -7,6 +7,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.requests.restaction.AuditableRestAction;
 import net.pgfmc.bot.Discord;
 import net.pgfmc.bot.Main;
@@ -20,7 +21,7 @@ public class OnReady implements EventListener {
 	public void onEvent(GenericEvent e) {
 		
 		if (!(e instanceof ReadyEvent)) { return; }
-			
+		
 		// auto delete stuff down below :\
 		FileConfiguration database = Mixins.getDatabase(Main.configPath);
 		
@@ -60,6 +61,9 @@ public class OnReady implements EventListener {
 		{
 			Discord.sendAlert(Discord.START_MESSAGE_EMBED);
 		}
+		
+		// Slash commands here
+		Discord.JDA.upsertCommand(new CommandData("list", "Show who's online.")).queue();
 		
 	}
 	
