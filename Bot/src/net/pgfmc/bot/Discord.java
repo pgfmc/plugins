@@ -20,16 +20,18 @@ import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.pgfmc.bot.listeners.OnMessageReceived;
 import net.pgfmc.bot.listeners.OnReady;
+import net.pgfmc.bot.listeners.OnSlashCommand;
 import net.pgfmc.bot.listeners.OnUpdateRole;
 
 public class Discord extends ListenerAdapter {
 	
-	public static JDA JDA;
+	public static JDA JDA = null;
 	public static String PREFIX = "!";
 	public static List<String> ADMINS = new ArrayList<>(Arrays.asList("243499063838769152", "440726027405361152")); // bk, Crimson
 	private static TextChannel serverChannel;
 	
 	public static String PGF_ID = "579055447437475851";
+	public static String BTS_ID = "721951670132801596";
 	
 	// Frequently used colors
 	public static final Color green = new Color(0, 255, 0); // Join
@@ -52,6 +54,7 @@ public class Discord extends ListenerAdapter {
 		builder.addEventListeners(new OnReady());
 		builder.addEventListeners(new OnMessageReceived());
 		builder.addEventListeners(new OnUpdateRole());
+		builder.addEventListeners(new OnSlashCommand());
 		
 		/*
 		 * 
@@ -59,10 +62,11 @@ public class Discord extends ListenerAdapter {
 		
 		// creates JDA and allows the bot to load all members 
 		JDA = builder
-				.setChunkingFilter(ChunkingFilter.ALL)
-				.setMemberCachePolicy(MemberCachePolicy.ALL)
-                .enableIntents(GatewayIntent.GUILD_MEMBERS)
-                .build();
+		.setChunkingFilter(ChunkingFilter.ALL)
+		.setMemberCachePolicy(MemberCachePolicy.ALL)
+		.enableIntents(GatewayIntent.GUILD_MEMBERS)
+		.build();
+		
 		JDA.awaitReady();
 	}
 	
