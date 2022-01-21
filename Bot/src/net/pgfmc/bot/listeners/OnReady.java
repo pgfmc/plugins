@@ -36,8 +36,6 @@ public class OnReady implements EventListener {
 		}
 		Discord.setChannel(Discord.JDA.getTextChannelById(Discord.SERVER_CHANNEL));
 		
-		Discord.JDA.getGuildById("579055447437475851").upsertCommand(new CommandData("list", "Show who's online.")).queue();
-		
 		if (database.getString("delete") != null) { // deletes the "server stopping" message.
 			AuditableRestAction<Void> EEEE = Discord.getChannel().deleteMessageById(database.getString("delete"));
 			
@@ -64,6 +62,10 @@ public class OnReady implements EventListener {
 			Discord.sendAlert(Discord.START_MESSAGE_EMBED);
 		}
 		
+		
+		
+		// Slash command
+		Discord.JDA.getGuildById("579055447437475851").upsertCommand(new CommandData("list", "Show who's online.")).queue();
 	}
 	
 	
