@@ -1,10 +1,12 @@
 package net.pgfmc.bot.player;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import org.bukkit.entity.Player;
@@ -16,6 +18,10 @@ import org.bukkit.event.player.PlayerAdvancementDoneEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.GuildChannel;
+import net.dv8tion.jda.api.entities.MessageChannel;
 import net.pgfmc.bot.Discord;
 import net.pgfmc.bot.Main;
 import net.pgfmc.core.chat.ProfanityFilter;
@@ -45,6 +51,16 @@ public class ChatEvents implements Listener {
 		{
 			p.sendMessage("§4Please do not use blacklisted words!");
 			e.setCancelled(true);
+			
+			String n = p.getName();
+			Guild g = Discord.JDA.getGuildById("721951670132801596");
+			EmbedBuilder eb = new EmbedBuilder();
+			eb.setTitle("Blacklisted word detected!");
+			eb.setColor(new Color(255, 0, 0));
+			eb.setDescription("User: " + n + "\n" + "Message: " + "||" + msg + "||");
+			eb.setTimestamp(OffsetDateTime.now());
+			GuildChannel l = g.getGuildChannelById("721951670132801600");
+			((MessageChannel) l).sendMessage(eb.build()).queue();
 			return;
 		}
 		
