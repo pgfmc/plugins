@@ -35,7 +35,7 @@ public abstract class ListInventory<T> extends BaseInventory {
 	 * @param slot The slot this entry is in.
 	 * @return The Butto lambda function ran when this entry is pressed in-inventory.
 	 */
-	protected abstract Butto toAction(T entry, int slot);
+	protected abstract Butto toAction(T entry);
 	
 	/**
 	 * Translates an entry in the list returned by load() to an ItemStack.
@@ -97,10 +97,9 @@ public abstract class ListInventory<T> extends BaseInventory {
 			new Exception("input \"index\" is out of bounds!");
 			return -1;
 		}
-		
 	}
 	
-	private void flipPage(int flips) {
+	public void flipPage(int flips) {
 		if (flips + page > 0 && flips + page <= pages.length) {
 			page = page + flips;
 			setPage(page);
@@ -155,8 +154,9 @@ public abstract class ListInventory<T> extends BaseInventory {
 					i < 36;
 					i++) {
 				int enty = entryToSlot(i);
-				setAction(enty, toAction(currentPage[i], enty));
+				if (currentPage[i] == null) continue;
 				
+				setAction(enty, toAction(currentPage[i]));
 				setItem(enty, toItem(currentPage[i]));
 			}
 			
@@ -196,8 +196,9 @@ public abstract class ListInventory<T> extends BaseInventory {
 					i < 21;
 					i++) {
 				int enty = entryToSlot(i);
-				setAction(enty, toAction(currentPage[i], enty));
+				if (currentPage[i] == null) continue;
 				
+				setAction(enty, toAction(currentPage[i]));
 				setItem(enty, toItem(currentPage[i]));
 			}
 		}
