@@ -35,11 +35,6 @@ public class OnMessageReceived implements EventListener {
 		if (ProfanityFilter.hasProfanity(s))
 		{
 			m.getTextChannel().sendMessage(user.getAsMention() + ", please do not use blacklisted words!");
-//			Message c = m.getMessage();
-//			OffsetDateTime t = m.getMessage().getTimeCreated();
-//			User a = m.getAuthor();
-			
-			
 			m.getMessage().delete().queue();
 			return;
 		}
