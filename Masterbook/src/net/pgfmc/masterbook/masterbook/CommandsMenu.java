@@ -244,10 +244,35 @@ public class CommandsMenu implements InventoryHolder {
 				setItem(22, Material.ENDER_CHEST).n("§r§3Ender Chest").l("§r§9VIP perk!");
 			}
 			
+			
+			/* 
+			 * [] [] [] [] [] [] [] [] []
+			 * XX [] [] [] [] [] [] [] []
+			 * [] [] [] [] [] [] [] [] []
+			 * Requests
+			 */
 			setAction(9, (p, e) -> {
 				p.openInventory(new RequestList(pd).getInventory());
 			});
 			setItem(9, Material.LEVER).n("§r§4Requests");
+			
+			
+			/* 
+			 * [] [] [] [] [] [] [] [] []
+			 * [] [] [] [] [] [] [] [] []
+			 * XX [] [] [] [] [] [] [] []
+			 * Nickname
+			 */
+			if (perms.contains("pgf.cmd.donator.nick"))
+			{
+				setAction(18, (p, e) -> {
+					PlayerData.setData(p, "nickTemp", "reset");
+					p.closeInventory();
+					p.sendMessage("§9Type your new nickname in chat.");
+				});
+				setItem(18, Material.NAME_TAG).n("§eNickname").l("§7Give yourself a nickname!");
+			}
+			
 		}
 	}
 	
@@ -320,7 +345,7 @@ public class CommandsMenu implements InventoryHolder {
 		}
 
 		@Override
-		protected Butto toAction(World entry, int slot) {
+		protected Butto toAction(World entry) {
 			return (p, e) -> {
 				p.performCommand("goto " + entry.getName());
 			};
@@ -386,7 +411,7 @@ public class CommandsMenu implements InventoryHolder {
 			}
 
 			@Override
-			protected Butto toAction(String entry, int slot) {
+			protected Butto toAction(String entry) {
 				
 				return (p, e) -> {
 					p.performCommand(dingus + entry);
@@ -461,7 +486,7 @@ public class CommandsMenu implements InventoryHolder {
 			}
 
 			@Override
-			protected Butto toAction(String entry, int slot) {
+			protected Butto toAction(String entry) {
 				
 				return (p, e) -> {
 					p.performCommand("delhome" + entry);
@@ -496,7 +521,7 @@ public class CommandsMenu implements InventoryHolder {
 		}
 
 		@Override
-		protected Butto toAction(Player entry, int slot) {
+		protected Butto toAction(Player entry) {
 			return (p, e) -> {
 				p.performCommand("tpa " + entry.getName());
 				p.openInventory(new Homepage().getInventory());
@@ -527,7 +552,7 @@ public class CommandsMenu implements InventoryHolder {
 		}
 		
 		@Override
-		protected Butto toAction(PlayerData entry, int slot) {
+		protected Butto toAction(PlayerData entry) {
 			return (p, d) -> {
 				p.openInventory(new FriendOptions(pd, entry).getInventory());
 			};
@@ -600,7 +625,7 @@ public class CommandsMenu implements InventoryHolder {
 		}
 		
 		@Override
-		protected Butto toAction(PlayerData entry, int slot) {
+		protected Butto toAction(PlayerData entry) {
 			return (p, e) -> {
 				p.openInventory(new PlayerOptions(entry).getInventory());
 			};
@@ -794,7 +819,7 @@ public class CommandsMenu implements InventoryHolder {
 		}
 
 		@Override
-		protected Butto toAction(Request entry, int slot) {
+		protected Butto toAction(Request entry) {
 			return (p, e) -> {
 				if (entry.expireNow(Reason.Accept) != false) {
 					entry.act();
