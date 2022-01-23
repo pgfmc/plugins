@@ -40,7 +40,7 @@ public class MainScreen extends ListInventory<Listing> {
     }
 
 	@Override
-	protected Butto toAction(Listing arg0, int arg1) {
+	protected Butto toAction(Listing arg0) {
 		
 		if (arg0.getPlayer().getUniqueId().equals(pd.getUniqueId())) {
 			return (p, e) -> {
