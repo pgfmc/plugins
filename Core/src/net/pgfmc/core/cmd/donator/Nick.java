@@ -12,6 +12,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import net.pgfmc.core.permissions.Role;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
 public class Nick implements CommandExecutor {
@@ -42,70 +43,7 @@ public class Nick implements CommandExecutor {
 			return false;
 		}
 		
-		
-		
-		Player p = (Player) sender;
-		PlayerData pd = PlayerData.getPlayerData(p);
-		
-		String nick = String.join("", args).replaceAll("[^A-Za-z0-9&]", "").replace("&k", "");
-		String raw = removeCodes(nick);
-		
-		/*
-		 * A raw length of 0 means the nickname had no content, just color codes (lmao)
-		 */
-		if (raw.length() <= 0)
-		{
-			sender.sendMessage("§cThe nickname must be more than just color codes!");
-			return true;
-		}
-		
-		/*
-		 * The nickname without color codes must be less than 20 characters
-		 */
-		if (raw.length() > 20)
-		{
-			sender.sendMessage("§cThe max nickname length is 20!");
-			return true;
-		}
-		
-		/*
-		 * If the raw nickname is "off" or "reset" or the player's name
-		 * then it will reset the nickname to Player.getName()
-		 */
-		if (raw.equals("off") || raw.equals("reset") || nick.equals(p.getName()))
-		{
-			pd.setData("nick", null).queue();
-			sender.sendMessage("§6Nickname changed to " + pd.getRankedName() + "§6!");
-			
-			return true;
-		}
-		
-		/*
-		 * No impostors, check removeImpostors() for comments
-		 */
-		for (OfflinePlayer op2 : Bukkit.getOfflinePlayers())
-		{
-			String raw2 = raw.toLowerCase();
-			if (raw2.equals(pd.getName().toLowerCase())) { break; }
-			
-			if (op2.getUniqueId().equals(pd.getUniqueId())) { continue; }
-			
-			if (op2.getName().toLowerCase().equals(raw2) || removeCodes(
-					((String) Optional.ofNullable(PlayerData.getData(op2, "nick")).orElse(""))).toLowerCase()
-					.equals(raw2))
-			{
-				p.sendMessage("§cYou cannot have the same name as another player!");
-				return true;
-			}
-		}
-		
-		
-		
-		
-		
-		
-		pd.setData("nick", nick.replace("&", "§") + "§r").queue();
-		sender.sendMessage("§6Nickname changed to " + pd.getRankedName() + "§6!");
+		setNick((Player) sender, args);
 		
 		return true;
 	}
@@ -166,11 +104,82 @@ public class Nick implements CommandExecutor {
 		}
 	}
 	
-	// Annoying way to get a String from a file using PlayerData
-	@Deprecated
-	public void init()
+	/**
+	 * Set a nickname to a player
+	 * @param p Player
+	 * @param nick Nickname
+	 */
+	public static void setNick(Player p, String nick)
 	{
+		PlayerData pd = PlayerData.getPlayerData(p);
 		
+		Role role = Role.getDominant(pd.getData("Roles"));
+		
+		if (role.getDominance() < Role.VETERAN.getDominance())
+		{
+			p.sendMessage("§cYou do not have permission to use this command.");
+			return;
+		}
+		
+		nick = nick.replaceAll("[^A-Za-z0-9&]", "").replace("&k", "");
+		String raw = removeCodes(nick);
+		
+		/*
+		 * A raw length of 0 means the nickname had no content, just color codes (lmao)
+		 */
+		if (raw.length() <= 0)
+		{
+			p.sendMessage("§cThe nickname must be more than just color codes!");
+			return;
+		}
+		
+		/*
+		 * The nickname without color codes must be less than 20 characters
+		 */
+		if (raw.length() > 20)
+		{
+			p.sendMessage("§cThe max nickname length is 20!");
+			return;
+		}
+		
+		/*
+		 * If the raw nickname is "off" or "reset" or the player's name
+		 * then it will reset the nickname to Player.getName()
+		 */
+		if (raw.equals("off") || raw.equals("reset") || nick.equals(p.getName()))
+		{
+			pd.setData("nick", null).queue();
+			p.sendMessage("§6Nickname changed to " + pd.getRankedName() + "§6!");
+			
+			return;
+		}
+		
+		/*
+		 * No impostors, check removeImpostors() for comments
+		 */
+		for (OfflinePlayer op2 : Bukkit.getOfflinePlayers())
+		{
+			String raw2 = raw.toLowerCase();
+			if (raw2.equals(pd.getName().toLowerCase())) { break; }
+			
+			if (op2.getUniqueId().equals(pd.getUniqueId())) { continue; }
+			
+			if (op2.getName().toLowerCase().equals(raw2) || removeCodes(
+					((String) Optional.ofNullable(PlayerData.getData(op2, "nick")).orElse(""))).toLowerCase()
+					.equals(raw2))
+			{
+				p.sendMessage("§cYou cannot have the same name as another player!");
+				return;
+			}
+		}
+		
+		pd.setData("nick", nick.replace("&", "§") + "§r").queue();
+		p.sendMessage("§6Nickname changed to " + pd.getRankedName() + "§6!");
+	}
+	
+	public static void setNick(Player p, String[] nick)
+	{
+		setNick(p, String.join("", nick));
 	}
 
 }
