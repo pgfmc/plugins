@@ -71,15 +71,15 @@ public class OnMessageReceived implements EventListener {
 			s.replace("%", ""); // removes all "%"s from the message.
 			
 			// attempts to bring over formatting from discord.
-			s = format(s, "\\*\\*\\*", "Â§lÂ§o"); 
-			s = format(s, "\\*\\*", "Â§l");
-			s = format(s, "\\*", "Â§o");
-			s = format(s, "__", "Â§n");
+			s = format(s, "\\*\\*\\*", "§l§o"); 
+			s = format(s, "\\*\\*", "§l");
+			s = format(s, "\\*", "§o");
+			s = format(s, "__", "§n");
 			
 			// If not reply
 			if(m.getMessage().getReferencedMessage() == null || m.getMessage().getReferencedMessage().getAuthor().isBot())
 			{
-				Bukkit.getServer().broadcastMessage(r.getColor() + m.getMember().getEffectiveName() + " Â§rÂ§8-|| " + ChatEvents.getMessageColor(m.getMember().getId()) + s);
+				Bukkit.getServer().broadcastMessage(r.getColor() + m.getMember().getEffectiveName() + " §r§8-|| " + ChatEvents.getMessageColor(m.getMember().getId()) + s);
 				return;
 
 			} else {
@@ -97,7 +97,7 @@ public class OnMessageReceived implements EventListener {
                     		);
                 }
                 
-                Bukkit.getServer().broadcastMessage(r.getColor() + m.getMember().getEffectiveName() + " replied to " + replyRole.getColor() + replyMember.getEffectiveName() + " Â§rÂ§8-|| " + ChatEvents.getMessageColor(m.getMember().getId()) + s);
+                Bukkit.getServer().broadcastMessage(r.getColor() + m.getMember().getEffectiveName() + " replied to " + replyRole.getColor() + replyMember.getEffectiveName() + " §r§8-|| " + ChatEvents.getMessageColor(m.getMember().getId()) + s);
 			}
 		} 
 		
@@ -130,7 +130,7 @@ public class OnMessageReceived implements EventListener {
 		for (String S : sa) {
 			
 			if (mark) {
-				s = s + mc + S + "Â§r";
+				s = s + mc + S + "§r";
 				mark = false;
 			} else {
 				s = s + S;

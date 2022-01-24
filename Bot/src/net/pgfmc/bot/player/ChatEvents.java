@@ -64,12 +64,12 @@ public class ChatEvents implements Listener {
 //		    List<String> a = Arrays.asList(msg.substring(msg.indexOf("@")).split("@"));
 //		    a = a.stream().map(fl -> fl.substring(0, fl.indexOf(" "))).collect(Collectors.toList());
 //		    System.out.println(a);
-//			
-//			PlayerData pd = PlayerData.getPlayerData(p);
-//			
-//			e.setFormat(pd.getRankedName() + "§8 -> " + getMessageColor(p.getUniqueId().toString()) + msg);
-//			
-//			Discord.sendMessage(pd.getNicknameRaw() + " -> " + msg);
+			
+			PlayerData pd = PlayerData.getPlayerData(p);
+			
+			e.setFormat(pd.getRankedName() + "§8 -> " + getMessageColor(p.getUniqueId().toString()) + msg);
+			
+			Discord.sendMessage(pd.getNicknameRaw() + " -> " + msg);
 		}
 	
 	@EventHandler
