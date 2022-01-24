@@ -5,7 +5,7 @@ authors: [bk, CrimsonDart]
 website: play.pgfmc.net
 main: net.pgfmc.core.CoreMain
 description: Core for PGF
-softdepend: [Teams]
+softdepend: [PGF-Teams, PGF-Bot]
 load: POSTWORLD
 prefix: PGF-Core
 
