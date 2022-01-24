@@ -3,7 +3,6 @@ package net.pgfmc.shop.Inventories;
 import org.bukkit.Material;
 
 import net.pgfmc.core.inventoryAPI.BaseInventory;
-import net.pgfmc.core.inventoryAPI.extra.SizeData;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.shop.Listing;
 
@@ -15,7 +14,7 @@ import net.pgfmc.shop.Listing;
 public class OwnListing extends BaseInventory {
     
     public OwnListing(Listing listing, PlayerData pd) {
-        super(SizeData.SMALL, "");
+        super(27, "");
         
         
         setAction(0, (p, e) -> {
