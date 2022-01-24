@@ -86,17 +86,17 @@ public class Roles {
 		System.out.println("Recalculating roles for player " + pd.getName());
 		
 		String id = (String) pd.loadFromFile("Discord");
-		List<String> roles = (List<String>) Optional.ofNullable(pd.loadFromFile("roles"))
-				.orElse(Arrays.asList(Role.MEMBER.getName()));
+		List<String> roles = Arrays.asList(Role.MEMBER.getName());
 		
-		if (id != null) { pd.setData("Discord", id); }
-		
-		if (!CoreMain.PGFPlugin.BOT.isEnabled()) {
+		if (!CoreMain.PGFPlugin.BOT.isEnabled())
+		{
 			roles = (List<String>) Optional.ofNullable(pd.loadFromFile("roles"))
 					.orElse(Arrays.asList(Role.MEMBER.getName()));
-		} else {
+		} else if (id != null && CoreMain.PGFPlugin.BOT.isEnabled())
+		{
 			List<String> discordRoles = Discord.getMemberRoles(id);
 			if (discordRoles != null) {
+				pd.setData("Discord", id);
 				roles = asString(getRolesById(discordRoles));
 			}
 		}

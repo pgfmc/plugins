@@ -26,6 +26,7 @@ import net.pgfmc.core.cmd.donator.Nick;
 import net.pgfmc.core.inventoryAPI.extra.InventoryPressEvent;
 import net.pgfmc.core.permissions.Permissions;
 import net.pgfmc.core.playerdataAPI.PlayerDataManager;
+import net.pgfmc.core.teleportAPI.SpawnProtect;
 import net.pgfmc.core.util.DimManager;
 import net.pgfmc.core.util.Mixins;
 import net.pgfmc.core.util.ReloadConfigify;
@@ -198,6 +199,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new InventoryPressEvent(), this);
 		getServer().getPluginManager().registerEvents(new PlayerDataManager(), this);
 		getServer().getPluginManager().registerEvents(new Permissions(), this);
+		getServer().getPluginManager().registerEvents(new SpawnProtect(), this);
 		
 		
 		System.out.println(Bukkit.getServer().getCommandAliases());

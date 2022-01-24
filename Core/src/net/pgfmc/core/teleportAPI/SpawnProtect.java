@@ -1,10 +1,9 @@
 package net.pgfmc.core.teleportAPI;
 
-import java.util.EventListener;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
@@ -21,7 +20,7 @@ import net.pgfmc.core.playerdataAPI.PlayerData;
  * @author bk
  *
  */
-public class SpawnProtect implements EventListener {
+public class SpawnProtect implements Listener {
 	
 	
 	@EventHandler
