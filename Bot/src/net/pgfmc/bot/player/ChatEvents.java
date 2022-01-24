@@ -1,6 +1,5 @@
 package net.pgfmc.bot.player;
 
-import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -19,9 +18,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.GuildChannel;
-import net.dv8tion.jda.api.entities.MessageChannel;
 import net.pgfmc.bot.Discord;
 import net.pgfmc.bot.Main;
 import net.pgfmc.core.chat.ProfanityFilter;
@@ -47,20 +43,21 @@ public class ChatEvents implements Listener {
 			
 			// If list1 has any values with list 2
 			// Word blacklist
-			if (ProfanityFilter.hasProfanity(msg)){
+			if (ProfanityFilter.hasProfanity(msg))
+			{
 				p.sendMessage("§4Please do not use blacklisted words!");
 				e.setCancelled(true);
 				
-				String n = p.getName();
-				Guild g = Discord.JDA.getGuildById("579055447437475851");
-				GuildChannel l = g.getGuildChannelById("891939656969621534");
 				EmbedBuilder eb = new EmbedBuilder();
-				eb.setAuthor(n, null, "https://crafatar.com/avatars/" + p.getUniqueId());
+				eb.setColor(Discord.red);
+				eb.setAuthor(p.getName(), null, "https://crafatar.com/avatars/" + p.getUniqueId());
 				eb.setTitle("Blacklisted word detected! (Minecraft)");
-				eb.setColor(new Color(255, 0, 0));
-				eb.setDescription("User: " + n + "\n" + "Message: " + "||" + msg + "||");
+				eb.setDescription("A blacklisted word was detected by " + p.getName() + "in Minecraft.");
+				eb.addField("User", p.getName(), false);
+				eb.addField("Message", "|| " + msg + " ||", false);
 				eb.setTimestamp(OffsetDateTime.now());
-				((MessageChannel) l).sendMessage(eb.build()).queue();
+				
+				Discord.sendAlert(eb.build());
 				return;
 			}
 			
