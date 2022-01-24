@@ -6,7 +6,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import net.pgfmc.core.inventoryAPI.extra.Butto;
-import net.pgfmc.core.inventoryAPI.extra.SizeData;
 
 public abstract class ListInventory<T> extends BaseInventory {
 	
@@ -52,10 +51,10 @@ public abstract class ListInventory<T> extends BaseInventory {
 	 * @param name Name displayed at the top of the inventory's interface.
 	 * @param itemController The function that is ran per entry in "entries"; itemController must return a button Object, with the entry itself as the input.
 	 */
-	public ListInventory(SizeData size, String name) {
+	public ListInventory(int size, String name) {
 		super(size, name);
 		
-		if (size == SizeData.DROPPER || size == SizeData.HOPPER) {
+		if (size == 9 || size == 5) {
 			throw new IllegalArgumentException();
 		}
 		
@@ -69,12 +68,14 @@ public abstract class ListInventory<T> extends BaseInventory {
 	public void refresh() {
 		List<T> entries = load();
 		
-		pages = (T[][]) new Object[(int) Math.ceil(entries.size() / (float) sizeD.getPageSize())][sizeD.getPageSize()];
+		int pageSize = (inv.getSize() == 27) ? 21 : (inv.getSize() == 54) ? 36 : -1;
+		
+		pages = (T[][]) new Object[(int) Math.ceil(entries.size() / (float) pageSize)][pageSize];
 		
 		for (int i = 0;
 				i < entries.size();
 				i++	) {
-			pages[i / sizeD.getPageSize()][i % sizeD.getPageSize()] = entries.get(i);
+			pages[i / pageSize][i % pageSize] = entries.get(i);
 		}
 		
 		setPage(page);
@@ -119,7 +120,7 @@ public abstract class ListInventory<T> extends BaseInventory {
 		
 		page = newPage;
 		
-		if (sizeD == SizeData.BIG) {
+		if (inv.getSize() == 54) {
 			
 			// sets the Previous page button, if apropriate.
 			if (page > 1) {
@@ -160,7 +161,7 @@ public abstract class ListInventory<T> extends BaseInventory {
 				setItem(enty, toItem(currentPage[i]));
 			}
 			
-		} else if (sizeD == SizeData.SMALL) {
+		} else if (inv.getSize() == 27) {
 			
 			// sets the Previous page button, if apropriate.
 			if (page > 1) {
