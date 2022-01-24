@@ -410,11 +410,11 @@ public class CommandsMenu implements InventoryHolder {
 					return;
 				}
 				if (Permissions.has(p, "pgf.cmd.donator.home") && homes.size() >= 5) {
-					p.sendMessage("§cYou can only have up to 5 homes: " + homes);
+					p.sendMessage("§cYou can only have up to 5 homes: " + Homes.getNamedHomes(p));
 					return;
 				} else if (!Permissions.has(p, "pgf.cmd.donator.home") && homes.size() >= 3)
 				{
-					p.sendMessage("§cYou can only have up to 3 homes: " + homes);
+					p.sendMessage("§cYou can only have up to 3 homes: " + Homes.getNamedHomes(p));
 					return;
 				}
 				p.openInventory(new SetConfirm().getInventory());

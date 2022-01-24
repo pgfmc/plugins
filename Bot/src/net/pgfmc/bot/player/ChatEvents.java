@@ -79,7 +79,7 @@ public class ChatEvents implements Listener {
 		
 		e.setDeathMessage(e.getDeathMessage().replace(pd.getName(), pd.getNicknameRaw()));
 		Discord.sendMessage("<:DEATH:907865162558636072> " + e.getDeathMessage());
-		e.setDeathMessage(e.getDeathMessage().replace(pd.getName(), pd.getRankedName()));
+		e.setDeathMessage(e.getDeathMessage().replace(pd.getNicknameRaw(), pd.getRankedName()));
 	}
 	
 	@EventHandler
