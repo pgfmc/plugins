@@ -20,7 +20,7 @@ public class ReloadConfigify implements CommandExecutor {
 		return true;
 	}
 	
-	public void init()
+	public void reload()
 	{
 		Configify.reloadConfigs();
 	}

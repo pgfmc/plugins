@@ -15,10 +15,13 @@ public class Main extends JavaPlugin {
 	
 	public static Main plugin;
 	
+	public Main() {
+		plugin = this;
+	}
+	
 	@Override
 	public void onEnable()
 	{
-		plugin = this;
 		
 		// ---------------------------------------------------- File creation thingy ( for storing data )
 		

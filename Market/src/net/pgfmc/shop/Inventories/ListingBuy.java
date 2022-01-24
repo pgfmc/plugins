@@ -4,7 +4,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import net.pgfmc.core.inventoryAPI.BaseInventory;
-import net.pgfmc.core.inventoryAPI.extra.SizeData;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.shop.Listing;
 
@@ -14,7 +13,7 @@ public class ListingBuy extends BaseInventory {
     Listing listing;
 
     public ListingBuy(Listing listing, PlayerData pd) {
-        super(SizeData.SMALL, "");
+        super(27, "");
         this.player = pd;
         this.listing = listing;
         
@@ -40,14 +39,14 @@ public class ListingBuy extends BaseInventory {
         });
     	setItem(11, Material.AIR);
     	
-    	setItem(13, listing.getTrade());
+    	setItem(13, listing.cost);
     	
     	setItem(6, Material.RED_CONCRETE).n("");
     	setItem(14, Material.RED_CONCRETE).n("");
     	setItem(16, Material.RED_CONCRETE).n("");
     	setItem(24, Material.RED_CONCRETE).n("");
     	
-    	setItem(15, listing.getItem().getType()).l("§dPlace " + listing.getPrice() + "\n§dinto the slot to the left\n§dto buy.");
+    	setItem(15, listing.product.getType()).l("§dPlace " + listing.getPrice() + "\n§dinto the slot to the left\n§dto buy.");
     }
 
     private void enterItem(ItemStack item) {
@@ -73,7 +72,7 @@ public class ListingBuy extends BaseInventory {
             e.setCancelled(false);
             buyItem();
         });
-    	setItem(15, listing.getItem());
+    	setItem(15, listing.product);
     }
 
     private void buyItem() {

@@ -1,10 +1,12 @@
 package net.pgfmc.masterbook.masterbook;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
@@ -20,7 +22,9 @@ import net.pgfmc.core.inventoryAPI.BaseInventory;
 import net.pgfmc.core.inventoryAPI.ListInventory;
 import net.pgfmc.core.inventoryAPI.extra.Butto;
 import net.pgfmc.core.inventoryAPI.extra.ItemWrapper;
-import net.pgfmc.core.inventoryAPI.extra.SizeData;
+import net.pgfmc.core.permissions.Permissions;
+import net.pgfmc.core.permissions.Roles;
+import net.pgfmc.core.permissions.Roles.Role;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.requestAPI.Request;
 import net.pgfmc.core.requestAPI.Requester;
@@ -43,22 +47,14 @@ public class CommandsMenu implements InventoryHolder {
 	public class Homepage extends BaseInventory {
 		
 		public Homepage() {
-			super(SizeData.SMALL, "Commands");
-			
-			List<String> perms = new ArrayList<>();
-			
-			for (PermissionAttachmentInfo s : pd.getPlayer().getEffectivePermissions()) {
-				if (s.getValue()) {
-					perms.add(s.getPermission());
-				}
-			}
+			super(27, "Commands");
 			
 			/* 
 			 * [] [] XX [] [] [] [] [] []
 			 * [] [] [] [] [] [] [] [] []
 			 * [] [] [] [] [] [] [] [] []
 			 */
-			if (perms.contains("pgf.cmd.link")) {
+			if (pd.hasPermission("pgf.cmd.link")) {
 				
 				if (pd.getData("Discord") != null) {
 					
@@ -66,7 +62,7 @@ public class CommandsMenu implements InventoryHolder {
 						p.openInventory(new DiscordConfirm(pd).getInventory());
 					});
 					
-					setItem(2, Material.AMETHYST_SHARD).n("§dUnlink Discord");
+					setItem(2, Material.AMETHYST_SHARD).n("Â§dUnlink Discord");
 				
 				} else {
 					
@@ -74,7 +70,7 @@ public class CommandsMenu implements InventoryHolder {
 						p.closeInventory();
 						p.performCommand("link");
 					});
-					setItem(2, Material.QUARTZ).n("§dLink Discord");
+					setItem(2, Material.QUARTZ).n("Â§dLink Discord");
 				}
 			}
 			
@@ -84,23 +80,21 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] [] [] [] [] [] [] []
 			 * toggles AFK in-menu
 			 */
-			if (perms.contains("pgf.cmd.afk")) {
+			if (pd.hasPermission("pgf.cmd.afk")) {
 				
 				if (Afk.isAfk(pd.getPlayer())) {
 					
 					setAction(3, (p, e) -> {
 						
 						p.performCommand("afk");
-						p.openInventory(new Homepage().getInventory());
 					});
 					
-					setItem(3, Material.BLUE_ICE).n("§r§7AFK: §aEnabled").l("§r§7Click to disable!");
+					setItem(3, Material.BLUE_ICE).n("Â§rÂ§7AFK: Â§aEnabled").l("Â§rÂ§7Click to disable!");
 				} else {
 					setAction(3, (p, e) -> {
 						p.performCommand("afk");
-						p.openInventory(new Homepage().getInventory());
 					});
-					setItem(3, Material.ICE).n("§r§7AFK: §cDisabled").l("§r§7Click to enable!");
+					setItem(3, Material.ICE).n("Â§rÂ§7AFK: Â§cDisabled").l("Â§rÂ§7Click to enable!");
 				}
 			}
 			
@@ -110,13 +104,13 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] [] [] [] [] [] [] []
 			 * Back command
 			 */
-			if (perms.contains("pgf.cmd.back")) {
+			if (pd.hasPermission("pgf.cmd.back")) {
 				
 				setAction(5, (p, e) -> {
 					p.openInventory(new BackConfirm(pd).getInventory());
 				});
 				
-				setItem(5, Material.ARROW).n("§r§4Back").l("§r§7Go back to your last location");
+				setItem(5, Material.ARROW).n("Â§rÂ§4Back").l("Â§rÂ§7Go back to your last location");
 			}
 			
 			/* 
@@ -129,7 +123,7 @@ public class CommandsMenu implements InventoryHolder {
 				p.closeInventory();
 				p.openBook(Guidebook.getCopmleteBook());
 			});
-			setItem(6, Material.BOOK).n("§r§dInfo").l("§r§7Bring up the guidebook");
+			setItem(6, Material.BOOK).n("Â§rÂ§dInfo").l("Â§rÂ§7Bring up the guidebook");
 			
 			
 			/* 
@@ -138,12 +132,12 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] [] [] [] [] [] [] []
 			 * /dim command
 			 */
-			if (perms.contains("pgf.cmd.goto")) {
+			if (pd.hasPermission("pgf.cmd.goto")) {
 				
 				setAction(13, (p, e) -> {
 					p.openInventory(new DimSelect(pd).getInventory());
 				});
-				setItem(13, Material.SPYGLASS).n("§r§9Dimensions").l("§r§7Go to other worlds!");
+				setItem(13, Material.SPYGLASS).n("Â§rÂ§9Dimensions").l("Â§rÂ§7Go to other worlds!");
 			}
 			
 			/* 
@@ -152,12 +146,10 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] XX [] [] [] [] [] []
 			 * home menu
 			 */
-			if (perms.contains("pgf.cmd.home.*")) {
-				setAction(20, (p, e) -> {
-					p.openInventory(new HomeMenu(pd).getInventory());
-				});
-				setItem(20, Material.COMPASS).n("§r§eHomes");
-			}
+			setAction(20, (p, e) -> {
+				p.openInventory(new HomeMenu(pd).getInventory());
+			});
+			setItem(20, Material.COMPASS).n("Â§rÂ§eHomes");
 			
 			/* 
 			 * [] [] [] [] [] [] [] [] []
@@ -165,21 +157,21 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] [] XX [] [] [] [] []
 			 * home menu
 			 */
-			if (perms.contains("pgf.cmd.tp.tpa")) {
+			if (pd.hasPermission("pgf.cmd.tp.tpa")) {
 				
 				if (Bukkit.getOnlinePlayers().size() == 1) {
 					
 					setAction(21, (p, e) -> {
 						pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
 					});
-					setItem(21, Material.GRAY_CONCRETE).n("§r§5Tpa").l("§r§cNo players online.");
+					setItem(21, Material.GRAY_CONCRETE).n("Â§rÂ§5Tpa").l("Â§rÂ§cNo players online.");
 					
 				} else {
 					
 					setAction(21, (p, e) -> {
 						p.openInventory(new TpaList().getInventory());
 					});
-					setItem(21, Material.ENDER_PEARL).n("§r§5Tpa").l("§r§7Teleport to another player!");
+					setItem(21, Material.ENDER_PEARL).n("Â§rÂ§5Tpa").l("Â§rÂ§7Teleport to another player!");
 				}
 				
 				
@@ -192,12 +184,12 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] [] [] [] XX [] [] []
 			 * home menu
 			 */
-			if (perms.contains("teams.friend.*") && PGFPlugin.TEAMS.isEnabled()) {
+			if (pd.hasPermission("teams.friend.*") && PGFPlugin.TEAMS.isEnabled()) {
 				
 				setAction(23, (p, e) -> {
 					p.openInventory(new FriendsList().getInventory());
 				});
-				setItem(23, Material.TOTEM_OF_UNDYING).n("§r§6Friends");
+				setItem(23, Material.TOTEM_OF_UNDYING).n("Â§rÂ§6Friends");
 			}
 			
 			/* 
@@ -206,12 +198,12 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] [] [] [] [] XX [] []
 			 * home menu
 			 */
-			if (perms.contains("bukkit.command.list") && PGFPlugin.TEAMS.isEnabled()) {
+			if (pd.hasPermission("bukkit.command.list") && PGFPlugin.TEAMS.isEnabled()) {
 				
 				setAction(24, (p, e) -> {
 					p.openInventory(new PlayerList().getInventory());
 				});
-				setItem(24, Material.PLAYER_HEAD).n("§r§bPlayer List");
+				setItem(24, Material.PLAYER_HEAD).n("Â§rÂ§bPlayer List");
 			}
 			
 			// Other buttons -
@@ -223,11 +215,39 @@ public class CommandsMenu implements InventoryHolder {
 			 * home menu
 			 */
 			
-			//List<Role> roles = pd.getData("Roles");
-			
-			//if (roles != null) {
-			//	setButton(4, new Button(Material.EMERALD, PermissionsManager.getRolePrefix(roles.get(0)) + roles.get(0)));
-			//};
+			Role topRole = Roles.getTop(pd.getOfflinePlayer());
+			Material emblem = Material.RAW_COPPER;
+			switch (topRole) {
+			case VETERAN:
+				emblem = Material.LAPIS_LAZULI;
+				break;
+			case DONATOR:
+				emblem = Material.RAW_GOLD;
+				break;
+			case DOOKIE:
+				emblem = Material.COCOA_BEANS;
+				break;
+			case STAFF:
+				emblem = Material.BLACK_DYE;
+				break;
+			case TRAINEE:
+				emblem = Material.CHORUS_FRUIT;
+				break;
+			case MODERATOR:
+				emblem = Material.POPPED_CHORUS_FRUIT;
+				break;
+			case DEVELOPER:
+				emblem = Material.EMERALD;
+				break;
+			case ADMIN:
+				emblem = Material.DIAMOND;
+				break;
+			case FOUNDER:
+				emblem = Material.DIAMOND;
+				break;
+			default: break;
+			};
+			setItem(4, emblem).n(topRole.getColor() + topRole.name().charAt(0) + topRole.getName().substring(1));
 			
 			/* 
 			 * [] [] [] [] [] [] [] [] []
@@ -235,19 +255,44 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] [] [] XX [] [] [] []
 			 * home menu
 			 */
-			if (perms.contains("pgf.cmd.donator.echest")) {
+			if (pd.hasPermission("pgf.cmd.donator.echest")) {
 				
 				setAction(22, (p, e) -> {
 					p.closeInventory();
 					p.performCommand("echest");
 				});
-				setItem(22, Material.ENDER_CHEST).n("§r§3Ender Chest").l("§r§9VIP perk!");
+				setItem(22, Material.ENDER_CHEST).n("Â§rÂ§3Ender Chest").l("Â§rÂ§9VIP perk!");
 			}
 			
+			
+			/* 
+			 * [] [] [] [] [] [] [] [] []
+			 * XX [] [] [] [] [] [] [] []
+			 * [] [] [] [] [] [] [] [] []
+			 * Requests
+			 */
 			setAction(9, (p, e) -> {
 				p.openInventory(new RequestList(pd).getInventory());
 			});
-			setItem(9, Material.LEVER).n("§r§4Requests");
+			setItem(9, Material.LEVER).n("Â§rÂ§4Requests");
+			
+			
+			/* 
+			 * [] [] [] [] [] [] [] [] []
+			 * [] [] [] [] [] [] [] [] []
+			 * XX [] [] [] [] [] [] [] []
+			 * Nickname
+			 */
+			if (pd.hasPermission("pgf.cmd.donator.nick"))
+			{
+				setAction(18, (p, e) -> {
+					PlayerData.setData(p, "nickTemp", "reset");
+					p.closeInventory();
+					p.sendMessage("Â§9Type your new nickname in chat.");
+				});
+				setItem(18, Material.NAME_TAG).n("Â§eNickname").l("Â§7Give yourself a nickname!");
+			}
+			
 		}
 	}
 	
@@ -263,7 +308,7 @@ public class CommandsMenu implements InventoryHolder {
 	private class DiscordConfirm extends BaseInventory {
 		
 		public DiscordConfirm(PlayerData pd) {
-			super(SizeData.SMALL, "§r§8Unlink Account?");
+			super(27, "Â§rÂ§8Unlink Account?");
 			
 			/*
 			 * checks if discord is already linked, and creates buttons corresponding to this information.
@@ -276,42 +321,42 @@ public class CommandsMenu implements InventoryHolder {
 				p.performCommand("unlink");
 				p.openInventory(new Homepage().getInventory());
 			});
-			setItem(11, Material.LIME_CONCRETE).n("§r§cUnlink");
+			setItem(11, Material.LIME_CONCRETE).n("Â§rÂ§cUnlink");
 			
 			setAction(15, (p, e) -> {
 				p.openInventory(new Homepage().getInventory());
 			});
-			setItem(15, Material.RED_CONCRETE).n("§r§7Cancel");
+			setItem(15, Material.RED_CONCRETE).n("Â§rÂ§7Cancel");
 		}
 	}
 	
 	private class BackConfirm extends BaseInventory {
 		public BackConfirm(PlayerData pd) {
-			super(SizeData.SMALL, "§r§8Tp to last location?");
+			super(27, "Â§rÂ§8Tp to last location?");
 			
 			setAction(11, (p, e) -> {
 				p.closeInventory();
 				p.performCommand("back");
 			});
-			setItem(11, Material.LIME_CONCRETE).n("§r§dTeleport");
+			setItem(11, Material.LIME_CONCRETE).n("Â§rÂ§dTeleport");
 			
 			setAction(15, (p, e) -> {
 				p.closeInventory();
 				p.openInventory(new Homepage().getInventory());
 			});
-			setItem(15, Material.RED_CONCRETE).n("§r§7Cancel");
+			setItem(15, Material.RED_CONCRETE).n("Â§rÂ§7Cancel");
 		}
 	}
 	
 	private class DimSelect extends ListInventory<World> {
 		
 		public DimSelect(PlayerData pd) {
-			super(SizeData.SMALL, "§r§5Dimension Select");
+			super(27, "Â§rÂ§5Dimension Select");
 			
 			setAction(0, (p, e) -> {
 				p.openInventory(new Homepage().getInventory());
 			});
-			setItem(0, Material.FEATHER).n("§r§7Back");
+			setItem(0, Material.FEATHER).n("Â§rÂ§7Back");
 		}
 
 		@Override
@@ -320,7 +365,7 @@ public class CommandsMenu implements InventoryHolder {
 		}
 
 		@Override
-		protected Butto toAction(World entry, int slot) {
+		protected Butto toAction(World entry) {
 			return (p, e) -> {
 				p.performCommand("goto " + entry.getName());
 			};
@@ -328,51 +373,77 @@ public class CommandsMenu implements InventoryHolder {
 		
 		@Override
 		protected ItemStack toItem(World entry) {
-			return new ItemWrapper(Material.ENDER_PEARL).n("§r§9" + entry.getName()).gi();
+			return new ItemWrapper(Material.ENDER_PEARL).n("Â§rÂ§9" + entry.getName()).gi();
 		}
 	}
 	
 	private class HomeMenu extends BaseInventory {
 		
 		public HomeMenu(PlayerData pd) {
-			super(SizeData.SMALL, "§r§8Home");
+			super(27, "Â§rÂ§8Home");
+      
+      HashMap<String, Location> homes = Homes.getHomes(pd.getOfflinePlayer());
 			
 			setAction(0, (p, e) -> {
 				p.openInventory(new Homepage().getInventory());
 			});
-			setItem(0, Material.FEATHER).n("§r§7Back");
+			setItem(0, Material.FEATHER).n("Â§rÂ§7Back");
 			
 			setAction(13, (p, e) -> {
+				if (!Permissions.has(p, "pgf.cmd.home.home")) {
+					p.sendMessage("Â§cYou don't have permission to execute this command.");
+					return;
+				}
+				if (homes.size() == 0) {
+					p.sendMessage("Â§cYou do not have any homes.");
+					return;
+				}
 				p.openInventory(new HomeList("home ").getInventory());
 			});
-			setItem(13, Material.ENDER_PEARL).n("§r§dGo to Home");
+			setItem(13, Material.ENDER_PEARL).n("Â§rÂ§dGo to Home");
 			
-			if (!(Homes.getHomes(pd.getOfflinePlayer()).size() >= 3)) {
-				
-				setAction(11, (p, e) -> {
-					p.openInventory(new SetConfirm().getInventory());
-				});
-				setItem(11, Material.OAK_SAPLING).n("§r§aSet Home");
-				
-			}
+			setAction(11, (p, e) -> {
+				if (!Permissions.has(p, "pgf.cmd.home.set")) {
+					p.sendMessage("Â§cYou don't have permission to execute this command.");
+					return;
+				}
+				if (Permissions.has(p, "pgf.cmd.donator.home") && homes.size() >= 5) {
+					p.sendMessage("Â§cYou can only have up to 5 homes: " + Homes.getNamedHomes(p));
+					return;
+				} else if (!Permissions.has(p, "pgf.cmd.donator.home") && homes.size() >= 3)
+				{
+					p.sendMessage("Â§cYou can only have up to 3 homes: " + Homes.getNamedHomes(p));
+					return;
+				}
+				p.openInventory(new SetConfirm().getInventory());
+			});
+			setItem(11, Material.OAK_SAPLING).n("Â§rÂ§aSet Home");
 			
 			setAction(15, (p, e) -> {
+				if (!Permissions.has(p, "pgf.cmd.home.del")) {
+					p.sendMessage("Â§cYou don't have permission to execute this command.");
+					return;
+				}
+				if (homes.size() == 0) {
+					p.sendMessage("Â§cYou do not have any homes.");
+					return;
+				}
 				p.openInventory(new DelList(pd).getInventory());
 			});
-			setItem(15, Material.FLINT_AND_STEEL).n("§r§cDelete Home");
+			setItem(15, Material.FLINT_AND_STEEL).n("Â§rÂ§cDelete Home");
 		}
 		
 		private class HomeList extends ListInventory<String> {
 			String dingus;
 			
 			public HomeList(String dingus) {
-				super(SizeData.SMALL, "§r§8Home Select");
+				super(27, "Â§rÂ§8Home Select");
 				this.dingus = dingus;
 
 				setAction(0, (p, e) -> {
-					p.openInventory(new Homepage().getInventory());
+					p.openInventory(new HomeMenu(pd).getInventory());
 				});
-				setItem(0, Material.FEATHER).n("§r§7Back");
+				setItem(0, Material.FEATHER).n("Â§rÂ§7Back");
 			}
 
 			@Override
@@ -386,7 +457,7 @@ public class CommandsMenu implements InventoryHolder {
 			}
 
 			@Override
-			protected Butto toAction(String entry, int slot) {
+			protected Butto toAction(String entry) {
 				
 				return (p, e) -> {
 					p.performCommand(dingus + entry);
@@ -409,13 +480,13 @@ public class CommandsMenu implements InventoryHolder {
 		 */
 		private class SetConfirm extends BaseInventory {
 			public SetConfirm() {
-				super(SizeData.SMALL, "§r§8Set home here?");
+				super(27, "Â§rÂ§8Set home here?");
 				
 				setAction(11, (p, e) -> {
 					pd.setData("tempHomeLocation", pd.getPlayer().getLocation());
 					p.closeInventory();
-					pd.sendMessage("§r§dType into chat to set the name of your Home!");
-					pd.sendMessage("§r§dYou can only name the home for 4 minutes.");
+					pd.sendMessage("Â§rÂ§dType into chat to set the name of your Home!");
+					pd.sendMessage("Â§rÂ§dYou can only name the home for 4 minutes.");
 					
 					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
 						
@@ -424,18 +495,18 @@ public class CommandsMenu implements InventoryHolder {
 						{
 							if (pd.getData("tempHomeLocation") != null) {
 								pd.setData("tempHomeLocation", null);
-								pd.sendMessage("§r§cYour home couldnt be set.");
+								pd.sendMessage("Â§rÂ§cYour home couldnt be set.");
 							}
 						}
 						
 					}, 20 * 60 * 4);
 				});
-				setItem(11, Material.LIME_CONCRETE).n("§r§aSet Home");
+				setItem(11, Material.LIME_CONCRETE).n("Â§rÂ§aSet Home");
 				
 				setAction(15, (p, e) -> {
 					p.openInventory(new HomeMenu(pd).getInventory());
 				});
-				setItem(15, Material.RED_CONCRETE).n("§r§7Cancel");
+				setItem(15, Material.RED_CONCRETE).n("Â§rÂ§7Cancel");
 			}
 		}
 		
@@ -443,12 +514,12 @@ public class CommandsMenu implements InventoryHolder {
 		private class DelList extends ListInventory<String> {
 			
 			public DelList(PlayerData pd) {
-				super(SizeData.SMALL, "§r§8Delete Home");
+				super(27, "Â§rÂ§8Delete Home");
 				
 				setAction(0, (p, e) -> {
-					p.openInventory(new Homepage().getInventory());
+					p.openInventory(new HomeMenu(pd).getInventory());
 				});
-				setItem(0, Material.FEATHER).n("§r§7Back");
+				setItem(0, Material.FEATHER).n("Â§rÂ§7Back");
 			}
 
 			@Override
@@ -461,29 +532,29 @@ public class CommandsMenu implements InventoryHolder {
 			}
 
 			@Override
-			protected Butto toAction(String entry, int slot) {
+			protected Butto toAction(String entry) {
 				
 				return (p, e) -> {
-					p.performCommand("delhome" + entry);
+					p.performCommand("delhome " + entry);
 					p.closeInventory();
 				};
 			}
 
 			@Override
 			protected ItemStack toItem(String entry) {
-				return new ItemWrapper(Material.PAPER).n("§r§a" + entry).gi();
+				return new ItemWrapper(Material.PAPER).n("Â§rÂ§a" + entry).gi();
 			}
 		}
 	}
 	
 	private class TpaList extends ListInventory<Player> {
 		public TpaList() {
-			super(SizeData.SMALL, "§r§8Select who to teleport to!");
+			super(27, "Â§rÂ§8Select who to teleport to!");
 			
 			setAction(0, (p, e) -> {
 				p.openInventory(new Homepage().getInventory());
 			});
-			setItem(0, Material.FEATHER).n("§r§7Back");
+			setItem(0, Material.FEATHER).n("Â§rÂ§7Back");
 		}
 
 		@Override
@@ -496,7 +567,7 @@ public class CommandsMenu implements InventoryHolder {
 		}
 
 		@Override
-		protected Butto toAction(Player entry, int slot) {
+		protected Butto toAction(Player entry) {
 			return (p, e) -> {
 				p.performCommand("tpa " + entry.getName());
 				p.openInventory(new Homepage().getInventory());
@@ -505,19 +576,19 @@ public class CommandsMenu implements InventoryHolder {
 
 		@Override
 		protected ItemStack toItem(Player entry) {
-			return new ItemWrapper(Material.PLAYER_HEAD).n("§r§a" + entry.getName()).gi();
+			return new ItemWrapper(Material.PLAYER_HEAD).n("Â§rÂ§a" + entry.getName()).gi();
 		}
 	}
 	
 	public class FriendsList extends ListInventory<PlayerData> {
 		
 		public FriendsList() {
-			super(SizeData.SMALL, "§r§8Friends List");
+			super(27, "Â§rÂ§8Friends List");
 
 			setAction(0, (p, e) -> {
 				p.openInventory(new Homepage().getInventory());
 			});
-			setItem(0, Material.FEATHER).n("§r§7Back");
+			setItem(0, Material.FEATHER).n("Â§rÂ§7Back");
 		}
 		
 		@Override
@@ -527,7 +598,7 @@ public class CommandsMenu implements InventoryHolder {
 		}
 		
 		@Override
-		protected Butto toAction(PlayerData entry, int slot) {
+		protected Butto toAction(PlayerData entry) {
 			return (p, d) -> {
 				p.openInventory(new FriendOptions(pd, entry).getInventory());
 			};
@@ -543,18 +614,18 @@ public class CommandsMenu implements InventoryHolder {
 		public class FriendOptions extends BaseInventory {
 
 			public FriendOptions(PlayerData player, PlayerData friend) {
-				super(SizeData.SMALL, "§r§8Options for " + friend.getRankedName());
+				super(27, "Â§rÂ§8Options for " + friend.getRankedName());
 				
 				
 				setAction(12, (p, e) -> {
 					Friends.setRelation(player, Relation.NONE, friend, Relation.NONE);
-					player.sendMessage("§cYou have Unfriended " + friend.getName() + ".");
+					player.sendMessage("Â§cYou have Unfriended " + friend.getName() + ".");
 					player.playSound(Sound.BLOCK_CALCITE_HIT);
 					// player.getPlayer().closeInventory(); // Better if not close
 					p.openInventory(new FriendOptions(player, friend).getInventory());
 					
 				});
-				setItem(12, Material.ARROW).n("§r§cUnfriend");
+				setItem(12, Material.ARROW).n("Â§rÂ§cUnfriend");
 				
 				Relation r = Friends.getRelation(player, friend);
 				
@@ -563,26 +634,26 @@ public class CommandsMenu implements InventoryHolder {
 					setAction(14, (p, e) -> {
 						
 						Friends.setRelation(player, friend, Relation.FAVORITE);
-						player.sendMessage("§r§6" + friend.getName() + " is now a favorite!");
+						player.sendMessage("Â§rÂ§6" + friend.getName() + " is now a favorite!");
 						player.playSound(Sound.ENTITY_EXPERIENCE_ORB_PICKUP);
 						// player.getPlayer().closeInventory(); // Better if not close
 						p.openInventory(new FriendOptions(player, friend).getInventory());
 						
 					});
-					setItem(14, Material.NETHER_STAR).n("§r§eFavorite");
+					setItem(14, Material.NETHER_STAR).n("Â§rÂ§eFavorite");
 					
 				} else if (r == Relation.FAVORITE) {
 					
 					setAction(14, (p, e) -> {
 						
 						Friends.setRelation(player, friend, Relation.FRIEND);
-						player.sendMessage("§r§c" + friend.getName() + " has Been unfavorited!");
+						player.sendMessage("Â§rÂ§c" + friend.getName() + " has Been unfavorited!");
 						player.playSound(Sound.BLOCK_CALCITE_HIT);
 						// player.getPlayer().closeInventory(); // Better if not close
 						p.openInventory(new FriendOptions(player, friend).getInventory());
 						
 					});
-					setItem(14, Material.NETHER_STAR).n("§r§6Unfavorite");
+					setItem(14, Material.NETHER_STAR).n("Â§rÂ§6Unfavorite");
 				}
 			}
 		}
@@ -591,16 +662,16 @@ public class CommandsMenu implements InventoryHolder {
 	public class PlayerList extends ListInventory<PlayerData> {
 		
 		public PlayerList() {
-			super(SizeData.SMALL, "§r§8Player List");
+			super(27, "Â§rÂ§8Player List");
 
 			setAction(0, (p, e) -> {
 				p.openInventory(new Homepage().getInventory());
 			});
-			setItem(0, Material.FEATHER).n("§r§7Back");
+			setItem(0, Material.FEATHER).n("Â§rÂ§7Back");
 		}
 		
 		@Override
-		protected Butto toAction(PlayerData entry, int slot) {
+		protected Butto toAction(PlayerData entry) {
 			return (p, e) -> {
 				p.openInventory(new PlayerOptions(entry).getInventory());
 			};
@@ -608,7 +679,7 @@ public class CommandsMenu implements InventoryHolder {
 
 		@Override
 		protected ItemStack toItem(PlayerData entry) {
-			return new ItemWrapper(Material.PLAYER_HEAD).n(entry.getRankedName()).l((entry.isOnline()) ? "§r§aOnline" : "§r§cOffline").gi();
+			return new ItemWrapper(Material.PLAYER_HEAD).n(entry.getRankedName()).l((entry.isOnline()) ? "Â§rÂ§aOnline" : "Â§rÂ§cOffline").gi();
 		}
 		
 		@Override
@@ -667,13 +738,13 @@ public class CommandsMenu implements InventoryHolder {
 		private class PlayerOptions extends BaseInventory {
 			
 			public PlayerOptions(PlayerData player) {
-				super(SizeData.SMALL, player.getRankedName());
+				super(27, player.getRankedName());
 				
 				
 				setAction(0, (p, e) -> {
 					p.openInventory(new PlayerList().getInventory());
 				});
-				setItem(0, Material.FEATHER).n("§r§7Back");
+				setItem(0, Material.FEATHER).n("Â§rÂ§7Back");
 				
 				List<String> perms = new ArrayList<>();
 				
@@ -690,28 +761,28 @@ public class CommandsMenu implements InventoryHolder {
 						setAction(11, (p, e) -> {
 							p.openInventory(new UnfriendConfirm(pd, player).getInventory());
 						});
-						setItem(11, Material.TOTEM_OF_UNDYING).n("§r§cUnfriend");
+						setItem(11, Material.TOTEM_OF_UNDYING).n("Â§rÂ§cUnfriend");
 						
 						if (r == Relation.FAVORITE) {
 							setAction(12, (p, e) -> {
 								p.performCommand("unfav " + player.getName());
 								p.openInventory(new PlayerOptions(player).getInventory());
 							});
-							setItem(12, Material.TOTEM_OF_UNDYING).n("§r§cUnfavorite");
+							setItem(12, Material.TOTEM_OF_UNDYING).n("Â§rÂ§cUnfavorite");
 							
 						} else {
 							setAction(12, (p, e) -> {
 								p.performCommand("fav " + player.getName());
 								p.openInventory(new PlayerOptions(player).getInventory());
 							});
-							setItem(12, Material.TOTEM_OF_UNDYING).n("§r§eFavorite");
+							setItem(12, Material.TOTEM_OF_UNDYING).n("Â§rÂ§eFavorite");
 							
 						}
 					} else {
 						setAction(11, (p, e) -> {
 							p.openInventory(new FriendConfirm(pd, player).getInventory());
 						});
-						setItem(11, Material.TOTEM_OF_UNDYING).n("§r§6Friend");
+						setItem(11, Material.TOTEM_OF_UNDYING).n("Â§rÂ§6Friend");
 					}
 				}
 				
@@ -721,25 +792,25 @@ public class CommandsMenu implements InventoryHolder {
 							p.performCommand("unblock " + player.getName());
 							p.openInventory(new PlayerOptions(player).getInventory());
 						});
-						setItem(14, Material.RED_STAINED_GLASS_PANE).n("§r§4Unblock");
+						setItem(14, Material.RED_STAINED_GLASS_PANE).n("Â§rÂ§4Unblock");
 						
 					} else {
 						setAction(14, (p, e) -> {
 							p.performCommand("block " + player.getName());
 							p.openInventory(new PlayerOptions(player).getInventory());
 						});
-						setItem(14, Material.WHITE_STAINED_GLASS_PANE).n("§r§4Block");
+						setItem(14, Material.WHITE_STAINED_GLASS_PANE).n("Â§rÂ§4Block");
 						
 					}
 				}
-				// XXX setButton(15, new Button(Material.RED_BANNER, "§r§4Report", "§r§7If someone is bullying or\ngriefing you, use this!" + "\nWIP"));
+				// XXX setButton(15, new Button(Material.RED_BANNER, "Â§rÂ§4Report", "Â§rÂ§7If someone is bullying or\ngriefing you, use this!" + "\nWIP"));
 				
 			}
 			
 			private class FriendConfirm extends BaseInventory {
 				
 				public FriendConfirm(PlayerData pd, PlayerData player) {
-					super(SizeData.SMALL, "§r§6Friend " + player.getName() + "?");
+					super(27, "Â§rÂ§6Friend " + player.getName() + "?");
 					
 					
 					setAction(11, (p, e) -> {
@@ -747,12 +818,12 @@ public class CommandsMenu implements InventoryHolder {
 						p.performCommand("friendrequest " + player.getName());
 						p.openInventory(new PlayerOptions(player).getInventory());
 					});
-					setItem(11, Material.LIME_CONCRETE).n("§r§aSend Request");
+					setItem(11, Material.LIME_CONCRETE).n("Â§rÂ§aSend Request");
 					
 					setAction(15, (p, e) -> {
 						p.openInventory(new PlayerOptions(player).getInventory());
 					});
-					setItem(15, Material.RED_CONCRETE).n("§r§7Cancel");
+					setItem(15, Material.RED_CONCRETE).n("Â§rÂ§7Cancel");
 					
 				}
 			}
@@ -760,19 +831,19 @@ public class CommandsMenu implements InventoryHolder {
 			private class UnfriendConfirm extends BaseInventory {
 				
 				public UnfriendConfirm(PlayerData pd, PlayerData player) {
-					super(SizeData.SMALL, "§r§cUnfriend " + player.getName() + "?");
+					super(27, "Â§rÂ§cUnfriend " + player.getName() + "?");
 					
 					
 					setAction(11, (p, e) -> {
 						p.performCommand("unfriend " + player.getName());
 						p.openInventory(new PlayerOptions(player).getInventory());
 					});
-					setItem(11, Material.LIME_CONCRETE).n("§r§cUnfriend");
+					setItem(11, Material.LIME_CONCRETE).n("Â§rÂ§cUnfriend");
 					
 					setAction(15, (p, e) -> {
 						p.openInventory(new PlayerOptions(player).getInventory());
 					});
-					setItem(15, Material.RED_CONCRETE).n("§r§7Cancel");
+					setItem(15, Material.RED_CONCRETE).n("Â§rÂ§7Cancel");
 				}
 			}
 		}
@@ -780,12 +851,12 @@ public class CommandsMenu implements InventoryHolder {
 	
 	public class RequestList extends ListInventory<Request> {
 		public RequestList(PlayerData pd) {
-			super(SizeData.SMALL, "Pending Requests");
+			super(27, "Pending Requests");
 
 			setAction(0, (p, e) -> {
 				p.openInventory(new Homepage().getInventory());
 			});
-			setItem(0, Material.FEATHER).n("§r§7Back");
+			setItem(0, Material.FEATHER).n("Â§rÂ§7Back");
 		}
 
 		@Override
@@ -794,7 +865,7 @@ public class CommandsMenu implements InventoryHolder {
 		}
 
 		@Override
-		protected Butto toAction(Request entry, int slot) {
+		protected Butto toAction(Request entry) {
 			return (p, e) -> {
 				if (entry.expireNow(Reason.Accept) != false) {
 					entry.act();

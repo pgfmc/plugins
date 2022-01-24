@@ -1,7 +1,5 @@
 package net.pgfmc.core.inventoryAPI;
 
-import java.util.ArrayList;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -9,11 +7,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
+import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.inventoryAPI.extra.Butto;
 import net.pgfmc.core.inventoryAPI.extra.ItemWrapper;
-import net.pgfmc.core.inventoryAPI.extra.SizeData;
 
 /**
  * The basic Inventory.
@@ -22,7 +19,7 @@ import net.pgfmc.core.inventoryAPI.extra.SizeData;
  * @since 2.0.0
  *
  */
-public class BaseInventory implements InventoryHolder {
+public abstract class BaseInventory implements InventoryHolder {
 
 	// fields
 		
@@ -30,22 +27,20 @@ public class BaseInventory implements InventoryHolder {
 	 * The list of functional buttons in an inventory.
 	 */
 	protected Butto[] buttons;
-		
-	/**
-	 * The Size of the Inventory. (BIG (56 slots) or SMALL (27 slots))
-	 */
-	SizeData sizeD;
-		
+	
 	/**
 	 * The inventory itself.
 	 */
 	protected Inventory inv;
 	
-	public BaseInventory(SizeData size, String name) {
-		sizeD = size;
-		this.inv = Bukkit.createInventory(this, size.getSize(), name);
+	public BaseInventory(int size, String name) {
 		
-		buttons = new Butto[size.getSize()];
+		if (size != 27 && size != 54 && size != 5 && size != 9) return;
+		
+		
+		this.inv = Bukkit.createInventory(this, size, name);
+		
+		buttons = new Butto[size];
 	}
 	
 	public void setAction(int slot, Butto b) {
@@ -57,92 +52,23 @@ public class BaseInventory implements InventoryHolder {
 	public ItemWrapper setItem(int slot, ItemStack itemS) {
 		if (slot + 1 > inv.getSize()) return null;
 		
-		ItemWrapper iw = new ItemWrapper(itemS) {
-			@Override
-			public ItemWrapper a(int a) {
-				item.setAmount(a);
-				inv.setItem(slot, item);
-				return this;
-			}
-			
-			@Override
-			public ItemWrapper n(String name) {
-				ItemMeta imeta = item.getItemMeta();
-				imeta.setDisplayName(name);
-				item.setItemMeta(imeta);
-				inv.setItem(slot, item);
-				return this;
-			}
-			
-			@Override
-			public ItemWrapper l(String lore) {
-				ItemMeta imeta = item.getItemMeta();
-				
-				String[] lorelist = lore.split("\n");
-				ArrayList<String> liszt = new ArrayList<>(lorelist.length);
-				for (String s : lorelist) {
-					liszt.add(s);
-				}
-				imeta.setLore(liszt);
-				item.setItemMeta(imeta);
-				inv.setItem(slot, item);
-				return this;
-			}
-			
-			@Override
-			public ItemWrapper m(Material mat) {
-				item.setType(mat);
-				inv.setItem(slot, item);
-				return this;
-			}
-		};
-		inv.setItem(slot, iw.gi());
+		ItemWrapper iw = new ItemWrapper(itemS);
+		
+		Bukkit.getScheduler().runTaskLater(CoreMain.plugin, x -> {
+			inv.setItem(slot, iw.gi());
+		}, 0);
+		
 		return iw;
 	}
 	
 	public ItemWrapper setItem(int slot, Material mat) {
 		if (slot + 1 > inv.getSize()) return null;
 		
-		ItemWrapper iw = new ItemWrapper(mat) {
-			@Override
-			public ItemWrapper a(int a) {
-				item.setAmount(a);
-				inv.setItem(slot, item);
-				return this;
-			}
-			
-			@Override
-			public ItemWrapper n(String name) {
-				ItemMeta imeta = item.getItemMeta();
-				imeta.setDisplayName(name);
-				item.setItemMeta(imeta);
-				inv.setItem(slot, item);
-				return this;
-			}
-			
-			@Override
-			public ItemWrapper l(String lore) {
-				ItemMeta imeta = item.getItemMeta();
-				
-				String[] lorelist = lore.split("\n");
-				ArrayList<String> liszt = new ArrayList<>(lorelist.length);
-				for (String s : lorelist) {
-					liszt.add(s);
-				}
-				imeta.setLore(liszt);
-				item.setItemMeta(imeta);
-				inv.setItem(slot, item);
-				return this;
-			}
-			
-			@Override
-			public ItemWrapper m(Material mat) {
-				item.setType(mat);
-				inv.setItem(slot, item);
-				return this;
-			}
-		};
-		inv.setItem(slot, iw.gi());
+		ItemWrapper iw = new ItemWrapper(mat);
+		Bukkit.getScheduler().runTaskLater(CoreMain.plugin, x -> {
+			inv.setItem(slot, iw.gi());
+		}, 0);
+		
 		return iw;
 	}
 	

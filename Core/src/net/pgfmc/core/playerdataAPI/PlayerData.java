@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -19,7 +18,7 @@ import org.bukkit.entity.Player;
 
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.cmd.donator.Nick;
-import net.pgfmc.core.permissions.Role;
+import net.pgfmc.core.permissions.Roles;
 import net.pgfmc.core.util.Mixins;
 
 /**
@@ -118,16 +117,8 @@ public class PlayerData extends AbstractPlayerData {
 	public String getRankedName()
 	{
 		Nick.removeImpostors(this);
-		
-		Role role = Role.getDominant(getData("Roles"));
-		String name = getName();
-		
-		// If role is Donator or higher
-		if (role.getDominance() >= Role.VETERAN.getDominance())
-		{
-			return role.getColorCode() + (String) Optional.ofNullable(getData("nick")).orElse(name);
-		}
-		return role.getColorCode() + name;
+		// Nick will be player's name if no permission
+		return getRankColor() + Nick.getNick(player);
 	}
 	
 	public String getNicknameRaw()
@@ -158,7 +149,7 @@ public class PlayerData extends AbstractPlayerData {
 	 * @return The player's role prefix.
 	 */
 	public String getRankColor() {
-		return Role.getDominant(getData("Roles")).getColorCode();
+		return Roles.getTop(player).getColor();
 	}
 	
 	public void setDebug(boolean d) {

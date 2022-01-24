@@ -7,6 +7,9 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.Permission;
+
+import net.pgfmc.core.permissions.Permissions;
 
 public abstract class AbstractPlayerData {
 	
@@ -91,7 +94,12 @@ public abstract class AbstractPlayerData {
 		}
 	}
 	
+	public boolean hasPermission(String permission) {
+		return Permissions.has(player, permission);
+	}
 	
-	
+	public boolean hasPermission(Permission permission) {
+		return Permissions.has(player, permission.getName());
+	}
 	
 }
