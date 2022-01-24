@@ -46,6 +46,8 @@ public class CoreMain extends JavaPlugin implements Listener {
 	public static CoreMain plugin;
 	public static Scoreboard scoreboard;
 	
+	
+	
 	public enum PGFPlugin {
 		BACKUP,
 		BOT,

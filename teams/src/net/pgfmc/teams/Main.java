@@ -69,7 +69,6 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new InvOpenEvent(), this);
 		getServer().getPluginManager().registerEvents(new ItemProtect(), this);	
 		getServer().getPluginManager().registerEvents(new DuelEvents(), this);
-		getServer().getPluginManager().registerEvents(Friends.DEFAULT, this);
 		getServer().getPluginManager().registerEvents(new BExEvent(), this);
 		
 		getCommand("friendRequest").setExecutor(new FriendRequestCommand());

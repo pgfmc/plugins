@@ -1,7 +1,7 @@
 package net.pgfmc.teams.friends;
 
 import net.pgfmc.core.playerdataAPI.PlayerData;
-import net.pgfmc.core.requestAPI.Request;
+import net.pgfmc.core.requests.Request;
 
 /**
  * Command for sending a Friend Request.
@@ -13,9 +13,9 @@ public class FriendRequestCommand extends FriendCommandBase {
 
 	@Override
 	public boolean action(PlayerData player, PlayerData friend) {
-		Request r = Friends.DEFAULT.findRequest(player.getUniqueId(), friend.getUniqueId());
+		Request r = FriendRequest.findRequest(player, friend, FriendRequest.class);
 		if (r != null) {
-			Friends.DEFAULT.accept(r);
+			r.accept();
 			return true;
 		}
 		
@@ -29,7 +29,7 @@ public class FriendRequestCommand extends FriendCommandBase {
 			break;
 			
 		case NONE:
-			Friends.DEFAULT.createRequest(player.getPlayer(), friend.getPlayer()).setMessage(Friends.RM);
+			new FriendRequest(player, friend);
 			player.sendMessage("§aFriend Request send to §n" + friend.getRankedName() + "§r§a.");
 			break;
 			
