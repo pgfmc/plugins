@@ -24,7 +24,9 @@ import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.cmd.admin.Tagging;
 import net.pgfmc.core.cmd.donator.Nick;
 import net.pgfmc.core.inventoryAPI.extra.InventoryPressEvent;
+import net.pgfmc.core.permissions.Permissions;
 import net.pgfmc.core.playerdataAPI.PlayerDataManager;
+import net.pgfmc.core.teleportAPI.SpawnProtect;
 import net.pgfmc.core.util.DimManager;
 import net.pgfmc.core.util.Mixins;
 import net.pgfmc.core.util.ReloadConfigify;
@@ -100,8 +102,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 		plugin = this;
 		
 		
-		
-		
 		pwd = CoreMain.plugin.getServer().getWorldContainer().getAbsolutePath();
 		configPath = CoreMain.plugin.getDataFolder() + File.separator + "config.yml";
 		PlayerDataPath = CoreMain.plugin.getDataFolder() + File.separator + "playerData";
@@ -116,7 +116,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 		case 25569: machine = Machine.CRIMSON; break;
 		default: machine = Machine.MAIN; break;
 		}
-		
 		
 		
 		// makes sure all files exist
@@ -159,6 +158,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 			
 			pd.setData("homes", homes);
 		});
+		
 		PlayerDataManager.setInit(pd -> {
 			
 			FileConfiguration db = pd.loadFile();
@@ -198,17 +198,20 @@ public class CoreMain extends JavaPlugin implements Listener {
 		
 		getServer().getPluginManager().registerEvents(new InventoryPressEvent(), this);
 		getServer().getPluginManager().registerEvents(new PlayerDataManager(), this);
+		getServer().getPluginManager().registerEvents(new Permissions(), this);
+		getServer().getPluginManager().registerEvents(new SpawnProtect(), this);
 		
 		
 		System.out.println(Bukkit.getServer().getCommandAliases());
 		
 		new ProfanityFilter();
-		new ReloadConfigify().init();
+		new ReloadConfigify().reload();
 	}
 	
 	@Override
 	public void onDisable() {
 		PlayerDataManager.saveQ();
+		Permissions.clear();
 	}
 	
 	
