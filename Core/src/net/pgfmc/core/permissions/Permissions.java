@@ -1,226 +1,176 @@
 package net.pgfmc.core.permissions;
 
-import java.util.List;
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionAttachment;
 
 import net.pgfmc.core.CoreMain;
+import net.pgfmc.core.permissions.Roles.Role;
 import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.util.Configify;
 
-public class Permissions {
+public class Permissions extends Configify implements Listener {
 	
-	public static final String[] disabledPerms = {
-			"minecraft.command.teammsg"
-	};
+	private static HashMap<String, PermissionAttachment> permatches = new HashMap<>();
 	
-	public static final String[] defaultPerms = {
-			"pgf.cmd.back",
-			"pgf.cmd.home.*",
-			"pgf.cmd.home.homes",
-			"pgf.cmd.home.home",
-			"pgf.cmd.home.set",
-			"pgf.cmd.home.del",
-			"pgf.cmd.tp.tpa",
-			"pgf.cmd.tp.tpaccept",
-			"pgf.cmd.tp.tpdeny",
-			"pgf.cmd.afk",
-			"pgf.cmd.help",
-			"pgf.cmd.link",
-			"pgf.cmd.unlink",
-			"teams.friend.*",
-			"teams.friend.request",
-			"teams.friend.accept",
-			"teams.friend.unfriend",
-			"teams.friend.list",
-			"teams.friend.fav",
-			"teams.friend.unfav",
-			"bukkit.command.seed",
-			"bukkit.command.tps", 
-			"bukkit.command.list",
-			"pgf.dim.survival",
-			"ultimatechairs.use",
-			"pgf.cmd.warp.warp",
-			"pgf.cmd.warp.warps"
-	};
-	
-	public static final String[] donatorPerms = {
-			"pgf.cmd.donator.echest",
-			"pgf.cmd.donator.nick",
-			"pgf.cmd.home.donator",
-			"pgf.cmd.donator.craft",
-			"ultimatechairs.sit"
-	};
-	
-	public static final String[] veteranPerms = {
-			// inherits donatorPerms
-	};
-	
-	public static final String[] modPerms = {
-			"pgf.admin.gamemode.creative", 
-			"pgf.admin.gamemode.survival", 
-			"pgf.admin.gamemode.adventure", 
-			"pgf.admin.gamemode.spectator", 
-			"bukkit.command.plugins", 
-			"bukkit.command.give",
-			"bukkit.command.kick",
-			"bukkit.command.teleport",
-			"bukkit.command.say",
-			"bukkit.command.ban.list"
-	};
-	
-	public static final String[] traineePerms = {
-			"bukkit.command.kick",
-			"bukkit.command.teleport",
-			"bukkit.command.say",
-			"bukkit.command.ban.list"
-	};
-	
-	public static final String[] devPerms = {
-			"pgf.admin.toggledim",
-			"pgf.admin.backup",
-			"pgf.admin.restore",
-			"pgf.admin.debug"
-	};
-	
-	public static final String[] adminPerms = {
-			"pgf.admin.vanish", 
-			"pgf.cmd.fly",
-			"pgf.admin.god",
-			"pgf.admin.sudo",
-			"pgf.cmd.heal",
-			"pgf.admin.day",
-			"pgf.admin.skull",
-			"pgf.admin.pgf",
-			"pgf.cmd.warp.set",
-			"pgf.cmd.warp.del",
-			"pgf.admin.tag",
-			"pgf.admin.broadcast",
-			"bukkit.command.restart",
-			"bukkit.commands.timings",
-			"bukkit.command.reload",
-			"bukkit.command.ban.ip",
-			"bukkit.command.ban.player",
-			"bukkit.command.clear",
-			"bukkit.command.defaultgamemode",
-			"bukkit.command.difficulty",
-			"bukkit.command.effect",
-			"bukkit.command.enchant",
-			"bukkit.command.gamemode",
-			"bukkit.command.gamerule",
-			"bukkit.command.kill",
-			"bukkit.command.unban.player",
-			"bukkit.command.unban.ip",
-			"bukkit.command.save.perform",
-			"bukkit.command.save.off",
-			"bukkit.command.save.on",
-			"bukkit.command.scoreboard",
-			"bukkit.command.spawnpoint",
-			"bukkit.command.stop",
-			"bukkit.command.time.set",
-			"bukkit.command.time.add",
-			"bukkit.command.toggledownfall",
-			"bukkit.command.weather",
-			"bukkit.command.whitelist.add",
-			"bukkit.command.whitelist.remove",
-			"bukkit.command.whitelist.list",
-			"bukkit.command.whitelist.enable",
-			"bukkit.command.whitelist.disable",
-			"bukkit.command.whitelist.reload",
-			"bukkit.command.xp"
-	};
-	
-	public static void recalcPerms(PlayerData pd) {
+	public Permissions() {
+		super(new File(CoreMain.plugin.getDataFolder() + File.separator + "permissions.yml"));
 		
-		List<Role> r = pd.getData("Roles");
-		
-		Player p = pd.getPlayer();
-		
-		if (p == null)
+		for (Role r : Role.values())
 		{
+			setDefaultValue("config-version", "1");
+			setDefaultValue(r.getName() + ".id", "000000000000000000");
+			setDefaultValue(r.getName() + ".color", "r");
+			setDefaultValue(r.getName() +  ".permissions", Arrays.asList("test.permission.1", "test.permission.2"));
+		}
+	}
+	
+	public static boolean has(OfflinePlayer p, String permission)
+	{
+		if (p.isOnline()) return p.getPlayer().hasPermission(permission);
+		
+		return Roles.getPermissionsAsString(Roles.getRolesByPlayer(p)).contains(permission);
+	}
+	
+	public static boolean has(OfflinePlayer p, Permission permission)
+	{
+		return has(p, permission.getName());
+	}
+	
+	/**
+	 * Recalculates Player permissions
+	 * This shouldn't ever be ran manually, instead see {@link Roles#recalculate(PlayerData)}
+	 * @param pd
+	 */
+	void recalculate(OfflinePlayer op)
+	{
+		System.out.println("Recalculating permisisons for player " + op.getName());
+		
+		Set<Role> roles = Roles.getRolesByPlayer(op);
+		Set<Permission> perms = Roles.getPermissions(roles);
+		
+		Player p = op.getPlayer();
+		
+		if (p == null || !op.isOnline())
+		{
+			clear(op);
 			System.out.println("Updating perms failed, player was offline");
 			return;
 		}
-			
-		PermissionAttachment permatch = p.addAttachment(CoreMain.plugin);
 		
-		if (p.isOp())
+		clear(op);
+		
+		PermissionAttachment permatch = p.addAttachment(CoreMain.plugin);
+		permatches.put(p.getUniqueId().toString(), permatch);
+		
+		// Bukkit.getPluginManager().getPermissions().forEach(pp -> permatch.unsetPermission(pp));
+		
+		for (Permission perm : perms)
 		{
-			for (String s : defaultPerms) {
-				permatch.setPermission(s, true);
+			System.out.println(perm.getName());
+			if (perm.getName().startsWith("-"))
+			{
+				permatch.setPermission(perm, false);
+				continue;
 			}
 			
-			for (String s : disabledPerms) {
-				permatch.setPermission(s, true);
-			}
+			permatch.setPermission(perm, true);
 			
-			for (String s : veteranPerms) {
-				permatch.setPermission(s, true);
-			}
-			
-			for (String s : modPerms) {
-				permatch.setPermission(s, true);
-			}
-			
-			for (String s : devPerms) {
-				permatch.setPermission(s, true);
-			}
-			
-			for (String s : adminPerms) {
-				permatch.setPermission(s, true);
-			} 
-		} else if (r != null) {
-				
-				for (String s : defaultPerms) {
-					permatch.setPermission(s, true);
-				}
-				
-				for (String s : disabledPerms) {
-					permatch.setPermission(s, false);
-				}
-				
-				for (String s : donatorPerms) {
-					permatch.setPermission(s, r.contains(Role.VETERAN) || r.contains(Role.DONATOR));
-				}
-				
-				for (String s : modPerms) {
-					permatch.setPermission(s, r.contains(Role.MODERATOR));
-				}
-				
-				for (String s : devPerms) {
-					permatch.setPermission(s, r.contains(Role.DEVELOPER));
-				}
-				
-				for (String s : adminPerms) {
-					permatch.setPermission(s, r.contains(Role.ADMIN));
-				}
-			} else if (r == null) {
-				for (String s : defaultPerms) {
-					permatch.setPermission(s, true);
-				}
-				
-				for (String s : disabledPerms) {
-					permatch.setPermission(s, false);
-				}
-				
-				for (String s : veteranPerms) {
-					permatch.setPermission(s, false);
-				}
-				
-				for (String s : modPerms) {
-					permatch.setPermission(s, false);
-				}
-				
-				for (String s : devPerms) {
-					permatch.setPermission(s, false);
-				}
-				
-				for (String s : adminPerms) {
-					permatch.setPermission(s, false);
-				}
-			}
+		}
 		
 		p.recalculatePermissions();
 		p.updateCommands();
+	}
+	
+	public static void clear()
+	{
+		permatches.forEach((uuid, permatch) -> permatch.remove());
+		permatches.clear();
+	}
+	
+	public static void clear(OfflinePlayer p)
+	{
+		PermissionAttachment permatch = permatches.get(p.getUniqueId().toString());
+		if (permatch != null) { permatch.remove(); }
+		permatches.remove(p.getUniqueId().toString());
+	}
+	
+	private static Set<Permission> includeWildcards(Set<Permission> permissions)
+	{
+		for (Permission perm : permissions)
+		{
+			//Bukkit.getPluginManager().getPermissions().stream().forEach(poingas -> System.out.println("POINGAS  :" + poingas.getName()));
+			if (perm.getName().startsWith("-") && perm.getName().endsWith(".*"))
+			{
+				Bukkit.getPluginManager().getPermissions().stream()
+				.filter(p -> p.getName()
+						.contains(perm.getName()
+								.replace(".*", "")))
+				.collect(Collectors.toSet()).addAll(permissions);
+				continue;
+			}
+			
+			if (perm.getName().endsWith(".*"))
+			{
+				Bukkit.getPluginManager().getPermissions().stream()
+				.filter(p -> p.getName()
+						.contains(perm.getName()
+								.replace(".*", "")))
+				.collect(Collectors.toSet()).addAll(permissions);
+				continue;
+			}
+			
+		}
+		permissions.stream().forEach(poingas2 -> System.out.println("POINGAS2  :" + poingas2.getName()));
+		return permissions;
+	}
+	
+	@EventHandler
+	public void onJoin(PlayerJoinEvent e)
+	{
+		Roles.recalculate(e.getPlayer());
+	}
+	
+	@EventHandler
+	public void onQuit(PlayerQuitEvent e)
+	{
+		clear(e.getPlayer());
+	}
+
+	@Override
+	public void reload()
+	{
+		System.out.println("Reloading permissions.yml");
+		
+		FileConfiguration db = getConfig();
+		
+		for (Role r : Role.values())
+		{
+			r.setId(db.getString(r.getName() + ".id"));
+			r.setColor(db.getString(r.getName() + ".color"));
+			r.setPermissions(
+					includeWildcards(
+							db.getStringList(r.getName() + ".permissions")
+							.stream()
+							.map(p -> new Permission(p))
+							.collect(Collectors.toSet())
+							));
+		}
+		
+		PlayerData.getOnlinePlayerData().stream()
+		.forEach(pd -> Roles.recalculate(pd));
 	}
 }

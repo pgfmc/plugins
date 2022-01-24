@@ -1,5 +1,5 @@
 name: PGF-Teleport
-version: 4.2.3
+version: 5.0.0
 api-version: 1.18
 authors: [bk, CrimsonDart]
 website: play.pgfmc.net
@@ -63,3 +63,32 @@ commands:
     description: Delete a warp
     usage: /<command> [name]
     permission: pgf.cmd.warp.del
+    
+permissions:
+  pgf.cmd.home.*:
+    description: Home wildcard
+    default: op
+    children:
+      pgf.cmd.home.home: true
+      pgf.cmd.home.homes: true
+      pgf.cmd.home.set: true
+      pgf.cmd.home.del: true
+    
+  pgf.cmd.tp.*:
+    description: Tpa wildcard
+    default: op
+    children:
+      pgf.cmd.tp.tpaccept: true
+      pgf.cmd.tp.tpa: true
+      pgf.cmd.tp.tpdeny: true
+      pgf.cmd.tp.tpcancel: true
+      pgf.cmd.tp.tpahere: true
+    
+  pgf.cmd.warp.*:
+    description: Warp wildcard
+    default: op
+    children:
+      pgf.cmd.warp.warp: true
+      pgf.cmd.warp.warps: true
+      pgf.cmd.warp.set: true
+      pgf.cmd.warp.del: true
