@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import org.bukkit.entity.Player;
@@ -16,6 +17,7 @@ import org.bukkit.event.player.PlayerAdvancementDoneEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.pgfmc.bot.Discord;
 import net.pgfmc.bot.Main;
 import net.pgfmc.core.chat.ProfanityFilter;
@@ -35,25 +37,40 @@ public class ChatEvents implements Listener {
 	
 	@EventHandler
 	public void onMessage(AsyncPlayerChatEvent e)
-	{
-		String msg = e.getMessage();
-		Player p = e.getPlayer();
-		
-		// If list1 has any values with list 2
-		// Word blacklist
-		if (ProfanityFilter.hasProfanity(msg))
 		{
-			p.sendMessage("§4Please do not use blacklisted words!");
-			e.setCancelled(true);
-			return;
+			String msg = e.getMessage();
+			Player p = e.getPlayer();
+			
+			// If list1 has any values with list 2
+			// Word blacklist
+			if (ProfanityFilter.hasProfanity(msg))
+			{
+				p.sendMessage("§4Please do not use blacklisted words!");
+				e.setCancelled(true);
+				
+				EmbedBuilder eb = new EmbedBuilder();
+				eb.setColor(Discord.red);
+				eb.setAuthor(p.getName(), null, "https://crafatar.com/avatars/" + p.getUniqueId());
+				eb.setTitle("Blacklisted word detected! (Minecraft)");
+				eb.setDescription("A blacklisted word was detected by " + p.getName() + "in Minecraft.");
+				eb.addField("User", p.getName(), false);
+				eb.addField("Message", "|| " + msg + " ||", false);
+				eb.setTimestamp(OffsetDateTime.now());
+				
+				Discord.sendAlert(eb.build());
+				return;
+			}
+			
+//		    List<String> a = Arrays.asList(msg.substring(msg.indexOf("@")).split("@"));
+//		    a = a.stream().map(fl -> fl.substring(0, fl.indexOf(" "))).collect(Collectors.toList());
+//		    System.out.println(a);
+//			
+//			PlayerData pd = PlayerData.getPlayerData(p);
+//			
+//			e.setFormat(pd.getRankedName() + "§8 -> " + getMessageColor(p.getUniqueId().toString()) + msg);
+//			
+//			Discord.sendMessage(pd.getNicknameRaw() + " -> " + msg);
 		}
-		
-		PlayerData pd = PlayerData.getPlayerData(p);
-		
-		e.setFormat(pd.getRankedName() + "§8 -> " + getMessageColor(p.getUniqueId().toString()) + msg);
-		
-		Discord.sendMessage(pd.getNicknameRaw() + " -> " + msg);
-	}
 	
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e)

@@ -1,9 +1,11 @@
 package net.pgfmc.bot.listeners;
 
+import java.time.OffsetDateTime;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
@@ -30,18 +32,25 @@ public class OnMessageReceived implements EventListener {
 		String s = m.getMessage().getContentDisplay();
 		User user = m.getAuthor();
 		Member memberPGF = Discord.JDA.getGuildById(Discord.PGF_ID).getMember(user);
+		// Guild g = Discord.JDA.getGuildById("579055447437475851");
 		
 		if (s.length() == 0) return;
 		
 		if (ProfanityFilter.hasProfanity(s))
 		{
 			m.getTextChannel().sendMessage(user.getAsMention() + ", please do not use blacklisted words!");
-//			Message c = m.getMessage();
-//			OffsetDateTime t = m.getMessage().getTimeCreated();
-//			User a = m.getAuthor();
-			
-			
 			m.getMessage().delete().queue();
+			
+			EmbedBuilder eb = new EmbedBuilder();
+			eb.setColor(Discord.red);
+			eb.setAuthor(user.getAsTag(), null, user.getAvatarUrl());
+			eb.setTitle("Blacklisted word detected! (Discord)");
+			eb.setDescription("A blacklisted word was detected by " + user.getName() + "in Discord.");
+			eb.addField("User", user.getName(), false);
+			eb.addField("Message", "|| " + s + " ||", false);
+			eb.setTimestamp(OffsetDateTime.now());
+			
+			Discord.sendAlert(eb.build());
 			return;
 		}
 		
@@ -62,16 +71,17 @@ public class OnMessageReceived implements EventListener {
 			s.replace("%", ""); // removes all "%"s from the message.
 			
 			// attempts to bring over formatting from discord.
-			s = format(s, "\\*\\*\\*", "§l§o"); 
-			s = format(s, "\\*\\*", "§l");
-			s = format(s, "\\*", "§o");
-			s = format(s, "__", "§n");
+			s = format(s, "\\*\\*\\*", "Â§lÂ§o"); 
+			s = format(s, "\\*\\*", "Â§l");
+			s = format(s, "\\*", "Â§o");
+			s = format(s, "__", "Â§n");
 			
 			// If not reply
 			if(m.getMessage().getReferencedMessage() == null || m.getMessage().getReferencedMessage().getAuthor().isBot())
 			{
-				Bukkit.getServer().broadcastMessage(r.getColor() + m.getMember().getEffectiveName() + " §r§8-|| " + ChatEvents.getMessageColor(m.getMember().getId()) + s);
+				Bukkit.getServer().broadcastMessage(r.getColor() + m.getMember().getEffectiveName() + " Â§rÂ§8-|| " + ChatEvents.getMessageColor(m.getMember().getId()) + s);
 				return;
+
 			} else {
                 User replyUser = m.getMessage().getReferencedMessage().getAuthor();
                 Member replyMember = Discord.JDA.getGuildById(Discord.PGF_ID).getMember(replyUser);
@@ -87,12 +97,9 @@ public class OnMessageReceived implements EventListener {
                     		);
                 }
                 
-                Bukkit.getServer().broadcastMessage(r.getColor() + m.getMember().getEffectiveName() + " replied to " + replyRole.getColor() + replyMember.getEffectiveName() + " §r§8-|| " + ChatEvents.getMessageColor(m.getMember().getId()) + s);
+                Bukkit.getServer().broadcastMessage(r.getColor() + m.getMember().getEffectiveName() + " replied to " + replyRole.getColor() + replyMember.getEffectiveName() + " Â§rÂ§8-|| " + ChatEvents.getMessageColor(m.getMember().getId()) + s);
 			}
-			
-			
-			
-		} else 
+		} 
 		
 		
 		// message sent to the bot in DMs.	
@@ -123,7 +130,7 @@ public class OnMessageReceived implements EventListener {
 		for (String S : sa) {
 			
 			if (mark) {
-				s = s + mc + S + "§r";
+				s = s + mc + S + "Â§r";
 				mark = false;
 			} else {
 				s = s + S;
@@ -132,5 +139,4 @@ public class OnMessageReceived implements EventListener {
 		}
 		return s;
 	}
-
 }
