@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
@@ -14,26 +13,26 @@ public class Listing {
 	
 	private transient static ArrayList<Listing> instances = new ArrayList<Listing>();
 	
-	ItemStack itemBeingSold;
-	ItemStack tradeItem;
-	UUID playerUuid;
+	public final ItemStack product;
+	public final ItemStack cost;
+	public final UUID playerUuid;
 	
 	
 	// ------------------------------------------------------------------------ Constructors
 	
 	public Listing(OfflinePlayer seller, ItemStack itemBeingSold, ItemStack tradeItem) {
-		this.itemBeingSold = itemBeingSold;
+		this.product = itemBeingSold;
 		
 		this.playerUuid = seller.getUniqueId();
 		
 		if (tradeItem == null) {
 			tradeItem = new ItemStack(Material.DIAMOND, 1);
 		}
-		this.tradeItem = tradeItem;
+		this.cost = tradeItem;
 		
-		ItemMeta itemMeta = this.itemBeingSold.getItemMeta();
+		ItemMeta itemMeta = this.product.getItemMeta();
 		itemMeta.setLore(new ArrayList<String>());
-		this.itemBeingSold.setItemMeta(itemMeta);
+		this.product.setItemMeta(itemMeta);
 		
 		instances.add(this);
 	}
@@ -60,29 +59,11 @@ public class Listing {
 		}
 		return list;
 	}
-
-	// ------------------------------------------------------------------------ Get itemBeingSold / icon
-	
-	public ItemStack getItem() {
-		return itemBeingSold;
-	}
-	
-	// ------------------------------------------------------------------------ Get Seller
-	
-	public OfflinePlayer getPlayer() {
-		return Bukkit.getOfflinePlayer(playerUuid);
-	}
 	
 	// ------------------------------------------------------------------------ Get Price
 	
 	public String getPrice() { // returns a string representation of the cost of this listing
-		return Main.makePlural(tradeItem);
-	}
-	
-	// ------------------------------------------------------------------------ Get TradeItem
-	
-	public ItemStack getTrade() {
-		return tradeItem;
+		return Main.makePlural(cost);
 	}
 	
 	// ------------------------------------------------------------------------ Confirm / Buy

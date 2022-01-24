@@ -11,7 +11,6 @@ import org.bukkit.inventory.ItemStack;
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.inventoryAPI.extra.Butto;
 import net.pgfmc.core.inventoryAPI.extra.ItemWrapper;
-import net.pgfmc.core.inventoryAPI.extra.SizeData;
 
 /**
  * The basic Inventory.
@@ -20,7 +19,7 @@ import net.pgfmc.core.inventoryAPI.extra.SizeData;
  * @since 2.0.0
  *
  */
-public class BaseInventory implements InventoryHolder {
+public abstract class BaseInventory implements InventoryHolder {
 
 	// fields
 		
@@ -28,22 +27,20 @@ public class BaseInventory implements InventoryHolder {
 	 * The list of functional buttons in an inventory.
 	 */
 	protected Butto[] buttons;
-		
-	/**
-	 * The Size of the Inventory. (BIG (56 slots) or SMALL (27 slots))
-	 */
-	SizeData sizeD;
-		
+	
 	/**
 	 * The inventory itself.
 	 */
 	protected Inventory inv;
 	
-	public BaseInventory(SizeData size, String name) {
-		sizeD = size;
-		this.inv = Bukkit.createInventory(this, size.getSize(), name);
+	public BaseInventory(int size, String name) {
 		
-		buttons = new Butto[size.getSize()];
+		if (size != 27 && size != 54 && size != 5 && size != 9) return;
+		
+		
+		this.inv = Bukkit.createInventory(this, size, name);
+		
+		buttons = new Butto[size];
 	}
 	
 	public void setAction(int slot, Butto b) {
