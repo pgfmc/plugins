@@ -41,35 +41,39 @@ public class ChatEvents implements Listener {
 	
 	@EventHandler
 	public void onMessage(AsyncPlayerChatEvent e)
-	{
-		String msg = e.getMessage();
-		Player p = e.getPlayer();
-		
-		// If list1 has any values with list 2
-		// Word blacklist
-		if (ProfanityFilter.hasProfanity(msg))
 		{
-			p.sendMessage("§4Please do not use blacklisted words!");
-			e.setCancelled(true);
+			String msg = e.getMessage();
+			Player p = e.getPlayer();
 			
-			String n = p.getName();
-			Guild g = Discord.JDA.getGuildById("721951670132801596");
-			EmbedBuilder eb = new EmbedBuilder();
-			eb.setTitle("Blacklisted word detected!");
-			eb.setColor(new Color(255, 0, 0));
-			eb.setDescription("User: " + n + "\n" + "Message: " + "||" + msg + "||");
-			eb.setTimestamp(OffsetDateTime.now());
-			GuildChannel l = g.getGuildChannelById("721951670132801600");
-			((MessageChannel) l).sendMessage(eb.build()).queue();
-			return;
+			// If list1 has any values with list 2
+			// Word blacklist
+			if (ProfanityFilter.hasProfanity(msg)){
+				p.sendMessage("§4Please do not use blacklisted words!");
+				e.setCancelled(true);
+				
+				String n = p.getName();
+				Guild g = Discord.JDA.getGuildById("579055447437475851");
+				GuildChannel l = g.getGuildChannelById("891939656969621534");
+				EmbedBuilder eb = new EmbedBuilder();
+				eb.setAuthor(n, null, "https://crafatar.com/avatars/" + p.getUniqueId());
+				eb.setTitle("Blacklisted word detected! (Minecraft)");
+				eb.setColor(new Color(255, 0, 0));
+				eb.setDescription("User: " + n + "\n" + "Message: " + "||" + msg + "||");
+				eb.setTimestamp(OffsetDateTime.now());
+				((MessageChannel) l).sendMessage(eb.build()).queue();
+				return;
+			}
+			
+//		    List<String> a = Arrays.asList(msg.substring(msg.indexOf("@")).split("@"));
+//		    a = a.stream().map(fl -> fl.substring(0, fl.indexOf(" "))).collect(Collectors.toList());
+//		    System.out.println(a);
+//			
+//			PlayerData pd = PlayerData.getPlayerData(p);
+//			
+//			e.setFormat(pd.getRankedName() + "§8 -> " + getMessageColor(p.getUniqueId().toString()) + msg);
+//			
+//			Discord.sendMessage(pd.getNicknameRaw() + " -> " + msg);
 		}
-		
-		PlayerData pd = PlayerData.getPlayerData(p);
-		
-		e.setFormat(pd.getRankedName() + "§8 -> " + getMessageColor(p.getUniqueId().toString()) + msg);
-		
-		Discord.sendMessage(pd.getNicknameRaw() + " -> " + msg);
-	}
 	
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e)
