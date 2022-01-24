@@ -1,6 +1,5 @@
 package net.pgfmc.bot.listeners;
 
-import java.awt.Color;
 import java.time.OffsetDateTime;
 import java.util.stream.Collectors;
 
@@ -8,10 +7,7 @@ import org.bukkit.Bukkit;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.ChannelType;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -36,7 +32,7 @@ public class OnMessageReceived implements EventListener {
 		String s = m.getMessage().getContentDisplay();
 		User user = m.getAuthor();
 		Member memberPGF = Discord.JDA.getGuildById(Discord.PGF_ID).getMember(user);
-		Guild g = Discord.JDA.getGuildById("579055447437475851");
+		// Guild g = Discord.JDA.getGuildById("579055447437475851");
 		
 		if (s.length() == 0) return;
 		
@@ -45,16 +41,16 @@ public class OnMessageReceived implements EventListener {
 			m.getTextChannel().sendMessage(user.getAsMention() + ", please do not use blacklisted words!");
 			m.getMessage().delete().queue();
 			
-			String n = user.getName();
-			String t = user.getAsTag();
-			GuildChannel l = g.getGuildChannelById("891939656969621534");
 			EmbedBuilder eb = new EmbedBuilder();
-			eb.setAuthor(t, null, user.getAvatarUrl());
+			eb.setColor(Discord.red);
+			eb.setAuthor(user.getAsTag(), null, user.getAvatarUrl());
 			eb.setTitle("Blacklisted word detected! (Discord)");
-			eb.setColor(new Color(255, 0, 0));
-			eb.setDescription("User: " + n + "\n" + "Message: " + "||" + s + "||");
+			eb.setDescription("A blacklisted word was detected by " + user.getName() + "in Discord.");
+			eb.addField("User", user.getName(), false);
+			eb.addField("Message", "|| " + s + " ||", false);
 			eb.setTimestamp(OffsetDateTime.now());
-			((MessageChannel) l).sendMessage(eb.build()).queue();
+			
+			Discord.sendAlert(eb.build());
 			return;
 		}
 		
