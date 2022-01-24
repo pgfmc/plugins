@@ -8,7 +8,6 @@ import org.bukkit.inventory.ItemStack;
 import net.pgfmc.core.inventoryAPI.ListInventory;
 import net.pgfmc.core.inventoryAPI.extra.Butto;
 import net.pgfmc.core.inventoryAPI.extra.ItemWrapper;
-import net.pgfmc.core.inventoryAPI.extra.SizeData;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.shop.Listing;
 
@@ -18,7 +17,7 @@ public class MainScreen extends ListInventory<Listing> {
 
 
     public MainScreen(PlayerData pd) {
-        super(SizeData.BIG , "Market");
+        super(54 , "Market");
 
         this.pd = pd;
         

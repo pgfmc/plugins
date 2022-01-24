@@ -1,9 +1,9 @@
 package net.pgfmc.shop.trade;
 
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import net.pgfmc.core.inventoryAPI.BaseInventory;
-import net.pgfmc.core.inventoryAPI.extra.SizeData;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
 public class TradeManager {
@@ -25,12 +25,12 @@ public class TradeManager {
 	
 	public class Trader extends BaseInventory {
 		
-		public Boolean ready = false;
+		public Boolean ready;
 		public Trader oppo;
 		public final PlayerData pd;
 
 		public Trader(PlayerData pd) {
-			super(SizeData.BIG, "");
+			super(54, "");
 			this.pd = pd;
 			
 			
@@ -38,9 +38,21 @@ public class TradeManager {
 			for (int i : intar) {
 				setItem(i, Material.IRON_BARS).n(" ");
 			}
+			
+			int[] inter = {0, 1, 2, 9, 10, 11, 18, 19, 20, 27, 28, 29, 36, 37, 38, 45, 46, 47};
+			for (int i : inter) {
+				setAction(i, (p, e) -> {
+					e.setCancelled(false);
+					
+					ItemStack item = e.getCursor();
+					
+					oppo.setItem(i + 6, item);
+				});
+			}
 		}
 		
 		public void unready() {
+			if (!ready) return;
 			
 			ready = false;
 			setItem(22, Material.RED_CONCRETE).n("§c[NOT READY]");
@@ -51,6 +63,7 @@ public class TradeManager {
 		}
 		
 		public void ready() {
+			if (ready) return;
 			
 			ready = true;
 			setItem(22, Material.GREEN_CONCRETE).n("§a[READY]");
@@ -59,5 +72,14 @@ public class TradeManager {
 			});
 			oppo.setItem(40, Material.GREEN_TERRACOTTA);
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 }

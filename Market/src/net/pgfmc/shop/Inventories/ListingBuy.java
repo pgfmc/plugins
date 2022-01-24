@@ -4,7 +4,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import net.pgfmc.core.inventoryAPI.BaseInventory;
-import net.pgfmc.core.inventoryAPI.extra.SizeData;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.shop.Listing;
 
@@ -14,7 +13,7 @@ public class ListingBuy extends BaseInventory {
     Listing listing;
 
     public ListingBuy(Listing listing, PlayerData pd) {
-        super(SizeData.SMALL, "");
+        super(27, "");
         this.player = pd;
         this.listing = listing;
         

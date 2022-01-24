@@ -6,7 +6,6 @@ import org.bukkit.inventory.ItemStack;
 
 import net.pgfmc.core.inventoryAPI.BaseInventory;
 import net.pgfmc.core.inventoryAPI.extra.Butto;
-import net.pgfmc.core.inventoryAPI.extra.SizeData;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
 public class CreateListing extends BaseInventory {
@@ -14,7 +13,7 @@ public class CreateListing extends BaseInventory {
     PlayerData pd;
 
     public CreateListing(PlayerData pd) {
-        super(SizeData.SMALL, "Sell Item!");
+        super(27, "Sell Item!");
         this.pd = pd;
 
         setOpen();

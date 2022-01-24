@@ -20,7 +20,6 @@ import net.pgfmc.core.inventoryAPI.BaseInventory;
 import net.pgfmc.core.inventoryAPI.ListInventory;
 import net.pgfmc.core.inventoryAPI.extra.Butto;
 import net.pgfmc.core.inventoryAPI.extra.ItemWrapper;
-import net.pgfmc.core.inventoryAPI.extra.SizeData;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.requestAPI.Request;
 import net.pgfmc.core.requestAPI.Requester;
@@ -43,7 +42,7 @@ public class CommandsMenu implements InventoryHolder {
 	public class Homepage extends BaseInventory {
 		
 		public Homepage() {
-			super(SizeData.SMALL, "Commands");
+			super(27, "Commands");
 			
 			List<String> perms = new ArrayList<>();
 			
@@ -91,14 +90,12 @@ public class CommandsMenu implements InventoryHolder {
 					setAction(3, (p, e) -> {
 						
 						p.performCommand("afk");
-						p.openInventory(new Homepage().getInventory());
 					});
 					
 					setItem(3, Material.BLUE_ICE).n("§r§7AFK: §aEnabled").l("§r§7Click to disable!");
 				} else {
 					setAction(3, (p, e) -> {
 						p.performCommand("afk");
-						p.openInventory(new Homepage().getInventory());
 					});
 					setItem(3, Material.ICE).n("§r§7AFK: §cDisabled").l("§r§7Click to enable!");
 				}
@@ -263,7 +260,7 @@ public class CommandsMenu implements InventoryHolder {
 	private class DiscordConfirm extends BaseInventory {
 		
 		public DiscordConfirm(PlayerData pd) {
-			super(SizeData.SMALL, "§r§8Unlink Account?");
+			super(27, "§r§8Unlink Account?");
 			
 			/*
 			 * checks if discord is already linked, and creates buttons corresponding to this information.
@@ -287,7 +284,7 @@ public class CommandsMenu implements InventoryHolder {
 	
 	private class BackConfirm extends BaseInventory {
 		public BackConfirm(PlayerData pd) {
-			super(SizeData.SMALL, "§r§8Tp to last location?");
+			super(27, "§r§8Tp to last location?");
 			
 			setAction(11, (p, e) -> {
 				p.closeInventory();
@@ -306,7 +303,7 @@ public class CommandsMenu implements InventoryHolder {
 	private class DimSelect extends ListInventory<World> {
 		
 		public DimSelect(PlayerData pd) {
-			super(SizeData.SMALL, "§r§5Dimension Select");
+			super(27, "§r§5Dimension Select");
 			
 			setAction(0, (p, e) -> {
 				p.openInventory(new Homepage().getInventory());
@@ -335,7 +332,7 @@ public class CommandsMenu implements InventoryHolder {
 	private class HomeMenu extends BaseInventory {
 		
 		public HomeMenu(PlayerData pd) {
-			super(SizeData.SMALL, "§r§8Home");
+			super(27, "§r§8Home");
 			
 			setAction(0, (p, e) -> {
 				p.openInventory(new Homepage().getInventory());
@@ -366,7 +363,7 @@ public class CommandsMenu implements InventoryHolder {
 			String dingus;
 			
 			public HomeList(String dingus) {
-				super(SizeData.SMALL, "§r§8Home Select");
+				super(27, "§r§8Home Select");
 				this.dingus = dingus;
 
 				setAction(0, (p, e) -> {
@@ -409,7 +406,7 @@ public class CommandsMenu implements InventoryHolder {
 		 */
 		private class SetConfirm extends BaseInventory {
 			public SetConfirm() {
-				super(SizeData.SMALL, "§r§8Set home here?");
+				super(27, "§r§8Set home here?");
 				
 				setAction(11, (p, e) -> {
 					pd.setData("tempHomeLocation", pd.getPlayer().getLocation());
@@ -443,7 +440,7 @@ public class CommandsMenu implements InventoryHolder {
 		private class DelList extends ListInventory<String> {
 			
 			public DelList(PlayerData pd) {
-				super(SizeData.SMALL, "§r§8Delete Home");
+				super(27, "§r§8Delete Home");
 				
 				setAction(0, (p, e) -> {
 					p.openInventory(new Homepage().getInventory());
@@ -478,7 +475,7 @@ public class CommandsMenu implements InventoryHolder {
 	
 	private class TpaList extends ListInventory<Player> {
 		public TpaList() {
-			super(SizeData.SMALL, "§r§8Select who to teleport to!");
+			super(27, "§r§8Select who to teleport to!");
 			
 			setAction(0, (p, e) -> {
 				p.openInventory(new Homepage().getInventory());
@@ -512,7 +509,7 @@ public class CommandsMenu implements InventoryHolder {
 	public class FriendsList extends ListInventory<PlayerData> {
 		
 		public FriendsList() {
-			super(SizeData.SMALL, "§r§8Friends List");
+			super(27, "§r§8Friends List");
 
 			setAction(0, (p, e) -> {
 				p.openInventory(new Homepage().getInventory());
@@ -543,7 +540,7 @@ public class CommandsMenu implements InventoryHolder {
 		public class FriendOptions extends BaseInventory {
 
 			public FriendOptions(PlayerData player, PlayerData friend) {
-				super(SizeData.SMALL, "§r§8Options for " + friend.getRankedName());
+				super(27, "§r§8Options for " + friend.getRankedName());
 				
 				
 				setAction(12, (p, e) -> {
@@ -591,7 +588,7 @@ public class CommandsMenu implements InventoryHolder {
 	public class PlayerList extends ListInventory<PlayerData> {
 		
 		public PlayerList() {
-			super(SizeData.SMALL, "§r§8Player List");
+			super(27, "§r§8Player List");
 
 			setAction(0, (p, e) -> {
 				p.openInventory(new Homepage().getInventory());
@@ -667,7 +664,7 @@ public class CommandsMenu implements InventoryHolder {
 		private class PlayerOptions extends BaseInventory {
 			
 			public PlayerOptions(PlayerData player) {
-				super(SizeData.SMALL, player.getRankedName());
+				super(27, player.getRankedName());
 				
 				
 				setAction(0, (p, e) -> {
@@ -739,7 +736,7 @@ public class CommandsMenu implements InventoryHolder {
 			private class FriendConfirm extends BaseInventory {
 				
 				public FriendConfirm(PlayerData pd, PlayerData player) {
-					super(SizeData.SMALL, "§r§6Friend " + player.getName() + "?");
+					super(27, "§r§6Friend " + player.getName() + "?");
 					
 					
 					setAction(11, (p, e) -> {
@@ -760,7 +757,7 @@ public class CommandsMenu implements InventoryHolder {
 			private class UnfriendConfirm extends BaseInventory {
 				
 				public UnfriendConfirm(PlayerData pd, PlayerData player) {
-					super(SizeData.SMALL, "§r§cUnfriend " + player.getName() + "?");
+					super(27, "§r§cUnfriend " + player.getName() + "?");
 					
 					
 					setAction(11, (p, e) -> {
@@ -780,7 +777,7 @@ public class CommandsMenu implements InventoryHolder {
 	
 	public class RequestList extends ListInventory<Request> {
 		public RequestList(PlayerData pd) {
-			super(SizeData.SMALL, "Pending Requests");
+			super(27, "Pending Requests");
 
 			setAction(0, (p, e) -> {
 				p.openInventory(new Homepage().getInventory());
