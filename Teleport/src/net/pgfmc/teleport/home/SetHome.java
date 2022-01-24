@@ -44,11 +44,11 @@ public class SetHome implements CommandExecutor {
 			return;
 		}
 		
-		if (p.hasPermission("pgf.cmd.home.donator") && homes.size() >= 5)
+		if (p.hasPermission("pgf.cmd.donator.home") && homes.size() >= 5)
 		{
 			p.sendMessage("§cYou can only have up to 5 homes: §6" + Homes.getNamedHomes(p));
 			return;
-		} else if (homes.size() >= 3)
+		} else if (!p.hasPermission("pgf.cmd.donator.home") && homes.size() >= 3)
 		{
 			p.sendMessage("§cYou can only have up to 3 homes: §6" + Homes.getNamedHomes(p));
 			return;

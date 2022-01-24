@@ -14,13 +14,10 @@ public class NicknameInput implements Listener {
 	{
 		PlayerData pd = PlayerData.getPlayerData(e.getPlayer());
 		
-		if (pd.getData("nickTemp") != null) {
-			
-			e.setCancelled(true);
-			Nick.setNick(pd.getPlayer(), e.getMessage());
-			pd.setData("nickTemp", null);
-			
-			return;
-		}
+		if (pd.getData("nickTemp") == null) return;
+		
+		e.setCancelled(true);
+		Nick.setNick(pd.getPlayer(), e.getMessage());
+		pd.setData("nickTemp", null);
 	}
 }
