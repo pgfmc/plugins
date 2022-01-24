@@ -12,7 +12,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import net.pgfmc.core.permissions.Role;
+import net.pgfmc.core.permissions.Permissions;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
 public class Nick implements CommandExecutor {
@@ -113,9 +113,7 @@ public class Nick implements CommandExecutor {
 	{
 		PlayerData pd = PlayerData.getPlayerData(p);
 		
-		Role role = Role.getDominant(pd.getData("Roles"));
-		
-		if (role.getDominance() < Role.VETERAN.getDominance())
+		if (!p.hasPermission("pgf.cmd.donator.nick"))
 		{
 			p.sendMessage("§cYou do not have permission to use this command.");
 			return;
@@ -173,13 +171,20 @@ public class Nick implements CommandExecutor {
 			}
 		}
 		
-		pd.setData("nick", nick.replace("&", "§") + "§r").queue();
+		pd.setData("nick", nick.replace("&", "§")).queue();
 		p.sendMessage("§6Nickname changed to " + pd.getRankedName() + "§6!");
 	}
 	
 	public static void setNick(Player p, String[] nick)
 	{
 		setNick(p, String.join("", nick));
+	}
+	
+	public static String getNick(OfflinePlayer p)
+	{
+		if (Permissions.has(p, "pgf.cmd.donator.nick")) return (String) Optional.ofNullable(PlayerData.getData(p, "nick"))
+				.orElse(p.getName());
+		return p.getName();
 	}
 
 }

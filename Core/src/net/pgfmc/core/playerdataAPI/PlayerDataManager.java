@@ -12,10 +12,12 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import net.pgfmc.core.CoreMain;
-import net.pgfmc.core.permissions.Permissions;
+import net.pgfmc.core.util.Configify;
 
-public class PlayerDataManager implements Listener {
+public class PlayerDataManager extends Configify implements Listener {
 	
+	private static int task = -1;
+
 	private static List<Consumer<Void>> postLoad = new ArrayList<>();
 	protected static List<Consumer<PlayerData>> pdInit = new ArrayList<>();
 	
@@ -61,7 +63,7 @@ public class PlayerDataManager implements Listener {
 	 * Begins the queue saving loop.
 	 */
 	private static void initializeQ() {
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(CoreMain.plugin, new Runnable() {
+		task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(CoreMain.plugin, new Runnable() {
 			
 			@Override
 			public void run() {
@@ -93,11 +95,18 @@ public class PlayerDataManager implements Listener {
 		}
 		
 		pd.setOnline(e.getPlayer());
-		Permissions.recalcPerms(pd);
 	}
 	
 	@EventHandler
 	public void onQuitEvent(PlayerQuitEvent e) {
 		PlayerData.getPlayerData(e.getPlayer()).setOffline();
+	}
+
+	@Override
+	public void reload() {
+		saveQ();
+		if (task == -1) return;
+		Bukkit.getServer().getScheduler().cancelTask(task);
+		initializeQ();
 	}
 }

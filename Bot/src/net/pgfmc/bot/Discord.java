@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.security.auth.login.LoginException;
 
@@ -131,5 +132,16 @@ public class Discord extends ListenerAdapter {
 		eb.setAuthor(message, null, icon);
 		
 		return eb.build();
+	}
+	
+	public static List<String> getMemberRoles(String id)
+	{
+		if (id == null) return null;
+		
+		return JDA.getGuildById(PGF_ID)
+		.getMemberById(id)
+		.getRoles().stream()
+		.map(role -> role.getId())
+		.collect(Collectors.toList());
 	}
 }

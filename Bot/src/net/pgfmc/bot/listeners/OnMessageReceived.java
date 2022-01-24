@@ -15,7 +15,8 @@ import net.pgfmc.bot.functions.AccountLinking;
 import net.pgfmc.bot.functions.StartStopMessageDelete;
 import net.pgfmc.bot.player.ChatEvents;
 import net.pgfmc.core.chat.ProfanityFilter;
-import net.pgfmc.core.permissions.Role;
+import net.pgfmc.core.permissions.Roles;
+import net.pgfmc.core.permissions.Roles.Role;
 
 public class OnMessageReceived implements EventListener {
 
@@ -50,7 +51,12 @@ public class OnMessageReceived implements EventListener {
 			// If member of PGF (mainly for BTS/outside PGF server)
 			if (memberPGF != null)
 			{
-				r = Role.getDominantOf(memberPGF.getRoles().stream().map(x -> x.getId()).collect(Collectors.toList()));
+				r = Roles.getTop(
+						Roles.getRolesById(memberPGF
+								.getRoles().stream()
+								.map(role -> role.getId())
+								.collect(Collectors.toList()))
+						);
 			}
 			
 			s.replace("%", ""); // removes all "%"s from the message.
@@ -64,7 +70,7 @@ public class OnMessageReceived implements EventListener {
 			// If not reply
 			if(m.getMessage().getReferencedMessage() == null || m.getMessage().getReferencedMessage().getAuthor().isBot())
 			{
-				Bukkit.getServer().broadcastMessage(r.getColorCode() + m.getMember().getEffectiveName() + " §r§8-|| " + ChatEvents.getMessageColor(m.getMember().getId()) + s);
+				Bukkit.getServer().broadcastMessage(r.getColor() + m.getMember().getEffectiveName() + " §r§8-|| " + ChatEvents.getMessageColor(m.getMember().getId()) + s);
 				return;
 			} else {
                 User replyUser = m.getMessage().getReferencedMessage().getAuthor();
@@ -73,10 +79,15 @@ public class OnMessageReceived implements EventListener {
                 
                 if (replyMember != null)
                 {
-                    replyRole = Role.getDominantOf(replyMember.getRoles().stream().map(x -> x.getId()).collect(Collectors.toList()));
+                    replyRole = Roles.getTop(
+                    		Roles.getRolesById(replyMember
+                    				.getRoles().stream()
+                    				.map(role -> role.getId())
+                    				.collect(Collectors.toList()))
+                    		);
                 }
                 
-                Bukkit.getServer().broadcastMessage(r.getColorCode() + m.getMember().getEffectiveName() + " replied to " + replyRole.getColorCode() + replyMember.getEffectiveName() + " §r§8-|| " + ChatEvents.getMessageColor(m.getMember().getId()) + s);
+                Bukkit.getServer().broadcastMessage(r.getColor() + m.getMember().getEffectiveName() + " replied to " + replyRole.getColor() + replyMember.getEffectiveName() + " §r§8-|| " + ChatEvents.getMessageColor(m.getMember().getId()) + s);
 			}
 			
 			

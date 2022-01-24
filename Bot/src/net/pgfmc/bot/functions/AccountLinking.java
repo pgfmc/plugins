@@ -4,8 +4,7 @@ import java.util.LinkedList;
 import java.util.Random;
 
 import net.dv8tion.jda.api.entities.User;
-import net.pgfmc.bot.player.Roles;
-import net.pgfmc.core.permissions.Permissions;
+import net.pgfmc.core.permissions.Roles;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
 public class AccountLinking {
@@ -59,8 +58,7 @@ public class AccountLinking {
 	public static void link(PlayerData pd, String id)
 	{
 		pd.setData("Discord", id).save();
-		Roles.recalculateRoles(pd);
-		Permissions.recalcPerms(pd);
+		Roles.recalculate(pd);
 	}
 	
 	/**
