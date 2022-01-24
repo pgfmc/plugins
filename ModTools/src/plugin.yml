@@ -60,3 +60,12 @@ commands:
     usage: /<command>
     description: Toggles debug mode for this player.
     permission: pgf.admin.debug
+    
+permissions:
+  pgf.admin.gamemode.*:
+    description: Gamemode wildcard
+    children:
+      pgf.admin.gamemode.creative: true
+      pgf.admin.gamemode.survival: true
+      pgf.admin.gamemode.adventure: true
+      pgf.admin.gamemode.spectator: true

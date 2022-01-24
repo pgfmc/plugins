@@ -1,10 +1,12 @@
 package net.pgfmc.masterbook.masterbook;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
@@ -21,6 +23,9 @@ import net.pgfmc.core.inventoryAPI.ListInventory;
 import net.pgfmc.core.inventoryAPI.extra.Butto;
 import net.pgfmc.core.inventoryAPI.extra.ItemWrapper;
 import net.pgfmc.core.inventoryAPI.extra.SizeData;
+import net.pgfmc.core.permissions.Permissions;
+import net.pgfmc.core.permissions.Roles;
+import net.pgfmc.core.permissions.Roles.Role;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.requestAPI.Request;
 import net.pgfmc.core.requestAPI.Requester;
@@ -45,20 +50,12 @@ public class CommandsMenu implements InventoryHolder {
 		public Homepage() {
 			super(SizeData.SMALL, "Commands");
 			
-			List<String> perms = new ArrayList<>();
-			
-			for (PermissionAttachmentInfo s : pd.getPlayer().getEffectivePermissions()) {
-				if (s.getValue()) {
-					perms.add(s.getPermission());
-				}
-			}
-			
 			/* 
 			 * [] [] XX [] [] [] [] [] []
 			 * [] [] [] [] [] [] [] [] []
 			 * [] [] [] [] [] [] [] [] []
 			 */
-			if (perms.contains("pgf.cmd.link")) {
+			if (pd.hasPermission("pgf.cmd.link")) {
 				
 				if (pd.getData("Discord") != null) {
 					
@@ -84,7 +81,7 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] [] [] [] [] [] [] []
 			 * toggles AFK in-menu
 			 */
-			if (perms.contains("pgf.cmd.afk")) {
+			if (pd.hasPermission("pgf.cmd.afk")) {
 				
 				if (Afk.isAfk(pd.getPlayer())) {
 					
@@ -110,7 +107,7 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] [] [] [] [] [] [] []
 			 * Back command
 			 */
-			if (perms.contains("pgf.cmd.back")) {
+			if (pd.hasPermission("pgf.cmd.back")) {
 				
 				setAction(5, (p, e) -> {
 					p.openInventory(new BackConfirm(pd).getInventory());
@@ -138,7 +135,7 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] [] [] [] [] [] [] []
 			 * /dim command
 			 */
-			if (perms.contains("pgf.cmd.goto")) {
+			if (pd.hasPermission("pgf.cmd.goto")) {
 				
 				setAction(13, (p, e) -> {
 					p.openInventory(new DimSelect(pd).getInventory());
@@ -152,12 +149,10 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] XX [] [] [] [] [] []
 			 * home menu
 			 */
-			if (perms.contains("pgf.cmd.home.*")) {
-				setAction(20, (p, e) -> {
-					p.openInventory(new HomeMenu(pd).getInventory());
-				});
-				setItem(20, Material.COMPASS).n("§r§eHomes");
-			}
+			setAction(20, (p, e) -> {
+				p.openInventory(new HomeMenu(pd).getInventory());
+			});
+			setItem(20, Material.COMPASS).n("§r§eHomes");
 			
 			/* 
 			 * [] [] [] [] [] [] [] [] []
@@ -165,7 +160,7 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] [] XX [] [] [] [] []
 			 * home menu
 			 */
-			if (perms.contains("pgf.cmd.tp.tpa")) {
+			if (pd.hasPermission("pgf.cmd.tp.tpa")) {
 				
 				if (Bukkit.getOnlinePlayers().size() == 1) {
 					
@@ -192,7 +187,7 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] [] [] [] XX [] [] []
 			 * home menu
 			 */
-			if (perms.contains("teams.friend.*") && PGFPlugin.TEAMS.isEnabled()) {
+			if (pd.hasPermission("teams.friend.*") && PGFPlugin.TEAMS.isEnabled()) {
 				
 				setAction(23, (p, e) -> {
 					p.openInventory(new FriendsList().getInventory());
@@ -206,7 +201,7 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] [] [] [] [] XX [] []
 			 * home menu
 			 */
-			if (perms.contains("bukkit.command.list") && PGFPlugin.TEAMS.isEnabled()) {
+			if (pd.hasPermission("bukkit.command.list") && PGFPlugin.TEAMS.isEnabled()) {
 				
 				setAction(24, (p, e) -> {
 					p.openInventory(new PlayerList().getInventory());
@@ -223,11 +218,39 @@ public class CommandsMenu implements InventoryHolder {
 			 * home menu
 			 */
 			
-			//List<Role> roles = pd.getData("Roles");
-			
-			//if (roles != null) {
-			//	setButton(4, new Button(Material.EMERALD, PermissionsManager.getRolePrefix(roles.get(0)) + roles.get(0)));
-			//};
+			Role topRole = Roles.getTop(pd.getOfflinePlayer());
+			Material emblem = Material.RAW_COPPER;
+			switch (topRole) {
+			case VETERAN:
+				emblem = Material.LAPIS_LAZULI;
+				break;
+			case DONATOR:
+				emblem = Material.RAW_GOLD;
+				break;
+			case DOOKIE:
+				emblem = Material.COCOA_BEANS;
+				break;
+			case STAFF:
+				emblem = Material.BLACK_DYE;
+				break;
+			case TRAINEE:
+				emblem = Material.CHORUS_FRUIT;
+				break;
+			case MODERATOR:
+				emblem = Material.POPPED_CHORUS_FRUIT;
+				break;
+			case DEVELOPER:
+				emblem = Material.EMERALD;
+				break;
+			case ADMIN:
+				emblem = Material.DIAMOND;
+				break;
+			case FOUNDER:
+				emblem = Material.DIAMOND;
+				break;
+			default: break;
+			};
+			setItem(4, emblem).n(topRole.getColor() + topRole.name().charAt(0) + topRole.getName().substring(1));
 			
 			/* 
 			 * [] [] [] [] [] [] [] [] []
@@ -235,7 +258,7 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] [] [] XX [] [] [] []
 			 * home menu
 			 */
-			if (perms.contains("pgf.cmd.donator.echest")) {
+			if (pd.hasPermission("pgf.cmd.donator.echest")) {
 				
 				setAction(22, (p, e) -> {
 					p.closeInventory();
@@ -263,7 +286,7 @@ public class CommandsMenu implements InventoryHolder {
 			 * XX [] [] [] [] [] [] [] []
 			 * Nickname
 			 */
-			if (perms.contains("pgf.cmd.donator.nick"))
+			if (pd.hasPermission("pgf.cmd.donator.nick"))
 			{
 				setAction(18, (p, e) -> {
 					PlayerData.setData(p, "nickTemp", "reset");
@@ -361,6 +384,7 @@ public class CommandsMenu implements InventoryHolder {
 		
 		public HomeMenu(PlayerData pd) {
 			super(SizeData.SMALL, "§r§8Home");
+			HashMap<String, Location> homes = Homes.getHomes(pd.getOfflinePlayer());
 			
 			setAction(0, (p, e) -> {
 				p.openInventory(new Homepage().getInventory());
@@ -368,20 +392,44 @@ public class CommandsMenu implements InventoryHolder {
 			setItem(0, Material.FEATHER).n("§r§7Back");
 			
 			setAction(13, (p, e) -> {
+				if (!Permissions.has(p, "pgf.cmd.home.home")) {
+					p.sendMessage("§cYou don't have permission to execute this command.");
+					return;
+				}
+				if (homes.size() == 0) {
+					p.sendMessage("§cYou do not have any homes.");
+					return;
+				}
 				p.openInventory(new HomeList("home ").getInventory());
 			});
 			setItem(13, Material.ENDER_PEARL).n("§r§dGo to Home");
 			
-			if (!(Homes.getHomes(pd.getOfflinePlayer()).size() >= 3)) {
-				
-				setAction(11, (p, e) -> {
-					p.openInventory(new SetConfirm().getInventory());
-				});
-				setItem(11, Material.OAK_SAPLING).n("§r§aSet Home");
-				
-			}
+			setAction(11, (p, e) -> {
+				if (!Permissions.has(p, "pgf.cmd.home.set")) {
+					p.sendMessage("§cYou don't have permission to execute this command.");
+					return;
+				}
+				if (Permissions.has(p, "pgf.cmd.donator.home") && homes.size() >= 5) {
+					p.sendMessage("§cYou can only have up to 5 homes: " + homes);
+					return;
+				} else if (!Permissions.has(p, "pgf.cmd.donator.home") && homes.size() >= 3)
+				{
+					p.sendMessage("§cYou can only have up to 3 homes: " + homes);
+					return;
+				}
+				p.openInventory(new SetConfirm().getInventory());
+			});
+			setItem(11, Material.OAK_SAPLING).n("§r§aSet Home");
 			
 			setAction(15, (p, e) -> {
+				if (!Permissions.has(p, "pgf.cmd.home.del")) {
+					p.sendMessage("§cYou don't have permission to execute this command.");
+					return;
+				}
+				if (homes.size() == 0) {
+					p.sendMessage("§cYou do not have any homes.");
+					return;
+				}
 				p.openInventory(new DelList(pd).getInventory());
 			});
 			setItem(15, Material.FLINT_AND_STEEL).n("§r§cDelete Home");
@@ -395,7 +443,7 @@ public class CommandsMenu implements InventoryHolder {
 				this.dingus = dingus;
 
 				setAction(0, (p, e) -> {
-					p.openInventory(new Homepage().getInventory());
+					p.openInventory(new HomeMenu(pd).getInventory());
 				});
 				setItem(0, Material.FEATHER).n("§r§7Back");
 			}
@@ -471,7 +519,7 @@ public class CommandsMenu implements InventoryHolder {
 				super(SizeData.SMALL, "§r§8Delete Home");
 				
 				setAction(0, (p, e) -> {
-					p.openInventory(new Homepage().getInventory());
+					p.openInventory(new HomeMenu(pd).getInventory());
 				});
 				setItem(0, Material.FEATHER).n("§r§7Back");
 			}
@@ -489,7 +537,7 @@ public class CommandsMenu implements InventoryHolder {
 			protected Butto toAction(String entry) {
 				
 				return (p, e) -> {
-					p.performCommand("delhome" + entry);
+					p.performCommand("delhome " + entry);
 					p.closeInventory();
 				};
 			}
