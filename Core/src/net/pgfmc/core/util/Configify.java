@@ -25,6 +25,8 @@ public abstract class Configify {
 	 * Override this lol
 	 */
 	public abstract void reload();
+	public abstract void enable();
+	public abstract void disable();
 	
 	public final FileConfiguration getConfig()
 	{
@@ -34,12 +36,30 @@ public abstract class Configify {
 	}
 	
 	/**
-	 * Reload all the configs that extend this class
+	 * Reloads all the configs
 	 */
-	public final static void reloadConfigs()
+	public final static void reloadConfigify()
 	{
 		configs.stream().forEach(c -> c.reload());
 		System.out.println("(" + configs.size() + ") Configify reloaded");
+	}
+	
+	/**
+	 * Enables all the configs
+	 */
+	public final static void enableConfigify()
+	{
+		configs.stream().forEach(c -> c.enable());
+		System.out.println("(" + configs.size() + ") Configify enabled");
+	}
+	
+	/**
+	 * Disables all the configs
+	 */
+	public final static void disableConfigify()
+	{
+		configs.stream().forEach(c -> c.disable());
+		System.out.println("(" + configs.size() + ") Configify disabled");
 	}
 	
 	/**
