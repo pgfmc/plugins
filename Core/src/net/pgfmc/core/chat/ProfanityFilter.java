@@ -19,13 +19,6 @@ public class ProfanityFilter extends Configify {
 
 	private static List<String> nword = new ArrayList<String>();
 	
-	@Override
-	public void reload() {
-		nword = getConfig().getStringList("profantity");
-		System.out.println("New profanity list: " + nword);
-	}
-	
-	
 	public static List<String> getFilter()
 	{
 		return nword;
@@ -42,5 +35,21 @@ public class ProfanityFilter extends Configify {
 	{
 		return !Collections.disjoint(Arrays.asList(message.split(" ")), nword);
 	}
+	
+	@Override
+	public void reload() {
+		nword = getConfig().getStringList("profantity");
+		System.out.println("New profanity list: " + nword);
+	}
+
+
+	@Override
+	public void enable() {
+		reload();
+	}
+
+
+	@Override
+	public void disable() {}
 
 }

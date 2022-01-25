@@ -14,7 +14,7 @@ public class ReloadConfigify implements CommandExecutor {
 		
 		if (args.length == 1 && args[0].equals("reload"))
 		{
-			Configify.reloadConfigs();
+			Configify.reloadConfigify();
 		}
 		
 		return true;
@@ -22,6 +22,6 @@ public class ReloadConfigify implements CommandExecutor {
 	
 	public void reload()
 	{
-		Configify.reloadConfigs();
+		Configify.reloadConfigify();
 	}
 }

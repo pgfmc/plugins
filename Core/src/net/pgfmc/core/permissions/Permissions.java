@@ -21,13 +21,14 @@ import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.permissions.Roles.Role;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.util.Configify;
+import net.pgfmc.core.util.Mixins;
 
 public class Permissions extends Configify implements Listener {
 	
 	private static HashMap<String, PermissionAttachment> permatches = new HashMap<>();
 	
 	public Permissions() {
-		super(new File(CoreMain.plugin.getDataFolder() + File.separator + "permissions.yml"));
+		super(Mixins.getFile(CoreMain.plugin.getDataFolder() + File.separator + "permissions.yml"));
 		
 		for (Role r : Role.values())
 		{
@@ -173,4 +174,13 @@ public class Permissions extends Configify implements Listener {
 		PlayerData.getOnlinePlayerData().stream()
 		.forEach(pd -> Roles.recalculate(pd));
 	}
+
+	@Override
+	public void enable() {
+		reload();
+		
+	}
+
+	@Override
+	public void disable() {}
 }
