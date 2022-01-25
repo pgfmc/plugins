@@ -2,12 +2,67 @@ package net.pgfmc.bot.functions.spam;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-public interface Punishable {
+import net.dv8tion.jda.api.entities.Member;
+import net.pgfmc.bot.Main;
+
+public class Punishable {
+	
+	// Contains UUIDS of Player and User that are in timeout
+	private HashMap<String, Punishable> punishables = new HashMap<>();
+	
+	public Punishable(String id) {
+		punishables.put(id, this);
+	}
+	
+	public static Punishable get(Player p) {
+		return get(p.getUniqueId().toString());
+	}
+	
+	public static Punishable get(Member m) {
+		return get(m.getId());
+	}
+	
+	public static Punishable get(String id) {
+		return Optional.ofNullable(punishables.get(id)).orElse(new Punishable(id));
+	}
+	/**
+	 * Get if a player/user is in timeout
+	 * 
+	 * @param id The user or player's UUID
+	 * @return if the player is in timeout
+	 */
+	public boolean isTimeout(String id) {
+		return timeouts.containsKey(id);
+	}
+	
+	public void timeoutRemove(Player p)
+	{
+		Punishable pun = timeouts.get(p.getUniqueId().toString());
+		
+		timeouts.remove(p.getUniqueId().toString());
+	}
+	
+	private Punishable timeout(Player p, int seconds)
+	{
+		if (isTimeout(p.getUniqueId().toString())) {
+			timeoutRemove(p);
+			timeouts.get(p.getUniqueId().toString()).
+		}
+		timeouts.add(p.getUniqueId().toString());
+		
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+			@Override
+			public void run() {
+				timeouts.remove(p.getUniqueId().toString());
+			}
+		}, 0);
+	}
 	
 	private Punishable timeout(Player p, String[] args)
 	{
@@ -20,6 +75,8 @@ public interface Punishable {
 		if (msg == null) return null;
 		
 		p.sendMessage(ChatColor.RED + msg);
+		
+		
 		
 		return this;
 	}
