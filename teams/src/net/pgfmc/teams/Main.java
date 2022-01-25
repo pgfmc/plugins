@@ -79,7 +79,7 @@ public class Main extends JavaPlugin {
 		getCommand("favorite").setExecutor(new FavoriteCommand());
 		getCommand("unfavorite").setExecutor(new UnfavoriteCommand());
 		getCommand("inspector").setExecutor(new InspectCommand());
-		getCommand("edit_ownable").setExecutor(new EditOwnableCommand());
+		getCommand("editownable").setExecutor(new EditOwnableCommand());
 		getCommand("claimtp").setExecutor(new ClaimTPCommand());
 	}
 	
