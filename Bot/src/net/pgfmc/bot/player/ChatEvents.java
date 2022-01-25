@@ -52,7 +52,7 @@ public class ChatEvents implements Listener {
 				eb.setColor(Discord.red);
 				eb.setAuthor(p.getName(), null, "https://crafatar.com/avatars/" + p.getUniqueId());
 				eb.setTitle("Blacklisted word detected! (Minecraft)");
-				eb.setDescription("A blacklisted word was detected by " + p.getName() + "in Minecraft.");
+				eb.setDescription("A blacklisted word was detected by " + p.getName() + " in Minecraft.");
 				eb.addField("User", p.getName(), false);
 				eb.addField("Message", "|| " + msg + " ||", false);
 				eb.setTimestamp(OffsetDateTime.now());
