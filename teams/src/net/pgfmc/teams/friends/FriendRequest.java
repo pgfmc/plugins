@@ -1,7 +1,10 @@
 package net.pgfmc.teams.friends;
 
+import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.inventory.ItemStack;
 
+import net.pgfmc.core.inventoryAPI.extra.ItemWrapper;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.requests.EndBehavior;
 import net.pgfmc.core.requests.Request;
@@ -25,7 +28,7 @@ public class FriendRequest extends Request {
 			break;
 		case QUIT:
 			break;
-		case SUCCESSFUL:
+		case ACCEPT:
 			Friends.setRelation(asker, Relation.FRIEND, target, Relation.FRIEND);
 			asker.playSound(Sound.BLOCK_AMETHYST_BLOCK_HIT);
 			target.playSound(Sound.BLOCK_AMETHYST_BLOCK_HIT);
@@ -37,8 +40,11 @@ public class FriendRequest extends Request {
 			asker.sendMessage("§cFriend Request timed out.");
 			target.sendMessage("§6Friend Request timed out.");
 			break;
-
-		
 		}
+	}
+
+	@Override
+	public ItemStack toItem() {
+		return new ItemWrapper(Material.TOTEM_OF_UNDYING).gi();
 	}
 }

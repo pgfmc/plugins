@@ -85,7 +85,7 @@ public abstract class Request implements Buttonable {
 	
 	public void accept() {
 		requests.get(this.getClass()).remove(this);
-		endRequest(EndBehavior.SUCCESSFUL);
+		endRequest(EndBehavior.ACCEPT);
 	}
 	
 	public void deny() {

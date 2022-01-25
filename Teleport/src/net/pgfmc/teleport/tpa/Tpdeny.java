@@ -39,6 +39,9 @@ public class Tpdeny implements CommandExecutor {
 			return true;
 		}
 		
+		
+		
+		
 		if (!TpRequest.TPA.deny(b))
 		{
 			b.sendMessage("§cNo requests to deny.");

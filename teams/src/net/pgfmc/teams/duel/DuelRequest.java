@@ -1,5 +1,8 @@
 package net.pgfmc.teams.duel;
 
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.requests.EndBehavior;
 import net.pgfmc.core.requests.Request;
@@ -30,7 +33,7 @@ public class DuelRequest extends Request {
 			break;
 		case QUIT:
 			break;
-		case SUCCESSFUL:
+		case ACCEPT:
 			new Duel(asker, target);
 			asker.sendMessage(target.getRankedName() + " §r§6has accepted your challenge!");
 			target.sendMessage("§aYou have accepted the challenge!");
@@ -40,5 +43,10 @@ public class DuelRequest extends Request {
 			target.sendMessage("§cThe challenge has timed out.");
 			break;
 		}
+	}
+
+	@Override
+	public ItemStack toItem() {
+		return new ItemStack(Material.IRON_SWORD);
 	}
 }

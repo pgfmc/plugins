@@ -1,54 +1,49 @@
 package net.pgfmc.teleport.tpa;
 
+import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.inventory.ItemStack;
 
-import net.pgfmc.core.requestAPI.Requester;
+import net.pgfmc.core.inventoryAPI.extra.ItemWrapper;
+import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.requests.EndBehavior;
+import net.pgfmc.core.requests.Request;
 import net.pgfmc.core.teleportAPI.TimedTeleport;
 import net.pgfmc.survival.cmd.Afk;
 
-public class TpRequest extends Requester {
+public class TpRequest extends Request {
 	
-	public static final TpRequest TPA = new TpRequest("Teleport");
-	public static final TpRequest TPAHERE = new TpRequest("Teleport Here");
-	
-	private TpRequest(String name)
-	{
-		super(name, 120, (a, b) -> {
-			if (name.equals("Teleport"))
-			{
-				if (!(a.isOnline() && b.isOnline())) { return false; }
-				
-				a.sendMessage("§6Teleporting to " + b.getRankedName() + " §r§6in 5 seconds");
-				b.sendMessage("§6Teleporting "+ a.getRankedName() +" §r§6here in 5 seconds");
-				
-				new TimedTeleport(a.getPlayer(), b.getPlayer(), 5, 40, true).setAct(v -> {
-					a.sendMessage("§aPoof!");
-					a.playSound(Sound.ENTITY_ENDERMAN_TELEPORT);
-					if (Afk.isAfk(a.getPlayer())) { Afk.toggleAfk(a.getPlayer()); }
-				});
-				
-				return true;
-			}
-			
-			if (name.equals("Teleport Here"))
-			{
-				if (!(a.isOnline() && b.isOnline())) { return false; }
-				
-				b.sendMessage("§6Teleporting to " + a.getRankedName() + " §r§ain 5 seconds");
-				a.sendMessage("§6Teleporting "+ b.getRankedName() +" §r§6here in 5 seconds");
-				
-				new TimedTeleport(b.getPlayer(), a.getPlayer(), 5, 40, true).setAct(v -> {
-					b.sendMessage("§aPoof!");
-					b.playSound(Sound.ENTITY_ENDERMAN_TELEPORT);
-					if (Afk.isAfk(b.getPlayer())) { Afk.toggleAfk(b.getPlayer()); }
-				});
-				
-				return true;
-			}
-			
-			
-			return false;
-		});
+	protected TpRequest(PlayerData asker, PlayerData target) {
+		super(asker, target, 120, true);
 	}
 
+	@Override
+	protected void endRequest(EndBehavior eB) {
+		switch(eB) {
+		case ACCEPT:
+			
+			asker.sendMessage("§6Teleporting to " + target.getRankedName() + " §r§6in 5 seconds");
+			target.sendMessage("§6Teleporting "+ asker.getRankedName() +" §r§6here in 5 seconds");
+			
+			new TimedTeleport(asker.getPlayer(), target.getPlayer(), 5, 40, true).setAct(v -> {
+				asker.sendMessage("§aPoof!");
+				asker.playSound(Sound.ENTITY_ENDERMAN_TELEPORT);
+				if (Afk.isAfk(asker.getPlayer())) { Afk.toggleAfk(asker.getPlayer()); }
+			});
+			
+		case DENIED:
+			break;
+		case FORCEEND:
+			break;
+		case QUIT:
+			break;
+		case TIMEOUT:
+			break;
+		}
+	}
+
+	@Override
+	public ItemStack toItem() {
+		return new ItemWrapper(Material.ENDER_PEARL).gi();
+	}
 }
