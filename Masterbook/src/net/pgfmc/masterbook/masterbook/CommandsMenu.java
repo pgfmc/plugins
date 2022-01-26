@@ -17,13 +17,13 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 import net.pgfmc.core.CoreMain.PGFPlugin;
 import net.pgfmc.core.cmd.Blocked;
 import net.pgfmc.core.inventoryAPI.BaseInventory;
+import net.pgfmc.core.inventoryAPI.ButtonInventory;
 import net.pgfmc.core.inventoryAPI.ListInventory;
 import net.pgfmc.core.inventoryAPI.extra.Butto;
+import net.pgfmc.core.inventoryAPI.extra.Buttonable;
 import net.pgfmc.core.inventoryAPI.extra.ItemWrapper;
 import net.pgfmc.core.playerdataAPI.PlayerData;
-import net.pgfmc.core.requestAPI.Request;
-import net.pgfmc.core.requestAPI.Requester;
-import net.pgfmc.core.requestAPI.Requester.Reason;
+import net.pgfmc.core.requests.Request;
 import net.pgfmc.core.util.DimManager;
 import net.pgfmc.masterbook.Main;
 import net.pgfmc.survival.cmd.Afk;
@@ -800,7 +800,7 @@ public class CommandsMenu implements InventoryHolder {
 		}
 	}
 	
-	public class RequestList extends ListInventory<Request> {
+	public class RequestList extends ButtonInventory {
 		public RequestList(PlayerData pd) {
 			super(27, "Pending Requests");
 
@@ -811,25 +811,8 @@ public class CommandsMenu implements InventoryHolder {
 		}
 
 		@Override
-		public List<Request> load() {
-			return Requester.ALLREQUESTS;
-		}
-
-		@Override
-		protected Butto toAction(Request entry) {
-			return (p, e) -> {
-				if (entry.expireNow(Reason.Accept) != false) {
-					entry.act();
-				} else {
-					pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
-					p.openInventory(new RequestList(pd).getInventory());
-				}
-			};
-		}
-
-		@Override
-		protected ItemStack toItem(Request entry) {
-			return new ItemWrapper(Material.ARROW).n(entry.getParent().getName()).gi();
+		public List<Buttonable> load() {
+			return Request.requestSet().stream().collect(Collectors.toList());
 		}
 	}
 

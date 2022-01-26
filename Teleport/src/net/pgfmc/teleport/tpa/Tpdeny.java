@@ -6,6 +6,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import net.pgfmc.core.requests.Request;
+
 
 public class Tpdeny implements CommandExecutor {
 
@@ -30,7 +32,9 @@ public class Tpdeny implements CommandExecutor {
 				return true;
 			}
 			
-			if (!TpRequest.TPA.deny(a, b))
+			if (Request.getRequests((x) -> {
+				return false;
+			}, TpRequest.class)		!TpRequest.TPA.deny(a, b))
 			{
 				b.sendMessage("§cNo requests to deny.");
 				return true;

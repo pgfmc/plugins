@@ -14,7 +14,7 @@ import net.pgfmc.survival.cmd.Afk;
 public class TpRequest extends Request {
 	
 	protected TpRequest(PlayerData asker, PlayerData target) {
-		super(asker, target, 120, true);
+		super(asker, target, 120);
 	}
 
 	@Override

@@ -17,7 +17,7 @@ import net.pgfmc.core.requests.Request;
 public class DuelRequest extends Request {
 
 	public DuelRequest(PlayerData asker, PlayerData target) {
-		super(asker, target, 30, true);
+		super(asker, target, 30);
 	}
 
 	@Override

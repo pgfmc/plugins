@@ -1,121 +1,74 @@
 package net.pgfmc.core.requests;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map.Entry;
-import java.util.Set;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
 
-import org.bukkit.Bukkit;
-
-import net.pgfmc.core.CoreMain;
+import net.pgfmc.core.inventoryAPI.ConfirmInventory;
 import net.pgfmc.core.inventoryAPI.extra.Butto;
 import net.pgfmc.core.inventoryAPI.extra.Buttonable;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
-public abstract class Request implements Buttonable {
+/**
+ * Abstract class to be extended by other classes :)
+ * 
+ * Implementor must define 
+ * 
+ * 
+ * @author CrimsonDart
+ *
+ */
+public final class Request implements Buttonable {
+	
+	// FIELDS
 	
 	public final PlayerData asker;
 	public final PlayerData target;
 	
-	public final int time;
-	private transient boolean isEnded;
+	transient boolean isEnded = false;
+	private final RequestType parent;
 	
-	static final HashMap<Class<? extends Request>, Set<Request>> requests = new HashMap<>();
-	
-	protected Request(PlayerData asker, PlayerData target, int time, boolean quittable) {
+	/**
+	 * Base Constructor for Requests.
+	 * Automatically adds the constructed request to an internal static HashMap.
+	 * @param asker The Player sending the request.
+	 * @param target The Player receiving the request.
+	 * @param time The amount of time (in ticks) until the request expires.
+	 */
+	protected Request(PlayerData asker, PlayerData target, RequestType parent) {
 		this.asker = asker;
 		this.target = target;
-		this.time = time;
-		
-		Set<Request> list = requests.get(this.getClass());
-		if (list == null) {
-			list = new HashSet<Request>();
-			list.add(this);
-			requests.put(this.getClass(), list);
-			
-		} else {
-			list.add(this);
-		}
-		
-		if (time < 1) return;
-		Bukkit.getScheduler().runTaskLater(CoreMain.plugin, x -> {
-			if (!isEnded) {
-				timeout();
-			}
-		}, time);
+		this.parent = parent;
 	}
 	
-	public static Request findRequest(PlayerData asker, PlayerData target, Class<? extends Request> clazz) {
-		for (Request r : requests.get(clazz)) {
-			if (r.asker == asker && r.target == target) {
-				return r;
-			}
-		}
-		return null;
-	}
-	
-	public static Set<Request> findRequests(PlayerData asker, PlayerData target) {
-		Set<Request> set = new HashSet<>();
-		
-		for (Entry<Class<? extends Request>, Set<Request>> entry : requests.entrySet()) {
-			for (Request r : entry.getValue()) {
-				if (r.asker == asker && r.target == target) {
-					set.add(r);
-					break;
-				}
-			}
-		}
-		if (set.size() == 0) {
-			return null;
-		} else {
-			return set;
-		}
-	}
-	
-	public static Set<Request> requestSet() {
-		Set<Request> set = new HashSet<>();
-		
-		for (Entry<Class<? extends Request>, Set<Request>> entry : requests.entrySet()) {
-			for (Request r : entry.getValue()) {
-				set.add(r);
-			}
-		}
-		return set;
-	}
-	
-	public void accept() {
-		requests.get(this.getClass()).remove(this);
-		endRequest(EndBehavior.ACCEPT);
-	}
-	
-	public void deny() {
-		requests.get(this.getClass()).remove(this);
-		endRequest(EndBehavior.DENIED);
-	}
-	
-	public void forceEnd() {
-		requests.get(this.getClass()).remove(this);
-		endRequest(EndBehavior.FORCEEND);
-	}
-	
-	protected void quit() {
-		requests.get(this.getClass()).remove(this);
-		endRequest(EndBehavior.QUIT);
-	}
-	
-	protected void timeout() {
-		requests.get(this.getClass()).remove(this);
-		endRequest(EndBehavior.TIMEOUT);
+	public void end(EndBehavior eB) {
+		parent.requests.remove(this);
+		parent.endRequest(this, eB);
 	}
 	
 	public Butto toAction() {
+		Request r = this;
 		return (p, e) -> {
 			
+			ConfirmInventory conf = new ConfirmInventory("Accept " + parent.name + " Request from " + r.asker.getNicknameRaw() + "?", "Accept", "Reject") {
+
+				@Override
+				protected void confirmAction(Player p, InventoryClickEvent e) {
+					r.end(EndBehavior.ACCEPT);
+				}
+				
+				@Override
+				protected void cancelAction(Player p, InventoryClickEvent e) {
+					r.end(EndBehavior.DENIED);
+				}
+			};
+			
+			p.openInventory(conf.getInventory());
 		};
 	}
 	
-	
-	protected abstract void endRequest(EndBehavior eB);
-	
-	
+	@Override
+	public ItemStack toItem() {
+		return parent.toItem();
+	}
 }

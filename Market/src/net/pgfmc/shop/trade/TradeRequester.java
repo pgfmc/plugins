@@ -1,14 +1,10 @@
 package net.pgfmc.shop.trade;
 
-import org.bukkit.entity.Player;
-
-import net.pgfmc.core.requestAPI.Request;
-import net.pgfmc.core.requestAPI.Requester;
-
-public class TradeRequester extends Requester {
+public class TradeRequester {
 	
 	public final static TradeRequester DEFAULT = new TradeRequester();
-
+	/*
+	@Deprecated
 	private TradeRequester() {
 		super("Trade", 300, (p1, p2) -> {
 			
@@ -16,15 +12,15 @@ public class TradeRequester extends Requester {
 			return true;
 			
 		});
-	}
+	}*/
 	
-	@Override
-	public Request createRequest(Player init, Player target) {
+	//@Override
+	//public Request createRequest(Player init, Player target) {
 		
 		
 		
 		
 		
-		return null;
-	}
+	//	return null;
+	//}
 }

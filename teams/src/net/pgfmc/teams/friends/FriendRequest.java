@@ -13,7 +13,7 @@ import net.pgfmc.teams.friends.Friends.Relation;
 public class FriendRequest extends Request {
 
 	public FriendRequest(PlayerData asker, PlayerData target) {
-		super(asker, target, 120, true);
+		super(asker, target, 120);
 	}
 
 	@Override
