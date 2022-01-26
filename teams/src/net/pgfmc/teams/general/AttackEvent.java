@@ -12,6 +12,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.InventoryHolder;
 
 import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.requests.EndBehavior;
 import net.pgfmc.core.requests.Request;
 import net.pgfmc.teams.duel.Duel;
 import net.pgfmc.teams.duel.Duel.DuelState;
@@ -90,15 +91,20 @@ public class AttackEvent implements Listener {
 						
 						if (ATKnull && isHoldingSword(attacker)) { // if both are null : create Request
 							
-							Request r = Request.findRequest(tpd, apd, DuelRequest.class);
+							
+							
+							
+							Request r = DuelRequest.DR.findRequest(tpd, apd);
 							
 							if (r == null) {
-								new DuelRequest(apd, tpd);
+								
+								DuelRequest.DR.createRequest(apd, tpd);
+								
 								e.setCancelled(true);
 								return;
 								
 							} else {
-								r.accept();
+								r.end(EndBehavior.ACCEPT);
 								e.setCancelled(true);
 								return;
 								
@@ -128,14 +134,14 @@ public class AttackEvent implements Listener {
 						
 						
 						
-						Request r = Request.findRequest(tpd, apd, FriendRequest.class);
+						Request r = FriendRequest.FR.findRequest(tpd, apd);
 						
 						if (r != null) {
-							r.accept();
+							r.end(EndBehavior.ACCEPT);
 						} else {
-							new FriendRequest(apd, tpd);
 							
-							//Friends.DEFAULT.createRequest(attacker, target).setMessage(RM);;
+							FriendRequest.FR.createRequest(apd, tpd);
+							
 						}
 						e.setCancelled(true);
 						return;

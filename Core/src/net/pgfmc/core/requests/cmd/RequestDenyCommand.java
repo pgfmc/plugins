@@ -1,5 +1,6 @@
 package net.pgfmc.core.requests.cmd;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -15,12 +16,27 @@ public class RequestDenyCommand extends PlayerCmd {
 
 	public RequestDenyCommand(String name, RequestType rt) {
 		super(name);
+		System.out.println("1..");
 		this.rt = rt;
 	}
 
 	@Override
 	public List<String> tabComplete(PlayerData pd, String alias, String[] args) {
-		return null;
+		
+		Set<Request> set = rt.findRequests(pd);
+		List<String> list = new ArrayList<>();
+		
+		if (!(args.length == 0 || args.length == 1)) return list;
+		
+		if (set.size() == 0) {
+			return list;
+		} else  {
+			for (Request r : set) {
+				list.add(r.asker.getNicknameRaw());
+			}
+		}
+		
+		return list;
 	}
 
 	@Override
@@ -44,7 +60,7 @@ public class RequestDenyCommand extends PlayerCmd {
 		Set<Request> set = rt.findRequests(pd);
 		
 		if (set.size() == 0) {
-			pd.sendMessage("No requests to accept!");
+			pd.sendMessage("No requests to Deny!");
 			return true;
 		} else if (set.size() == 1) {
 			for (Request r : set) {

@@ -9,8 +9,6 @@ import net.pgfmc.core.playerdataAPI.PlayerDataManager;
 import net.pgfmc.core.util.Mixins;
 import net.pgfmc.teams.duel.DuelEvents;
 import net.pgfmc.teams.friends.FavoriteCommand;
-import net.pgfmc.teams.friends.FriendAcceptCommand;
-import net.pgfmc.teams.friends.FriendRequestCommand;
 import net.pgfmc.teams.friends.Friends;
 import net.pgfmc.teams.friends.Friends.Relation;
 import net.pgfmc.teams.friends.FriendsListCommand;
@@ -71,8 +69,8 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new DuelEvents(), this);
 		getServer().getPluginManager().registerEvents(new BExEvent(), this);
 		
-		getCommand("friendRequest").setExecutor(new FriendRequestCommand());
-		getCommand("friendAccept").setExecutor(new FriendAcceptCommand());
+		//getCommand("friendRequest").setExecutor(new FriendRequestCommand());
+		//getCommand("friendAccept").setExecutor(new FriendAcceptCommand());
 		getCommand("unfriend").setExecutor(new UnfriendCommand());
 		getCommand("friendlist").setExecutor(new FriendsListCommand());
 		getCommand("favorite").setExecutor(new FavoriteCommand());

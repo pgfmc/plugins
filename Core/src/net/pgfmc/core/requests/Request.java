@@ -67,6 +67,10 @@ public final class Request implements Buttonable {
 		};
 	}
 	
+	public String getType() {
+		return parent.name;
+	}
+	
 	@Override
 	public ItemStack toItem() {
 		return parent.toItem();

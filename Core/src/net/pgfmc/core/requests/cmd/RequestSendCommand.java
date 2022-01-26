@@ -1,5 +1,6 @@
 package net.pgfmc.core.requests.cmd;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.pgfmc.core.cmd.base.PlayerCmd;
@@ -39,14 +40,27 @@ public class RequestSendCommand extends PlayerCmd {
 	@Override
 	public List<String> tabComplete(PlayerData pd, String alias, String[] args) {
 		
+		List<String> list = new ArrayList<>();
 		
-		
-		if (rt.endsOnQuit()) {
-			PlayerData.getOnlinePlayerData();
+		if (args.length == 0 || args.length == 1) {
+			if (rt.endsOnQuit()) {
+				for (PlayerData pds : PlayerData.getOnlinePlayerData()) {
+					if (pds == pd) continue;
+					
+					if (pds.getNicknameRaw().startsWith(args[0])) {
+						list.add(pds.getNicknameRaw());
+					}
+				}
+			} else {
+				for (PlayerData pds : PlayerData.getPlayerDataSet()) {
+					if (pds == pd) continue;
+					if (pds.getNicknameRaw().startsWith(args[0])) {
+						list.add(pds.getNicknameRaw());
+					}
+				}
+			}
 		}
 		
-		
-		
-		return null;
+		return list;
 	}
 }

@@ -2,6 +2,7 @@ package net.pgfmc.masterbook.masterbook;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
@@ -24,6 +25,7 @@ import net.pgfmc.core.inventoryAPI.extra.Buttonable;
 import net.pgfmc.core.inventoryAPI.extra.ItemWrapper;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.requests.Request;
+import net.pgfmc.core.requests.RequestType;
 import net.pgfmc.core.util.DimManager;
 import net.pgfmc.masterbook.Main;
 import net.pgfmc.survival.cmd.Afk;
@@ -801,8 +803,12 @@ public class CommandsMenu implements InventoryHolder {
 	}
 	
 	public class RequestList extends ButtonInventory {
+		
+		PlayerData pd;
+		
 		public RequestList(PlayerData pd) {
 			super(27, "Pending Requests");
+			this.pd = pd;
 
 			setAction(0, (p, e) -> {
 				p.openInventory(new Homepage().getInventory());
@@ -812,7 +818,17 @@ public class CommandsMenu implements InventoryHolder {
 
 		@Override
 		public List<Buttonable> load() {
-			return Request.requestSet().stream().collect(Collectors.toList());
+			List<Buttonable> list = new ArrayList<>();
+			
+			Set<Request> set = RequestType.getInAllRequests(x -> {
+				return (x.target == pd);
+			});
+			
+			for (Request r : set) {
+				list.add(r);
+			}
+			return list;
+			
 		}
 	}
 

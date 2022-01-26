@@ -11,6 +11,7 @@ public abstract class PlayerCmd extends CmdBase {
 
 	public PlayerCmd(String name) {
 		super(name);
+		System.out.print("2..");
 	}
 
 	@Override
@@ -27,7 +28,7 @@ public abstract class PlayerCmd extends CmdBase {
 			return true;
 		}
 		
-		return false;
+		return execute(pd, alias, args);
 	}
 	
 	public List<String> tabComplete(CommandSender sender, String alias, String[] args) {

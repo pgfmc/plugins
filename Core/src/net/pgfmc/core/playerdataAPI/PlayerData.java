@@ -91,12 +91,12 @@ public class PlayerData extends AbstractPlayerData {
 	
 	/**
 	 * Gets a player's PlayerData class.
-	 * @param name The player's mc username.
+	 * @param name The player's Minecraft Username, or Nickname.
 	 * @return The player's PlayerData.
 	 */
 	public static PlayerData getPlayerData(String name) {
 		for (PlayerData uid : instances) {
-			if (uid.getName().equals(name)) {
+			if (uid.getName().equals(name) || uid.getNicknameRaw().equals(name)) {
 				return uid;
 			}
 		}

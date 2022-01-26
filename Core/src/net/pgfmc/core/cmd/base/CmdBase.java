@@ -10,8 +10,10 @@ import org.bukkit.command.TabExecutor;
 public abstract class CmdBase {
 	
 	public CmdBase(String name) {
+		System.out.println("command for " + name + " has been registered!");
 		Bukkit.getPluginCommand(name).setExecutor(executor);
 		Bukkit.getPluginCommand(name).setTabCompleter(executor);
+		System.out.print("3..");
 	}
 	
 	private TabExecutor executor = new TabExecutor() {

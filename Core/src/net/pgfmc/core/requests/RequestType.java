@@ -2,12 +2,16 @@ package net.pgfmc.core.requests;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.requests.cmd.RequestAcceptCommand;
+import net.pgfmc.core.requests.cmd.RequestDenyCommand;
+import net.pgfmc.core.requests.cmd.RequestSendCommand;
 
 /**
  * Represents a type of Request.
@@ -38,6 +42,8 @@ public abstract class RequestType {
 	 * The name of the Type of request. Used in built inventories, and Feedback for commands.
 	 */
 	public final String name;
+	
+	private static Set<Set<Request>> allRequests = new HashSet<>();
 	
 	/**
 	 * Constructor for RequestTypes. Defines all required fields for requests.
@@ -106,8 +112,45 @@ public abstract class RequestType {
 		return set;
 	}
 	
+	public static Set<Request> getAllRequests() {
+		Set<Request> set = new HashSet<>();
+		
+		for (Set<Request> sr : allRequests) {
+			for (Request r : sr) {
+				set.add(r);
+			}
+		}
+		return set;
+	}
+	
+	public static Set<Request> getInAllRequests(Predicate<? super Request> predicate) {
+		Set<Request> set = new HashSet<>();
+		
+		for (Set<Request> sr : allRequests) {
+			for (Request r : sr) {
+				if (predicate.test(r)) {
+					set.add(r);
+				}
+			}
+		}
+		return set;
+	}
+	
 	public boolean endsOnQuit() {
 		return endsOnQuit;
+	}
+	
+	public void registerDeny(String label) {
+		System.out.println("Attempting to register Deny for " + label);
+		new RequestDenyCommand(label, this);
+	}
+	
+	public void registerSend(String label) {
+		new RequestSendCommand(label, this);
+	}
+	
+	public void registerAccept(String label) {
+		new RequestAcceptCommand(label, this);
 	}
 	
 	/**

@@ -16,6 +16,11 @@ commands:
       usage: /<command>
       permission: teams.friend.accept
       description: accepts a friend request.
+   friendDeny:
+      aliases: [fd]
+      usage: /<command>
+      permission: teams.friend.deny
+      description: denies a friend reqeust.
    unfriend:
       aliases: [uf]
       usage: /<command> <friend>

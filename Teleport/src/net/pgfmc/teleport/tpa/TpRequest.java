@@ -5,30 +5,58 @@ import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
 
 import net.pgfmc.core.inventoryAPI.extra.ItemWrapper;
-import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.requests.EndBehavior;
 import net.pgfmc.core.requests.Request;
+import net.pgfmc.core.requests.RequestType;
 import net.pgfmc.core.teleportAPI.TimedTeleport;
 import net.pgfmc.survival.cmd.Afk;
 
-public class TpRequest extends Request {
+public class TpRequest extends RequestType {
 	
-	protected TpRequest(PlayerData asker, PlayerData target) {
-		super(asker, target, 120);
+	public static final TpRequest TR = new TpRequest();
+	
+	private TpRequest() {
+		super(20 * 60 * 2, "Teleport");
+		
+	}
+	
+	public static final void registerAll() {
+		TR.registerDeny("tpdeny");
+		TR.registerAccept("tpaccept");
+		TR.registerSend("tpa");
+	}
+	
+
+	@Override
+	public ItemStack toItem() {
+		return new ItemWrapper(Material.ENDER_PEARL).gi();
 	}
 
 	@Override
-	protected void endRequest(EndBehavior eB) {
+	protected void requestMessage(Request r, boolean refreshed) {
+		if (refreshed) {
+			r.asker.sendMessage("Time limit refreshed!");
+			r.target.sendMessage("Time limit refreshed!");
+			return;
+		} 
+		r.asker.sendMessage("Teleport request sent to " + r.target.getRankedName() + "!");
+		r.target.sendMessage("Incoming Tp request from " + r.asker.getRankedName() + ".");
+		r.target.sendMessage("Use /tpaccept to accept!");
+		
+	}
+
+	@Override
+	protected void endRequest(Request r, EndBehavior eB) {
 		switch(eB) {
 		case ACCEPT:
 			
-			asker.sendMessage("§6Teleporting to " + target.getRankedName() + " §r§6in 5 seconds");
-			target.sendMessage("§6Teleporting "+ asker.getRankedName() +" §r§6here in 5 seconds");
+			r.asker.sendMessage("§6Teleporting to " + r.target.getRankedName() + " §r§6in 5 seconds");
+			r.target.sendMessage("§6Teleporting "+ r.asker.getRankedName() +" §r§6here in 5 seconds");
 			
-			new TimedTeleport(asker.getPlayer(), target.getPlayer(), 5, 40, true).setAct(v -> {
-				asker.sendMessage("§aPoof!");
-				asker.playSound(Sound.ENTITY_ENDERMAN_TELEPORT);
-				if (Afk.isAfk(asker.getPlayer())) { Afk.toggleAfk(asker.getPlayer()); }
+			new TimedTeleport(r.asker.getPlayer(), r.target.getPlayer(), 5, 40, true).setAct(v -> {
+				r.asker.sendMessage("§aPoof!");
+				r.asker.playSound(Sound.ENTITY_ENDERMAN_TELEPORT);
+				if (Afk.isAfk(r.asker.getPlayer())) { Afk.toggleAfk(r.asker.getPlayer()); }
 			});
 			
 		case DENIED:
@@ -39,11 +67,8 @@ public class TpRequest extends Request {
 			break;
 		case TIMEOUT:
 			break;
+		case REFRESH:
+			break;
 		}
-	}
-
-	@Override
-	public ItemStack toItem() {
-		return new ItemWrapper(Material.ENDER_PEARL).gi();
 	}
 }

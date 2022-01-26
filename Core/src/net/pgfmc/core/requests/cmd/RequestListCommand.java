@@ -1,14 +1,17 @@
 package net.pgfmc.core.requests.cmd;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.bukkit.inventory.ItemStack;
 
 import net.pgfmc.core.cmd.base.PlayerCmd;
 import net.pgfmc.core.inventoryAPI.BaseInventory;
-import net.pgfmc.core.inventoryAPI.extra.Butto;
 import net.pgfmc.core.inventoryAPI.extra.Inventoryable;
 import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.requests.Request;
+import net.pgfmc.core.requests.RequestType;
 
 public class RequestListCommand extends PlayerCmd implements Inventoryable {
 
@@ -17,14 +20,7 @@ public class RequestListCommand extends PlayerCmd implements Inventoryable {
 	}
 
 	@Override
-	public Butto toAction() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public ItemStack toItem() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -35,13 +31,20 @@ public class RequestListCommand extends PlayerCmd implements Inventoryable {
 
 	@Override
 	public List<String> tabComplete(PlayerData pd, String alias, String[] args) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<>();
 	}
 
 	@Override
 	public boolean execute(PlayerData pd, String alias, String[] args) {
-		// TODO Auto-generated method stub
+		
+		Set<Request> rs = RequestType.getInAllRequests(x -> {
+			return (x.target == pd);
+		});
+		
+		for (Request r : rs) {
+			pd.sendMessage(r.getType() + " Request from " + r.asker.getNicknameRaw());
+		}
+		
 		return false;
 	}
 
