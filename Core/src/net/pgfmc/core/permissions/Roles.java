@@ -41,7 +41,7 @@ public class Roles {
 		}
 		
 		public String getColor() {
-			return "ยง" + color;
+			return "ง" + color;
 		}
 		
 		public String getId() {
