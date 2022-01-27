@@ -8,10 +8,14 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-public abstract class AbstractPlayerData {
+/**
+ * Exists literally only so there is less code in PlayerData.
+ * @author CrimsonDart
+ *
+ */
+abstract class AbstractPlayerData {
 	
 	protected OfflinePlayer player;
-	protected Player online;
 	
 	protected AbstractPlayerData(OfflinePlayer p) {
 		player = p;

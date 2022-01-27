@@ -34,7 +34,7 @@ public class Homes implements CommandExecutor {
 	@SuppressWarnings("unchecked")
 	public static HashMap<String, Location> getHomes(OfflinePlayer p)
 	{
-		return Optional.ofNullable((HashMap<String, Location>) PlayerData.getData(p, "homes")).orElse(new HashMap<String, Location>());
+		return Optional.ofNullable((HashMap<String, Location>) PlayerData.getPlayerData(p).getData("homes")).orElse(new HashMap<String, Location>());
 	}
 	
 	/*

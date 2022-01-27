@@ -33,14 +33,14 @@ public class DuelEvents implements Listener {
 		if (e.getEntity() instanceof Player) {
 			Player gamer = (Player) e.getEntity();
 			
-			Duel BlakeIsBest = PlayerData.getData(gamer, "duel");
+			Duel BlakeIsBest = PlayerData.getPlayerData(gamer).getData("duel");
 			
 			if (BlakeIsBest != null) {
 				if ((BlakeIsBest.getState() == DuelState.BATTLEPENDING ||  BlakeIsBest.getState() == DuelState.INBATTLE) && gamer.getGameMode() == GameMode.SURVIVAL) {
 					
 					if (e.getFinalDamage() >= gamer.getHealth()) { // if they would die on the next hit
 						
-						if (!(boolean) PlayerData.getData(gamer, "duelHit") && (
+						if (!(boolean) PlayerData.getPlayerData(gamer).getData("duelHit") && (
 								e.getCause() == DamageCause.FALL
 								|| e.getCause() == DamageCause.LAVA
 								|| e.getCause() == DamageCause.HOT_FLOOR

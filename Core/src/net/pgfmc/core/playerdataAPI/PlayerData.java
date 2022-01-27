@@ -14,7 +14,6 @@ import java.util.function.Predicate;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.cmd.donator.Nick;
@@ -27,16 +26,15 @@ import net.pgfmc.core.util.Mixins;
  * @since 2.0.0
  * @version 4.0.2
  */
-public class PlayerData extends AbstractPlayerData {
+public final class PlayerData extends AbstractPlayerData {
 	
 	// fields
 	
 	/**
 	 * Hashmap to contain all instances of PlayerData, so they can be accesed.
 	 */
-	private static Set<PlayerData> instances = new HashSet<PlayerData>();
-	private static Set<PlayerData> debug = new HashSet<PlayerData>();
-	private static List<PlayerData> onlinePlayers = new LinkedList<>();
+	private static final Set<PlayerData> instances = new HashSet<PlayerData>();
+	private static final Set<PlayerData> debug = new HashSet<PlayerData>();
 	
 	private HashMap<String, Object> data = new HashMap<String, Object>();
 	protected List<String> queue = new LinkedList<String>();
@@ -181,20 +179,6 @@ public class PlayerData extends AbstractPlayerData {
 	/**
 	 * Sets a player's data, and saves it in RAM.
 	 * Returns a Queueable, which can be <.queue>ed to save to file.
-	 * @param p The player
-	 * @param n Name of the data; also the name used to call the data
-	 * @param d The data itself
-	 */
-	public static Queueable setData(OfflinePlayer p, String n, Object d) { // static function that passes to non-static setData
-		if (p == null) {
-			return null;
-		}
-		return getPlayerData(p).setData(n, d);
-	}
-	
-	/**
-	 * Sets a player's data, and saves it in RAM.
-	 * Returns a Queueable, which can be <.queue>ed to save to file.
 	 * @param n Name of the data; also the name used to call the data
 	 * @param d The data itself
 	 */
@@ -224,16 +208,6 @@ public class PlayerData extends AbstractPlayerData {
 		public void queue() {
 			queue.add(data);
 		}
-	}
-	
-	/**
-	 * Gets a player's data. must be Cast to the Correct Class to be used, however.
-	 * @param p The player
-	 * @param n Name of the data.
-	 * @return The data called by "n". Must be Cast to be used.
-	 */
-	public static <T> T getData(OfflinePlayer p, String n) { // static function that passes to non-static getData
-		return getPlayerData(p).getData(n);
 	}
 	
 	/**
@@ -276,27 +250,11 @@ public class PlayerData extends AbstractPlayerData {
 	}
 	
 	/**
-	 * switches this player to online;
-	 */
-	protected void setOnline(Player p) {
-		online = p;
-		onlinePlayers.add(this);
-	}
-	
-	/**
-	 * turns this player offline :(
-	 */
-	protected void setOffline() {
-		online = null;
-		onlinePlayers.remove(this);
-	}
-	
-	/**
 	 * Returns a set containing all PlayerDatas.
 	 * @return A set containing all PlayerDatas.
 	 */
 	public static Set<PlayerData> getPlayerDataSet() {
-		return instances;
+		return getPlayerDataSet(x -> true);
 	}
 	
 	/**

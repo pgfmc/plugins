@@ -265,7 +265,7 @@ public class CommandsMenu implements InventoryHolder {
 			if (perms.contains("pgf.cmd.donator.nick"))
 			{
 				setAction(18, (p, e) -> {
-					PlayerData.setData(p, "nickTemp", "reset");
+					PlayerData.getPlayerData(p).setData("nickTemp", "reset");
 					p.closeInventory();
 					p.sendMessage("§9Type your new nickname in chat.");
 				});
@@ -637,10 +637,7 @@ public class CommandsMenu implements InventoryHolder {
 		
 		@Override
 		public List<PlayerData> load() {
-			return PlayerData.stream()
-					.filter(x-> {
-						return (x != pd);
-					})
+			return PlayerData.getPlayerDataSet(x -> x != pd).stream()
 					.sorted((o1, o2) -> { // player sorter.
 						
 						if (o1.isOnline() && o2.isOnline()) { // both online

@@ -9,7 +9,6 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.permissions.Permissions;
@@ -92,12 +91,6 @@ public class PlayerDataManager implements Listener {
 			pd = new PlayerData(e.getPlayer());
 		}
 		
-		pd.setOnline(e.getPlayer());
 		Permissions.recalcPerms(pd);
-	}
-	
-	@EventHandler
-	public void onQuitEvent(PlayerQuitEvent e) {
-		PlayerData.getPlayerData(e.getPlayer()).setOffline();
 	}
 }

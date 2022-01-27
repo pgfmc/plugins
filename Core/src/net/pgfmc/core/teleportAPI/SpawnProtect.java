@@ -37,7 +37,7 @@ public class SpawnProtect implements EventListener {
 		p.setInvulnerable(true);
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(CoreMain.plugin, new Runnable() { @Override public void run() {
 			p.setInvulnerable(false);
-			PlayerData.setData(p, "god", null);
+			PlayerData.getPlayerData(p).setData("god", null);
 			
 		}}, ticks);
 	}

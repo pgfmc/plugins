@@ -58,7 +58,7 @@ public class AccountLinking {
 	 */
 	public static void link(PlayerData pd, String id)
 	{
-		pd.setData("Discord", id).save();
+		pd.setData("Discord", id).queue();
 		Roles.recalculateRoles(pd);
 		Permissions.recalcPerms(pd);
 	}

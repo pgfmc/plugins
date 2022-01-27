@@ -79,7 +79,7 @@ public class Afk  implements CommandExecutor, Listener {
 		if (p.isInvulnerable() && p.getGameMode() == GameMode.SURVIVAL)
 		{
 			p.setInvulnerable(false);
-			PlayerData.setData(p, "AFK", false);
+			PlayerData.getPlayerData(p).setData("AFK", false);
 		}
 	}
 	
@@ -110,7 +110,7 @@ public class Afk  implements CommandExecutor, Listener {
 			p.sendMessage("§cAFK mode off.");
 			p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 8);
 			
-			PlayerData.setData(p, "AFK", false);
+			PlayerData.getPlayerData(p).setData("AFK", false);
 		} else // TURN AFK ON
 		{
 			// This deprecated method is nothing to worry about, getNoDamageTicks prevents AFK after 20 ticks of taking damage
@@ -126,12 +126,12 @@ public class Afk  implements CommandExecutor, Listener {
 			p.setInvulnerable(true);
 			p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
 			
-			PlayerData.setData(p, "AFK", true);
+			PlayerData.getPlayerData(p).setData("AFK", true);
 		}
 	}
 	
 	public static boolean isAfk(Player p)
 	{
-		return (boolean) Optional.ofNullable(PlayerData.getData(p, "AFK")).orElse(false);
+		return (boolean) Optional.ofNullable(PlayerData.getPlayerData(p).getData("AFK")).orElse(false);
 	}
 }

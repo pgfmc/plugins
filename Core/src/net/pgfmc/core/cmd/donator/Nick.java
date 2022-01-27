@@ -82,7 +82,7 @@ public class Nick implements CommandExecutor {
 	public static void removeImpostors(PlayerData pd)
 	{
 		// The nickname without color codes
-		String raw = removeCodes((String) Optional.ofNullable(PlayerData.getData(pd.getOfflinePlayer(), "nick")).orElse(pd.getName())).toLowerCase();
+		String raw = removeCodes((String) Optional.ofNullable(pd.getData("nick")).orElse(pd.getName())).toLowerCase();
 		// If their raw nickname is just their player name, ignore
 		if (raw.equals(pd.getName().toLowerCase())) { return; }
 		
@@ -94,7 +94,7 @@ public class Nick implements CommandExecutor {
 			
 			// If player1's name matches player2's name OR their raw nicknames match
 			if (op.getName().toLowerCase().equals(raw) || removeCodes(
-					((String) Optional.ofNullable(PlayerData.getData(op, "nick")).orElse(""))).toLowerCase()
+					((String) Optional.ofNullable(PlayerData.getPlayerData(op).getData("nick")).orElse(""))).toLowerCase()
 					.equals(raw))
 			{
 				// Remove the impostor's nickname
@@ -165,7 +165,7 @@ public class Nick implements CommandExecutor {
 			if (op2.getUniqueId().equals(pd.getUniqueId())) { continue; }
 			
 			if (op2.getName().toLowerCase().equals(raw2) || removeCodes(
-					((String) Optional.ofNullable(PlayerData.getData(op2, "nick")).orElse(""))).toLowerCase()
+					((String) Optional.ofNullable(PlayerData.getPlayerData(op2).getData("nick")).orElse(""))).toLowerCase()
 					.equals(raw2))
 			{
 				p.sendMessage("§cYou cannot have the same name as another player!");
