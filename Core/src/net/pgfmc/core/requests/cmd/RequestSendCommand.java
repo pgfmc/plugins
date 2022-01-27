@@ -44,7 +44,7 @@ public class RequestSendCommand extends PlayerCmd {
 		
 		if (args.length == 0 || args.length == 1) {
 			if (rt.endsOnQuit()) {
-				for (PlayerData pds : PlayerData.getOnlinePlayerData()) {
+				for (PlayerData pds : PlayerData.getPlayerDataSet(x -> x.isOnline())) {
 					if (pds == pd) continue;
 					
 					if (pds.getNicknameRaw().startsWith(args[0])) {

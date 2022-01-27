@@ -1,26 +1,35 @@
 package net.pgfmc.shop.trade;
 
-public class TradeRequester {
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+
+import net.pgfmc.core.inventoryAPI.extra.ItemWrapper;
+import net.pgfmc.core.requests.EndBehavior;
+import net.pgfmc.core.requests.Request;
+import net.pgfmc.core.requests.RequestType;
+
+public class TradeRequester extends RequestType {
 	
+	public TradeRequester() {
+		super(0, "Trade");
+	}
+
 	public final static TradeRequester DEFAULT = new TradeRequester();
-	/*
-	@Deprecated
-	private TradeRequester() {
-		super("Trade", 300, (p1, p2) -> {
-			
-			new TradeManager(p1, p2);
-			return true;
-			
-		});
-	}*/
-	
-	//@Override
-	//public Request createRequest(Player init, Player target) {
+
+	@Override
+	protected void requestMessage(Request r, boolean refreshed) {
+		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	protected void endRequest(Request r, EndBehavior eB) {
+		// TODO Auto-generated method stub
 		
-		
-		
-		
-	//	return null;
-	//}
+	}
+
+	@Override
+	protected ItemStack toItem() {
+		return new ItemWrapper(Material.MAGENTA_GLAZED_TERRACOTTA).n("Trade").gi();
+	}
 }
