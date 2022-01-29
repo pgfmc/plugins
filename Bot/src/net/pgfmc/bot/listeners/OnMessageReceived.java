@@ -45,7 +45,7 @@ public class OnMessageReceived implements EventListener {
 			eb.setColor(Discord.red);
 			eb.setAuthor(user.getAsTag(), null, user.getAvatarUrl());
 			eb.setTitle("Blacklisted word detected! (Discord)");
-			eb.setDescription("A blacklisted word was detected by " + user.getName() + "in Discord.");
+			eb.setDescription("A blacklisted word was detected by " + user.getName() + " in Discord.");
 			eb.addField("User", user.getName(), false);
 			eb.addField("Message", "|| " + s + " ||", false);
 			eb.setTimestamp(OffsetDateTime.now());
