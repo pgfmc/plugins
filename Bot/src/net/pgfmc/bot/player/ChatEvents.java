@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.time.OffsetDateTime;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,8 +21,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.pgfmc.bot.Discord;
 import net.pgfmc.bot.Main;
+import net.pgfmc.bot.functions.spam.Spam;
 import net.pgfmc.core.chat.ProfanityFilter;
 import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.punish.Punish;
 
 /**
  * Makes all the chat colorful :)
@@ -40,6 +43,23 @@ public class ChatEvents implements Listener {
 		{
 			String msg = e.getMessage();
 			Player p = e.getPlayer();
+			PlayerData pd = PlayerData.getPlayerData(p);
+			
+			if (Punish.isMute(pd))
+			{
+				p.sendMessage(ChatColor.RED + "You are currently muted.");
+				e.setCancelled(true);
+				return;
+			} else
+			{
+				Spam.check(p);
+			}
+			
+			if (msg.length() > 95)
+			{
+				p.sendMessage(ChatColor.RED + "Your message is too long (max 95 characters).");
+				msg = msg.substring(0, 95) + "(...)";
+			}
 			
 			// If list1 has any values with list 2
 			// Word blacklist
@@ -61,11 +81,12 @@ public class ChatEvents implements Listener {
 				return;
 			}
 			
-//		    List<String> a = Arrays.asList(msg.substring(msg.indexOf("@")).split("@"));
-//		    a = a.stream().map(fl -> fl.substring(0, fl.indexOf(" "))).collect(Collectors.toList());
-//		    System.out.println(a);
-			
-			PlayerData pd = PlayerData.getPlayerData(p);
+			/*
+		    List<String> a = Arrays.asList(msg.substring(msg.indexOf("@")).split("@"));
+		    a = a.stream().map(fl -> fl.substring(0, fl.indexOf(" "))).collect(Collectors.toList());
+		    System.out.println(a);
+		    */
+
 			
 			e.setFormat(pd.getRankedName() + "§8 -> " + getMessageColor(p.getUniqueId().toString()) + msg);
 			
