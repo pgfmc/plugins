@@ -61,7 +61,7 @@ public class Roles {
 		
 		public void setColor(String color)
 		{
-			this.color = color.replaceAll("[^A-Za-z0-9âœ¦]", "").toLowerCase();
+			this.color = color;//color.replaceAll("[^A-Za-z0-9âœ¦]", "").toLowerCase();
 		}
 		
 		public void setPermissions(Set<Permission> permissions)
