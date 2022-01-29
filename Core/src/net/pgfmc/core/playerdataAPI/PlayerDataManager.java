@@ -109,4 +109,10 @@ public class PlayerDataManager extends Configify implements Listener {
 		Bukkit.getServer().getScheduler().cancelTask(task);
 		initializeQ();
 	}
+
+	@Override
+	public void enable() {}
+
+	@Override
+	public void disable() {}
 }

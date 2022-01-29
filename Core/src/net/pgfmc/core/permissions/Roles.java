@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.permissions.Permission;
 
@@ -41,7 +42,7 @@ public class Roles {
 		}
 		
 		public String getColor() {
-			return "�" + color;
+			return ChatColor.COLOR_CHAR + color;
 		}
 		
 		public String getId() {
@@ -60,7 +61,7 @@ public class Roles {
 		
 		public void setColor(String color)
 		{
-			this.color = color.replaceAll("[^A-Za-z0-9✦]", "").toLowerCase();
+			this.color = color.replaceAll("[^A-Za-z0-9âœ¦]", "").toLowerCase();
 		}
 		
 		public void setPermissions(Set<Permission> permissions)
