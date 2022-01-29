@@ -19,6 +19,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
+import net.pgfmc.bot.listeners.OnMemberJoin;
 import net.pgfmc.bot.listeners.OnMessageReceived;
 import net.pgfmc.bot.listeners.OnReady;
 import net.pgfmc.bot.listeners.OnSlashCommand;
@@ -42,9 +43,9 @@ public class Discord extends ListenerAdapter {
 	
 	public static String SERVER_CHANNEL;
 	public static final String START_MESSAGE = "<:START:905682398790959125> Server has started!";
-	public static final MessageEmbed START_MESSAGE_EMBED = simpleServerEmbed("Server is starting...", "https://cdn.discordapp.com/emojis/905682398790959125.png?size=44", green);
+	public static final MessageEmbed START_MESSAGE_EMBED = simpleServerEmbed("Server is starting...", "https://cdn.discordapp.com/emojis/905682398790959125.png?size=44", green).build();
 	public static final String STOP_MESSAGE = "<:STOP:905683316844429312> Server is stopping...";
-	public static final MessageEmbed STOP_MESSAGE_EMBED = simpleServerEmbed("Server is stopping...", "https://cdn.discordapp.com/emojis/905683316844429312.png?size=44", red);
+	public static final MessageEmbed STOP_MESSAGE_EMBED = simpleServerEmbed("Server is stopping...", "https://cdn.discordapp.com/emojis/905683316844429312.png?size=44", red).build();
 	
 	public static void initialize() throws LoginException, InterruptedException {
 		JDABuilder builder = JDABuilder.createDefault(Secret.getKey()); // bot token, don't share.
@@ -56,9 +57,10 @@ public class Discord extends ListenerAdapter {
 		builder.addEventListeners(new OnMessageReceived());
 		builder.addEventListeners(new OnUpdateRole());
 		builder.addEventListeners(new OnSlashCommand());
+		builder.addEventListeners(new OnMemberJoin());
 		
 		/*
-		 * 
+		 * ---
 		 */
 		
 		// creates JDA and allows the bot to load all members 
@@ -109,29 +111,40 @@ public class Discord extends ListenerAdapter {
 	
 	
 	/**
-	 * For more complicated embeds, use EmbedBuilder from JDA
-	 * @return
+	 * 	Makes a simple embed for a Player
+	 * 
+	 * @param player The player
+	 * @param title "Player " + title
+	 * @param color The color of the embed
+	 * @return the EmbedBuilder
 	 */
-	
-	public static MessageEmbed simplePlayerEmbed(OfflinePlayer player, String message, Color color)
+	public static EmbedBuilder simplePlayerEmbed(OfflinePlayer player, String title, Color color)
 	{
 		EmbedBuilder eb = new EmbedBuilder();
 		
 		// Thank you to "https://crafatar.com" for providing avatars.
 		eb.setColor(color);
-		eb.setAuthor(player.getName() + " " + message, null, "https://crafatar.com/avatars/" + player.getUniqueId());
+		eb.setAuthor(player.getName() + " " + title, null, "https://crafatar.com/avatars/" + player.getUniqueId());
 		
-		return eb.build();
+		return eb;
 	}
 	
-	public static MessageEmbed simpleServerEmbed(String message, String icon, Color color)
+	/**
+	 * Makes a simple embed for the Discord server
+	 * 
+	 * @param title The title
+	 * @param icon The icon of the embed
+	 * @param color The color
+	 * @return the EmbedBuilder
+	 */
+	public static EmbedBuilder simpleServerEmbed(String title, String icon, Color color)
 	{
 		EmbedBuilder eb = new EmbedBuilder();
 		
 		eb.setColor(color);
-		eb.setAuthor(message, null, icon);
+		eb.setAuthor(title, null, icon);
 		
-		return eb.build();
+		return eb;
 	}
 	
 	public static List<String> getMemberRoles(String id)

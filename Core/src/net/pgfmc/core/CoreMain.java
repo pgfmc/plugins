@@ -27,6 +27,7 @@ import net.pgfmc.core.inventoryAPI.extra.InventoryPressEvent;
 import net.pgfmc.core.permissions.Permissions;
 import net.pgfmc.core.playerdataAPI.PlayerDataManager;
 import net.pgfmc.core.teleportAPI.SpawnProtect;
+import net.pgfmc.core.util.Configify;
 import net.pgfmc.core.util.DimManager;
 import net.pgfmc.core.util.Mixins;
 import net.pgfmc.core.util.ReloadConfigify;
@@ -205,13 +206,13 @@ public class CoreMain extends JavaPlugin implements Listener {
 		System.out.println(Bukkit.getServer().getCommandAliases());
 		
 		new ProfanityFilter();
-		new ReloadConfigify().reload();
 	}
 	
 	@Override
 	public void onDisable() {
 		PlayerDataManager.saveQ();
 		Permissions.clear();
+		Configify.disableConfigify();
 	}
 	
 	
@@ -239,6 +240,8 @@ public class CoreMain extends JavaPlugin implements Listener {
 				Bukkit.getLogger().warning("[" + pl.getName() + " (" + pl.getDescription().getVersion() + ")] does not match PGF-Core (" + ver + ") version!");
 			}
 		}
+		
+		Configify.enableConfigify();
 	}
 }
 
