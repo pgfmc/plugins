@@ -1,9 +1,14 @@
 package net.pgfmc.bot.listeners;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
@@ -60,6 +65,15 @@ public class OnReady implements EventListener {
 		if (CoreMain.machine == Machine.MAIN)
 		{
 			Discord.sendAlert(Discord.START_MESSAGE_EMBED);
+			
+			Guild g = Discord.JDA.getGuildById(Discord.PGF_ID);
+			Role r = g.getRoleById("579062298526875648");
+			List<Member> noMemberRole = g.getMembers().stream().filter(m -> !m.getRoles().contains(r)).collect(Collectors.toList());
+			
+			for (Member m : noMemberRole)
+			{
+				g.addRoleToMember(m, r);
+			}
 		}
 		
 		// Slash commands here
