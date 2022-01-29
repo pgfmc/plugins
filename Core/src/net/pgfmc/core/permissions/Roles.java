@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.permissions.Permission;
 
@@ -41,7 +42,7 @@ public class Roles {
 		}
 		
 		public String getColor() {
-			return "§" + color;
+			return ChatColor.COLOR_CHAR + color;
 		}
 		
 		public String getId() {
