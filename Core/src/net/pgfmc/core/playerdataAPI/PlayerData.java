@@ -9,12 +9,10 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
+import java.util.function.Predicate;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.cmd.donator.Nick;
@@ -27,16 +25,15 @@ import net.pgfmc.core.util.Mixins;
  * @since 2.0.0
  * @version 4.0.2
  */
-public class PlayerData extends AbstractPlayerData {
+public final class PlayerData extends AbstractPlayerData {
 	
 	// fields
 	
 	/**
 	 * Hashmap to contain all instances of PlayerData, so they can be accesed.
 	 */
-	private static Set<PlayerData> instances = new HashSet<PlayerData>();
-	private static Set<PlayerData> debug = new HashSet<PlayerData>();
-	private static List<PlayerData> onlinePlayers = new LinkedList<>();
+	private static final Set<PlayerData> instances = new HashSet<PlayerData>();
+	private static final Set<PlayerData> debug = new HashSet<PlayerData>();
 	
 	private HashMap<String, Object> data = new HashMap<String, Object>();
 	protected List<String> queue = new LinkedList<String>();
@@ -90,12 +87,12 @@ public class PlayerData extends AbstractPlayerData {
 	
 	/**
 	 * Gets a player's PlayerData class.
-	 * @param name The player's mc username.
+	 * @param name The player's Minecraft Username, or Nickname.
 	 * @return The player's PlayerData.
 	 */
 	public static PlayerData getPlayerData(String name) {
 		for (PlayerData uid : instances) {
-			if (uid.getName().equals(name)) {
+			if (uid.getName().equals(name) || uid.getNicknameRaw().equals(name)) {
 				return uid;
 			}
 		}
@@ -123,7 +120,7 @@ public class PlayerData extends AbstractPlayerData {
 	
 	public String getNicknameRaw()
 	{
-		return Nick.removeCodes(getRankedName());
+		return (String) Optional.ofNullable(getData("nick")).orElse(getName());
 	}
 	
 	@Override
@@ -164,28 +161,10 @@ public class PlayerData extends AbstractPlayerData {
 		return (debug.contains(this));
 	}
 	
-	public void toggleDebug() {
-		setDebug(!isDebug());
-	}
-	
 	public static void sendDebug(String message) {
 		for (PlayerData pd : debug) {
 			pd.sendMessage(message);
 		}
-	}
-	
-	/**
-	 * Sets a player's data, and saves it in RAM.
-	 * Returns a Queueable, which can be <.queue>ed to save to file.
-	 * @param p The player
-	 * @param n Name of the data; also the name used to call the data
-	 * @param d The data itself
-	 */
-	public static Queueable setData(OfflinePlayer p, String n, Object d) { // static function that passes to non-static setData
-		if (p == null) {
-			return null;
-		}
-		return getPlayerData(p).setData(n, d);
 	}
 	
 	/**
@@ -200,7 +179,8 @@ public class PlayerData extends AbstractPlayerData {
 	}
 	
 	/**
-	 * Queueable class
+	 * Queueable class.
+	 * Create a new instance to create a new Queueable instance, then use the {@code .queue()} method to add to the queue.
 	 * 
 	 * @author CrimsonDart
 	 *
@@ -219,42 +199,6 @@ public class PlayerData extends AbstractPlayerData {
 		public void queue() {
 			queue.add(data);
 		}
-		
-		public void save() {
-			saveToFile(data, getData(data));
-		}
-	}
-	
-	/**
-	 * adds a data point to the queue.
-	 * @param data The data point to be added to the queue.
-	 * @return wether or not the addition was successful.
-	 */
-	public boolean addQ(String data) {
-		if (data.contains(data)) {
-			queue.add(data);
-			return true;
-		}
-		return false;
-	}
-	
-	/**
-	 * removes a data point from the queue.
-	 * @param data The data point to remove.
-	 * @return Wether or not the removal was successful.
-	 */
-	public boolean removeQ(String data) {
-		return queue.remove(data);
-	}
-	
-	/**
-	 * Gets a player's data. must be Cast to the Correct Class to be used, however.
-	 * @param p The player
-	 * @param n Name of the data.
-	 * @return The data called by "n". Must be Cast to be used.
-	 */
-	public static <T> T getData(OfflinePlayer p, String n) { // static function that passes to non-static getData
-		return getPlayerData(p).getData(n);
 	}
 	
 	/**
@@ -297,49 +241,27 @@ public class PlayerData extends AbstractPlayerData {
 	}
 	
 	/**
-	 * switches this player to online;
-	 */
-	protected void setOnline(Player p) {
-		online = p;
-		onlinePlayers.add(this);
-	}
-	
-	/**
-	 * turns this player offline :(
-	 */
-	protected void setOffline() {
-		online = null;
-		onlinePlayers.remove(this);
-	}
-	
-	/**
-	 * Returns a set containing all PlayerData.
-	 * @return A set containing all PlayerData.
+	 * Returns a set containing all PlayerDatas.
+	 * @return A set containing all PlayerDatas.
 	 */
 	public static Set<PlayerData> getPlayerDataSet() {
-		return instances;
+		return getPlayerDataSet(x -> true);
 	}
 	
 	/**
-	 * Returns the amount of PlayerDatas currently loaded.
-	 * @return the amount of playerdatas.
+	 * Returns a set of all PlayerDatas that match the given Predicate.
+	 * @param predicate The condition that a PlayerData must match to be returned.
+	 * @return The set of all PlayerDatas that the predicate returns true for.
 	 */
-	public static int size() {
-		return instances.size();
-	}
-	
-	/**
-	 * Returns a stream of each PlayerData.
-	 */
-	public static Stream<PlayerData> stream() {
-		return StreamSupport.stream(getPlayerDataSet().spliterator(), false);
-	}
-	
-	/**
-	 * returns all online player's PlayerData.
-	 * @return
-	 */
-	public static List<PlayerData> getOnlinePlayerData() {
-		return onlinePlayers;
+	public static Set<PlayerData> getPlayerDataSet(Predicate<PlayerData> predicate) {
+		
+		Set<PlayerData> set = new HashSet<>();
+		
+		for (PlayerData pd : instances) {
+			if (predicate.test(pd)) {
+				set.add(pd);
+			}
+		}
+		return set;
 	}
 }

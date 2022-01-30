@@ -9,15 +9,12 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 
 import net.pgfmc.core.CoreMain;
-import net.pgfmc.core.util.Configify;
+import net.pgfmc.core.permissions.Permissions;
 
-public class PlayerDataManager extends Configify implements Listener {
+public class PlayerDataManager implements Listener {
 	
-	private static int task = -1;
-
 	private static List<Consumer<Void>> postLoad = new ArrayList<>();
 	protected static List<Consumer<PlayerData>> pdInit = new ArrayList<>();
 	
@@ -63,7 +60,7 @@ public class PlayerDataManager extends Configify implements Listener {
 	 * Begins the queue saving loop.
 	 */
 	private static void initializeQ() {
-		task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(CoreMain.plugin, new Runnable() {
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(CoreMain.plugin, new Runnable() {
 			
 			@Override
 			public void run() {
@@ -94,25 +91,6 @@ public class PlayerDataManager extends Configify implements Listener {
 			pd = new PlayerData(e.getPlayer());
 		}
 		
-		pd.setOnline(e.getPlayer());
+		Permissions.recalcPerms(pd);
 	}
-	
-	@EventHandler
-	public void onQuitEvent(PlayerQuitEvent e) {
-		PlayerData.getPlayerData(e.getPlayer()).setOffline();
-	}
-
-	@Override
-	public void reload() {
-		saveQ();
-		if (task == -1) return;
-		Bukkit.getServer().getScheduler().cancelTask(task);
-		initializeQ();
-	}
-
-	@Override
-	public void enable() {}
-
-	@Override
-	public void disable() {}
 }

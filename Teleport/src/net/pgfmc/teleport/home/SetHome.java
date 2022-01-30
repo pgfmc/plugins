@@ -63,7 +63,7 @@ public class SetHome implements CommandExecutor {
 		}
 		
 		p.sendMessage("§aSet home §6" + name + "§a!");
-		PlayerData.setData(p, "homes", homes).queue();
+		PlayerData.getPlayerData(p).setData("homes", homes).queue();
 	}
 
 }

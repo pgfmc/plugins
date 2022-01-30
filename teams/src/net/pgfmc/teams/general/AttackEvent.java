@@ -12,13 +12,13 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.InventoryHolder;
 
 import net.pgfmc.core.playerdataAPI.PlayerData;
-import net.pgfmc.core.requestAPI.Request;
-import net.pgfmc.core.requestAPI.Request.RequestMessage;
+import net.pgfmc.core.requests.EndBehavior;
+import net.pgfmc.core.requests.Request;
 import net.pgfmc.teams.duel.Duel;
 import net.pgfmc.teams.duel.Duel.DuelState;
 import net.pgfmc.teams.duel.Duel.PlayerState;
-import net.pgfmc.teams.duel.DuelRequester;
-import net.pgfmc.teams.friends.Friends;
+import net.pgfmc.teams.duel.DuelRequest;
+import net.pgfmc.teams.friends.FriendRequest;
 import net.pgfmc.teams.ownable.entities.OwnableEntity;
 
 /**
@@ -91,15 +91,20 @@ public class AttackEvent implements Listener {
 						
 						if (ATKnull && isHoldingSword(attacker)) { // if both are null : create Request
 							
-							Request r = DuelRequester.DEFAULT.findRequest(target, attacker);
+							
+							
+							
+							Request r = DuelRequest.DR.findRequest(tpd, apd);
 							
 							if (r == null) {
-								DuelRequester.DEFAULT.createRequest(attacker, target).setMessage(RM);;
+								
+								DuelRequest.DR.createRequest(apd, tpd);
+								
 								e.setCancelled(true);
 								return;
 								
 							} else {
-								DuelRequester.DEFAULT.accept(r);
+								r.end(EndBehavior.ACCEPT);
 								e.setCancelled(true);
 								return;
 								
@@ -127,12 +132,16 @@ public class AttackEvent implements Listener {
 						
 					} else if (isFlower(attacker.getInventory().getItemInMainHand().getType())) { // checks if the player is holding a flower
 						
-						Request r = Friends.DEFAULT.findRequest(tpd.getPlayer(), apd.getPlayer());
+						
+						
+						Request r = FriendRequest.FR.findRequest(tpd, apd);
 						
 						if (r != null) {
-							Friends.DEFAULT.accept(r);
+							r.end(EndBehavior.ACCEPT);
 						} else {
-							Friends.DEFAULT.createRequest(attacker, target).setMessage(RM);;
+							
+							FriendRequest.FR.createRequest(apd, tpd);
+							
 						}
 						e.setCancelled(true);
 						return;
@@ -194,30 +203,4 @@ public class AttackEvent implements Listener {
 				|| mainHand == Material.NETHERITE_SWORD 
 				|| mainHand == Material.WOODEN_SWORD);
 	}
-	
-	RequestMessage RM = (init, targ, end, request) -> {
-		
-		switch(end) {
-		case Accept:
-			init.sendMessage(targ.getRankedName() + " §r§6has accepted your challenge!");
-			targ.sendMessage("§aYou have accepted the challenge!");
-			break;
-		case Deny:
-			init.sendMessage("§cHas rejected your challenge!");
-			targ.sendMessage("§cChallenge Rejected.");
-			break;
-		case Duplicate:
-			break;
-		case Force:
-			break;
-		case Quit:
-			break;
-		case Timeout:
-			init.sendMessage("§cThe challenge has timed out.");
-			targ.sendMessage("§cThe challenge has timed out.");
-			break;
-		}
-	};
-	
-	
 }
