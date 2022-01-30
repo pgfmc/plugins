@@ -147,7 +147,7 @@ public class Nick implements CommandExecutor {
 			}
 		}
 		
-		pd.setData("nick", nick.replace("&", "§")).queue();
+		pd.setData("nick", nick.replace('&', ChatColor.COLOR_CHAR)).queue();
 		p.sendMessage("§6Nickname changed to " + pd.getRankedName() + "§6!");
 	}
 	
