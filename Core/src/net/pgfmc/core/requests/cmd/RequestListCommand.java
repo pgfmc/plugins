@@ -6,14 +6,14 @@ import java.util.Set;
 
 import org.bukkit.inventory.ItemStack;
 
-import net.pgfmc.core.cmd.base.PlayerCmd;
+import net.pgfmc.core.cmd.base.PlayerCommand;
 import net.pgfmc.core.inventoryAPI.BaseInventory;
 import net.pgfmc.core.inventoryAPI.extra.Inventoryable;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.requests.Request;
 import net.pgfmc.core.requests.RequestType;
 
-public class RequestListCommand extends PlayerCmd implements Inventoryable {
+public class RequestListCommand extends PlayerCommand implements Inventoryable {
 
 	public RequestListCommand() {
 		super("requestList");

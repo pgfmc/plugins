@@ -7,9 +7,9 @@ import org.bukkit.entity.Player;
 
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
-public abstract class PlayerCmd extends CmdBase {
+public abstract class PlayerCommand extends CmdBase {
 
-	public PlayerCmd(String name) {
+	public PlayerCommand(String name) {
 		super(name);
 		System.out.print("2..");
 	}

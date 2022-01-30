@@ -3,11 +3,11 @@ package net.pgfmc.core.requests.cmd;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.pgfmc.core.cmd.base.PlayerCmd;
+import net.pgfmc.core.cmd.base.PlayerCommand;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.requests.RequestType;
 
-public class RequestSendCommand extends PlayerCmd {
+public class RequestSendCommand extends PlayerCommand {
 	
 	private final RequestType rt;
 	

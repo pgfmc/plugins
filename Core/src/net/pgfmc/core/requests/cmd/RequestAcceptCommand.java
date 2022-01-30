@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.pgfmc.core.cmd.base.PlayerCmd;
+import net.pgfmc.core.cmd.base.PlayerCommand;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.requests.EndBehavior;
 import net.pgfmc.core.requests.Request;
 import net.pgfmc.core.requests.RequestType;
 
-public class RequestAcceptCommand extends PlayerCmd {
+public class RequestAcceptCommand extends PlayerCommand {
 	
 	public final RequestType rt;
 

@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -137,10 +138,6 @@ public final class PlayerData extends AbstractPlayerData {
 		return o.getUniqueId().toString().equals(getUniqueId().toString());
 	}
 	
-	
-	
-	
-	
 	/**
 	 * Gets the Player's Role prefix.
 	 * @return The player's role prefix.
@@ -178,6 +175,10 @@ public final class PlayerData extends AbstractPlayerData {
 		return new Queueable(n);
 	}
 	
+	public static Queueable setData(OfflinePlayer player, String n, Object d) {
+		return getPlayerData(player).setData(n, d);
+	}
+	
 	/**
 	 * Queueable class.
 	 * Create a new instance to create a new Queueable instance, then use the {@code .queue()} method to add to the queue.
@@ -199,6 +200,10 @@ public final class PlayerData extends AbstractPlayerData {
 		public void queue() {
 			queue.add(data);
 		}
+		
+		public void save() {
+			saveToFile(data, getData(data));
+		}
 	}
 	
 	/**
@@ -209,6 +214,17 @@ public final class PlayerData extends AbstractPlayerData {
 	@SuppressWarnings("unchecked")
 	public <T> T getData(String n) { // gets a playerData point
 		return (T) data.get(n);
+	}
+	
+	/**
+	 * Static method to get a player's data.
+	 * @param <T> The type of the data being returned.
+	 * @param player An OfflinePlayer whose data is wanted.
+	 * @param data The name of the data wanted.
+	 * @return The data associated with input "data".
+	 */
+	public static <T> T getData(OfflinePlayer player, String data) {
+		return getPlayerData(player).getData(data);
 	}
 	
 	/**
