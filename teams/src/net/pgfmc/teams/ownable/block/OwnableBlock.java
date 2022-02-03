@@ -1,5 +1,6 @@
 package net.pgfmc.teams.ownable.block;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -184,7 +185,7 @@ public class OwnableBlock extends Ownable {
 				pd.sendMessage("§cThis container is locked!");
 			}
 		}
-		case EXCEPTION: System.out.println("cont.isAllowed() returned Security.EXCEPTION!"); return;
+		case EXCEPTION: Bukkit.getLogger().warning("cont.isAllowed() returned Security.EXCEPTION!"); return;
 		}
 	}
 	
@@ -219,11 +220,11 @@ public class OwnableBlock extends Ownable {
 	 */
 	public void remove() {
 		if (isClaim) {
-			System.out.println("1");
+			Bukkit.getLogger().warning("1");
 			ClaimsTable.remove(this);
 			return;
 		} else {
-			System.out.println("2");
+			Bukkit.getLogger().warning("2");
 			ContainerTable.remove(this);
 			return;
 		}

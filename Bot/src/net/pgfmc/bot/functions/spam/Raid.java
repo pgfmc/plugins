@@ -21,7 +21,7 @@ public class Raid {
 	public static void check(GuildMemberJoinEvent e) {
 		Guild g = e.getGuild();
 		
-		if (g.getId() != Discord.PGF_ID) return;
+		if (g.getId() != Discord.getGuildPGF().getId()) return;
 		
 		double lastJoinInSeconds = (double) ((new Date().getTime() - lastJoin) / 1000);
 		double joins = joinPerSecond * lastJoinInSeconds + 1;
@@ -44,7 +44,7 @@ public class Raid {
 				g.addRoleToMember(id, muteRole);
 			}
 			
-			EmbedBuilder eb = Discord.simpleServerEmbed("Raid detected!", "https://cdn.discordapp.com/emojis/726548471015800912.webp?size=96", Discord.red);
+			EmbedBuilder eb = Discord.simpleServerEmbed("Raid detected!", "https://cdn.discordapp.com/emojis/726548471015800912.webp?size=96", Discord.RED);
 			eb.setDescription("Last 5 members: " + last5MemberIds.stream()
 													.map(id -> g.getMemberById(id).getAsMention())
 													.collect(Collectors.toList())

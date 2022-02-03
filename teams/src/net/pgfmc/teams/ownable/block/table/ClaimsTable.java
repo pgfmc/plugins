@@ -1,5 +1,7 @@
 package net.pgfmc.teams.ownable.block.table;
 
+import org.bukkit.Bukkit;
+
 import com.sk89q.worldguard.util.collect.LongHash;
 import com.sk89q.worldguard.util.collect.LongHashTable;
 
@@ -84,7 +86,7 @@ public class ClaimsTable {
 	public static OwnableBlock getRelevantClaim(Vector4 v) {
 		ClaimSection cs = getSection(v);
 		if (cs == null) { // if there is no CS, then it creates a new one for the position v.
-			System.out.println("cs was null, creating new cs for GRC.");
+			Bukkit.getLogger().warning("cs was null, creating new cs for GRC.");
 			cs = new ClaimSection(getSectionKey(v), v.w());
 			getWorldTable(v.w()).put(getSectionKey(v), cs);
 		}
@@ -113,7 +115,7 @@ public class ClaimsTable {
 	public static boolean isOverlappingClaim(Vector4 v) {
 		ClaimSection cs = getSection(v);
 		if (cs == null) {
-			System.out.println("cs was null, creating a new cs for IOC.");
+			Bukkit.getLogger().warning("cs was null, creating a new cs for IOC.");
 			cs = new ClaimSection(getSectionKey(v), v.w());
 			getWorldTable(v.w()).put(getSectionKey(v), cs);
 		}

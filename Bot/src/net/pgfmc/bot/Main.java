@@ -1,8 +1,6 @@
 package net.pgfmc.bot;
 
 import java.io.File;
-import java.util.Random;
-import java.util.function.Consumer;
 
 import javax.security.auth.login.LoginException;
 
@@ -10,22 +8,20 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import net.dv8tion.jda.api.entities.MessageHistory;
 import net.pgfmc.bot.cmd.LinkCommand;
 import net.pgfmc.bot.cmd.UnlinkCommand;
+import net.pgfmc.bot.functions.StartStopMessage;
 import net.pgfmc.bot.listeners.minecraft.OnAsyncPlayerChat;
 import net.pgfmc.bot.listeners.minecraft.OnPlayerAdvancementDone;
 import net.pgfmc.bot.listeners.minecraft.OnPlayerDeath;
 import net.pgfmc.bot.listeners.minecraft.OnPlayerJoin;
 import net.pgfmc.bot.listeners.minecraft.OnPlayerQuit;
-import net.pgfmc.core.CoreMain;
-import net.pgfmc.core.CoreMain.Machine;
 
 public class Main extends JavaPlugin {
 	
 	public static Main plugin;
 	public static String configPath;
-	
-	public static Consumer<Random> action;
 	
 	@Override
 	public void onEnable()
@@ -50,29 +46,46 @@ public class Main extends JavaPlugin {
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}
+		
+		StartStopMessage.enable();
+		
+		MessageHistory feed = new MessageHistory(Discord.getServerChannel());	
+		
+		Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+			@Override
+			public void run() {
+				// Gets the past 20 messages
+				
+				feed.retrievePast(20).queue();
+			}
+		}, 20);
+		
+		Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+			@Override
+			public void run() {
+				StartStopMessage.deleteStartStopMessages(feed);
+			}
+		}, 60 * 20);
 	}
 	
 	@Override
 	public void onDisable()
 	{
-		String msg = "";
+		StringBuilder builder = new StringBuilder();
 		
-		for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-			
-			msg += "<:LEAVE:905682349239463957> " + p.getName() + "\n";
-		}
-		
-		Discord.sendMessage(msg);
-		Discord.sendMessage(Discord.STOP_MESSAGE);
-		
-		if (CoreMain.machine == Machine.MAIN)
+		for (Player p : Bukkit.getServer().getOnlinePlayers())
 		{
-			Discord.sendAlert(Discord.STOP_MESSAGE_EMBED);
+			builder.append("<:LEAVE:905682349239463957> " + p.getName() + "\n");
 		}
 		
-		if (action != null) {
-			action.accept(null);
+		if (!StartStopMessage.isDeleted)
+		{
+			StartStopMessage.deleteStartStopMessages(new MessageHistory(Discord.getServerChannel()));
 		}
+		
+		Discord.sendMessage(builder.toString());
+		
+		StartStopMessage.disable();
 		
 		Discord.JDA.shutdown();
 	}

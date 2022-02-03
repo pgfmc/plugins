@@ -7,6 +7,8 @@ import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.stream.Stream;
 
+import org.bukkit.Bukkit;
+
 public class FileCopy {
 	
 	public void copy(String sourceDir, String destDir) {				
@@ -40,10 +42,10 @@ public class FileCopy {
 			    }
 			}
 			
-			System.out.println("Successfully copied files to \"" + destDir + "\".");
+			Bukkit.getLogger().warning("Successfully copied files to \"" + destDir + "\".");
 			
 		} catch (IOException e) {
-			System.out.println("Failed to copy files.");
+			Bukkit.getLogger().warning("Failed to copy files.");
 			e.printStackTrace();
 		}
 	}

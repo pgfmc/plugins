@@ -2,6 +2,7 @@ package net.pgfmc.survival.cmd;
 
 import java.util.Optional;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
@@ -47,7 +48,7 @@ public class Afk  implements CommandExecutor, Listener {
 			// Jumping toggles AFK
 			if (e.getTo().getY() > e.getFrom().getY())
 			{
-				System.out.println("Jumped!");
+				Bukkit.getLogger().warning("Jumped!");
 				toggleAfk(p);
 				return;
 			}
@@ -65,7 +66,7 @@ public class Afk  implements CommandExecutor, Listener {
 	{
 		if (Afk.isAfk(e.getPlayer()))
 		{
-			System.out.println("Clicked!");
+			Bukkit.getLogger().warning("Clicked!");
 			toggleAfk(e.getPlayer());
 			return;
 		}
@@ -94,7 +95,7 @@ public class Afk  implements CommandExecutor, Listener {
 			if (!e.getFrom().equals(e.getTo()))
 			{
 				toggleAfk(p);
-				System.out.println("Teleported! Cause: " + e.getCause());
+				Bukkit.getLogger().warning("Teleported! Cause: " + e.getCause());
 			}
 		}
 	}

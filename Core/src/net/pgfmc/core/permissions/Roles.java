@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.permissions.Permission;
@@ -84,7 +85,7 @@ public class Roles {
 	@SuppressWarnings("unchecked")
 	public static void recalculate(PlayerData pd)
 	{
-		System.out.println("Recalculating roles for player " + pd.getName());
+		Bukkit.getLogger().warning("Recalculating roles for player " + pd.getName());
 		
 		String id = (String) pd.loadFromFile("Discord");
 		List<String> roles = Arrays.asList(Role.MEMBER.getName());
