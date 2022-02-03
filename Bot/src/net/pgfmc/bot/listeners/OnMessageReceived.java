@@ -15,7 +15,7 @@ import net.dv8tion.jda.api.hooks.EventListener;
 import net.pgfmc.bot.Discord;
 import net.pgfmc.bot.functions.AccountLinking;
 import net.pgfmc.bot.functions.StartStopMessageDelete;
-import net.pgfmc.bot.player.ChatEvents;
+import net.pgfmc.bot.listeners.minecraft.OnAsyncPlayerChat;
 import net.pgfmc.core.chat.ProfanityFilter;
 import net.pgfmc.core.permissions.Roles;
 import net.pgfmc.core.permissions.Roles.Role;
@@ -79,7 +79,7 @@ public class OnMessageReceived implements EventListener {
 			// If not reply
 			if(m.getMessage().getReferencedMessage() == null || m.getMessage().getReferencedMessage().getAuthor().isBot())
 			{
-				Bukkit.getServer().broadcastMessage(r.getColor() + m.getMember().getEffectiveName() + " §r§8-|| " + ChatEvents.getMessageColor(m.getMember().getId()) + s);
+				Bukkit.getServer().broadcastMessage(r.getColor() + m.getMember().getEffectiveName() + " §r§8-|| " + OnAsyncPlayerChat.getMessageColor(m.getMember().getId()) + s);
 				return;
 
 			} else {
@@ -97,7 +97,7 @@ public class OnMessageReceived implements EventListener {
                     		);
                 }
                 
-                Bukkit.getServer().broadcastMessage(r.getColor() + m.getMember().getEffectiveName() + " replied to " + replyRole.getColor() + replyMember.getEffectiveName() + " §r§8-|| " + ChatEvents.getMessageColor(m.getMember().getId()) + s);
+                Bukkit.getServer().broadcastMessage(r.getColor() + m.getMember().getEffectiveName() + " replied to " + replyRole.getColor() + replyMember.getEffectiveName() + " §r§8-|| " + OnAsyncPlayerChat.getMessageColor(m.getMember().getId()) + s);
 			}
 		} 
 		
