@@ -28,7 +28,7 @@ public class OnMessageReceived implements EventListener {
 		
 		MessageReceivedEvent e = (MessageReceivedEvent) event;
 		
-		String content = e.getMessage().getContentDisplay().toString().replace("//", " //");
+		String content = e.getMessage().getContentDisplay();
 		User user = e.getAuthor();
 		Member memberPGF = Discord.getGuildPGF().getMember(user);
 		// Guild g = Discord.JDA.getGuildById("579055447437475851");
