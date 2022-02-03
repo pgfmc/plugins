@@ -47,7 +47,7 @@ public class Nick implements CommandExecutor {
 	public static String removeCodes(String nick)
 	{
 		return ChatColor.stripColor(
-				ChatColor.translateAlternateColorCodes("§".charAt(0), nick.replace("&", "§"))
+				ChatColor.translateAlternateColorCodes('§', nick.replace('&', '§'))
 				);
 	}
 	/**
