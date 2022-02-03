@@ -12,7 +12,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import net.pgfmc.bot.cmd.LinkCommand;
 import net.pgfmc.bot.cmd.UnlinkCommand;
-import net.pgfmc.bot.player.ChatEvents;
+import net.pgfmc.bot.listeners.minecraft.OnAsyncPlayerChat;
+import net.pgfmc.bot.listeners.minecraft.OnPlayerAdvancementDone;
+import net.pgfmc.bot.listeners.minecraft.OnPlayerDeath;
+import net.pgfmc.bot.listeners.minecraft.OnPlayerJoin;
+import net.pgfmc.bot.listeners.minecraft.OnPlayerQuit;
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.CoreMain.Machine;
 
@@ -29,7 +33,11 @@ public class Main extends JavaPlugin {
 		plugin = this;
 		configPath = plugin.getDataFolder() + File.separator + "config.yml";
 		
-		getServer().getPluginManager().registerEvents(new ChatEvents(), this);
+		getServer().getPluginManager().registerEvents(new OnAsyncPlayerChat(), this);
+		getServer().getPluginManager().registerEvents(new OnPlayerAdvancementDone(), this);
+		getServer().getPluginManager().registerEvents(new OnPlayerDeath(), this);
+		getServer().getPluginManager().registerEvents(new OnPlayerJoin(), this);
+		getServer().getPluginManager().registerEvents(new OnPlayerQuit(), this);
 		
 		getCommand("link").setExecutor(new LinkCommand());
 		getCommand("unlink").setExecutor(new UnlinkCommand());
