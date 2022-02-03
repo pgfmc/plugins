@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -53,7 +54,7 @@ public class OwnableFile {
 				new OwnableBlock(pd, vec, lock);
 				amount++;
 			}
-			System.out.println("Loaded " + amount + " Ownables.");
+			Bukkit.getLogger().warning("Loaded " + amount + " Ownables.");
 		}
 		
 		// Entity Containers
@@ -120,7 +121,7 @@ public class OwnableFile {
 		
 		try {
 			database.save(file);
-			System.out.println("Container location saved!");
+			Bukkit.getLogger().warning("Container location saved!");
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -152,7 +153,7 @@ public class OwnableFile {
 			// saves data.
 			try {
 				database.save(file);
-				System.out.println("Container location saved!");
+				Bukkit.getLogger().warning("Container location saved!");
 				
 			} catch (IOException e) {
 				e.printStackTrace();

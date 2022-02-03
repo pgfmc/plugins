@@ -1,5 +1,6 @@
 package net.pgfmc.bot.cmd;
 
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -37,11 +38,11 @@ public class LinkCommand implements CommandExecutor {
 				sender.sendMessage("§6Message the code §f[ " + code + " ] §6to §aPGF.bot §6in dms");
 				sender.sendMessage("§6to link your account.");
 				
-				System.out.println("Account linking Thread ended!");
+				Bukkit.getLogger().warning("Account linking Thread ended!");
 			}
 		};
 		thread.start();
-		System.out.println("Account linking Thread started!");
+		Bukkit.getLogger().warning("Account linking Thread started!");
 		
 		return true;
 	}

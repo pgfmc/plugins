@@ -1,5 +1,6 @@
 package net.pgfmc.teams.ownable.entities;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -54,7 +55,7 @@ public class EntityAttackEvent implements Listener {
 					}
 					case EXCEPTION: {
 						e.setCancelled(true);
-						System.out.println("cont.isAllowed() returned Security.EXCEPTION!");
+						Bukkit.getLogger().warning("cont.isAllowed() returned Security.EXCEPTION!");
 						return;
 					}
 					}
