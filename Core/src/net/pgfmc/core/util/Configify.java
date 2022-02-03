@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public abstract class Configify {
@@ -44,7 +45,7 @@ public abstract class Configify {
 	public final static void reloadConfigify()
 	{
 		configs.stream().forEach(c -> c.reload());
-		System.out.println("(" + configs.size() + ") Configify reloaded");
+		Bukkit.getLogger().warning("(" + configs.size() + ") Configify reloaded");
 	}
 	
 	/**
@@ -53,7 +54,7 @@ public abstract class Configify {
 	public final static void enableConfigify()
 	{
 		configs.stream().forEach(c -> c.enable());
-		System.out.println("(" + configs.size() + ") Configify enabled");
+		Bukkit.getLogger().warning("(" + configs.size() + ") Configify enabled");
 	}
 	
 	/**
@@ -62,7 +63,7 @@ public abstract class Configify {
 	public final static void disableConfigify()
 	{
 		configs.stream().forEach(c -> c.disable());
-		System.out.println("(" + configs.size() + ") Configify disabled");
+		Bukkit.getLogger().warning("(" + configs.size() + ") Configify disabled");
 	}
 	
 	/**

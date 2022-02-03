@@ -77,7 +77,7 @@ public class OnAsyncPlayerChat implements Listener {
 		/*
 	    List<String> a = Arrays.asList(msg.substring(msg.indexOf("@")).split("@"));
 	    a = a.stream().map(fl -> fl.substring(0, fl.indexOf(" "))).collect(Collectors.toList());
-	    System.out.println(a);
+	    Bukkit.getLogger().warning(a);
 	    */
 
 		

@@ -3,6 +3,8 @@ package net.pgfmc.bot.listeners;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.bukkit.Bukkit;
+
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -19,7 +21,7 @@ public class OnReady implements EventListener {
 	@Override
 	public void onEvent(GenericEvent e) {		
 		if (!(e instanceof ReadyEvent)) { return; }
-		System.out.println("Discord Bot Initialized!");
+		Bukkit.getLogger().warning("Discord Bot Initialized!");
 		
 		// Don't run the code below if Machine isn't MAIN !!!!!!!!
 		if (CoreMain.machine != Machine.MAIN) return;

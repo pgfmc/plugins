@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import javax.security.auth.login.LoginException;
 
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -71,13 +72,13 @@ public class Discord extends ListenerAdapter {
 		if (m == null || m == "") return;
 		
 		getServerChannel().sendMessage(m).queue();
-		System.out.println("Discord: " + m);
+		Bukkit.getLogger().warning("Discord: " + m);
 	}
 	
 	public static void sendEmbed(MessageEmbed eb)
 	{
 		getServerChannel().sendMessage(eb).queue();
-		// System.out.println("Discord: " + eb.getAuthor().getName());
+		// Bukkit.getLogger().warning("Discord: " + eb.getAuthor().getName());
 	}
 	
 	public static void sendAlert(String m) {

@@ -3,6 +3,7 @@ package net.pgfmc.core.util;
 import java.io.File;
 import java.io.IOException;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -23,18 +24,18 @@ public interface Mixins {
 		File file = new File(dir);
 		
 		if (!file.exists()) {
-			System.out.println("Attempting to create file at " + dir);
+			Bukkit.getLogger().warning("Attempting to create file at " + dir);
 			file.getParentFile().mkdirs();
 			try {
 				file.createNewFile();
 				
 			} catch (IOException e) {
 				e.printStackTrace();
-				System.out.println("File at " + dir + " couldnt be created!");
+				Bukkit.getLogger().warning("File at " + dir + " couldnt be created!");
 				return null;
 				
 			}
-			System.out.println("File created!");
+			Bukkit.getLogger().warning("File created!");
 			return file;
 		}
 		
