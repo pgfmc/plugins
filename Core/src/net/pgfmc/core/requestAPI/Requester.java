@@ -228,7 +228,7 @@ public abstract class Requester implements Listener {
 			}
 		);
 		
-		System.out.println("All relations of player "  + Bukkit.getOfflinePlayer(uuid).getName() + " Expired due to " + reason.toString());
+		Bukkit.getLogger().warning("All relations of player "  + Bukkit.getOfflinePlayer(uuid).getName() + " Expired due to " + reason.toString());
 	}
 	
 	/**

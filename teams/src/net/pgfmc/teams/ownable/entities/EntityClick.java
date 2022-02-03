@@ -1,5 +1,6 @@
 package net.pgfmc.teams.ownable.entities;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -182,7 +183,7 @@ public class EntityClick implements Listener {
 						default: return;
 					}
 				}
-				case EXCEPTION: System.out.println("cont.isAllowed() returned Security.EXCEPTION!");
+				case EXCEPTION: Bukkit.getLogger().warning("cont.isAllowed() returned Security.EXCEPTION!");
 				}
 			}
 		}
