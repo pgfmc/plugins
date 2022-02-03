@@ -222,7 +222,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new SpawnProtect(), this);
 		
 		
-		System.out.println(Bukkit.getServer().getCommandAliases());
+		Bukkit.getLogger().warning(Bukkit.getServer().getCommandAliases().toString());
 		
 		new ProfanityFilter();
 	}

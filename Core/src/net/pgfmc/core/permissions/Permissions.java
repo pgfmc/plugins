@@ -58,7 +58,7 @@ public class Permissions extends Configify implements Listener {
 	 */
 	void recalculate(OfflinePlayer op)
 	{
-		System.out.println("Recalculating permisisons for player " + op.getName());
+		Bukkit.getLogger().warning("Recalculating permisisons for player " + op.getName());
 		
 		Set<Role> roles = Roles.getRolesByPlayer(op);
 		Set<Permission> perms = Roles.getPermissions(roles);
@@ -68,7 +68,7 @@ public class Permissions extends Configify implements Listener {
 		if (p == null || !op.isOnline())
 		{
 			clear(op);
-			System.out.println("Updating perms failed, player was offline");
+			Bukkit.getLogger().warning("Updating perms failed, player was offline");
 			return;
 		}
 		
@@ -81,7 +81,7 @@ public class Permissions extends Configify implements Listener {
 		
 		for (Permission perm : perms)
 		{
-			//System.out.println(perm.getName());
+			//Bukkit.getLogger().warning(perm.getName());
 			if (perm.getName().startsWith("-"))
 			{
 				permatch.setPermission(perm, false);
@@ -113,7 +113,7 @@ public class Permissions extends Configify implements Listener {
 	{
 		for (Permission perm : permissions)
 		{
-			//Bukkit.getPluginManager().getPermissions().stream().forEach(poingas -> System.out.println("POINGAS  :" + poingas.getName()));
+			//Bukkit.getPluginManager().getPermissions().stream().forEach(poingas -> Bukkit.getLogger().warning("POINGAS  :" + poingas.getName()));
 			if (perm.getName().startsWith("-") && perm.getName().endsWith(".*"))
 			{
 				Bukkit.getPluginManager().getPermissions().stream()
@@ -135,7 +135,7 @@ public class Permissions extends Configify implements Listener {
 			}
 			
 		}
-		//permissions.stream().forEach(poingas2 -> System.out.println("POINGAS2  :" + poingas2.getName()));
+		//permissions.stream().forEach(poingas2 -> Bukkit.getLogger().warning("POINGAS2  :" + poingas2.getName()));
 		return permissions;
 	}
 	
@@ -154,7 +154,7 @@ public class Permissions extends Configify implements Listener {
 	@Override
 	public void reload()
 	{
-		System.out.println("Reloading permissions.yml");
+		Bukkit.getLogger().warning("Reloading permissions.yml");
 		
 		FileConfiguration db = getConfig();
 		

@@ -28,7 +28,7 @@ public class PlayerDataManager extends Configify implements Listener {
 	 */
 	public static void setInit(Consumer<PlayerData> consoom) {
 		pdInit.add(consoom);
-		System.out.println("PD Initialization Function added!");
+		Bukkit.getLogger().warning("PD Initialization Function added!");
 	}
 	
 	/**
@@ -38,7 +38,7 @@ public class PlayerDataManager extends Configify implements Listener {
 	 */
 	public static void setPostLoad(Consumer<Void> consoom) {
 		postLoad.add(consoom);
-		System.out.println("Post PD function Init!");
+		Bukkit.getLogger().warning("Post PD function Init!");
 	}
 	
 	/**
@@ -55,7 +55,7 @@ public class PlayerDataManager extends Configify implements Listener {
 		initializeQ();
 		for (Consumer<?> c : postLoad) {
 			c.accept(null);
-			System.out.println("PD Post methods ran!");
+			Bukkit.getLogger().warning("PD Post methods ran!");
 		}
 	}
 	
@@ -83,7 +83,7 @@ public class PlayerDataManager extends Configify implements Listener {
 			}
 			pd.queue.clear();
 		}
-		System.out.println("Queue has been saved.");
+		Bukkit.getLogger().warning("Queue has been saved.");
 	}
 	
 	@EventHandler

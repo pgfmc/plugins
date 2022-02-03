@@ -3,6 +3,8 @@ package net.pgfmc.bot.functions;
 import java.util.LinkedList;
 import java.util.Random;
 
+import org.bukkit.Bukkit;
+
 import net.dv8tion.jda.api.entities.User;
 import net.pgfmc.core.permissions.Roles;
 import net.pgfmc.core.playerdataAPI.PlayerData;
@@ -20,7 +22,7 @@ public class AccountLinking {
 		// when a Direct Message is sent to the bot.
 		// 0000 because a shorter message will give error
 		code = (code.strip() + "0000").substring(0, 4);
-		System.out.println("Account linking: Input code is " + code);
+		Bukkit.getLogger().warning("Account linking: Input code is " + code);
 		
 		PlayerData codeMatch = null; // the playerdata that has the code match.
 		boolean taken = false; // wether or not the discord account has been taken.
@@ -30,7 +32,7 @@ public class AccountLinking {
 			if (pd.getData("linkCode") != null && pd.getData("linkCode").equals(code)) {
 				pd.setData("linkCode", null);
 				codeMatch = pd;
-				System.out.println("Account linking: Found a match");
+				Bukkit.getLogger().warning("Account linking: Found a match");
 			}
 			
 			if (!taken) {
@@ -40,7 +42,7 @@ public class AccountLinking {
 		
 		// Link the account
 		if (codeMatch != null && !taken) {
-			System.out.println("Account linking: Successfully linked (Minecraft)" + codeMatch.getName() + " and (Discord)" + user.getName());
+			Bukkit.getLogger().warning("Account linking: Successfully linked (Minecraft)" + codeMatch.getName() + " and (Discord)" + user.getName());
 			link(codeMatch, user.getId());
 			codeMatch.sendMessage("§aYour roles have been updated!");
 			return true;
@@ -69,7 +71,7 @@ public class AccountLinking {
 	public static String generateCode()
 	{
 		String code = String.valueOf(new Random().nextInt(9999 - 1000) + 1000);
-		System.out.println("Generating code: Code is " + code);
+		Bukkit.getLogger().warning("Generating code: Code is " + code);
 		// range is 1000 to 9999
 		LinkedList<String> takenCodes = new LinkedList<>();
 		
@@ -79,13 +81,13 @@ public class AccountLinking {
 			if (tempCode == null || tempCode == "") continue;
 			takenCodes.add(tempCode);
 		}
-		System.out.println("Generating code: Taken codes are " + takenCodes);
+		Bukkit.getLogger().warning("Generating code: Taken codes are " + takenCodes);
 		
 		while (takenCodes.contains(code))
 		{
-			System.out.println("Generating code: Code taken, generating new code");
+			Bukkit.getLogger().warning("Generating code: Code taken, generating new code");
 			code = String.valueOf(new Random().nextInt(9999 - 1000) + 1000);
-			System.out.println("Generating code: Code is " + code);
+			Bukkit.getLogger().warning("Generating code: Code is " + code);
 		}
 		
 		return code;

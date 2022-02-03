@@ -41,7 +41,7 @@ public class ProfanityFilter extends Configify {
 	@Override
 	public void reload() {
 		nword = getConfig().getStringList("profantity");
-		System.out.println("New profanity list!");
+		Bukkit.getLogger().warning("New profanity list!");
 		
 		if (nword.toString().equals(Arrays.asList("test", "test1").toString()))
 		{

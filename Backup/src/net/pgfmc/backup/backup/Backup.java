@@ -63,7 +63,7 @@ public class Backup implements CommandExecutor {
 	{
 		if (!(CoreMain.machine == Machine.MAIN)) { return; }
 		
-		System.out.println("Purging data");
+		Bukkit.getLogger().warning("Purging data");
 		
 		// Purge old CoreProtect data
 		CoreProtectAPI co = Main.plugin.getCoreProtect();
@@ -77,7 +77,7 @@ public class Backup implements CommandExecutor {
 		 */
 		Bukkit.getScheduler().callSyncMethod(Main.plugin, () -> Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), "save-all"));
 		
-		System.out.println("Creating backup thread.");
+		Bukkit.getLogger().warning("Creating backup thread.");
 		
 		/*
 		 * Creates a new thread to run this on, makes it so server doesn't crash lol (jk idk how it works)
@@ -91,11 +91,11 @@ public class Backup implements CommandExecutor {
 					{
 						if (!f.isDirectory() && f.lastModified() < new Date().getTime() - 172800000L) // Checks if older than 2 days in milliseconds
 						{
-							System.out.println("Deleting log: " + f.getName());
+							Bukkit.getLogger().warning("Deleting log: " + f.getName());
 							f.delete();
 						} else
 						{
-							System.out.println("Saving log: " + f.getName());
+							Bukkit.getLogger().warning("Saving log: " + f.getName());
 						}
 					}
 					
@@ -104,8 +104,8 @@ public class Backup implements CommandExecutor {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				System.out.println("Ending backup thread.");
-				System.out.println("Restarting server");
+				Bukkit.getLogger().warning("Ending backup thread.");
+				Bukkit.getLogger().warning("Restarting server");
 				Bukkit.shutdown();
 			}
 		};
