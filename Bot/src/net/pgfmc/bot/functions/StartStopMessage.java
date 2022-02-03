@@ -16,7 +16,7 @@ public class StartStopMessage {
 		
 		feed.getRetrievedHistory()
 		.stream()
-		.filter(m -> m.getAuthor().getId().equals("721949520728031232"))
+		.filter(m -> !m.getEmbeds().isEmpty() && m.getAuthor().getId().equals("721949520728031232"))
 		.forEach(m -> m.delete().queue());
 		
 		isDeleted = true;
