@@ -18,7 +18,10 @@ public abstract class Configify {
 		this.file = file;
 	}
 	
-	public Configify() {}
+	public Configify()
+	{
+		configs.add(this);
+	}
 	
 	/**
 	 * Reload method, set variables and stuff when called (from file)
