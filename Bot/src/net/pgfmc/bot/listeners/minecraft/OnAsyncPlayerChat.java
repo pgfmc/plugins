@@ -62,7 +62,7 @@ public class OnAsyncPlayerChat implements Listener {
 			e.setCancelled(true);
 			
 			EmbedBuilder eb = new EmbedBuilder();
-			eb.setColor(Discord.red);
+			eb.setColor(Discord.RED);
 			eb.setAuthor(p.getName(), null, "https://crafatar.com/avatars/" + p.getUniqueId());
 			eb.setTitle("Blacklisted word detected! (Minecraft)");
 			eb.setDescription("A blacklisted word was detected by " + p.getName() + " in Minecraft.");
@@ -77,7 +77,7 @@ public class OnAsyncPlayerChat implements Listener {
 		/*
 	    List<String> a = Arrays.asList(msg.substring(msg.indexOf("@")).split("@"));
 	    a = a.stream().map(fl -> fl.substring(0, fl.indexOf(" "))).collect(Collectors.toList());
-	    System.out.println(a);
+	    Bukkit.getLogger().warning(a);
 	    */
 
 		
