@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.bukkit.Bukkit;
+
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.util.Configify;
 import net.pgfmc.core.util.Mixins;
@@ -39,7 +41,12 @@ public class ProfanityFilter extends Configify {
 	@Override
 	public void reload() {
 		nword = getConfig().getStringList("profantity");
-		System.out.println("New profanity list: " + nword);
+		System.out.println("New profanity list!");
+		
+		if (nword.toString().equals(Arrays.asList("test", "test1").toString()))
+		{
+			Bukkit.getLogger().warning("Profanity filter list is default! Please change.");
+		}
 	}
 
 
