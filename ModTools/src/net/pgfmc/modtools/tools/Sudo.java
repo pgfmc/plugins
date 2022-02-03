@@ -20,16 +20,17 @@ public class Sudo implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		
-		if (args.length != 2) { return false; }
+		if (args.length < 2) return false;
 		
-		if (Bukkit.getPlayer(args[0]) == null)
+		Player target = Bukkit.getPlayer(args[0]);
+		
+		if (target == null)
 		{
 			sender.sendMessage("§cCould not find player §6§n" + args[0] + "§r§c.");
 			return true;
 		}
 		
-		Player target = Bukkit.getPlayer(args[0]);
-		String msg = args[1];
+		String msg = String.join(" ", args).replace(args[0], "");
 		
 		target.chat(msg);
 		sender.sendMessage("§aCommand successfully ran!");
