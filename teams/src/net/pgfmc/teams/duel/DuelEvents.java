@@ -30,33 +30,27 @@ public class DuelEvents implements Listener {
 	@EventHandler
 	public void noDamage(EntityDamageEvent e) { // --------------------- sends a player back to their spawn point after they get defeated in a duel
 		
-		if (e.getEntity() instanceof Player) {
-			Player gamer = (Player) e.getEntity();
-			
-			Duel BlakeIsBest = PlayerData.getData(gamer, "duel");
-			
-			if (BlakeIsBest != null) {
-				if ((BlakeIsBest.getState() == DuelState.BATTLEPENDING ||  BlakeIsBest.getState() == DuelState.INBATTLE) && gamer.getGameMode() == GameMode.SURVIVAL) {
-					
-					if (e.getFinalDamage() >= gamer.getHealth()) { // if they would die on the next hit
-						
-						if (!(boolean) PlayerData.getData(gamer, "duelHit") && (
-								e.getCause() == DamageCause.FALL
-								|| e.getCause() == DamageCause.LAVA
-								|| e.getCause() == DamageCause.HOT_FLOOR
-								|| e.getCause() == DamageCause.SUICIDE)) { // if the player wasnt hit by a player, the damage would kill them normally.
-							BlakeIsBest.playerDie(PlayerData.getPlayerData(gamer), null, false);
-							return;
-						}
-						
-						
-						e.setCancelled(true);
-						
-						BlakeIsBest.playerDie(PlayerData.getPlayerData(gamer), null, true);
-					}
-				}
-			}
+		if (!(e.getEntity() instanceof Player)) return;
+		
+		Player gamer = (Player) e.getEntity();
+		Duel BlakeIsBest = PlayerData.getData(gamer, "duel");
+		
+		if (BlakeIsBest == null) return;
+		if (!((BlakeIsBest.getState() == DuelState.BATTLEPENDING ||  BlakeIsBest.getState() == DuelState.INBATTLE) && gamer.getGameMode() == GameMode.SURVIVAL)) return;
+		if (e.getFinalDamage() < gamer.getHealth()) return; // if they would die on the next hit
+		
+		if (!(boolean) PlayerData.getData(gamer, "duelHit") && (
+				e.getCause() == DamageCause.FALL
+				|| e.getCause() == DamageCause.LAVA
+				|| e.getCause() == DamageCause.HOT_FLOOR
+				|| e.getCause() == DamageCause.SUICIDE)) { // if the player wasnt hit by a player, the damage would kill them normally.
+			BlakeIsBest.playerDie(PlayerData.getPlayerData(gamer), null, false);
+			return;
 		}
+		
+		BlakeIsBest.playerDie(PlayerData.getPlayerData(gamer), null, true);
+		
+		e.setCancelled(true);
 	}
 	
 	@EventHandler
