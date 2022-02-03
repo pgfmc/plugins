@@ -49,9 +49,16 @@ public class Main extends JavaPlugin {
 		
 		StartStopMessage.enable();
 		
-		// Gets the past 20 messages
-		MessageHistory feed = new MessageHistory(Discord.getServerChannel());
-		feed.retrievePast(20).queue();
+		MessageHistory feed = new MessageHistory(Discord.getServerChannel());	
+		
+		Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+			@Override
+			public void run() {
+				// Gets the past 20 messages
+				
+				feed.retrievePast(20).queue();
+			}
+		}, 20);
 		
 		Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
 			@Override
