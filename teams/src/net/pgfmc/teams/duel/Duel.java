@@ -173,7 +173,7 @@ public class Duel {
 				pd.sendMessage("§n" + killer.getRankedName() + " §r§6defeated §n" + ded.getRankedName() + "§r§6!");
 				pd.playSound(Sound.ENTITY_PLAYER_BIG_FALL);
 			} else if (wasKilled) {
-				pd.sendMessage("§n" + ded.getName() + "§r§6 was defeated.");
+				pd.sendMessage("§n" + ded.getRankedName() + "§r§6 was defeated.");
 				pd.playSound(Sound.ENTITY_PLAYER_BIG_FALL);
 			}
 		}
