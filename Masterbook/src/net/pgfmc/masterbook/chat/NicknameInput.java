@@ -16,8 +16,9 @@ public class NicknameInput implements Listener {
 		
 		if (pd.getData("nickTemp") == null) return;
 		
-		e.setCancelled(true);
 		Nick.setNick(pd.getPlayer(), e.getMessage());
 		pd.setData("nickTemp", null);
+		
+		e.setCancelled(true);
 	}
 }
