@@ -21,13 +21,14 @@ import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.permissions.Roles.Role;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.util.Configify;
+import net.pgfmc.core.util.Mixins;
 
 public class Permissions extends Configify implements Listener {
 	
 	private static HashMap<String, PermissionAttachment> permatches = new HashMap<>();
 	
 	public Permissions() {
-		super(new File(CoreMain.plugin.getDataFolder() + File.separator + "permissions.yml"));
+		super(Mixins.getFile(CoreMain.plugin.getDataFolder() + File.separator + "permissions.yml"));
 		
 		for (Role r : Role.values())
 		{
@@ -57,7 +58,7 @@ public class Permissions extends Configify implements Listener {
 	 */
 	void recalculate(OfflinePlayer op)
 	{
-		System.out.println("Recalculating permisisons for player " + op.getName());
+		Bukkit.getLogger().warning("Recalculating permisisons for player " + op.getName());
 		
 		Set<Role> roles = Roles.getRolesByPlayer(op);
 		Set<Permission> perms = Roles.getPermissions(roles);
@@ -67,7 +68,7 @@ public class Permissions extends Configify implements Listener {
 		if (p == null || !op.isOnline())
 		{
 			clear(op);
-			System.out.println("Updating perms failed, player was offline");
+			Bukkit.getLogger().warning("Updating perms failed, player was offline");
 			return;
 		}
 		
@@ -80,7 +81,7 @@ public class Permissions extends Configify implements Listener {
 		
 		for (Permission perm : perms)
 		{
-			System.out.println(perm.getName());
+			//Bukkit.getLogger().warning(perm.getName());
 			if (perm.getName().startsWith("-"))
 			{
 				permatch.setPermission(perm, false);
@@ -112,7 +113,7 @@ public class Permissions extends Configify implements Listener {
 	{
 		for (Permission perm : permissions)
 		{
-			//Bukkit.getPluginManager().getPermissions().stream().forEach(poingas -> System.out.println("POINGAS  :" + poingas.getName()));
+			//Bukkit.getPluginManager().getPermissions().stream().forEach(poingas -> Bukkit.getLogger().warning("POINGAS  :" + poingas.getName()));
 			if (perm.getName().startsWith("-") && perm.getName().endsWith(".*"))
 			{
 				Bukkit.getPluginManager().getPermissions().stream()
@@ -134,7 +135,7 @@ public class Permissions extends Configify implements Listener {
 			}
 			
 		}
-		permissions.stream().forEach(poingas2 -> System.out.println("POINGAS2  :" + poingas2.getName()));
+		//permissions.stream().forEach(poingas2 -> Bukkit.getLogger().warning("POINGAS2  :" + poingas2.getName()));
 		return permissions;
 	}
 	
@@ -153,7 +154,7 @@ public class Permissions extends Configify implements Listener {
 	@Override
 	public void reload()
 	{
-		System.out.println("Reloading permissions.yml");
+		Bukkit.getLogger().warning("Reloading permissions.yml");
 		
 		FileConfiguration db = getConfig();
 		
@@ -173,4 +174,13 @@ public class Permissions extends Configify implements Listener {
 		PlayerData.getOnlinePlayerData().stream()
 		.forEach(pd -> Roles.recalculate(pd));
 	}
+
+	@Override
+	public void enable() {
+		reload();
+		
+	}
+
+	@Override
+	public void disable() {}
 }

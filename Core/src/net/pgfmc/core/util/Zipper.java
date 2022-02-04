@@ -8,6 +8,8 @@ import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import org.bukkit.Bukkit;
+
 public class Zipper {
 	
 	public static void zip(String source, String dest) throws IOException
@@ -31,7 +33,7 @@ public class Zipper {
         	}
         }
 
-        System.out.println("Created zip file: " + destPath);
+        Bukkit.getLogger().warning("Created zip file: " + destPath);
     }
     
 }

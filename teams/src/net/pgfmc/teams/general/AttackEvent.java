@@ -39,6 +39,8 @@ public class AttackEvent implements Listener {
 			Player attacker = (Player) ((Projectile) e.getDamager()).getShooter();
 			Player target = (Player) e.getEntity();
 			
+			if (attacker.getUniqueId().equals(target.getUniqueId())) return;
+			
 			if (target.getGameMode() == GameMode.SURVIVAL && attacker.getGameMode() == GameMode.SURVIVAL) { // makes sure both players are in survival
 				
 				PlayerData apd = PlayerData.getPlayerData(attacker);
@@ -139,7 +141,11 @@ public class AttackEvent implements Listener {
 					}
 
 				}
-				e.setDamage(0);
+				
+				if (!target.getUniqueId().equals(attacker.getUniqueId()))
+				{
+					e.setDamage(0);
+				}
 				
 			} else if (e.getEntity() instanceof InventoryHolder && OwnableEntity.getContainer(e.getEntity().getUniqueId()) != null)  {
 				

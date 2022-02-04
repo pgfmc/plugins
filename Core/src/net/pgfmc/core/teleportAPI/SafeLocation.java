@@ -3,6 +3,7 @@ package net.pgfmc.core.teleportAPI;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -41,7 +42,7 @@ public class SafeLocation implements Runnable {
 			return;
 		}
 		
-		System.out.println("Starting thread");
+		Bukkit.getLogger().warning("Starting thread");
 		thread.start();
 	}
 	
@@ -58,7 +59,7 @@ public class SafeLocation implements Runnable {
 			// This loop controls the radius from the centre
 			for (int r = 1; r <= 8; r++)
 			{
-				// System.out.println("Testing lap: " + x + "; with len: " + len);
+				// Bukkit.getLogger().warning("Testing lap: " + x + "; with len: " + len);
 				
 				// This loop controls which block to look at next
 				// It checks all 4 sides in the same loop, so it only needs to loop once
@@ -68,64 +69,64 @@ public class SafeLocation implements Runnable {
 					if (isSafe(v.world().getBlockAt(v.x() - r + i, y, v.z() + r)))
 					{
 						safeLoc = new Location(v.world(), v.x() - r + i, y, v.z() + r).add(0.5, 0, 0.5);
-						System.out.println("Safe location found: " + safeLoc.toString());
+						Bukkit.getLogger().warning("Safe location found: " + safeLoc.toString());
 						return;
 					}
-					// System.out.println("SOUTHWEST -> SOUTHEAST failed");
+					// Bukkit.getLogger().warning("SOUTHWEST -> SOUTHEAST failed");
 					
 					// SOUTHEAST -> NORTHEAST
 					if (isSafe(v.world().getBlockAt(v.x() + r, y, v.z() + r - i)))
 					{
 						safeLoc = new Location(v.world(), v.x() + r, y, v.z() + r - i).add(0.5, 0, 0.5);
-						System.out.println("Safe location found: " + safeLoc.toString());
+						Bukkit.getLogger().warning("Safe location found: " + safeLoc.toString());
 						return;
 					}
-					// System.out.println("SOUTHEAST -> NORTHEAST failed");
+					// Bukkit.getLogger().warning("SOUTHEAST -> NORTHEAST failed");
 					
 					// NORTHEAST -> NORTHWEST
 					if (isSafe(v.world().getBlockAt(v.x() + r - i, y, v.z() - r)))
 					{
 						safeLoc = new Location(v.world(), v.x() + r - i, y, v.z() - r).add(0.5, 0, 0.5);
-						System.out.println("Safe location found: " + safeLoc.toString());
+						Bukkit.getLogger().warning("Safe location found: " + safeLoc.toString());
 						return;
 					}
-					// System.out.println("NORTHEAST -> NORTHWEST failed");
+					// Bukkit.getLogger().warning("NORTHEAST -> NORTHWEST failed");
 					
 					// NORTHWEST -> SOUTHWEST
 					if (isSafe(v.world().getBlockAt(v.x() - r, y, v.z() - r + i)))
 					{
 						safeLoc = new Location(v.world(), v.x() - r, y, v.z() - r + i).add(0.5, 0, 0.5);
-						System.out.println("Safe location found: " + safeLoc.toString());
+						Bukkit.getLogger().warning("Safe location found: " + safeLoc.toString());
 						return;
 					}
-					// System.out.println("NORTHWEST -> SOUTHWEST failed");
+					// Bukkit.getLogger().warning("NORTHWEST -> SOUTHWEST failed");
 					
 				}
 			}
 		}
 		
-		System.out.println("Safe location not found");
+		Bukkit.getLogger().warning("Safe location not found");
 		safeLoc = loc;
 	}
 	
 	public Thread getThread()
 	{
-		System.out.println("Getting SafeLocation thread..");
+		Bukkit.getLogger().warning("Getting SafeLocation thread..");
 		return thread;
 	}
 	
 	private boolean isSafe(Block b)
 	{
-		// System.out.println("Testing block: " + bmid.getX() + ", " + bmid.getY() + ", " + bmid.getZ());
+		// Bukkit.getLogger().warning("Testing block: " + bmid.getX() + ", " + bmid.getY() + ", " + bmid.getZ());
 		
 		if (unsafe.contains(b.getType())
 				|| unsafe.contains(b.getRelative(BlockFace.DOWN).getType())
 				|| unsafe.contains(b.getRelative(BlockFace.UP).getType())) return false;
-		// System.out.println("Passed contains test");
+		// Bukkit.getLogger().warning("Passed contains test");
 		if (!(b.isPassable()
 				&& b.getRelative(BlockFace.UP).isPassable()
 				&& !b.getRelative(BlockFace.DOWN).isPassable())) return false;
-		// System.out.println("Passed passable test");
+		// Bukkit.getLogger().warning("Passed passable test");
 		// if (bup.getLocation().getBlockY() >= v.world().getMaxHeight()) return false;
 		
 		return true;

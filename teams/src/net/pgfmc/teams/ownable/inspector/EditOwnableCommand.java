@@ -73,7 +73,7 @@ public class EditOwnableCommand implements CommandExecutor {
 				if (args.length > 1) {
 					PlayerData ope = PlayerData.getPlayerData(args[1]);
 					if (ope != null) {
-						cache.setOwner(pd);
+						cache.setOwner(ope);
 						sender.sendMessage("§aOwner set to " + ope.getRankedName());
 						return true;
 					}

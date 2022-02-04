@@ -14,8 +14,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
 import net.pgfmc.bot.Discord;
 import net.pgfmc.bot.functions.AccountLinking;
-import net.pgfmc.bot.functions.StartStopMessageDelete;
-import net.pgfmc.bot.player.ChatEvents;
+import net.pgfmc.bot.listeners.minecraft.OnAsyncPlayerChat;
 import net.pgfmc.core.chat.ProfanityFilter;
 import net.pgfmc.core.permissions.Roles;
 import net.pgfmc.core.permissions.Roles.Role;
@@ -23,31 +22,29 @@ import net.pgfmc.core.permissions.Roles.Role;
 public class OnMessageReceived implements EventListener {
 
 	@Override
-	public void onEvent(GenericEvent e) {
+	public void onEvent(GenericEvent event) {
 		
-		if (!(e instanceof MessageReceivedEvent)) { return; }
+		if (!(event instanceof MessageReceivedEvent)) { return; }
 		
-		MessageReceivedEvent m = (MessageReceivedEvent) e;
+		MessageReceivedEvent e = (MessageReceivedEvent) event;
 		
-		String s = m.getMessage().getContentDisplay();
-		User user = m.getAuthor();
-		Member memberPGF = Discord.JDA.getGuildById(Discord.PGF_ID).getMember(user);
+		String content = e.getMessage().getContentDisplay();
+		User user = e.getAuthor();
+		Member memberPGF = Discord.getGuildPGF().getMember(user);
 		// Guild g = Discord.JDA.getGuildById("579055447437475851");
 		
-		if (s.length() == 0) return;
+		if (content.length() == 0) return;
 		
-		if (ProfanityFilter.hasProfanity(s))
+		if (ProfanityFilter.hasProfanity(content))
 		{
-			m.getTextChannel().sendMessage(user.getAsMention() + ", please do not use blacklisted words!");
-			m.getMessage().delete().queue();
+			e.getTextChannel().sendMessage(user.getAsMention() + ", please do not use blacklisted words!");
+			e.getMessage().delete().queue();
 			
-			EmbedBuilder eb = new EmbedBuilder();
-			eb.setColor(Discord.red);
-			eb.setAuthor(user.getAsTag(), null, user.getAvatarUrl());
+			EmbedBuilder eb = Discord.simpleServerEmbed(user.getAsTag(), user.getAvatarUrl(), Discord.RED);
 			eb.setTitle("Blacklisted word detected! (Discord)");
-			eb.setDescription("A blacklisted word was detected by " + user.getName() + "in Discord.");
+			eb.setDescription("A blacklisted word was detected by " + user.getName() + " in Discord.");
 			eb.addField("User", user.getName(), false);
-			eb.addField("Message", "|| " + s + " ||", false);
+			eb.addField("Message", "|| " + content + " ||", false);
 			eb.setTimestamp(OffsetDateTime.now());
 			
 			Discord.sendAlert(eb.build());
@@ -55,7 +52,8 @@ public class OnMessageReceived implements EventListener {
 		}
 		
 		// message sent in #server by a Member (not a bot)
-		if (m.getChannel().getId().equals(Discord.SERVER_CHANNEL) && !user.isBot()) {
+		if (e.getChannel().getId().equals(Discord.getServerChannel().getId()) && !user.isBot())
+		{
 			Role r = Role.MEMBER;
 			// If member of PGF (mainly for BTS/outside PGF server)
 			if (memberPGF != null)
@@ -68,55 +66,60 @@ public class OnMessageReceived implements EventListener {
 						);
 			}
 			
-			s.replace("%", ""); // removes all "%"s from the message.
+			content.replace("%", ""); // removes all "%"s from the message.
 			
 			// attempts to bring over formatting from discord.
-			s = format(s, "\\*\\*\\*", "Â§lÂ§o"); 
-			s = format(s, "\\*\\*", "Â§l");
-			s = format(s, "\\*", "Â§o");
-			s = format(s, "__", "Â§n");
+			content = format(content, "\\*\\*\\*", "§l§o"); 
+			content = format(content, "\\*\\*", "§l");
+			content = format(content, "\\*", "§o");
+			content = format(content, "__", "§n");
 			
 			// If not reply
-			if(m.getMessage().getReferencedMessage() == null || m.getMessage().getReferencedMessage().getAuthor().isBot())
+			if(e.getMessage().getReferencedMessage() == null || e.getMessage().getReferencedMessage().getAuthor().isBot())
 			{
-				Bukkit.getServer().broadcastMessage(r.getColor() + m.getMember().getEffectiveName() + " Â§rÂ§8-|| " + ChatEvents.getMessageColor(m.getMember().getId()) + s);
+				Bukkit.getServer().broadcastMessage(r.getColor()
+						+ e.getMember().getEffectiveName()
+						+ " §r§8-|| "
+						+ OnAsyncPlayerChat.getMessageColor(e.getMember().getId())
+						+ content);
+				
 				return;
-
+				
 			} else {
-                User replyUser = m.getMessage().getReferencedMessage().getAuthor();
-                Member replyMember = Discord.JDA.getGuildById(Discord.PGF_ID).getMember(replyUser);
                 Role replyRole = Role.MEMBER;
                 
-                if (replyMember != null)
+                if (memberPGF != null)
                 {
                     replyRole = Roles.getTop(
-                    		Roles.getRolesById(replyMember
+                    		Roles.getRolesById(memberPGF
                     				.getRoles().stream()
                     				.map(role -> role.getId())
                     				.collect(Collectors.toList()))
                     		);
                 }
                 
-                Bukkit.getServer().broadcastMessage(r.getColor() + m.getMember().getEffectiveName() + " replied to " + replyRole.getColor() + replyMember.getEffectiveName() + " Â§rÂ§8-|| " + ChatEvents.getMessageColor(m.getMember().getId()) + s);
+                Bukkit.getServer().broadcastMessage(r.getColor()
+                		+ e.getMember().getEffectiveName()
+                		+ " replied to "
+                		+ replyRole.getColor()
+                		+ memberPGF.getEffectiveName()
+                		+ " §r§8-|| "
+                		+ OnAsyncPlayerChat.getMessageColor(e.getMember().getId())
+                		+ content);
+                
 			}
 		} 
 		
 		
-		// message sent to the bot in DMs.	
-			
-		if (m.getChannelType() == ChannelType.PRIVATE && !m.getAuthor().isBot()) {
-			if (AccountLinking.linkAsk(s, user))
+		// message sent to the bot in DMs.
+		if (e.getChannelType() == ChannelType.PRIVATE && !e.getAuthor().isBot()) {
+			if (AccountLinking.linkAsk(content, user))
 			{
-				m.getChannel().sendMessage("Your account has been linked.").queue();
+				e.getChannel().sendMessage("Your account has been linked.").queue();
 			} else
 			{
-				m.getChannel().sendMessage("Invalid code, please try generating a new code.").queue();
+				e.getChannel().sendMessage("Invalid code, please try generating a new code.").queue();
 			}
-			
-		// if the bot sent the message.
-		} else if (m.getChannel().getId().equals(Discord.SERVER_CHANNEL) && user.getId().equals("721949520728031232")) {
-				
-			StartStopMessageDelete.run(m.getMessage());
 		}
 	}
 	
@@ -130,7 +133,7 @@ public class OnMessageReceived implements EventListener {
 		for (String S : sa) {
 			
 			if (mark) {
-				s = s + mc + S + "Â§r";
+				s = s + mc + S + "§r";
 				mark = false;
 			} else {
 				s = s + S;

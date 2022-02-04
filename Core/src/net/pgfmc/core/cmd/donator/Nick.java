@@ -1,11 +1,11 @@
 package net.pgfmc.core.cmd.donator;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,18 +16,6 @@ import net.pgfmc.core.permissions.Permissions;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
 public class Nick implements CommandExecutor {
-	
-	/*
-	 * Color codes and format codes
-	 */
-	public static final List<String> colors = new ArrayList<>(Arrays.asList("&0"
-			, "&2", "&4", "&6", "&8"
-			, "&a", "&c", "&e", "&1"
-			, "&3", "&5", "&7", "&9"
-			, "&b", "&d", "&d", "&f"));
-	public static final List<String> formats = new ArrayList<>(Arrays.asList("&k"
-			, "&m", "&o", "&l"
-			, "&n", "&r", "&k"));
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -58,19 +46,9 @@ public class Nick implements CommandExecutor {
 	 */
 	public static String removeCodes(String nick)
 	{
-		String nickname = nick.replace("§", "&");
-		
-		for (String code : colors)
-		{
-			nickname = nickname.replace(code, "");
-		}
-		
-		for (String code : formats)
-		{
-			nickname = nickname.replace(code, "");
-		}
-		
-		return nickname;
+		return ChatColor.stripColor(
+				ChatColor.translateAlternateColorCodes('§', nick.replace('&', '§'))
+				);
 	}
 	/**
 	 * This prevents a player from
@@ -86,22 +64,15 @@ public class Nick implements CommandExecutor {
 		// If their raw nickname is just their player name, ignore
 		if (raw.equals(pd.getName().toLowerCase())) { return; }
 		
-		// Loop through every player
-		for (OfflinePlayer op : Bukkit.getOfflinePlayers())
-		{
-			// Skip the player who's nickname we're checking for impostors
-			if (op.getUniqueId().equals(pd.getUniqueId())) { continue; }
-			
-			// If player1's name matches player2's name OR their raw nicknames match
-			if (op.getName().toLowerCase().equals(raw) || removeCodes(
-					((String) Optional.ofNullable(PlayerData.getData(op, "nick")).orElse(""))).toLowerCase()
-					.equals(raw))
-			{
-				// Remove the impostor's nickname
-				pd.setData("nick", null).queue();
-				return;
-			}
-		}
+		// If op isn't pd, if op's name is pd's nickname with or without color codes
+		if (Arrays.asList(Bukkit.getOfflinePlayers()).stream()
+				.filter(op -> !op.getUniqueId().equals(pd.getUniqueId()) && (
+						op.getName().toLowerCase().equals(raw)
+							|| removeCodes(((String) Optional.ofNullable(PlayerData.getData(op, "nick")).orElse(""))).toLowerCase().equals(raw)
+						)).collect(Collectors.toList()).size() == 0) return; // If list is empty (no impostors)
+		
+		// At least 1 impostor, remove nickname
+		pd.setData("nick", null).queue();
 	}
 	
 	/**
@@ -118,8 +89,13 @@ public class Nick implements CommandExecutor {
 			p.sendMessage("§cYou do not have permission to use this command.");
 			return;
 		}
-		
-		nick = nick.replaceAll("[^A-Za-z0-9&]", "").replace("&k", "");
+		nick = nick.replaceAll("[^A-Za-z0-9&]", "")
+				.replace("&k", "")
+				.replace("&m", "")
+				.replace("&o", "")
+				.replace("&n", "")
+				.replace("&l", "")
+				.replace("&r", "");
 		String raw = removeCodes(nick);
 		
 		/*

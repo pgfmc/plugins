@@ -27,6 +27,7 @@ import net.pgfmc.core.inventoryAPI.extra.InventoryPressEvent;
 import net.pgfmc.core.permissions.Permissions;
 import net.pgfmc.core.playerdataAPI.PlayerDataManager;
 import net.pgfmc.core.teleportAPI.SpawnProtect;
+import net.pgfmc.core.util.Configify;
 import net.pgfmc.core.util.DimManager;
 import net.pgfmc.core.util.Mixins;
 import net.pgfmc.core.util.ReloadConfigify;
@@ -83,11 +84,30 @@ public class CoreMain extends JavaPlugin implements Listener {
 	}
 	
 	public enum Machine {
-		MAIN,
-		TEST,
-		JIMBO,
-		CRIMSON
-	};
+		MAIN("784261883632681032", "891939656969621534"),
+		TEST("771247931005206579", "938677080349093898"),
+		JIMBO("771247931005206579", "938677080349093898"),
+		CRIMSON("771247931005206579", "938677080349093898");
+		
+		String serverChannelId;
+		String alertChannelId;
+		
+		private Machine(String serverChannelId, String alertChannelId)
+		{
+			this.serverChannelId = serverChannelId;
+			this.alertChannelId = alertChannelId;
+		}
+		
+		public String getServerChannelId()
+		{
+			return serverChannelId;
+		}
+		
+		public String getAlertChannelId()
+		{
+			return alertChannelId;
+		}
+	}
 	
 	public static Machine machine;
 	
@@ -110,11 +130,11 @@ public class CoreMain extends JavaPlugin implements Listener {
 				+ File.separator;
 		
 		switch (this.getServer().getPort()) {
+		case 25565: machine = Machine.MAIN; break;
 		case 25566: machine = Machine.TEST; break;
 		case 25567: machine = Machine.JIMBO; break;
-		case 25568: machine = Machine.TEST; break;
 		case 25569: machine = Machine.CRIMSON; break;
-		default: machine = Machine.MAIN; break;
+		default: machine = Machine.TEST; break;
 		}
 		
 		
@@ -202,16 +222,16 @@ public class CoreMain extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new SpawnProtect(), this);
 		
 		
-		System.out.println(Bukkit.getServer().getCommandAliases());
+		Bukkit.getLogger().warning(Bukkit.getServer().getCommandAliases().toString());
 		
 		new ProfanityFilter();
-		new ReloadConfigify().reload();
 	}
 	
 	@Override
 	public void onDisable() {
 		PlayerDataManager.saveQ();
 		Permissions.clear();
+		Configify.disableConfigify();
 	}
 	
 	
@@ -239,6 +259,8 @@ public class CoreMain extends JavaPlugin implements Listener {
 				Bukkit.getLogger().warning("[" + pl.getName() + " (" + pl.getDescription().getVersion() + ")] does not match PGF-Core (" + ver + ") version!");
 			}
 		}
+		
+		Configify.enableConfigify();
 	}
 }
 

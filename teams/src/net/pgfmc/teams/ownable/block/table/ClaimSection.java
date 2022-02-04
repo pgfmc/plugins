@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.bukkit.Bukkit;
+
 import com.sk89q.worldguard.util.collect.LongHash;
 
 import net.pgfmc.core.util.Vector4;
@@ -220,11 +222,11 @@ public class ClaimSection {
 	
 	public ClaimSection getNeighbor(Neighbor n) {
 		
-		System.out.println("getting neighbor at " + n.toString());
+		Bukkit.getLogger().warning("getting neighbor at " + n.toString());
 		
 		ClaimSection cs = neighbors.get(n);
 		if (cs != null) {
-			System.out.println("Neighbor referenced.");
+			Bukkit.getLogger().warning("Neighbor referenced.");
 			return cs;
 		}
 		
