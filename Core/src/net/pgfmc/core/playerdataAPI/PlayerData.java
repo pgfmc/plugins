@@ -12,6 +12,7 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -58,7 +59,7 @@ public class PlayerData extends AbstractPlayerData {
 			}
 			
 			instances.add(this);
-			System.out.println(p.getName() + " has been loaded!");
+			Bukkit.getLogger().warning(p.getName() + " has been loaded!");
 		}
 	}
 	
@@ -291,7 +292,7 @@ public class PlayerData extends AbstractPlayerData {
 		database.set(path, payload);
 		//queue.forEach((s, o) -> database.set(s, o));
 		//queue.clear();
-		System.out.println("Queue saved to system!");
+		Bukkit.getLogger().warning("Queue saved to system!");
 		
 		Mixins.saveDatabase(database, CoreMain.PlayerDataPath + File.separator + getUniqueId().toString() + ".yml");
 	}

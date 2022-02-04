@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -221,7 +222,7 @@ public class Main extends JavaPlugin {
 				}
 			}
 		}
-		System.out.println("Plural could not be found for item " + name);
+		Bukkit.getLogger().warning("Plural could not be found for item " + name);
 		return name;
 	}
 	

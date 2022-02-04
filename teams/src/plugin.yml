@@ -1,5 +1,5 @@
 name: PGF-Teams
-version: 5.0.1
+version: 5.2.3
 api-version: 1.18
 author: [bk, CrimsonDart]
 main: net.pgfmc.teams.Main
@@ -41,7 +41,7 @@ commands:
       usage: /<command>
       permission: teams.inspector.activate
       description: toggles Inspector mode if in Creative mode.
-   edit_ownable:
+   editownable:
       aliases: [ewon]
       usage: /<command> <type> <value>
       permission: teams.inspector.edit

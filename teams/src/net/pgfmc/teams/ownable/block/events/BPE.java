@@ -37,12 +37,12 @@ public class BPE implements Listener {
 			if (block.getType() == Material.LODESTONE) { // for placing claims
 				if (ClaimsTable.isOverlappingClaim(new Vector4(block))) {
 					e.setCancelled(true);
-					pd.sendMessage("Â§cCannot claim land that would overlap another claim.");
+					pd.sendMessage("§cCannot claim land that would overlap another claim.");
 					
 					pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 				} else {
 					BlockManager.createBlockContainer(pd, block);
-					pd.sendMessage("Â§aSurrounding land claimed!");
+					pd.sendMessage("§aSurrounding land claimed!");
 					pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
 				}
 				return;
@@ -52,7 +52,7 @@ public class BPE implements Listener {
 			
 			if (claim != null && claim.getAccess(pd) == Security.DISALLOWED) {
 				
-				pd.sendMessage("Â§cCannot place blocks in claimed land.");
+				pd.sendMessage("§cCannot place blocks in claimed land.");
 				e.setCancelled(true);
 				pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 				return;
