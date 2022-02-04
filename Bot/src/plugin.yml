@@ -18,3 +18,7 @@ commands:
     usage: /<command>
     description: unlinks the user's discord account.
     permission: pgf.cmd.unlink
+  report:
+  	usage: /<command>
+  	description: sends a message to the staff.
+  	permission: pgf.cmd.report

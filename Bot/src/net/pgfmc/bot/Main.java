@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.pgfmc.bot.cmd.LinkCommand;
+import net.pgfmc.bot.cmd.ReportCommand;
 import net.pgfmc.bot.cmd.UnlinkCommand;
 import net.pgfmc.bot.player.ChatEvents;
 import net.pgfmc.core.CoreMain;
@@ -33,6 +34,7 @@ public class Main extends JavaPlugin {
 		
 		getCommand("link").setExecutor(new LinkCommand());
 		getCommand("unlink").setExecutor(new UnlinkCommand());
+		getCommand("report").setExecutor(new ReportCommand());
 		
 		// Tries to initialize discord integration
 		try {
