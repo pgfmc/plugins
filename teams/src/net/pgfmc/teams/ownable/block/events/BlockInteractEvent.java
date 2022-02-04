@@ -47,7 +47,7 @@ public class BlockInteractEvent implements Listener {
 					OwnableBlock claim = ClaimsTable.getRelevantClaim(new Vector4(block));
 					
 					if (claim != null && claim.getAccess(pd) == Security.DISALLOWED) {
-						pd.sendMessage("Â§cThis land is claimed.");
+						pd.sendMessage("§cThis land is claimed.");
 						e.setCancelled(true);
 						return;
 					}
@@ -69,17 +69,17 @@ public class BlockInteractEvent implements Listener {
 							
 							switch(block.getType()) {
 							
-							case BARREL: pd.sendMessage("Â§cThis barrel is locked!"); return;
-							case BLAST_FURNACE: pd.sendMessage("Â§cThis blast furnace is locked!"); return;
-							case BREWING_STAND: pd.sendMessage("Â§cThis brewing stand is locked!"); return;
-							case CHEST: pd.sendMessage("Â§cThis chest is locked!"); return;
-							case DISPENSER: pd.sendMessage("Â§cThis dispenser is locked!"); return;
-							case DROPPER: pd.sendMessage("Â§cThis dropper is locked!"); return;
-							case FURNACE: pd.sendMessage("Â§cThis furnace is locked!"); return;
-							case HOPPER: pd.sendMessage("Â§cThis hopper is locked!"); return;
-							case SHULKER_BOX: pd.sendMessage("Â§cThis shulker box is locked!"); return;
-							case SMOKER: pd.sendMessage("Â§cThis smoker is locked!"); return;
-							case BEACON: pd.sendMessage("Â§cThis beacon is locked!"); return;
+							case BARREL: pd.sendMessage("§cThis barrel is locked!"); return;
+							case BLAST_FURNACE: pd.sendMessage("§cThis blast furnace is locked!"); return;
+							case BREWING_STAND: pd.sendMessage("§cThis brewing stand is locked!"); return;
+							case CHEST: pd.sendMessage("§cThis chest is locked!"); return;
+							case DISPENSER: pd.sendMessage("§cThis dispenser is locked!"); return;
+							case DROPPER: pd.sendMessage("§cThis dropper is locked!"); return;
+							case FURNACE: pd.sendMessage("§cThis furnace is locked!"); return;
+							case HOPPER: pd.sendMessage("§cThis hopper is locked!"); return;
+							case SHULKER_BOX: pd.sendMessage("§cThis shulker box is locked!"); return;
+							case SMOKER: pd.sendMessage("§cThis smoker is locked!"); return;
+							case BEACON: pd.sendMessage("§cThis beacon is locked!"); return;
 							default:
 								return;
 							}
@@ -88,17 +88,17 @@ public class BlockInteractEvent implements Listener {
 							
 							switch(block.getType()) {
 							
-							case BARREL: pd.sendMessage("Â§cThis barrel is locked!"); return;
-							case BLAST_FURNACE: pd.sendMessage("Â§cThis blast furnace is locked!"); return;
-							case BREWING_STAND: pd.sendMessage("Â§cThis brewing stand is locked!"); return;
-							case CHEST: pd.sendMessage("Â§cThis chest is locked!"); return;
-							case DISPENSER: pd.sendMessage("Â§cThis dispenser is locked!"); return;
-							case DROPPER: pd.sendMessage("Â§cThis dropper is locked!"); return;
-							case FURNACE: pd.sendMessage("Â§cThis furnace is locked!"); return;
-							case HOPPER: pd.sendMessage("Â§cThis hopper is locked!"); return;
-							case SHULKER_BOX: pd.sendMessage("Â§cThis shulker box is locked!"); return;
-							case SMOKER: pd.sendMessage("Â§cThis smoker is locked!"); return;
-							case BEACON: pd.sendMessage("Â§cThis beacon is locked!"); return;
+							case BARREL: pd.sendMessage("§cThis barrel is locked!"); return;
+							case BLAST_FURNACE: pd.sendMessage("§cThis blast furnace is locked!"); return;
+							case BREWING_STAND: pd.sendMessage("§cThis brewing stand is locked!"); return;
+							case CHEST: pd.sendMessage("§cThis chest is locked!"); return;
+							case DISPENSER: pd.sendMessage("§cThis dispenser is locked!"); return;
+							case DROPPER: pd.sendMessage("§cThis dropper is locked!"); return;
+							case FURNACE: pd.sendMessage("§cThis furnace is locked!"); return;
+							case HOPPER: pd.sendMessage("§cThis hopper is locked!"); return;
+							case SHULKER_BOX: pd.sendMessage("§cThis shulker box is locked!"); return;
+							case SMOKER: pd.sendMessage("§cThis smoker is locked!"); return;
+							case BEACON: pd.sendMessage("§cThis beacon is locked!"); return;
 							default:
 								return;
 							}
@@ -115,7 +115,7 @@ public class BlockInteractEvent implements Listener {
 					
 					if (claim != null && claim.getAccess(pd) != Security.OWNER) {
 						
-						pd.sendMessage("Â§cCannot claim this chest, as it's in claimed land.");
+						pd.sendMessage("§cCannot claim this chest, as it's in claimed land.");
 						e.setCancelled(true);
 						pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 						return;
@@ -146,7 +146,7 @@ public class BlockInteractEvent implements Listener {
 					OwnableBlock claim = ClaimsTable.getRelevantClaim(new Vector4(block));
 					
 					if (claim != null && claim.isAllowed(pd) == Security.DISALLOWED) {
-						pd.sendMessage("Â§cThis land is claimed.");
+						pd.sendMessage("§cThis land is claimed.");
 						e.setCancelled(true);
 						return;
 					}
@@ -249,7 +249,7 @@ public class BlockInteractEvent implements Listener {
 				
 				e.setCancelled(true);
 				
-				pd.sendMessage("Â§6Default lock: FAVORITES ONLY");
+				pd.sendMessage("§6Default lock: FAVORITES ONLY");
 				pd.playSound(e.getPlayer().getLocation(), Sound.BLOCK_TRIPWIRE_CLICK_ON, 0, 0);
 				pd.setData("lockMode", Lock.FAVORITES_ONLY);
 				return;
@@ -257,7 +257,7 @@ public class BlockInteractEvent implements Listener {
 			case FAVORITES_ONLY:
 				e.setCancelled(true);
 				
-				pd.sendMessage("Â§6Default lock: FRIENDS ONLY");
+				pd.sendMessage("§6Default lock: FRIENDS ONLY");
 				pd.playSound(e.getPlayer().getLocation(), Sound.BLOCK_TRIPWIRE_CLICK_ON, 0, 0);
 				pd.setData("lockMode", Lock.FRIENDS_ONLY);
 				return;	
@@ -266,7 +266,7 @@ public class BlockInteractEvent implements Listener {
 
 				e.setCancelled(true);
 				
-				pd.sendMessage("Â§6Default lock: UNLOCKED");
+				pd.sendMessage("§6Default lock: UNLOCKED");
 				pd.playSound(e.getPlayer().getLocation(), Sound.BLOCK_TRIPWIRE_CLICK_ON, 0, 0);
 				pd.setData("lockMode", Lock.UNLOCKED);
 				return;
@@ -275,7 +275,7 @@ public class BlockInteractEvent implements Listener {
 				
 				e.setCancelled(true);
 				
-				pd.sendMessage("Â§6Default lock: LOCKED");
+				pd.sendMessage("§6Default lock: LOCKED");
 				pd.playSound(e.getPlayer().getLocation(), Sound.BLOCK_TRIPWIRE_CLICK_ON, 0, 0);
 				pd.setData("lockMode", Lock.LOCKED);
 				return;

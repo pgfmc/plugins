@@ -1,72 +1,43 @@
 package net.pgfmc.bot.listeners;
 
-import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.Bukkit;
 
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
-import net.dv8tion.jda.api.requests.restaction.AuditableRestAction;
 import net.pgfmc.bot.Discord;
-import net.pgfmc.bot.Main;
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.CoreMain.Machine;
-import net.pgfmc.core.util.Mixins;
 
 public class OnReady implements EventListener {
 
 	@Override
-	public void onEvent(GenericEvent e) {
-		
+	public void onEvent(GenericEvent e) {		
 		if (!(e instanceof ReadyEvent)) { return; }
+		Bukkit.getLogger().warning("Discord Bot Initialized!");
 		
-		// auto delete stuff down below :\
-		FileConfiguration database = Mixins.getDatabase(Main.configPath);
+		// Don't run the code below if Machine isn't MAIN !!!!!!!!
+		if (CoreMain.machine != Machine.MAIN) return;
 		
-		String s = database.getString("channel");
+		Guild guild = Discord.getGuildPGF();
+		Role memberRole = guild.getRoleById("579062298526875648");
 		
-		// sets the channel from the channel stored on config.yml.
-		if (s != null) {
-			Discord.SERVER_CHANNEL = s;
-		} else {
-			Discord.SERVER_CHANNEL = "771247931005206579";
-			database.set("channel", "771247931005206579");
-		}
-		Discord.setChannel(Discord.JDA.getTextChannelById(Discord.SERVER_CHANNEL));
+		List<Member> noMemberRole = guild.getMembers().stream().filter(member -> !member.getRoles().contains(memberRole)).collect(Collectors.toList());
 		
-		if (database.getString("delete") != null) { // deletes the "server stopping" message.
-			AuditableRestAction<Void> EEEE = Discord.getChannel().deleteMessageById(database.getString("delete"));
-			
-			try {
-				EEEE.complete();
-			} catch(Exception except) {
-				System.out.println("Message delete failed");
-				except.printStackTrace();
-			}
-		}
-		database.set("delete", null);
-		
-		try {
-			database.save(Mixins.getFile(Main.configPath));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		
-		System.out.println("Discord Bot Initialized!");
-		Discord.sendMessage(Discord.START_MESSAGE);
-		
-		if (CoreMain.machine == Machine.MAIN)
+		for (Member m : noMemberRole)
 		{
-			Discord.sendAlert(Discord.START_MESSAGE_EMBED);
+			guild.addRoleToMember(m, memberRole);
 		}
 		
-		// Slash commands here
-		Discord.JDA.getGuildById(Discord.PGF_ID).upsertCommand(new CommandData("list", "Show who's online.")).queue();
+		guild.upsertCommand(new CommandData("list", "Show who's online.")).queue();
 		
 	}
-	
-	
 
 }

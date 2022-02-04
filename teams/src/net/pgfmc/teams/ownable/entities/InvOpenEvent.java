@@ -1,5 +1,6 @@
 package net.pgfmc.teams.ownable.entities;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -21,7 +22,7 @@ public class InvOpenEvent implements Listener {
 		
 		if (e.getPlayer().getGameMode() == GameMode.SURVIVAL && e.getPlayer() instanceof Player && e.getInventory().getHolder() instanceof Entity) {
 			
-			System.out.println(((Entity) e.getInventory().getHolder()).getUniqueId());
+			Bukkit.getLogger().warning(((Entity) e.getInventory().getHolder()).getUniqueId().toString());
 			
 			OwnableEntity cont = OwnableEntity.getContainer((Entity) e.getInventory().getHolder());
 			
@@ -201,11 +202,11 @@ public class InvOpenEvent implements Listener {
 										return;
 						}
 					}
-					case EXCEPTION: System.out.println("cont.isAllowed() returned Security.EXCEPTION!");
+					case EXCEPTION: Bukkit.getLogger().warning("cont.isAllowed() returned Security.EXCEPTION!");
 					}
 				}
 			}
-			System.out.println("out 1");
+			Bukkit.getLogger().warning("out 1");
 		}
 	}
 }

@@ -37,7 +37,7 @@ public class BBEvent implements Listener {
 				switch(s) {
 				case DISALLOWED:
 					e.setCancelled(true);
-					pd.sendMessage("Â§cYou don't own this.");
+					pd.sendMessage("§cYou don't own this.");
 					return;
 					
 				case EXCEPTION:
@@ -47,7 +47,7 @@ public class BBEvent implements Listener {
 					
 					if (cont.isClaim()) {
 						e.setCancelled(true);
-						pd.sendMessage("Â§cYou don't own this.");
+						pd.sendMessage("§cYou don't own this.");
 						return;
 					} else {
 						cont.remove();
@@ -57,7 +57,7 @@ public class BBEvent implements Listener {
 				case FRIEND:
 					if (cont.isClaim()) {
 						e.setCancelled(true);
-						pd.sendMessage("Â§cYou don't own this.");
+						pd.sendMessage("§cYou don't own this.");
 						return;
 					} else {
 						cont.remove();
@@ -67,14 +67,14 @@ public class BBEvent implements Listener {
 				case OWNER:
 					cont.remove();
 					if (cont.isClaim()) {
-						pd.sendMessage("Â§6Claim Removed!");
+						pd.sendMessage("§6Claim Removed!");
 					}
 					return;
 					
 				case UNLOCKED:
 					
 					e.setCancelled(true);
-					pd.sendMessage("Â§cYou don't own this.");
+					pd.sendMessage("§cYou don't own this.");
 					return;
 				}
 			}
@@ -84,7 +84,7 @@ public class BBEvent implements Listener {
 			if (claim != null) {
 				
 				if (claim.getAccess(pd) == Security.DISALLOWED) {
-					pd.sendMessage("Â§cThis land is claimed.");
+					pd.sendMessage("§cThis land is claimed.");
 					e.setCancelled(true);
 					pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 					return;
@@ -100,21 +100,21 @@ public class BBEvent implements Listener {
 				OwnableBlock claim = ClaimsTable.getRelevantClaim(new Vector4(e.getBlock()));
 				
 				if (claim != null) {
-					pd.sendMessage("Â§bInside claim at Â§c" + claim.getLocation().toString());
-					pd.sendMessage("Â§bOwnber: Â§d" + claim.getPlayer().getNicknameRaw());
-					pd.sendMessage("Â§bLock: Â§a" + claim.getLock().toString());
+					pd.sendMessage("§bInside claim at §c" + claim.getLocation().toString());
+					pd.sendMessage("§bOwnber: §d" + claim.getPlayer().getNicknameRaw());
+					pd.sendMessage("§bLock: §a" + claim.getLock().toString());
 				} else {
-					pd.sendMessage("Â§bNot Inside a claim.");
+					pd.sendMessage("§bNot Inside a claim.");
 				}
 				
 				OwnableBlock ob = OwnableBlock.getOwnable(e.getBlock());
 				
 				if (ob != null) {
-					pd.sendMessage("Â§eOwnableBlock data from: Â§c" + ob.getLocation().toString());
-					pd.sendMessage("Â§eOwner: Â§d" + ob.getPlayer().getNicknameRaw());
-					pd.sendMessage("Â§eLock: Â§a" + ob.getLock().toString());
+					pd.sendMessage("§eOwnableBlock data from: §c" + ob.getLocation().toString());
+					pd.sendMessage("§eOwner: §d" + ob.getPlayer().getNicknameRaw());
+					pd.sendMessage("§eLock: §a" + ob.getLock().toString());
 					pd.setData("OwnableCache", ob);
-					pd.sendMessage("Â§dOwnable Selected!");
+					pd.sendMessage("§dOwnable Selected!");
 				}
 				return;
 			}
