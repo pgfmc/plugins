@@ -59,8 +59,6 @@ public class DuelEvents implements Listener {
 			}
 		}
 		
-		BlakeIsBest.playerDie(PlayerData.getPlayerData(gamer), null, true);
-		
 		e.setCancelled(true);
 	}
 	
