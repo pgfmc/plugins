@@ -43,10 +43,10 @@ commands:
     description: Deny a teleport request
     usage: /<command> [player]
     permission: pgf.cmd.tp.tpdeny
-  tpcancel:
-    description: Cancel a teleport request
-    usage: /<command> [player]
-    permission: pgf.cmd.tp.tpcancel
+  #tpcancel:
+    #description: Cancel a teleport request
+    #usage: /<command> [player]
+    #permission: pgf.cmd.tp.tpcancel
   warp:
     description: Warp to a location
     usage: /<command> [name]

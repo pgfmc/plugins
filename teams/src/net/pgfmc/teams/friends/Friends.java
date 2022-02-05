@@ -4,13 +4,10 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.UUID;
 
-import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import net.pgfmc.core.playerdataAPI.PlayerData;
-import net.pgfmc.core.requestAPI.Request.RequestMessage;
-import net.pgfmc.core.requestAPI.Requester;
 import net.pgfmc.core.util.Mixins;
 import net.pgfmc.teams.Main;
 
@@ -22,9 +19,7 @@ import net.pgfmc.teams.Main;
  * @author CrimsonDart
  * @since 1.2.0	
  */
-public class Friends extends Requester {
-	
-	public static final Friends DEFAULT = new Friends();
+public class Friends {
 	
 	public enum Relation {
 		SELF,
@@ -40,43 +35,6 @@ public class Friends extends Requester {
 			return (this == FAVORITE || this == FRIEND);
 		}
 	}
-	
-	private Friends() {
-		super("Friend", 120, (x, y) -> {
-			
-			setRelation(x, Relation.FRIEND, y, Relation.FRIEND);
-			x.playSound(Sound.BLOCK_AMETHYST_BLOCK_HIT);
-			y.playSound(Sound.BLOCK_AMETHYST_BLOCK_HIT);
-			
-			return true;
-		});
-	}
-	
-	protected static RequestMessage RM = (init, targ, end, reqeust) -> {
-		
-		switch(end) {
-		case Accept:
-			init.sendMessage("§6Friend request sent to " + targ.getRankedName());
-			targ.sendMessage(init.getRankedName() + "§6has sent you a friend request!");
-			targ.sendMessage("§6Type §b/fa §6to accept!");
-			break;
-		case Deny:
-			init.sendMessage("§cYour friend request to " + targ.getRankedName() + "§r§chas been rejected.");
-			targ.sendMessage("§cRequest Rejected.");
-			break;
-		case Duplicate:
-			break;
-		case Force:
-			break;
-		case Quit:
-			break;
-		case Timeout:
-			init.sendMessage("§cFriend Request timed out.");
-			targ.sendMessage("§6Friend Request timed out.");
-			break;
-		}
-		
-	};
 	
 	/**
 	 * Stores data for friends functionality

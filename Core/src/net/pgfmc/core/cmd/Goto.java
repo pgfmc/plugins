@@ -30,7 +30,7 @@ public class Goto implements CommandExecutor {
 	 */
 	public static void logBackLocation(OfflinePlayer p, Location loc)
 	{
-		PlayerData.setData(p, "backLoc", loc);
+		PlayerData.getPlayerData(p).setData("backLoc", loc);
 	}
 	
 	/**
@@ -40,7 +40,7 @@ public class Goto implements CommandExecutor {
 	 */
 	public static Location getBackLocation(OfflinePlayer p)
 	{
-		return Optional.ofNullable((Location) PlayerData.getData(p, "backLoc")).orElse(null);
+		return Optional.ofNullable((Location) PlayerData.getPlayerData(p).getData("backLoc")).orElse(null);
 	}
 	
 	/**
@@ -148,8 +148,4 @@ public class Goto implements CommandExecutor {
 		}
 		
 	}
-	
-	
-	
-
 }

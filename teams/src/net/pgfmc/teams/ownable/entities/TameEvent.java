@@ -31,7 +31,7 @@ public class TameEvent implements Listener {
 					e.setCancelled(true);
 					return;
 				} else {
-					new OwnableEntity(pd, PlayerData.getData(player, "lockMode"), e.getEntity().getUniqueId());
+					new OwnableEntity(pd, PlayerData.getPlayerData(player).getData("lockMode"), e.getEntity().getUniqueId());
 					pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
 				}
 			}
