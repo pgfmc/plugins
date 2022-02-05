@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.inventoryAPI.extra.Butto;
+import net.pgfmc.core.inventoryAPI.extra.Buttonable;
 import net.pgfmc.core.inventoryAPI.extra.ItemWrapper;
 
 /**
@@ -70,6 +71,15 @@ public abstract class BaseInventory implements InventoryHolder {
 		}, 0);
 		
 		return iw;
+	}
+	
+	public void set(int slot, Buttonable button) {
+		if (slot + 1 > inv.getSize()) return;
+		
+		buttons[slot] = button.toAction();
+		Bukkit.getScheduler().runTaskLater(CoreMain.plugin, x -> {
+			inv.setItem(slot, button.toItem());
+		}, 0);
 	}
 	
 	/*

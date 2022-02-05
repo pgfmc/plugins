@@ -171,7 +171,10 @@ public class Permissions extends Configify implements Listener {
 							));
 		}
 		
-		PlayerData.getOnlinePlayerData().stream()
+		
+		
+		
+		PlayerData.getPlayerDataSet(x -> x.isOnline())
 		.forEach(pd -> Roles.recalculate(pd));
 	}
 

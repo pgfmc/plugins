@@ -35,9 +35,8 @@ public class Tpahere implements CommandExecutor {
 			return true;
 		}
 		
-		TpRequest.TPAHERE.createRequest(a, b);
+		//TpRequest.TPAHERE.createRequest(a, b);
 		
 		return true;
 	}
-
 }

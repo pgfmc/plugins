@@ -48,7 +48,7 @@ public class EditOwnableCommand implements CommandExecutor {
 		
 		if (cache instanceof OwnableBlock) {
 			
-			if (args == null || args.length == 0) {
+			if (args == null || args.length > 1) {
 				sender.sendMessage("§dAllowed types: §b'§alock§b'§d, §b'§aowner§b'");
 				
 			} else if ("lock".equals(args[0])) {

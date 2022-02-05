@@ -50,7 +50,7 @@ public class Vanish implements CommandExecutor, Listener {
 	{
 		Player p = e.getPlayer();
 		
-		boolean vanish = (boolean) Optional.ofNullable(PlayerData.getData(p, "vanish")).orElse(false);
+		boolean vanish = (boolean) Optional.ofNullable(PlayerData.getPlayerData(p).getData("vanish")).orElse(false);
 		
 		if (vanish)
 		{
