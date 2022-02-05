@@ -28,9 +28,15 @@ public class RequestSendCommand extends PlayerCommand {
 		if (target == null) {
 			pd.sendMessage("Player not found");
 			return true;
+			
 		} else if (!target.isOnline() && rt.endsOnQuit()) {
 			pd.sendMessage("Player is not online to receive reqeust.");
 			return true;
+			
+		} else if (pd == target) {
+			pd.sendMessage("You can't send a request to yourself!");
+			return true;
+			
 		}
 		rt.createRequest(pd, target);
 		

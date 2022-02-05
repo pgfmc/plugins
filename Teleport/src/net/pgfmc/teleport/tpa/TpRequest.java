@@ -35,13 +35,13 @@ public class TpRequest extends RequestType {
 	@Override
 	protected void requestMessage(Request r, boolean refreshed) {
 		if (refreshed) {
-			r.asker.sendMessage("Time limit refreshed!");
-			r.target.sendMessage("Time limit refreshed!");
+			r.asker.sendMessage("§6Time limit refreshed!");
+			r.target.sendMessage("§6Time limit refreshed!");
 			return;
 		} 
-		r.asker.sendMessage("Teleport request sent to " + r.target.getRankedName() + "!");
-		r.target.sendMessage("Incoming Tp request from " + r.asker.getRankedName() + ".");
-		r.target.sendMessage("Use /tpaccept to accept!");
+		r.asker.sendMessage("§6Teleport request sent to " + r.target.getRankedName() + "§6!");
+		r.target.sendMessage("§6Incoming Tp request from " + r.asker.getRankedName() + "§6.");
+		r.target.sendMessage("§6Use §b/tpaccept §6to accept!");
 		
 	}
 
@@ -60,12 +60,18 @@ public class TpRequest extends RequestType {
 			});
 			
 		case DENIED:
+			r.asker.sendMessage("§cTpa request denied!");
+			r.target.sendMessage("§cTpa request denied!");
 			break;
 		case FORCEEND:
 			break;
 		case QUIT:
+			r.asker.sendMessage("§cTpa request cancelled since " + r.target.getRankedName() + " §cquit!");
+			r.target.sendMessage("§cTpa request cancelled since " + r.asker.getRankedName() + " §cquit!");
 			break;
 		case TIMEOUT:
+			r.asker.sendMessage("§cTpa request timed out!");
+			r.target.sendMessage("§cTpa request timed out!");
 			break;
 		case REFRESH:
 			break;

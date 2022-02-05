@@ -15,14 +15,14 @@ public abstract class PlayerArg1Cmd extends CmdBase {
 	public boolean execute(CommandSender sender, String alias, String[] args) {
 		
 		if (args.length < 1) {
-			sender.sendMessage("Please input a player's name!");
+			sender.sendMessage("§cPlease input a player's name!");
 			return true;
 		}
 		
 		PlayerData pdarg = PlayerData.getPlayerData(args[0]);
 		
 		if (pdarg == null) {
-			sender.sendMessage("Please input a player's name!");
+			sender.sendMessage("§cPlease input a player's name!");
 			return true;
 		}
 		

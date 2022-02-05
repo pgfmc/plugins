@@ -51,14 +51,14 @@ public class RequestAcceptCommand extends PlayerCommand {
 				}
 			}
 			
-			pd.sendMessage("No request found for " + args[0]);
+			pd.sendMessage("§cNo request found for " + args[0]);
 			return true;
 		}
 		
 		Set<Request> set = rt.findRequests(pd);
 		
 		if (set.size() == 0) {
-			pd.sendMessage("No requests to accept!");
+			pd.sendMessage("§cNo requests to accept!");
 			return true;
 		} else if (set.size() == 1) {
 			for (Request r : set) {
@@ -68,9 +68,9 @@ public class RequestAcceptCommand extends PlayerCommand {
 			
 		} else {
 			for (Request r : set) {
-				pd.sendMessage(rt.name + " Request from " + r.asker + ".");
+				pd.sendMessage("§c" + rt.name + " Request from " + r.asker + ".");
 			}
-			pd.sendMessage("Use /" + alias + " <sender name> to pick a Request.");
+			pd.sendMessage("§6Use §b/" + alias + " <sender name> §6to pick a Request.");
 		}
 		return true;
 	}

@@ -53,14 +53,14 @@ public class RequestDenyCommand extends PlayerCommand {
 				}
 			}
 			
-			pd.sendMessage("No request found for " + args[0]);
+			pd.sendMessage("§cNo request found for " + args[0]);
 			return true;
 		}
 		
 		Set<Request> set = rt.findRequests(pd);
 		
 		if (set.size() == 0) {
-			pd.sendMessage("No requests to Deny!");
+			pd.sendMessage("§cNo requests to Deny!");
 			return true;
 		} else if (set.size() == 1) {
 			for (Request r : set) {
@@ -71,10 +71,10 @@ public class RequestDenyCommand extends PlayerCommand {
 		} else {
 			
 			for (Request r : set) {
-				pd.sendMessage(rt.name + " Request from " + r.asker + ".");
+				pd.sendMessage("§6" + rt.name + " Request from " + r.asker + ".");
 				
 			}
-			pd.sendMessage("You have " + set.size() + " Requests.");
+			pd.sendMessage("§6You have " + set.size() + " Requests.");
 		}
 		return true;
 	}

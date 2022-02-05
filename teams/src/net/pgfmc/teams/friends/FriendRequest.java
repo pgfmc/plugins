@@ -33,9 +33,9 @@ public class FriendRequest extends RequestType {
 
 	@Override
 	protected void requestMessage(Request r, boolean refreshed) {
-		r.asker.sendMessage("Friend Request sent to " + r.target.getRankedName() + "!");
-		r.target.sendMessage(r.asker.getRankedName() + " has sent you a friend request!");
-		r.target.sendMessage("Use /fa to accept!");
+		r.asker.sendMessage("§6Friend Request sent to " + r.target.getRankedName() + "!");
+		r.target.sendMessage(r.asker.getRankedName() + " §6has sent you a friend request!");
+		r.target.sendMessage("§6Use /fa to accept!");
 	}
 
 	@Override

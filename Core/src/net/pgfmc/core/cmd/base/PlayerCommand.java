@@ -1,5 +1,6 @@
 package net.pgfmc.core.cmd.base;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.command.CommandSender;
@@ -11,20 +12,19 @@ public abstract class PlayerCommand extends CmdBase {
 
 	public PlayerCommand(String name) {
 		super(name);
-		System.out.print("2..");
 	}
 
 	@Override
 	public boolean execute(CommandSender sender, String alias, String[] args) {
 
 		if (!(sender instanceof Player)) {
-			sender.sendMessage("The sender must be a player!");
+			sender.sendMessage("§cThe sender must be a player!");
 			return true;
 		}
 		
 		PlayerData pd = PlayerData.getPlayerData((Player) sender);
 		if (pd == null) {
-			sender.sendMessage("The sender must be a player!");
+			sender.sendMessage("§cThe sender must be a player!");
 			return true;
 		}
 		
@@ -34,14 +34,12 @@ public abstract class PlayerCommand extends CmdBase {
 	public List<String> tabComplete(CommandSender sender, String alias, String[] args) {
 		
 		if (!(sender instanceof Player)) {
-			sender.sendMessage("The sender must be a player!");
-			return null;
+			return new ArrayList<>();
 		}
 		
 		PlayerData pd = PlayerData.getPlayerData((Player) sender);
 		if (pd == null) {
-			sender.sendMessage("The sender must be a player!");
-			return null;
+			return new ArrayList<>();
 		}
 		
 		return tabComplete(pd, alias, args);
