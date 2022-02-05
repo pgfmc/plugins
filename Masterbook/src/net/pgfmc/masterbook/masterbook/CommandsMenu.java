@@ -32,10 +32,10 @@ import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.requests.Request;
 import net.pgfmc.core.requests.RequestType;
 import net.pgfmc.core.util.DimManager;
+import net.pgfmc.friends.data.Friends;
+import net.pgfmc.friends.data.Friends.Relation;
 import net.pgfmc.masterbook.Main;
 import net.pgfmc.survival.cmd.Afk;
-import net.pgfmc.teams.friends.Friends;
-import net.pgfmc.teams.friends.Friends.Relation;
 import net.pgfmc.teleport.home.Homes;
 
 public class CommandsMenu implements InventoryHolder {

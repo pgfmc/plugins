@@ -11,27 +11,12 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="E:/github/.plugins/Bot.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="E:/github/.plugins/Core.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="E:/github/.plugins/Survival.jar">
+	<classpathentry kind="lib" path="E:/github/.plugins/Core.jar" sourcepath="/PGF-Essentials">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="E:/github/.plugins/Friends.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="E:/github/.plugins/Teleport.jar" sourcepath="/Teleport">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
