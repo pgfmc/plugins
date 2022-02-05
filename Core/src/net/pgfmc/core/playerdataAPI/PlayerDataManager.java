@@ -9,7 +9,6 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.util.Configify;
@@ -93,13 +92,6 @@ public class PlayerDataManager extends Configify implements Listener {
 		if (pd == null) {
 			pd = new PlayerData(e.getPlayer());
 		}
-		
-		pd.setOnline(e.getPlayer());
-	}
-	
-	@EventHandler
-	public void onQuitEvent(PlayerQuitEvent e) {
-		PlayerData.getPlayerData(e.getPlayer()).setOffline();
 	}
 
 	@Override

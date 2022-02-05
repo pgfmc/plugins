@@ -3,6 +3,7 @@ package net.pgfmc.masterbook.masterbook;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
@@ -19,16 +20,17 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 import net.pgfmc.core.CoreMain.PGFPlugin;
 import net.pgfmc.core.cmd.Blocked;
 import net.pgfmc.core.inventoryAPI.BaseInventory;
+import net.pgfmc.core.inventoryAPI.ButtonInventory;
 import net.pgfmc.core.inventoryAPI.ListInventory;
 import net.pgfmc.core.inventoryAPI.extra.Butto;
+import net.pgfmc.core.inventoryAPI.extra.Buttonable;
 import net.pgfmc.core.inventoryAPI.extra.ItemWrapper;
 import net.pgfmc.core.permissions.Permissions;
 import net.pgfmc.core.permissions.Roles;
 import net.pgfmc.core.permissions.Roles.Role;
 import net.pgfmc.core.playerdataAPI.PlayerData;
-import net.pgfmc.core.requestAPI.Request;
-import net.pgfmc.core.requestAPI.Requester;
-import net.pgfmc.core.requestAPI.Requester.Reason;
+import net.pgfmc.core.requests.Request;
+import net.pgfmc.core.requests.RequestType;
 import net.pgfmc.core.util.DimManager;
 import net.pgfmc.masterbook.Main;
 import net.pgfmc.survival.cmd.Afk;
@@ -286,7 +288,7 @@ public class CommandsMenu implements InventoryHolder {
 			if (pd.hasPermission("pgf.cmd.donator.nick"))
 			{
 				setAction(18, (p, e) -> {
-					PlayerData.setData(p, "nickTemp", "reset");
+					PlayerData.getPlayerData(p).setData("nickTemp", "reset");
 					p.closeInventory();
 					p.sendMessage("§9Type your new nickname in chat.");
 				});
@@ -684,10 +686,7 @@ public class CommandsMenu implements InventoryHolder {
 		
 		@Override
 		public List<PlayerData> load() {
-			return PlayerData.stream()
-					.filter(x-> {
-						return (x != pd);
-					})
+			return PlayerData.getPlayerDataSet(x -> x != pd).stream()
 					.sorted((o1, o2) -> { // player sorter.
 						
 						if (o1.isOnline() && o2.isOnline()) { // both online
@@ -849,9 +848,13 @@ public class CommandsMenu implements InventoryHolder {
 		}
 	}
 	
-	public class RequestList extends ListInventory<Request> {
+	public class RequestList extends ButtonInventory {
+		
+		PlayerData pd;
+		
 		public RequestList(PlayerData pd) {
 			super(27, "Pending Requests");
+			this.pd = pd;
 
 			setAction(0, (p, e) -> {
 				p.openInventory(new Homepage().getInventory());
@@ -860,25 +863,18 @@ public class CommandsMenu implements InventoryHolder {
 		}
 
 		@Override
-		public List<Request> load() {
-			return Requester.ALLREQUESTS;
-		}
-
-		@Override
-		protected Butto toAction(Request entry) {
-			return (p, e) -> {
-				if (entry.expireNow(Reason.Accept) != false) {
-					entry.act();
-				} else {
-					pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
-					p.openInventory(new RequestList(pd).getInventory());
-				}
-			};
-		}
-
-		@Override
-		protected ItemStack toItem(Request entry) {
-			return new ItemWrapper(Material.ARROW).n(entry.getParent().getName()).gi();
+		public List<Buttonable> load() {
+			List<Buttonable> list = new ArrayList<>();
+			
+			Set<Request> set = RequestType.getInAllRequests(x -> {
+				return (x.target == pd);
+			});
+			
+			for (Request r : set) {
+				list.add(r);
+			}
+			return list;
+			
 		}
 	}
 
