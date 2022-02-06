@@ -213,6 +213,7 @@ public class ClaimSection {
 	}
 	
 	public void put(OwnableBlock ob) {
+		System.out.println("pushed pt. 2");
 		claims.add(ob);
 	}
 	

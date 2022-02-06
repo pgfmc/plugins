@@ -18,8 +18,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.cmd.donator.Nick;
+import net.pgfmc.core.file.Mixins;
 import net.pgfmc.core.permissions.Roles;
-import net.pgfmc.core.util.Mixins;
 
 /**
  * stores dynamic, temporary and non-temporary data for each player.
@@ -94,7 +94,8 @@ public final class PlayerData extends AbstractPlayerData {
 	 */
 	public static PlayerData getPlayerData(String name) {
 		for (PlayerData uid : instances) {
-			if (uid.getName().equals(name) || uid.getNicknameRaw().equals(name)) {
+			name = name.toLowerCase();
+			if (uid.getName().toLowerCase().equals(name) || uid.getDisplayNameRaw().toLowerCase().equals(name)) {
 				return uid;
 			}
 		}
@@ -120,7 +121,7 @@ public final class PlayerData extends AbstractPlayerData {
 		return getRankColor() + Nick.getNick(player);
 	}
 	
-	public String getNicknameRaw()
+	public String getDisplayNameRaw()
 	{
 		return (String) Optional.ofNullable(getData("nick")).orElse(getName());
 	}

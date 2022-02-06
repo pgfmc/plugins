@@ -1,4 +1,4 @@
-package net.pgfmc.core.util;
+package net.pgfmc.core.file;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

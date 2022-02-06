@@ -83,7 +83,7 @@ public class OnAsyncPlayerChat implements Listener {
 		
 		e.setFormat(pd.getRankedName() + "§8 -> " + getMessageColor(p.getUniqueId().toString()) + msg);
 		
-		Discord.sendMessage(pd.getNicknameRaw() + " -> " + msg);
+		Discord.sendMessage(pd.getDisplayNameRaw() + " -> " + msg);
 	}
 	
 	public static String getMessageColor(String sender) {

@@ -7,8 +7,8 @@ import java.util.UUID;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import net.pgfmc.core.file.Mixins;
 import net.pgfmc.core.playerdataAPI.PlayerData;
-import net.pgfmc.core.util.Mixins;
 import net.pgfmc.friends.Main;
 
 /**

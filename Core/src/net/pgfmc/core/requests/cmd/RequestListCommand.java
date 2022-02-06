@@ -42,7 +42,7 @@ public class RequestListCommand extends PlayerCommand implements Inventoryable {
 		});
 		
 		for (Request r : rs) {
-			pd.sendMessage(r.getType() + " Request from " + r.asker.getNicknameRaw());
+			pd.sendMessage(r.getType() + " Request from " + r.asker.getDisplayNameRaw());
 		}
 		
 		return false;

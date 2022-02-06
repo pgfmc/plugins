@@ -18,10 +18,10 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionAttachment;
 
 import net.pgfmc.core.CoreMain;
+import net.pgfmc.core.file.Configify;
+import net.pgfmc.core.file.Mixins;
 import net.pgfmc.core.permissions.Roles.Role;
 import net.pgfmc.core.playerdataAPI.PlayerData;
-import net.pgfmc.core.util.Configify;
-import net.pgfmc.core.util.Mixins;
 
 public class Permissions extends Configify implements Listener {
 	

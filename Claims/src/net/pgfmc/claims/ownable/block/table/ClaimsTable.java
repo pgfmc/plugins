@@ -56,6 +56,9 @@ public class ClaimsTable {
 	 * @param ob The Claim.
 	 */
 	public static void put(OwnableBlock ob) {
+		
+		System.out.println("ownable pushed!");
+		
 		ClaimSection cs = getSection(ob.getLocation());
 		if (cs != null) {
 			cs.put(ob);

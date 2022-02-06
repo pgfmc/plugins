@@ -17,14 +17,14 @@ import net.pgfmc.claims.ownable.entities.TameEvent;
 import net.pgfmc.claims.ownable.inspector.ClaimTPCommand;
 import net.pgfmc.claims.ownable.inspector.EditOwnableCommand;
 import net.pgfmc.claims.ownable.inspector.InspectCommand;
+import net.pgfmc.core.file.Mixins;
 import net.pgfmc.core.playerdataAPI.PlayerDataManager;
-import net.pgfmc.core.util.Mixins;
 
 public class Main extends JavaPlugin {
 	
 	// all relevant file paths.
-	public static final String BlockContainersPath = "plugins\\Teams\\BlockContainers.yml";
-	public static final String EntityContainersPath = "plugins\\Teams\\EntityContainers.yml";
+	public static final String BlockContainersPath = "plugins\\PGF-Claims\\BlockContainers.yml";
+	public static final String EntityContainersPath = "plugins\\PGF-Claims\\EntityContainers.yml";
 	
 	public static Main plugin;
 	

@@ -34,6 +34,8 @@ public class BPE implements Listener {
 		
 		if (e.getPlayer().getGameMode() == GameMode.SURVIVAL) { // ---------------------------------------------- if debug mode off / not creative mode
 			
+			System.out.println("block placed!");
+			
 			if (block.getType() == Material.LODESTONE) { // for placing claims
 				if (ClaimsTable.isOverlappingClaim(new Vector4(block))) {
 					e.setCancelled(true);
@@ -61,6 +63,7 @@ public class BPE implements Listener {
 			// registers block as a container if it is a valid container.
 			if (BlockManager.isOwnable(block.getType())) {
 				BlockManager.createBlockContainer(pd, block);
+				System.out.println("ownable placed!");
 			}
 		}	
 	}

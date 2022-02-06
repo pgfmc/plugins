@@ -186,7 +186,7 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] [] [] [] XX [] [] []
 			 * home menu
 			 */
-			if (pd.hasPermission("teams.friend.*") && PGFPlugin.TEAMS.isEnabled()) {
+			if (pd.hasPermission("teams.friend.*") && PGFPlugin.FRIENDS.isEnabled()) {
 				
 				setAction(23, (p, e) -> {
 					p.openInventory(new FriendsList().getInventory());
@@ -200,7 +200,7 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] [] [] [] [] XX [] []
 			 * home menu
 			 */
-			if (pd.hasPermission("bukkit.command.list") && PGFPlugin.TEAMS.isEnabled()) {
+			if (pd.hasPermission("bukkit.command.list") && PGFPlugin.FRIENDS.isEnabled()) {
 				
 				setAction(24, (p, e) -> {
 					p.openInventory(new PlayerList().getInventory());
@@ -753,7 +753,7 @@ public class CommandsMenu implements InventoryHolder {
 					}
 				}
 				
-				if (perms.contains("teams.friend.*") && PGFPlugin.TEAMS.isEnabled()) {
+				if (perms.contains("teams.friend.*") && PGFPlugin.FRIENDS.isEnabled()) {
 					
 					Relation r = Friends.getRelation(pd, player);
 					if (r == Relation.FRIEND || r == Relation.FAVORITE) {
