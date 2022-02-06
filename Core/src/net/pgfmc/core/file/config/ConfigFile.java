@@ -7,12 +7,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import net.pgfmc.core.file.Configify;
 
+@Deprecated
 public class ConfigFile extends Configify {
 	
 	private final HashSet<Entry<?>> entries = new HashSet<>();
 	private final JavaPlugin plugin;
 	
-	private boolean isEnabled = false;
+	private static boolean isEnabled = false;
 	
 	public ConfigFile(JavaPlugin plugin) {
 		this.plugin = plugin;
@@ -21,7 +22,13 @@ public class ConfigFile extends Configify {
 	private void load() {
 		ConfigurationSection conf = plugin.getConfig();
 		for (Entry<?> entry : entries) {
-			if ()
+			if (!conf.isConfigurationSection(entry.key)) {
+				
+				
+				
+				
+				
+			}
 			
 			
 			
@@ -43,7 +50,18 @@ public class ConfigFile extends Configify {
 	
 	public <T> void setData(String key, T data) {
 		
-		
+		for (Entry<?> entry : entries) {
+			if (entry.key.equals(key) &&
+					data.getClass().equals(entry.getValue().getClass())) {
+				//Entry<T> entri = (Entry<T>) entry;
+				entry.setValue(data);
+				
+				
+			}
+			
+			
+			
+		}
 		
 		
 	}
@@ -53,20 +71,20 @@ public class ConfigFile extends Configify {
 	
 
 	@Override
-	public void reload() {
+	public final void reload() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void enable() {
+	public final void enable() {
 		isEnabled = true;
 		load();
 		
 	}
 
 	@Override
-	public void disable() {
+	public final void disable() {
 		// TODO Auto-generated method stub
 		
 	}

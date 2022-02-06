@@ -1,0 +1,12 @@
+# config for PGF-Bot
+
+server-channel: '771247931005206579'
+alert-chanel: '938677080349093898'
+enable-command: false
+
+token: NzIxOTQ5NTIwNzI4MDMxMjMy.Xub94g.0xsw462w-BJ2YVceLhxG41e4V5U
+
+
+#DONT TOUCH, this entry is dynamic
+delete: ''
+

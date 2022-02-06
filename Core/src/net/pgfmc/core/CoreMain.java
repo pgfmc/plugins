@@ -84,35 +84,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 		}
 	}
 	
-	@Deprecated
-	public enum Machine {
-		MAIN("784261883632681032", "891939656969621534"),
-		TEST("771247931005206579", "938677080349093898"),
-		JIMBO("771247931005206579", "938677080349093898"),
-		CRIMSON("771247931005206579", "938677080349093898");
-		
-		String serverChannelId;
-		String alertChannelId;
-		
-		private Machine(String serverChannelId, String alertChannelId)
-		{
-			this.serverChannelId = serverChannelId;
-			this.alertChannelId = alertChannelId;
-		}
-		
-		public String getServerChannelId()
-		{
-			return serverChannelId;
-		}
-		
-		public String getAlertChannelId()
-		{
-			return alertChannelId;
-		}
-	}
-	
-	public static Machine machine;
-	
 	/**
 	 * creates all files, loads all worlds, PlayerData, commands and events.
 	 * @author bk
@@ -123,31 +94,17 @@ public class CoreMain extends JavaPlugin implements Listener {
 		// defines all constants for the plugin
 		plugin = this;
 		
-		
-		pwd =plugin.getServer().getWorldContainer().getAbsolutePath();
+		pwd = plugin.getServer().getWorldContainer().getAbsolutePath();
 		configPath = plugin.getDataFolder() + File.separator + "config.yml";
 		PlayerDataPath = plugin.getDataFolder() + File.separator + "playerData";
 		backupDir =  homeDir + "Backups" + File.separator
 				+ "Main" + File.separator + currentSeason
 				+ File.separator;
 		
-		switch (this.getServer().getPort()) {
-		case 25565: machine = Machine.MAIN; break;
-		case 25566: machine = Machine.TEST; break;
-		case 25567: machine = Machine.JIMBO; break;
-		case 25569: machine = Machine.CRIMSON; break;
-		default: machine = Machine.TEST; break;
-		}
-		
 		
 		// makes sure all files exist
 		Mixins.getFile(configPath);
 		new File(PlayerDataPath).mkdirs();
-		
-		// scoreboard stuff
-		//Scoreboard scorebored = Bukkit.getScoreboardManager().getNewScoreboard();
-		//scorebored.registerNewTeam("survival");
-		//scoreboard = scorebored;
 		
 		// loads PlayerData
 		

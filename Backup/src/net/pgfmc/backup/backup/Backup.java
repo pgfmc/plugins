@@ -14,7 +14,6 @@ import org.bukkit.command.CommandSender;
 import net.coreprotect.CoreProtectAPI;
 import net.pgfmc.backup.Main;
 import net.pgfmc.core.CoreMain;
-import net.pgfmc.core.CoreMain.Machine;
 import net.pgfmc.core.file.Zipper;
 import net.pgfmc.core.util.StringDate;
 
@@ -47,8 +46,6 @@ public class Backup implements CommandExecutor {
 				sender.sendMessage("Could not find a backup, first do /backup");
 			}
 		}
-		
-		
 		return true;
 	}
 	
@@ -61,7 +58,7 @@ public class Backup implements CommandExecutor {
 	 */
 	public void backup()
 	{
-		if (!(CoreMain.machine == Machine.MAIN)) { return; }
+		if (!Main.plugin.getConfig().getBoolean("enable")) { return; }
 		
 		Bukkit.getLogger().warning("Purging data");
 		

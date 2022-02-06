@@ -1,7 +1,5 @@
 package net.pgfmc.bot;
 
-import java.io.File;
-
 import javax.security.auth.login.LoginException;
 
 import org.bukkit.Bukkit;
@@ -27,7 +25,7 @@ public class Main extends JavaPlugin {
 	public void onEnable()
 	{
 		plugin = this;
-		configPath = plugin.getDataFolder() + File.separator + "config.yml";
+		plugin.saveDefaultConfig();
 		
 		getServer().getPluginManager().registerEvents(new OnAsyncPlayerChat(), this);
 		getServer().getPluginManager().registerEvents(new OnPlayerAdvancementDone(), this);
@@ -89,5 +87,8 @@ public class Main extends JavaPlugin {
 		
 		Discord.JDA.shutdown();
 	}
-
+	
+	public static String getChannelID(String entry) {
+		return plugin.getConfig().getString(entry);
+	}
 }

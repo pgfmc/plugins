@@ -13,8 +13,7 @@ import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.pgfmc.bot.Discord;
-import net.pgfmc.core.CoreMain;
-import net.pgfmc.core.CoreMain.Machine;
+import net.pgfmc.bot.Main;
 
 public class OnReady implements EventListener {
 
@@ -24,7 +23,7 @@ public class OnReady implements EventListener {
 		Bukkit.getLogger().warning("Discord Bot Initialized!");
 		
 		// Don't run the code below if Machine isn't MAIN !!!!!!!!
-		if (CoreMain.machine != Machine.MAIN) return;
+		if (!Main.plugin.getConfig().getBoolean("enable-command")) return;
 		
 		Guild guild = Discord.getGuildPGF();
 		Role memberRole = guild.getRoleById("579062298526875648");

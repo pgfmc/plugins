@@ -24,7 +24,6 @@ import net.pgfmc.bot.listeners.OnMessageReceived;
 import net.pgfmc.bot.listeners.OnReady;
 import net.pgfmc.bot.listeners.OnSlashCommand;
 import net.pgfmc.bot.listeners.OnUpdateRole;
-import net.pgfmc.core.CoreMain;
 
 public class Discord extends ListenerAdapter {
 	
@@ -92,11 +91,11 @@ public class Discord extends ListenerAdapter {
 	}
 	
 	public static TextChannel getServerChannel() {
-		return JDA.getTextChannelById(CoreMain.machine.getServerChannelId());
+		return JDA.getTextChannelById(Main.getChannelID("server-channel"));
 	}
 	
 	public static TextChannel getAlertChannel() {
-		return JDA.getTextChannelById(CoreMain.machine.getAlertChannelId());
+		return JDA.getTextChannelById(Main.getChannelID("alert-channel"));
 	}
 	
 	public static Guild getGuildPGF()
