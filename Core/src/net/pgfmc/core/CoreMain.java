@@ -84,6 +84,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		}
 	}
 	
+	@Deprecated
 	public enum Machine {
 		MAIN("784261883632681032", "891939656969621534"),
 		TEST("771247931005206579", "938677080349093898"),
