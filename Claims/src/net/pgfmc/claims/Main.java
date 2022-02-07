@@ -32,6 +32,8 @@ public class Main extends JavaPlugin {
 	public void onEnable() {
 		
 		plugin = this;
+		plugin.saveDefaultConfig();
+		plugin.reloadConfig();
 		
 		// loads files.
 		Mixins.getFile(BlockContainersPath);

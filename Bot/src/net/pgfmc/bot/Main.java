@@ -26,6 +26,7 @@ public class Main extends JavaPlugin {
 	{
 		plugin = this;
 		plugin.saveDefaultConfig();
+		plugin.reloadConfig();
 		
 		getServer().getPluginManager().registerEvents(new OnAsyncPlayerChat(), this);
 		getServer().getPluginManager().registerEvents(new OnPlayerAdvancementDone(), this);

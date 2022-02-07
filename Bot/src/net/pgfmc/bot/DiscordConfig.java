@@ -6,20 +6,12 @@ public class DiscordConfig extends Configify {
 
 	@Override
 	public void reload() {
-		// TODO Auto-generated method stub
-		
+		Main.plugin.reloadConfig();
 	}
 
 	@Override
-	public void enable() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void enable() {}
 
 	@Override
-	public void disable() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	public void disable() {}
 }
