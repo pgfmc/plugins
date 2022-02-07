@@ -149,6 +149,7 @@ public class Nick implements CommandExecutor {
 		
 		pd.setData("nick", nick.replace("&", "§")).queue();
 		p.sendMessage("§6Nickname changed to " + pd.getRankedName() + "§6!");
+		pd.getPlayer().setDisplayName(pd.getRankedName());
 	}
 	
 	public static void setNick(Player p, String[] nick)
