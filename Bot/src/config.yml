@@ -5,8 +5,3 @@ alert-chanel: '938677080349093898'
 enable-command: false
 
 token: discord bot token here 
-
-
-#DONT TOUCH, this entry is dynamic
-delete: ''
-
