@@ -20,21 +20,21 @@ public class RequestSendCommand extends PlayerCommand {
 	public boolean execute(PlayerData pd, String alias, String[] args) {
 		
 		if (args.length < 1) {
-			pd.sendMessage("Please enter a player!");
+			pd.sendMessage("§cPlease enter a player!");
 			return true;
 		}
 		
 		PlayerData target = PlayerData.getPlayerData(args[0]);
 		if (target == null) {
-			pd.sendMessage("Player not found");
+			pd.sendMessage("§cPlayer not found");
 			return true;
 			
 		} else if (!target.isOnline() && rt.endsOnQuit()) {
-			pd.sendMessage("Player is not online to receive reqeust.");
+			pd.sendMessage("§cPlayer is not online to receive reqeust.");
 			return true;
 			
 		} else if (pd == target) {
-			pd.sendMessage("You can't send a request to yourself!");
+			pd.sendMessage("§cYou can't send a request to yourself!");
 			return true;
 			
 		}
@@ -53,15 +53,15 @@ public class RequestSendCommand extends PlayerCommand {
 				for (PlayerData pds : PlayerData.getPlayerDataSet(x -> x.isOnline())) {
 					if (pds == pd) continue;
 					
-					if (pds.getNicknameRaw().startsWith(args[0])) {
-						list.add(pds.getNicknameRaw());
+					if (pds.getDisplayNameRaw().startsWith(args[0])) {
+						list.add(pds.getDisplayNameRaw());
 					}
 				}
 			} else {
 				for (PlayerData pds : PlayerData.getPlayerDataSet()) {
 					if (pds == pd) continue;
-					if (pds.getNicknameRaw().startsWith(args[0])) {
-						list.add(pds.getNicknameRaw());
+					if (pds.getDisplayNameRaw().startsWith(args[0])) {
+						list.add(pds.getDisplayNameRaw());
 					}
 				}
 			}

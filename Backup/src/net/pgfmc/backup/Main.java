@@ -14,7 +14,10 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onEnable()
 	{
+		
 		plugin = this;
+		plugin.saveDefaultConfig();
+		plugin.reloadConfig();
 		
 		getCommand("backup").setExecutor(new Backup());
 		// getCommand("restore").setExecutor(new Restore());

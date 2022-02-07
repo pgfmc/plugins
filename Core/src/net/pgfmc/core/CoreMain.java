@@ -15,7 +15,6 @@ import org.bukkit.event.server.ServerLoadEvent;
 import org.bukkit.event.server.ServerLoadEvent.LoadType;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scoreboard.Scoreboard;
 
 import net.pgfmc.core.chat.ProfanityFilter;
 import net.pgfmc.core.cmd.Goto;
@@ -23,14 +22,14 @@ import net.pgfmc.core.cmd.admin.Broadcast;
 import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.cmd.admin.Tagging;
 import net.pgfmc.core.cmd.donator.Nick;
+import net.pgfmc.core.file.Configify;
+import net.pgfmc.core.file.Mixins;
+import net.pgfmc.core.file.ReloadConfigify;
 import net.pgfmc.core.inventoryAPI.extra.InventoryPressEvent;
 import net.pgfmc.core.permissions.Permissions;
 import net.pgfmc.core.playerdataAPI.PlayerDataManager;
 import net.pgfmc.core.teleportAPI.SpawnProtect;
-import net.pgfmc.core.util.Configify;
 import net.pgfmc.core.util.DimManager;
-import net.pgfmc.core.util.Mixins;
-import net.pgfmc.core.util.ReloadConfigify;
 
 /**
  * @author bk and CrimsonDart
@@ -47,19 +46,19 @@ public class CoreMain extends JavaPlugin implements Listener {
 	public static String backupDir;
 	
 	public static CoreMain plugin;
-	public static Scoreboard scoreboard;
-	
-	
+	//public static Scoreboard scoreboard;
 	
 	public enum PGFPlugin {
 		BACKUP,
 		BOT,
+		CLAIMS,
 		CORE,
+		DUELS,
+		FRIENDS,
 		MARKET,
 		MASTERBOOK,
 		MODTOOLS,
 		SURVIVAL,
-		TEAMS,
 		TELEPORT;
 		
 		private boolean enabled = true;
@@ -85,34 +84,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 		}
 	}
 	
-	public enum Machine {
-		MAIN("784261883632681032", "891939656969621534"),
-		TEST("771247931005206579", "938677080349093898"),
-		JIMBO("771247931005206579", "938677080349093898"),
-		CRIMSON("771247931005206579", "938677080349093898");
-		
-		String serverChannelId;
-		String alertChannelId;
-		
-		private Machine(String serverChannelId, String alertChannelId)
-		{
-			this.serverChannelId = serverChannelId;
-			this.alertChannelId = alertChannelId;
-		}
-		
-		public String getServerChannelId()
-		{
-			return serverChannelId;
-		}
-		
-		public String getAlertChannelId()
-		{
-			return alertChannelId;
-		}
-	}
-	
-	public static Machine machine;
-	
 	/**
 	 * creates all files, loads all worlds, PlayerData, commands and events.
 	 * @author bk
@@ -123,31 +94,17 @@ public class CoreMain extends JavaPlugin implements Listener {
 		// defines all constants for the plugin
 		plugin = this;
 		
-		
-		pwd = CoreMain.plugin.getServer().getWorldContainer().getAbsolutePath();
-		configPath = CoreMain.plugin.getDataFolder() + File.separator + "config.yml";
-		PlayerDataPath = CoreMain.plugin.getDataFolder() + File.separator + "playerData";
+		pwd = plugin.getServer().getWorldContainer().getAbsolutePath();
+		configPath = plugin.getDataFolder() + File.separator + "config.yml";
+		PlayerDataPath = plugin.getDataFolder() + File.separator + "playerData";
 		backupDir =  homeDir + "Backups" + File.separator
 				+ "Main" + File.separator + currentSeason
 				+ File.separator;
-		
-		switch (this.getServer().getPort()) {
-		case 25565: machine = Machine.MAIN; break;
-		case 25566: machine = Machine.TEST; break;
-		case 25567: machine = Machine.JIMBO; break;
-		case 25569: machine = Machine.CRIMSON; break;
-		default: machine = Machine.TEST; break;
-		}
 		
 		
 		// makes sure all files exist
 		Mixins.getFile(configPath);
 		new File(PlayerDataPath).mkdirs();
-		
-		// scoreboard stuff
-		Scoreboard scorebored = Bukkit.getScoreboardManager().getNewScoreboard();
-		scorebored.registerNewTeam("survival");
-		scoreboard = scorebored;
 		
 		// loads PlayerData
 		

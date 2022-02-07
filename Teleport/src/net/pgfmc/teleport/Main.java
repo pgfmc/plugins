@@ -22,11 +22,6 @@ public class Main extends JavaPlugin {
 	{
 		plugin = this;
 		
-		//getCommand("tpa").setExecutor(new Tpa());
-		//getCommand("tpaccept").setExecutor(new Tpaccept());
-		//getCommand("tpdeny").setExecutor(new Tpdeny());
-		//getCommand("tpcancel").setExecutor(new Tpcancel());
-		
 		TpRequest.registerAll();
 		
 		getCommand("home").setExecutor(new Home());

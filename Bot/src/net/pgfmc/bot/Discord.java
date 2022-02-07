@@ -24,17 +24,11 @@ import net.pgfmc.bot.listeners.OnMessageReceived;
 import net.pgfmc.bot.listeners.OnReady;
 import net.pgfmc.bot.listeners.OnSlashCommand;
 import net.pgfmc.bot.listeners.OnUpdateRole;
-import net.pgfmc.core.CoreMain;
 
 public class Discord extends ListenerAdapter {
 	
 	public static JDA JDA = null;
 	public static final String PREFIX = "!";
-	//public static List<String> ADMINS = new ArrayList<>(Arrays.asList("243499063838769152", "440726027405361152")); // bk, Crimson
-	//private static TextChannel serverChannel;
-	
-	//public static String PGF_ID = "579055447437475851";
-	//public static String BTS_ID = "721951670132801596";
 	
 	// Frequently used colors
 	public static final Color GREEN = new Color(0, 255, 0); // Join
@@ -92,11 +86,11 @@ public class Discord extends ListenerAdapter {
 	}
 	
 	public static TextChannel getServerChannel() {
-		return JDA.getTextChannelById(CoreMain.machine.getServerChannelId());
+		return JDA.getTextChannelById(Main.getChannelID("server-channel"));
 	}
 	
 	public static TextChannel getAlertChannel() {
-		return JDA.getTextChannelById(CoreMain.machine.getAlertChannelId());
+		return JDA.getTextChannelById(Main.getChannelID("alert-channel"));
 	}
 	
 	public static Guild getGuildPGF()

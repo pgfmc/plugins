@@ -32,10 +32,10 @@ import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.requests.Request;
 import net.pgfmc.core.requests.RequestType;
 import net.pgfmc.core.util.DimManager;
+import net.pgfmc.friends.data.Friends;
+import net.pgfmc.friends.data.Friends.Relation;
 import net.pgfmc.masterbook.Main;
 import net.pgfmc.survival.cmd.Afk;
-import net.pgfmc.teams.friends.Friends;
-import net.pgfmc.teams.friends.Friends.Relation;
 import net.pgfmc.teleport.home.Homes;
 
 public class CommandsMenu implements InventoryHolder {
@@ -186,7 +186,7 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] [] [] [] XX [] [] []
 			 * home menu
 			 */
-			if (pd.hasPermission("teams.friend.*") && PGFPlugin.TEAMS.isEnabled()) {
+			if (pd.hasPermission("teams.friend.*") && PGFPlugin.FRIENDS.isEnabled()) {
 				
 				setAction(23, (p, e) -> {
 					p.openInventory(new FriendsList().getInventory());
@@ -200,7 +200,7 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] [] [] [] [] XX [] []
 			 * home menu
 			 */
-			if (pd.hasPermission("bukkit.command.list") && PGFPlugin.TEAMS.isEnabled()) {
+			if (pd.hasPermission("bukkit.command.list") && PGFPlugin.FRIENDS.isEnabled()) {
 				
 				setAction(24, (p, e) -> {
 					p.openInventory(new PlayerList().getInventory());
@@ -753,7 +753,7 @@ public class CommandsMenu implements InventoryHolder {
 					}
 				}
 				
-				if (perms.contains("teams.friend.*") && PGFPlugin.TEAMS.isEnabled()) {
+				if (perms.contains("teams.friend.*") && PGFPlugin.FRIENDS.isEnabled()) {
 					
 					Relation r = Friends.getRelation(pd, player);
 					if (r == Relation.FRIEND || r == Relation.FAVORITE) {

@@ -10,8 +10,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import net.pgfmc.shop.commands.Shop;
-
 public class Main extends JavaPlugin {
 	
 	public static Main plugin;
@@ -57,7 +55,7 @@ public class Main extends JavaPlugin {
 		
 		// ------------------------------------------------------ Commands And Events
 		
-		this.getCommand("market").setExecutor(new Shop());
+		// this.getCommand("market").setExecutor(new Shop());
 		
 		// XXX Listing.loadListings();
 	}

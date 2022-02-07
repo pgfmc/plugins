@@ -1,0 +1,54 @@
+name: PGF-Friends
+version: 5.3.0
+api-version: 1.18
+author: [CrimsonDart]
+main: net.pgfmc.friends.Main
+description: implemets Friends
+depend: [PGF-Core]
+commands: 
+   friendRequest:
+      aliases: [fr]
+      usage: /<command> <player>
+      permission: teams.friend.request
+      description: sends a friend request to <player>.
+   friendAccept:
+      aliases: [fa]
+      usage: /<command>
+      permission: teams.friend.accept
+      description: accepts a friend request.
+   friendDeny:
+      aliases: [fd]
+      usage: /<command>
+      permission: teams.friend.deny
+      description: denies a friend reqeust.
+   unfriend:
+      aliases: [uf]
+      usage: /<command> <friend>
+      permission: teams.friend.unfriend
+      description: unfriends <player>
+   friendlist:
+      aliases: [flist]
+      usage: /<command>
+      permission: teams.friend.list
+      description: shows friends list.
+   favorite:
+      aliases: [fav]
+      usage: /<command> <friend>
+      permission: teams.friend.fav
+      description: favorites a friend.
+   unfavorite: 
+      aliases: [unfav]
+      usage: /<command> <favorite>
+      permission: teams.friend.unfav
+      description: unfavorites a friend.
+      
+permissions:
+  teams.friend.*:
+    description: Friend wildcard
+    children:
+      teams.friend.request: true
+      teams.friend.accept: true
+      teams.friend.unfriend: true
+      teams.friend.list: true
+      teams.friend.fav: true
+      teams.friend.unfav: true
