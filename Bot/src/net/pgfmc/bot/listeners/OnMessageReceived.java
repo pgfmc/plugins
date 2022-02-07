@@ -108,7 +108,7 @@ public class OnMessageReceived implements EventListener {
                 		+ content);
                 
 			}
-		} 
+		}
 		
 		
 		// message sent to the bot in DMs.
