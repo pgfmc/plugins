@@ -58,75 +58,70 @@ public class AttackEventHandler implements Listener {
 			e.setCancelled(true);
 		}
 		
-		if (e.getDamager() instanceof Player) {
+		if (!(e.getDamager() instanceof Player)) {
 			
 			Player attacker = (Player) e.getDamager();
 			
-			if (e.getEntity() instanceof Player) { // gets all players in the situation
+			if (!(e.getEntity() instanceof Player)) return; // gets all players in the situation
 				
-				Player target = (Player) e.getEntity();
+			Player target = (Player) e.getEntity();
+			
+			// if in a battle already -- V
+			
+			if (!(target.getGameMode() == GameMode.SURVIVAL && attacker.getGameMode() == GameMode.SURVIVAL)) return; // makes sure both players are in survival
 				
-				// if in a battle already -- V
+			PlayerData apd = PlayerData.getPlayerData(attacker);
+			PlayerData tpd = PlayerData.getPlayerData(target);
+			Duel ATK = apd.getData("duel");
+			Duel DEF = tpd.getData("duel");
+			
+			if (ATK == DEF) {
 				
-				if (target.getGameMode() == GameMode.SURVIVAL && attacker.getGameMode() == GameMode.SURVIVAL) { // makes sure both players are in survival
+				if (ATK == null && isHoldingSword(attacker)) { // if both are null : create Request
 					
-					PlayerData apd = PlayerData.getPlayerData(attacker);
-					PlayerData tpd = PlayerData.getPlayerData(target);
-					Duel ATK = apd.getData("duel");
-					Duel DEF = tpd.getData("duel");
+					Request r = DuelRequest.DR.findRequest(tpd, apd);
 					
-					boolean equal = (ATK == DEF);
-					boolean ATKnull = (ATK == null);
-					
-					if (equal) {
+					if (r == null) {
 						
-						if (ATKnull && isHoldingSword(attacker)) { // if both are null : create Request
-							
-							Request r = DuelRequest.DR.findRequest(tpd, apd);
-							
-							if (r == null) {
-								
-								DuelRequest.DR.createRequest(apd, tpd);
-								
-								e.setCancelled(true);
-								return;
-								
-							} else {
-								r.end(EndBehavior.ACCEPT);
-								e.setCancelled(true);
-								return;
-								
-							}
-						} else if (!ATKnull && ATK.getState() == DuelState.INBATTLE 
-								&& ATK.getPlayers().get(apd) == PlayerState.DUELING
-								&& ATK.getPlayers().get(tpd) == PlayerState.DUELING) { // if same Duel : allow attack
-							
-							if (e.getFinalDamage() >= target.getHealth()) {
-								
-								e.setDamage(0);
-								ATK.playerDie(tpd, apd, true);
-								return;
-							}
-							
-							tpd.setData("duelHit", true);
-							
-							return;
-							
-						}
-					} else if (ATKnull && DEF.getPlayers().get(PlayerData.getPlayerData(target)) == PlayerState.DUELING) { 
+						DuelRequest.DR.createRequest(apd, tpd);
+						
 						e.setCancelled(true);
-						DEF.join(PlayerData.getPlayerData(attacker));
+						return;
+						
+					} else {
+						r.end(EndBehavior.ACCEPT);
+						e.setCancelled(true);
 						return;
 						
 					}
+				} else if (ATK != null && ATK.getState() == DuelState.INBATTLE 
+						&& ATK.getPlayers().get(apd) == PlayerState.DUELING
+						&& ATK.getPlayers().get(tpd) == PlayerState.DUELING) { // if same Duel : allow attack
+					
+					if (e.getFinalDamage() >= target.getHealth()) {
+						
+						e.setDamage(0);
+						ATK.playerDie(tpd, apd, true);
+						return;
+					}
+					
+					tpd.setData("duelHit", true);
+					
+					return;
+					
 				}
-				
-				if (!target.getUniqueId().equals(attacker.getUniqueId()))
-				{
-					e.setDamage(0);
-				}
+			} else if (ATK == null && DEF.getPlayers().get(PlayerData.getPlayerData(target)) == PlayerState.DUELING) { 
+				e.setCancelled(true);
+				DEF.join(PlayerData.getPlayerData(attacker));
+				return;
 				
 			}
+		
+			if (!target.getUniqueId().equals(attacker.getUniqueId()))
+			{
+				e.setDamage(0);
+			}
+			
 		}
 	}
 	
