@@ -92,6 +92,8 @@ public class PlayerDataManager extends Configify implements Listener {
 		if (pd == null) {
 			pd = new PlayerData(e.getPlayer());
 		}
+		
+		e.getPlayer().setDisplayName(pd.getRankedName());
 	}
 
 	@Override

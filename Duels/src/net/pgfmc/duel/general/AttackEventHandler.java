@@ -137,7 +137,14 @@ public class AttackEventHandler implements Listener {
 				|| mainHand == Material.GOLDEN_SWORD 
 				|| mainHand == Material.STONE_SWORD 
 				|| mainHand == Material.NETHERITE_SWORD 
-				|| mainHand == Material.WOODEN_SWORD);
+				|| mainHand == Material.WOODEN_SWORD
+				|| mainHand == Material.DIAMOND_AXE
+				|| mainHand == Material.GOLDEN_AXE
+				|| mainHand == Material.IRON_AXE
+				|| mainHand == Material.STONE_AXE
+				|| mainHand == Material.WOODEN_AXE
+				|| mainHand == Material.NETHERITE_AXE
+				);
 	}
 	
 }
