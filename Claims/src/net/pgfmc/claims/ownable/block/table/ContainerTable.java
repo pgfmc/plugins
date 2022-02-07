@@ -47,8 +47,6 @@ public class ContainerTable {
 	
 	public static void put(OwnableBlock ob) {
 		
-		System.out.println("container pushed");
-		
 		ContainerSection cs = getSection(ob.getLocation());
 		if (cs != null) {
 			cs.put(ob);

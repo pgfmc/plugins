@@ -45,8 +45,6 @@ public class OwnableBlock extends Ownable {
 	public OwnableBlock(PlayerData player, Vector4 vec, Lock lock) {
 		super(player, (lock == null) ? player.getData("lockMode") : lock);
 		
-		System.out.println("ownable created!");
-		
 		Block block = vec.getBlock();
 		vector = vec;
 		
