@@ -8,9 +8,8 @@ import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
 import net.pgfmc.bot.Discord;
+import net.pgfmc.bot.Main;
 import net.pgfmc.bot.functions.spam.Raid;
-import net.pgfmc.core.CoreMain;
-import net.pgfmc.core.CoreMain.Machine;
 
 public class OnMemberJoin implements EventListener {
 
@@ -20,7 +19,7 @@ public class OnMemberJoin implements EventListener {
 		
 		GuildMemberJoinEvent e = (GuildMemberJoinEvent) event;
 		
-		if (CoreMain.machine != Machine.MAIN) return;
+		if (!Main.plugin.getConfig().getBoolean("enable-command")) return;
 		
 		User user = e.getUser();
 		

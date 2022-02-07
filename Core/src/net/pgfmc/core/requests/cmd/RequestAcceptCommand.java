@@ -31,7 +31,7 @@ public class RequestAcceptCommand extends PlayerCommand {
 			return list;
 		} else  {
 			for (Request r : set) {
-				list.add(r.asker.getNicknameRaw());
+				list.add(r.asker.getDisplayNameRaw());
 			}
 		}
 		
