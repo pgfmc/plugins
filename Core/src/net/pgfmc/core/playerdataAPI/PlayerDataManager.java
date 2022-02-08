@@ -95,7 +95,6 @@ public class PlayerDataManager extends Configify implements Listener {
 			pd = new PlayerData(p);
 		}
 		
-		/*
 		// p.setDisplayName(pd.getRankedName());
 		p.setPlayerListName(pd.getRankedName());
 		p.setCustomName(pd.getRankedName());
@@ -109,7 +108,6 @@ public class PlayerDataManager extends Configify implements Listener {
 		
 		p.hidePlayer(CoreMain.plugin, p);
 		p.showPlayer(CoreMain.plugin, p);
-		*/
 	}
 
 	@Override

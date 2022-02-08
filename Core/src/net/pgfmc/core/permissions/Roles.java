@@ -87,7 +87,7 @@ public class Roles {
 	{
 		Bukkit.getLogger().warning("Recalculating roles for player " + pd.getName());
 		
-		String id = pd.getData("Discord");
+		String id = (String) Optional.ofNullable(pd.getData("Discord")).orElse(pd.loadFromFile("Discord"));
 		List<String> roles = Arrays.asList(Role.MEMBER.getName());
 		
 		if (!CoreMain.PGFPlugin.BOT.isEnabled() && pd.loadFromFile("Discord") != null)
