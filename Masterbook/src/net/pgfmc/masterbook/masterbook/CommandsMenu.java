@@ -200,7 +200,7 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] [] [] [] [] XX [] []
 			 * home menu
 			 */
-			if (pd.hasPermission("bukkit.command.list") && PGFPlugin.FRIENDS.isEnabled()) {
+			if (pd.hasPermission("minecraft.command.list") && PGFPlugin.FRIENDS.isEnabled()) {
 				
 				setAction(24, (p, e) -> {
 					p.openInventory(new PlayerList().getInventory());
