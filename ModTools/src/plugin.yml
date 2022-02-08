@@ -6,6 +6,7 @@ website: play.pgfmc.net
 main: net.pgfmc.modtools.Main
 description: Moderator tools for PGF
 depend: [PGF-Core]
+softdepend: [PGF-Bot]
 load: POSTWORLD
 prefix: PGF-Core
 
@@ -72,6 +73,25 @@ commands:
     usage: /<command> [player]
     description: Unmute a player
     permission: pgf.admin.unmute
+  tag:
+    usage: /<command> [Player] [Path] [Tag] [true/false]
+    description: Tag a player!
+    permission: pgf.admin.tag
+  broadcast:
+    usage: /<command> [message]
+    description: Broadcast to the server!
+    aliases: [bc, broadc, bcast, say]
+    permission: pgf.admin.broadcast
+  fakejoin:
+    usage: /<command>
+    description: Send a fake join message
+    aliases: [fj, fakej, fjoin]
+    permission: pgf.admin.fake.join
+  fakeleave:
+    usage: /<command>
+    description: Send a fake leave message
+    aliases: [fl, fakel, fleave]
+    permission: pgf.admin.fake.leave
     
 permissions:
   pgf.admin.gamemode.*:
