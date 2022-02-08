@@ -1,0 +1,8 @@
+TradeCommand
+ - type "/trade" to open your only trade;
+ 	if you have more pending trades, then a list will pop up with all your trades
+ 	"/trade <player>" will open the trade with that other player.
+ 	
+	
+	
+	requests cannot end upon restart, or on a player quitting.

@@ -4,8 +4,28 @@ api-version: 1.18
 author: [bk, CrimsonDart]
 main: net.pgfmc.shop.Main
 description: Implements a global market to buy and sell
-#commands:
+commands:
 #  market:
 #    description: Global buy/sell shop
 #    usage: /<command>
 #    aliases: [m]
+  traderequest:
+    description: sends a trade request
+    usage: /<command> <player>
+    aliases: [trs]
+    permission: pgf.cmd.trade.request
+  tradeaccept:
+    description: accepts a sent trade request
+    usage: /<command> [player]
+    aliases: [tra]
+    permission: pgf.cmd.trade.accept
+  tradedeny:
+    description: denies a sent trade request
+    usage: /<command> [player]
+    aliases: [trd]
+    permission: pgf.cmd.trade.accept
+  trade:
+    description: opens to a trade
+    usage: /<command> [player]
+    aliases: [tro]
+    permission: pgf.cmd.trade.open

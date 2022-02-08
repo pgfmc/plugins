@@ -1,7 +1,5 @@
 package net.pgfmc.shop;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -9,6 +7,8 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import net.pgfmc.shop.trade.TradeRequester;
 
 public class Main extends JavaPlugin {
 	
@@ -24,40 +24,12 @@ public class Main extends JavaPlugin {
 		
 		// ---------------------------------------------------- File creation thingy ( for storing data )
 		
-		File file = new File(getDataFolder().toString()); // Creates a File object
+		TradeRequester.registerAll();
 		
-		if (!file.exists()) {
-			file.mkdir();
-		}
 		
-		file = new File(getDataFolder() + File.separator); // Creates a File object
 		
-		if (!file.exists())
-		{
-			try {
-				file.createNewFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
 		
-		file = new File(getDataFolder() + File.separator + "playerdata.yml"); // Creates a File object
 		
-		if (!file.exists())
-		{
-			try {
-				file.createNewFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		// ------------------------------------------------------ Commands And Events
-		
-		// this.getCommand("market").setExecutor(new Shop());
-		
-		// XXX Listing.loadListings();
 	}
 	
 	// functions used all around the place in this pluign :)

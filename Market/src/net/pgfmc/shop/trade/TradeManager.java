@@ -72,14 +72,5 @@ public class TradeManager {
 			});
 			oppo.setItem(40, Material.GREEN_TERRACOTTA);
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	}
 }
