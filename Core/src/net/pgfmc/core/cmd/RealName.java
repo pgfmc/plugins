@@ -22,7 +22,7 @@ public class RealName implements CommandExecutor {
 			return true;
 		}
 		
-		sender.sendMessage(ChatColor.GOLD + "Real name for " + pd.getRankedName() + " is " + pd.getRankColor() + pd.getName());
+		sender.sendMessage(ChatColor.GOLD + "Real name for " + pd.getRankedName() + ChatColor.GOLD + " is " + pd.getRankColor() + pd.getName() + ChatColor.GOLD + "!");
 		
 		return true;
 	}
