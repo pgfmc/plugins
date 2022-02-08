@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import net.pgfmc.core.CoreMain;
-import net.pgfmc.core.cmd.Goto;
+import net.pgfmc.core.playerdataAPI.PlayerData;
 
 /**
  * Teleport a living entity to a destination with a delay before
@@ -55,7 +55,7 @@ public class TimedTeleport {
 			@Override
 			public void run() {
 				if (safe.getThread().isAlive()) return;
-				Goto.logBackLocation(p, p.getLocation());
+				PlayerData.setData(p, "backLoc", p.getLocation());
 				p.teleport(safe.getLocation());
 				if (act != null) { act.accept(null); }
 				cancel();
@@ -71,7 +71,7 @@ public class TimedTeleport {
 			public void run() {
 				if (safe.getThread().isAlive()) return;
 				SpawnProtect.TEMP_PROTECT(p, 20 * 2);
-				Goto.logBackLocation(p, p.getLocation());
+				PlayerData.setData(p, "backLoc", p.getLocation());
 				p.teleport(safe.getLocation());
 				if (act != null) { act.accept(null); }
 				cancel();
