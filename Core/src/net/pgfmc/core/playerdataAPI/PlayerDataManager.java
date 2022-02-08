@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -87,13 +88,26 @@ public class PlayerDataManager extends Configify implements Listener {
 	
 	@EventHandler
 	public void onJoinEvent(PlayerJoinEvent e) {
-		PlayerData pd = PlayerData.getPlayerData(e.getPlayer());
+		Player p = e.getPlayer();
+		PlayerData pd = PlayerData.getPlayerData(p);
 		
 		if (pd == null) {
-			pd = new PlayerData(e.getPlayer());
+			pd = new PlayerData(p);
 		}
 		
-		e.getPlayer().setDisplayName(pd.getRankedName());
+		// p.setDisplayName(pd.getRankedName());
+		p.setPlayerListName(pd.getRankedName());
+		p.setCustomName(pd.getRankedName());
+		p.setCustomNameVisible(true);
+		
+		for (Player playerP : Bukkit.getOnlinePlayers()) {
+			if (playerP == p) continue;
+			p.hidePlayer(CoreMain.plugin, playerP);
+			p.showPlayer(CoreMain.plugin, playerP);
+		}
+		
+		p.hidePlayer(CoreMain.plugin, p);
+		p.showPlayer(CoreMain.plugin, p);
 	}
 
 	@Override
