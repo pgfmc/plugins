@@ -22,27 +22,6 @@ import net.pgfmc.core.util.DimManager;
  *
  */
 public class Goto implements CommandExecutor {
-	
-	/**
-	 * saves a player's last location.
-	 * @param p Player
-	 * @param loc The Player's last Location
-	 */
-	public static void logBackLocation(OfflinePlayer p, Location loc)
-	{
-		PlayerData.getPlayerData(p).setData("backLoc", loc);
-	}
-	
-	/**
-	 * Gets a player's last Location
-	 * @param p Player
-	 * @return A player's last Location, null if none
-	 */
-	public static Location getBackLocation(OfflinePlayer p)
-	{
-		return Optional.ofNullable((Location) PlayerData.getPlayerData(p).getData("backLoc")).orElse(null);
-	}
-	
 	/**
 	 * Loads a player's last location for a world
 	 * @param p
@@ -59,6 +38,7 @@ public class Goto implements CommandExecutor {
 	 * @param player Player to be teleported
 	 * @param destination Destination of the player
 	 */
+	@Deprecated
 	public void dimSave(Player player, Location destination)
 	{
 		Location current = player.getLocation();
@@ -78,7 +58,7 @@ public class Goto implements CommandExecutor {
 		if (currentWorldName.contains("the_end")) { pd.saveToFile(currentWorldName.substring(0, currentWorldName.length() - 8) + ".uuid." + playerUUID, current); } // If teleporting from The End
 		if (!(currentWorldName.contains("the_end")) && !(currentWorldName.contains("nether"))) { pd.saveToFile(currentWorldName + ".uuid." + playerUUID, current); } // If teleporting from Overworld
 		
-		logBackLocation(player, current);
+		PlayerData.setData(player, "backLoc", current);
 		player.teleport(destination); // Teleports sender to the hub if no errors while saving
 		player.setVelocity(new Vector());
 		
