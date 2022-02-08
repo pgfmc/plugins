@@ -101,7 +101,7 @@ public class BBEvent implements Listener {
 				
 				if (claim != null) {
 					pd.sendMessage("§bInside claim at §c" + claim.getLocation().toString());
-					pd.sendMessage("§bOwnber: §d" + claim.getPlayer().getDisplayNameRaw());
+					pd.sendMessage("§bOwnber: §d" + claim.getPlayer().getRankedName());
 					pd.sendMessage("§bLock: §a" + claim.getLock().toString());
 				} else {
 					pd.sendMessage("§bNot Inside a claim.");
@@ -111,7 +111,7 @@ public class BBEvent implements Listener {
 				
 				if (ob != null) {
 					pd.sendMessage("§eOwnableBlock data from: §c" + ob.getLocation().toString());
-					pd.sendMessage("§eOwner: §d" + ob.getPlayer().getDisplayNameRaw());
+					pd.sendMessage("§eOwner: §d" + ob.getPlayer().getRankedName());
 					pd.sendMessage("§eLock: §a" + ob.getLock().toString());
 					pd.setData("OwnableCache", ob);
 					pd.sendMessage("§dOwnable Selected!");

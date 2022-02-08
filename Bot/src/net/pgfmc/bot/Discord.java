@@ -140,10 +140,20 @@ public class Discord extends ListenerAdapter {
 	{
 		if (id == null) return null;
 		
-		return getGuildPGF()
+		List<String> roles = null;
+		
+		try {
+		roles = getGuildPGF()
 		.getMemberById(id)
 		.getRoles().stream()
 		.map(role -> role.getId())
 		.collect(Collectors.toList());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return roles;
+		
+		
 	}
 }

@@ -75,7 +75,7 @@ public class Main extends JavaPlugin {
 		
 		for (Player p : Bukkit.getServer().getOnlinePlayers())
 		{
-			builder.append("<:LEAVE:905682349239463957> " + PlayerData.getPlayerData(p).getDisplayNameRaw() + "\n");
+			builder.append("<:LEAVE:905682349239463957> " + PlayerData.getPlayerData(p).getDisplayName() + "\n");
 		}
 		
 		if (!StartStopMessage.isDeleted)
