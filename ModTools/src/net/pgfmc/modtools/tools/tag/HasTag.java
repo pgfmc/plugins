@@ -32,7 +32,7 @@ public class HasTag implements CommandExecutor {
 		
 		if (tagObj == null)
 		{
-			p.sendMessage(ChatColor.GOLD + pd.getRankedName() + " does not have tag set at " + path);
+			sender.sendMessage(ChatColor.GOLD + pd.getRankedName() + " does not have tag set at " + path);
 			return true;
 		}
 		
@@ -40,10 +40,10 @@ public class HasTag implements CommandExecutor {
 		
 		if (!tag)
 		{
-			p.sendMessage(ChatColor.GOLD + pd.getRankedName() + "'s tag is false at " + path);
+			sender.sendMessage(ChatColor.GOLD + pd.getRankedName() + "'s tag is false at " + path);
 		} else
 		{
-			p.sendMessage(ChatColor.GOLD + pd.getRankedName() + "'s tag is true at " + path);
+			sender.sendMessage(ChatColor.GOLD + pd.getRankedName() + "'s tag is true at " + path);
 		}
 		
 		return true;
