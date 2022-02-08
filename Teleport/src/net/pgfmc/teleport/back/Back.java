@@ -10,7 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-import net.pgfmc.core.cmd.Goto;
+import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.teleportAPI.TimedTeleport;
 import net.pgfmc.survival.cmd.Afk;
 
@@ -29,8 +29,9 @@ public class Back implements CommandExecutor, Listener {
 		if (!(sender instanceof Player)) { return true; }
 		
 		Player p = (Player) sender;
+		PlayerData pd = PlayerData.getPlayerData(p);
 		
-		Location dest = Goto.getBackLocation(p);
+		Location dest = pd.getData("backLoc");
 		if (dest == null)
 		{
 			p.sendMessage("§cYou do not have a back location.");
@@ -55,9 +56,7 @@ public class Back implements CommandExecutor, Listener {
 	@EventHandler
 	public void onDeath(PlayerDeathEvent e)
 	{
-		Player p = e.getEntity();
-		
-		Goto.logBackLocation(p, p.getLocation());
+		PlayerData.setData(e.getEntity(), "backLoc", e.getEntity().getLocation());
 	}
 
 }
