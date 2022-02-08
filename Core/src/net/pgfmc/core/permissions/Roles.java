@@ -126,7 +126,9 @@ public class Roles {
 	
 	public static Set<Role> getRolesByPlayer(OfflinePlayer p)
 	{
-		List<String> roles = PlayerData.getData(p, "roles");
+		PlayerData pd = PlayerData.getPlayerData(p);
+		@SuppressWarnings("unchecked")
+		List<String> roles = (List<String>) Optional.ofNullable(pd.getData("roles")).orElse(pd.loadFromFile("roles"));
 		
 		if (roles == null) return Set.of(Role.MEMBER);
 		
