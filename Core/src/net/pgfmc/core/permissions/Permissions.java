@@ -3,6 +3,7 @@ package net.pgfmc.core.permissions;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -26,6 +27,7 @@ import net.pgfmc.core.playerdataAPI.PlayerData;
 public class Permissions extends Configify implements Listener {
 	
 	private static HashMap<String, PermissionAttachment> permatches = new HashMap<>();
+	private static Set<Permission> allPermissions = new HashSet<Permission>();
 	
 	public Permissions() {
 		super(Mixins.getFile(CoreMain.plugin.getDataFolder() + File.separator + "permissions.yml"));
@@ -41,11 +43,19 @@ public class Permissions extends Configify implements Listener {
 	
 	public static boolean has(OfflinePlayer p, String permission)
 	{
-		if (p.isOnline()) return p.getPlayer().hasPermission(permission);
+		// Gets the permissions the slowest pay, only runs if the player is offline
+		if (!p.isOnline()) return Roles.getPermissionsAsString(Roles.getRolesByPlayer(p)).contains(permission);
 		
-		return Roles.getPermissionsAsString(Roles.getRolesByPlayer(p)).contains(permission);
+		// If the player has a matching permission set to true
+		return !p.getPlayer()
+				.getEffectivePermissions().stream()
+				.filter(perm -> perm.getPermission().equals(permission) && perm.getValue())
+				.collect(Collectors.toList())
+				.isEmpty();
+		
 	}
 	
+	@Deprecated
 	public static boolean has(OfflinePlayer p, Permission permission)
 	{
 		return has(p, permission.getName());
@@ -65,19 +75,18 @@ public class Permissions extends Configify implements Listener {
 		
 		Player p = op.getPlayer();
 		
+		clear(op);
+		
 		if (p == null || !op.isOnline())
 		{
-			clear(op);
 			Bukkit.getLogger().warning("Updating perms failed, player was offline");
 			return;
 		}
 		
-		clear(op);
-		
 		PermissionAttachment permatch = p.addAttachment(CoreMain.plugin);
 		permatches.put(p.getUniqueId().toString(), permatch);
 		
-		// Bukkit.getPluginManager().getPermissions().forEach(pp -> permatch.unsetPermission(pp));
+		// Bukkit.getPluginManager().getPermissions().forEach(pp -> permatch.setPermission(pp, false));
 		
 		for (Permission perm : perms)
 		{
@@ -162,13 +171,15 @@ public class Permissions extends Configify implements Listener {
 		{
 			r.setId(db.getString(r.getName() + ".id"));
 			r.setColor(db.getString(r.getName() + ".color"));
-			r.setPermissions(
-					includeWildcards(
+			Set<Permission> permissions = includeWildcards(
 							db.getStringList(r.getName() + ".permissions")
 							.stream()
 							.map(p -> new Permission(p))
 							.collect(Collectors.toSet())
-							));
+							);
+			
+			r.setPermissions(permissions);
+			allPermissions.addAll(permissions);
 		}
 		
 		

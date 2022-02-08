@@ -12,7 +12,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.permissions.Permissions;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
@@ -47,9 +46,7 @@ public class Nick implements CommandExecutor {
 	 */
 	public static String removeCodes(String nick)
 	{
-		return ChatColor.stripColor(
-				ChatColor.translateAlternateColorCodes('§', nick.replace('&', '§'))
-				);
+		return ChatColor.stripColor(nick.replace('&', '§'));
 	}
 	/**
 	 * This prevents a player from
@@ -61,15 +58,20 @@ public class Nick implements CommandExecutor {
 	public static void removeImpostors(PlayerData pd)
 	{
 		// The nickname without color codes
-		String raw = removeCodes((String) Optional.ofNullable(PlayerData.getData(pd.getOfflinePlayer(), "nick")).orElse(pd.getName())).toLowerCase();
+		String nick = pd.getData("nick");
+		if (nick == null) return;
+		
+		String raw = removeCodes(nick).toLowerCase();
+		
 		// If their raw nickname is just their player name, ignore
-		if (raw.equals(pd.getName().toLowerCase())) { return; }
+		if (raw.equals(pd.getName().toLowerCase())) return;
 		
 		// If op isn't pd, if op's name is pd's nickname with or without color codes
 		if (Arrays.asList(Bukkit.getOfflinePlayers()).stream()
 				.filter(op -> !op.getUniqueId().equals(pd.getUniqueId()) && (
 						op.getName().toLowerCase().equals(raw)
-							|| removeCodes(((String) Optional.ofNullable(PlayerData.getData(op, "nick")).orElse(""))).toLowerCase().equals(raw)
+							|| removeCodes(((String) Optional.ofNullable(PlayerData.getData(op, "nick"))
+									.orElse(op.getName()))).toLowerCase().equals(raw)
 						)).collect(Collectors.toList()).size() == 0) return; // If list is empty (no impostors)
 		
 		// At least 1 impostor, remove nickname
@@ -151,6 +153,7 @@ public class Nick implements CommandExecutor {
 		pd.setData("nick", nick.replace("&", "§")).queue();
 		p.sendMessage("§6Nickname changed to " + pd.getRankedName() + "§6!");
 		
+		/*
 		// p.setDisplayName(pd.getRankedName());
 		p.setPlayerListName(pd.getRankedName());
 		p.setCustomName(pd.getRankedName());
@@ -164,6 +167,7 @@ public class Nick implements CommandExecutor {
 		
 		p.hidePlayer(CoreMain.plugin, p);
 		p.showPlayer(CoreMain.plugin, p);
+		*/
 	}
 	
 	public static void setNick(Player p, String[] nick)
@@ -175,6 +179,7 @@ public class Nick implements CommandExecutor {
 	{
 		if (Permissions.has(p, "pgf.cmd.donator.nick")) return (String) Optional.ofNullable(PlayerData.getData(p, "nick"))
 				.orElse(p.getName());
+		
 		return p.getName();
 	}
 
