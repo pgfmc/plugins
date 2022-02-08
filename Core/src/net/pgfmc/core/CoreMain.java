@@ -3,7 +3,6 @@ package net.pgfmc.core;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -120,11 +119,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 			Map<String, Location> homes = new HashMap<>();
 			FileConfiguration db = pd.loadFile();
 			
-			if (db == null)
-			{
-				new Exception("FileConfiguration for PlayerData setInit is null.").printStackTrace();
-				return;
-			}
+			if (db == null) return;
 		
 			ConfigurationSection config = db.getConfigurationSection("homes");
 			
@@ -142,9 +137,9 @@ public class CoreMain extends JavaPlugin implements Listener {
 			
 			FileConfiguration db = pd.loadFile();
 			
-			if (db == null) throw new NullPointerException();
+			if (db == null) return;
 			
-			pd.setData("nick", Optional.ofNullable(db.getString("nick")).orElse(null));
+			pd.setData("nick", db.getString("nick"));
 		});
 		
 		DimManager.updateConfigForWorldPermissionAccess();

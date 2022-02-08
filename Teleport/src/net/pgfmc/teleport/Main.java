@@ -7,6 +7,7 @@ import net.pgfmc.teleport.home.DelHome;
 import net.pgfmc.teleport.home.Home;
 import net.pgfmc.teleport.home.Homes;
 import net.pgfmc.teleport.home.SetHome;
+import net.pgfmc.teleport.tpa.TpHereRequest;
 import net.pgfmc.teleport.tpa.TpRequest;
 import net.pgfmc.teleport.warp.DelWarp;
 import net.pgfmc.teleport.warp.SetWarp;
@@ -23,6 +24,7 @@ public class Main extends JavaPlugin {
 		plugin = this;
 		
 		TpRequest.registerAll();
+		TpHereRequest.registerAll();
 		
 		getCommand("home").setExecutor(new Home());
 		getCommand("sethome").setExecutor(new SetHome());

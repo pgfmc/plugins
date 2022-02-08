@@ -58,7 +58,7 @@ public class AttackEventHandler implements Listener {
 			e.setCancelled(true);
 		}
 		
-		if (!(e.getDamager() instanceof Player)) {
+		if (e.getDamager() instanceof Player) {
 			
 			Player attacker = (Player) e.getDamager();
 			

@@ -15,13 +15,11 @@ public class HomeInput implements Listener {
 		PlayerData pd = PlayerData.getPlayerData(e.getPlayer());
 		
 		// For homes
-		if (pd.getData("tempHomeLocation") != null) {
-			
-			e.setCancelled(true);
-			SetHome.setHome(pd.getPlayer(), e.getMessage(), pd.getData("tempHomeLocation"));
-			pd.setData("tempHomeLocation", null);
-			
-			return;
-		}
+		if (pd.getData("tempHomeLocation") == null) return;
+		
+		SetHome.setHome(pd.getPlayer(), e.getMessage(), pd.getData("tempHomeLocation"));
+		pd.setData("tempHomeLocation", null);
+		
+		e.setCancelled(true);
 	}
 }

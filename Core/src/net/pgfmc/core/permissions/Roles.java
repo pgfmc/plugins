@@ -87,23 +87,25 @@ public class Roles {
 	{
 		Bukkit.getLogger().warning("Recalculating roles for player " + pd.getName());
 		
-		String id = (String) pd.loadFromFile("Discord");
+		String id = (String) Optional.ofNullable(pd.getData("Discord")).orElse(pd.loadFromFile("Discord"));
 		List<String> roles = Arrays.asList(Role.MEMBER.getName());
 		
-		if (!CoreMain.PGFPlugin.BOT.isEnabled())
+		if (!CoreMain.PGFPlugin.BOT.isEnabled() && pd.loadFromFile("Discord") != null)
 		{
 			roles = (List<String>) Optional.ofNullable(pd.loadFromFile("roles"))
 					.orElse(Arrays.asList(Role.MEMBER.getName()));
-		} else if (id != null && CoreMain.PGFPlugin.BOT.isEnabled())
+			
+		} else if (id != null)
 		{
 			List<String> discordRoles = Discord.getMemberRoles(id);
 			if (discordRoles != null) {
-				pd.setData("Discord", id);
+				pd.setData("Discord", id).queue();
 				roles = asString(getRolesById(discordRoles));
 			}
+		
 		}
 		
-		pd.setData("roles", roles).save();
+		pd.setData("roles", roles).queue();
 		pManager.recalculate(pd.getOfflinePlayer());
 	}
 	
