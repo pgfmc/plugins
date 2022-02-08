@@ -36,3 +36,8 @@ commands:
     description: Broadcast to the server!
     aliases: [bc, broadc, bcast, say]
     permission: pgf.admin.broadcast
+  realname:
+    usage: /<command> [player]
+    description: Get the real name of a nicked player
+    aliases: [rn]
+    permission: pgf.cmd.realname
