@@ -60,6 +60,10 @@ commands:
     usage: /<command>
     description: Toggles debug mode for this player.
     permission: pgf.admin.debug
+  invsee:
+    usage: /<command> [player] [(optional) echest]
+    description: See inside a player's inventory
+    permission: pgf.admin.invsee
     
 permissions:
   pgf.admin.gamemode.*:
