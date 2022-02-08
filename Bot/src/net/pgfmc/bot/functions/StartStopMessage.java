@@ -1,7 +1,5 @@
 package net.pgfmc.bot.functions;
 
-import org.bukkit.Bukkit;
-
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.MessageHistory;
 import net.pgfmc.bot.Discord;
@@ -11,9 +9,7 @@ public class StartStopMessage {
 	public static boolean isDeleted = false;
 	
 	public static void deleteStartStopMessages(MessageHistory feed)
-	{
-		Bukkit.getLogger().warning("Message history size: " + feed.getRetrievedHistory().size());
-		
+	{		
 		feed.getRetrievedHistory()
 		.stream()
 		.filter(m -> !m.getEmbeds().isEmpty() && m.getAuthor().getId().equals("721949520728031232"))
