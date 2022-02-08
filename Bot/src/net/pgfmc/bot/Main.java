@@ -1,5 +1,7 @@
 package net.pgfmc.bot;
 
+import java.util.Optional;
+
 import javax.security.auth.login.LoginException;
 
 import org.bukkit.Bukkit;
@@ -75,6 +77,11 @@ public class Main extends JavaPlugin {
 		
 		for (Player p : Bukkit.getServer().getOnlinePlayers())
 		{
+			if (p.hasPermission("pgf.admin.fake.leave"))
+			{
+				if (((boolean) Optional.ofNullable(PlayerData.getData(p, "fake-leave")).orElse(false)) == true) continue;
+			}
+			
 			builder.append("<:LEAVE:905682349239463957> " + PlayerData.getPlayerData(p).getDisplayName() + "\n");
 		}
 		

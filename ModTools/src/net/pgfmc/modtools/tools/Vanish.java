@@ -39,15 +39,18 @@ public class Vanish implements CommandExecutor, Listener {
 		boolean vanish = (boolean) Optional.ofNullable(pd.getData("vanish")).orElse(false); // Gets "invis" from PlayerData, default to false if null, converts to boolean
 		
 		pd.setData("vanish", !vanish);
+		p.setInvisible(!vanish); // This is only so the user knows they're in invis mode
 		
 		if (vanish)
 		{
 			Bukkit.getOnlinePlayers().stream().forEach(pl -> pl.showPlayer(Main.plugin, p));
 			p.sendMessage("§cVanish off.");
+			p.performCommand("fakejoin");
 		} else
 		{
 			Bukkit.getOnlinePlayers().stream().filter(pl -> !pl.hasPermission("pgf.admin.vanish.exempt")).forEach(pl -> pl.hidePlayer(Main.plugin, p));
 			p.sendMessage("§aVanished!");
+			p.performCommand("fakeleave");
 		}
 		
 		return true;
