@@ -58,6 +58,7 @@ public class TpRequest extends RequestType {
 				r.asker.playSound(Sound.ENTITY_ENDERMAN_TELEPORT);
 				if (Afk.isAfk(r.asker.getPlayer())) { Afk.toggleAfk(r.asker.getPlayer()); }
 			});
+			break;
 			
 		case DENIED:
 			r.asker.sendMessage("§cTpa request denied!");

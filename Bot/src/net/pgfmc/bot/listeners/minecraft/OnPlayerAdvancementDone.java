@@ -30,7 +30,7 @@ public class OnPlayerAdvancementDone implements Listener {
 		if (adv.contains(" has made the advancement "))
 		{
 			adv = adv.substring(adv.lastIndexOf(pd.getName()), adv.length());
-			adv.replace(pd.getName(), pd.getDisplayNameRaw());
+			adv.replace(pd.getName(), pd.getDisplayName());
 			
 			Discord.sendMessage(adv);
 			Bukkit.getLogger().warning("Advancement Get!"); // DO NOT REMOVE THIS!!!!!!!!!!!!!!!! (IT BREAKS) XXX lol

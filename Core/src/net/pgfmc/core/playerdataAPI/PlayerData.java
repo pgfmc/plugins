@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -114,6 +113,7 @@ public final class PlayerData extends AbstractPlayerData {
 	
 	// getters and setters
 	
+	// Has color, has staff diamond
 	public String getRankedName()
 	{
 		Nick.removeImpostors(this);
@@ -121,9 +121,16 @@ public final class PlayerData extends AbstractPlayerData {
 		return getRankColor() + Nick.getNick(player);
 	}
 	
+	// No color, has staff diamond
+	public String getDisplayName()
+	{
+		return Nick.removeCodes(getRankedName());
+	}
+	
+	// No color, no staff diamond
 	public String getDisplayNameRaw()
 	{
-		return (String) Optional.ofNullable(getData("nick")).orElse(getName());
+		return Nick.removeCodes(getDisplayName()).replaceAll("[^A-Za-z0-9]", "");
 	}
 	
 	@Override
