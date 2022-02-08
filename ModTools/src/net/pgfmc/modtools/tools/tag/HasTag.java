@@ -1,6 +1,7 @@
-package net.pgfmc.modtools.tools;
+package net.pgfmc.modtools.tools.tag;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -8,19 +9,18 @@ import org.bukkit.entity.Player;
 
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
-public class Tagging implements CommandExecutor {
+public class HasTag implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		
-		if (args.length < 3)
+		if (args.length < 2)
 		{
 			return false;
 		}
 		
 		Player p = Bukkit.getPlayer(args[0]);
 		String path = args[1];
-		String tag = args[2];
 		
 		if (p == null)
 		{
@@ -28,14 +28,22 @@ public class Tagging implements CommandExecutor {
 			return true;
 		}
 		PlayerData pd = PlayerData.getPlayerData(p);
-		pd.setData(path, tag).queue();
+		Object tagObj = pd.getData(path);
 		
-		sender.sendMessage(pd.getRankedName() + " §ahas been tagged! §6" + path + " -> " + tag);
-		
-		// true/false for feedback to target
-		if (args.length >= 4 && Boolean.valueOf(args[3]))
+		if (tagObj == null)
 		{
-			p.sendMessage("§aYou have been tagged! §6" + path + " -> " + tag);
+			p.sendMessage(ChatColor.GOLD + pd.getRankedName() + " does not have tag set at " + path);
+			return true;
+		}
+		
+		boolean tag = (boolean) tagObj;
+		
+		if (!tag)
+		{
+			p.sendMessage(ChatColor.GOLD + pd.getRankedName() + "'s tag is false at " + path);
+		} else
+		{
+			p.sendMessage(ChatColor.GOLD + pd.getRankedName() + "'s tag is true at " + path);
 		}
 		
 		return true;

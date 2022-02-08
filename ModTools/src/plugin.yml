@@ -77,6 +77,10 @@ commands:
     usage: /<command> [Player] [Path] [Tag] [true/false]
     description: Tag a player!
     permission: pgf.admin.tag
+  hastag:
+    usage: /<command> [Player] [Path]
+    description: Test if a player has a tag!
+    permission: pgf.admin.tag
   broadcast:
     usage: /<command> [message]
     description: Broadcast to the server!
