@@ -58,6 +58,7 @@ public static final TpHereRequest TH = new TpHereRequest();
 				r.target.playSound(Sound.ENTITY_ENDERMAN_TELEPORT);
 				if (Afk.isAfk(r.target.getPlayer())) { Afk.toggleAfk(r.target.getPlayer()); }
 			});
+			break;
 			
 		case DENIED:
 			r.asker.sendMessage("§cTph request denied!");

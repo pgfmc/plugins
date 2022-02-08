@@ -11,6 +11,7 @@ import net.pgfmc.friends.commands.FavoriteCommand;
 import net.pgfmc.friends.commands.FriendsListCommand;
 import net.pgfmc.friends.commands.UnfavoriteCommand;
 import net.pgfmc.friends.commands.UnfriendCommand;
+import net.pgfmc.friends.data.FriendRequest;
 import net.pgfmc.friends.data.Friends;
 import net.pgfmc.friends.data.Friends.Relation;
 import net.pgfmc.friends.events.AttackEventHandler;
@@ -27,6 +28,7 @@ public class Main extends JavaPlugin {
 		getCommand("friendlist").setExecutor(new FriendsListCommand());
 		getCommand("favorite").setExecutor(new FavoriteCommand());
 		getCommand("unfavorite").setExecutor(new UnfavoriteCommand());
+		FriendRequest.registerAll();
 		
 
 		PlayerDataManager.setInit(x -> x.setData("friends", new HashMap<PlayerData, Relation>()));

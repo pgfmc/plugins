@@ -15,7 +15,7 @@ public class FriendRequest extends RequestType {
 	public static final FriendRequest FR = new FriendRequest();
 
 	public FriendRequest() {
-		super(0, "Friend");
+		super(5 * 20 * 60, "Friend");
 		endsOnQuit = false;
 		isPersistent = true;
 	}
