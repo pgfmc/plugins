@@ -66,7 +66,8 @@ public class OnMessageReceived implements EventListener {
 						);
 			}
 			
-			content.replace("%", "\\%"); // removes all "%"s from the message.
+			// content.replace("%", "\\%"); // removes all "%"s from the message.
+			
 			
 			// attempts to bring over formatting from discord.
 			content = format(content, "\\*\\*\\*", "§l§o"); 
