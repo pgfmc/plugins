@@ -4,4 +4,4 @@ server-channel: '771247931005206579'
 alert-channel: '938677080349093898'
 enable-command: false
 
-token: discord bot token here 
+token: <discord bot token here>
