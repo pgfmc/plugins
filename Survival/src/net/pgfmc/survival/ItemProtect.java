@@ -1,4 +1,4 @@
-package net.pgfmc.claims.general;
+package net.pgfmc.survival;
 
 import java.util.HashMap;
 import java.util.List;
@@ -8,8 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
-import org.bukkit.entity.Creeper;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,15 +17,15 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.util.Vector;
 
 import net.pgfmc.core.CoreMain;
-import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.friends.data.Friends;
- /**
-  * Prevents other players from picking up someone else's items on death.
-  * Effect fades after 2 minutes.
-  * @author bk + CrimsonDart
-  * @since 1.3.0
-  */
+
+/**
+ * Prevents other players from picking up someone else's items on death.
+ * Effect fades after 2 minutes.
+ * @author bk + CrimsonDart
+ * @since 1.3.0
+ */
 public class ItemProtect implements Listener {
 	
 	private static HashMap<Item, Entry> items = new HashMap<>();
@@ -41,20 +39,12 @@ public class ItemProtect implements Listener {
 		World world = p.getWorld();
 		PlayerData pd = PlayerData.getPlayerData(p);
 		
+		if (!p.hasPermission("pgf.itemprotect")) return;
+		
 		// converts dropped items
 		List<Item> droppedItems = e.getDrops().stream().map((x -> {
 			return world.dropItem(loc, x);
 		})).collect(Collectors.toList());
-		
-		// Drop a custom player head if death by charged creeper
-		if (p.getLastDamageCause().getEntityType().equals(EntityType.CREEPER))
-		{
-			Creeper creeper = (Creeper) p.getLastDamageCause().getEntity();
-			if (creeper.isPowered())
-			{
-				droppedItems.add(world.dropItem(loc, Skull.getHead(p.getUniqueId(), null)));
-			}
-		}
 		
 		// activates the items
 		for (Item drop : droppedItems) {
@@ -89,22 +79,18 @@ public class ItemProtect implements Listener {
 	}
 	
 	@EventHandler
-	public void onPickup(EntityPickupItemEvent e) {
+	public void onPickup(EntityPickupItemEvent e)
+	{
+		if (!(e.getEntity() instanceof OfflinePlayer)) return;
 		
-		if (e.getEntity() instanceof OfflinePlayer) {
-			Item item = e.getItem();
+		Item item = e.getItem();
+		Entry data = items.get(item);
+		
+		if (data == null) return;
 			
-			
-			Entry data = items.get(item);
-			
-			if (data != null) {
-				
-				PlayerData pd = PlayerData.getPlayerData((OfflinePlayer) e.getEntity());
-				
-				e.setCancelled(!(data.pickup(pd)));
-				
-			}
-		}
+		PlayerData pd = PlayerData.getPlayerData((OfflinePlayer) e.getEntity());
+		e.setCancelled(!(data.pickup(pd)));
+		
 	}
 	
 	/**
@@ -149,3 +135,4 @@ public class ItemProtect implements Listener {
 	}
 
 }
+

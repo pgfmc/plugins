@@ -12,6 +12,8 @@ import net.pgfmc.modtools.tools.Heal;
 import net.pgfmc.modtools.tools.Invsee;
 import net.pgfmc.modtools.tools.Sudo;
 import net.pgfmc.modtools.tools.Vanish;
+import net.pgfmc.modtools.tools.mute.Mute;
+import net.pgfmc.modtools.tools.mute.Unmute;
 
 public class Main extends JavaPlugin {
 	
@@ -41,6 +43,9 @@ public class Main extends JavaPlugin {
 		getCommand("dimtoggle").setExecutor(new DimToggle());
 		
 		getCommand("invsee").setExecutor(new Invsee());
+		
+		getCommand("mute").setExecutor(new Mute());
+		getCommand("unmute").setExecutor(new Unmute());
 		
 		getServer().getPluginManager().registerEvents(new Fly(), this);
 		getServer().getPluginManager().registerEvents(new God(), this);

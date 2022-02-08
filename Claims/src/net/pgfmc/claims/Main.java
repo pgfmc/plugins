@@ -3,7 +3,6 @@ package net.pgfmc.claims;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.pgfmc.claims.general.AttackEvent;
-import net.pgfmc.claims.general.ItemProtect;
 import net.pgfmc.claims.ownable.Ownable.Lock;
 import net.pgfmc.claims.ownable.OwnableFile;
 import net.pgfmc.claims.ownable.block.events.BBEvent;
@@ -54,7 +53,6 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new TameEvent(), this);
 		getServer().getPluginManager().registerEvents(new DeathEvent(), this);
 		getServer().getPluginManager().registerEvents(new InvOpenEvent(), this);
-		getServer().getPluginManager().registerEvents(new ItemProtect(), this);	
 		getServer().getPluginManager().registerEvents(new BExEvent(), this);
 		
 		getCommand("inspector").setExecutor(new InspectCommand());

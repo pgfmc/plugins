@@ -64,6 +64,14 @@ commands:
     usage: /<command> [player] [(optional) echest]
     description: See inside a player's inventory
     permission: pgf.admin.invsee
+  mute:
+    usage: /<command> [player]
+    description: Mute a player
+    permission: pgf.admin.mute
+  unmute:
+    usage: /<command> [player]
+    description: Unmute a player
+    permission: pgf.admin.unmute
     
 permissions:
   pgf.admin.gamemode.*:
