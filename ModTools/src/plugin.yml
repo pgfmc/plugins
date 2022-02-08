@@ -1,11 +1,12 @@
 name: PGF-ModTools
-version: 5.3.4
+version: 5.4.0
 api-version: 1.18
 authors: [bk, CrimsonDart]
 website: play.pgfmc.net
 main: net.pgfmc.modtools.Main
 description: Moderator tools for PGF
 depend: [PGF-Core]
+softdepend: [PGF-Bot]
 load: POSTWORLD
 prefix: PGF-Core
 
@@ -64,6 +65,37 @@ commands:
     usage: /<command> [player] [(optional) echest]
     description: See inside a player's inventory
     permission: pgf.admin.invsee
+  mute:
+    usage: /<command> [player]
+    description: Mute a player
+    permission: pgf.admin.mute
+  unmute:
+    usage: /<command> [player]
+    description: Unmute a player
+    permission: pgf.admin.unmute
+  tag:
+    usage: /<command> [Player] [Path] [Tag] [true/false]
+    description: Tag a player!
+    permission: pgf.admin.tag
+  hastag:
+    usage: /<command> [Player] [Path]
+    description: Test if a player has a tag!
+    permission: pgf.admin.tag
+  broadcast:
+    usage: /<command> [message]
+    description: Broadcast to the server!
+    aliases: [bc, broadc, bcast, say]
+    permission: pgf.admin.broadcast
+  fakejoin:
+    usage: /<command>
+    description: Send a fake join message
+    aliases: [fj, fakej, fjoin]
+    permission: pgf.admin.fake.join
+  fakeleave:
+    usage: /<command>
+    description: Send a fake leave message
+    aliases: [fl, fakel, fleave]
+    permission: pgf.admin.fake.leave
     
 permissions:
   pgf.admin.gamemode.*:
