@@ -19,6 +19,7 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import net.pgfmc.core.CoreMain.PGFPlugin;
 import net.pgfmc.core.cmd.Blocked;
+import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.inventoryAPI.BaseInventory;
 import net.pgfmc.core.inventoryAPI.ButtonInventory;
 import net.pgfmc.core.inventoryAPI.ListInventory;
@@ -200,7 +201,7 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] [] [] [] [] XX [] []
 			 * home menu
 			 */
-			if (pd.hasPermission("bukkit.command.list") && PGFPlugin.FRIENDS.isEnabled()) {
+			if (pd.hasPermission("minecraft.command.list") && PGFPlugin.FRIENDS.isEnabled()) {
 				
 				setAction(24, (p, e) -> {
 					p.openInventory(new PlayerList().getInventory());
@@ -218,6 +219,7 @@ public class CommandsMenu implements InventoryHolder {
 			 */
 			
 			Role topRole = Roles.getTop(pd.getOfflinePlayer());
+			/* in case I don't like this new UI change - bk
 			Material emblem = Material.RAW_COPPER;
 			switch (topRole) {
 			case VETERAN:
@@ -249,7 +251,30 @@ public class CommandsMenu implements InventoryHolder {
 				break;
 			default: break;
 			};
-			setItem(4, emblem).n(topRole.getColor() + topRole.name().charAt(0) + topRole.getName().substring(1));
+			*/
+			/* 
+			 * [] [] [] [] XX [] [] [] []
+			 * [] [] [] [] [] [] [] [] []
+			 * [] [] [] [] [] [] [] [] []
+			 * Nickname
+			 */
+			setAction(4, (p, e) -> {
+				if (pd.hasPermission("pgf.cmd.donator.nick"))
+				{
+					PlayerData.getPlayerData(p).setData("nickTemp", "reset");
+					p.closeInventory();
+					p.sendMessage("§9Type your new nickname in chat.");
+				} else
+				{
+					p.sendMessage("§cYou need donator for that!");
+				}
+				
+			});
+			setItem(4, Skull.getHead(pd.getUniqueId(), null))
+			.n(pd.getRankedName() + " (" + topRole.name().charAt(0) + topRole.getName().substring(1) + ")")
+			.l("§7Change nickname!");
+			
+			
 			
 			/* 
 			 * [] [] [] [] [] [] [] [] []
@@ -277,23 +302,6 @@ public class CommandsMenu implements InventoryHolder {
 				p.openInventory(new RequestList(pd).getInventory());
 			});
 			setItem(9, Material.LEVER).n("§r§4Requests");
-			
-			
-			/* 
-			 * [] [] [] [] [] [] [] [] []
-			 * [] [] [] [] [] [] [] [] []
-			 * XX [] [] [] [] [] [] [] []
-			 * Nickname
-			 */
-			if (pd.hasPermission("pgf.cmd.donator.nick"))
-			{
-				setAction(18, (p, e) -> {
-					PlayerData.getPlayerData(p).setData("nickTemp", "reset");
-					p.closeInventory();
-					p.sendMessage("§9Type your new nickname in chat.");
-				});
-				setItem(18, Material.NAME_TAG).n("§eNickname").l("§7Give yourself a nickname!");
-			}
 			
 		}
 	}
@@ -681,7 +689,11 @@ public class CommandsMenu implements InventoryHolder {
 
 		@Override
 		protected ItemStack toItem(PlayerData entry) {
-			return new ItemWrapper(Material.PLAYER_HEAD).n(entry.getRankedName()).l((entry.isOnline()) ? "§r§aOnline" : "§r§cOffline").gi();
+				// Is their skin
+			return new ItemWrapper(Skull.getHead(entry.getUniqueId(), null))
+					.n(entry.getRankedName())
+					.l((entry.isOnline()) ? "§r§aOnline" : "§r§cOffline")
+					.gi();
 		}
 		
 		@Override

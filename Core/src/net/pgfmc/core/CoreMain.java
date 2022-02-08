@@ -17,6 +17,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import net.pgfmc.core.chat.ProfanityFilter;
 import net.pgfmc.core.cmd.Goto;
+import net.pgfmc.core.cmd.RealName;
 import net.pgfmc.core.cmd.admin.Broadcast;
 import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.cmd.admin.Tagging;
@@ -166,6 +167,8 @@ public class CoreMain extends JavaPlugin implements Listener {
 		
 		getCommand("broadcast").setExecutor(new Broadcast());
 		
+		getCommand("realname").setExecutor(new RealName());
+		
 		
 		
 		getServer().getPluginManager().registerEvents(this, this);
@@ -203,7 +206,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 			Plugin pl = p.getPlugin();
 			if (pl == null)
 			{
-				Bukkit.getLogger().warning("[PGF-" + p.name() + "] is disabled!");
+				Bukkit.getLogger().severe("[PGF-" + p.name() + "] is disabled!");
 				p.disable();
 				continue;
 			}
