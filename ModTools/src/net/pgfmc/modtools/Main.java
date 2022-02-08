@@ -9,6 +9,7 @@ import net.pgfmc.modtools.tools.Fly;
 import net.pgfmc.modtools.tools.Gamemode;
 import net.pgfmc.modtools.tools.God;
 import net.pgfmc.modtools.tools.Heal;
+import net.pgfmc.modtools.tools.Invsee;
 import net.pgfmc.modtools.tools.Sudo;
 import net.pgfmc.modtools.tools.Vanish;
 
@@ -38,6 +39,8 @@ public class Main extends JavaPlugin {
 		getCommand("day").setExecutor(new Day());
 		
 		getCommand("dimtoggle").setExecutor(new DimToggle());
+		
+		getCommand("invsee").setExecutor(new Invsee());
 		
 		getServer().getPluginManager().registerEvents(new Fly(), this);
 		getServer().getPluginManager().registerEvents(new God(), this);
