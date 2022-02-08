@@ -13,6 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import net.pgfmc.core.CoreMain;
+import net.pgfmc.core.chat.ProfanityFilter;
 import net.pgfmc.core.permissions.Permissions;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
@@ -102,6 +103,12 @@ public class Nick implements CommandExecutor {
 				.replace("&r", "");
 		String raw = removeCodes(nick);
 		
+		if (ProfanityFilter.hasProfanity(raw))
+		{
+			p.sendMessage(ChatColor.RED + "Please do not include profanity!");
+			return;
+		}
+		
 		/*
 		 * A raw length of 0 means the nickname had no content, just color codes (lmao)
 		 */
@@ -176,8 +183,13 @@ public class Nick implements CommandExecutor {
 	
 	public static String getNick(OfflinePlayer p)
 	{
-		if (Permissions.has(p, "pgf.cmd.donator.nick")) return (String) Optional.ofNullable(PlayerData.getData(p, "nick"))
-				.orElse(p.getName());
+		if (Permissions.has(p, "pgf.cmd.donator.nick")) 
+		{
+			String nick = PlayerData.getData(p, "nick");
+			
+			if (nick != null) return "~" + nick;
+			
+		}
 		
 		return p.getName();
 	}
