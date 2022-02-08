@@ -2,6 +2,7 @@ package net.pgfmc.modtools.tools;
 
 import java.util.Optional;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -11,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.modtools.Main;
 
  /**
   * Toggles invisibility.
@@ -37,10 +39,16 @@ public class Vanish implements CommandExecutor, Listener {
 		boolean vanish = (boolean) Optional.ofNullable(pd.getData("vanish")).orElse(false); // Gets "invis" from PlayerData, default to false if null, converts to boolean
 		
 		pd.setData("vanish", !vanish);
-		p.setInvisible(!vanish);
-		p.setSilent(!vanish);
 		
-		if (vanish) { p.sendMessage("§cVanish off."); } else { p.sendMessage("§aVanished!"); }
+		if (vanish)
+		{
+			Bukkit.getOnlinePlayers().stream().forEach(pl -> pl.showPlayer(Main.plugin, p));
+			p.sendMessage("§cVanish off.");
+		} else
+		{
+			Bukkit.getOnlinePlayers().stream().filter(pl -> !pl.hasPermission("pgf.admin.vanish.exempt")).forEach(pl -> pl.hidePlayer(Main.plugin, p));
+			p.sendMessage("§aVanished!");
+		}
 		
 		return true;
 	}
