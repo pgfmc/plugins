@@ -2,6 +2,7 @@ package net.pgfmc.modtools;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import net.pgfmc.modtools.tools.Broadcast;
 import net.pgfmc.modtools.tools.Day;
 import net.pgfmc.modtools.tools.Debug;
 import net.pgfmc.modtools.tools.DimToggle;
@@ -11,7 +12,10 @@ import net.pgfmc.modtools.tools.God;
 import net.pgfmc.modtools.tools.Heal;
 import net.pgfmc.modtools.tools.Invsee;
 import net.pgfmc.modtools.tools.Sudo;
+import net.pgfmc.modtools.tools.Tagging;
 import net.pgfmc.modtools.tools.Vanish;
+import net.pgfmc.modtools.tools.fake.FakeJoin;
+import net.pgfmc.modtools.tools.fake.FakeLeave;
 import net.pgfmc.modtools.tools.mute.Mute;
 import net.pgfmc.modtools.tools.mute.Unmute;
 
@@ -47,9 +51,17 @@ public class Main extends JavaPlugin {
 		getCommand("mute").setExecutor(new Mute());
 		getCommand("unmute").setExecutor(new Unmute());
 		
+		getCommand("tag").setExecutor(new Tagging());
+		
+		getCommand("broadcast").setExecutor(new Broadcast());
+		
+		getCommand("fakeleave").setExecutor(new FakeLeave());
+		getCommand("fakejoin").setExecutor(new FakeJoin());
+		
 		getServer().getPluginManager().registerEvents(new Fly(), this);
 		getServer().getPluginManager().registerEvents(new God(), this);
 		getServer().getPluginManager().registerEvents(new Vanish(), this);
+		
 	}
 
 }
