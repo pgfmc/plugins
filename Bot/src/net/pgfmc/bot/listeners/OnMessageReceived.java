@@ -66,7 +66,7 @@ public class OnMessageReceived implements EventListener {
 						);
 			}
 			
-			content.replace("%", ""); // removes all "%"s from the message.
+			content.replace("%", "\\%"); // removes all "%"s from the message.
 			
 			// attempts to bring over formatting from discord.
 			content = format(content, "\\*\\*\\*", "§l§o"); 
@@ -75,7 +75,7 @@ public class OnMessageReceived implements EventListener {
 			content = format(content, "__", "§n");
 			
 			// If not reply
-			if(e.getMessage().getReferencedMessage() == null || e.getMessage().getReferencedMessage().getAuthor().isBot())
+			if(e.getMessage().getReferencedMessage() == null || e.getMessage().getReferencedMessage().getAuthor().isBot() || Discord.getGuildPGF() == null)
 			{
 				Bukkit.getServer().broadcastMessage(r.getColor()
 						+ e.getMember().getEffectiveName()
@@ -87,11 +87,12 @@ public class OnMessageReceived implements EventListener {
 				
 			} else {
                 Role replyRole = Role.MEMBER;
+                Member replyMember = Discord.getGuildPGF().getMember(e.getMessage().getReferencedMessage().getAuthor());
                 
-                if (memberPGF != null)
+                if (replyMember != null)
                 {
                     replyRole = Roles.getTop(
-                    		Roles.getRolesById(memberPGF
+                    		Roles.getRolesById(replyMember
                     				.getRoles().stream()
                     				.map(role -> role.getId())
                     				.collect(Collectors.toList()))
@@ -102,7 +103,7 @@ public class OnMessageReceived implements EventListener {
                 		+ e.getMember().getEffectiveName()
                 		+ " replied to "
                 		+ replyRole.getColor()
-                		+ memberPGF.getEffectiveName()
+                		+ replyMember.getEffectiveName()
                 		+ " §r§8-|| "
                 		+ OnAsyncPlayerChat.getMessageColor(e.getMember().getId())
                 		+ content);

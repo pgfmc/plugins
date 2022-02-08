@@ -79,9 +79,8 @@ public class OnAsyncPlayerChat implements Listener {
 	    a = a.stream().map(fl -> fl.substring(0, fl.indexOf(" "))).collect(Collectors.toList());
 	    Bukkit.getLogger().warning(a);
 	    */
-
 		
-		e.setFormat(pd.getRankedName() + "§8 -> " + getMessageColor(p.getUniqueId().toString()) + msg);
+		e.setFormat(pd.getRankedName() + "§8 -> " + getMessageColor(p.getUniqueId().toString()) + "%2$s"); // %2$s means 2nd argument (the chat message), %1$s would be the player's display name
 		
 		Discord.sendMessage(pd.getDisplayName() + " -> " + msg);
 	}

@@ -8,7 +8,6 @@ import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
 import net.pgfmc.bot.Discord;
-import net.pgfmc.bot.Main;
 import net.pgfmc.bot.functions.spam.Raid;
 
 public class OnMemberJoin implements EventListener {
@@ -19,11 +18,9 @@ public class OnMemberJoin implements EventListener {
 		
 		GuildMemberJoinEvent e = (GuildMemberJoinEvent) event;
 		
-		if (!Main.plugin.getConfig().getBoolean("enable-command")) return;
-		
 		User user = e.getUser();
 		
-		EmbedBuilder eb = Discord.simpleServerEmbed(user.getAsTag() + " has joined PGF!", user.getEffectiveAvatarUrl(), Discord.GOLD);
+		EmbedBuilder eb = Discord.simpleServerEmbed(user.getAsTag() + " has joined PGF Discord!", user.getEffectiveAvatarUrl(), Discord.GOLD);
 		eb.setTimestamp(OffsetDateTime.now());
 		
 		Discord.sendAlert(eb.build());
