@@ -15,6 +15,7 @@ import net.pgfmc.bot.listeners.minecraft.OnPlayerAdvancementDone;
 import net.pgfmc.bot.listeners.minecraft.OnPlayerDeath;
 import net.pgfmc.bot.listeners.minecraft.OnPlayerJoin;
 import net.pgfmc.bot.listeners.minecraft.OnPlayerQuit;
+import net.pgfmc.core.playerdataAPI.PlayerData;
 
 public class Main extends JavaPlugin {
 	
@@ -74,7 +75,7 @@ public class Main extends JavaPlugin {
 		
 		for (Player p : Bukkit.getServer().getOnlinePlayers())
 		{
-			builder.append("<:LEAVE:905682349239463957> " + p.getName() + "\n");
+			builder.append("<:LEAVE:905682349239463957> " + PlayerData.getPlayerData(p).getDisplayNameRaw() + "\n");
 		}
 		
 		if (!StartStopMessage.isDeleted)
