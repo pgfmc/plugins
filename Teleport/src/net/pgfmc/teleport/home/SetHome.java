@@ -2,12 +2,14 @@ package net.pgfmc.teleport.home;
 
 import java.util.HashMap;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import net.pgfmc.core.chat.ProfanityFilter;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
 public class SetHome implements CommandExecutor {
@@ -37,6 +39,12 @@ public class SetHome implements CommandExecutor {
 		HashMap<String, Location> homes = Homes.getHomes(p);
 		
 		name = name.toLowerCase().strip().replace(" ", "_");
+		
+		if (ProfanityFilter.hasProfanity(name))
+		{
+			p.sendMessage(ChatColor.RED + "Please do not include profanity!");
+			return;
+		}
 		
 		if (homes.containsKey(name))
 		{
