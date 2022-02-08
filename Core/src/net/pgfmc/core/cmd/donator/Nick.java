@@ -12,6 +12,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.permissions.Permissions;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
@@ -153,7 +154,6 @@ public class Nick implements CommandExecutor {
 		pd.setData("nick", nick.replace("&", "§")).queue();
 		p.sendMessage("§6Nickname changed to " + pd.getRankedName() + "§6!");
 		
-		/*
 		// p.setDisplayName(pd.getRankedName());
 		p.setPlayerListName(pd.getRankedName());
 		p.setCustomName(pd.getRankedName());
@@ -167,7 +167,6 @@ public class Nick implements CommandExecutor {
 		
 		p.hidePlayer(CoreMain.plugin, p);
 		p.showPlayer(CoreMain.plugin, p);
-		*/
 	}
 	
 	public static void setNick(Player p, String[] nick)

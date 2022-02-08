@@ -112,8 +112,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 		PlayerDataManager.setInit(pd -> pd.setData("fly", false));
 		PlayerDataManager.setInit(pd -> pd.setData("vanish", false));
 		
-		PlayerDataManager.setInit(pd -> pd.setData("Discord", pd.loadFromFile("Discord")));
-		
 		PlayerDataManager.setInit(pd -> pd.setData("Name", pd.getName()).queue());
 		
 		PlayerDataManager.setInit(pd -> {
