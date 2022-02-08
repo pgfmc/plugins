@@ -176,8 +176,13 @@ public class Nick implements CommandExecutor {
 	
 	public static String getNick(OfflinePlayer p)
 	{
-		if (Permissions.has(p, "pgf.cmd.donator.nick")) return (String) Optional.ofNullable(PlayerData.getData(p, "nick"))
-				.orElse(p.getName());
+		if (Permissions.has(p, "pgf.cmd.donator.nick")) 
+		{
+			String nick = PlayerData.getData(p, "nick");
+			
+			if (nick != null) return "~" + nick;
+			
+		}
 		
 		return p.getName();
 	}
