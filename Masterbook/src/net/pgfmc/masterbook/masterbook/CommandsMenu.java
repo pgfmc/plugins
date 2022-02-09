@@ -3,7 +3,6 @@ package net.pgfmc.masterbook.masterbook;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
@@ -21,17 +20,14 @@ import net.pgfmc.core.CoreMain.PGFPlugin;
 import net.pgfmc.core.cmd.Blocked;
 import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.inventoryAPI.BaseInventory;
-import net.pgfmc.core.inventoryAPI.ButtonInventory;
 import net.pgfmc.core.inventoryAPI.ListInventory;
 import net.pgfmc.core.inventoryAPI.extra.Butto;
-import net.pgfmc.core.inventoryAPI.extra.Buttonable;
 import net.pgfmc.core.inventoryAPI.extra.ItemWrapper;
 import net.pgfmc.core.permissions.Permissions;
 import net.pgfmc.core.permissions.Roles;
 import net.pgfmc.core.permissions.Roles.Role;
 import net.pgfmc.core.playerdataAPI.PlayerData;
-import net.pgfmc.core.requests.Request;
-import net.pgfmc.core.requests.RequestType;
+import net.pgfmc.core.requests.inv.RequestListInventory;
 import net.pgfmc.core.util.DimManager;
 import net.pgfmc.friends.data.Friends;
 import net.pgfmc.friends.data.Friends.Relation;
@@ -299,7 +295,14 @@ public class CommandsMenu implements InventoryHolder {
 			 * Requests
 			 */
 			setAction(9, (p, e) -> {
-				p.openInventory(new RequestList(pd).getInventory());
+				
+				RequestListInventory inv = new RequestListInventory(pd);
+				inv.setItem(0, Material.FEATHER).n("§r§cBack");
+				inv.setAction(0, (player, event) -> {
+					player.openInventory(new Homepage().getInventory());
+				});
+				
+				p.openInventory(inv.getInventory());
 			});
 			setItem(9, Material.LEVER).n("§r§4Requests");
 			
@@ -860,36 +863,6 @@ public class CommandsMenu implements InventoryHolder {
 		}
 	}
 	
-	public class RequestList extends ButtonInventory {
-		
-		PlayerData pd;
-		
-		public RequestList(PlayerData pd) {
-			super(27, "Pending Requests");
-			this.pd = pd;
-
-			setAction(0, (p, e) -> {
-				p.openInventory(new Homepage().getInventory());
-			});
-			setItem(0, Material.FEATHER).n("§r§7Back");
-		}
-
-		@Override
-		public List<Buttonable> load() {
-			List<Buttonable> list = new ArrayList<>();
-			
-			Set<Request> set = RequestType.getInAllRequests(x -> {
-				return (x.target == pd);
-			});
-			
-			for (Request r : set) {
-				list.add(r);
-			}
-			return list;
-			
-		}
-	}
-
 	@Override
 	public Inventory getInventory() {
 		return new Homepage().getInventory();

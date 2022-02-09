@@ -8,7 +8,9 @@ import net.pgfmc.core.inventoryAPI.BaseInventory;
  *
  */
 public interface Inventoryable extends Buttonable {
+	
 	public abstract BaseInventory toInventory();
+	
 	public default Butto toAction() {
 		return (p, e) -> {
 			p.openInventory(toInventory().getInventory());
