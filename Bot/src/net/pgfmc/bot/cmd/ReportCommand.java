@@ -27,7 +27,7 @@ public class ReportCommand implements CommandExecutor {
 			a.sendMessage("Please provide a message.");
 		} else {
 			EmbedBuilder eb = new EmbedBuilder();
-			eb.setColor(Discord.red);
+			eb.setColor(Discord.RED);
 			eb.setAuthor(a.getName(), null, "https://crafatar.com/avatars/" + a.getUniqueId());
 			eb.setTitle("Message received!");
 			eb.setDescription(m + " - From" + a.getName());
