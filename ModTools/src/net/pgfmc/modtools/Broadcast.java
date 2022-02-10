@@ -1,4 +1,4 @@
-package net.pgfmc.modtools.tools;
+package net.pgfmc.modtools;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

@@ -2,23 +2,19 @@ package net.pgfmc.modtools;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import net.pgfmc.modtools.tools.Broadcast;
-import net.pgfmc.modtools.tools.Day;
-import net.pgfmc.modtools.tools.Debug;
-import net.pgfmc.modtools.tools.DimToggle;
-import net.pgfmc.modtools.tools.Fly;
-import net.pgfmc.modtools.tools.Gamemode;
-import net.pgfmc.modtools.tools.God;
-import net.pgfmc.modtools.tools.Heal;
-import net.pgfmc.modtools.tools.Invsee;
-import net.pgfmc.modtools.tools.Sudo;
-import net.pgfmc.modtools.tools.Vanish;
-import net.pgfmc.modtools.tools.fake.FakeJoin;
-import net.pgfmc.modtools.tools.fake.FakeLeave;
-import net.pgfmc.modtools.tools.mute.Mute;
-import net.pgfmc.modtools.tools.mute.Unmute;
-import net.pgfmc.modtools.tools.tag.AddTag;
-import net.pgfmc.modtools.tools.tag.HasTag;
+import net.pgfmc.core.playerdataAPI.PlayerDataManager;
+import net.pgfmc.modtools.fake.FakeJoin;
+import net.pgfmc.modtools.fake.FakeLeave;
+import net.pgfmc.modtools.mute.Mute;
+import net.pgfmc.modtools.mute.Unmute;
+import net.pgfmc.modtools.rollback.PlayerInventorySaver;
+import net.pgfmc.modtools.rollback.commands.Rollback;
+import net.pgfmc.modtools.tag.AddTag;
+import net.pgfmc.modtools.tag.HasTag;
+import net.pgfmc.modtools.toggle.DimToggle;
+import net.pgfmc.modtools.toggle.Fly;
+import net.pgfmc.modtools.toggle.God;
+import net.pgfmc.modtools.toggle.Vanish;
 
 public class Main extends JavaPlugin {
 	
@@ -28,6 +24,8 @@ public class Main extends JavaPlugin {
 	public void onEnable()
 	{
 		plugin = this;
+		
+		PlayerDataManager.setInit(pd -> new PlayerInventorySaver(pd));
 		
 		getCommand("gmc").setExecutor(new Gamemode());
 		getCommand("gms").setExecutor(new Gamemode());
@@ -59,6 +57,9 @@ public class Main extends JavaPlugin {
 		
 		getCommand("fakeleave").setExecutor(new FakeLeave());
 		getCommand("fakejoin").setExecutor(new FakeJoin());
+		
+		getCommand("rollback").setExecutor(new Rollback());
+		getCommand("rollback").setExecutor(new Rollback());
 		
 		getServer().getPluginManager().registerEvents(new Fly(), this);
 		getServer().getPluginManager().registerEvents(new God(), this);
