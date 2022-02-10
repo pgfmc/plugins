@@ -50,7 +50,7 @@ public class Fly implements CommandExecutor, Listener{
 	{
 		Player p = e.getPlayer();
 		
-		boolean fly = (boolean) Optional.ofNullable(PlayerData.getData(p, "fly")).orElse(false);
+		boolean fly = (boolean) Optional.ofNullable(PlayerData.getPlayerData(p).getData("fly")).orElse(false);
 		
 		if (fly)
 		{

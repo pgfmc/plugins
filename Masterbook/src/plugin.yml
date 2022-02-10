@@ -1,11 +1,11 @@
 name: PGF-Masterbook
-version: 5.2.3
+version: 5.4.0
 api-version: 1.18
 authors: [bk, CrimsonDart]
 website: play.pgfmc.net
 main: net.pgfmc.masterbook.Main
 description: Masterbook for PGF
-depend: [PGF-Core, PGF-Survival, PGF-Bot, PGF-Teams, PGF-Teleport]
+depend: [PGF-Core, PGF-Survival, PGF-Bot, PGF-Friends, PGF-Teleport]
 load: POSTWORLD
 prefix: PGF-Masterbook
 

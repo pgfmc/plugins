@@ -13,5 +13,8 @@ public class StringDate {
 	{
 		return new SimpleDateFormat("MMM dd, YYYY @ kkmm").format(new Date()); // Jan, 01, 2022 @ 0330
 	}
+	
+	// WAIT WAIT!!!!!
+	// try just using the integer version of the date formate :)
 
 }

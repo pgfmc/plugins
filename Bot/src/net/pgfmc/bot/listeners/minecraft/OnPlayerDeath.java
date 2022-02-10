@@ -13,9 +13,9 @@ public class OnPlayerDeath implements Listener {
 	public void onDie(PlayerDeathEvent e) {
 		PlayerData pd = PlayerData.getPlayerData(e.getEntity());
 		
-		e.setDeathMessage(e.getDeathMessage().replace(pd.getName(), pd.getNicknameRaw()));
+		e.setDeathMessage(e.getDeathMessage().replace(pd.getName(), pd.getDisplayName()));
 		Discord.sendMessage("<:DEATH:907865162558636072> " + e.getDeathMessage());
-		e.setDeathMessage(e.getDeathMessage().replace(pd.getNicknameRaw(), pd.getRankedName()));
+		e.setDeathMessage(e.getDeathMessage().replace(pd.getDisplayName(), pd.getRankedName()));
 	}
 
 }

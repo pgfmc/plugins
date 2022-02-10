@@ -6,13 +6,13 @@ import java.util.function.Consumer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 
 import net.pgfmc.core.CoreMain;
-import net.pgfmc.core.util.Configify;
+import net.pgfmc.core.file.Configify;
 
 public class PlayerDataManager extends Configify implements Listener {
 	
@@ -88,18 +88,26 @@ public class PlayerDataManager extends Configify implements Listener {
 	
 	@EventHandler
 	public void onJoinEvent(PlayerJoinEvent e) {
-		PlayerData pd = PlayerData.getPlayerData(e.getPlayer());
+		Player p = e.getPlayer();
+		PlayerData pd = PlayerData.getPlayerData(p);
 		
 		if (pd == null) {
-			pd = new PlayerData(e.getPlayer());
+			pd = new PlayerData(p);
 		}
 		
-		pd.setOnline(e.getPlayer());
-	}
-	
-	@EventHandler
-	public void onQuitEvent(PlayerQuitEvent e) {
-		PlayerData.getPlayerData(e.getPlayer()).setOffline();
+		// p.setDisplayName(pd.getRankedName());
+		p.setPlayerListName(pd.getRankedName());
+		p.setCustomName(pd.getRankedName());
+		p.setCustomNameVisible(true);
+		
+		for (Player playerP : Bukkit.getOnlinePlayers()) {
+			if (playerP == p) continue;
+			p.hidePlayer(CoreMain.plugin, playerP);
+			p.showPlayer(CoreMain.plugin, playerP);
+		}
+		
+		p.hidePlayer(CoreMain.plugin, p);
+		p.showPlayer(CoreMain.plugin, p);
 	}
 
 	@Override
