@@ -1,4 +1,4 @@
-package net.pgfmc.modtools.tools.tag;
+package net.pgfmc.modtools.tag;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
