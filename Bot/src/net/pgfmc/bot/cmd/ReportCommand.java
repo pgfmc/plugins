@@ -34,7 +34,8 @@ public class ReportCommand implements CommandExecutor {
 			Double secondsSinceLastReport = (double) ((new Date().getTime() - commandCooldowns.get(pd.getUniqueId().toString())) / 1000);
 			if (secondsSinceLastReport <= 120.0)
 			{
-				pd.sendMessage(ChatColor.RED + "Please wait " + (120.0 - secondsSinceLastReport) + " seconds before using this command again.");
+				String timeLeft = String.valueOf(120.0 - secondsSinceLastReport);
+				pd.sendMessage(ChatColor.RED + "Please wait " + timeLeft.substring(0, timeLeft.length() - 2) + " seconds before using this command again.");
 				return true;
 			}
 		}
@@ -49,10 +50,10 @@ public class ReportCommand implements CommandExecutor {
 		String message = String.join(" ", args);
 		
 		EmbedBuilder eb = Discord.simplePlayerEmbed(pd.getOfflinePlayer(), "sent a report!", Discord.BLACK);
-		eb.addField("Report content (<@&721951729763221516>)", message, false);
+		eb.addField("Report content", message, false);
 		eb.setTimestamp(OffsetDateTime.now());
 		
-		Discord.sendAlert("<@&721951729763221516>").embed(eb.build()).queue();
+		Discord.sendAlert("<@&595557113581797381>").embed(eb.build()).queue();
 		
 		String discordId = pd.getData("Discord");
 		if (discordId != null)
