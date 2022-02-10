@@ -9,8 +9,8 @@ import java.util.List;
 import org.bukkit.Bukkit;
 
 import net.pgfmc.core.CoreMain;
-import net.pgfmc.core.util.Configify;
-import net.pgfmc.core.util.Mixins;
+import net.pgfmc.core.file.Configify;
+import net.pgfmc.core.file.Mixins;
 
 public class ProfanityFilter extends Configify {
 	

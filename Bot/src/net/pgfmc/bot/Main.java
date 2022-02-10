@@ -1,6 +1,6 @@
 package net.pgfmc.bot;
 
-import java.io.File;
+import java.util.Optional;
 
 import javax.security.auth.login.LoginException;
 
@@ -18,6 +18,7 @@ import net.pgfmc.bot.listeners.minecraft.OnPlayerAdvancementDone;
 import net.pgfmc.bot.listeners.minecraft.OnPlayerDeath;
 import net.pgfmc.bot.listeners.minecraft.OnPlayerJoin;
 import net.pgfmc.bot.listeners.minecraft.OnPlayerQuit;
+import net.pgfmc.core.playerdataAPI.PlayerData;
 
 public class Main extends JavaPlugin {
 	
@@ -28,7 +29,8 @@ public class Main extends JavaPlugin {
 	public void onEnable()
 	{
 		plugin = this;
-		configPath = plugin.getDataFolder() + File.separator + "config.yml";
+		plugin.saveDefaultConfig();
+		plugin.reloadConfig();
 		
 		getServer().getPluginManager().registerEvents(new OnAsyncPlayerChat(), this);
 		getServer().getPluginManager().registerEvents(new OnPlayerAdvancementDone(), this);
@@ -77,7 +79,12 @@ public class Main extends JavaPlugin {
 		
 		for (Player p : Bukkit.getServer().getOnlinePlayers())
 		{
-			builder.append("<:LEAVE:905682349239463957> " + p.getName() + "\n");
+			if (p.hasPermission("pgf.admin.fake.leave"))
+			{
+				if (((boolean) Optional.ofNullable(PlayerData.getData(p, "fake-leave")).orElse(false)) == true) continue;
+			}
+			
+			builder.append("<:LEAVE:905682349239463957> " + PlayerData.getPlayerData(p).getDisplayName() + "\n");
 		}
 		
 		if (!StartStopMessage.isDeleted)
@@ -91,5 +98,8 @@ public class Main extends JavaPlugin {
 		
 		Discord.JDA.shutdown();
 	}
-
+	
+	public static String getChannelID(String entry) {
+		return plugin.getConfig().getString(entry);
+	}
 }

@@ -3,6 +3,7 @@ package net.pgfmc.masterbook.masterbook;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
@@ -18,22 +19,24 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import net.pgfmc.core.CoreMain.PGFPlugin;
 import net.pgfmc.core.cmd.Blocked;
+import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.inventoryAPI.BaseInventory;
+import net.pgfmc.core.inventoryAPI.ButtonInventory;
 import net.pgfmc.core.inventoryAPI.ListInventory;
 import net.pgfmc.core.inventoryAPI.extra.Butto;
+import net.pgfmc.core.inventoryAPI.extra.Buttonable;
 import net.pgfmc.core.inventoryAPI.extra.ItemWrapper;
 import net.pgfmc.core.permissions.Permissions;
 import net.pgfmc.core.permissions.Roles;
 import net.pgfmc.core.permissions.Roles.Role;
 import net.pgfmc.core.playerdataAPI.PlayerData;
-import net.pgfmc.core.requestAPI.Request;
-import net.pgfmc.core.requestAPI.Requester;
-import net.pgfmc.core.requestAPI.Requester.Reason;
+import net.pgfmc.core.requests.Request;
+import net.pgfmc.core.requests.RequestType;
 import net.pgfmc.core.util.DimManager;
+import net.pgfmc.friends.data.Friends;
+import net.pgfmc.friends.data.Friends.Relation;
 import net.pgfmc.masterbook.Main;
 import net.pgfmc.survival.cmd.Afk;
-import net.pgfmc.teams.friends.Friends;
-import net.pgfmc.teams.friends.Friends.Relation;
 import net.pgfmc.teleport.home.Homes;
 
 public class CommandsMenu implements InventoryHolder {
@@ -184,7 +187,7 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] [] [] [] XX [] [] []
 			 * home menu
 			 */
-			if (pd.hasPermission("teams.friend.*") && PGFPlugin.TEAMS.isEnabled()) {
+			if (pd.hasPermission("teams.friend.*") && PGFPlugin.FRIENDS.isEnabled()) {
 				
 				setAction(23, (p, e) -> {
 					p.openInventory(new FriendsList().getInventory());
@@ -198,7 +201,7 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] [] [] [] [] XX [] []
 			 * home menu
 			 */
-			if (pd.hasPermission("bukkit.command.list") && PGFPlugin.TEAMS.isEnabled()) {
+			if (pd.hasPermission("minecraft.command.list") && PGFPlugin.FRIENDS.isEnabled()) {
 				
 				setAction(24, (p, e) -> {
 					p.openInventory(new PlayerList().getInventory());
@@ -216,6 +219,7 @@ public class CommandsMenu implements InventoryHolder {
 			 */
 			
 			Role topRole = Roles.getTop(pd.getOfflinePlayer());
+			/* in case I don't like this new UI change - bk
 			Material emblem = Material.RAW_COPPER;
 			switch (topRole) {
 			case VETERAN:
@@ -247,7 +251,30 @@ public class CommandsMenu implements InventoryHolder {
 				break;
 			default: break;
 			};
-			setItem(4, emblem).n(topRole.getColor() + topRole.name().charAt(0) + topRole.getName().substring(1));
+			*/
+			/* 
+			 * [] [] [] [] XX [] [] [] []
+			 * [] [] [] [] [] [] [] [] []
+			 * [] [] [] [] [] [] [] [] []
+			 * Nickname
+			 */
+			setAction(4, (p, e) -> {
+				if (pd.hasPermission("pgf.cmd.donator.nick"))
+				{
+					PlayerData.getPlayerData(p).setData("nickTemp", "reset");
+					p.closeInventory();
+					p.sendMessage("§9Type your new nickname in chat.");
+				} else
+				{
+					p.sendMessage("§cYou need donator for that!");
+				}
+				
+			});
+			setItem(4, Skull.getHead(pd.getUniqueId(), null))
+			.n(pd.getRankedName() + " (" + topRole.name().charAt(0) + topRole.getName().substring(1) + ")")
+			.l("§7Change nickname!");
+			
+			
 			
 			/* 
 			 * [] [] [] [] [] [] [] [] []
@@ -275,23 +302,6 @@ public class CommandsMenu implements InventoryHolder {
 				p.openInventory(new RequestList(pd).getInventory());
 			});
 			setItem(9, Material.LEVER).n("§r§4Requests");
-			
-			
-			/* 
-			 * [] [] [] [] [] [] [] [] []
-			 * [] [] [] [] [] [] [] [] []
-			 * XX [] [] [] [] [] [] [] []
-			 * Nickname
-			 */
-			if (pd.hasPermission("pgf.cmd.donator.nick"))
-			{
-				setAction(18, (p, e) -> {
-					PlayerData.setData(p, "nickTemp", "reset");
-					p.closeInventory();
-					p.sendMessage("§9Type your new nickname in chat.");
-				});
-				setItem(18, Material.NAME_TAG).n("§eNickname").l("§7Give yourself a nickname!");
-			}
 			
 		}
 	}
@@ -679,15 +689,16 @@ public class CommandsMenu implements InventoryHolder {
 
 		@Override
 		protected ItemStack toItem(PlayerData entry) {
-			return new ItemWrapper(Material.PLAYER_HEAD).n(entry.getRankedName()).l((entry.isOnline()) ? "§r§aOnline" : "§r§cOffline").gi();
+				// Is their skin
+			return new ItemWrapper(Skull.getHead(entry.getUniqueId(), null))
+					.n(entry.getRankedName())
+					.l((entry.isOnline()) ? "§r§aOnline" : "§r§cOffline")
+					.gi();
 		}
 		
 		@Override
 		public List<PlayerData> load() {
-			return PlayerData.stream()
-					.filter(x-> {
-						return (x != pd);
-					})
+			return PlayerData.getPlayerDataSet(x -> x != pd).stream()
 					.sorted((o1, o2) -> { // player sorter.
 						
 						if (o1.isOnline() && o2.isOnline()) { // both online
@@ -754,7 +765,7 @@ public class CommandsMenu implements InventoryHolder {
 					}
 				}
 				
-				if (perms.contains("teams.friend.*") && PGFPlugin.TEAMS.isEnabled()) {
+				if (perms.contains("teams.friend.*") && PGFPlugin.FRIENDS.isEnabled()) {
 					
 					Relation r = Friends.getRelation(pd, player);
 					if (r == Relation.FRIEND || r == Relation.FAVORITE) {
@@ -849,9 +860,13 @@ public class CommandsMenu implements InventoryHolder {
 		}
 	}
 	
-	public class RequestList extends ListInventory<Request> {
+	public class RequestList extends ButtonInventory {
+		
+		PlayerData pd;
+		
 		public RequestList(PlayerData pd) {
 			super(27, "Pending Requests");
+			this.pd = pd;
 
 			setAction(0, (p, e) -> {
 				p.openInventory(new Homepage().getInventory());
@@ -860,25 +875,18 @@ public class CommandsMenu implements InventoryHolder {
 		}
 
 		@Override
-		public List<Request> load() {
-			return Requester.ALLREQUESTS;
-		}
-
-		@Override
-		protected Butto toAction(Request entry) {
-			return (p, e) -> {
-				if (entry.expireNow(Reason.Accept) != false) {
-					entry.act();
-				} else {
-					pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
-					p.openInventory(new RequestList(pd).getInventory());
-				}
-			};
-		}
-
-		@Override
-		protected ItemStack toItem(Request entry) {
-			return new ItemWrapper(Material.ARROW).n(entry.getParent().getName()).gi();
+		public List<Buttonable> load() {
+			List<Buttonable> list = new ArrayList<>();
+			
+			Set<Request> set = RequestType.getInAllRequests(x -> {
+				return (x.target == pd);
+			});
+			
+			for (Request r : set) {
+				list.add(r);
+			}
+			return list;
+			
 		}
 	}
 
