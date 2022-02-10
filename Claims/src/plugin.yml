@@ -1,10 +1,12 @@
 name: PGF-Claims
-version: 5.4.0
+version: 5.5.0
 api-version: 1.18
 author: [bk, CrimsonDart]
 main: net.pgfmc.claims.Main
 description: implemets the Claims and Locking system
 depend: [PGF-Core, PGF-Friends]
+prefix: PGF-Claims
+
 commands:
    inspector:
       aliases: [insp]

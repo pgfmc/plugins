@@ -70,7 +70,7 @@ public class OnAsyncPlayerChat implements Listener {
 			eb.addField("Message", "|| " + msg + " ||", false);
 			eb.setTimestamp(OffsetDateTime.now());
 			
-			Discord.sendAlert(eb.build());
+			Discord.sendAlert(eb.build()).queue();
 			return;
 		}
 		
@@ -82,7 +82,7 @@ public class OnAsyncPlayerChat implements Listener {
 		
 		e.setFormat(pd.getRankedName() + "§8 -> " + getMessageColor(p.getUniqueId().toString()) + "%2$s"); // %2$s means 2nd argument (the chat message), %1$s would be the player's display name
 		
-		Discord.sendMessage(pd.getDisplayName() + " -> " + msg);
+		Discord.sendMessage(pd.getDisplayName() + " -> " + msg).queue();
 	}
 	
 	public static String getMessageColor(String sender) {
