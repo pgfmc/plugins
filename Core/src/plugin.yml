@@ -1,5 +1,5 @@
 name: PGF-Core
-version: 5.2.3
+version: 5.4.0
 api-version: 1.18
 authors: [bk, CrimsonDart]
 website: play.pgfmc.net
@@ -27,12 +27,8 @@ commands:
     usage: /<command>
     description: Master commands for PGF
     permission: pgf.admin.pgf
-  tag:
-    usage: /<command> [Player] [Path] [Tag] [true/false]
-    description: Tag a player!
-    permission: pgf.admin.tag
-  broadcast:
-    usage: /<command> [message]
-    description: Broadcast to the server!
-    aliases: [bc, broadc, bcast, say]
-    permission: pgf.admin.broadcast
+  realname:
+    usage: /<command> [player]
+    description: Get the real name of a nicked player
+    aliases: [rn]
+    permission: pgf.cmd.realname

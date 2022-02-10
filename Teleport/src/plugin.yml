@@ -1,5 +1,5 @@
 name: PGF-Teleport
-version: 5.2.3
+version: 5.4.0
 api-version: 1.18
 authors: [bk, CrimsonDart]
 website: play.pgfmc.net
@@ -31,6 +31,7 @@ commands:
     description: See a list of homes
     usage: /<command>
     permission: pgf.cmd.home.homes
+    
   tpa:
     description: Send a teleport request
     usage: /<command> [player]
@@ -43,10 +44,23 @@ commands:
     description: Deny a teleport request
     usage: /<command> [player]
     permission: pgf.cmd.tp.tpdeny
-  tpcancel:
-    description: Cancel a teleport request
+
+  tphere:
+    description: Send a Teleport here request.
     usage: /<command> [player]
-    permission: pgf.cmd.tp.tpcancel
+    permission: pgf.cmd.tp.tphere
+    aliases: [tph]
+  tphereaccept:
+    description: Accept a teleport here request.
+    usage: /<command> [player]
+    permission: pgf.cmd.tp.tphereaccept
+    aliases: [tpha]
+  tpheredeny:
+    description: Deny a teleport here request.
+    usage: /<command> [player]
+    permission: pgf.cmd.tp.tpheredeny
+    aliases: [tphd]
+    
   warp:
     description: Warp to a location
     usage: /<command> [name]
@@ -81,8 +95,9 @@ permissions:
       pgf.cmd.tp.tpaccept: true
       pgf.cmd.tp.tpa: true
       pgf.cmd.tp.tpdeny: true
-      pgf.cmd.tp.tpcancel: true
-      pgf.cmd.tp.tpahere: true
+      pgf.cmd.tp.tphere: true
+      pgf.cmd.tp.tphereaccept: true
+      pgf.cmd.tp.tpheredeny: true
     
   pgf.cmd.warp.*:
     description: Warp wildcard

@@ -50,7 +50,7 @@ public class God implements CommandExecutor, Listener {
 	public void onJoin(PlayerJoinEvent e) { // disables god when a player joines the servere
 		Player p = e.getPlayer();
 		
-		boolean god = (boolean) Optional.ofNullable(PlayerData.getData(p, "god")).orElse(false);
+		boolean god = (boolean) Optional.ofNullable(PlayerData.getPlayerData(p).getData("god")).orElse(false);
 		
 		if (god)
 		{
