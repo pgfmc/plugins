@@ -21,7 +21,7 @@ public class Raid {
 	public static void check(GuildMemberJoinEvent e) {
 		Guild g = e.getGuild();
 		
-		if (g.getId() != Discord.getGuildPGF().getId()) return;
+		if (!g.getId().equals(Discord.getGuildPGF().getId())) return;
 		
 		double lastJoinInSeconds = (double) ((new Date().getTime() - lastJoin) / 1000);
 		double joins = joinPerSecond * lastJoinInSeconds + 1;
