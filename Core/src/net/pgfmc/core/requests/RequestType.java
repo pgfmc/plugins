@@ -1,13 +1,19 @@
 package net.pgfmc.core.requests;
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 import java.util.function.Predicate;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 
 import net.pgfmc.core.CoreMain;
+import net.pgfmc.core.file.Configify;
+import net.pgfmc.core.file.Mixins;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.requests.cmd.RequestAcceptCommand;
 import net.pgfmc.core.requests.cmd.RequestDenyCommand;
@@ -18,7 +24,7 @@ import net.pgfmc.core.requests.cmd.RequestSendCommand;
  * @author CrimsonDart
  *
  */
-public abstract class RequestType {
+public abstract class RequestType extends Configify {
 	
 	// FIELDS
 	
@@ -152,6 +158,61 @@ public abstract class RequestType {
 	public void registerAccept(String label) {
 		new RequestAcceptCommand(label, this);
 	}
+	
+	@Override
+	public void enable() {
+		
+		FileConfiguration cs = Mixins.getDatabase(CoreMain.plugin.getDataFolder() + File.separator + "requests.yml");
+		
+		for (String key : cs.getKeys(false)) {
+			ConfigurationSection configsec = cs.getConfigurationSection(key);
+			
+			if (configsec.getString("name").equals(this.name)) {
+				PlayerData aska = PlayerData.getPlayerData(UUID.fromString(configsec.getString("asker")));
+				PlayerData targe = PlayerData.getPlayerData(UUID.fromString(configsec.getString("target")));
+				
+				if (aska == null || targe == null) continue;
+				
+				createRequest(aska, targe);
+			}
+		}
+	}
+	
+	
+	private static boolean isInitialized = false;
+	
+	@Override
+	public void disable() {
+		FileConfiguration cs = Mixins.getDatabase(CoreMain.plugin.getDataFolder() + File.separator + "requests.yml");
+		
+		if (!isInitialized) {
+			for (String key : cs.getKeys(false)) {
+				cs.set(key, null);
+			}
+			isInitialized = true;
+		}
+		
+		
+		int i = 0;
+		for (Request r : getAllRequests()) {
+			
+			if (!isPersistent) continue;
+			
+			cs.set("r" + i, r.toConfigSec());
+			
+			i++;
+		}
+		Mixins.saveDatabase(cs, CoreMain.plugin.getDataFolder() + File.separator + "requests");
+	}
+	
+	@Override
+	public void reload() {
+		isInitialized = false;
+		disable();
+		enable();
+	}
+	
+	
 	
 	/**
 	 * Method ran when a new request is created.

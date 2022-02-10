@@ -1,5 +1,7 @@
 package net.pgfmc.core.requests;
 
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -26,7 +28,7 @@ public final class Request implements Buttonable {
 	public final PlayerData target;
 	
 	transient boolean isEnded = false;
-	private final RequestType parent;
+	public final RequestType parent;
 	
 	/**
 	 * Base Constructor for Requests.
@@ -74,5 +76,16 @@ public final class Request implements Buttonable {
 	@Override
 	public ItemStack toItem() {
 		return parent.toItem();
+	}
+	
+	protected ConfigurationSection toConfigSec() {
+		
+		MemoryConfiguration mem = new MemoryConfiguration();
+		
+		mem.set("name", parent.name);
+		mem.set("asker", asker.getUniqueId().toString());
+		mem.set("target", target.getUniqueId().toString());
+		
+		return mem;
 	}
 }

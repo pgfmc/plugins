@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 
 import net.pgfmc.core.playerdataAPI.PlayerData;
  /**
@@ -58,9 +59,19 @@ public class Fly implements CommandExecutor, Listener{
 			p.setFlying(true);
 			p.sendMessage("§aEnabled flight!");
 		}
-		
 	}
 	
-	
+	@EventHandler
+	public void onJoin(PlayerRespawnEvent e)
+	{
+		Player p = e.getPlayer();
+		
+		boolean fly = (boolean) Optional.ofNullable(PlayerData.getPlayerData(p).getData("fly")).orElse(false);
+		
+		if (fly)
+		{
+			p.setAllowFlight(true);
+		}
+	}
 	
 }
