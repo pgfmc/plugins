@@ -1,4 +1,4 @@
-package net.pgfmc.modtools.tools.mute;
+package net.pgfmc.modtools.mute;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

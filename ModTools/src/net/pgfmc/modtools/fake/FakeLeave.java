@@ -1,4 +1,4 @@
-package net.pgfmc.modtools.tools.fake;
+package net.pgfmc.modtools.fake;
 
 import java.util.Optional;
 

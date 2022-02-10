@@ -96,6 +96,11 @@ commands:
     description: Send a fake leave message
     aliases: [fl, fakel, fleave]
     permission: pgf.admin.fake.leave
+  rollback:
+    usage: /<command> [player/undo] [minutes]
+    description: Rollback a player's inventory
+    aliases: [rb, rollb, rollb, rollbackinventory]
+    permission: pgf.admin.rollbackinventory
     
 permissions:
   pgf.admin.gamemode.*:
