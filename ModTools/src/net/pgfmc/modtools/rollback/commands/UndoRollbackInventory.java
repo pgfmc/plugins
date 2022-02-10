@@ -22,6 +22,8 @@ public class UndoRollbackInventory {
 		}
 		
 		PlayerInventorySaver.undo(target);
+		sender.sendMessage(ChatColor.GREEN + "Successfully undid rollback inventory for " + target.getRankedName() + "!");
+		target.sendMessage(ChatColor.GREEN + "Your inventory rollback has been undone!");
 		
 		return true;
 	}

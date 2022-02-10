@@ -113,7 +113,7 @@ public class PlayerInventorySaver extends Configify {
 		
 		inventories.stream().forEach(di -> file.set("dated-inventories." + String.valueOf(di.getDate()), di));
 		
-		save(file);
+		//save(file);
 	}
 	
 }

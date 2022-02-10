@@ -100,7 +100,7 @@ public class DatedInventory extends Configify {
 				FileConfiguration file = getConfig();
 				
 				file.set("dated-inventories." + String.valueOf(date), that);
-				save(file);
+				//save(file);
 			}
 		}, 30 * 60 * 20, 60 * 20); // 30 minutes
 	}
