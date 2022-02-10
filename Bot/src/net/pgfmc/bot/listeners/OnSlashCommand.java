@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
+import net.pgfmc.bot.Discord;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
 public class OnSlashCommand implements EventListener {
@@ -19,6 +20,7 @@ public class OnSlashCommand implements EventListener {
         SlashCommandEvent e = (SlashCommandEvent) event;
         
         if (!e.getName().equals("list")) return;
+        if (!e.getGuild().getId().equals(Discord.getServerChannel().getGuild().getId())) return;
         
         List<String> pl = Bukkit.getOnlinePlayers()
         		.stream()
