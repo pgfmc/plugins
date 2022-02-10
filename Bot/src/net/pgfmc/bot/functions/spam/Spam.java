@@ -33,7 +33,7 @@ public class Spam {
 			if (warnings >= 3 && !Permissions.has(pd.getPlayer(), "pgf.spam.exempt"))
 			{
 				pd.sendMessage(ChatColor.DARK_RED + "You've been muted for spamming (60 seconds).");
-				Discord.sendAlert(Discord.simplePlayerEmbed(pd.getPlayer(), "has been muted for spamming.", Discord.RED).build());
+				Discord.sendAlert(Discord.simplePlayerEmbed(pd.getPlayer(), "has been muted for spamming.", Discord.RED).build()).queue();
 				Punish.setMute(pd, true);
 				addTimer(pd);
 			}
@@ -47,7 +47,7 @@ public class Spam {
 	{
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
 			public void run() {
-				Discord.sendAlert(Discord.simplePlayerEmbed(pd.getPlayer(), "has been unmuted.", Discord.GREEN).build());
+				Discord.sendAlert(Discord.simplePlayerEmbed(pd.getPlayer(), "has been unmuted.", Discord.GREEN).build()).queue();
 				Punish.setMute(pd, false).sendMessage(ChatColor.GREEN + "You've been unmuted.");;
 				pd.setData("spam.warnings", (byte) 0);
 			}

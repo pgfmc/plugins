@@ -1,9 +1,10 @@
 name: PGF-Market
-version: 5.4.0
+version: 5.5.0
 api-version: 1.18
 author: [bk, CrimsonDart]
 main: net.pgfmc.shop.Main
 description: Implements a global market to buy and sell
+prefix: PGF-Market
 #commands:
 #  market:
 #    description: Global buy/sell shop
