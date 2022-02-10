@@ -25,6 +25,6 @@ public class OnPlayerQuit implements Listener {
 		}
 		
 		e.setQuitMessage("§7[§c-§7]§r " + pd.getRankedName());
-		Discord.sendMessage("<:LEAVE:905682349239463957> " + pd.getDisplayName());
+		Discord.sendMessage("<:LEAVE:905682349239463957> " + pd.getDisplayName()).queue();
 	}
 }

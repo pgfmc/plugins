@@ -26,7 +26,7 @@ public class OnMemberJoin implements EventListener {
 		EmbedBuilder eb = Discord.simpleServerEmbed(user.getAsTag() + " has joined PGF Discord!", user.getEffectiveAvatarUrl(), Discord.GOLD);
 		eb.setTimestamp(OffsetDateTime.now());
 		
-		Discord.sendAlert(eb.build());
+		Discord.sendAlert(eb.build()).queue();
 		
 		Raid.check(e);
 	}

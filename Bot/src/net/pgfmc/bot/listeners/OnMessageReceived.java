@@ -47,7 +47,7 @@ public class OnMessageReceived implements EventListener {
 			eb.addField("Message", "|| " + content + " ||", false);
 			eb.setTimestamp(OffsetDateTime.now());
 			
-			Discord.sendAlert(eb.build());
+			Discord.sendAlert(eb.build()).queue();
 			return;
 		}
 		

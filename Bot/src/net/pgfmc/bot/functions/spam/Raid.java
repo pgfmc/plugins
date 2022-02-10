@@ -51,7 +51,7 @@ public class Raid {
 					);
 			eb.setTimestamp(OffsetDateTime.now());
 			
-			Discord.sendAlert(eb.build());
+			Discord.sendAlert(eb.build()).queue();
 			
 		}
 		
