@@ -78,7 +78,7 @@ public abstract class Configify {
 	 * @return The object
 	 */
 	@SuppressWarnings("unchecked")
-	protected final <T> T setDefaultValue(String key, T value)
+	public final <T> T setDefaultValue(String key, T value)
 	{
 		if (file == null) return null;
 		
@@ -95,5 +95,14 @@ public abstract class Configify {
 		}
 		
 		return (T) conf.getObject(key, value.getClass());
+	}
+	
+	public void save(FileConfiguration config)
+	{
+		try {
+			config.save(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
