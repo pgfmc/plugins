@@ -1,4 +1,4 @@
-package net.pgfmc.modtools.tools;
+package net.pgfmc.modtools.toggle;
 
 import java.util.Optional;
 
@@ -11,18 +11,20 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import net.pgfmc.core.playerdataAPI.PlayerData;
- /**
-  * Fly Command
-  * @author bk
-  */
-public class Fly implements CommandExecutor, Listener{
+
+/**
+ * God command
+ * @author bk
+ *
+ */
+public class God implements CommandExecutor, Listener {
 	
 	/**
-	 * Toggles flying state.
+	 * Toggles God state.
 	 */
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		
+			
 		if (!(sender instanceof Player))
 		{
 			sender.sendMessage("§cOnly players can execute this command.");
@@ -32,35 +34,31 @@ public class Fly implements CommandExecutor, Listener{
 		Player p = (Player) sender;
 		
 		PlayerData pd = PlayerData.getPlayerData(p);
-		boolean fly = (boolean) Optional.ofNullable(pd.getData("fly")).orElse(false); // Gets "flying" from PlayerData, default to false if null, converts to boolean
+		boolean god = (boolean) Optional.ofNullable(pd.getData("god")).orElse(false); // Gets "god" from PlayerData, default to false if null, converts to boolean
 		
-		pd.setData("fly", !fly);
-		p.setAllowFlight(!fly);
-		p.setFlying(!fly);
+		pd.setData("god", !god);
+		p.setInvulnerable(!god);
 		
-		if (fly) { p.sendMessage("§cDisabled flight."); } else { p.sendMessage("§aEnabled flight!"); }
+		if (god) { p.sendMessage("§cDisabled god mode."); } else { p.sendMessage("§aEnabled god mode!"); }
+		
 		
 		return true;
 	}
 	
 	
-	
 	@EventHandler
-	public void onJoin(PlayerJoinEvent e)
-	{
+	public void onJoin(PlayerJoinEvent e) { // disables god when a player joines the servere
 		Player p = e.getPlayer();
 		
-		boolean fly = (boolean) Optional.ofNullable(PlayerData.getPlayerData(p).getData("fly")).orElse(false);
+		boolean god = (boolean) Optional.ofNullable(PlayerData.getPlayerData(p).getData("god")).orElse(false);
 		
-		if (fly)
+		if (god)
 		{
-			p.setAllowFlight(true);
-			p.setFlying(true);
-			p.sendMessage("§aEnabled flight!");
+			p.setInvulnerable(true);
+			p.sendMessage("§aEnabled god mode!");
 		}
 		
+		
 	}
-	
-	
-	
+
 }
