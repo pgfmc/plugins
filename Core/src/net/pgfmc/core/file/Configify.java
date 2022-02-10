@@ -17,6 +17,8 @@ public abstract class Configify {
 	{
 		configs.add(this);
 		this.file = file;
+		
+		Mixins.getFile(file.getAbsolutePath());
 	}
 	
 	public Configify()
