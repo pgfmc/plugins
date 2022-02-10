@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import net.dv8tion.jda.api.entities.MessageHistory;
 import net.pgfmc.bot.cmd.LinkCommand;
+import net.pgfmc.bot.cmd.ReportCommand;
 import net.pgfmc.bot.cmd.UnlinkCommand;
 import net.pgfmc.bot.functions.StartStopMessage;
 import net.pgfmc.bot.listeners.minecraft.OnAsyncPlayerChat;
@@ -39,6 +40,7 @@ public class Main extends JavaPlugin {
 		
 		getCommand("link").setExecutor(new LinkCommand());
 		getCommand("unlink").setExecutor(new UnlinkCommand());
+		getCommand("report").setExecutor(new ReportCommand());
 		
 		// Tries to initialize discord integration
 		try {
@@ -90,7 +92,7 @@ public class Main extends JavaPlugin {
 			StartStopMessage.deleteStartStopMessages(new MessageHistory(Discord.getServerChannel()));
 		}
 		
-		Discord.sendMessage(builder.toString());
+		Discord.sendMessage(builder.toString()).queue();
 		
 		StartStopMessage.disable();
 		
