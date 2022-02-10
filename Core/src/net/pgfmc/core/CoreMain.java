@@ -26,6 +26,8 @@ import net.pgfmc.core.file.ReloadConfigify;
 import net.pgfmc.core.inventoryAPI.extra.InventoryPressEvent;
 import net.pgfmc.core.permissions.Permissions;
 import net.pgfmc.core.playerdataAPI.PlayerDataManager;
+import net.pgfmc.core.playerdataAPI.cmd.DumpCommand;
+import net.pgfmc.core.playerdataAPI.cmd.TagCommand;
 import net.pgfmc.core.teleportAPI.SpawnProtect;
 import net.pgfmc.core.util.DimManager;
 
@@ -143,11 +145,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 		
 		DimManager.updateConfigForWorldPermissionAccess();
 		
-		
-		
-		//checks for the team "survival"
-		//if it doesnt exist, it creates a new team with the same name.
-		
 		getCommand("goto").setExecutor(new Goto());
 		
 		// Makes it so you can /<world> if you want instead of /goto ((	PROBABLY DOESN'T WORK ))
@@ -164,7 +161,8 @@ public class CoreMain extends JavaPlugin implements Listener {
 		
 		getCommand("realname").setExecutor(new RealName());
 		
-		
+		new DumpCommand();
+		new TagCommand();
 		
 		getServer().getPluginManager().registerEvents(this, this);
 		

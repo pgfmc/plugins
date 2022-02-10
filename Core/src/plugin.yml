@@ -32,3 +32,20 @@ commands:
     description: Get the real name of a nicked player
     aliases: [rn]
     permission: pgf.cmd.realname
+  dump:
+    usage: /<command> [player]
+    description: dumps all playerdata to the sender
+    permission: pgf.cmd.playerdata.dump
+  tag:
+    usage: /<command> <player> <add | remove | list> [tag]
+    description: manages playerdata tags.
+    permission: pgf.cmd.playerdata.tag
+
+permissions:
+  pgf.cmd.playerdata.*:
+    description: PlayerData wildcard
+    default: op
+    children:
+      pgf.cmd.playerdata.tag
+      pgf.cmd.playerdata.dump
+    

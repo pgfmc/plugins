@@ -44,8 +44,6 @@ public class Fly implements CommandExecutor, Listener{
 		return true;
 	}
 	
-	
-	
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e)
 	{

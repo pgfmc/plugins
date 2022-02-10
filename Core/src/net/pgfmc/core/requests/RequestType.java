@@ -202,7 +202,7 @@ public abstract class RequestType extends Configify {
 			
 			i++;
 		}
-		Mixins.saveDatabase(cs, CoreMain.plugin.getDataFolder() + File.separator + "requests");
+		Mixins.saveDatabase(cs, CoreMain.plugin.getDataFolder() + File.separator + "requests.yml");
 	}
 	
 	@Override
