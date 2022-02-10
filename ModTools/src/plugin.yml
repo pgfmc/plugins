@@ -1,14 +1,14 @@
 name: PGF-ModTools
-version: 5.4.0
+version: 5.5.0
 api-version: 1.18
 authors: [bk, CrimsonDart]
 website: play.pgfmc.net
 main: net.pgfmc.modtools.Main
 description: Moderator tools for PGF
 depend: [PGF-Core]
-softdepend: [PGF-Bot]
+softdepend: [PGF-Bot, JDA-plugin]
 load: POSTWORLD
-prefix: PGF-Core
+prefix: PGF-ModTools
 
 commands:
   gmc:
