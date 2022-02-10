@@ -25,7 +25,8 @@ public class RollbackInventory {
 		}
 		
 		PlayerInventorySaver.restore(target, Integer.valueOf(minutes) - 1);
-		
+		sender.sendMessage(ChatColor.GREEN + "Successfully rolled back inventory! " + target.getRankedName() + " (" + minutes + " minutes ago)");
+		target.sendMessage(ChatColor.GREEN + "Your inventory has been rolledback " + minutes + " minutes!");
 		
 		return true;
 	}
