@@ -1,7 +1,10 @@
 package net.pgfmc.bot.cmd;
 
 import java.time.OffsetDateTime;
+import java.util.Date;
+import java.util.HashMap;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -9,33 +12,63 @@ import org.bukkit.entity.Player;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.pgfmc.bot.Discord;
+import net.pgfmc.core.playerdataAPI.PlayerData;
 
 public class ReportCommand implements CommandExecutor {
+	
+	private HashMap<String, Long> commandCooldowns = new HashMap<>();
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String alias, String[] args) {
 		
 		if(!(sender instanceof Player)) {
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage(ChatColor.RED + "Only players can execute this command.");
 			return true;
 		}
 		
-		String m = args[0];
-		Player a = (Player) sender;
+		PlayerData pd = PlayerData.getPlayerData((Player) sender);
 		
-		if(m.length() == 0) {
-			a.sendMessage("Please provide a message.");
-		} else {
-			EmbedBuilder eb = new EmbedBuilder();
-			eb.setColor(Discord.RED);
-			eb.setAuthor(a.getName(), null, "https://crafatar.com/avatars/" + a.getUniqueId());
-			eb.setTitle("Message received!");
-			eb.setDescription(m + " - From" + a.getName());
-			eb.setTimestamp(OffsetDateTime.now());
+		// 2 minute cooldown
+		if (commandCooldowns.get(pd.getUniqueId().toString()) != null)
+		{
+			Double secondsSinceLastReport = (double) ((new Date().getTime() - commandCooldowns.get(pd.getUniqueId().toString())) / 1000);
+			if (secondsSinceLastReport <= 120.0)
+			{
+				pd.sendMessage(ChatColor.RED + "Please wait " + (120.0 - secondsSinceLastReport) + " seconds before using this command again.");
+				return true;
+			}
+		}
+		
+		if(args.length == 0) {
+			pd.sendMessage("Please provide a message.");
+			return true;
+		}
+		
+		commandCooldowns.put(pd.getUniqueId().toString(), new Date().getTime());
+		
+		String message = String.join(" ", args);
+		
+		EmbedBuilder eb = Discord.simplePlayerEmbed(pd.getOfflinePlayer(), "sent a report!", Discord.BLACK);
+		eb.addField("Report content (<@&721951729763221516>)", message, false);
+		eb.setTimestamp(OffsetDateTime.now());
+		
+		Discord.sendAlert("<@&721951729763221516>").embed(eb.build()).queue();
+		
+		String discordId = pd.getData("Discord");
+		if (discordId != null)
+		{
+			EmbedBuilder eb2 = Discord.simplePlayerEmbed(pd.getOfflinePlayer(), "| Report received!", Discord.BLACK);
+			eb2.setDescription("We've received your report! It'll be reviewed soon.");
+			eb2.addField("Report content", message, false);
+			eb2.setTimestamp(OffsetDateTime.now());
 			
-			Discord.sendAlert(eb.build());
-			return true;
+			Discord.JDA.getUserById(discordId).openPrivateChannel()
+			.flatMap(channel -> channel.sendMessage(eb2.build()))
+			.queue();
 		}
+		
+		pd.sendMessage(ChatColor.GREEN + "Report successfully sent to staff!");
 		return true;
+		
 	}
 }
