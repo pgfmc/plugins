@@ -18,6 +18,9 @@ public class OnMemberJoin implements EventListener {
 		
 		GuildMemberJoinEvent e = (GuildMemberJoinEvent) event;
 		
+		// If the event's guild doesn't match the #server guild
+		if (!e.getGuild().getId().equals(Discord.getServerChannel().getGuild().getId())) return;
+		
 		User user = e.getUser();
 		
 		EmbedBuilder eb = Discord.simpleServerEmbed(user.getAsTag() + " has joined PGF Discord!", user.getEffectiveAvatarUrl(), Discord.GOLD);
