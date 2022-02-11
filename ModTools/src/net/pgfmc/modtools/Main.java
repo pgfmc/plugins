@@ -2,21 +2,14 @@ package net.pgfmc.modtools;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import net.pgfmc.modtools.tools.Broadcast;
-import net.pgfmc.modtools.tools.Day;
-import net.pgfmc.modtools.tools.Debug;
-import net.pgfmc.modtools.tools.DimToggle;
-import net.pgfmc.modtools.tools.Fly;
-import net.pgfmc.modtools.tools.Gamemode;
-import net.pgfmc.modtools.tools.God;
-import net.pgfmc.modtools.tools.Heal;
-import net.pgfmc.modtools.tools.Invsee;
-import net.pgfmc.modtools.tools.Sudo;
-import net.pgfmc.modtools.tools.Vanish;
-import net.pgfmc.modtools.tools.fake.FakeJoin;
-import net.pgfmc.modtools.tools.fake.FakeLeave;
-import net.pgfmc.modtools.tools.mute.Mute;
-import net.pgfmc.modtools.tools.mute.Unmute;
+import net.pgfmc.modtools.fake.FakeJoin;
+import net.pgfmc.modtools.fake.FakeLeave;
+import net.pgfmc.modtools.mute.Mute;
+import net.pgfmc.modtools.mute.Unmute;
+import net.pgfmc.modtools.toggle.DimToggle;
+import net.pgfmc.modtools.toggle.Fly;
+import net.pgfmc.modtools.toggle.God;
+import net.pgfmc.modtools.toggle.Vanish;
 
 public class Main extends JavaPlugin {
 	
