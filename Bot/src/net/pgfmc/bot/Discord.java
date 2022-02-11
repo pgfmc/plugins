@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import javax.security.auth.login.LoginException;
 
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -17,6 +16,7 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.requests.restaction.MessageAction;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.pgfmc.bot.listeners.OnMemberJoin;
@@ -62,27 +62,26 @@ public class Discord extends ListenerAdapter {
 		JDA.awaitReady();
 	}
 	
-	public static void sendMessage(String m) {
-		if (m == null || m == "") return;
+	public static MessageAction sendMessage(String m) {
+		if (m == null || m == "") return null;
 		
-		getServerChannel().sendMessage(m).queue();
-		Bukkit.getLogger().warning("Discord: " + m);
+		return getServerChannel().sendMessage(m);
 	}
 	
-	public static void sendEmbed(MessageEmbed eb)
+	public static MessageAction sendEmbed(MessageEmbed eb)
 	{
-		getServerChannel().sendMessage(eb).queue();
-		// Bukkit.getLogger().warning("Discord: " + eb.getAuthor().getName());
+		if (eb == null) return null;
+		return getServerChannel().sendMessage(eb);
 	}
 	
-	public static void sendAlert(String m) {
-		if (m == null || m.equals("")) { return; }
-		getAlertChannel().sendMessage(m).queue();
+	public static MessageAction sendAlert(String m) {
+		if (m == null || m.equals("")) { return null; }
+		return getAlertChannel().sendMessage(m);
 	}
 	
-	public static void sendAlert(MessageEmbed me) {
-		if (me == null) { return; }
-		getAlertChannel().sendMessage(me).queue();
+	public static MessageAction sendAlert(MessageEmbed me) {
+		if (me == null) { return null; }
+		return getAlertChannel().sendMessage(me);
 	}
 	
 	public static TextChannel getServerChannel() {

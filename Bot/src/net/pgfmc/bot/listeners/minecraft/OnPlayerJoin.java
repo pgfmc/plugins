@@ -15,7 +15,7 @@ public class OnPlayerJoin implements Listener {
 		PlayerData pd = PlayerData.from(e.getPlayer());
 		
 		e.setJoinMessage("§7[§a+§7]§r " + pd.getRankedName());
-		Discord.sendMessage("<:JOIN:905023714213625886> " + pd.getDisplayName());
+		Discord.sendMessage("<:JOIN:905023714213625886> " + pd.getDisplayName()).queue();
 	}
 
 }

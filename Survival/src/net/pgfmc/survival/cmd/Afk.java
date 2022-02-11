@@ -21,7 +21,7 @@ import net.pgfmc.core.playerdataAPI.PlayerData;
  * AFK mode blocks all incoming damage, and prevents mob aggro.
  * @author CrimsonDart
  */
-public class Afk  implements CommandExecutor, Listener {
+public class Afk implements CommandExecutor, Listener {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

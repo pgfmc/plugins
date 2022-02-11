@@ -32,7 +32,7 @@ public class OnPlayerAdvancementDone implements Listener {
 			adv = adv.substring(adv.lastIndexOf(pd.getName()), adv.length());
 			adv.replace(pd.getName(), pd.getDisplayName());
 			
-			Discord.sendMessage(adv);
+			Discord.sendMessage(adv).queue();
 			Bukkit.getLogger().warning("Advancement Get!"); // DO NOT REMOVE THIS!!!!!!!!!!!!!!!! (IT BREAKS) XXX lol
 		}
 	}
