@@ -1,7 +1,5 @@
 package net.pgfmc.modtools.tools;
 
-import java.util.Optional;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -33,14 +31,18 @@ public class God implements CommandExecutor, Listener {
 		
 		Player p = (Player) sender;
 		
-		PlayerData pd = PlayerData.getPlayerData(p);
-		boolean god = (boolean) Optional.ofNullable(pd.getData("god")).orElse(false); // Gets "god" from PlayerData, default to false if null, converts to boolean
+		PlayerData pd = PlayerData.from(p);
+		boolean god = pd.hasTag("god"); // Gets "god" from PlayerData, default to false if null, converts to boolean
 		
-		pd.setData("god", !god);
+		if (god) {
+			pd.removeTag("god");
+			p.sendMessage("§cDisabled god mode.");
+		} else {
+			pd.addTag("god");
+			p.sendMessage("§aEnabled god mode!");
+		}
+		
 		p.setInvulnerable(!god);
-		
-		if (god) { p.sendMessage("§cDisabled god mode."); } else { p.sendMessage("§aEnabled god mode!"); }
-		
 		
 		return true;
 	}
@@ -50,15 +52,12 @@ public class God implements CommandExecutor, Listener {
 	public void onJoin(PlayerJoinEvent e) { // disables god when a player joines the servere
 		Player p = e.getPlayer();
 		
-		boolean god = (boolean) Optional.ofNullable(PlayerData.getPlayerData(p).getData("god")).orElse(false);
+		boolean god = PlayerData.from(p).hasTag("god");
 		
 		if (god)
 		{
 			p.setInvulnerable(true);
 			p.sendMessage("§aEnabled god mode!");
 		}
-		
-		
 	}
-
 }

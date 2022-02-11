@@ -17,8 +17,6 @@ import net.pgfmc.modtools.tools.fake.FakeJoin;
 import net.pgfmc.modtools.tools.fake.FakeLeave;
 import net.pgfmc.modtools.tools.mute.Mute;
 import net.pgfmc.modtools.tools.mute.Unmute;
-import net.pgfmc.modtools.tools.tag.AddTag;
-import net.pgfmc.modtools.tools.tag.HasTag;
 
 public class Main extends JavaPlugin {
 	
@@ -51,9 +49,6 @@ public class Main extends JavaPlugin {
 		
 		getCommand("mute").setExecutor(new Mute());
 		getCommand("unmute").setExecutor(new Unmute());
-		
-		getCommand("tag").setExecutor(new AddTag());
-		getCommand("hastag").setExecutor(new HasTag());
 		
 		getCommand("broadcast").setExecutor(new Broadcast());
 		

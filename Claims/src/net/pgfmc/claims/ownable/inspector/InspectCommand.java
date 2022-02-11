@@ -25,7 +25,7 @@ public class InspectCommand implements CommandExecutor {
 		if (!(sender instanceof Player)) return true;
 		if (((Player) sender).getGameMode() != GameMode.CREATIVE) return true;
 		
-		PlayerData pd = PlayerData.getPlayerData((Player) sender);
+		PlayerData pd = PlayerData.from((Player) sender);
 		toggleInspector(pd);
 		
 		return true;
@@ -39,12 +39,14 @@ public class InspectCommand implements CommandExecutor {
 	 */
 	public static boolean toggleInspector(PlayerData pd) {
 		
-		boolean insp = pd.getData("inspector");
-		pd.setData("inspector", !insp);
+		boolean insp = pd.hasTag("inspector");
+		
 		
 		if (insp) {
+			pd.removeTag("inspector");
 			pd.sendMessage("§6Disabled Inspector mode.");
 		} else {
+			pd.addTag("inspector");
 			pd.sendMessage("§aEnabled Inspector mode.");
 			pd.sendMessage("§o§7Break Blocks to show Claim information on the block.");
 		}

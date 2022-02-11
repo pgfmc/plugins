@@ -33,7 +33,7 @@ public class BlockInteractEvent implements Listener {
 		
 		// controls clicking containers and beacons;
 		
-		PlayerData pd = PlayerData.getPlayerData(e.getPlayer());
+		PlayerData pd = PlayerData.from(e.getPlayer());
 		
 		// Right click not air
 		if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.hasBlock()) {

@@ -82,7 +82,7 @@ public class Main extends JavaPlugin {
 				if (((boolean) Optional.ofNullable(PlayerData.getData(p, "fake-leave")).orElse(false)) == true) continue;
 			}
 			
-			builder.append("<:LEAVE:905682349239463957> " + PlayerData.getPlayerData(p).getDisplayName() + "\n");
+			builder.append("<:LEAVE:905682349239463957> " + PlayerData.from(p).getDisplayName() + "\n");
 		}
 		
 		if (!StartStopMessage.isDeleted)

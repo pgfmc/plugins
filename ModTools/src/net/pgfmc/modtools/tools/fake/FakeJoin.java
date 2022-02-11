@@ -23,7 +23,7 @@ public class FakeJoin implements CommandExecutor {
 			return true;
 		}
 		
-		PlayerData pd = PlayerData.getPlayerData((Player) sender);
+		PlayerData pd = PlayerData.from((Player) sender);
 		
 		if (!((boolean) Optional.ofNullable(pd.getData("fake-leave")).orElse(false)))
 		{

@@ -28,7 +28,7 @@ public class InvOpenEvent implements Listener {
 			
 			if (cont != null) {
 				
-				PlayerData pd = PlayerData.getPlayerData((OfflinePlayer) e.getPlayer());
+				PlayerData pd = PlayerData.from((OfflinePlayer) e.getPlayer());
 				Entity entity = cont.getEntity();
 				
 				

@@ -1,7 +1,5 @@
 package net.pgfmc.survival.cmd;
 
-import java.util.Optional;
-
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
@@ -48,7 +46,7 @@ public class Afk  implements CommandExecutor, Listener {
 			// Jumping toggles AFK
 			if (e.getTo().getY() > e.getFrom().getY())
 			{
-				Bukkit.getLogger().warning("Jumped!");
+				Bukkit.getLogger().info("Jumped!");
 				toggleAfk(p);
 				return;
 			}
@@ -66,7 +64,7 @@ public class Afk  implements CommandExecutor, Listener {
 	{
 		if (Afk.isAfk(e.getPlayer()))
 		{
-			Bukkit.getLogger().warning("Clicked!");
+			Bukkit.getLogger().info("Clicked!");
 			toggleAfk(e.getPlayer());
 			return;
 		}
@@ -80,7 +78,7 @@ public class Afk  implements CommandExecutor, Listener {
 		if (p.isInvulnerable() && p.getGameMode() == GameMode.SURVIVAL)
 		{
 			p.setInvulnerable(false);
-			PlayerData.getPlayerData(p).setData("AFK", false);
+			PlayerData.from(p).removeTag("afk");
 		}
 	}
 	
@@ -105,13 +103,16 @@ public class Afk  implements CommandExecutor, Listener {
 	@SuppressWarnings("deprecation")
 	public static void toggleAfk(Player p)
 	{
-		if (isAfk(p)) // TURN AFK OFF
+		
+		PlayerData pd = PlayerData.from(p);
+		
+		if (pd.hasTag("afk")) // TURN AFK OFF
 		{
 			p.setInvulnerable(false);
 			p.sendMessage("§cAFK mode off.");
 			p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 8);
 			
-			PlayerData.getPlayerData(p).setData("AFK", false);
+			pd.removeTag("afk");
 		} else // TURN AFK ON
 		{
 			// This deprecated method is nothing to worry about, getNoDamageTicks prevents AFK after 20 ticks of taking damage
@@ -127,12 +128,12 @@ public class Afk  implements CommandExecutor, Listener {
 			p.setInvulnerable(true);
 			p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
 			
-			PlayerData.getPlayerData(p).setData("AFK", true);
+			pd.addTag("afk");
 		}
 	}
 	
 	public static boolean isAfk(Player p)
 	{
-		return (boolean) Optional.ofNullable(PlayerData.getPlayerData(p).getData("AFK")).orElse(false);
+		return PlayerData.from(p).hasTag("afk");
 	}
 }

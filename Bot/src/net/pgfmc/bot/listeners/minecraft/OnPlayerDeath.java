@@ -11,7 +11,7 @@ public class OnPlayerDeath implements Listener {
 	
 	@EventHandler
 	public void onDie(PlayerDeathEvent e) {
-		PlayerData pd = PlayerData.getPlayerData(e.getEntity());
+		PlayerData pd = PlayerData.from(e.getEntity());
 		
 		e.setDeathMessage(e.getDeathMessage().replace(pd.getName(), pd.getDisplayName()));
 		Discord.sendMessage("<:DEATH:907865162558636072> " + e.getDeathMessage());

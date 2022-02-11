@@ -1,7 +1,5 @@
 package net.pgfmc.modtools.tools;
 
-import java.util.Optional;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -32,14 +30,22 @@ public class Fly implements CommandExecutor, Listener{
 		
 		Player p = (Player) sender;
 		
-		PlayerData pd = PlayerData.getPlayerData(p);
-		boolean fly = (boolean) Optional.ofNullable(pd.getData("fly")).orElse(false); // Gets "flying" from PlayerData, default to false if null, converts to boolean
+		PlayerData pd = PlayerData.from(p);
 		
-		pd.setData("fly", !fly);
+		
+		boolean fly = pd.hasTag("fly"); // Gets "flying" from PlayerData, default to false if null, converts to boolean
+		
+		
+		if (fly) {
+			pd.removeTag("fly");
+			p.sendMessage("§cDisabled flight.");
+		} else {
+			pd.addTag("fly");
+			p.sendMessage("§aEnabled flight!");
+		}
+		
 		p.setAllowFlight(!fly);
 		p.setFlying(!fly);
-		
-		if (fly) { p.sendMessage("§cDisabled flight."); } else { p.sendMessage("§aEnabled flight!"); }
 		
 		return true;
 	}
@@ -49,7 +55,7 @@ public class Fly implements CommandExecutor, Listener{
 	{
 		Player p = e.getPlayer();
 		
-		boolean fly = (boolean) Optional.ofNullable(PlayerData.getPlayerData(p).getData("fly")).orElse(false);
+		boolean fly = PlayerData.from(p).hasTag("fly");
 		
 		if (fly)
 		{
@@ -60,11 +66,11 @@ public class Fly implements CommandExecutor, Listener{
 	}
 	
 	@EventHandler
-	public void onJoin(PlayerRespawnEvent e)
+	public void onRespawn(PlayerRespawnEvent e)
 	{
 		Player p = e.getPlayer();
 		
-		boolean fly = (boolean) Optional.ofNullable(PlayerData.getPlayerData(p).getData("fly")).orElse(false);
+		boolean fly = PlayerData.from(p).hasTag("fly");
 		
 		if (fly)
 		{

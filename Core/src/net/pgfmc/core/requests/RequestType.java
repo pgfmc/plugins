@@ -168,8 +168,8 @@ public abstract class RequestType extends Configify {
 			ConfigurationSection configsec = cs.getConfigurationSection(key);
 			
 			if (configsec.getString("name").equals(this.name)) {
-				PlayerData aska = PlayerData.getPlayerData(UUID.fromString(configsec.getString("asker")));
-				PlayerData targe = PlayerData.getPlayerData(UUID.fromString(configsec.getString("target")));
+				PlayerData aska = PlayerData.from(UUID.fromString(configsec.getString("asker")));
+				PlayerData targe = PlayerData.from(UUID.fromString(configsec.getString("target")));
 				
 				if (aska == null || targe == null) continue;
 				

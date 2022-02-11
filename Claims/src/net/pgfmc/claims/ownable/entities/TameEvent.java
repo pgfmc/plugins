@@ -22,7 +22,7 @@ public class TameEvent implements Listener {
 			Player player = (Player) e.getOwner();
 			
 			if (player.getGameMode() == GameMode.SURVIVAL) {
-				PlayerData pd = PlayerData.getPlayerData(player);
+				PlayerData pd = PlayerData.from(player);
 				
 				OwnableBlock beacon = ClaimsTable.getRelevantClaim(new Vector4(player.getLocation()));
 				
@@ -31,7 +31,7 @@ public class TameEvent implements Listener {
 					e.setCancelled(true);
 					return;
 				} else {
-					new OwnableEntity(pd, PlayerData.getPlayerData(player).getData("lockMode"), e.getEntity().getUniqueId());
+					new OwnableEntity(pd, PlayerData.from(player).getData("lockMode"), e.getEntity().getUniqueId());
 					pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
 				}
 			}

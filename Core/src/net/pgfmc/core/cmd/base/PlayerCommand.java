@@ -22,7 +22,7 @@ public abstract class PlayerCommand extends CmdBase {
 			return true;
 		}
 		
-		PlayerData pd = PlayerData.getPlayerData((Player) sender);
+		PlayerData pd = PlayerData.from((Player) sender);
 		if (pd == null) {
 			sender.sendMessage("§cThe sender must be a player!");
 			return true;
@@ -37,7 +37,7 @@ public abstract class PlayerCommand extends CmdBase {
 			return new ArrayList<>();
 		}
 		
-		PlayerData pd = PlayerData.getPlayerData((Player) sender);
+		PlayerData pd = PlayerData.from((Player) sender);
 		if (pd == null) {
 			return new ArrayList<>();
 		}

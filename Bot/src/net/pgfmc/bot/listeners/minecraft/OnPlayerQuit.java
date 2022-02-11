@@ -15,7 +15,7 @@ public class OnPlayerQuit implements Listener {
 	@EventHandler (priority = EventPriority.HIGHEST)
 	public void onQuit(PlayerQuitEvent e)
 	{
-		PlayerData pd = PlayerData.getPlayerData(e.getPlayer());
+		PlayerData pd = PlayerData.from(e.getPlayer());
 		
 		if ((boolean) Optional.ofNullable(pd.getData("fake-leave")).orElse(false))
 		{

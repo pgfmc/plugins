@@ -23,7 +23,7 @@ public class EntityAttackEvent implements Listener {
 			
 			if (ent != null) {
 				
-				PlayerData pd = PlayerData.getPlayerData((Player) e.getDamager());
+				PlayerData pd = PlayerData.from((Player) e.getDamager());
 				Entity entity = e.getEntity();
 				
 				if ((entity.getType() == EntityType.MINECART_CHEST || 

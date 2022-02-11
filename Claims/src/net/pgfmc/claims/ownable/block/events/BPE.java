@@ -29,7 +29,7 @@ public class BPE implements Listener {
 	
 	@EventHandler
 	public void blockPlace(BlockPlaceEvent e) {
-		PlayerData pd = PlayerData.getPlayerData(e.getPlayer());
+		PlayerData pd = PlayerData.from(e.getPlayer());
 		Block block = e.getBlock();
 		
 		if (e.getPlayer().getGameMode() == GameMode.SURVIVAL) { // ---------------------------------------------- if debug mode off / not creative mode

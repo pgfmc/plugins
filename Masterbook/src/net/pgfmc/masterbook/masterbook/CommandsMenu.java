@@ -257,7 +257,7 @@ public class CommandsMenu implements InventoryHolder {
 			setAction(4, (p, e) -> {
 				if (pd.hasPermission("pgf.cmd.donator.nick"))
 				{
-					PlayerData.getPlayerData(p).setData("nickTemp", "reset");
+					pd.setData("nickTemp", "reset");
 					p.closeInventory();
 					p.sendMessage("§9Type your new nickname in chat.");
 				} else

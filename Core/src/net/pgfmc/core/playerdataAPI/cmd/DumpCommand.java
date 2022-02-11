@@ -2,6 +2,7 @@ package net.pgfmc.core.playerdataAPI.cmd;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.Map.Entry;
 
 import org.bukkit.command.CommandSender;
@@ -45,32 +46,53 @@ public class DumpCommand extends CmdBase {
 			return true;
 		}
 		
-		PlayerData pd = PlayerData.getPlayerData(args[0]);
+		PlayerData pd = PlayerData.from(args[0]);
 		
 		if (pd == null) {
 			sender.sendMessage("§cPlease enter a valid player.");
 			return true;
 		}
 		
-		int i = 0;
 		for (Entry<String, Object> entry : pd.getAllData().entrySet()) {
 			
 			if (entry.getValue() == null) {
 				sender.sendMessage("§f[§b" + entry.getKey() + "§f]: §dnull");
-				i++;
+				
 				continue;
 			}
 			
 			sender.sendMessage("§f[§b" + entry.getKey() + "§f]: §d" + entry.getValue().toString());
-			i++;
 		}
-		sender.sendMessage("§d" + String.valueOf(i) + " §aEntries printed.");
+		
+		// tag list
+		
+		sender.sendMessage("§bListing all tags for " + pd.getRankedName());
+		
+		Set<String> tags = pd.getTags();
+		int length = tags.size();
+		
+		int iit = 0;
+		String list = "§d";
+		for (String tag : tags) {
+			
+			list = list + tag;
+			
+			if (length -1 == iit) {
+				break;
+			}
+			
+			list = list + "§f,§d";
+			
+			if (iit % 3 == 2) {
+				list = list + "\n";
+			}
+		}
+		
+		if (length > 25) {
+			list = list + "\n§bPlayer has §d" + String.valueOf(length) + " §dtags.";
+		}
+		sender.sendMessage(list);
 		
 		return true;
 	}
-	
-	
-	
-	
-	
 }

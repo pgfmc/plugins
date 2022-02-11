@@ -36,7 +36,7 @@ public class OnAsyncPlayerChat implements Listener {
 		
 		String msg = e.getMessage();
 		Player p = e.getPlayer();
-		PlayerData pd = PlayerData.getPlayerData(p);
+		PlayerData pd = PlayerData.from(p);
 		
 		if (Punish.isMute(pd))
 		{

@@ -27,7 +27,7 @@ public class TagCommand extends CmdBase {
 		
 		if (args.length >= 1) {
 			
-			pd = PlayerData.getPlayerData(args[0]);
+			pd = PlayerData.from(args[0]);
 			
 			if (pd == null) {
 				sender.sendMessage("§cPlease enter a valid player.");
@@ -111,20 +111,15 @@ public class TagCommand extends CmdBase {
 
 	@Override
 	public List<String> tabComplete(CommandSender sender, String alias, String[] args) {
-		List<String> list = new LinkedList<>();
 		
-		if (args.length == 0) {
-			for (PlayerData pd : PlayerData.getPlayerDataSet()) {
-				list.add(pd.getDisplayNameRaw());
-			}
-		}
+		List<String> list = new LinkedList<>();
 		
 		if (args.length == 1) {
 			
 			for (PlayerData pd : PlayerData.getPlayerDataSet()) {
 				String name = pd.getDisplayNameRaw();
 				
-				if (args[0].startsWith(name)) {
+				if (name.startsWith(args[0])) {
 					list.add(name);
 				}
 			}
@@ -135,7 +130,7 @@ public class TagCommand extends CmdBase {
 			String[] argumes = {"add", "remove", "list"};
 			
 			for (String arg : argumes) {
-				if (args[1].startsWith(arg)) {
+				if (arg.startsWith(args[1])) {
 					list.add(arg);
 				}
 			}
@@ -143,8 +138,4 @@ public class TagCommand extends CmdBase {
 		
 		return list;
 	}
-	
-	
-	
-
 }

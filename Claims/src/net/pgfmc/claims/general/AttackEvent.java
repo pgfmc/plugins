@@ -25,7 +25,7 @@ public class AttackEvent implements Listener {
 			
 			if (e.getEntity() instanceof InventoryHolder && OwnableEntity.getContainer(e.getEntity().getUniqueId()) != null)  {
 				
-				switch(OwnableEntity.getContainer(e.getEntity()).getAccess(PlayerData.getPlayerData(attacker))) {
+				switch(OwnableEntity.getContainer(e.getEntity()).getAccess(PlayerData.from(attacker))) {
 				case OWNER: return;
 				case FAVORITE: return;
 				case FRIEND: return;

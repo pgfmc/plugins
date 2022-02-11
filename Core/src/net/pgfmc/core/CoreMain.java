@@ -11,7 +11,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerLoadEvent;
-import org.bukkit.event.server.ServerLoadEvent.LoadType;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -108,11 +107,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 		
 		// loads PlayerData
 		
-		PlayerDataManager.setInit(x -> x.setData("AFK", false));
-		PlayerDataManager.setInit(pd -> pd.setData("god", false));
-		PlayerDataManager.setInit(pd -> pd.setData("fly", false));
-		PlayerDataManager.setInit(pd -> pd.setData("vanish", false));
-		
 		PlayerDataManager.setInit(pd -> pd.setData("Name", pd.getName()).queue());
 		
 		PlayerDataManager.setInit(pd -> {
@@ -184,10 +178,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 	
 	@EventHandler
 	public void onLoad(ServerLoadEvent e) {
-		
-		if (e.getType() == LoadType.STARTUP) {
-			PlayerDataManager.InitializePD();
-		}
 		
 		String ver = getDescription().getVersion();		
 		

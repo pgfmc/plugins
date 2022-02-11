@@ -46,6 +46,6 @@ permissions:
     description: PlayerData wildcard
     default: op
     children:
-      pgf.cmd.playerdata.tag
-      pgf.cmd.playerdata.dump
+      pgf.cmd.playerdata.tag: true
+      pgf.cmd.playerdata.dump: true
     
