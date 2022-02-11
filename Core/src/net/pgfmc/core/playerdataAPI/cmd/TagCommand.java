@@ -94,7 +94,7 @@ public class TagCommand extends CmdBase {
 			if (pd.addTag(tag)) {
 				sender.sendMessage("§bAdded tag §d" + tag + " §bto §r" + pd.getRankedName() + "§b.");
 			} else {
-				sender.sendMessage(pd.getRankedName() + "§balready has that tag!");
+				sender.sendMessage(pd.getRankedName() + " §balready has that tag!");
 			}
 		} else
 		
@@ -132,6 +132,16 @@ public class TagCommand extends CmdBase {
 			for (String arg : argumes) {
 				if (arg.startsWith(args[1])) {
 					list.add(arg);
+				}
+			}
+		}
+		
+		if (args.length == 3) {
+			if (args[1].equals("remove")) {
+				for (String arg : PlayerData.from(args[0]).getTags()) {
+					if (arg.startsWith(args[1])) {
+						list.add(arg);
+					}
 				}
 			}
 		}

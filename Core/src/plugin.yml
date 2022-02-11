@@ -40,6 +40,11 @@ commands:
     usage: /<command> <player> <add | remove | list> [tag]
     description: manages playerdata tags.
     permission: pgf.cmd.playerdata.tag
+  setplayerdata:
+    usage: /<command> <player> <entry> <data (String)>
+    description: sets a player's data point.
+    permission: pgf.cmd.playerdata.set
+    aliasees: [spd]
 
 permissions:
   pgf.cmd.playerdata.*:
@@ -48,4 +53,5 @@ permissions:
     children:
       pgf.cmd.playerdata.tag: true
       pgf.cmd.playerdata.dump: true
+      pgf.cmd.playerdata.set: true
     

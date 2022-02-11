@@ -26,6 +26,7 @@ import net.pgfmc.core.inventoryAPI.extra.InventoryPressEvent;
 import net.pgfmc.core.permissions.Permissions;
 import net.pgfmc.core.playerdataAPI.PlayerDataManager;
 import net.pgfmc.core.playerdataAPI.cmd.DumpCommand;
+import net.pgfmc.core.playerdataAPI.cmd.PlayerDataSetCommand;
 import net.pgfmc.core.playerdataAPI.cmd.TagCommand;
 import net.pgfmc.core.teleportAPI.SpawnProtect;
 import net.pgfmc.core.util.DimManager;
@@ -157,6 +158,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		
 		new DumpCommand();
 		new TagCommand();
+		new PlayerDataSetCommand();
 		
 		getServer().getPluginManager().registerEvents(this, this);
 		

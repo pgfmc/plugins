@@ -126,9 +126,6 @@ public class OnMessageReceived implements EventListener {
 			if (AccountLinking.linkAsk(content, user))
 			{
 				e.getChannel().sendMessage("Your account has been linked.").queue();
-			} else
-			{
-				e.getChannel().sendMessage("Invalid code, please try generating a new code.").queue();
 			}
 		}
 	}
