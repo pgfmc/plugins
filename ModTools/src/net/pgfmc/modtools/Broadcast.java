@@ -1,4 +1,4 @@
-package net.pgfmc.modtools.tools;
+package net.pgfmc.modtools;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -26,7 +26,7 @@ public class Broadcast implements CommandExecutor {
 		Bukkit.broadcastMessage(msg);
 		
 		if (!CoreMain.PGFPlugin.BOT.isEnabled()) return true;
-		Discord.sendMessage(ChatColor.stripColor(msg));
+		Discord.sendMessage(ChatColor.stripColor(msg)).queue();
 		
 		return true;
 	}

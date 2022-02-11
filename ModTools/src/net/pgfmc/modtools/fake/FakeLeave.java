@@ -1,4 +1,4 @@
-package net.pgfmc.modtools.tools.fake;
+package net.pgfmc.modtools.fake;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -10,8 +10,8 @@ import org.bukkit.entity.Player;
 import net.pgfmc.bot.Discord;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
-public class FakeJoin implements CommandExecutor {
-	
+public class FakeLeave implements CommandExecutor {
+
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		
@@ -25,14 +25,14 @@ public class FakeJoin implements CommandExecutor {
 		
 		if (pd.hasTag("fake-leave"))
 		{
-			pd.sendMessage(ChatColor.RED + "Can't fake join again!");
+			pd.sendMessage(ChatColor.RED + "Can't fake leave again!");
 			return true;
 		}
 		
-		Bukkit.broadcastMessage("§7[§a+§7]§r " + pd.getRankedName());
-		Discord.sendMessage("<:JOIN:905023714213625886> " + pd.getDisplayName());
+		Bukkit.broadcastMessage("§7[§c-§7]§r " + pd.getRankedName());
+		Discord.sendMessage("<:LEAVE:905682349239463957> " + pd.getDisplayName());
 		
-		pd.removeTag("fake-leave");
+		pd.addTag("fake-leave");
 		
 		return true;
 	}

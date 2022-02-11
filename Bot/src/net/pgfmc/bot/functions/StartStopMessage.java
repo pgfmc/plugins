@@ -24,8 +24,8 @@ public class StartStopMessage {
 				, Discord.GREEN)
 		.build();
 		
-		Discord.sendEmbed(startMessageEmbed);
-		Discord.sendAlert(startMessageEmbed);
+		Discord.sendEmbed(startMessageEmbed).queue();
+		Discord.sendAlert(startMessageEmbed).queue();
 		
 	}
 	
@@ -35,8 +35,8 @@ public class StartStopMessage {
 				, Discord.RED)
 		.build();
 		
-		Discord.sendEmbed(stopMessageEmbed);
-		Discord.sendAlert(stopMessageEmbed);
+		Discord.sendEmbed(stopMessageEmbed).queue();
+		Discord.sendAlert(stopMessageEmbed).queue();
 		
 	}
 	

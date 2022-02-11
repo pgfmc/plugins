@@ -1,14 +1,14 @@
 name: PGF-ModTools
-version: 5.4.0
+version: 5.5.1
 api-version: 1.18
 authors: [bk, CrimsonDart]
 website: play.pgfmc.net
 main: net.pgfmc.modtools.Main
 description: Moderator tools for PGF
 depend: [PGF-Core]
-softdepend: [PGF-Bot]
+softdepend: [PGF-Bot, JDA-plugin]
 load: POSTWORLD
-prefix: PGF-Core
+prefix: PGF-ModTools
 
 commands:
   gmc:
@@ -73,14 +73,6 @@ commands:
     usage: /<command> [player]
     description: Unmute a player
     permission: pgf.admin.unmute
-  tag:
-    usage: /<command> [Player] [Path] [Tag] [true/false]
-    description: Tag a player!
-    permission: pgf.admin.tag
-  hastag:
-    usage: /<command> [Player] [Path]
-    description: Test if a player has a tag!
-    permission: pgf.admin.tag
   broadcast:
     usage: /<command> [message]
     description: Broadcast to the server!
@@ -96,6 +88,11 @@ commands:
     description: Send a fake leave message
     aliases: [fl, fakel, fleave]
     permission: pgf.admin.fake.leave
+  rollback:
+    usage: /<command> [player/undo] [minutes]
+    description: Rollback a player's inventory
+    aliases: [rb, rollb, rollb, rollbackinventory]
+    permission: pgf.admin.rollbackinventory
     
 permissions:
   pgf.admin.gamemode.*:

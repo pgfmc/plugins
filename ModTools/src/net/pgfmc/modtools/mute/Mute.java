@@ -1,4 +1,4 @@
-package net.pgfmc.modtools.tools.mute;
+package net.pgfmc.modtools.mute;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -9,7 +9,7 @@ import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.punish.Punish;
 
-public class Unmute implements CommandExecutor {
+public class Mute implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -24,15 +24,15 @@ public class Unmute implements CommandExecutor {
 			return true;
 		}
 		
-		if (!Punish.isMute(pd))
+		if (pd.hasPermission("pgf.mute.exempt") || (sender.getName().equals(pd.getName())))
 		{
-			sender.sendMessage(ChatColor.RED + "This player is already unmuted!");
+			sender.sendMessage(ChatColor.RED + "This player cannot be muted!");
 			return true;
 		}
 		
-		if (sender.getName().equals(pd.getName()))
+		if (Punish.isMute(pd))
 		{
-			sender.sendMessage(ChatColor.RED + "This player cannot be unmuted!");
+			sender.sendMessage(ChatColor.RED + "This player is already muted!");
 			return true;
 		}
 		
@@ -42,10 +42,11 @@ public class Unmute implements CommandExecutor {
 			// no return because yeah
 		}
 		
-		sender.sendMessage(pd.getRankedName() + ChatColor.GREEN + " has been unmuted!");
-		pd.sendMessage(ChatColor.GREEN + "You have been unmuted!");
-		Punish.setMute(pd, false);
+		sender.sendMessage(pd.getRankedName() + ChatColor.RED + " has been muted!");
+		pd.sendMessage(ChatColor.RED + "You have been muted!");
+		Punish.setMute(pd, true);
 		
 		return true;
 	}
+
 }
