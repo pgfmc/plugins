@@ -1,7 +1,5 @@
 package net.pgfmc.modtools.tools.fake;
 
-import java.util.Optional;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -25,7 +23,7 @@ public class FakeJoin implements CommandExecutor {
 		
 		PlayerData pd = PlayerData.from((Player) sender);
 		
-		if (!((boolean) Optional.ofNullable(pd.getData("fake-leave")).orElse(false)))
+		if (pd.hasTag("fake-leave"))
 		{
 			pd.sendMessage(ChatColor.RED + "Can't fake join again!");
 			return true;
@@ -34,7 +32,7 @@ public class FakeJoin implements CommandExecutor {
 		Bukkit.broadcastMessage("§7[§a+§7]§r " + pd.getRankedName());
 		Discord.sendMessage("<:JOIN:905023714213625886> " + pd.getDisplayName());
 		
-		pd.setData("fake-leave", false);
+		pd.removeTag("fake-leave");
 		
 		return true;
 	}

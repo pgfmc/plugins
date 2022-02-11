@@ -91,7 +91,6 @@ public class PlayerDataSetCommand extends CmdBase {
 			
 			PlayerData pd = PlayerData.from(args[0]);
 			if (pd == null) return list;
-	
 			
 			for (String entry : pd.getAllData().keySet()) {
 				if (entry.startsWith(args[1]) && pd.getData(entry) instanceof String) {

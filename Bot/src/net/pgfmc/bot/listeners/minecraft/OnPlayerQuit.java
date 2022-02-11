@@ -1,7 +1,5 @@
 package net.pgfmc.bot.listeners.minecraft;
 
-import java.util.Optional;
-
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -17,9 +15,9 @@ public class OnPlayerQuit implements Listener {
 	{
 		PlayerData pd = PlayerData.from(e.getPlayer());
 		
-		if ((boolean) Optional.ofNullable(pd.getData("fake-leave")).orElse(false))
+		if (pd.hasTag("fake-leave"))
 		{
-			pd.setData("fake-leave", false);
+			pd.removeTag("fake-leave");
 			e.setQuitMessage("");
 			return;
 		}

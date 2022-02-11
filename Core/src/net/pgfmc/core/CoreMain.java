@@ -28,6 +28,7 @@ import net.pgfmc.core.playerdataAPI.PlayerDataManager;
 import net.pgfmc.core.playerdataAPI.cmd.DumpCommand;
 import net.pgfmc.core.playerdataAPI.cmd.PlayerDataSetCommand;
 import net.pgfmc.core.playerdataAPI.cmd.TagCommand;
+import net.pgfmc.core.requests.RequestEvents;
 import net.pgfmc.core.teleportAPI.SpawnProtect;
 import net.pgfmc.core.util.DimManager;
 
@@ -166,6 +167,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new PlayerDataManager(), this);
 		getServer().getPluginManager().registerEvents(new Permissions(), this);
 		getServer().getPluginManager().registerEvents(new SpawnProtect(), this);
+		getServer().getPluginManager().registerEvents(new RequestEvents(), this);
 		
 		new ProfanityFilter();
 	}

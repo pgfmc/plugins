@@ -102,7 +102,7 @@ public class TagCommand extends CmdBase {
 			if (pd.removeTag(tag)) {
 				sender.sendMessage("§cRemoved tag §d" + tag + " §cfrom §r" + pd.getRankedName() + "§c.");
 			} else {
-				sender.sendMessage(pd.getRankedName() + "§cdid not have that tag.");
+				sender.sendMessage(pd.getRankedName() + " §cdid not have that tag.");
 			}
 		}
 		
