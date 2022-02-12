@@ -12,7 +12,7 @@ public class NicknameInput implements Listener {
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent e)
 	{
-		PlayerData pd = PlayerData.getPlayerData(e.getPlayer());
+		PlayerData pd = PlayerData.from(e.getPlayer());
 		
 		if (pd.getData("nickTemp") == null) return;
 		

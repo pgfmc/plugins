@@ -17,7 +17,7 @@ public class Spam {
 	
 	public static void check(Player p)
 	{
-		PlayerData pd = PlayerData.getPlayerData(p);
+		PlayerData pd = PlayerData.from(p);
 		
 		// current time - last chat time <= 850ms, is not muted, does not have exemption
 		if (!Punish.isMute(pd) && !Permissions.has(pd.getPlayer(), "pgf.spam.exempt") && new Date().getTime() - (long) Optional.ofNullable(pd.getData("spam.lastchat")).orElse(1000L) <= 550)

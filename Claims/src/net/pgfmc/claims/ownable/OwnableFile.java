@@ -40,7 +40,7 @@ public class OwnableFile {
 				
 				ConfigurationSection configSec = database.getConfigurationSection(key);
 				
-				PlayerData pd = PlayerData.getPlayerData(UUID.fromString(configSec.getString("player")));
+				PlayerData pd = PlayerData.from(UUID.fromString(configSec.getString("player")));
 				
 				Lock lock;
 				
@@ -69,7 +69,7 @@ public class OwnableFile {
 				
 				UUID uuid = UUID.fromString(key);
 				
-				PlayerData pd = PlayerData.getPlayerData(UUID.fromString(configSec.getString("player")));
+				PlayerData pd = PlayerData.from(UUID.fromString(configSec.getString("player")));
 				
 				Lock lock = Lock.valueOf(configSec.getString("Lock"));
 				

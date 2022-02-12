@@ -25,8 +25,8 @@ public class AttackEventHandler implements Listener {
 			// if in a battle already -- V
 			if (target.getGameMode() == GameMode.SURVIVAL && attacker.getGameMode() == GameMode.SURVIVAL) { // makes sure both players are in survival
 				
-				PlayerData apd = PlayerData.getPlayerData(attacker);
-				PlayerData tpd = PlayerData.getPlayerData(target);
+				PlayerData apd = PlayerData.from(attacker);
+				PlayerData tpd = PlayerData.from(target);
 				
 				if (isFlower(attacker.getInventory().getItemInMainHand().getType())) { // checks if the player is holding a flower
 					Request r = FriendRequest.FR.findRequest(tpd, apd);

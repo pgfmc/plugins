@@ -25,7 +25,7 @@ public class OnPlayerAdvancementDone implements Listener {
 		List<String> all = Files.readAllLines(Paths.get(logPath), Charset.forName("Cp1252"));
 		String adv = all.get(all.size() - 1);
 		
-		PlayerData pd = PlayerData.getPlayerData(e.getPlayer());
+		PlayerData pd = PlayerData.from(e.getPlayer());
 		
 		if (adv.contains(" has made the advancement "))
 		{

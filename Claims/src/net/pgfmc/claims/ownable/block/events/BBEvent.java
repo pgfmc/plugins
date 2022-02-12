@@ -24,7 +24,7 @@ public class BBEvent implements Listener {
 	@EventHandler
 	public void blockBreak(BlockBreakEvent e) {
 		
-		PlayerData pd = PlayerData.getPlayerData(e.getPlayer());
+		PlayerData pd = PlayerData.from(e.getPlayer());
 		if (e.getPlayer().getGameMode() == GameMode.SURVIVAL) { // ---------------------------------------------- if debug mode off / not creative mode
 			
 			OwnableBlock cont = OwnableBlock.getOwnable(e.getBlock());

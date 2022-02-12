@@ -26,7 +26,7 @@ public class ReportCommand implements CommandExecutor {
 			return true;
 		}
 		
-		PlayerData pd = PlayerData.getPlayerData((Player) sender);
+		PlayerData pd = PlayerData.from((Player) sender);
 		
 		// 2 minute cooldown
 		if (commandCooldowns.get(pd.getUniqueId().toString()) != null)

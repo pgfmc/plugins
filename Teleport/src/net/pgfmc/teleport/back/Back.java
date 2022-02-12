@@ -29,7 +29,7 @@ public class Back implements CommandExecutor, Listener {
 		if (!(sender instanceof Player)) { return true; }
 		
 		Player p = (Player) sender;
-		PlayerData pd = PlayerData.getPlayerData(p);
+		PlayerData pd = PlayerData.from(p);
 		
 		Location dest = pd.getData("backLoc");
 		if (dest == null)

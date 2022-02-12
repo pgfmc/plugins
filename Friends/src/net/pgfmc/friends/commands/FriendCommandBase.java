@@ -21,14 +21,14 @@ public abstract class FriendCommandBase implements CommandExecutor {
 			return false;
 		}
 		
-		PlayerData friend = PlayerData.getPlayerData(args[0]);
+		PlayerData friend = PlayerData.from(args[0]);
 		
 		if (friend == null) {
 			sender.sendMessage("§cCouldn't find player " + args[0] + ".");
 			return true;
 		}
 		
-		PlayerData player = PlayerData.getPlayerData((Player) sender);
+		PlayerData player = PlayerData.from((Player) sender);
 		
 		return action(player, friend);
 	}

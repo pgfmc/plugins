@@ -4,29 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.bukkit.inventory.ItemStack;
-
 import net.pgfmc.core.cmd.base.PlayerCommand;
-import net.pgfmc.core.inventoryAPI.BaseInventory;
-import net.pgfmc.core.inventoryAPI.extra.Inventoryable;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.requests.Request;
 import net.pgfmc.core.requests.RequestType;
+import net.pgfmc.core.requests.inv.RequestListInventory;
 
-public class RequestListCommand extends PlayerCommand implements Inventoryable {
+public class RequestListCommand extends PlayerCommand {
 
 	public RequestListCommand() {
 		super("requestList");
-	}
-
-	@Override
-	public ItemStack toItem() {
-		return null;
-	}
-
-	@Override
-	public BaseInventory toInventory() {
-		return new RequestListInventory();
 	}
 
 	@Override
@@ -45,7 +32,8 @@ public class RequestListCommand extends PlayerCommand implements Inventoryable {
 			pd.sendMessage(r.getType() + " Request from " + r.asker.getRankedName());
 		}
 		
+		new RequestListInventory(pd);
+		
 		return false;
 	}
-
 }

@@ -21,7 +21,7 @@ public class HelpCommand implements CommandExecutor {
 		
 		Player p = (Player) sender;
 		p.closeInventory();
-		p.openInventory(new CommandsMenu(PlayerData.getPlayerData(p)).getInventory());
+		p.openInventory(new CommandsMenu(PlayerData.from(p)).getInventory());
 		
 		return true;
 	}

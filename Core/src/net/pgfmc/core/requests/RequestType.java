@@ -1,13 +1,19 @@
 package net.pgfmc.core.requests;
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 import java.util.function.Predicate;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 
 import net.pgfmc.core.CoreMain;
+import net.pgfmc.core.file.Configify;
+import net.pgfmc.core.file.Mixins;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.requests.cmd.RequestAcceptCommand;
 import net.pgfmc.core.requests.cmd.RequestDenyCommand;
@@ -18,7 +24,7 @@ import net.pgfmc.core.requests.cmd.RequestSendCommand;
  * @author CrimsonDart
  *
  */
-public abstract class RequestType {
+public abstract class RequestType extends Configify {
 	
 	// FIELDS
 	
@@ -43,6 +49,8 @@ public abstract class RequestType {
 	 */
 	public final String name;
 	
+	private String joinMessage;
+	
 	private static Set<Set<Request>> allRequests = new HashSet<>();
 	
 	/**
@@ -64,7 +72,7 @@ public abstract class RequestType {
 	public Request createRequest(PlayerData asker, PlayerData target) {
 		
 		Request sub = findRequest(asker, target);
-		if (sub != null) {
+		if (sub != null && !isPersistent) {
 			sub.end(EndBehavior.REFRESH);
 		}
 		
@@ -80,7 +88,11 @@ public abstract class RequestType {
 			}, time);
 		}
 		
-		requestMessage(r, sub != null);
+		if (sub == null) {
+			if (!sendRequest(r)) {
+				r.end(EndBehavior.FORCEEND);
+			}
+		}
 		
 		return r;
 	}
@@ -141,7 +153,6 @@ public abstract class RequestType {
 	}
 	
 	public void registerDeny(String label) {
-		System.out.println("Attempting to register Deny for " + label);
 		new RequestDenyCommand(label, this);
 	}
 	
@@ -153,13 +164,64 @@ public abstract class RequestType {
 		new RequestAcceptCommand(label, this);
 	}
 	
+	@Override
+	public void enable() {
+		
+		FileConfiguration cs = Mixins.getDatabase(CoreMain.plugin.getDataFolder() + File.separator + "requests.yml");
+		
+		ConfigurationSection configsec = cs.getConfigurationSection(name);
+		
+		for (String key : configsec.getKeys(false)) {
+			PlayerData aska = PlayerData.from(UUID.fromString(key));
+			PlayerData targe = PlayerData.from(UUID.fromString(configsec.getString(key)));
+			
+			createRequest(aska, targe);
+		}
+	}
+	
+	@Override
+	public void disable() {
+		FileConfiguration cs = Mixins.getDatabase(CoreMain.plugin.getDataFolder() + File.separator + "requests.yml");
+		
+		ConfigurationSection configsec = cs.createSection(name);
+		
+		for (Request r : requests) {
+			
+			if (!isPersistent) continue;
+			
+			configsec.set(r.asker.getUniqueId().toString(), r.target.getUniqueId().toString());
+		}
+		
+		cs.set(name, configsec);
+		Mixins.saveDatabase(cs, CoreMain.plugin.getDataFolder() + File.separator + "requests.yml");
+		
+		requests.clear();
+	}
+	
+	@Override
+	public void reload() {
+		disable();
+		enable();
+	}
+	
+	protected void setJoinMessage(String messa) {
+		
+		if (joinMessage == null) {
+			joinMessage = messa;
+		}
+	}
+	
+	public String getJoinMessage() {
+		return joinMessage;
+	}
+	
 	/**
 	 * Method ran when a new request is created.
 	 * Use to send messages to members of a request when one is created.
 	 * @param r The request just created.
-	 * @param refreshed Whether or not the request refreshed a past request.	
+	 * @return Returns true if the request isn't cancelled, false if it is cancelled.
 	 */
-	protected abstract void requestMessage(Request r, boolean refreshed);
+	protected abstract boolean sendRequest(Request r);
 	
 	/**
 	 * Only implement this method, NEVER RUN IT YOURSELF, instead use {@code request.end(EndBehavior)} to end a Request.

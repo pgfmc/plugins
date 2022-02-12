@@ -33,16 +33,11 @@ public class TpRequest extends RequestType {
 	}
 
 	@Override
-	protected void requestMessage(Request r, boolean refreshed) {
-		if (refreshed) {
-			r.asker.sendMessage("§6Time limit refreshed!");
-			r.target.sendMessage("§6Time limit refreshed!");
-			return;
-		} 
+	protected boolean sendRequest(Request r) {
 		r.asker.sendMessage("§6Teleport request sent to " + r.target.getRankedName() + "§6!");
 		r.target.sendMessage("§6Incoming Tp request from " + r.asker.getRankedName() + "§6.");
 		r.target.sendMessage("§6Use §b/tpaccept §6to accept!");
-		
+		return true;
 	}
 
 	@Override
@@ -75,6 +70,7 @@ public class TpRequest extends RequestType {
 			r.target.sendMessage("§cTpa request timed out!");
 			break;
 		case REFRESH:
+			r.asker.sendMessage("§6Time refreshed!");
 			break;
 		}
 	}

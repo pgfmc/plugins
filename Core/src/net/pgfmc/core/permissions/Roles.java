@@ -111,7 +111,7 @@ public class Roles {
 	
 	public static void recalculate(OfflinePlayer p)
 	{
-		recalculate(PlayerData.getPlayerData(p));
+		recalculate(PlayerData.from(p));
 	}
 	
 	public static Role getRoleById(String id)
@@ -126,7 +126,7 @@ public class Roles {
 	
 	public static Set<Role> getRolesByPlayer(OfflinePlayer p)
 	{
-		PlayerData pd = PlayerData.getPlayerData(p);
+		PlayerData pd = PlayerData.from(p);
 		@SuppressWarnings("unchecked")
 		List<String> roles = (List<String>) Optional.ofNullable(pd.getData("roles")).orElse(pd.loadFromFile("roles"));
 		
