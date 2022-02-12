@@ -90,7 +90,10 @@ public class Main extends JavaPlugin {
 			StartStopMessage.deleteStartStopMessages(new MessageHistory(Discord.getServerChannel()));
 		}
 		
-		Discord.sendMessage(builder.toString()).queue();
+		if (!builder.isEmpty())
+		{
+			Discord.sendMessage(builder.toString()).queue();
+		}
 		
 		StartStopMessage.disable();
 		
