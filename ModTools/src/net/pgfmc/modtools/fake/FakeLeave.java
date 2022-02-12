@@ -1,7 +1,5 @@
 package net.pgfmc.modtools.fake;
 
-import java.util.Optional;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -23,9 +21,9 @@ public class FakeLeave implements CommandExecutor {
 			return true;
 		}
 		
-		PlayerData pd = PlayerData.getPlayerData((Player) sender);
+		PlayerData pd = PlayerData.from((Player) sender);
 		
-		if ((boolean) Optional.ofNullable(pd.getData("fake-leave")).orElse(false))
+		if (pd.hasTag("fake-leave"))
 		{
 			pd.sendMessage(ChatColor.RED + "Can't fake leave again!");
 			return true;
@@ -34,7 +32,7 @@ public class FakeLeave implements CommandExecutor {
 		Bukkit.broadcastMessage("§7[§c-§7]§r " + pd.getRankedName());
 		Discord.sendMessage("<:LEAVE:905682349239463957> " + pd.getDisplayName());
 		
-		pd.setData("fake-leave", true);
+		pd.addTag("fake-leave");
 		
 		return true;
 	}

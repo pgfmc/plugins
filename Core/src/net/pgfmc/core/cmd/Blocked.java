@@ -54,7 +54,7 @@ public class Blocked implements CommandExecutor {
 		
 		blockList.add(p2.getUniqueId());
 		
-		PlayerData.getPlayerData(p1).setData("blockList", blockList);
+		PlayerData.from(p1).setData("blockList", blockList);
 	}
 	
 	public static void REMOVE_BLOCKED(OfflinePlayer p1, OfflinePlayer p2)
@@ -63,14 +63,14 @@ public class Blocked implements CommandExecutor {
 		
 		blockList.remove(p2.getUniqueId());
 		
-		PlayerData.getPlayerData(p1).setData("blockList", blockList).queue();
+		PlayerData.from(p1).setData("blockList", blockList).queue();
 	}
 	
 	@SuppressWarnings("unchecked")
 	public static List<UUID> GET_BLOCKED(OfflinePlayer p)
 	{
 		return Optional.ofNullable(
-				(List<UUID>) PlayerData.getPlayerData(p).getData("blocked")
+				(List<UUID>) PlayerData.from(p).getData("blocked")
 				).orElse(new ArrayList<UUID>());
 	}
 	

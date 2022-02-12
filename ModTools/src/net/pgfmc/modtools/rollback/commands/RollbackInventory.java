@@ -13,7 +13,7 @@ public class RollbackInventory {
 		
 		if (args.length < 2) return false;
 		
-		PlayerData target = PlayerData.getPlayerData(args[0]);
+		PlayerData target = PlayerData.from(args[0]);
 		String minutes = args[1].replaceAll("[^0-9]", "");
 		
 		if (minutes.length() == 0 || Integer.valueOf(minutes) == null || minutes.equals("0")) return false;

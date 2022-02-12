@@ -20,7 +20,7 @@ public class EntityClick implements Listener {
 		
 		if (e.getPlayer() != null && e.getRightClicked() != null  && e.getPlayer().getGameMode() == GameMode.SURVIVAL) {
 			
-			PlayerData pd = PlayerData.getPlayerData(e.getPlayer());
+			PlayerData pd = PlayerData.from(e.getPlayer());
 			
 			if ((e.getRightClicked().getType() == EntityType.MINECART_CHEST || 
 					e.getRightClicked().getType() == EntityType.MINECART_HOPPER ||

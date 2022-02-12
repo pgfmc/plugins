@@ -19,7 +19,7 @@ public abstract class PlayerArg1Cmd extends CmdBase {
 			return true;
 		}
 		
-		PlayerData pdarg = PlayerData.getPlayerData(args[0]);
+		PlayerData pdarg = PlayerData.from(args[0]);
 		
 		if (pdarg == null) {
 			sender.sendMessage("§cPlease input a player's name!");

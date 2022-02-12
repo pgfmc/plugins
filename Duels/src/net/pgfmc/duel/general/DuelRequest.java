@@ -30,8 +30,8 @@ public class DuelRequest extends RequestType {
 	}
 
 	@Override
-	protected void requestMessage(Request r, boolean refreshed) {
-		
+	protected boolean sendRequest(Request r) {
+		return true;
 	}
 
 	@Override

@@ -11,7 +11,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerLoadEvent;
-import org.bukkit.event.server.ServerLoadEvent.LoadType;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -26,6 +25,10 @@ import net.pgfmc.core.file.ReloadConfigify;
 import net.pgfmc.core.inventoryAPI.extra.InventoryPressEvent;
 import net.pgfmc.core.permissions.Permissions;
 import net.pgfmc.core.playerdataAPI.PlayerDataManager;
+import net.pgfmc.core.playerdataAPI.cmd.DumpCommand;
+import net.pgfmc.core.playerdataAPI.cmd.PlayerDataSetCommand;
+import net.pgfmc.core.playerdataAPI.cmd.TagCommand;
+import net.pgfmc.core.requests.RequestEvents;
 import net.pgfmc.core.teleportAPI.SpawnProtect;
 import net.pgfmc.core.util.DimManager;
 
@@ -106,11 +109,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 		
 		// loads PlayerData
 		
-		PlayerDataManager.setInit(x -> x.setData("AFK", false));
-		PlayerDataManager.setInit(pd -> pd.setData("god", false));
-		PlayerDataManager.setInit(pd -> pd.setData("fly", false));
-		PlayerDataManager.setInit(pd -> pd.setData("vanish", false));
-		
 		PlayerDataManager.setInit(pd -> pd.setData("Name", pd.getName()).queue());
 		
 		PlayerDataManager.setInit(pd -> {
@@ -143,11 +141,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 		
 		DimManager.updateConfigForWorldPermissionAccess();
 		
-		
-		
-		//checks for the team "survival"
-		//if it doesnt exist, it creates a new team with the same name.
-		
 		getCommand("goto").setExecutor(new Goto());
 		
 		// Makes it so you can /<world> if you want instead of /goto ((	PROBABLY DOESN'T WORK ))
@@ -164,7 +157,9 @@ public class CoreMain extends JavaPlugin implements Listener {
 		
 		getCommand("realname").setExecutor(new RealName());
 		
-		
+		new DumpCommand();
+		new TagCommand();
+		new PlayerDataSetCommand();
 		
 		getServer().getPluginManager().registerEvents(this, this);
 		
@@ -172,6 +167,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new PlayerDataManager(), this);
 		getServer().getPluginManager().registerEvents(new Permissions(), this);
 		getServer().getPluginManager().registerEvents(new SpawnProtect(), this);
+		getServer().getPluginManager().registerEvents(new RequestEvents(), this);
 		
 		new ProfanityFilter();
 	}
@@ -187,9 +183,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 	@EventHandler
 	public void onLoad(ServerLoadEvent e) {
 		
-		if (e.getType() == LoadType.STARTUP) {
-			PlayerDataManager.InitializePD();
-		}
+		PlayerDataManager.initializePD();
 		
 		String ver = getDescription().getVersion();		
 		

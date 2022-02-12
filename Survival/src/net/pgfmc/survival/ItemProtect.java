@@ -37,7 +37,7 @@ public class ItemProtect implements Listener {
 		Player p = e.getEntity();
 		Location loc = p.getLocation();
 		World world = p.getWorld();
-		PlayerData pd = PlayerData.getPlayerData(p);
+		PlayerData pd = PlayerData.from(p);
 		
 		if (!p.hasPermission("pgf.itemprotect")) return;
 		
@@ -88,7 +88,7 @@ public class ItemProtect implements Listener {
 		
 		if (data == null) return;
 			
-		PlayerData pd = PlayerData.getPlayerData((OfflinePlayer) e.getEntity());
+		PlayerData pd = PlayerData.from((OfflinePlayer) e.getEntity());
 		e.setCancelled(!(data.pickup(pd)));
 		
 	}

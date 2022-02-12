@@ -4,6 +4,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import net.pgfmc.core.event_handler.requests.RequestEndEvent;
+import net.pgfmc.core.event_handler.requests.RequestSendEvent;
 import net.pgfmc.core.inventoryAPI.ConfirmInventory;
 import net.pgfmc.core.inventoryAPI.extra.Butto;
 import net.pgfmc.core.inventoryAPI.extra.Buttonable;
@@ -26,7 +28,7 @@ public final class Request implements Buttonable {
 	public final PlayerData target;
 	
 	transient boolean isEnded = false;
-	private final RequestType parent;
+	public final RequestType parent;
 	
 	/**
 	 * Base Constructor for Requests.
@@ -39,11 +41,13 @@ public final class Request implements Buttonable {
 		this.asker = asker;
 		this.target = target;
 		this.parent = parent;
+		new RequestSendEvent(this);
 	}
 	
 	public void end(EndBehavior eB) {
 		parent.requests.remove(this);
 		parent.endRequest(this, eB);
+		new RequestEndEvent(this, eB);
 	}
 	
 	public Butto toAction() {

@@ -21,7 +21,7 @@ public class LinkCommand implements CommandExecutor {
 			return true;
 		}
 		
-		PlayerData pd = PlayerData.getPlayerData((OfflinePlayer) sender);
+		PlayerData pd = PlayerData.from((OfflinePlayer) sender);
 		
 		if (pd.getData("Discord") != null)
 		{

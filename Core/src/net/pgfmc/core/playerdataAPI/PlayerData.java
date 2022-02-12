@@ -37,6 +37,7 @@ public final class PlayerData extends AbstractPlayerData {
 	private static final Set<PlayerData> debug = new HashSet<PlayerData>();
 	
 	private HashMap<String, Object> data = new HashMap<String, Object>();
+	private Set<String> tags = new HashSet<>();
 	protected List<String> queue = new LinkedList<String>();
 	
 	/**
@@ -46,7 +47,7 @@ public final class PlayerData extends AbstractPlayerData {
 	PlayerData(OfflinePlayer p) {
 		super(p);
 		
-		PlayerData pd = getPlayerData(p);
+		PlayerData pd = from(p);
 		if (pd == null) {
 			
 			
@@ -67,8 +68,8 @@ public final class PlayerData extends AbstractPlayerData {
 	 * @param p The player.
 	 * @return The Player's PlayerData class.
 	 */
-	public static PlayerData getPlayerData(OfflinePlayer p) { // gets a player's playerdata.
-		return getPlayerData(p.getUniqueId());
+	public static PlayerData from(OfflinePlayer p) { // gets a player's playerdata.
+		return from(p.getUniqueId());
 	}
 	
 	/**
@@ -76,7 +77,7 @@ public final class PlayerData extends AbstractPlayerData {
 	 * @param id The player's UUID.
 	 * @return The player's PlayerData.
 	 */
-	public static PlayerData getPlayerData(UUID id) {
+	public static PlayerData from(UUID id) {
 		Objects.requireNonNull(id);
 		for (PlayerData uid : instances) {
 			if (id.toString().equals(uid.getUniqueId().toString())) {
@@ -91,7 +92,7 @@ public final class PlayerData extends AbstractPlayerData {
 	 * @param name The player's Minecraft Username, or Nickname.
 	 * @return The player's PlayerData.
 	 */
-	public static PlayerData getPlayerData(String name) {
+	public static PlayerData from(String name) {
 		for (PlayerData uid : instances) {
 			name = name.toLowerCase();
 			if (uid.getName().toLowerCase().equals(name) || uid.getDisplayNameRaw().toLowerCase().equals(name)) {
@@ -101,7 +102,7 @@ public final class PlayerData extends AbstractPlayerData {
 		return null;
 	}
 	
-	public static PlayerData getPlayerDataById(String discordUserId)
+	public static PlayerData fromDiscordID(String discordUserId)
 	{
 		for (PlayerData uid : instances)
 		{
@@ -185,7 +186,7 @@ public final class PlayerData extends AbstractPlayerData {
 	}
 	
 	public static Queueable setData(OfflinePlayer player, String n, Object d) {
-		return getPlayerData(player).setData(n, d);
+		return from(player).setData(n, d);
 	}
 	
 	/**
@@ -233,7 +234,27 @@ public final class PlayerData extends AbstractPlayerData {
 	 * @return The data associated with input "data".
 	 */
 	public static <T> T getData(OfflinePlayer player, String data) {
-		return getPlayerData(player).getData(data);
+		return from(player).getData(data);
+	}
+	
+	public HashMap<String, Object> getAllData() {
+		return data;
+	}
+	
+	public boolean addTag(String tag) {
+		return tags.add(tag);
+	}
+	
+	public boolean removeTag(String tag) {
+		return tags.remove(tag);
+	}
+	
+	public Set<String> getTags() {
+		return tags;
+	}
+	
+	public boolean hasTag(String tag) {
+		return tags.contains(tag);
 	}
 	
 	/**

@@ -32,7 +32,7 @@ public class DelHome implements CommandExecutor {
 		if (homes.containsKey(name))
 		{
 			homes.remove(name);
-			PlayerData.getPlayerData(p).setData("homes", homes).queue();
+			PlayerData.from(p).setData("homes", homes).queue();
 			p.sendMessage("§aHome §6" + name + "§a removed!");
 		} else
 		{

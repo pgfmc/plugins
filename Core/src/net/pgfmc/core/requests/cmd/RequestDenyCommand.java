@@ -44,7 +44,7 @@ public class RequestDenyCommand extends PlayerCommand {
 		
 		if (args.length > 0) { // if an argument was entered.
 			
-			PlayerData pds = PlayerData.getPlayerData(args[0]);
+			PlayerData pds = PlayerData.from(args[0]);
 			if (pds != null) {
 				Request r = rt.findRequest(pds, pd);
 				if (r != null) {

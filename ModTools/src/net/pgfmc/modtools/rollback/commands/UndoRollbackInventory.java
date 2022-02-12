@@ -13,7 +13,7 @@ public class UndoRollbackInventory {
 		
 		if (args.length < 2) return false;
 		
-		PlayerData target = PlayerData.getPlayerData(args[1]);
+		PlayerData target = PlayerData.from(args[1]);
 		
 		if (target == null)
 		{

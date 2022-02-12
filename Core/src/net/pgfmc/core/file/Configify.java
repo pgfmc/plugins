@@ -46,8 +46,8 @@ public abstract class Configify {
 	 */
 	public final static void reloadConfigify()
 	{
-		configs.stream().forEach(c -> c.reload());
-		Bukkit.getLogger().warning("(" + configs.size() + ") Configify reloaded");
+		configs.forEach(c -> c.reload());
+		Bukkit.getLogger().info("(" + configs.size() + ") Configify reloaded");
 	}
 	
 	/**
@@ -55,8 +55,8 @@ public abstract class Configify {
 	 */
 	public final static void enableConfigify()
 	{
-		configs.stream().forEach(c -> c.enable());
-		Bukkit.getLogger().warning("(" + configs.size() + ") Configify enabled");
+		configs.forEach(c -> c.enable());
+		Bukkit.getLogger().info("(" + configs.size() + ") Configify enabled");
 	}
 	
 	/**
@@ -64,8 +64,8 @@ public abstract class Configify {
 	 */
 	public final static void disableConfigify()
 	{
-		configs.stream().forEach(c -> c.disable());
-		Bukkit.getLogger().warning("(" + configs.size() + ") Configify disabled");
+		configs.forEach(c -> c.disable());
+		Bukkit.getLogger().info("(" + configs.size() + ") Configify disabled");
 	}
 	
 	/**

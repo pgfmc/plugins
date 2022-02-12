@@ -135,7 +135,7 @@ public class Friends {
 			
 			config.getKeys(false).stream()
 			.forEach(x-> {
-				setRelation(pd, PlayerData.getPlayerData(UUID.fromString(x)), Relation.valueOf(config.getString(x)));
+				setRelation(pd, PlayerData.from(UUID.fromString(x)), Relation.valueOf(config.getString(x)));
 			});
 		}
 	}
