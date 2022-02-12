@@ -77,6 +77,8 @@ public final class Request implements Buttonable {
 	
 	@Override
 	public ItemStack toItem() {
+		
+		System.out.println("Item Got!");
 		return parent.toItem();
 	}
 }

@@ -296,11 +296,13 @@ public class CommandsMenu implements InventoryHolder {
 			 */
 			setAction(9, (p, e) -> {
 				
-				RequestListInventory inv = new RequestListInventory(pd);
+				RequestListInventory inv = new RequestListInventory(PlayerData.from(p));
 				inv.setItem(0, Material.FEATHER).n("§r§cBack");
 				inv.setAction(0, (player, event) -> {
 					player.openInventory(new Homepage().getInventory());
 				});
+				inv.refresh();
+				
 				
 				p.openInventory(inv.getInventory());
 			});
