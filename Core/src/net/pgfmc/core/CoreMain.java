@@ -24,7 +24,6 @@ import net.pgfmc.core.file.Mixins;
 import net.pgfmc.core.file.ReloadConfigify;
 import net.pgfmc.core.inventoryAPI.extra.InventoryPressEvent;
 import net.pgfmc.core.permissions.Permissions;
-import net.pgfmc.core.permissions.Roles;
 import net.pgfmc.core.playerdataAPI.PlayerDataManager;
 import net.pgfmc.core.playerdataAPI.cmd.DumpCommand;
 import net.pgfmc.core.playerdataAPI.cmd.PlayerDataSetCommand;
@@ -139,8 +138,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 			
 			pd.setData("nick", db.getString("nick"));
 		});
-		
-		PlayerDataManager.setInit(pd -> Roles.recalculate(pd));
 		
 		DimManager.updateConfigForWorldPermissionAccess();
 		

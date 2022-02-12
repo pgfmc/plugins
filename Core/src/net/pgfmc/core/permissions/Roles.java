@@ -1,5 +1,6 @@
 package net.pgfmc.core.permissions;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -124,11 +125,14 @@ public class Roles {
 		return Role.MEMBER;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static Set<Role> getRolesByPlayer(OfflinePlayer p)
 	{
 		PlayerData pd = PlayerData.from(p);
-		@SuppressWarnings("unchecked")
-		List<String> roles = (List<String>) Optional.ofNullable(pd.getData("roles")).orElse(pd.loadFromFile("roles"));
+		List<String> roles = new ArrayList<String>();
+		if (pd == null) return Set.of(Role.MEMBER);
+		
+		roles = (List<String>) Optional.ofNullable(pd.getData("roles")).orElse(pd.loadFromFile("roles"));
 		
 		if (roles == null) return Set.of(Role.MEMBER);
 		
