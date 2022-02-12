@@ -301,7 +301,6 @@ public class CommandsMenu implements InventoryHolder {
 				inv.setAction(0, (player, event) -> {
 					player.openInventory(new Homepage().getInventory());
 				});
-				inv.refresh();
 				
 				
 				p.openInventory(inv.getInventory());

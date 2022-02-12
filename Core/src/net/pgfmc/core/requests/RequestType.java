@@ -51,7 +51,7 @@ public abstract class RequestType extends Configify {
 	
 	private String joinMessage;
 	
-	private static Set<Set<Request>> allRequests = new HashSet<>();
+	private static Set<RequestType> allRequests = new HashSet<>();
 	
 	/**
 	 * Constructor for RequestTypes. Defines all required fields for requests.
@@ -61,6 +61,7 @@ public abstract class RequestType extends Configify {
 	public RequestType(int time, String typeName) {
 		this.time = time;
 		this.name = typeName;
+		allRequests.add(this);
 	}
 	
 	/**
@@ -127,8 +128,8 @@ public abstract class RequestType extends Configify {
 	public static Set<Request> getAllRequests() {
 		Set<Request> set = new HashSet<>();
 		
-		for (Set<Request> sr : allRequests) {
-			for (Request r : sr) {
+		for (RequestType rt : allRequests) {
+			for (Request r : rt.requests) {
 				set.add(r);
 			}
 		}
@@ -138,9 +139,14 @@ public abstract class RequestType extends Configify {
 	public static Set<Request> getInAllRequests(Predicate<? super Request> predicate) {
 		Set<Request> set = new HashSet<>();
 		
-		for (Set<Request> sr : allRequests) {
-			for (Request r : sr) {
+		Bukkit.getLogger().warning("allRequests size: " + allRequests.size());
+		
+		for (RequestType rt : allRequests) {
+			Bukkit.getLogger().warning("rt size: " + rt.requests.size());
+			for (Request r : rt.requests) {
+				Bukkit.getLogger().warning("Testing against request, target is " + r.target.getRankedName());
 				if (predicate.test(r)) {
+					Bukkit.getLogger().warning("True test, target is " + r.target.getRankedName());
 					set.add(r);
 				}
 			}
