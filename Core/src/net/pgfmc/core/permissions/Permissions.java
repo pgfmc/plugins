@@ -151,7 +151,10 @@ public class Permissions extends Configify implements Listener {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e)
 	{
-		Roles.recalculate(e.getPlayer());
+		PlayerData pd = PlayerData.from(e.getPlayer());
+		if (pd == null) return;
+		
+		Roles.recalculate(pd);
 	}
 	
 	@EventHandler
