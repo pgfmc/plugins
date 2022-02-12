@@ -33,16 +33,11 @@ public static final TpHereRequest TH = new TpHereRequest();
 	}
 
 	@Override
-	protected void requestMessage(Request r, boolean refreshed) {
-		if (refreshed) {
-			r.asker.sendMessage("§6Time limit refreshed!");
-			r.target.sendMessage("§6Time limit refreshed!");
-			return;
-		} 
+	protected boolean sendRequest(Request r) {
 		r.asker.sendMessage("§6Teleport here request sent to " + r.target.getRankedName() + "§6!");
 		r.target.sendMessage("§6Incoming Tph request from " + r.asker.getRankedName() + "§6.");
 		r.target.sendMessage("§6Use §b/tpha §6to accept!");
-		
+		return true;
 	}
 
 	@Override
@@ -75,6 +70,7 @@ public static final TpHereRequest TH = new TpHereRequest();
 			r.target.sendMessage("§cTph request timed out!");
 			break;
 		case REFRESH:
+			r.asker.sendMessage("§6Time refreshed!");
 			break;
 		}
 	}

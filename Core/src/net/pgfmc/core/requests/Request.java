@@ -1,11 +1,11 @@
 package net.pgfmc.core.requests;
 
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import net.pgfmc.core.event_handler.requests.RequestEndEvent;
+import net.pgfmc.core.event_handler.requests.RequestSendEvent;
 import net.pgfmc.core.inventoryAPI.ConfirmInventory;
 import net.pgfmc.core.inventoryAPI.extra.Butto;
 import net.pgfmc.core.inventoryAPI.extra.Buttonable;
@@ -41,11 +41,13 @@ public final class Request implements Buttonable {
 		this.asker = asker;
 		this.target = target;
 		this.parent = parent;
+		new RequestSendEvent(this);
 	}
 	
 	public void end(EndBehavior eB) {
 		parent.requests.remove(this);
 		parent.endRequest(this, eB);
+		new RequestEndEvent(this, eB);
 	}
 	
 	public Butto toAction() {
@@ -76,16 +78,5 @@ public final class Request implements Buttonable {
 	@Override
 	public ItemStack toItem() {
 		return parent.toItem();
-	}
-	
-	protected ConfigurationSection toConfigSec() {
-		
-		MemoryConfiguration mem = new MemoryConfiguration();
-		
-		mem.set("name", parent.name);
-		mem.set("asker", asker.getUniqueId().toString());
-		mem.set("target", target.getUniqueId().toString());
-		
-		return mem;
 	}
 }

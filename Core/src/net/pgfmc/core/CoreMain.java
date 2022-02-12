@@ -183,6 +183,8 @@ public class CoreMain extends JavaPlugin implements Listener {
 	@EventHandler
 	public void onLoad(ServerLoadEvent e) {
 		
+		PlayerDataManager.initializePD();
+		
 		String ver = getDescription().getVersion();		
 		
 		for (PGFPlugin p : PGFPlugin.values())

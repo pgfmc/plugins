@@ -49,6 +49,8 @@ public abstract class RequestType extends Configify {
 	 */
 	public final String name;
 	
+	private String joinMessage;
+	
 	private static Set<Set<Request>> allRequests = new HashSet<>();
 	
 	/**
@@ -70,7 +72,7 @@ public abstract class RequestType extends Configify {
 	public Request createRequest(PlayerData asker, PlayerData target) {
 		
 		Request sub = findRequest(asker, target);
-		if (sub != null) {
+		if (sub != null && !isPersistent) {
 			sub.end(EndBehavior.REFRESH);
 		}
 		
@@ -86,7 +88,11 @@ public abstract class RequestType extends Configify {
 			}, time);
 		}
 		
-		requestMessage(r, sub != null);
+		if (sub == null) {
+			if (!sendRequest(r)) {
+				r.end(EndBehavior.FORCEEND);
+			}
+		}
 		
 		return r;
 	}
@@ -147,7 +153,6 @@ public abstract class RequestType extends Configify {
 	}
 	
 	public void registerDeny(String label) {
-		System.out.println("Attempting to register Deny for " + label);
 		new RequestDenyCommand(label, this);
 	}
 	
@@ -164,63 +169,59 @@ public abstract class RequestType extends Configify {
 		
 		FileConfiguration cs = Mixins.getDatabase(CoreMain.plugin.getDataFolder() + File.separator + "requests.yml");
 		
-		for (String key : cs.getKeys(false)) {
-			ConfigurationSection configsec = cs.getConfigurationSection(key);
+		ConfigurationSection configsec = cs.getConfigurationSection(name);
+		
+		for (String key : configsec.getKeys(false)) {
+			PlayerData aska = PlayerData.from(UUID.fromString(key));
+			PlayerData targe = PlayerData.from(UUID.fromString(configsec.getString(key)));
 			
-			if (configsec.getString("name").equals(this.name)) {
-				PlayerData aska = PlayerData.from(UUID.fromString(configsec.getString("asker")));
-				PlayerData targe = PlayerData.from(UUID.fromString(configsec.getString("target")));
-				
-				if (aska == null || targe == null) continue;
-				
-				createRequest(aska, targe);
-			}
+			createRequest(aska, targe);
 		}
 	}
-	
-	
-	private static boolean isInitialized = false;
 	
 	@Override
 	public void disable() {
 		FileConfiguration cs = Mixins.getDatabase(CoreMain.plugin.getDataFolder() + File.separator + "requests.yml");
 		
-		if (!isInitialized) {
-			for (String key : cs.getKeys(false)) {
-				cs.set(key, null);
-			}
-			isInitialized = true;
-		}
+		ConfigurationSection configsec = cs.createSection(name);
 		
-		
-		int i = 0;
-		for (Request r : getAllRequests()) {
+		for (Request r : requests) {
 			
 			if (!isPersistent) continue;
 			
-			cs.set("r" + i, r.toConfigSec());
-			
-			i++;
+			configsec.set(r.asker.getUniqueId().toString(), r.target.getUniqueId().toString());
 		}
+		
+		cs.set(name, configsec);
 		Mixins.saveDatabase(cs, CoreMain.plugin.getDataFolder() + File.separator + "requests.yml");
+		
+		requests.clear();
 	}
 	
 	@Override
 	public void reload() {
-		isInitialized = false;
 		disable();
 		enable();
 	}
 	
+	protected void setJoinMessage(String messa) {
+		
+		if (joinMessage == null) {
+			joinMessage = messa;
+		}
+	}
 	
+	public String getJoinMessage() {
+		return joinMessage;
+	}
 	
 	/**
 	 * Method ran when a new request is created.
 	 * Use to send messages to members of a request when one is created.
 	 * @param r The request just created.
-	 * @param refreshed Whether or not the request refreshed a past request.	
+	 * @return Returns true if the request isn't cancelled, false if it is cancelled.
 	 */
-	protected abstract void requestMessage(Request r, boolean refreshed);
+	protected abstract boolean sendRequest(Request r);
 	
 	/**
 	 * Only implement this method, NEVER RUN IT YOURSELF, instead use {@code request.end(EndBehavior)} to end a Request.

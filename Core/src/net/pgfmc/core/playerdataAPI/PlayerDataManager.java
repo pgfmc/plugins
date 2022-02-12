@@ -43,7 +43,28 @@ public class PlayerDataManager extends Configify implements Listener {
 		Bukkit.getLogger().warning("Post PD function Init!");
 	}
 	
-	
+	/**
+	 * Initializes PlayerData. 
+	 * Creates a new PlayerData for each Player who has ever played, and loads their data, set by PlayerDataManager.setInit(Consumer<PlayerData>).
+	 * After PD is initialized, the queue is initialized, and postLoad functions are loaded, set by PlayerDataManager.setPostLoad(Consumer<?>).
+	 */
+	public static void initializePD() {
+		for (OfflinePlayer p : Bukkit.getOfflinePlayers()) {
+			PlayerData pd = new PlayerData(p);
+			
+			ConfigurationSection cfs = pd.loadFile();
+			
+			for (String s : cfs.getStringList("tags")) {
+				pd.addTag(s);
+			}
+		}
+		
+		initializeQ();
+		for (Consumer<?> c : postLoad) {
+			c.accept(null);
+			Bukkit.getLogger().warning("PD Post methods ran!");
+		}
+	}
 	
 	
 	/**
@@ -105,34 +126,9 @@ public class PlayerDataManager extends Configify implements Listener {
 		initializeQ();
 	}
 	
-	/**
-	 * Initializes PlayerData. 
-	 * Creates a new PlayerData for each Player who has ever played, and loads their data, set by PlayerDataManager.setInit(Consumer<PlayerData>).
-	 * After PD is initialized, the queue is initialized, and postLoad functions are loaded, set by PlayerDataManager.setPostLoad(Consumer<?>).
-	 */
+	
 	@Override
-	public void enable() {
-		
-		for (OfflinePlayer p : Bukkit.getOfflinePlayers()) {
-			PlayerData pd = new PlayerData(p);
-			
-			ConfigurationSection cfs = pd.loadFile();
-			
-			for (String s : cfs.getStringList("tags")) {
-				pd.addTag(s);
-			}
-		}
-		
-		initializeQ();
-		for (Consumer<?> c : postLoad) {
-			c.accept(null);
-			Bukkit.getLogger().warning("PD Post methods ran!");
-		}
-		
-		
-		
-		
-	}
+	public void enable() {}
 
 	@Override
 	public void disable() {}

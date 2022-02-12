@@ -68,11 +68,10 @@ public class RequestAcceptCommand extends PlayerCommand {
 			
 		} else {
 			for (Request r : set) {
-				pd.sendMessage("§c" + rt.name + " Request from " + r.asker + ".");
+				pd.sendMessage("§c" + rt.name + " Request from " + r.asker.getDisplayNameRaw() + ".");
 			}
-			pd.sendMessage("§6Use §b/" + alias + " <sender name> §6to pick a Request.");
+			pd.sendMessage("§6Use §b/" + alias + " <name> §6to pick a Request.");
 		}
 		return true;
 	}
-
 }
