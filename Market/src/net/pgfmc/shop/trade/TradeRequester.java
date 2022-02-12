@@ -17,8 +17,12 @@ public class TradeRequester extends RequestType {
 	public final static TradeRequester DEFAULT = new TradeRequester();
 
 	@Override
-	protected void requestMessage(Request r, boolean refreshed) {
-		// TODO Auto-generated method stub
+	protected boolean sendRequest(Request r) {
+		return true;
+		
+		
+		
+		
 		
 	}
 

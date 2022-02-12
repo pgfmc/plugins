@@ -16,7 +16,7 @@ public class Mute implements CommandExecutor {
 		
 		if (args.length == 0) return false;
 		
-		PlayerData pd = PlayerData.getPlayerData(args[0]);
+		PlayerData pd = PlayerData.from(args[0]);
 		
 		if (pd == null)
 		{

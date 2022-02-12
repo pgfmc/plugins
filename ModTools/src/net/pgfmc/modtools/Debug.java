@@ -20,7 +20,7 @@ public class Debug implements CommandExecutor {
 			return true;
 		}
 		
-		PlayerData p = PlayerData.getPlayerData((Player) sender);
+		PlayerData p = PlayerData.from((Player) sender);
 		
 		if (p != null) {
 			

@@ -30,7 +30,7 @@ public class Goto implements CommandExecutor {
 	 */
 	public Location dimLoad(OfflinePlayer p, World dest)
 	{
-		return Optional.ofNullable((Location) PlayerData.getPlayerData(p).loadFromFile(dest.getName() + ".uuid." + p.getUniqueId())).orElse(null);
+		return Optional.ofNullable((Location) PlayerData.from(p).loadFromFile(dest.getName() + ".uuid." + p.getUniqueId())).orElse(null);
 	}
 	
 	/**
@@ -45,7 +45,7 @@ public class Goto implements CommandExecutor {
 		String playerUUID = player.getUniqueId().toString();
 		String currentWorldName = current.getWorld().getName();
 		
-		PlayerData pd = PlayerData.getPlayerData(player);
+		PlayerData pd = PlayerData.from(player);
 		
 		if (currentWorldName.equals("hub")) // Need to make sure they spawn at 0, 0 so we will save their coordinates as 0, 0
 		{

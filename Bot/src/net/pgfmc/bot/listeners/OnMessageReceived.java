@@ -30,7 +30,15 @@ public class OnMessageReceived implements EventListener {
 		
 		String content = e.getMessage().getContentDisplay();
 		User user = e.getAuthor();
-		Member memberPGF = Discord.getGuildPGF().getMember(user);
+		
+		Member memberPGF = null;
+		
+		try {
+			memberPGF = Discord.getGuildPGF().getMember(user);
+		} catch(NullPointerException except) {
+			
+		}
+		
 		// Guild g = Discord.JDA.getGuildById("579055447437475851");
 		
 		if (content.length() == 0) return;
@@ -118,9 +126,6 @@ public class OnMessageReceived implements EventListener {
 			if (AccountLinking.linkAsk(content, user))
 			{
 				e.getChannel().sendMessage("Your account has been linked.").queue();
-			} else
-			{
-				e.getChannel().sendMessage("Invalid code, please try generating a new code.").queue();
 			}
 		}
 	}

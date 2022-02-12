@@ -31,7 +31,7 @@ public class EditOwnableCommand implements CommandExecutor {
 		
 		if (!(sender instanceof Player)) return true;
 		if (((Player) sender).getGameMode() != GameMode.CREATIVE) return true;
-		PlayerData pd = PlayerData.getPlayerData((Player) sender);
+		PlayerData pd = PlayerData.from((Player) sender);
 		
 		Ownable cache = pd.getData("OwnableCache");
 		if (cache == null) {
@@ -71,7 +71,7 @@ public class EditOwnableCommand implements CommandExecutor {
 			} else if ("owner".equals(args[0])) {
 				
 				if (args.length > 1) {
-					PlayerData ope = PlayerData.getPlayerData(args[1]);
+					PlayerData ope = PlayerData.from(args[1]);
 					if (ope != null) {
 						cache.setOwner(ope);
 						sender.sendMessage("§aOwner set to " + ope.getRankedName());

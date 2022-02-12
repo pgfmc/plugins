@@ -24,7 +24,7 @@ public class OnSlashCommand implements EventListener {
         
         List<String> pl = Bukkit.getOnlinePlayers()
         		.stream()
-        		.map(p -> PlayerData.getPlayerData(p).getDisplayName())
+        		.map(p -> PlayerData.from(p).getDisplayName())
         		.collect(Collectors.toList());
         e.reply("Online players: " + pl).queue();
       

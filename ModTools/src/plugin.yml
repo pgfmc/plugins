@@ -1,5 +1,5 @@
 name: PGF-ModTools
-version: 5.5.1
+version: 5.6.1
 api-version: 1.18
 authors: [bk, CrimsonDart]
 website: play.pgfmc.net
@@ -73,14 +73,6 @@ commands:
     usage: /<command> [player]
     description: Unmute a player
     permission: pgf.admin.unmute
-  tag:
-    usage: /<command> [Player] [Path] [Tag] [true/false]
-    description: Tag a player!
-    permission: pgf.admin.tag
-  hastag:
-    usage: /<command> [Player] [Path]
-    description: Test if a player has a tag!
-    permission: pgf.admin.tag
   broadcast:
     usage: /<command> [message]
     description: Broadcast to the server!

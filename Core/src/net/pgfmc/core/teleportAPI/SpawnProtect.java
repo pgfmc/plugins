@@ -12,7 +12,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.permissions.Permissions;
-import net.pgfmc.core.playerdataAPI.PlayerData;
 
 /**
  * Attempts to protect the player in a undefendable state
@@ -40,7 +39,6 @@ public class SpawnProtect implements Listener {
 		p.setInvulnerable(true);
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(CoreMain.plugin, new Runnable() { @Override public void run() {
 			p.setInvulnerable(false);
-			PlayerData.getPlayerData(p).setData("god", null);
 			
 		}}, ticks);
 	}

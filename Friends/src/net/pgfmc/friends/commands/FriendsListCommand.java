@@ -23,7 +23,7 @@ public class FriendsListCommand implements CommandExecutor {
 			return true;
 		}
 		
-		for (PlayerData pd : Friends.getFriendsMap(PlayerData.getPlayerData((Player) sender)).keySet()) {
+		for (PlayerData pd : Friends.getFriendsMap(PlayerData.from((Player) sender)).keySet()) {
 			sender.sendMessage("§n" + pd.getRankedName());
 		}
 		

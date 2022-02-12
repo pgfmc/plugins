@@ -87,7 +87,7 @@ public class Nick implements CommandExecutor {
 	 */
 	public static void setNick(Player p, String nick)
 	{
-		PlayerData pd = PlayerData.getPlayerData(p);
+		PlayerData pd = PlayerData.from(p);
 		
 		if (!p.hasPermission("pgf.cmd.donator.nick"))
 		{

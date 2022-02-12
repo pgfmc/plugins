@@ -42,7 +42,7 @@ public class RequestAcceptCommand extends PlayerCommand {
 	public boolean execute(PlayerData pd, String alias, String[] args) {
 		if (args.length > 0) { // if an argument was entered.
 			
-			PlayerData pds = PlayerData.getPlayerData(args[0]);
+			PlayerData pds = PlayerData.from(args[0]);
 			if (pds != null) {
 				Request r = rt.findRequest(pds, pd);
 				if (r != null) {
@@ -68,11 +68,10 @@ public class RequestAcceptCommand extends PlayerCommand {
 			
 		} else {
 			for (Request r : set) {
-				pd.sendMessage("§c" + rt.name + " Request from " + r.asker + ".");
+				pd.sendMessage("§c" + rt.name + " Request from " + r.asker.getDisplayNameRaw() + ".");
 			}
-			pd.sendMessage("§6Use §b/" + alias + " <sender name> §6to pick a Request.");
+			pd.sendMessage("§6Use §b/" + alias + " <name> §6to pick a Request.");
 		}
 		return true;
 	}
-
 }

@@ -12,7 +12,7 @@ public class HomeInput implements Listener {
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent e)
 	{
-		PlayerData pd = PlayerData.getPlayerData(e.getPlayer());
+		PlayerData pd = PlayerData.from(e.getPlayer());
 		
 		// For homes
 		if (pd.getData("tempHomeLocation") == null) return;

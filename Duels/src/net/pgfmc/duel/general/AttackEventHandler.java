@@ -32,8 +32,8 @@ public class AttackEventHandler implements Listener {
 			
 			if (target.getGameMode() == GameMode.SURVIVAL && attacker.getGameMode() == GameMode.SURVIVAL) { // makes sure both players are in survival
 				
-				PlayerData apd = PlayerData.getPlayerData(attacker);
-				PlayerData tpd = PlayerData.getPlayerData(target);
+				PlayerData apd = PlayerData.from(attacker);
+				PlayerData tpd = PlayerData.from(target);
 				Duel ATK = apd.getData("duel");
 				
 				if (ATK != null && ATK == tpd.getData("duel") && ATK.getState() == DuelState.INBATTLE 
@@ -70,8 +70,8 @@ public class AttackEventHandler implements Listener {
 			
 			if (!(target.getGameMode() == GameMode.SURVIVAL && attacker.getGameMode() == GameMode.SURVIVAL)) return; // makes sure both players are in survival
 				
-			PlayerData apd = PlayerData.getPlayerData(attacker);
-			PlayerData tpd = PlayerData.getPlayerData(target);
+			PlayerData apd = PlayerData.from(attacker);
+			PlayerData tpd = PlayerData.from(target);
 			Duel ATK = apd.getData("duel");
 			Duel DEF = tpd.getData("duel");
 			
@@ -110,9 +110,9 @@ public class AttackEventHandler implements Listener {
 					return;
 					
 				}
-			} else if (ATK == null && DEF.getPlayers().get(PlayerData.getPlayerData(target)) == PlayerState.DUELING) { 
+			} else if (ATK == null && DEF.getPlayers().get(PlayerData.from(target)) == PlayerState.DUELING) { 
 				e.setCancelled(true);
-				DEF.join(PlayerData.getPlayerData(attacker));
+				DEF.join(PlayerData.from(attacker));
 				return;
 				
 			}

@@ -1,7 +1,5 @@
 package net.pgfmc.modtools.toggle;
 
-import java.util.Optional;
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -35,10 +33,10 @@ public class Vanish implements CommandExecutor, Listener {
 		
 		Player p = (Player) sender;
 		
-		PlayerData pd = PlayerData.getPlayerData(p);
-		boolean vanish = (boolean) Optional.ofNullable(pd.getData("vanish")).orElse(false); // Gets "invis" from PlayerData, default to false if null, converts to boolean
+		PlayerData pd = PlayerData.from(p);
+		boolean vanish = pd.hasTag("vanish"); // Gets "invis" from PlayerData, default to false if null, converts to boolean
 		
-		pd.setData("vanish", !vanish);
+		
 		p.setInvisible(!vanish); // This is only so the user knows they're in invis mode
 		
 		if (vanish)
@@ -46,11 +44,13 @@ public class Vanish implements CommandExecutor, Listener {
 			Bukkit.getOnlinePlayers().stream().forEach(pl -> pl.showPlayer(Main.plugin, p));
 			p.sendMessage("§cVanish off.");
 			p.performCommand("fakejoin");
-		} else
-		{
+			pd.removeTag("vanish");
+			
+		} else {
 			Bukkit.getOnlinePlayers().stream().filter(pl -> !pl.hasPermission("pgf.admin.vanish.exempt")).forEach(pl -> pl.hidePlayer(Main.plugin, p));
 			p.sendMessage("§aVanished!");
 			p.performCommand("fakeleave");
+			pd.addTag("vanish");
 		}
 		
 		return true;
@@ -61,7 +61,7 @@ public class Vanish implements CommandExecutor, Listener {
 	{
 		Player p = e.getPlayer();
 		
-		boolean vanish = (boolean) Optional.ofNullable(PlayerData.getPlayerData(p).getData("vanish")).orElse(false);
+		boolean vanish = PlayerData.from(p).hasTag("vanish");
 		
 		if (vanish)
 		{

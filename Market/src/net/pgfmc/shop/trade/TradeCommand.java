@@ -19,7 +19,7 @@ public class TradeCommand implements CommandExecutor {
 			return true;
 		}
 		
-		PlayerData pd = PlayerData.getPlayerData((Player) sender);
+		PlayerData pd = PlayerData.from((Player) sender);
 		
 		if (pd == null) return true;
 		
