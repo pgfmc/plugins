@@ -25,7 +25,7 @@ public class RequestListInventory extends ButtonInventory {
 		
 		List<Buttonable> list = new LinkedList<>();
 		
-		for (Request r : RequestType.getInAllRequests(x -> x.target.equals(pd))) {
+		for (Request r : RequestType.getInAllRequests(x -> x.target.equals(pd) && !x.isEnded)) {
 			
 			list.add(r);
 		}

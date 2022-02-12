@@ -27,7 +27,7 @@ public final class Request implements Buttonable {
 	public final PlayerData asker;
 	public final PlayerData target;
 	
-	transient boolean isEnded = false;
+	public boolean isEnded = false;
 	public final RequestType parent;
 	
 	/**
