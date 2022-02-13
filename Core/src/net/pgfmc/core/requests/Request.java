@@ -1,5 +1,6 @@
 package net.pgfmc.core.requests;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -10,6 +11,8 @@ import net.pgfmc.core.inventoryAPI.ConfirmInventory;
 import net.pgfmc.core.inventoryAPI.extra.Butto;
 import net.pgfmc.core.inventoryAPI.extra.Buttonable;
 import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.requests.inv.RequestListInventory;
+import net.pgfmc.masterbook.masterbook.CommandsMenu;
 
 /**
  * Abstract class to be extended by other classes :)
@@ -42,6 +45,7 @@ public final class Request implements Buttonable {
 		this.target = target;
 		this.parent = parent;
 		new RequestSendEvent(this);
+		parent.requests.add(this);
 	}
 	
 	public void end(EndBehavior eB) {
@@ -54,18 +58,30 @@ public final class Request implements Buttonable {
 		Request r = this;
 		return (p, e) -> {
 			
-			ConfirmInventory conf = new ConfirmInventory("Accept " + parent.name + " Request from " + r.asker.getDisplayName() + "?", "Accept", "Reject") {
+			ConfirmInventory conf = new ConfirmInventory("Accept " + parent.name + " Request from " + r.asker.getDisplayName() + "?", "§r§aAccept", "§r§cReject") {
 
 				@Override
 				protected void confirmAction(Player p, InventoryClickEvent e) {
 					r.end(EndBehavior.ACCEPT);
+					p.closeInventory();
 				}
 				
 				@Override
 				protected void cancelAction(Player p, InventoryClickEvent e) {
 					r.end(EndBehavior.DENIED);
+					p.closeInventory();
 				}
 			};
+			conf.setItem(0, Material.FEATHER).n("§r§cBack");
+			conf.setAction(0, (pl, ev) -> {
+				RequestListInventory inv = new RequestListInventory(PlayerData.from(p));
+				inv.setItem(0, Material.FEATHER).n("§r§cBack");
+				inv.setAction(0, (player, event) -> {
+					player.openInventory(new CommandsMenu(PlayerData.from(p)).getInventory());
+				});
+				
+				p.openInventory(inv.getInventory());
+			});
 			
 			p.openInventory(conf.getInventory());
 		};
@@ -77,8 +93,6 @@ public final class Request implements Buttonable {
 	
 	@Override
 	public ItemStack toItem() {
-		
-		System.out.println("Item Got!");
-		return parent.toItem();
+		return parent.toItem(this);
 	}
 }

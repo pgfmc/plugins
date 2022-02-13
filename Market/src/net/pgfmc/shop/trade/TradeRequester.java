@@ -33,7 +33,7 @@ public class TradeRequester extends RequestType {
 	}
 
 	@Override
-	protected ItemStack toItem() {
+	protected ItemStack toItem(Request r) {
 		return new ItemWrapper(Material.MAGENTA_GLAZED_TERRACOTTA).n("Trade").gi();
 	}
 }

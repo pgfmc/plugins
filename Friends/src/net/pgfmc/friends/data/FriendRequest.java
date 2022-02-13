@@ -28,8 +28,8 @@ public class FriendRequest extends RequestType {
 	}
 	
 	@Override
-	public ItemStack toItem() {
-		return new ItemWrapper(Material.TOTEM_OF_UNDYING).gi();
+	public ItemStack toItem(Request r) {
+		return new ItemWrapper(Material.TOTEM_OF_UNDYING).n("§eFriend request from " + r.asker.getRankedName()).gi();
 	}
 
 	@Override
