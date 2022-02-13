@@ -287,7 +287,6 @@ public class CommandsMenu implements InventoryHolder {
 				setItem(22, Material.ENDER_CHEST).n("§r§3Ender Chest").l("§r§9VIP perk!");
 			}
 			
-			
 			/* 
 			 * [] [] [] [] [] [] [] [] []
 			 * XX [] [] [] [] [] [] [] []
@@ -301,13 +300,10 @@ public class CommandsMenu implements InventoryHolder {
 				inv.setAction(0, (player, event) -> {
 					player.openInventory(new Homepage().getInventory());
 				});
-				inv.refresh();
-				
 				
 				p.openInventory(inv.getInventory());
 			});
 			setItem(9, Material.LEVER).n("§r§4Requests");
-			
 		}
 	}
 	

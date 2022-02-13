@@ -28,8 +28,8 @@ public class TpRequest extends RequestType {
 	
 
 	@Override
-	public ItemStack toItem() {
-		return new ItemWrapper(Material.ENDER_PEARL).gi();
+	public ItemStack toItem(Request r) {
+		return new ItemWrapper(Material.ENDER_PEARL).n("§dTp request from " + r.asker.getRankedName()).gi();
 	}
 
 	@Override

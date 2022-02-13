@@ -51,7 +51,7 @@ public abstract class RequestType extends Configify {
 	
 	private String joinMessage;
 	
-	private static Set<Set<Request>> allRequests = new HashSet<>();
+	private static Set<RequestType> instances = new HashSet<>();
 	
 	/**
 	 * Constructor for RequestTypes. Defines all required fields for requests.
@@ -61,6 +61,7 @@ public abstract class RequestType extends Configify {
 	public RequestType(int time, String typeName) {
 		this.time = time;
 		this.name = typeName;
+		instances.add(this);
 	}
 	
 	/**
@@ -77,8 +78,6 @@ public abstract class RequestType extends Configify {
 		}
 		
 		Request r = new Request(asker, target, this);
-		
-		requests.add(r);
 		
 		if (time > 0) {
 			Bukkit.getScheduler().runTaskLater(CoreMain.plugin, x -> {
@@ -127,8 +126,8 @@ public abstract class RequestType extends Configify {
 	public static Set<Request> getAllRequests() {
 		Set<Request> set = new HashSet<>();
 		
-		for (Set<Request> sr : allRequests) {
-			for (Request r : sr) {
+		for (RequestType sr : instances) {
+			for (Request r : sr.requests) {
 				set.add(r);
 			}
 		}
@@ -138,11 +137,16 @@ public abstract class RequestType extends Configify {
 	public static Set<Request> getInAllRequests(Predicate<? super Request> predicate) {
 		Set<Request> set = new HashSet<>();
 		
-		for (Set<Request> sr : allRequests) {
-			for (Request r : sr) {
+		int i = 0;
+		for (RequestType sr : instances) {
+			
+			for (Request r : sr.requests) {
 				if (predicate.test(r)) {
 					set.add(r);
+					System.out.println("added");
 				}
+				i++;
+				System.out.print(" r" + i);
 			}
 		}
 		return set;
@@ -175,7 +179,7 @@ public abstract class RequestType extends Configify {
 			PlayerData aska = PlayerData.from(UUID.fromString(key));
 			PlayerData targe = PlayerData.from(UUID.fromString(configsec.getString(key)));
 			
-			createRequest(aska, targe);
+			new Request(aska, targe, this);
 		}
 	}
 	
@@ -233,6 +237,6 @@ public abstract class RequestType extends Configify {
 	 * Used to represent the request in an inventory. Try using ItemWrapper for more easy construction of ItemStacks :)
 	 * @return The ItemStack used to represent the Request in an inventory. 
 	 */
-	protected abstract ItemStack toItem();
+	protected abstract ItemStack toItem(Request request);
 	
 }

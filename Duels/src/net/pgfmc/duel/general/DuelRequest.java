@@ -3,6 +3,7 @@ package net.pgfmc.duel.general;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import net.pgfmc.core.inventoryAPI.extra.ItemWrapper;
 import net.pgfmc.core.requests.EndBehavior;
 import net.pgfmc.core.requests.Request;
 import net.pgfmc.core.requests.RequestType;
@@ -25,8 +26,8 @@ public class DuelRequest extends RequestType {
 	}
 
 	@Override
-	public ItemStack toItem() {
-		return new ItemStack(Material.IRON_SWORD);
+	public ItemStack toItem(Request r) {
+		return new ItemWrapper(Material.IRON_SWORD).n("§7Duel request from " + r.asker.getRankedName()).gi();
 	}
 
 	@Override

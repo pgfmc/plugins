@@ -12,21 +12,29 @@ import net.pgfmc.core.requests.RequestType;
 public class RequestListInventory extends ButtonInventory {
 	
 	
-	private final PlayerData pd;
-	
+	private PlayerData pd;
 	
 	public RequestListInventory(PlayerData pd) {
 		super(27, "Requests");
 		this.pd = pd;
+		if (pd != null) {
+			System.out.println("pd isn't null");
+		}
+		refresh();
 	}
 	
 	@Override
 	protected List<Buttonable> load() {
 		
+		
+		if (pd == null) {
+			System.out.println("pd is null");
+		}
+		
 		List<Buttonable> list = new LinkedList<>();
 		
-		for (Request r : RequestType.getInAllRequests(x -> x.target.equals(pd))) {
-			
+		for (Request r : RequestType.getInAllRequests(x -> x.target == pd)) {
+			System.out.println("Request added");
 			list.add(r);
 		}
 		
