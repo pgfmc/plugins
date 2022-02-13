@@ -78,7 +78,7 @@ public abstract class ListInventory<T> extends BaseInventory {
 			pages[i / pageSize][i % pageSize] = entries.get(i);
 		}
 		
-		setPage(page);
+		setPage(1);
 	}
 	
 	/**
@@ -122,7 +122,7 @@ public abstract class ListInventory<T> extends BaseInventory {
 		
 		if (inv.getSize() == 54) {
 			
-			// sets the Previous page button, if apropriate.
+			// sets the Previous page button, if appropriate.
 			if (page > 1) {
 				setAction(48, (x, e) -> {
 					flipPage(-1);

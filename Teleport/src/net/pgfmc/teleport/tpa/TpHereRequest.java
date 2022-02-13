@@ -28,8 +28,8 @@ public static final TpHereRequest TH = new TpHereRequest();
 	
 
 	@Override
-	public ItemStack toItem() {
-		return new ItemWrapper(Material.ENDER_EYE).gi();
+	public ItemStack toItem(Request r) {
+		return new ItemWrapper(Material.ENDER_EYE).n("§dTp here request from " + r.asker.getRankedName()).gi();
 	}
 
 	@Override
