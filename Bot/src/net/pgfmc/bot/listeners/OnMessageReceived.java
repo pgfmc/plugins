@@ -43,7 +43,7 @@ public class OnMessageReceived implements EventListener {
 		
 		if (content.length() == 0) return;
 		
-		if (ProfanityFilter.hasProfanity(content))
+		if (ProfanityFilter.hasProfanity(content) && e.getGuild().equals(Discord.getGuildPGF()))
 		{
 			e.getTextChannel().sendMessage(user.getAsMention() + ", please do not use blacklisted words!");
 			e.getMessage().delete().queue();
