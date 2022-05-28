@@ -3,7 +3,8 @@ package net.pgfmc.claims.cmd;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.pgfmc.claims.ownable.block.OwnableBlock;
+import net.pgfmc.claims.ownable.Ownable;
+import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
 import net.pgfmc.core.cmd.base.PlayerCommand;
 import net.pgfmc.core.playerdataAPI.PlayerData;
@@ -17,7 +18,7 @@ public class EscapeCommand extends PlayerCommand {
 
 	@Override
 	public boolean execute(PlayerData arg0, String arg1, String[] arg2) {
-		
+		/*
 		Vector4 player_location = new Vector4(arg0.getPlayer().getLocation());
 		
 		OwnableBlock ob = ClaimsTable.getRelevantClaim(player_location);
@@ -40,7 +41,7 @@ public class EscapeCommand extends PlayerCommand {
 			
 		}
 		
-		
+		*/
 		
 		return true;
 	}
@@ -50,4 +51,11 @@ public class EscapeCommand extends PlayerCommand {
 		return new ArrayList<>();
 	}
 
+	
+	public Vector4 getNearestClaimEdge(PlayerData player, Ownable claim) {
+		
+		return null;
+	}
+	
+	
 }
