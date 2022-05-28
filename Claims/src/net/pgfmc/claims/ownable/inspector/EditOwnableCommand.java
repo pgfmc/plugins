@@ -7,8 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import net.pgfmc.claims.ownable.Ownable;
-import net.pgfmc.claims.ownable.Ownable.Lock;
-import net.pgfmc.claims.ownable.block.OwnableBlock;
+import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
 /**
@@ -46,27 +45,10 @@ public class EditOwnableCommand implements CommandExecutor {
 		}
 		sender.sendMessage(s);
 		
-		if (cache instanceof OwnableBlock) {
+		if (cache instanceof Claim) {
 			
 			if (args == null || args.length > 1) {
 				sender.sendMessage("§dAllowed types: §b'§alock§b'§d, §b'§aowner§b'");
-				
-			} else if ("lock".equals(args[0])) {
-				
-				if (args.length > 1) {
-					Lock lock = Lock.valueOf(args[1]);
-					
-					if (lock != null) {
-						cache.setLock(lock);
-						sender.sendMessage("§aLock set to " + lock.toString());
-						return true;
-						
-					} else {
-						sender.sendMessage("§cPlease enter a valid Lock!");
-						
-					}
-				} 
-				sender.sendMessage("§cNo lock value input.");
 				
 			} else if ("owner".equals(args[0])) {
 				

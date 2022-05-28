@@ -1,11 +1,14 @@
 package net.pgfmc.claims.ownable.block.table;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.bukkit.Bukkit;
 
 import com.sk89q.worldguard.util.collect.LongHash;
 import com.sk89q.worldguard.util.collect.LongHashTable;
 
-import net.pgfmc.claims.ownable.block.OwnableBlock;
+import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.core.util.Vector4;
 
 /**
@@ -55,7 +58,7 @@ public class ClaimsTable {
 	 * Puts this claim into the LongMap.
 	 * @param ob The Claim.
 	 */
-	public static void put(OwnableBlock ob) {
+	public static void put(Claim ob) {
 		
 		ClaimSection cs = getSection(ob.getLocation());
 		if (cs != null) {
@@ -72,7 +75,7 @@ public class ClaimsTable {
 	 * Removes this claim.
 	 * @param ob The claim.
 	 */
-	public static void remove(OwnableBlock ob) {
+	public static void remove(Claim ob) {
 		ClaimSection cs = getSection(ob.getLocation());
 		if (cs != null) {
 			cs.remove(ob);
@@ -84,7 +87,7 @@ public class ClaimsTable {
 	 * @param v The location
 	 * @return The claim that contains this location. Returns "null" if there is no claim.
 	 */
-	public static OwnableBlock getRelevantClaim(Vector4 v) {
+	public static Claim getRelevantClaim(Vector4 v) {
 		ClaimSection cs = getSection(v);
 		if (cs == null) { // if there is no CS, then it creates a new one for the position v.
 			Bukkit.getLogger().warning("cs was null, creating new cs for GRC.");
@@ -92,7 +95,7 @@ public class ClaimsTable {
 			getWorldTable(v.w()).put(getSectionKey(v), cs);
 		}
 		
-		OwnableBlock ob = cs.getClosestClaim(v);
+		Claim ob = cs.getClosestClaim(v);
 		if (ob != null) {
 			return ob;
 		}
@@ -105,7 +108,7 @@ public class ClaimsTable {
 	 * @param v The location.
 	 * @return The claim at this location; Returns "null" if there is no claim.
 	 */
-	public static OwnableBlock getOwnable(Vector4 v) {
+	public static Claim getOwnable(Vector4 v) {
 		ClaimSection cs = getSection(v);
 		if (cs != null) {
 			return cs.getOwnable(v);
@@ -131,5 +134,30 @@ public class ClaimsTable {
 	 */
 	private static long getSectionKey(Vector4 v) {
 		return LongHash.toLong(v.x()/128, v.z()/128);
+	}
+	
+	public static Set<Claim> getAllClaims() {
+		Set<Claim> allClaims = new HashSet<>();
+		
+		for (ClaimSection cs : Overworldtable.values()) {
+			for (Claim claim : cs.getAllClaims()) {
+				allClaims.add(claim);
+			}
+		}
+		
+		for (ClaimSection cs : Nethertable.values()) {
+			for (Claim claim : cs.getAllClaims()) {
+				allClaims.add(claim);
+			}
+		}
+		
+		for (ClaimSection cs : Endtable.values()) {
+			for (Claim claim : cs.getAllClaims()) {
+				allClaims.add(claim);
+			}
+		}
+		
+		
+		return allClaims;
 	}
 }

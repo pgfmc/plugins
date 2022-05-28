@@ -1,10 +1,6 @@
 package net.pgfmc.claims.ownable;
 
-import org.bukkit.GameMode;
-
 import net.pgfmc.core.playerdataAPI.PlayerData;
-import net.pgfmc.friends.data.Friends;
-import net.pgfmc.friends.data.Friends.Relation;
 
 /*
 Written by CrimsonDart
@@ -35,7 +31,7 @@ public abstract class Ownable {
 	
 	protected PlayerData placer;
 	
-	protected Lock lock;
+	// protected String name;
 	
 	/**
 	 * Defines access states.
@@ -47,21 +43,13 @@ public abstract class Ownable {
 	 *
 	 */
 	public enum Security {
-		OWNER,
-		FAVORITE,
-		FRIEND,
-		UNLOCKED,
-		DISALLOWED,
-		EXCEPTION
+		ADMIN, 
+		MEMBER,
+		BLOCKED,
+		EXCEPTION,
 	}
 	
-	public enum Lock {
-		UNLOCKED,
-		FRIENDS_ONLY,
-		FAVORITES_ONLY,
-		LOCKED,
-		CREATIVE
-	}
+	
 	
 	/**
 	 * Constructs a new ownable.
@@ -70,10 +58,9 @@ public abstract class Ownable {
 	 * @param player
 	 * @param lock
 	 */
-	public Ownable(PlayerData player, Lock lock) { // class constructor
+	public Ownable(PlayerData player) { // class constructor
 		
 		this.placer = player;
-		this.lock = lock;
 	}
 	
 	// --------------------------------------------------- getters and setters
@@ -90,24 +77,12 @@ public abstract class Ownable {
 		placer = pd;
 	}
 	
-	/**
-	 * Gets the ownable's Lock.
-	 * @return
-	 */
-	public Lock getLock() {
-		return lock;
-	}
-	
-	/**
-	 * Sets the lock of this ownable.
-	 * @param sug The lock that this ownable's lock is set to.
-	 */
-	public void setLock(Lock sug) {
-		lock = sug;
-	}
-	
 	public Security getAccess(PlayerData player) {
 		
+		
+		return Security.MEMBER;
+		
+		/*
 		Relation r = Friends.getRelation(placer, player);
 		
 		switch(lock) {
@@ -168,5 +143,6 @@ public abstract class Ownable {
 		default:
 			return Security.EXCEPTION;
 		}
+		*/
 	};
 }

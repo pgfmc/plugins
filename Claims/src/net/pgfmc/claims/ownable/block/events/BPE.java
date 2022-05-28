@@ -9,8 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 import net.pgfmc.claims.ownable.Ownable.Security;
-import net.pgfmc.claims.ownable.block.BlockManager;
-import net.pgfmc.claims.ownable.block.OwnableBlock;
+import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.util.Vector4;
@@ -43,16 +42,19 @@ public class BPE implements Listener {
 					
 					pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 				} else {
-					BlockManager.createBlockContainer(pd, block);
+					
+					new Claim(pd, new Vector4(block));
+					
+					
 					pd.sendMessage("§aSurrounding land claimed!");
 					pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
 				}
 				return;
 			}
 			
-			OwnableBlock claim = ClaimsTable.getRelevantClaim(new Vector4(block));
+			Claim claim = ClaimsTable.getRelevantClaim(new Vector4(block));
 			
-			if (claim != null && claim.getAccess(pd) == Security.DISALLOWED) {
+			if (claim != null && claim.getAccess(pd) == Security.BLOCKED) {
 				
 				pd.sendMessage("§cCannot place blocks in claimed land.");
 				e.setCancelled(true);
@@ -61,8 +63,8 @@ public class BPE implements Listener {
 			}
 			
 			// registers block as a container if it is a valid container.
-			if (BlockManager.isOwnable(block.getType())) {
-				BlockManager.createBlockContainer(pd, block);
+			if (block.getType() == Material.LODESTONE) {
+				new Claim(pd, new Vector4(block));
 				System.out.println("ownable placed!");
 			}
 		}	

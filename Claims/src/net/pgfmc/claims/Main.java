@@ -2,16 +2,11 @@ package net.pgfmc.claims;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import net.pgfmc.claims.general.AttackEvent;
-import net.pgfmc.claims.ownable.Ownable.Lock;
 import net.pgfmc.claims.ownable.OwnableFile;
 import net.pgfmc.claims.ownable.block.events.BBEvent;
 import net.pgfmc.claims.ownable.block.events.BExEvent;
 import net.pgfmc.claims.ownable.block.events.BPE;
 import net.pgfmc.claims.ownable.block.events.BlockInteractEvent;
-import net.pgfmc.claims.ownable.entities.DeathEvent;
-import net.pgfmc.claims.ownable.entities.EntityClick;
-import net.pgfmc.claims.ownable.entities.InvOpenEvent;
 import net.pgfmc.claims.ownable.entities.TameEvent;
 import net.pgfmc.claims.ownable.inspector.ClaimTPCommand;
 import net.pgfmc.claims.ownable.inspector.EditOwnableCommand;
@@ -38,20 +33,16 @@ public class Main extends JavaPlugin {
 		Mixins.getFile(BlockContainersPath);
 		Mixins.getFile(EntityContainersPath);
 		
-		PlayerDataManager.setInit(x -> x.setData("lockMode", Lock.FRIENDS_ONLY));
+		
 		
 		
 		PlayerDataManager.setPostLoad((x) -> OwnableFile.loadContainers());
 		
 		// initializes all Event Listeners and Command Executors.
 		getServer().getPluginManager().registerEvents(new BlockInteractEvent(), this);
-		getServer().getPluginManager().registerEvents(new AttackEvent(), this);
 		getServer().getPluginManager().registerEvents(new BBEvent(), this);
 		getServer().getPluginManager().registerEvents(new BPE(), this);
-		getServer().getPluginManager().registerEvents(new EntityClick(), this);
 		getServer().getPluginManager().registerEvents(new TameEvent(), this);
-		getServer().getPluginManager().registerEvents(new DeathEvent(), this);
-		getServer().getPluginManager().registerEvents(new InvOpenEvent(), this);
 		getServer().getPluginManager().registerEvents(new BExEvent(), this);
 		
 		getCommand("inspector").setExecutor(new InspectCommand());
