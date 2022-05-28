@@ -7,7 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
 import net.pgfmc.claims.ownable.Ownable.Security;
-import net.pgfmc.claims.ownable.block.OwnableBlock;
+import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.util.Vector4;
@@ -27,7 +27,7 @@ public class BBEvent implements Listener {
 		PlayerData pd = PlayerData.from(e.getPlayer());
 		if (e.getPlayer().getGameMode() == GameMode.SURVIVAL) { // ---------------------------------------------- if debug mode off / not creative mode
 			
-			OwnableBlock cont = OwnableBlock.getOwnable(e.getBlock());
+			Claim cont = Claim.getOwnable(e.getBlock());
 			
 			// removes the ownable if able to
 			if (cont != null) {
@@ -35,55 +35,33 @@ public class BBEvent implements Listener {
 				Security s = cont.getAccess(pd);
 				
 				switch(s) {
-				case DISALLOWED:
+				case BLOCKED:
 					e.setCancelled(true);
-					pd.sendMessage("§cYou don't own this.");
+					pd.sendMessage("§cThis land is Claimed!");
 					return;
 					
 				case EXCEPTION:
 					e.setCancelled(true);
 					return;
-				case FAVORITE:
-					
-					if (cont.isClaim()) {
-						e.setCancelled(true);
-						pd.sendMessage("§cYou don't own this.");
-						return;
-					} else {
-						cont.remove();
-						return;
-					}
-					
-				case FRIEND:
-					if (cont.isClaim()) {
-						e.setCancelled(true);
-						pd.sendMessage("§cYou don't own this.");
-						return;
-					} else {
-						cont.remove();
-						return;
-					}
-					
-				case OWNER:
-					cont.remove();
-					if (cont.isClaim()) {
-						pd.sendMessage("§6Claim Removed!");
-					}
-					return;
-					
-				case UNLOCKED:
+				case MEMBER:
 					
 					e.setCancelled(true);
-					pd.sendMessage("§cYou don't own this.");
+					pd.sendMessage("§cOnly \"Admins\" can remove claims.");
 					return;
+					
+				case ADMIN:
+					cont.remove();
+					pd.sendMessage("§aClaim Removed!");
+					return;
+					
 				}
 			}
 			
-			OwnableBlock claim = ClaimsTable.getRelevantClaim(new Vector4(e.getBlock()));
+			Claim claim = ClaimsTable.getRelevantClaim(new Vector4(e.getBlock()));
 			
 			if (claim != null) {
 				
-				if (claim.getAccess(pd) == Security.DISALLOWED) {
+				if (claim.getAccess(pd) == Security.BLOCKED) {
 					pd.sendMessage("§cThis land is claimed.");
 					e.setCancelled(true);
 					pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
@@ -97,29 +75,27 @@ public class BBEvent implements Listener {
 			if (insp) {
 				e.setCancelled(true);
 				
-				OwnableBlock claim = ClaimsTable.getRelevantClaim(new Vector4(e.getBlock()));
+				Claim claim = ClaimsTable.getRelevantClaim(new Vector4(e.getBlock()));
 				
 				if (claim != null) {
 					pd.sendMessage("§bInside claim at §c" + claim.getLocation().toString());
 					pd.sendMessage("§bOwnber: §d" + claim.getPlayer().getRankedName());
-					pd.sendMessage("§bLock: §a" + claim.getLock().toString());
 				} else {
 					pd.sendMessage("§bNot Inside a claim.");
 				}
 				
-				OwnableBlock ob = OwnableBlock.getOwnable(e.getBlock());
+				Claim ob = Claim.getOwnable(e.getBlock());
 				
 				if (ob != null) {
 					pd.sendMessage("§eOwnableBlock data from: §c" + ob.getLocation().toString());
 					pd.sendMessage("§eOwner: §d" + ob.getPlayer().getRankedName());
-					pd.sendMessage("§eLock: §a" + ob.getLock().toString());
 					pd.setData("OwnableCache", ob);
 					pd.sendMessage("§dOwnable Selected!");
 				}
 				return;
 			}
 			
-			OwnableBlock cont = OwnableBlock.getOwnable(e.getBlock());
+			Claim cont = Claim.getOwnable(e.getBlock());
 			if (cont != null) {
 				cont.remove();
 			}

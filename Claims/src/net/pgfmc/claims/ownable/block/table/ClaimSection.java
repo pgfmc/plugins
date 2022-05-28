@@ -9,7 +9,7 @@ import org.bukkit.Bukkit;
 
 import com.sk89q.worldguard.util.collect.LongHash;
 
-import net.pgfmc.claims.ownable.block.OwnableBlock;
+import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.core.util.Vector4;
 
 /**
@@ -28,16 +28,20 @@ public class ClaimSection {
 	protected int w;
 	
 	private Map<Neighbor, ClaimSection> neighbors = new EnumMap<Neighbor, ClaimSection>(Neighbor.class);
-	private Set<OwnableBlock> claims = new HashSet<>();
+	private Set<Claim> claims = new HashSet<>();
 	
 	public ClaimSection(long key, int w) {
 		this.key = key;
 	}
 	
-	public OwnableBlock getRelevantClaim(Vector4 v) {
+	public Set<Claim> getAllClaims() {
+		return claims;
+	}
+	
+	public Claim getRelevantClaim(Vector4 v) {
 		if (claims.size() == 0) return null;
 		
-		for (OwnableBlock c : claims) {
+		for (Claim c : claims) {
 			Vector4 v1 = c.getLocation();
 			
 			if (v1.x() - 36 < v.x() &&
@@ -51,16 +55,16 @@ public class ClaimSection {
 		return null;
 	}
 	
-	public static OwnableBlock getRelevantClaim(ClaimSection cs, Vector4 v) {
+	public static Claim getRelevantClaim(ClaimSection cs, Vector4 v) {
 		if (cs != null) {
 			return cs.getRelevantClaim(v);
 		}
 		return null;
 	}
 	
-	public OwnableBlock getClosestClaim(Vector4 v) {
+	public Claim getClosestClaim(Vector4 v) {
 		
-		OwnableBlock ob = getRelevantClaim(v);
+		Claim ob = getRelevantClaim(v);
 		if (ob != null) {
 			return ob;
 		}
@@ -135,7 +139,7 @@ public class ClaimSection {
 	}
 	
 	public boolean isOverlappingRange(Vector4 v) {
-		for (OwnableBlock c : claims) {
+		for (Claim c : claims) {
 			Vector4 v1 = c.getLocation();
 			
 			if (v1.x() - 72 < v.x() &&
@@ -201,10 +205,10 @@ public class ClaimSection {
 		return false;
 	}
 	
-	public OwnableBlock getOwnable(Vector4 v) {
+	public Claim getOwnable(Vector4 v) {
 		if (claims.size() == 0) return null;
 		
-		for (OwnableBlock c : claims) {
+		for (Claim c : claims) {
 			if (c.getLocation().equals(v)) {
 				return c;
 			}
@@ -212,12 +216,12 @@ public class ClaimSection {
 		return null;
 	}
 	
-	public void put(OwnableBlock ob) {
+	public void put(Claim ob) {
 		System.out.println("pushed pt. 2");
 		claims.add(ob);
 	}
 	
-	public void remove(OwnableBlock ob) {
+	public void remove(Claim ob) {
 		claims.remove(ob);
 	}
 	
