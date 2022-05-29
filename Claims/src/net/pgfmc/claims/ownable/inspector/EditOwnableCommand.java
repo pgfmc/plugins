@@ -6,7 +6,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import net.pgfmc.claims.ownable.Ownable;
 import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
@@ -32,7 +31,7 @@ public class EditOwnableCommand implements CommandExecutor {
 		if (((Player) sender).getGameMode() != GameMode.CREATIVE) return true;
 		PlayerData pd = PlayerData.from((Player) sender);
 		
-		Ownable cache = pd.getData("OwnableCache");
+		Claim cache = pd.getData("OwnableCache");
 		if (cache == null) {
 			sender.sendMessage("§cNo Ownable Selected!");
 			return true;
@@ -45,29 +44,23 @@ public class EditOwnableCommand implements CommandExecutor {
 		}
 		sender.sendMessage(s);
 		
-		if (cache instanceof Claim) {
+		if (args == null || args.length > 1) {
+			sender.sendMessage("§dAllowed types: §b'§alock§b'§d, §b'§aowner§b'");
 			
-			if (args == null || args.length > 1) {
-				sender.sendMessage("§dAllowed types: §b'§alock§b'§d, §b'§aowner§b'");
-				
-			} else if ("owner".equals(args[0])) {
-				
-				if (args.length > 1) {
-					PlayerData ope = PlayerData.from(args[1]);
-					if (ope != null) {
-						cache.setOwner(ope);
-						sender.sendMessage("§aOwner set to " + ope.getRankedName());
-						return true;
-					}
+		} else if ("owner".equals(args[0])) {
+			
+			if (args.length > 1) {
+				PlayerData ope = PlayerData.from(args[1]);
+				if (ope != null) {
+					cache.setOwner(ope);
+					sender.sendMessage("§aOwner set to " + ope.getRankedName());
+					return true;
 				}
-				sender.sendMessage("§cPlease Enter a valid player!");
-				
-			} else {
-				sender.sendMessage("§dAllowed types: §b'§alock§b'§d, §b'§aowner§b'");
 			}
-		} else {
+			sender.sendMessage("§cPlease Enter a valid player!");
 			
-			sender.sendMessage("§dSelect an Ownable in Inspector mode §b(/insp) §dfirst!");
+		} else {
+			sender.sendMessage("§dAllowed types: §b'§alock§b'§d, §b'§aowner§b'");
 		}
 		return true;
 	}
