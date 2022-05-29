@@ -4,7 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
-import net.pgfmc.claims.ownable.Ownable;
 import net.pgfmc.claims.ownable.block.table.ClaimSection;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
 import net.pgfmc.core.playerdataAPI.PlayerData;
@@ -31,12 +30,31 @@ import net.pgfmc.core.util.Vector4;
  * @since 1.1.0	
  * @version 4.0.3
  */
-public class Claim extends Ownable {
+public class Claim {
+	
+	// protected String name;
+	private PlayerData placer;
 	
 	private Vector4 vector;
 	
+	/**
+	 * Defines access states.
+	 * 
+	 * Each constant defines a different relationship between 
+	 * the owner, the 
+	 * 
+	 * @author james
+	 *
+	 */
+	public enum Security {
+		ADMIN, 
+		MEMBER,
+		BLOCKED,
+		EXCEPTION,
+	}
+	
 	public Claim(PlayerData player, Vector4 vec) {
-		super(player);
+		this.placer = player;
 		
 		Block block = vec.getBlock();
 		vector = vec;
@@ -81,4 +99,141 @@ public class Claim extends Ownable {
 	public static Claim getOwnable(Vector4 v) {
 		return ClaimsTable.getOwnable(v);
 	}
+
+	// --------------------------------------------------- getters and setters
+	
+	/**
+	 * Gets the Player that owns this Ownable.
+	 * @return The player's PlayerData.
+	 */
+	public PlayerData getPlayer() {
+		return placer;
+	}
+	
+	public void setOwner(PlayerData pd) {
+		placer = pd;
+	}
+	
+	public Security getAccess(PlayerData player) {
+		return Security.ADMIN;
+	};
+	
+	private static int[] yDisplacementSearchOrder = {
+			0, 1, 2, -1, -2, -3, -4, -5, 3, 4, 5, -6, -7, -8, -9, -10, 6, 7, 8, 9, 10, -11, -12, -13, -14, -15, -16, -17, -18, -19, -20, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
+	};
+	
+	public Vector4 getNearestClaimEdge(Vector4 player_location) {
+		
+		Vector4 claim_location = this.getLocation();
+		
+		int[] loc =  { player_location.x() - claim_location.x(), player_location.z() - claim_location.z() };
+		int[] horzEdgeCoords = {0,0};
+		
+		if (loc[0] > loc[1]) {
+			double multiplier = ((float) loc[0]) / 37.0;
+			horzEdgeCoords[0] = 36 + claim_location.x();
+			horzEdgeCoords[1] = (int) Math.ceil(loc[1] / multiplier) + claim_location.z();
+			
+		} else {
+			double multiplier = ((float) loc[1]) / 37.0;
+			horzEdgeCoords[0] = (int) Math.ceil(loc[0] / multiplier) + claim_location.x();
+			horzEdgeCoords[1] = 36 + claim_location.z();
+		}
+		
+		for (int i : yDisplacementSearchOrder) {
+			
+			Vector4 possibleOut = new Vector4(horzEdgeCoords[0], i-1, horzEdgeCoords[1], player_location.w());
+			
+			if (isValidPlayerPosition(possibleOut)) {
+				return possibleOut;
+			}
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Checks if the input block can be STOOD ON (not stand in)
+	 * @param position
+	 * @return
+	 */
+	private static boolean isValidPlayerPosition(Vector4 position) {
+		
+		Material standOn = position.getBlock().getType();
+		Material lower = position.add(0, 1, 0).getBlock().getType();
+		Material upper = position.add(0, 2, 0).getBlock().getType();
+		
+		return (standOn.isOccluding() && standOn != Material.LAVA && standOn != Material.AIR && canStandIn(lower) && canStandIn(upper));
+	}
+	
+	private static String[] clist = {
+			"PRESSURE_PLATE",
+			"SIGN",
+			"BUTTON",
+			"SAPLING",
+			"RAIL",
+			"CANDLE",
+			"TORCH",
+			"BANNER",
+			"CARPET",
+			"CORAL",
+			"VINE",
+			"ROOT",
+			"REDSTONE",
+			"DEAD",
+			"FERN",
+			
+			
+	};
+	
+	private static String[] dlist = {
+			"_BLOCK",
+			"DEEPSLATE"
+	};
+	
+	private static Material[] exactMatch = {
+			Material.BROWN_MUSHROOM,
+			Material.WATER,
+			Material.CARROTS,
+			Material.COMPARATOR,
+			Material.CRIMSON_FUNGUS,
+			Material.WARPED_FUNGUS,
+			Material.GRASS
+			
+	};
+	
+	private static boolean canStandIn(Material m) {
+		if (m == Material.AIR) return true;
+		
+		for (Material mat : exactMatch) {
+			if (m == mat) return true;
+		}
+		
+		for (String s : dlist ) {
+			if (m.toString().contains(s)) return false;
+		}
+		
+		for (String s : clist ) {
+			if (m.toString().contains(s)) return true;
+		}
+		
+		return false;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
