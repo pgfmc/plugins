@@ -2,6 +2,7 @@ package net.pgfmc.claims;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import net.pgfmc.claims.cmd.EscapeCommand;
 import net.pgfmc.claims.ownable.OwnableFile;
 import net.pgfmc.claims.ownable.block.events.BBEvent;
 import net.pgfmc.claims.ownable.block.events.BExEvent;
@@ -33,8 +34,7 @@ public class Main extends JavaPlugin {
 		Mixins.getFile(BlockContainersPath);
 		Mixins.getFile(EntityContainersPath);
 		
-		
-		
+		new EscapeCommand();
 		
 		PlayerDataManager.setPostLoad((x) -> OwnableFile.loadContainers());
 		

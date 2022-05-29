@@ -6,8 +6,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
-import net.pgfmc.claims.ownable.Ownable.Security;
 import net.pgfmc.claims.ownable.block.Claim;
+import net.pgfmc.claims.ownable.block.Claim.Security;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.util.Vector4;
