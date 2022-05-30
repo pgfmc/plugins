@@ -1,5 +1,8 @@
 package net.pgfmc.claims.ownable.block;
 
+import java.util.Iterator;
+import java.util.stream.IntStream;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -118,11 +121,23 @@ public class Claim {
 		return Security.ADMIN;
 	};
 	
-	private static int[] yDisplacementSearchOrder = {
-			0, 1, 2, -1, -2, -3, -4, -5, 3, 4, 5, -6, -7, -8, -9, -10, 6, 7, 8, 9, 10, -11, -12, -13, -14, -15, -16, -17, -18, -19, -20, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
-	};
+	private static int getYDisplacement(int iter) {
+		
+		if (iter == 0) {
+			return 0;
+		} 
+		
+		if ((iter & 1) == 1) {
+			return iter / 2 + 1;
+		} else {
+			return iter / -2;
+		}
+	}
 	
+	// returns the block that a player can be teleported to on the Claim's Edge.
 	public Vector4 getNearestClaimEdge(Vector4 player_location) {
+		
+		if (player_location == null) return null;
 		
 		Vector4 claim_location = this.getLocation();
 		
@@ -140,15 +155,15 @@ public class Claim {
 			horzEdgeCoords[1] = 36 + claim_location.z();
 		}
 		
-		for (int i : yDisplacementSearchOrder) {
+		Iterator<Integer> iter = IntStream.range(-64, 320).boxed().iterator();
+		while (iter.hasNext()) {
 			
-			Vector4 possibleOut = new Vector4(horzEdgeCoords[0], i-1, horzEdgeCoords[1], player_location.w());
+			Vector4 possibleOut = new Vector4(horzEdgeCoords[0], getYDisplacement(iter.next()) + player_location.y() , horzEdgeCoords[1], player_location.w());
 			
 			if (isValidPlayerPosition(possibleOut)) {
-				return possibleOut;
+				return possibleOut.add(0, 1, 0);
 			}
 		}
-		
 		return null;
 	}
 	
