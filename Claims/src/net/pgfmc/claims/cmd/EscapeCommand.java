@@ -29,7 +29,11 @@ public class EscapeCommand extends PlayerCommand {
 		
 		Vector4 claimEdge = ob.getNearestClaimEdge(player_location);
 		
-		arg0.sendMessage(claimEdge.toString());
+		if (claimEdge != null) {
+			arg0.sendMessage(claimEdge.toString());
+			arg0.teleport(claimEdge.toLocation());
+		}
+		
 		
 		
 		
@@ -40,9 +44,4 @@ public class EscapeCommand extends PlayerCommand {
 	public List<String> tabComplete(PlayerData arg0, String arg1, String[] arg2) {
 		return new ArrayList<>();
 	}
-
-	
-	
-	
-	
 }

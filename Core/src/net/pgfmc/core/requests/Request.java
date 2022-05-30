@@ -19,9 +19,7 @@ import net.pgfmc.masterbook.masterbook.CommandsMenu;
  * 
  * Implementor must define 
  * 
- * 
  * @author CrimsonDart
- *
  */
 public final class Request implements Buttonable {
 	

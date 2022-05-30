@@ -29,8 +29,6 @@ import net.pgfmc.core.permissions.Roles.Role;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.requests.inv.RequestListInventory;
 import net.pgfmc.core.util.DimManager;
-import net.pgfmc.friends.data.Friends;
-import net.pgfmc.friends.data.Friends.Relation;
 import net.pgfmc.masterbook.Main;
 import net.pgfmc.survival.cmd.Afk;
 import net.pgfmc.teleport.home.Homes;
@@ -172,23 +170,6 @@ public class CommandsMenu implements InventoryHolder {
 					});
 					setItem(21, Material.ENDER_PEARL).n("§r§5Tpa").l("§r§7Teleport to another player!");
 				}
-				
-				
-				
-			}
-			
-			/* 
-			 * [] [] [] [] [] [] [] [] []
-			 * [] [] [] [] [] [] [] [] []
-			 * [] [] [] [] [] XX [] [] []
-			 * home menu
-			 */
-			if (pd.hasPermission("teams.friend.*") && PGFPlugin.FRIENDS.isEnabled()) {
-				
-				setAction(23, (p, e) -> {
-					p.openInventory(new FriendsList().getInventory());
-				});
-				setItem(23, Material.TOTEM_OF_UNDYING).n("§r§6Friends");
 			}
 			
 			/* 
@@ -591,85 +572,6 @@ public class CommandsMenu implements InventoryHolder {
 		}
 	}
 	
-	public class FriendsList extends ListInventory<PlayerData> {
-		
-		public FriendsList() {
-			super(27, "§r§8Friends List");
-
-			setAction(0, (p, e) -> {
-				p.openInventory(new Homepage().getInventory());
-			});
-			setItem(0, Material.FEATHER).n("§r§7Back");
-		}
-		
-		@Override
-		public List<PlayerData> load() {
-			return Friends.getFriendsMap(pd).keySet().stream()
-					.collect(Collectors.toList());
-		}
-		
-		@Override
-		protected Butto toAction(PlayerData entry) {
-			return (p, d) -> {
-				p.openInventory(new FriendOptions(pd, entry).getInventory());
-			};
-		}
-
-		@Override
-		protected ItemStack toItem(PlayerData entry) {
-			return new ItemWrapper(Material.PLAYER_HEAD).n(entry.getRankedName()).gi();
-		}
-		
-		
-		
-		public class FriendOptions extends BaseInventory {
-
-			public FriendOptions(PlayerData player, PlayerData friend) {
-				super(27, "§r§8Options for " + friend.getRankedName());
-				
-				
-				setAction(12, (p, e) -> {
-					Friends.setRelation(player, Relation.NONE, friend, Relation.NONE);
-					player.sendMessage("§cYou have Unfriended " + friend.getName() + ".");
-					player.playSound(Sound.BLOCK_CALCITE_HIT);
-					// player.getPlayer().closeInventory(); // Better if not close
-					p.openInventory(new FriendOptions(player, friend).getInventory());
-					
-				});
-				setItem(12, Material.ARROW).n("§r§cUnfriend");
-				
-				Relation r = Friends.getRelation(player, friend);
-				
-				if (r == Relation.FRIEND) {
-					
-					setAction(14, (p, e) -> {
-						
-						Friends.setRelation(player, friend, Relation.FAVORITE);
-						player.sendMessage("§r§6" + friend.getName() + " is now a favorite!");
-						player.playSound(Sound.ENTITY_EXPERIENCE_ORB_PICKUP);
-						// player.getPlayer().closeInventory(); // Better if not close
-						p.openInventory(new FriendOptions(player, friend).getInventory());
-						
-					});
-					setItem(14, Material.NETHER_STAR).n("§r§eFavorite");
-					
-				} else if (r == Relation.FAVORITE) {
-					
-					setAction(14, (p, e) -> {
-						
-						Friends.setRelation(player, friend, Relation.FRIEND);
-						player.sendMessage("§r§c" + friend.getName() + " has Been unfavorited!");
-						player.playSound(Sound.BLOCK_CALCITE_HIT);
-						// player.getPlayer().closeInventory(); // Better if not close
-						p.openInventory(new FriendOptions(player, friend).getInventory());
-						
-					});
-					setItem(14, Material.NETHER_STAR).n("§r§6Unfavorite");
-				}
-			}
-		}
-	}
-	
 	public class PlayerList extends ListInventory<PlayerData> {
 		
 		public PlayerList() {
@@ -700,48 +602,12 @@ public class CommandsMenu implements InventoryHolder {
 		@Override
 		public List<PlayerData> load() {
 			return PlayerData.getPlayerDataSet(x -> x != pd).stream()
-					.sorted((o1, o2) -> { // player sorter.
+					.sorted((o1, o2) -> {
 						
-						if (o1.isOnline() && o2.isOnline()) { // both online
-							
-							Relation r1 = Friends.getRelation(pd, o1);
-							Relation r2 = Friends.getRelation(pd, o2);
-							
-							if (r1 == r2) { // both are equal.
-								return 0;
-							} else if (r1 == Relation.NONE && r2 != Relation.NONE) { // r2 friended &^ but not r1.
-								return 1;
-							} else if (r1 != Relation.NONE && r2 == Relation.NONE) { // r1 friended &^ but not r2.
-								return -1;
-							} else if (r1 == Relation.FRIEND && r2 == Relation.FAVORITE) {
-								return 1;
-							} else if (r1 == Relation.FAVORITE && r2 == Relation.FRIEND) {
-								return -1;
-							} else {
-								return 0;
-							}
-						} else if (o1.isOnline()) { // 1 is online
-							return -1;
-						} else if (o2.isOnline()) { // 2 is online
-							return 1;
-						} else { // ------------------ none are online
-							Relation r1 = Friends.getRelation(pd, o1);
-							Relation r2 = Friends.getRelation(pd, o2);
-							
-							if (r1 == r2) { // both are equal.
-								return 0;
-							} else if (r1 == Relation.NONE && r2 != Relation.NONE) { // r2 friended &^ but not r1.
-								return 1;
-							} else if (r1 != Relation.NONE && r2 == Relation.NONE) { // r1 friended &^ but not r2.
-								return -1;
-							} else if (r1 == Relation.FRIEND && r2 == Relation.FAVORITE) {
-								return 1;
-							} else if (r1 == Relation.FAVORITE && r2 == Relation.FRIEND) {
-								return -1;
-							} else {
-								return 0;
-							}
-						}
+						return 0;
+						
+						
+						
 					})
 					.collect(Collectors.toList());
 		}
@@ -766,38 +632,6 @@ public class CommandsMenu implements InventoryHolder {
 					}
 				}
 				
-				if (perms.contains("teams.friend.*") && PGFPlugin.FRIENDS.isEnabled()) {
-					
-					Relation r = Friends.getRelation(pd, player);
-					if (r == Relation.FRIEND || r == Relation.FAVORITE) {
-						setAction(11, (p, e) -> {
-							p.openInventory(new UnfriendConfirm(pd, player).getInventory());
-						});
-						setItem(11, Material.TOTEM_OF_UNDYING).n("§r§cUnfriend");
-						
-						if (r == Relation.FAVORITE) {
-							setAction(12, (p, e) -> {
-								p.performCommand("unfav " + player.getName());
-								p.openInventory(new PlayerOptions(player).getInventory());
-							});
-							setItem(12, Material.TOTEM_OF_UNDYING).n("§r§cUnfavorite");
-							
-						} else {
-							setAction(12, (p, e) -> {
-								p.performCommand("fav " + player.getName());
-								p.openInventory(new PlayerOptions(player).getInventory());
-							});
-							setItem(12, Material.TOTEM_OF_UNDYING).n("§r§eFavorite");
-							
-						}
-					} else {
-						setAction(11, (p, e) -> {
-							p.openInventory(new FriendConfirm(pd, player).getInventory());
-						});
-						setItem(11, Material.TOTEM_OF_UNDYING).n("§r§6Friend");
-					}
-				}
-				
 				if (perms.contains("pgf.cmd.block")) {
 					if (Blocked.GET_BLOCKED(pd.getOfflinePlayer()).contains(player.getUniqueId())) {
 						setAction(14, (p, e) -> {
@@ -817,46 +651,6 @@ public class CommandsMenu implements InventoryHolder {
 				}
 				// XXX setButton(15, new Button(Material.RED_BANNER, "§r§4Report", "§r§7If someone is bullying or\ngriefing you, use this!" + "\nWIP"));
 				
-			}
-			
-			private class FriendConfirm extends BaseInventory {
-				
-				public FriendConfirm(PlayerData pd, PlayerData player) {
-					super(27, "§r§6Friend " + player.getName() + "?");
-					
-					
-					setAction(11, (p, e) -> {
-						// p.closeInventory();
-						p.performCommand("friendrequest " + player.getName());
-						p.openInventory(new PlayerOptions(player).getInventory());
-					});
-					setItem(11, Material.LIME_CONCRETE).n("§r§aSend Request");
-					
-					setAction(15, (p, e) -> {
-						p.openInventory(new PlayerOptions(player).getInventory());
-					});
-					setItem(15, Material.RED_CONCRETE).n("§r§7Cancel");
-					
-				}
-			}
-			
-			private class UnfriendConfirm extends BaseInventory {
-				
-				public UnfriendConfirm(PlayerData pd, PlayerData player) {
-					super(27, "§r§cUnfriend " + player.getName() + "?");
-					
-					
-					setAction(11, (p, e) -> {
-						p.performCommand("unfriend " + player.getName());
-						p.openInventory(new PlayerOptions(player).getInventory());
-					});
-					setItem(11, Material.LIME_CONCRETE).n("§r§cUnfriend");
-					
-					setAction(15, (p, e) -> {
-						p.openInventory(new PlayerOptions(player).getInventory());
-					});
-					setItem(15, Material.RED_CONCRETE).n("§r§7Cancel");
-				}
 			}
 		}
 	}
