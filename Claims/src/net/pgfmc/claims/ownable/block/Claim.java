@@ -40,8 +40,6 @@ public class Claim {
 	
 	private Vector4 vector;
 	
-	private String networkName;
-	
 	/**
 	 * Defines access states.
 	 * 
@@ -58,9 +56,8 @@ public class Claim {
 		EXCEPTION,
 	}
 	
-	public Claim(PlayerData player, Vector4 vec, String name) {
+	public Claim(PlayerData player, Vector4 vec) {
 		this.placer = player;
-		networkName = name;
 		
 		Block block = vec.getBlock();
 		vector = vec;
