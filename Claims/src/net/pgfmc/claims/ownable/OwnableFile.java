@@ -44,7 +44,7 @@ public class OwnableFile {
 				
 				
 				Vector4 vec = Vector4.fromString(key);
-				new Claim(pd, vec, null);
+				new Claim(pd, vec);
 				amount++;
 			}
 			Bukkit.getLogger().warning("Loaded " + amount + " Claim(s).");
