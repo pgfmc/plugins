@@ -44,10 +44,10 @@ public class OwnableFile {
 				
 				
 				Vector4 vec = Vector4.fromString(key);
-				new Claim(pd, vec);
+				new Claim(pd, vec, null);
 				amount++;
 			}
-			Bukkit.getLogger().warning("Loaded " + amount + " Ownables.");
+			Bukkit.getLogger().warning("Loaded " + amount + " Claim(s).");
 		}
 		
 		//BlockManager.calcLoop(); // stats the calcloop, which loads each player's region into memory.
@@ -88,7 +88,7 @@ public class OwnableFile {
 		
 		try {
 			database.save(file);
-			Bukkit.getLogger().warning("Container location saved!");
+			Bukkit.getLogger().warning("Claim locations saved!");
 			
 		} catch (IOException e) {
 			e.printStackTrace();
