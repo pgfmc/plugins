@@ -43,7 +43,7 @@ public class BPE implements Listener {
 					pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 				} else {
 					
-					new Claim(pd, new Vector4(block));
+					new Claim(pd, new Vector4(block), null);
 					
 					
 					pd.sendMessage("§aSurrounding land claimed!");
@@ -64,7 +64,7 @@ public class BPE implements Listener {
 			
 			// registers block as a container if it is a valid container.
 			if (block.getType() == Material.LODESTONE) {
-				new Claim(pd, new Vector4(block));
+				new Claim(pd, new Vector4(block), null);
 				System.out.println("ownable placed!");
 			}
 		}	

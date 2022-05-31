@@ -40,13 +40,15 @@ public class Claim {
 	
 	private Vector4 vector;
 	
+	private String networkName;
+	
 	/**
 	 * Defines access states.
 	 * 
 	 * Each constant defines a different relationship between 
 	 * the owner, the 
 	 * 
-	 * @author james
+	 * @author CrimsonDart
 	 *
 	 */
 	public enum Security {
@@ -56,8 +58,9 @@ public class Claim {
 		EXCEPTION,
 	}
 	
-	public Claim(PlayerData player, Vector4 vec) {
+	public Claim(PlayerData player, Vector4 vec, String name) {
 		this.placer = player;
+		networkName = name;
 		
 		Block block = vec.getBlock();
 		vector = vec;

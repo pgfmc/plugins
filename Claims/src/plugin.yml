@@ -23,9 +23,4 @@ commands:
       usage: /<command>
       permission: teams.inspector.claimtp
       description: Teleports the player to the claim they're in.
-   escape:
-      aliases: [esc]
-      usage: /<command>
-      permission: teams.escape
-      description: Teleports the player to the nearest edge of the claim.
       
