@@ -1,0 +1,16 @@
+name: PGF-FFA
+version: 5.7.0
+api-version: 1.18
+authors: [bk, CrimsonDart]
+website: play.pgfmc.net
+main: net.pgfmc.ffa.Main
+description: FFA for pre Season 11
+depend: [PGF-Core]
+load: POSTWORLD
+prefix: PGF-FFA
+
+commands:
+  cmd:
+    description: cmd desc
+    usage: /<command>
+    permission: pgf.cmd.cmd
