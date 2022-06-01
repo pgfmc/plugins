@@ -8,8 +8,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-import net.pgfmc.ffa.scoreboard.Scoreboard;
-import net.pgfmc.ffa.zone.Zone;
+import net.pgfmc.ffa.zone.ZoneInfo;
+import net.pgfmc.ffa.zone.ZoneInfo.Zone;
 
 public class Combat implements Listener {
 	
@@ -20,7 +20,7 @@ public class Combat implements Listener {
 		
 		Player p = (Player) e.getEntity();
 		
-		if (Zone.getZone(p.getLocation()) != Zone.Combat) return;
+		if (ZoneInfo.getZoneFromLocation(p.getLocation()) != Zone.Combat) return;
 		
 		// If this damage was going to kill the player
 		if (p.getHealth() - e.getFinalDamage() <= 0)
@@ -45,16 +45,8 @@ public class Combat implements Listener {
 				}
 			}
 			
-			// This means the player was shot by a skeleton or something
-			// I don't want this to count as a death,
-			// so just cancel the damage
-			if (damager == null)
-			{
-				e.setCancelled(true);
-				return;
-			}
+			// TODO
 			
-			Scoreboard.playerSlainPlayer(damager.getUniqueId(), p.getUniqueId());
 		}
 	}
 
