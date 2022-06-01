@@ -7,18 +7,15 @@ import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.ffa.zone.ZoneInfo;
 import net.pgfmc.ffa.zone.ZoneInfo.Zone;
 
-public class Combat implements Listener {
+public class Combat {
 	
-	@EventHandler
-	public void onDamageReceived(EntityDamageByEntityEvent e)
+	public void combatZoneDo(EntityDamageByEntityEvent e)
 	{
 		if (!(e.getEntity() instanceof Player)) return;
 		
