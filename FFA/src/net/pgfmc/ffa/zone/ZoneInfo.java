@@ -35,6 +35,14 @@ public class ZoneInfo extends Configify {
 		{
 			player.getInventory().setContents(inventory.getContents());
 		}
+		
+		public static Zone switchZoneUknown(Player player) 
+		{
+			Zone zone = getZoneFromLocation(player.getLocation());
+			
+			zone.switchZone(player);
+			return zone;
+		}
 
 	}
 	
