@@ -1,6 +1,9 @@
 package net.pgfmc.ffa.zone.combat;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -8,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
+import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.ffa.zone.ZoneInfo;
 import net.pgfmc.ffa.zone.ZoneInfo.Zone;
 
@@ -19,6 +23,7 @@ public class Combat implements Listener {
 		if (!(e.getEntity() instanceof Player)) return;
 		
 		Player p = (Player) e.getEntity();
+		PlayerData pd = PlayerData.from(p);
 		
 		if (ZoneInfo.getZoneFromLocation(p.getLocation()) != Zone.Combat) return;
 		
@@ -45,7 +50,17 @@ public class Combat implements Listener {
 				}
 			}
 			
-			// TODO
+			if (damager == null)
+			{
+				e.setCancelled(true);
+				return;
+			}
+			
+			PlayerData pdDamager = PlayerData.from(damager);
+			
+			Bukkit.broadcastMessage(pdDamager.getRankedName() + ChatColor.RED + " has slain " + pd.getRankedName() + ChatColor.RED + "!");
+			pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
+			pdDamager.playSound(Sound.ENTITY_EXPERIENCE_ORB_PICKUP);
 			
 		}
 	}
