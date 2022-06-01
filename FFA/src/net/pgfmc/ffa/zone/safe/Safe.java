@@ -2,17 +2,14 @@ package net.pgfmc.ffa.zone.safe;
 
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import net.pgfmc.ffa.zone.ZoneInfo;
 import net.pgfmc.ffa.zone.ZoneInfo.Zone;
 
-public class Safe implements Listener {
+public class Safe {
 	
-	@EventHandler
-	public void onDamageReceived(EntityDamageByEntityEvent e)
+	public void safeZoneDo(EntityDamageByEntityEvent e)
 	{
 		// No entity should take damage if inside safe zone
 		if (ZoneInfo.getZoneFromLocation(e.getEntity().getLocation()) == Zone.Safe) {

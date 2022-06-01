@@ -3,6 +3,7 @@ package net.pgfmc.ffa;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.pgfmc.ffa.cmd.SetZoneInventory;
+import net.pgfmc.ffa.zone.ZoneDetector;
 
 public class Main extends JavaPlugin {
 	
@@ -14,6 +15,8 @@ public class Main extends JavaPlugin {
 		plugin = this;
 		
 		getCommand("setzoneinventory").setExecutor(new SetZoneInventory());
+		getServer().getPluginManager().registerEvents(new ZoneDetector(), this);
+		
 	}
 	
 	@Override
