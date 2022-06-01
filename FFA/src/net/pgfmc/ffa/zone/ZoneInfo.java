@@ -48,8 +48,8 @@ public class ZoneInfo extends Configify {
 	
 	public static Zone getZoneFromLocation(Location loc)
 	{
-		int x = loc.getBlockX();
-		int z = loc.getBlockZ();
+		int x = Math.abs(loc.getBlockX());
+		int z = Math.abs(loc.getBlockZ());
 		
 		if (x >= 10 || z >= 10) return Zone.Combat;
 		
