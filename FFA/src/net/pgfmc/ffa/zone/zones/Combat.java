@@ -71,8 +71,9 @@ public class Combat implements ZoneDo, Listener {
 	@EventHandler
 	public void onDamage(EntityDamageEvent e)
 	{
-		if (e.getCause() == DamageCause.ENTITY_ATTACK || e.getCause() == DamageCause.PROJECTILE) return;
 		if (!(e.getEntity() instanceof Player)) return;
+		
+		if (e.getCause() == DamageCause.ENTITY_ATTACK || e.getCause() == DamageCause.PROJECTILE) return;
 		
 		e.setCancelled(true);
 	}

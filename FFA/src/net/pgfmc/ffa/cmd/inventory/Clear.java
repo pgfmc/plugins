@@ -22,7 +22,7 @@ public class Clear implements FFACmd {
 			return;
 		}
 		
-		zone.setInventoryItems(Bukkit.createInventory(null, InventoryType.PLAYER));
+		zone.setContents(Bukkit.createInventory(null, InventoryType.PLAYER).getContents());
 		
 		sender.sendMessage(ChatColor.GREEN + "Successfully cleared zone inventory!");
 		
