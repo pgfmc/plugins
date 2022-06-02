@@ -10,6 +10,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 
 import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.Claim.Security;
+import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.util.Vector4;
@@ -36,9 +37,27 @@ public class BPE implements Listener {
 			System.out.println("block placed!");
 			
 			if (block.getType() == Material.LODESTONE) { // for placing claims
-				if (ClaimsTable.isOverlappingClaim(new Vector4(block))) {
+				
+				// logic for merging claims: 
+				
+				
+				Claim merger = ClaimsTable.getRelevantClaim(new Vector4(block), Range.MERGE);
+				
+				if ()
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				if (ClaimsTable.getRelevantClaim(new Vector4(block), Range.FOREIGN) != null) {
 					e.setCancelled(true);
-					pd.sendMessage("ï¿½cCannot claim land that would overlap another claim.");
+					pd.sendMessage("§cCannot claim land that would overlap another claim.");
 					
 					pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 				} else {
@@ -46,17 +65,17 @@ public class BPE implements Listener {
 					new Claim(pd, new Vector4(block));
 					
 					
-					pd.sendMessage("ï¿½aSurrounding land claimed!");
+					pd.sendMessage("§aSurrounding land claimed!");
 					pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
 				}
 				return;
 			}
 			
-			Claim claim = ClaimsTable.getRelevantClaim(new Vector4(block));
+			Claim claim = ClaimsTable.getRelevantClaim(new Vector4(block), Range.PROTECTED);
 			
 			if (claim != null && claim.getAccess(pd) == Security.BLOCKED) {
 				
-				pd.sendMessage("ï¿½cCannot place blocks in claimed land.");
+				pd.sendMessage("§cCannot place blocks in claimed land.");
 				e.setCancelled(true);
 				pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 				return;

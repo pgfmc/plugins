@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import com.sk89q.worldguard.util.collect.LongHash;
 
 import net.pgfmc.claims.ownable.block.Claim;
+import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.core.util.Vector4;
 
 /**
@@ -24,6 +25,9 @@ import net.pgfmc.core.util.Vector4;
  */
 public class ClaimSection {
 	
+	/* Claim Section size*/
+	public static int CSS  = 256;
+	
 	protected long key;
 	protected int w;
 	
@@ -34,175 +38,102 @@ public class ClaimSection {
 		this.key = key;
 	}
 	
+	/**
+	 * 
+	 * @return all claims stored in this Section.
+	 */
 	public Set<Claim> getAllClaims() {
 		return claims;
 	}
 	
-	public Claim getRelevantClaim(Vector4 v) {
-		if (claims.size() == 0) return null;
+	public static Claim getRelevantClaim(ClaimSection cs, Vector4 v, Range r) {
+		if (cs == null) return null;
+		if (cs.claims.size() == 0) return null;
 		
-		for (Claim c : claims) {
-			Vector4 v1 = c.getLocation();
-			
-			if (v1.x() - 36 < v.x() &&
-					v1.x() + 36 > v.x() &&
-					v1.z() - 36 < v.z() &&
-					v1.z() + 36 > v.z() &&
-					v1.y() - 54 < v.y()) {
+		for (Claim c : cs.claims) {
+			if (ClaimsLogic.isInRange(c, v, r)) {
 				return c;
 			}
 		}
 		return null;
 	}
 	
-	public static Claim getRelevantClaim(ClaimSection cs, Vector4 v) {
-		if (cs != null) {
-			return cs.getRelevantClaim(v);
-		}
-		return null;
-	}
-	
-	public Claim getClosestClaim(Vector4 v) {
+	public Claim getClosestClaim(Vector4 v, Range r) {
 		
-		Claim ob = getRelevantClaim(v);
+		Claim ob = getRelevantClaim(this, v, r);
 		if (ob != null) {
 			return ob;
 		}
 		
-		int xBound = v.x()%128;
-		int zBound = v.z()%128;
+		int claimRange = r.getRange();
 		
-		if (xBound < 35) {
+		int xBound = v.x()%CSS;
+		int zBound = v.z()%CSS;
+		
+		if (xBound < claimRange) {
 			
-			ob = getRelevantClaim(getNeighbor(Neighbor.LEFT), v);
+			ob = getRelevantClaim(getNeighbor(Neighbor.LEFT), v, r);
 			if (ob != null) return ob;
 			
-			if (zBound < 35) {
+			if (zBound < claimRange) {
 				
-				ob = getRelevantClaim(getNeighbor(Neighbor.DOWN), v);
+				ob = getRelevantClaim(getNeighbor(Neighbor.DOWN), v, r);
 				if (ob != null) return ob;
 				
 				else {
-					ob = getRelevantClaim(getNeighbor(Neighbor.DOWNLEFT), v);
+					ob = getRelevantClaim(getNeighbor(Neighbor.DOWNLEFT), v, r);
 					if (ob != null) return ob;
 				}
 				
 				return null;
-			} else if (zBound > 93) {
+			} else if (zBound > CSS - claimRange) {
 				
-				ob = getRelevantClaim(getNeighbor(Neighbor.UP), v);
+				ob = getRelevantClaim(getNeighbor(Neighbor.UP), v, r);
 				if (ob != null) return ob;
 				
 				else {
-					ob = getRelevantClaim(getNeighbor(Neighbor.UPLEFT), v);
+					ob = getRelevantClaim(getNeighbor(Neighbor.UPLEFT), v, r);
 					if (ob != null) return ob;
 				}
 			}
 			return null;
-		} else if (xBound > 93) {
+		} else if (xBound > CSS - claimRange) {
 			
-			ob = getRelevantClaim(getNeighbor(Neighbor.RIGHT), v);
+			ob = getRelevantClaim(getNeighbor(Neighbor.RIGHT), v, r);
 			if (ob != null) return ob;
 			
-			if (zBound < 35) {
+			if (zBound < claimRange) {
 				
-				ob = getRelevantClaim(getNeighbor(Neighbor.DOWN), v);
+				ob = getRelevantClaim(getNeighbor(Neighbor.DOWN), v, r);
 				if (ob != null) return ob;
 				
 				else {
-					ob = getRelevantClaim(getNeighbor(Neighbor.DOWNRIGHT), v);
+					ob = getRelevantClaim(getNeighbor(Neighbor.DOWNRIGHT), v, r);
 					if (ob != null) return ob;
 				}
 				
 				return null;
-			} else if (zBound > 93) {
+			} else if (zBound > CSS - claimRange) {
 				
-				ob = getRelevantClaim(getNeighbor(Neighbor.UP), v);
+				ob = getRelevantClaim(getNeighbor(Neighbor.UP), v, r);
 				if (ob != null) return ob;
 				
 				else {
-					ob = getRelevantClaim(getNeighbor(Neighbor.UPRIGHT), v);
+					ob = getRelevantClaim(getNeighbor(Neighbor.UPRIGHT), v, r);
 					if (ob != null) return ob;
 				}
 			}
 			return null;
-		} else if (zBound < 35) { // move left
+		} else if (zBound < claimRange) { // move left
 			
-			ob = getRelevantClaim(getNeighbor(Neighbor.DOWN), v);
+			ob = getRelevantClaim(getNeighbor(Neighbor.DOWN), v, r);
 			if (ob != null) return ob;
 			
-		} else if (zBound > 93) {
-			ob = getRelevantClaim(getNeighbor(Neighbor.UP), v);
+		} else if (zBound > CSS - claimRange) {
+			ob = getRelevantClaim(getNeighbor(Neighbor.UP), v, r);
 			if (ob != null) return ob;
 		}
 		return null;
-	}
-	
-	public boolean isOverlappingRange(Vector4 v) {
-		for (Claim c : claims) {
-			Vector4 v1 = c.getLocation();
-			
-			if (v1.x() - 72 < v.x() &&
-					v1.x() + 72 > v.x() &&
-					v1.z() - 72 < v.z() &&
-					v1.z() + 72 > v.z()) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public static boolean isOverlappingRange(ClaimSection cs, Vector4 v) {
-		if (cs != null) {
-			return cs.isOverlappingRange(v);
-		}
-		return false;
-	}
-	
-	public boolean isOverlappingClaim(Vector4 v) {
-		
-		if (isOverlappingRange(v)) {
-			return true;
-		}
-		
-		int xBound = (v.x() > -1) ? 
-				v.x()%128 :
-				(-1 * Math.abs(v.x()%128)) + 128;
-		
-		int zBound = (v.z() > -1) ? 
-				v.z()%128 :
-				(-1 * Math.abs(v.z()%128)) + 128;
-		
-		if (!(xBound > 70)) {
-			if (isOverlappingRange(getNeighbor(Neighbor.LEFT), v)) return true;
-			
-			if (!(zBound < 57)) {
-				if (isOverlappingRange(getNeighbor(Neighbor.UP), v)) return true;
-				if (isOverlappingRange(getNeighbor(Neighbor.UPLEFT), v))return true;
-			}
-			
-			if (!(zBound > 70)) {
-				if (isOverlappingRange(getNeighbor(Neighbor.DOWN), v)) return true;
-				if (isOverlappingRange(getNeighbor(Neighbor.DOWNLEFT), v)) return true;
-			}
-		}
-		
-		if (!(xBound < 57)) {
-			if (isOverlappingRange(getNeighbor(Neighbor.RIGHT), v)) return true;
-			
-			
-			if (!(zBound < 57)) {
-				if (isOverlappingRange(getNeighbor(Neighbor.UP), v)) return true;
-				if (isOverlappingRange(getNeighbor(Neighbor.UPRIGHT), v)) return true;
-			}
-			
-			if (!(zBound > 70)) {
-				if (isOverlappingRange(getNeighbor(Neighbor.DOWN), v)) return true;
-				if (isOverlappingRange(getNeighbor(Neighbor.DOWNRIGHT), v)) return true;
-			}
-		}
-		
-		return false;
 	}
 	
 	public Claim getOwnable(Vector4 v) {
@@ -238,19 +169,5 @@ public class ClaimSection {
 		cs = ClaimsTable.getSection(LongHash.msw(key) + n.x(), LongHash.lsw(key) + n.z(), w);
 		neighbors.put(n, cs);
 		return cs;
-	}
-	
-	/**
-	 * updates the claim section, with references to neighboring ClaimSections.
-	 */
-	public void update() {
-		for (Neighbor n : Neighbor.values()) {
-			neighbors.put(n, ClaimsTable.getSection(LongHash.msw(key) + n.x(), LongHash.lsw(key) + n.z(), w));
-			
-		}
-	}
-	
-	public void update(Neighbor n) {
-		neighbors.put(n, ClaimsTable.getSection(LongHash.msw(key) + n.x(), LongHash.lsw(key) + n.z(), w));
 	}
 }

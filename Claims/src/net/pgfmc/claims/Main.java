@@ -29,6 +29,8 @@ public class Main extends JavaPlugin {
 		plugin.saveDefaultConfig();
 		plugin.reloadConfig();
 		
+		
+		
 		// loads files.
 		Mixins.getFile(BlockContainersPath);
 		Mixins.getFile(EntityContainersPath);

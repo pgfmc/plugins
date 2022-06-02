@@ -1,5 +1,6 @@
 package net.pgfmc.claims.ownable.block;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.stream.IntStream;
 
@@ -40,6 +41,8 @@ public class Claim {
 	
 	private Vector4 vector;
 	
+	private ArrayList<PlayerData> members;
+	
 	/**
 	 * Defines access states.
 	 * 
@@ -56,8 +59,9 @@ public class Claim {
 		EXCEPTION,
 	}
 	
-	public Claim(PlayerData player, Vector4 vec) {
+	public Claim(PlayerData player, Vector4 vec, ArrayList<PlayerData> members) {
 		this.placer = player;
+		this.members = members;
 		
 		Block block = vec.getBlock();
 		vector = vec;

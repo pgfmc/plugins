@@ -8,6 +8,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.Claim.Security;
+import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.util.Vector4;
@@ -57,7 +58,7 @@ public class BBEvent implements Listener {
 				}
 			}
 			
-			Claim claim = ClaimsTable.getRelevantClaim(new Vector4(e.getBlock()));
+			Claim claim = ClaimsTable.getRelevantClaim(new Vector4(e.getBlock()), Range.PROTECTED);
 			
 			if (claim != null) {
 				
@@ -70,12 +71,10 @@ public class BBEvent implements Listener {
 			}
 		} else if (e.getPlayer().getGameMode() == GameMode.CREATIVE) {
 			
-			boolean insp = pd.getData("inspector");
-			
-			if (insp) {
+			if (pd.getTags().contains("inspector")) {
 				e.setCancelled(true);
 				
-				Claim claim = ClaimsTable.getRelevantClaim(new Vector4(e.getBlock()));
+				Claim claim = ClaimsTable.getRelevantClaim(new Vector4(e.getBlock()), Range.PROTECTED);
 				
 				if (claim != null) {
 					pd.sendMessage("§bInside claim at §c" + claim.getLocation().toString());
@@ -98,6 +97,8 @@ public class BBEvent implements Listener {
 			Claim cont = Claim.getOwnable(e.getBlock());
 			if (cont != null) {
 				cont.remove();
+				pd.sendMessage("§aClaim Removed!");
+				return;
 			}
 		}
 	}
