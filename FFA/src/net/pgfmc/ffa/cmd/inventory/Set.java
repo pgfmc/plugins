@@ -27,7 +27,7 @@ public class Set implements FFACmd {
 			return;
 		}
 		
-		zone.setInventoryItems(((Player) sender).getInventory());
+		zone.setContents(((Player) sender).getInventory().getContents());
 		
 		sender.sendMessage(ChatColor.GREEN + "Successfully set zone inventory!");
 		
