@@ -18,7 +18,6 @@ public class Main extends JavaPlugin {
 	
 	// all relevant file paths.
 	public static final String BlockContainersPath = "plugins\\PGF-Claims\\BlockContainers.yml";
-	public static final String EntityContainersPath = "plugins\\PGF-Claims\\EntityContainers.yml";
 	
 	public static Main plugin;
 	
@@ -33,7 +32,6 @@ public class Main extends JavaPlugin {
 		
 		// loads files.
 		Mixins.getFile(BlockContainersPath);
-		Mixins.getFile(EntityContainersPath);
 		
 		// new EscapeCommand();
 		
