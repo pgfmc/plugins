@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import net.pgfmc.ffa.cmd.inventory.Clear;
+import net.pgfmc.ffa.cmd.inventory.Preview;
 import net.pgfmc.ffa.cmd.inventory.Set;
 import net.pgfmc.ffa.cmd.zones.List;
 
@@ -50,7 +51,7 @@ public class FFACmdHandler implements CommandExecutor {
 				
 				if (args[1].equals("preview"))
 				{
-					new Clear().CmdDo(sender, cmd, label, args);
+					new Preview().CmdDo(sender, cmd, label, args);
 					return true;
 				}
 				
