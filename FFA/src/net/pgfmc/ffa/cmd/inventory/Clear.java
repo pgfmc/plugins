@@ -14,13 +14,7 @@ public class Clear implements FFACmd {
 	@Override
 	public void CmdDo(CommandSender sender, Command cmd, String label, String[] args) {
 		
-		if (args.length == 0)
-		{
-			sender.sendMessage(ChatColor.RED + "Please use `/ffa zones` for a list of zones.");
-			return;
-		}
-		
-		Zone zone = Zone.valueOf(args[0].toUpperCase());
+		Zone zone = Zone.valueOf(args[2].toUpperCase());
 		
 		if (zone == null)
 		{
