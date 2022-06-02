@@ -19,13 +19,7 @@ public class Set implements FFACmd {
 			return;
 		}
 		
-		if (args.length == 0)
-		{
-			sender.sendMessage(ChatColor.RED + "Please use `/ffa zones` for a list of zones.");
-			return;
-		}
-		
-		Zone zone = Zone.valueOf(args[0].toUpperCase());
+		Zone zone = Zone.valueOf(args[2].toUpperCase());
 		
 		if (zone == null)
 		{
