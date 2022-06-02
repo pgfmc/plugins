@@ -2,6 +2,8 @@ package net.pgfmc.claims.ownable;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -39,12 +41,16 @@ public class OwnableFile {
 				
 				ConfigurationSection configSec = database.getConfigurationSection(key);
 				
-				PlayerData pd = PlayerData.from(UUID.fromString(configSec.getString("player")));
+				PlayerData pd = PlayerData.from(UUID.fromString(configSec.getString("placer")));
 				
+				Set<PlayerData> members = new HashSet<>();
+				for (String berri : configSec.getStringList("members")) {
+					members.add(PlayerData.from(UUID.fromString(berri)));
+				}
 				
 				
 				Vector4 vec = Vector4.fromString(key);
-				new Claim(pd, vec);
+				new Claim(pd, vec, members);
 				amount++;
 			}
 			Bukkit.getLogger().warning("Loaded " + amount + " Claim(s).");
@@ -67,6 +73,7 @@ public class OwnableFile {
 		}
 		
 		blocc.set("placer", player.getUniqueId().toString());
+		blocc.set("members", ob.getMembers());
 		
 		database.set(id, blocc);
 		
