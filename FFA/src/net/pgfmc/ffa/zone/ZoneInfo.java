@@ -1,10 +1,7 @@
 package net.pgfmc.ffa.zone;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -12,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 
 import net.pgfmc.core.file.Configify;
@@ -83,12 +81,11 @@ public class ZoneInfo extends Configify {
 	{
 		super(Mixins.getFile(Main.plugin.getDataFolder() + File.separator + "zone-inventory-contents.yml"));
 		
-		List<Map<String, Object>> zoneItemsMapList = new ArrayList<Map<String, Object>>();
-		zoneItemsMapList.add(new ItemWrapper(Material.APPLE).a(16).gi().serialize());
+		ItemStack[] emptyInventory = Bukkit.createInventory(null, InventoryType.PLAYER).getContents();
+		emptyInventory[0] = new ItemWrapper(Material.APPLE).a(1).gi();
 		
-		
-		setDefaultValue("safe", zoneItemsMapList);
-		setDefaultValue("combat", zoneItemsMapList);
+		setDefaultValue("safe", emptyInventory);
+		setDefaultValue("combat", emptyInventory);
 	}
 	
 	public static Zone getZoneFromLocation(Location loc)
@@ -105,28 +102,29 @@ public class ZoneInfo extends Configify {
 	@Override
 	public void reload() {}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void enable() {
 		FileConfiguration config = getConfig();
 		
-		List<Map<?, ?>> safeZoneItemsMapList = config.getMapList("safe");
-		List<Map<?, ?>> combatZoneItemsMapList = config.getMapList("combat");
+		ItemStack[] emptyInventory = Bukkit.createInventory(null, InventoryType.PLAYER).getContents();
+		ItemStack[] templateInventory = new ItemStack[emptyInventory.length - 1];
 		
-		List<ItemStack> safeZoneItemsList = new ArrayList<ItemStack>();
-		safeZoneItemsMapList.stream()
-			.filter(map -> map != null)
-			.forEach(map -> safeZoneItemsList
-								.add(safeZoneItemsMapList.indexOf(map), ItemStack.deserialize((Map<String, Object>) map)));
+		List<?> safeList = config.getList("safe");
+		List<?> combatList = config.getList("combat");
 		
-		List<ItemStack> combatZoneItemsList = new ArrayList<ItemStack>();
-		combatZoneItemsMapList.stream()
-			.filter(map -> map != null)
-			.forEach(map -> combatZoneItemsList
-								.add(safeZoneItemsMapList.indexOf(map), ItemStack.deserialize((Map<String, Object>) map)));
+		for (int i = 0; i < emptyInventory.length - 1; i++)
+		{
+			templateInventory[i] = (ItemStack) safeList.get(i);
+		}
 		
-		Zone.SAFE.setContents((ItemStack[]) safeZoneItemsList.toArray(new ItemStack[safeZoneItemsList.size() - 1]));
-		Zone.COMBAT.setContents((ItemStack[]) combatZoneItemsList.toArray(new ItemStack[combatZoneItemsList.size() - 1]));
+		Zone.SAFE.setContents(templateInventory.clone());
+		
+		for (int i = 0; i < emptyInventory.length - 1; i++)
+		{
+			templateInventory[i] = (ItemStack) combatList.get(i);
+		}
+		
+		Zone.COMBAT.setContents(templateInventory.clone());
 		
 		Bukkit.getLogger().info("Configify loaded for ZoneInfo in FFA!");
 	}
@@ -135,20 +133,10 @@ public class ZoneInfo extends Configify {
 	public void disable() {
 		FileConfiguration config = getConfig();
 		
-		List<Map<String, Object>> safeZoneItemsMapList = new ArrayList<Map<String, Object>>();
-		Arrays.asList(Zone.SAFE.getContents())
-			.forEach(item -> safeZoneItemsMapList
-								.add(Arrays.asList(Zone.SAFE.getContents())
-										.indexOf(item), item.serialize()));
 		
-		List<Map<String, Object>> combatZoneItemsMapList = new ArrayList<Map<String, Object>>();
-		Arrays.asList(Zone.COMBAT.getContents())
-			.forEach(item -> combatZoneItemsMapList
-								.add(Arrays.asList(Zone.COMBAT.getContents())
-										.indexOf(item), item.serialize()));
 		
-		config.set("safe", safeZoneItemsMapList);
-		config.set("combat", combatZoneItemsMapList);
+		config.set("safe", Zone.SAFE.getContents());
+		config.set("combat", Zone.COMBAT.getContents());
 		
 		save(config);
 		
