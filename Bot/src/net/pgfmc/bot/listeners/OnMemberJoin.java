@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
 import net.pgfmc.bot.Discord;
+import net.pgfmc.bot.functions.AutoRole;
 import net.pgfmc.bot.functions.spam.Raid;
 
 public class OnMemberJoin implements EventListener {
@@ -29,6 +30,8 @@ public class OnMemberJoin implements EventListener {
 		Discord.sendAlert(eb.build()).queue();
 		
 		Raid.check(e);
+		
+		new AutoRole().autoRole(e.getMember());
 	}
 	
 	
