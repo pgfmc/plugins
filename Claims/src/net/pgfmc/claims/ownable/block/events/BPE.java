@@ -1,5 +1,7 @@
 package net.pgfmc.claims.ownable.block.events;
 
+import java.util.HashSet;
+
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -42,8 +44,18 @@ public class BPE implements Listener {
 				
 				
 				Claim merger = ClaimsTable.getRelevantClaim(new Vector4(block), Range.MERGE);
+				Claim foreign = ClaimsTable.getRelevantClaim(new Vector4(block), Range.FOREIGN);
 				
-				if ()
+				if (merger != null && (merger.getMembers().contains(pd) || merger.getPlayer() == pd)) {
+					
+					Claim.cloneMembers(merger, new Vector4(block));
+					
+					
+					pd.sendMessage("§aSurrounding land claimed!");
+					pd.sendMessage("§6Claim merged with the nearby claim.");
+					pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
+					
+				} else
 				
 				
 				
@@ -55,14 +67,14 @@ public class BPE implements Listener {
 				
 				
 				
-				if (ClaimsTable.getRelevantClaim(new Vector4(block), Range.FOREIGN) != null) {
+				if (foreign != null && foreign.getAccess(pd) == Security.BLOCKED) {
 					e.setCancelled(true);
 					pd.sendMessage("§cCannot claim land that would overlap another claim.");
 					
 					pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 				} else {
 					
-					new Claim(pd, new Vector4(block));
+					new Claim(pd, new Vector4(block), new HashSet<PlayerData>());
 					
 					
 					pd.sendMessage("§aSurrounding land claimed!");
@@ -79,12 +91,6 @@ public class BPE implements Listener {
 				e.setCancelled(true);
 				pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 				return;
-			}
-			
-			// registers block as a container if it is a valid container.
-			if (block.getType() == Material.LODESTONE) {
-				new Claim(pd, new Vector4(block));
-				System.out.println("ownable placed!");
 			}
 		}	
 	}

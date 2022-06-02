@@ -28,12 +28,12 @@ public class EscapeCommand extends PlayerCommand {
 			return true;
 		}
 		
-		Vector4 claimEdge = ob.getNearestClaimEdge(player_location);
+		//Vector4 claimEdge = ob.getNearestClaimEdge(player_location);
 		
-		if (claimEdge != null) {
-			arg0.sendMessage(claimEdge.toString());
-			arg0.teleport(claimEdge.toLocation());
-		}
+		//if (claimEdge != null) {
+			//arg0.sendMessage(claimEdge.toString());
+			//arg0.teleport(claimEdge.toLocation());
+		//}
 		
 		
 		
