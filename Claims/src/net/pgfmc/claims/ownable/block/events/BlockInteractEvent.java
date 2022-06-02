@@ -9,6 +9,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.Claim.Security;
+import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.util.Vector4;
@@ -39,7 +40,7 @@ public class BlockInteractEvent implements Listener {
 			if (e.getPlayer().getGameMode() == GameMode.SURVIVAL) {
 				
 				
-				Claim claim = ClaimsTable.getRelevantClaim(new Vector4(block));
+				Claim claim = ClaimsTable.getRelevantClaim(new Vector4(block), Range.PROTECTED);
 				if (claim == null) return; 
 				Security access = claim.getAccess(pd);
 				
