@@ -4,13 +4,13 @@ api-version: 1.18
 authors: [bk, CrimsonDart]
 website: play.pgfmc.net
 main: net.pgfmc.ffa.Main
-description: FFA for pre Season 11
+description: FFA for Pre-Season 11
 depend: [PGF-Core]
 load: POSTWORLD
 prefix: PGF-FFA
 
 commands:
-  setzoneinventory:
+  ffa:
     description: Set the inventory for zones
     usage: /<command> [zone]
-    permission: pgf.admin.zone.set
+    permission: pgf.admin.zone
