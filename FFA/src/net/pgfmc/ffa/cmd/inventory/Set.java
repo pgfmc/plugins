@@ -1,4 +1,4 @@
-package net.pgfmc.ffa.cmd.zone;
+package net.pgfmc.ffa.cmd.inventory;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

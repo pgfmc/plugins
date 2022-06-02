@@ -12,6 +12,7 @@ import org.bukkit.inventory.Inventory;
 
 import net.pgfmc.core.file.Configify;
 import net.pgfmc.core.file.Mixins;
+import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.ffa.Main;
 import net.pgfmc.ffa.zone.zones.Combat;
 import net.pgfmc.ffa.zone.zones.Safe;
@@ -54,6 +55,14 @@ public class ZoneInfo extends Configify {
 		
 		public void switchZone(Player player)
 		{
+			PlayerData.setData(player, "zone", this);
+			
+			if (inventory.getContents() == null)
+			{
+				Bukkit.getLogger().warning("Inventory contents is null in FFA#ZoneInfo! Cannot change zone inventory.");
+				return;
+			}
+			
 			player.getInventory().setContents(inventory.getContents());
 		}
 		
@@ -61,7 +70,10 @@ public class ZoneInfo extends Configify {
 		{
 			Zone zone = getZoneFromLocation(player.getLocation());
 			
+			if (PlayerData.getData(player, "zone") == zone) return null;
+			
 			zone.switchZone(player);
+			
 			return zone;
 		}
 
@@ -95,6 +107,7 @@ public class ZoneInfo extends Configify {
 		Zone.SAFE.setInventoryItems((Inventory) config.get("safe"));
 		Zone.COMBAT.setInventoryItems((Inventory) config.get("combat"));
 		
+		Bukkit.getLogger().fine("Configify loaded for ZoneInfo in FFA!");
 	}
 
 	@Override
