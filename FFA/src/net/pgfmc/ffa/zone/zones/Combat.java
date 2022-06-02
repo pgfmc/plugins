@@ -1,4 +1,4 @@
-package net.pgfmc.ffa.zone.combat;
+package net.pgfmc.ffa.zone.zones;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -10,19 +10,21 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.ffa.zone.ZoneDo;
 import net.pgfmc.ffa.zone.ZoneInfo;
 import net.pgfmc.ffa.zone.ZoneInfo.Zone;
 
-public class Combat {
+public class Combat implements ZoneDo {
 	
-	public void combatZoneDo(EntityDamageByEntityEvent e)
+	@Override
+	public void zoneDo(EntityDamageByEntityEvent e)
 	{
 		if (!(e.getEntity() instanceof Player)) return;
 		
 		Player p = (Player) e.getEntity();
 		PlayerData pd = PlayerData.from(p);
 		
-		if (ZoneInfo.getZoneFromLocation(p.getLocation()) != Zone.Combat) return;
+		if (ZoneInfo.getZoneFromLocation(p.getLocation()) != Zone.COMBAT) return;
 		
 		// If this damage was going to kill the player
 		if (p.getHealth() - e.getFinalDamage() <= 0)

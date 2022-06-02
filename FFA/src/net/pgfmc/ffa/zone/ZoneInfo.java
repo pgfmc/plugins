@@ -6,24 +6,45 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 
 import net.pgfmc.core.file.Configify;
 import net.pgfmc.core.file.Mixins;
 import net.pgfmc.ffa.Main;
+import net.pgfmc.ffa.zone.zones.Combat;
+import net.pgfmc.ffa.zone.zones.Safe;
 
 public class ZoneInfo extends Configify {
 	
 	public enum Zone {
-		Safe,
-		Combat;
+		
+		SAFE(new Safe()),
+		COMBAT(new Combat());
 		
 		Inventory inventory;
+		ZoneDo zoneDoClass;
+		
+		private Zone(ZoneDo zoneDoClass)
+		{
+			this.zoneDoClass = zoneDoClass;
+		}
+		
+		public void zoneDo(EntityDamageByEntityEvent e)
+		{
+			zoneDoClass.zoneDo(e);
+		}
 		
 		public void setInventoryItems(Inventory inventory)
 		{
-			this.inventory = inventory;
+			// Not sure if this is completely necessary, but I
+			// like the idea of a blank inventory template
+			// instead of copying the admin's inventory
+			Inventory tempInventory = Bukkit.createInventory(null, InventoryType.PLAYER);
+			tempInventory.setContents(inventory.getContents());
+			
+			this.inventory = tempInventory;
 		}
 		
 		public Inventory getInventory()
@@ -36,7 +57,7 @@ public class ZoneInfo extends Configify {
 			player.getInventory().setContents(inventory.getContents());
 		}
 		
-		public static Zone switchZoneUknown(Player player) 
+		public static Zone switchZoneUnknown(Player player) 
 		{
 			Zone zone = getZoneFromLocation(player.getLocation());
 			
@@ -59,9 +80,9 @@ public class ZoneInfo extends Configify {
 		int x = Math.abs(loc.getBlockX());
 		int z = Math.abs(loc.getBlockZ());
 		
-		if (x >= 10 || z >= 10) return Zone.Combat;
+		if (x >= 10 || z >= 10) return Zone.COMBAT;
 		
-		return Zone.Safe;
+		return Zone.SAFE;
 		
 	}
 	
@@ -71,8 +92,8 @@ public class ZoneInfo extends Configify {
 	public void reload() {
 		FileConfiguration config = getConfig();
 		
-		Zone.Safe.setInventoryItems((Inventory) config.get("safe"));
-		Zone.Combat.setInventoryItems((Inventory) config.get("combat"));
+		Zone.SAFE.setInventoryItems((Inventory) config.get("safe"));
+		Zone.COMBAT.setInventoryItems((Inventory) config.get("combat"));
 		
 	}
 
@@ -85,8 +106,8 @@ public class ZoneInfo extends Configify {
 	public void disable() {
 		FileConfiguration config = getConfig();
 		
-		config.set("safe", Zone.Safe.getInventory());
-		config.set("combat", Zone.Combat.getInventory());
+		config.set("safe", Zone.SAFE.getInventory());
+		config.set("combat", Zone.COMBAT.getInventory());
 		
 		save(config);
 	}
