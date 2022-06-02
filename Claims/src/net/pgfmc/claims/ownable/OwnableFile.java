@@ -49,9 +49,6 @@ public class OwnableFile {
 			}
 			Bukkit.getLogger().warning("Loaded " + amount + " Claim(s).");
 		}
-		
-		//BlockManager.calcLoop(); // stats the calcloop, which loads each player's region into memory.
-		
 	}
 	
 	public static void saveContainer(Claim ob, FileConfiguration database) {
@@ -69,7 +66,7 @@ public class OwnableFile {
 			blocc = database.createSection(id);
 		}
 		
-		blocc.set("player", player.getUniqueId().toString());
+		blocc.set("placer", player.getUniqueId().toString());
 		
 		database.set(id, blocc);
 		
