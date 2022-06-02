@@ -5,8 +5,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import net.pgfmc.ffa.cmd.zone.Clear;
-import net.pgfmc.ffa.cmd.zone.Set;
+import net.pgfmc.ffa.cmd.inventory.Clear;
+import net.pgfmc.ffa.cmd.inventory.Set;
 import net.pgfmc.ffa.cmd.zones.List;
 
 public class FFACmdHandler implements CommandExecutor {
@@ -17,7 +17,7 @@ public class FFACmdHandler implements CommandExecutor {
 		if (args.length == 0)
 		{
 			sender.sendMessage(ChatColor.RED + "" + ChatColor.UNDERLINE + "Commands for PGF-FFA" + ChatColor.RESET
-					+ "\n" + ChatColor.RED + "/ffa zone <set/clear/preview> [zone]"
+					+ "\n" + ChatColor.RED + "/ffa inventory <set/clear/preview> [zone]"
 					+ "\n" + ChatColor.RED + "/ffa zones");
 			return true;
 		}
@@ -32,9 +32,9 @@ public class FFACmdHandler implements CommandExecutor {
 			
 		}
 		
-		if (args.length == 2)
+		if (args.length == 3)
 		{
-			if (args[0].equals("zone"))
+			if (args[0].equals("inventory"))
 			{
 				if (args[1].equals("set"))
 				{
