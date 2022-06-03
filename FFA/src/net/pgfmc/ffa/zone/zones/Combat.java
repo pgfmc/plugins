@@ -1,5 +1,7 @@
 package net.pgfmc.ffa.zone.zones;
 
+import java.util.Optional;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -14,15 +16,39 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.ffa.FFAScoreboard;
 import net.pgfmc.ffa.zone.ZoneDo;
 import net.pgfmc.ffa.zone.ZoneInfo;
 import net.pgfmc.ffa.zone.ZoneInfo.Zone;
 
 public class Combat implements ZoneDo, Listener {
 	
+	private static final FFAScoreboard SCOREBOARD = new FFAScoreboard();
+	
 	@Override
 	public void zoneDo(EntityDamageByEntityEvent e)
 	{
+		
+		if (!(e.getDamager() instanceof Player && !(e.getDamager() instanceof Projectile)))
+		{
+			e.setCancelled(true);
+			return;
+			
+			
+		} else if (e.getDamager() instanceof Projectile)
+		{
+			Projectile proj = (Projectile) e.getDamager();
+			
+			if (!(proj.getShooter() instanceof Player))
+			{
+				e.setCancelled(true);
+				return;
+				
+			}
+			
+		}
+		
+		
 		if (!(e.getEntity() instanceof Player)) return;
 		
 		Player p = (Player) e.getEntity();
@@ -50,11 +76,11 @@ public class Combat implements ZoneDo, Listener {
 				if (proj.getShooter() instanceof Player)
 				{
 					damager = (Player) proj.getShooter();
+				} else {
+					e.setCancelled(true);
+					return;
 				}
-			}
-			
-			if (damager == null)
-			{
+			} else {
 				e.setCancelled(true);
 				return;
 			}
@@ -65,9 +91,17 @@ public class Combat implements ZoneDo, Listener {
 			pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
 			pdDamager.playSound(Sound.ENTITY_EXPERIENCE_ORB_PICKUP);
 			
+			double deaths = (double) Optional.ofNullable(pd.getData("deaths")).orElse(0.0) + 1.0;
+			pd.setData("deaths", deaths).queue();;
+			
+			double kills = (double) Optional.ofNullable(pdDamager.getData("kills")).orElse(0.0) + 1.0;
+			pdDamager.setData("kills", kills).queue();;
+			
+			SCOREBOARD.updateScoreboard();			
 		}
 	}
 	
+	// Basically only cancels fall damage
 	@EventHandler
 	public void onDamage(EntityDamageEvent e)
 	{
