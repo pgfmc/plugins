@@ -22,6 +22,7 @@ public class Main extends JavaPlugin {
 		
 		getServer().getPluginManager().registerEvents(new Afk(), this);
 		getServer().getPluginManager().registerEvents(new ItemProtect(), this);
+		getServer().getPluginManager().registerEvents(new NetherRoofBlocker(), this);
 		
 	}
 	
