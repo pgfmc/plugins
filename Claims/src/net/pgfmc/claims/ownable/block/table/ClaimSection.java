@@ -1,5 +1,6 @@
 package net.pgfmc.claims.ownable.block.table;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -44,6 +45,25 @@ public class ClaimSection {
 	 */
 	public Set<Claim> getAllClaims() {
 		return claims;
+	}
+	
+	public static ArrayList<Claim> getClaims(ClaimSection cs, Vector4 v, Range r) {
+		
+		
+		ArrayList<Claim> claims = new ArrayList<>();
+		
+		if (cs == null) return claims;
+		if (cs.claims.size() == 0) return claims;
+		
+		for (Claim c : cs.claims) {
+			if (ClaimsLogic.isInRange(c, v, r)) {
+				
+				claims.add(c);
+			}
+		}
+		
+		return claims;
+		
 	}
 	
 	public static Claim getRelevantClaim(ClaimSection cs, Vector4 v, Range r) {
@@ -135,6 +155,53 @@ public class ClaimSection {
 		}
 		return null;
 	}
+	
+	public ArrayList<Claim> getNearbyClaims(Vector4 v, Range r) {
+		
+		final ArrayList<Claim> ob = getClaims(this, v, r);
+		
+		
+		
+		int claimRange = r.getRange();
+		int xBound = v.x()%CSS;
+		int zBound = v.z()%CSS;
+		
+		if (xBound < claimRange) {
+			
+			getClaims(getNeighbor(Neighbor.LEFT), v, r).forEach(x -> ob.add(x));
+			
+			
+			if (zBound < claimRange) {
+				
+				getClaims(getNeighbor(Neighbor.DOWN), v, r).forEach(x -> ob.add(x));
+				getClaims(getNeighbor(Neighbor.DOWNLEFT), v, r).forEach(x -> ob.add(x));
+			} else if (zBound > CSS - claimRange) {
+				getClaims(getNeighbor(Neighbor.UP), v, r).forEach(x -> ob.add(x));
+				getClaims(getNeighbor(Neighbor.UPLEFT), v, r).forEach(x -> ob.add(x));
+			}
+		} else if (xBound > CSS - claimRange) {
+			
+			getClaims(getNeighbor(Neighbor.RIGHT), v, r).forEach(x -> ob.add(x));
+			if (zBound < claimRange) {
+				getClaims(getNeighbor(Neighbor.DOWN), v, r).forEach(x -> ob.add(x));
+				getClaims(getNeighbor(Neighbor.DOWNRIGHT), v, r).forEach(x -> ob.add(x));
+			} else if (zBound > CSS - claimRange) {
+				getClaims(getNeighbor(Neighbor.UP), v, r).forEach(x -> ob.add(x));
+				getClaims(getNeighbor(Neighbor.UPRIGHT), v, r).forEach(x -> ob.add(x));
+			}
+		} else if (zBound < claimRange) { // move left
+			getClaims(getNeighbor(Neighbor.DOWN), v, r).forEach(x -> ob.add(x));
+		} else if (zBound > CSS - claimRange) {
+			getClaims(getNeighbor(Neighbor.UP), v, r).forEach(x -> ob.add(x));
+		}
+		return ob;
+	}
+	
+	
+	
+	
+	
+	
 	
 	public Claim getOwnable(Vector4 v) {
 		if (claims.size() == 0) return null;

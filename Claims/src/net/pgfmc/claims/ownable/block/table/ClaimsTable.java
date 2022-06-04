@@ -1,5 +1,6 @@
 package net.pgfmc.claims.ownable.block.table;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -97,6 +98,22 @@ public class ClaimsTable {
 		}
 		
 		Claim ob = cs.getClosestClaim(v, r);
+		if (ob != null) {
+			return ob;
+		}
+		
+		return null;
+	}
+	
+	public static ArrayList<Claim> getNearbyClaims(Vector4 v, Range r) {
+		ClaimSection cs = getSection(v);
+		if (cs == null) { // if there is no CS, then it creates a new one for the position v.
+			Bukkit.getLogger().warning("cs was null, creating new cs for GRC.");
+			cs = new ClaimSection(getSectionKey(v), v.w());
+			getWorldTable(v.w()).put(getSectionKey(v), cs);
+		}
+		
+		ArrayList<Claim> ob = cs.getNearbyClaims(v, r);
 		if (ob != null) {
 			return ob;
 		}

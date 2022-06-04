@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -73,7 +74,10 @@ public class OwnableFile {
 		}
 		
 		blocc.set("placer", player.getUniqueId().toString());
-		blocc.set("members", ob.getMembers());
+		blocc.set("members", ob.getMembers()
+				.stream().map(x -> {
+					return x.getUniqueId().toString();
+				}).collect(Collectors.toList()));
 		
 		database.set(id, blocc);
 		
