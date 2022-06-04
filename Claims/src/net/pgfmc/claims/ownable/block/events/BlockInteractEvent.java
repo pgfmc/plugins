@@ -1,6 +1,7 @@
 package net.pgfmc.claims.ownable.block.events;
 
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,6 +10,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.Claim.Security;
+import net.pgfmc.claims.ownable.block.ClaimConfigInventory;
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
 import net.pgfmc.core.playerdataAPI.PlayerData;
@@ -71,8 +73,15 @@ public class BlockInteractEvent implements Listener {
 					}
 					
 					e.setCancelled(true);
-					
-						
+				}
+			} 
+			
+			if (e.getPlayer().isSneaking()) return;
+			if (block != null && block.getType() == Material.LODESTONE) {
+				Claim claim = ClaimsTable.getOwnable(new Vector4(block));
+				if (claim != null && claim.getAccess(pd) == Security.ADMIN || e.getPlayer().getGameMode() == GameMode.CREATIVE) {
+					e.setCancelled(true);
+					pd.getPlayer().openInventory(new ClaimConfigInventory(claim).getInventory());
 				}
 			}
 		}
