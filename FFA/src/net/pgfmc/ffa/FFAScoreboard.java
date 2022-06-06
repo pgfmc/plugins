@@ -7,23 +7,21 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.ScoreboardManager;
 
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
 public class FFAScoreboard {
 	
+	final private Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+	
 	public void updateScoreboard()
 	{
-        ScoreboardManager m = Bukkit.getScoreboardManager();
         
         for (Player p : Bukkit.getOnlinePlayers())
         {
         	PlayerData pd = PlayerData.from(p);
         	
-        	Scoreboard b = m.getNewScoreboard();
-        	
-			Objective o = b.registerNewObjective("ffa-scoreboard", "dummy", "Pre-Season 11");
+			Objective o = scoreboard.registerNewObjective("ffa-scoreboard", "dummy", "");
 			o.setDisplaySlot(DisplaySlot.BELOW_NAME);
 			
 			double kills = pd.getData("kills");
@@ -34,7 +32,7 @@ public class FFAScoreboard {
 			Score kd = o.getScore(ChatColor.GOLD + String.valueOf(kdr));
 			kd.setScore(0);
 			
-			p.setScoreboard(b);
+			p.setScoreboard(scoreboard);
         }
         
 	}
