@@ -177,7 +177,7 @@ public class ClaimConfigInventory extends BaseInventory {
 			claim.getMembers().add(player);
 			arg0.closeInventory();
 			arg0.sendMessage("Added " + player.getRankedName() + " to your base.");
-			
+			claim.forwardUpdateFrom(claim, null);
 		}
 	}
 	
@@ -203,7 +203,7 @@ public class ClaimConfigInventory extends BaseInventory {
 			claim.getMembers().remove(player);
 			arg0.closeInventory();
 			arg0.sendMessage("Removed " + player.getRankedName() + " from your base.");
-			
+			claim.forwardUpdateFrom(claim, null);
 		}
 	}
 }

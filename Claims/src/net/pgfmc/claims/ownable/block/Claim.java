@@ -1,12 +1,13 @@
 package net.pgfmc.claims.ownable.block;
 
+import java.util.HashSet;
 import java.util.Set;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import net.pgfmc.claims.ownable.block.table.ClaimSection;
+import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.util.Vector4;
@@ -71,16 +72,35 @@ public class Claim {
 		}
 	}
 	
-	public static Claim cloneMembers(Claim claim, Vector4 vec) {
-		return new Claim(claim.placer, vec, claim.getMembers());
+	
+	public void updateFrom(Claim claim) {
+		this.members = claim.members;
+		this.placer = claim.placer;
+	}
+	
+	public void forwardUpdateFrom(Claim claim, Set<Claim> done) {
+		if (done == null) {
+			done = new HashSet<Claim>();
+		}
 		
+		if (!done.contains(this)) {
+			done.add(this);
+		}
+		
+		updateFrom(claim);
+		
+		for (Claim clame : ClaimsTable.getNearbyClaims(this.getLocation(), Range.MERGE)) {
+			if (!done.contains(clame)) {
+				done.add(clame);
+				clame.forwardUpdateFrom(claim, done);
+			}
+		}
 	}
 	
 	/**
 	 * Removes this ownable.
 	 */
 	public void remove() {
-		Bukkit.getLogger().warning("1");
 		ClaimsTable.remove(this);
 		return;
 	}
@@ -129,7 +149,14 @@ public class Claim {
 	}
 	
 	public Security getAccess(PlayerData player) {
-		return Security.ADMIN;
+		
+		if (player == placer) {
+			return Security.ADMIN;
+		} else if (members.contains(player)) {
+			return Security.MEMBER;
+		} else {
+			return Security.BLOCKED;
+		}
 	};
 }
 
