@@ -21,7 +21,7 @@ public class EscapeCommand extends PlayerCommand {
 		
 		Vector4 player_location = new Vector4(arg0.getPlayer().getLocation());
 		
-		Claim ob = ClaimsTable.getRelevantClaim(player_location, Range.PROTECTED);
+		Claim ob = ClaimsTable.getClosestClaim(player_location, Range.PROTECTED);
 		
 		if (ob == null) {
 			arg0.sendMessage("§cYou aren't in a claim!");

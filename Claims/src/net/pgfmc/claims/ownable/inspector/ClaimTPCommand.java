@@ -19,7 +19,7 @@ public class ClaimTPCommand implements CommandExecutor {
 		if (!(sender instanceof Player)) return true;
 		if (((Player) sender).getGameMode() != GameMode.CREATIVE) return true;
 		
-		Claim ob = ClaimsTable.getRelevantClaim(new Vector4(((Player) sender).getLocation()), Range.PROTECTED);
+		Claim ob = ClaimsTable.getClosestClaim(new Vector4(((Player) sender).getLocation()), Range.PROTECTED);
 		
 		if (ob != null) {
 			((Player) sender).teleport(ob.getLocation().toLocation());

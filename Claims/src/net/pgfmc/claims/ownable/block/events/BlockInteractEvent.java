@@ -42,7 +42,7 @@ public class BlockInteractEvent implements Listener {
 			if (e.getPlayer().getGameMode() == GameMode.SURVIVAL) {
 				
 				
-				Claim claim = ClaimsTable.getRelevantClaim(new Vector4(block), Range.PROTECTED);
+				Claim claim = ClaimsTable.getClosestClaim(new Vector4(block), Range.PROTECTED);
 				if (claim == null) return; 
 				Security access = claim.getAccess(pd);
 				
@@ -57,17 +57,17 @@ public class BlockInteractEvent implements Listener {
 					
 					switch(block.getType()) {
 					
-					case BARREL: pd.sendMessage("§cThis barrel is locked!"); break;
-					case BLAST_FURNACE: pd.sendMessage("§cThis blast furnace is locked!"); break;
-					case BREWING_STAND: pd.sendMessage("§cThis brewing stand is locked!"); break;
-					case CHEST: pd.sendMessage("§cThis chest is locked!"); break;
-					case DISPENSER: pd.sendMessage("§cThis dispenser is locked!"); break;
-					case DROPPER: pd.sendMessage("§cThis dropper is locked!"); break;
-					case FURNACE: pd.sendMessage("§cThis furnace is locked!"); break;
-					case HOPPER: pd.sendMessage("§cThis hopper is locked!"); break;
-					case SHULKER_BOX: pd.sendMessage("§cThis shulker box is locked!"); break;
-					case SMOKER: pd.sendMessage("§cThis smoker is locked!"); break;
-					case BEACON: pd.sendMessage("§cThis beacon is locked!"); break;
+					case BARREL: pd.sendMessage("§cThis barrel is claimed!"); break;
+					case BLAST_FURNACE: pd.sendMessage("§cThis blast furnace is claimed!"); break;
+					case BREWING_STAND: pd.sendMessage("§cThis brewing stand is claimed!"); break;
+					case CHEST: pd.sendMessage("§cThis chest is claimed!"); break;
+					case DISPENSER: pd.sendMessage("§cThis dispenser is claimed!"); break;
+					case DROPPER: pd.sendMessage("§cThis dropper is claimed!"); break;
+					case FURNACE: pd.sendMessage("§cThis furnace is claimed!"); break;
+					case HOPPER: pd.sendMessage("§cThis hopper is claimed!"); break;
+					case SHULKER_BOX: pd.sendMessage("§cThis shulker box is claimed!"); break;
+					case SMOKER: pd.sendMessage("§cThis smoker is claimed!"); break;
+					case BEACON: pd.sendMessage("§cThis beacon is claimed!"); break;
 					default:
 						return;
 					}
