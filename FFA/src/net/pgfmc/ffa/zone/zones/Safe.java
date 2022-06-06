@@ -13,20 +13,30 @@ public class Safe implements ZoneDo {
 	@Override
 	public void zoneDo(EntityDamageByEntityEvent e)
 	{
-		// No entity should take damage if inside safe zone
-		if (ZoneInfo.getZoneFromLocation(e.getEntity().getLocation()) == Zone.SAFE) {
-			e.setCancelled(true);
-		} else return;
+		Zone zone = ZoneInfo.getZoneFromLocation(e.getEntity().getLocation());
 		
+		if (zone != Zone.SAFE) return;
 		
+		// Let damage through if the damager is in creative mode
+		if (e.getDamager() instanceof Player)
+		{
+			Player pDamager = (Player) e.getDamager();
+			
+			if (pDamager.getGameMode() == GameMode.CREATIVE) return;
+		}
 		
-		if (!(e.getEntity() instanceof Player)) return;
+		// Cancel all damage
+		e.setCancelled(true);
 		
-		Player p = (Player) e.getEntity();
-		
-		if (p.getGameMode() != GameMode.SURVIVAL) return;
-		
-		Zone.SAFE.switchZone(p);
+		if (!(e.getEntity() instanceof Player))
+		{
+			Player p = (Player) e.getEntity();
+			
+			if (p.getGameMode() != GameMode.SURVIVAL) return;
+			
+			// Switch zone inventory if in survival mode
+			Zone.SAFE.switchZone(p);
+		}
 		
 	}
 
