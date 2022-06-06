@@ -1,8 +1,8 @@
 package net.pgfmc.core.permissions;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -11,15 +11,29 @@ import java.util.stream.Collectors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.permissions.Permission;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 import net.pgfmc.bot.Discord;
 import net.pgfmc.core.CoreMain;
+import net.pgfmc.core.file.Configify;
+import net.pgfmc.core.file.Mixins;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
-public class Roles {
+public class Roles extends Configify implements Listener {
 	
-	private static Permissions pManager = new Permissions();
+	public Roles() {
+		super(Mixins.getFile(CoreMain.plugin.getDataFolder() + File.separator + "roles.yml"));
+		
+		for (Role r : Role.values())
+		{
+			setDefaultValue("config-version", "1");
+			setDefaultValue(r.getName() + ".id", "000000000000000000");
+			setDefaultValue(r.getName() + ".color", "r");
+		}
+	}
 	
 	public enum Role {
 		FOUNDER,
@@ -34,7 +48,6 @@ public class Roles {
 		MEMBER;
 		
 		private String color;
-		private Set<Permission> permissions;
 		private String id;
 		
 		public String getName()
@@ -65,19 +78,9 @@ public class Roles {
 			this.color = color;//color.replaceAll("[^A-Za-z0-9âœ¦]", "").toLowerCase();
 		}
 		
-		public void setPermissions(Set<Permission> permissions)
-		{
-			this.permissions = permissions;
-		}
-		
 		public void setId(String id)
 		{
 			this.id = id;
-		}
-		
-		public Set<Permission> getPermissions()
-		{
-			return permissions;
 		}
 		
 	}
@@ -106,7 +109,6 @@ public class Roles {
 		}
 		
 		pd.setData("roles", roles).queue();
-		pManager.recalculate(pd.getOfflinePlayer());
 	}
 	
 	public static void recalculate(OfflinePlayer p)
@@ -177,28 +179,37 @@ public class Roles {
 		return getTop(getRolesByPlayer(p));
 	}
 	
-	public static Set<Permission> getPermissions(Collection<Role> roles)
+	@EventHandler
+	public void onJoin(PlayerJoinEvent e)
 	{
-		if (roles.size() == 0 || roles == null) return Role.MEMBER.getPermissions();
+		Roles.recalculate(e.getPlayer());
+	}
+
+	@Override
+	public void reload()
+	{
+		FileConfiguration db = getConfig();
 		
-		Set<Permission> permissions = new HashSet<Permission>();
+		Bukkit.getLogger().warning("Reloading roles.yml");
 		
-		for (Role r : roles)
+		for (Role r : Role.values())
 		{
-			Set<Permission> p = r.getPermissions();
-			if (p == null) continue;
+			r.setId(db.getString(r.getName() + ".id"));
+			r.setColor(db.getString(r.getName() + ".color"));
 			
-			permissions.addAll(p);
 		}
 		
-		return permissions;
+		PlayerData.getPlayerDataSet(x -> x.isOnline())
+		.forEach(pd -> Roles.recalculate(pd));
+		
 	}
-	
-	public static List<String> getPermissionsAsString(Collection<Role> roles)
-	{
-		return getPermissions(roles).stream()
-				.map(p -> p.getName())
-				.collect(Collectors.toList());
+
+	@Override
+	public void enable() {
+		reload();
 	}
+
+	@Override
+	public void disable() {}
 	
 }

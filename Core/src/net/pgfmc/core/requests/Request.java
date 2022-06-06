@@ -77,7 +77,7 @@ public final class Request implements Buttonable {
 				RequestListInventory inv = new RequestListInventory(PlayerData.from(p));
 				inv.setItem(0, Material.FEATHER).n("§r§cBack");
 				inv.setAction(0, (player, event) -> {
-					player.openInventory(new CommandsMenu(net.pgfmc.core.playerdataAPI.PlayerData.from(p)).getInventory());
+					player.openInventory(new CommandsMenu(PlayerData.from(p)).getInventory());
 				});
 				
 				p.openInventory(inv.getInventory());

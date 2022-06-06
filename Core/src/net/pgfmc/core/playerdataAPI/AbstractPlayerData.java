@@ -9,8 +9,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 
-import net.pgfmc.core.permissions.Permissions;
-
 /**
  * Exists literally only so there is less code in PlayerData.
  * @author CrimsonDart
@@ -98,12 +96,20 @@ abstract class AbstractPlayerData {
 		}
 	}
 	
-	public boolean hasPermission(String permission) {
-		return Permissions.has(player, permission);
+	public Boolean hasPermission(String permission) {
+		Player p = player.getPlayer();
+		
+		if (p == null) return null;
+		
+		return p.hasPermission(permission);
 	}
 	
-	public boolean hasPermission(Permission permission) {
-		return Permissions.has(player, permission.getName());
+	public Boolean hasPermission(Permission permission) {
+		Player p = player.getPlayer();
+		
+		if (p == null) return null;
+		
+		return p.hasPermission(permission.getName());
 	}
 	
 }
