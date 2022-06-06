@@ -16,5 +16,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="E:/github/.plugins/Dependencies/ProtocolLib.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

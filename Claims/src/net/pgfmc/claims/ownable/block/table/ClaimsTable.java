@@ -1,10 +1,7 @@
 package net.pgfmc.claims.ownable.block.table;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-
-import org.bukkit.Bukkit;
 
 import com.sk89q.worldguard.util.collect.LongHash;
 import com.sk89q.worldguard.util.collect.LongHashTable;
@@ -89,10 +86,9 @@ public class ClaimsTable {
 	 * @param v The location
 	 * @return The claim that contains this location. Returns "null" if there is no claim.
 	 */
-	public static Claim getRelevantClaim(Vector4 v, Range r) {
+	public static Claim getClosestClaim(Vector4 v, Range r) {
 		ClaimSection cs = getSection(v);
 		if (cs == null) { // if there is no CS, then it creates a new one for the position v.
-			Bukkit.getLogger().warning("cs was null, creating new cs for GRC.");
 			cs = new ClaimSection(getSectionKey(v), v.w());
 			getWorldTable(v.w()).put(getSectionKey(v), cs);
 		}
@@ -105,15 +101,14 @@ public class ClaimsTable {
 		return null;
 	}
 	
-	public static ArrayList<Claim> getNearbyClaims(Vector4 v, Range r) {
+	public static Set<Claim> getNearbyClaims(Vector4 v, Range r) {
 		ClaimSection cs = getSection(v);
-		if (cs == null) { // if there is no CS, then it creates a new one for the position v.
-			Bukkit.getLogger().warning("cs was null, creating new cs for GRC.");
+		if (cs == null) { // if there is no CS, then it creates a new one for the position v
 			cs = new ClaimSection(getSectionKey(v), v.w());
 			getWorldTable(v.w()).put(getSectionKey(v), cs);
 		}
 		
-		ArrayList<Claim> ob = cs.getNearbyClaims(v, r);
+		Set<Claim> ob = cs.getNearbyClaims(v, r);
 		if (ob != null) {
 			return ob;
 		}

@@ -1,12 +1,9 @@
 package net.pgfmc.claims.ownable.block.table;
 
-import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-import org.bukkit.Bukkit;
 
 import com.sk89q.worldguard.util.collect.LongHash;
 
@@ -47,10 +44,10 @@ public class ClaimSection {
 		return claims;
 	}
 	
-	public static ArrayList<Claim> getClaims(ClaimSection cs, Vector4 v, Range r) {
+	public static Set<Claim> getClaims(ClaimSection cs, Vector4 v, Range r) {
 		
 		
-		ArrayList<Claim> claims = new ArrayList<>();
+		Set<Claim> claims = new HashSet<>();
 		
 		if (cs == null) return claims;
 		if (cs.claims.size() == 0) return claims;
@@ -63,7 +60,6 @@ public class ClaimSection {
 		}
 		
 		return claims;
-		
 	}
 	
 	public static Claim getRelevantClaim(ClaimSection cs, Vector4 v, Range r) {
@@ -80,87 +76,28 @@ public class ClaimSection {
 	
 	public Claim getClosestClaim(Vector4 v, Range r) {
 		
-		Claim ob = getRelevantClaim(this, v, r);
-		if (ob != null) {
-			return ob;
-		}
 		
-		int claimRange = r.getRange();
 		
-		int xBound = v.x()%CSS;
-		int zBound = v.z()%CSS;
+		Set<Claim> claimes = this.getNearbyClaims(v, r);
 		
-		if (xBound < claimRange) {
+		
+		
+		return claimes.stream().reduce( (x, y) -> {
 			
-			ob = getRelevantClaim(getNeighbor(Neighbor.LEFT), v, r);
-			if (ob != null) return ob;
+			double d1 = Math.abs(Math.sqrt((v.x() - x.getLocation().x()) + (v.y() - x.getLocation().y())));
+			double d2 = Math.abs(Math.sqrt((v.x() - y.getLocation().x()) + (v.y() - y.getLocation().y())));
 			
-			if (zBound < claimRange) {
-				
-				ob = getRelevantClaim(getNeighbor(Neighbor.DOWN), v, r);
-				if (ob != null) return ob;
-				
-				else {
-					ob = getRelevantClaim(getNeighbor(Neighbor.DOWNLEFT), v, r);
-					if (ob != null) return ob;
-				}
-				
-				return null;
-			} else if (zBound > CSS - claimRange) {
-				
-				ob = getRelevantClaim(getNeighbor(Neighbor.UP), v, r);
-				if (ob != null) return ob;
-				
-				else {
-					ob = getRelevantClaim(getNeighbor(Neighbor.UPLEFT), v, r);
-					if (ob != null) return ob;
-				}
+			if (d1 > d2) {
+				return y;
+			} else {
+				return x;
 			}
-			return null;
-		} else if (xBound > CSS - claimRange) {
-			
-			ob = getRelevantClaim(getNeighbor(Neighbor.RIGHT), v, r);
-			if (ob != null) return ob;
-			
-			if (zBound < claimRange) {
-				
-				ob = getRelevantClaim(getNeighbor(Neighbor.DOWN), v, r);
-				if (ob != null) return ob;
-				
-				else {
-					ob = getRelevantClaim(getNeighbor(Neighbor.DOWNRIGHT), v, r);
-					if (ob != null) return ob;
-				}
-				
-				return null;
-			} else if (zBound > CSS - claimRange) {
-				
-				ob = getRelevantClaim(getNeighbor(Neighbor.UP), v, r);
-				if (ob != null) return ob;
-				
-				else {
-					ob = getRelevantClaim(getNeighbor(Neighbor.UPRIGHT), v, r);
-					if (ob != null) return ob;
-				}
-			}
-			return null;
-		} else if (zBound < claimRange) { // move left
-			
-			ob = getRelevantClaim(getNeighbor(Neighbor.DOWN), v, r);
-			if (ob != null) return ob;
-			
-		} else if (zBound > CSS - claimRange) {
-			ob = getRelevantClaim(getNeighbor(Neighbor.UP), v, r);
-			if (ob != null) return ob;
-		}
-		return null;
+		}).orElse(null);
 	}
 	
-	public ArrayList<Claim> getNearbyClaims(Vector4 v, Range r) {
+	public Set<Claim> getNearbyClaims(Vector4 v, Range r) {
 		
-		final ArrayList<Claim> ob = getClaims(this, v, r);
-		
-		
+		final Set<Claim> ob = getClaims(this, v, r);
 		
 		int claimRange = r.getRange();
 		int xBound = v.x()%CSS;
@@ -197,12 +134,6 @@ public class ClaimSection {
 		return ob;
 	}
 	
-	
-	
-	
-	
-	
-	
 	public Claim getOwnable(Vector4 v) {
 		if (claims.size() == 0) return null;
 		
@@ -215,7 +146,6 @@ public class ClaimSection {
 	}
 	
 	public void put(Claim ob) {
-		System.out.println("pushed pt. 2");
 		claims.add(ob);
 	}
 	
@@ -224,12 +154,8 @@ public class ClaimSection {
 	}
 	
 	public ClaimSection getNeighbor(Neighbor n) {
-		
-		Bukkit.getLogger().warning("getting neighbor at " + n.toString());
-		
 		ClaimSection cs = neighbors.get(n);
 		if (cs != null) {
-			Bukkit.getLogger().warning("Neighbor referenced.");
 			return cs;
 		}
 		

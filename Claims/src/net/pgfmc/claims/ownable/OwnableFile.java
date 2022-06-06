@@ -54,7 +54,7 @@ public class OwnableFile {
 				new Claim(pd, vec, members);
 				amount++;
 			}
-			Bukkit.getLogger().warning("Loaded " + amount + " Claim(s).");
+			Bukkit.getLogger().info("Loaded " + amount + " Claim(s).");
 		}
 	}
 	
@@ -96,7 +96,7 @@ public class OwnableFile {
 		
 		try {
 			database.save(file);
-			Bukkit.getLogger().warning("Claim locations saved!");
+			Bukkit.getLogger().info("Claim locations saved!");
 			
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -36,35 +36,22 @@ public class BPE implements Listener {
 		
 		if (e.getPlayer().getGameMode() == GameMode.SURVIVAL) { // ---------------------------------------------- if debug mode off / not creative mode
 			
-			System.out.println("block placed!");
-			
 			if (block.getType() == Material.LODESTONE) { // for placing claims
 				
 				// logic for merging claims: 
 				
-				
-				Claim merger = ClaimsTable.getRelevantClaim(new Vector4(block), Range.MERGE);
-				Claim foreign = ClaimsTable.getRelevantClaim(new Vector4(block), Range.FOREIGN);
+				Claim merger = ClaimsTable.getClosestClaim(new Vector4(block), Range.MERGE);
+				Claim foreign = ClaimsTable.getClosestClaim(new Vector4(block), Range.FOREIGN);
 				
 				if (merger != null && (merger.getMembers().contains(pd) || merger.getPlayer() == pd)) {
 					
-					Claim.cloneMembers(merger, new Vector4(block));
-					
+					new Claim(merger.getPlayer(), new Vector4(block), merger.getMembers());
 					
 					pd.sendMessage("§aSurrounding land claimed!");
 					pd.sendMessage("§6Claim merged with the nearby claim.");
 					pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
 					
 				} else
-				
-				
-				
-				
-				
-				
-				
-				
-				
 				
 				
 				if (foreign != null && foreign.getAccess(pd) == Security.BLOCKED) {
@@ -83,7 +70,7 @@ public class BPE implements Listener {
 				return;
 			}
 			
-			Claim claim = ClaimsTable.getRelevantClaim(new Vector4(block), Range.PROTECTED);
+			Claim claim = ClaimsTable.getClosestClaim(new Vector4(block), Range.PROTECTED);
 			
 			if (claim != null && claim.getAccess(pd) == Security.BLOCKED) {
 				

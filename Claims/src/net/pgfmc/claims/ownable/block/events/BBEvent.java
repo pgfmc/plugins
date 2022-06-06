@@ -58,7 +58,7 @@ public class BBEvent implements Listener {
 				}
 			}
 			
-			Claim claim = ClaimsTable.getRelevantClaim(new Vector4(e.getBlock()), Range.PROTECTED);
+			Claim claim = ClaimsTable.getClosestClaim(new Vector4(e.getBlock()), Range.PROTECTED);
 			
 			if (claim != null) {
 				
@@ -74,7 +74,7 @@ public class BBEvent implements Listener {
 			if (pd.getTags().contains("inspector")) {
 				e.setCancelled(true);
 				
-				Claim claim = ClaimsTable.getRelevantClaim(new Vector4(e.getBlock()), Range.PROTECTED);
+				Claim claim = ClaimsTable.getClosestClaim(new Vector4(e.getBlock()), Range.PROTECTED);
 				
 				if (claim != null) {
 					pd.sendMessage("§bInside claim at §c" + claim.getLocation().toString());
