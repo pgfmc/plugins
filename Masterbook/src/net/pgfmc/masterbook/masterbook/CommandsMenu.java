@@ -23,7 +23,6 @@ import net.pgfmc.core.inventoryAPI.BaseInventory;
 import net.pgfmc.core.inventoryAPI.ListInventory;
 import net.pgfmc.core.inventoryAPI.extra.Butto;
 import net.pgfmc.core.inventoryAPI.extra.ItemWrapper;
-import net.pgfmc.core.permissions.Permissions;
 import net.pgfmc.core.permissions.Roles;
 import net.pgfmc.core.permissions.Roles.Role;
 import net.pgfmc.core.playerdataAPI.PlayerData;
@@ -401,7 +400,7 @@ public class CommandsMenu implements InventoryHolder {
 			setItem(0, Material.FEATHER).n("§r§7Back");
 			
 			setAction(13, (p, e) -> {
-				if (!Permissions.has(p, "pgf.cmd.home.home")) {
+				if (!p.hasPermission("pgf.cmd.home.home")) {
 					p.sendMessage("§cYou don't have permission to execute this command.");
 					return;
 				}
@@ -414,14 +413,14 @@ public class CommandsMenu implements InventoryHolder {
 			setItem(13, Material.ENDER_PEARL).n("§r§dGo to Home");
 			
 			setAction(11, (p, e) -> {
-				if (!Permissions.has(p, "pgf.cmd.home.set")) {
+				if (!p.hasPermission("pgf.cmd.home.set")) {
 					p.sendMessage("§cYou don't have permission to execute this command.");
 					return;
 				}
-				if (Permissions.has(p, "pgf.cmd.donator.home") && homes.size() >= 5) {
+				if (p.hasPermission("pgf.cmd.donator.home") && homes.size() >= 5) {
 					p.sendMessage("§cYou can only have up to 5 homes: " + Homes.getNamedHomes(p));
 					return;
-				} else if (!Permissions.has(p, "pgf.cmd.donator.home") && homes.size() >= 3)
+				} else if (!p.hasPermission("pgf.cmd.donator.home") && homes.size() >= 3)
 				{
 					p.sendMessage("§cYou can only have up to 3 homes: " + Homes.getNamedHomes(p));
 					return;
@@ -431,7 +430,7 @@ public class CommandsMenu implements InventoryHolder {
 			setItem(11, Material.OAK_SAPLING).n("§r§aSet Home");
 			
 			setAction(15, (p, e) -> {
-				if (!Permissions.has(p, "pgf.cmd.home.del")) {
+				if (!p.hasPermission("pgf.cmd.home.del")) {
 					p.sendMessage("§cYou don't have permission to execute this command.");
 					return;
 				}

@@ -23,7 +23,7 @@ import net.pgfmc.core.file.Configify;
 import net.pgfmc.core.file.Mixins;
 import net.pgfmc.core.file.ReloadConfigify;
 import net.pgfmc.core.inventoryAPI.extra.InventoryPressEvent;
-import net.pgfmc.core.permissions.Permissions;
+import net.pgfmc.core.permissions.Roles;
 import net.pgfmc.core.playerdataAPI.PlayerDataManager;
 import net.pgfmc.core.playerdataAPI.cmd.DumpCommand;
 import net.pgfmc.core.playerdataAPI.cmd.PlayerDataSetCommand;
@@ -165,9 +165,9 @@ public class CoreMain extends JavaPlugin implements Listener {
 		
 		getServer().getPluginManager().registerEvents(new InventoryPressEvent(), this);
 		getServer().getPluginManager().registerEvents(new PlayerDataManager(), this);
-		getServer().getPluginManager().registerEvents(new Permissions(), this);
 		getServer().getPluginManager().registerEvents(new SpawnProtect(), this);
 		getServer().getPluginManager().registerEvents(new RequestEvents(), this);
+		getServer().getPluginManager().registerEvents(new Roles(), this);
 		
 		new ProfanityFilter();
 	}
@@ -175,7 +175,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 	@Override
 	public void onDisable() {
 		PlayerDataManager.saveQ();
-		Permissions.clear();
 		Configify.disableConfigify();
 	}
 	

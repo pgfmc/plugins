@@ -11,7 +11,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import net.pgfmc.core.CoreMain;
-import net.pgfmc.core.permissions.Permissions;
 
 /**
  * Attempts to protect the player in a undefendable state
@@ -46,27 +45,30 @@ public class SpawnProtect implements Listener {
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent e)
 	{
-		if (Permissions.has(e.getPlayer(), "world.modify.break")) return;
+		Player p = e.getPlayer();
+		if (p.hasPermission("world.modify.break")) return;
 		
-		e.getPlayer().sendMessage("§cYou do not have permission to do that.");
+		p.sendMessage("§cYou do not have permission to do that.");
 		e.setCancelled(true);
 	}
 	
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent e)
 	{
-		if (Permissions.has(e.getPlayer(), "world.modify.place")) return;
+		Player p = e.getPlayer();
+		if (p.hasPermission("world.modify.place")) return;
 		
-		e.getPlayer().sendMessage("§cYou do not have permission to do that.");
+		p.sendMessage("§cYou do not have permission to do that.");
 		e.setCancelled(true);
 	}
 	
 	@EventHandler
 	public void onInteract(PlayerInteractEvent e)
 	{
-		if (Permissions.has(e.getPlayer(), "world.modify.interact")) return;
+		Player p = e.getPlayer();
+		if (p.hasPermission("world.modify.interact")) return;
 		
-		e.getPlayer().sendMessage("§cYou do not have permission to do that.");
+		p.sendMessage("§cYou do not have permission to do that.");
 		e.setCancelled(true);
 	}
 
