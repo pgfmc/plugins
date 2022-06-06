@@ -21,12 +21,16 @@ public class AutoRole {
 		
 		for (Member m : noMemberRole)
 		{
+			if (m.getUser().isBot()) continue;
+			
 			guild.addRoleToMember(m, memberRole).queue();
 		}
 	}
 	
 	public void autoRole(Member member)
 	{
+		if (member.getUser().isBot()) return;
+		
 		Guild guild = Discord.getGuildPGF();
 		Role memberRole = guild.getRoleById(MEMBER_ROLE_ID);
 		
