@@ -14,7 +14,8 @@ import org.bukkit.entity.Player;
 
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.chat.ProfanityFilter;
-import net.pgfmc.core.permissions.Permissions;
+import net.pgfmc.core.permissions.Roles;
+import net.pgfmc.core.permissions.Roles.Role;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
 public class Nick implements CommandExecutor {
@@ -183,7 +184,7 @@ public class Nick implements CommandExecutor {
 	
 	public static String getNick(OfflinePlayer p)
 	{
-		if (Permissions.has(p, "pgf.cmd.donator.nick")) 
+		if (Roles.getTop(Roles.getRolesByPlayer(p)) != Role.MEMBER)
 		{
 			String nick = PlayerData.getData(p, "nick");
 			
