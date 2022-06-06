@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 
 import net.pgfmc.bot.Discord;
 import net.pgfmc.bot.Main;
-import net.pgfmc.core.permissions.Permissions;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.punish.Punish;
 
@@ -20,7 +19,7 @@ public class Spam {
 		PlayerData pd = PlayerData.from(p);
 		
 		// current time - last chat time <= 850ms, is not muted, does not have exemption
-		if (!Punish.isMute(pd) && !Permissions.has(pd.getPlayer(), "pgf.spam.exempt") && new Date().getTime() - (long) Optional.ofNullable(pd.getData("spam.lastchat")).orElse(1000L) <= 550)
+		if (!Punish.isMute(pd) && !pd.hasPermission("pgf.spam.exempt") && new Date().getTime() - (long) Optional.ofNullable(pd.getData("spam.lastchat")).orElse(1000L) <= 550)
 		{
 			byte warnings = (byte) Optional.ofNullable(pd.getData("spam.warnings")).orElse((byte) 1);
 			pd.setData("spam.warnings", (byte) (warnings + (byte) 1));
@@ -30,7 +29,7 @@ public class Spam {
 				pd.sendMessage(ChatColor.RED + "Please, slow down (" + warnings + "/3)!");
 			}
 			
-			if (warnings >= 3 && !Permissions.has(pd.getPlayer(), "pgf.spam.exempt"))
+			if (warnings >= 3 && !pd.hasPermission("pgf.spam.exempt"))
 			{
 				pd.sendMessage(ChatColor.DARK_RED + "You've been muted for spamming (60 seconds).");
 				Discord.sendAlert(Discord.simplePlayerEmbed(pd.getPlayer(), "has been muted for spamming.", Discord.RED).build()).queue();
