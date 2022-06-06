@@ -16,6 +16,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.model.group.Group;
+import net.luckperms.api.model.user.UserManager;
+import net.luckperms.api.node.Node;
 import net.pgfmc.bot.Discord;
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.file.Configify;
@@ -109,6 +114,28 @@ public class Roles extends Configify implements Listener {
 		}
 		
 		pd.setData("roles", roles).queue();
+		
+		LuckPerms lp = LuckPermsProvider.get();
+		Set<Group> lpGroups = lp.getGroupManager().getLoadedGroups();
+		
+		for (Group group : lpGroups)
+		{
+			String groupName = group.getName();
+			UserManager userManager = lp.getUserManager();
+			
+			// Add roles
+			if (roles.contains(groupName))
+			{
+				userManager.modifyUser(pd.getUniqueId(), user -> {
+					user.data().add(Node.builder("group." + groupName).build());
+				});
+			} else // Remove roles
+			{
+				userManager.modifyUser(pd.getUniqueId(), user -> {
+					user.data().remove(Node.builder("group." + groupName).build());
+				});
+			}
+		}
 	}
 	
 	public static void recalculate(OfflinePlayer p)
