@@ -41,35 +41,5 @@ public class SpawnProtect implements Listener {
 			
 		}}, ticks);
 	}
-	
-	@EventHandler
-	public void onBlockBreak(BlockBreakEvent e)
-	{
-		Player p = e.getPlayer();
-		if (p.hasPermission("world.modify.break")) return;
-		
-		p.sendMessage("§cYou do not have permission to do that.");
-		e.setCancelled(true);
-	}
-	
-	@EventHandler
-	public void onBlockPlace(BlockPlaceEvent e)
-	{
-		Player p = e.getPlayer();
-		if (p.hasPermission("world.modify.place")) return;
-		
-		p.sendMessage("§cYou do not have permission to do that.");
-		e.setCancelled(true);
-	}
-	
-	@EventHandler
-	public void onInteract(PlayerInteractEvent e)
-	{
-		Player p = e.getPlayer();
-		if (p.hasPermission("world.modify.interact")) return;
-		
-		p.sendMessage("§cYou do not have permission to do that.");
-		e.setCancelled(true);
-	}
 
 }
