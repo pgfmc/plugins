@@ -6,7 +6,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import net.pgfmc.claims.ownable.block.OwnableBlock;
+import net.pgfmc.claims.ownable.block.Claim;
+import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
 import net.pgfmc.core.util.Vector4;
 
@@ -18,7 +19,7 @@ public class ClaimTPCommand implements CommandExecutor {
 		if (!(sender instanceof Player)) return true;
 		if (((Player) sender).getGameMode() != GameMode.CREATIVE) return true;
 		
-		OwnableBlock ob = ClaimsTable.getRelevantClaim(new Vector4(((Player) sender).getLocation()));
+		Claim ob = ClaimsTable.getClosestClaim(new Vector4(((Player) sender).getLocation()), Range.PROTECTED);
 		
 		if (ob != null) {
 			((Player) sender).teleport(ob.getLocation().toLocation());

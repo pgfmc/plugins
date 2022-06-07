@@ -1,8 +1,0 @@
-name: PGF-Duels
-version: 5.8.0
-api-version: 1.18
-author: [CrimsonDart]
-main: net.pgfmc.duel.Main
-description: implemets the Duels system
-depend: [PGF-Core]
-prefix: PGF-Duels

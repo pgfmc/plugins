@@ -1,5 +1,7 @@
 package net.pgfmc.claims.ownable.block.events;
 
+import java.util.HashSet;
+
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -8,9 +10,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
-import net.pgfmc.claims.ownable.Ownable.Security;
-import net.pgfmc.claims.ownable.block.BlockManager;
-import net.pgfmc.claims.ownable.block.OwnableBlock;
+import net.pgfmc.claims.ownable.block.Claim;
+import net.pgfmc.claims.ownable.block.Claim.Security;
+import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.util.Vector4;
@@ -34,36 +36,48 @@ public class BPE implements Listener {
 		
 		if (e.getPlayer().getGameMode() == GameMode.SURVIVAL) { // ---------------------------------------------- if debug mode off / not creative mode
 			
-			System.out.println("block placed!");
-			
 			if (block.getType() == Material.LODESTONE) { // for placing claims
-				if (ClaimsTable.isOverlappingClaim(new Vector4(block))) {
+				
+				// logic for merging claims: 
+				
+				Claim merger = ClaimsTable.getClosestClaim(new Vector4(block), Range.MERGE);
+				Claim foreign = ClaimsTable.getClosestClaim(new Vector4(block), Range.FOREIGN);
+				
+				if (merger != null && (merger.getMembers().contains(pd) || merger.getPlayer() == pd)) {
+					
+					new Claim(merger.getPlayer(), new Vector4(block), merger.getMembers());
+					
+					pd.sendMessage("§aSurrounding land claimed!");
+					pd.sendMessage("§6Claim merged with the nearby claim.");
+					pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
+					
+				} else
+				
+				
+				if (foreign != null && foreign.getAccess(pd) == Security.BLOCKED) {
 					e.setCancelled(true);
 					pd.sendMessage("§cCannot claim land that would overlap another claim.");
 					
 					pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 				} else {
-					BlockManager.createBlockContainer(pd, block);
+					
+					new Claim(pd, new Vector4(block), new HashSet<PlayerData>());
+					
+					
 					pd.sendMessage("§aSurrounding land claimed!");
 					pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
 				}
 				return;
 			}
 			
-			OwnableBlock claim = ClaimsTable.getRelevantClaim(new Vector4(block));
+			Claim claim = ClaimsTable.getClosestClaim(new Vector4(block), Range.PROTECTED);
 			
-			if (claim != null && claim.getAccess(pd) == Security.DISALLOWED) {
+			if (claim != null && claim.getAccess(pd) == Security.BLOCKED) {
 				
 				pd.sendMessage("§cCannot place blocks in claimed land.");
 				e.setCancelled(true);
 				pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 				return;
-			}
-			
-			// registers block as a container if it is a valid container.
-			if (BlockManager.isOwnable(block.getType())) {
-				BlockManager.createBlockContainer(pd, block);
-				System.out.println("ownable placed!");
 			}
 		}	
 	}
