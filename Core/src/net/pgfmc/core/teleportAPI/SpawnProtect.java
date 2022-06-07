@@ -46,9 +46,6 @@ public class SpawnProtect implements Listener {
 	{
 		Player p = e.getPlayer();
 		
-		if (!e.isBlockInHand() && e.getAction() == Action.LEFT_CLICK_BLOCK) return;
-		if (e.isBlockInHand() && e.getAction() == Action.RIGHT_CLICK_AIR) return;
-		
 		if (p.hasPermission("modifyworld.*")) return;
 		
 		//p.sendMessage("§cYou do not have permission to do that.");
