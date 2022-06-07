@@ -16,7 +16,6 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 
-import net.pgfmc.core.CoreMain.PGFPlugin;
 import net.pgfmc.core.cmd.Blocked;
 import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.inventoryAPI.BaseInventory;
@@ -109,18 +108,6 @@ public class CommandsMenu implements InventoryHolder {
 				setItem(5, Material.ARROW).n("§r§4Back").l("§r§7Go back to your last location");
 			}
 			
-			/* 
-			 * [] [] [] [] [] [] XX [] []
-			 * [] [] [] [] [] [] [] [] []
-			 * [] [] [] [] [] [] [] [] []
-			 * shows the current world's seed on screen.
-			 */
-			setAction(6, (p, e) -> {
-				p.closeInventory();
-				p.openBook(Guidebook.getCopmleteBook());
-			});
-			setItem(6, Material.BOOK).n("§r§dInfo").l("§r§7Bring up the guidebook");
-			
 			
 			/* 
 			 * [] [] [] [] [] [] [] [] []
@@ -169,20 +156,6 @@ public class CommandsMenu implements InventoryHolder {
 					});
 					setItem(21, Material.ENDER_PEARL).n("§r§5Tpa").l("§r§7Teleport to another player!");
 				}
-			}
-			
-			/* 
-			 * [] [] [] [] [] [] [] [] []
-			 * [] [] [] [] [] [] [] [] []
-			 * [] [] [] [] [] [] XX [] []
-			 * home menu
-			 */
-			if (pd.hasPermission("minecraft.command.list") && PGFPlugin.FRIENDS.isEnabled()) {
-				
-				setAction(24, (p, e) -> {
-					p.openInventory(new PlayerList().getInventory());
-				});
-				setItem(24, Material.PLAYER_HEAD).n("§r§bPlayer List");
 			}
 			
 			// Other buttons -
