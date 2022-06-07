@@ -25,3 +25,7 @@ commands:
     usage: /<command>
     aliases: [bench]
     permission: pgf.cmd.donator.craft
+  pvp: 
+    description: Toggles PvP mode
+    usage: /<command>
+    permission: pgf.cmd.pvp

@@ -18,7 +18,6 @@ import org.bukkit.util.Vector;
 
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.playerdataAPI.PlayerData;
-import net.pgfmc.friends.data.Friends;
 
 /**
  * Prevents other players from picking up someone else's items on death.
@@ -112,9 +111,6 @@ public class ItemProtect implements Listener {
 		public boolean pickup(PlayerData picker) {
 			
 			if (pd == picker) {
-				remove();
-				return true;
-			} else if (Friends.getFriendsMap(picker).containsKey(pd)) {
 				remove();
 				return true;
 			} else {

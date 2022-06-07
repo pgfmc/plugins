@@ -22,5 +22,4 @@ public class OnUpdateRole implements EventListener {
 		
 		Roles.recalculate(pd);
 	}
-
 }

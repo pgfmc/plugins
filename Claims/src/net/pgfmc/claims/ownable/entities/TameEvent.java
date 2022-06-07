@@ -1,14 +1,14 @@
 package net.pgfmc.claims.ownable.entities;
 
 import org.bukkit.GameMode;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityTameEvent;
 
-import net.pgfmc.claims.ownable.Ownable.Security;
-import net.pgfmc.claims.ownable.block.OwnableBlock;
+import net.pgfmc.claims.ownable.block.Claim;
+import net.pgfmc.claims.ownable.block.Claim.Security;
+import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.util.Vector4;
@@ -24,15 +24,12 @@ public class TameEvent implements Listener {
 			if (player.getGameMode() == GameMode.SURVIVAL) {
 				PlayerData pd = PlayerData.from(player);
 				
-				OwnableBlock beacon = ClaimsTable.getRelevantClaim(new Vector4(player.getLocation()));
+				Claim beacon = ClaimsTable.getClosestClaim(new Vector4(player.getLocation()), Range.PROTECTED);
 				
-				if (beacon != null && beacon.getAccess(pd) == Security.DISALLOWED) {
+				if (beacon != null && beacon.getAccess(pd) == Security.BLOCKED) {
 					player.sendMessage("§cCannot tame on claimed land.");
 					e.setCancelled(true);
 					return;
-				} else {
-					new OwnableEntity(pd, PlayerData.from(player).getData("lockMode"), e.getEntity().getUniqueId());
-					pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
 				}
 			}
 		}
