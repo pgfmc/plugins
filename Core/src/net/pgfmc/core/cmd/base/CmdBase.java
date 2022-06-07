@@ -1,5 +1,6 @@
 package net.pgfmc.core.cmd.base;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -22,7 +23,14 @@ public abstract class CmdBase {
 
 		@Override
 		public List<String> onTabComplete(CommandSender arg0, Command arg1, String arg2, String[] arg3) {
-			return tabComplete(arg0, arg2, arg3);
+			
+			List<String> list = tabComplete(arg0, arg2, arg3);
+			
+			if (list == null) {
+				return new ArrayList<>();
+			} else {
+				return list;
+			}
 		}
 	};
 	
