@@ -100,26 +100,11 @@ public class CommandsMenu implements InventoryHolder {
 			 */
 			if (pd.hasPermission("pgf.cmd.back")) {
 				
-				setAction(5, (p, e) -> {
+				setAction(23, (p, e) -> {
 					p.openInventory(new BackConfirm(pd).getInventory());
 				});
 				
-				setItem(5, Material.ARROW).n("§r§4Back").l("§r§7Go back to your last location");
-			}
-			
-			
-			/* 
-			 * [] [] [] [] [] [] [] [] []
-			 * [] [] [] [] XX [] [] [] []
-			 * [] [] [] [] [] [] [] [] []
-			 * /dim command
-			 */
-			if (pd.hasPermission("pgf.cmd.goto")) {
-				
-				setAction(13, (p, e) -> {
-					p.openInventory(new DimSelect(pd).getInventory());
-				});
-				setItem(13, Material.SPYGLASS).n("§r§9Dimensions").l("§r§7Go to other worlds!");
+				setItem(23, Material.ARROW).n("§r§4Back").l("§r§7Go back to your last location");
 			}
 			
 			/* 
@@ -266,20 +251,20 @@ public class CommandsMenu implements InventoryHolder {
 			if (pd.hasPermission("pgf.cmd.pvp")) {
 				
 				if (pd.hasTag("pvp")) {
-					setAction(6, (p, e) -> {
+					setAction(5, (p, e) -> {
 						enablePVP(this);
 						p.performCommand("pvp");
 					});
 					
-					setItem(6, Material.DIAMOND_SWORD).n("§r§7PVP: §aEnabled").l("§r§7Click to disable!");
+					setItem(5, Material.DIAMOND_SWORD).n("§r§7PVP: §aEnabled").l("§r§7Click to disable!");
 					
 				} else {
 					
-					setAction(6, (p, e) -> {
+					setAction(5, (p, e) -> {
 						disablePVP(this);
 						p.performCommand("pvp");
 					});
-					setItem(6, Material.WOODEN_SWORD).n("§r§7PVP: §cDisabled").l("§r§7Click to enable!");
+					setItem(5, Material.WOODEN_SWORD).n("§r§7PVP: §cDisabled").l("§r§7Click to enable!");
 					
 					
 					
@@ -579,22 +564,22 @@ public class CommandsMenu implements InventoryHolder {
 	
 	private static void enablePVP(BaseInventory ib) {
 		
-		ib.setAction(6, (p, e) -> {
+		ib.setAction(5, (p, e) -> {
 			disablePVP(ib);
 			p.performCommand("pvp");
 		});
-		ib.setItem(6, Material.WOODEN_SWORD).n("§r§7PVP: §cDisabled").l("§r§7Click to enable!");
+		ib.setItem(5, Material.WOODEN_SWORD).n("§r§7PVP: §cDisabled").l("§r§7Click to enable!");
 		
 		
 	}
 	
 	private static void disablePVP(BaseInventory ib) {
 		
-		ib.setAction(6, (p, e) -> {
+		ib.setAction(5, (p, e) -> {
 			enablePVP(ib);
 			p.performCommand("pvp");
 		});
-		ib.setItem(6, Material.DIAMOND_SWORD).n("§r§7PVP: §aEnabled").l("§r§7Click to disable!");
+		ib.setItem(5, Material.DIAMOND_SWORD).n("§r§7PVP: §aEnabled").l("§r§7Click to disable!");
 	}
 	
 	private static void enableAFK(BaseInventory ib) {
