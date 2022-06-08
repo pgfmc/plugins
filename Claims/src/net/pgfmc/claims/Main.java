@@ -44,9 +44,9 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new TameEvent(), this);
 		getServer().getPluginManager().registerEvents(new BExEvent(), this);
 		
-		getCommand("inspector").setExecutor(new InspectCommand());
-		getCommand("editownable").setExecutor(new EditOwnableCommand());
-		getCommand("claimtp").setExecutor(new ClaimTPCommand());
+		new InspectCommand("inspector");
+		new EditOwnableCommand("editownable");
+		new ClaimTPCommand("claimtp");
 		
 		plugin.getLogger().info("Claims Loaded!");
 		

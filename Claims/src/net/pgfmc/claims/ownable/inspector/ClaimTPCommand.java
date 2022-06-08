@@ -1,35 +1,37 @@
 package net.pgfmc.claims.ownable.inspector;
 
-import org.bukkit.GameMode;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import java.util.List;
 
 import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
+import net.pgfmc.core.cmd.base.CreativeOnly;
+import net.pgfmc.core.cmd.base.PlayerCommand;
+import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.util.Vector4;
 
-public class ClaimTPCommand implements CommandExecutor {
+public class ClaimTPCommand extends PlayerCommand implements CreativeOnly {
 	
+	public ClaimTPCommand(String name) {
+		super(name);
+	}
+
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public List<String> tabComplete(PlayerData pd, String alias, String[] args) {
+		return null;
+	}
+
+	@Override
+	public boolean execute(PlayerData pd, String alias, String[] args) {
 		
-		if (!(sender instanceof Player)) return true;
-		if (((Player) sender).getGameMode() != GameMode.CREATIVE) return true;
-		
-		Claim ob = ClaimsTable.getClosestClaim(new Vector4(((Player) sender).getLocation()), Range.PROTECTED);
+		Claim ob = ClaimsTable.getClosestClaim(new Vector4(pd.getPlayer().getLocation()), Range.PROTECTED);
 		
 		if (ob != null) {
-			((Player) sender).teleport(ob.getLocation().toLocation());
-			sender.sendMessage("§aTeleported to the active claim!");
+			pd.teleport(ob.getLocation().toLocation());
+			pd.sendMessage("§aTeleported to the active claim!");
 		} else {
-			sender.sendMessage("§6No claim in range.");
+			pd.sendMessage("§6No claim in range.");
 		}
-		
-		return true;
+		return false;
 	}
-	
-
 }

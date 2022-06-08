@@ -5,49 +5,28 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-public class Skull implements CommandExecutor {
+import net.pgfmc.core.cmd.base.BothPlayerCmd;
+import net.pgfmc.core.playerdataAPI.PlayerData;
 
+public class Skull extends BothPlayerCmd {
+
+	
+	public Skull(String name) {
+		super(name);
+	}
+	
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		
-		if (!(sender instanceof Player))
-		{
-			sender.sendMessage("§cOnly players can execute this command.");
-			return true;
-		}
-		
-		Player p = (Player) sender;
-		
-		if (args.length > 0)
-		{
-			Player player = Bukkit.getPlayer(args[0]);
-			
-			if (Bukkit.getPlayer(args[0]) == null)
-			{
-				p.sendMessage("§cCould not find player §6§n" + args[0]);
-				return true;
-			}
-			
-			String lore = null;
-			if (args.length >= 2)
-			{
-				lore = String.join(" ", args).replace(args[0], "").replace("&", "§").strip();
-			}
-			
-			p.getInventory().addItem(getHead(player.getUniqueId(), lore));
-			
-			return true;
-		}
-		
-		p.getInventory().addItem(getHead(p.getUniqueId(), null));
-		
+	public boolean execute(PlayerData pd, String alias, PlayerData arg) {
+		pd.getPlayer().getInventory().addItem(getHead(arg.getUniqueId(), null));
+		return true;
+
+	}
+	
+	@Override
+	public boolean playerPredicate(PlayerData arg, PlayerData sender) {
 		return true;
 	}
 	
@@ -70,5 +49,4 @@ public class Skull implements CommandExecutor {
 		
 		return item;
 	}
-
 }

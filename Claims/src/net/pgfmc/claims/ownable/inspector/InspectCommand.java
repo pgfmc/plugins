@@ -1,33 +1,30 @@
 package net.pgfmc.claims.ownable.inspector;
 
-import org.bukkit.GameMode;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import java.util.List;
 
+import net.pgfmc.core.cmd.base.PlayerCommand;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
 /**
  * Inspector Command
  * @author CrimsonDart
- * @version 4.0.2
+ * @version 6.0.0
  * @since 4.0.2
  */
-public class InspectCommand implements CommandExecutor {
+public class InspectCommand extends PlayerCommand {
 	
-	/**
-	 * @since 4.0.2
-	 */
+	public InspectCommand(String name) {
+		super(name);
+	}
+	
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		
-		if (!(sender instanceof Player)) return true;
-		if (((Player) sender).getGameMode() != GameMode.CREATIVE) return true;
-		
-		PlayerData pd = PlayerData.from((Player) sender);
+	public List<String> tabComplete(PlayerData pd, String alias, String[] args) {
+		return null;
+	}
+
+	@Override
+	public boolean execute(PlayerData pd, String alias, String[] args) {
 		toggleInspector(pd);
-		
 		return true;
 	}
 	
@@ -53,5 +50,4 @@ public class InspectCommand implements CommandExecutor {
 		
 		return insp;
 	}
-	
 }

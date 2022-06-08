@@ -22,7 +22,7 @@ public class Vector4 implements Cloneable, Serializable {
 	private int z;
 	
 	/**
-	 * Creates a new Vector3
+	 * Creates a new Vector4
 	 */
 	public Vector4(int x, int y, int z, int w) {
 		this.x = x;
@@ -31,7 +31,7 @@ public class Vector4 implements Cloneable, Serializable {
 	}
 	
 	/**
-	 * Creates a new Vector3 from a Bukkit Location
+	 * Creates a new Vector4 from a Bukkit Location
 	 */
 	public Vector4(Location loc) {
 		this.x = loc.getBlockX();
@@ -41,7 +41,7 @@ public class Vector4 implements Cloneable, Serializable {
 	}
 	
 	/**
-	 * Creates a new Vector3 from a Bukkit block.
+	 * Creates a new Vector4 from a Bukkit block.
 	 */
 	public Vector4(Block block) {
 		this.x = block.getX();

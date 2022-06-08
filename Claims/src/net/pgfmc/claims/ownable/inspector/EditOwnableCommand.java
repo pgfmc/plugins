@@ -1,12 +1,10 @@
 package net.pgfmc.claims.ownable.inspector;
 
-import org.bukkit.GameMode;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import java.util.List;
 
 import net.pgfmc.claims.ownable.block.Claim;
+import net.pgfmc.core.cmd.base.CreativeOnly;
+import net.pgfmc.core.cmd.base.PlayerCommand;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
 /**
@@ -18,34 +16,24 @@ import net.pgfmc.core.playerdataAPI.PlayerData;
  * @since 4.0.2
  *
  */
-public class EditOwnableCommand implements CommandExecutor {
+public class EditOwnableCommand extends PlayerCommand implements CreativeOnly {
 	
-	/**
-	 * @version 4.0.2
-	 * 
-	 */
+	public EditOwnableCommand(String name) {
+		super(name);
+	}
+
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean execute(PlayerData pd, String label, String[] args) {
 		
-		if (!(sender instanceof Player)) return true;
-		if (((Player) sender).getGameMode() != GameMode.CREATIVE) return true;
-		PlayerData pd = PlayerData.from((Player) sender);
 		
 		Claim cache = pd.getData("OwnableCache");
 		if (cache == null) {
-			sender.sendMessage("§cNo Ownable Selected!");
+			pd.sendMessage("§cNo Ownable Selected!");
 			return true;
 		}
 		
-		String s = label;
-		
-		for (String sr : args) {
-			s = s + " " + sr;
-		}
-		sender.sendMessage(s);
-		
 		if (args == null || args.length > 1) {
-			sender.sendMessage("§dAllowed types: §b'§alock§b'§d, §b'§aowner§b'");
+			pd.sendMessage("§dAllowed types: §b'§alock§b'§d, §b'§aowner§b'");
 			
 		} else if ("owner".equals(args[0])) {
 			
@@ -53,15 +41,17 @@ public class EditOwnableCommand implements CommandExecutor {
 				PlayerData ope = PlayerData.from(args[1]);
 				if (ope != null) {
 					cache.setOwner(ope);
-					sender.sendMessage("§aOwner set to " + ope.getRankedName());
+					pd.sendMessage("§aOwner set to " + ope.getRankedName());
 					return true;
 				}
 			}
-			sender.sendMessage("§cPlease Enter a valid player!");
-			
-		} else {
-			sender.sendMessage("§dAllowed types: §b'§alock§b'§d, §b'§aowner§b'");
+			pd.sendMessage("§cPlease Enter a valid player!");
 		}
 		return true;
+	}
+
+	@Override
+	public List<String> tabComplete(PlayerData arg0, String arg1, String[] arg2) {
+		return null;
 	}
 }

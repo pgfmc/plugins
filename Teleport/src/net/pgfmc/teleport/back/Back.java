@@ -47,6 +47,9 @@ public class Back implements CommandExecutor, Listener {
 		});
 		
 		
+		// added by crimson
+		pd.setData("backLoc", null); // wipes back location, dont want this to be too op
+		
 		return true;
 	}
 	

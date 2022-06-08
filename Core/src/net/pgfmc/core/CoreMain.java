@@ -151,11 +151,11 @@ public class CoreMain extends JavaPlugin implements Listener {
 		
 		getCommand("nick").setExecutor(new Nick());
 		
-		getCommand("skull").setExecutor(new Skull());
+		new Skull("skull");
 		
 		getCommand("pgf").setExecutor(new ReloadConfigify());
 		
-		getCommand("realname").setExecutor(new RealName());
+		new RealName("realname");
 		
 		new DumpCommand();
 		new TagCommand();

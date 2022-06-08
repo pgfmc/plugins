@@ -3,6 +3,7 @@ package net.pgfmc.core.cmd.base;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -25,6 +26,11 @@ public abstract class PlayerCommand extends CmdBase {
 		PlayerData pd = PlayerData.from((Player) sender);
 		if (pd == null) {
 			sender.sendMessage("§cThe sender must be a player!");
+			return true;
+		}
+		
+		if (this instanceof CreativeOnly && pd.getPlayer().getGameMode() != GameMode.CREATIVE) {
+			sender.sendMessage("§cYou must be in creative mode to use this command!");
 			return true;
 		}
 		
