@@ -14,9 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.permissions.PermissionAttachmentInfo;
 
-import net.pgfmc.core.cmd.Blocked;
 import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.inventoryAPI.BaseInventory;
 import net.pgfmc.core.inventoryAPI.ListInventory;
@@ -42,7 +40,7 @@ public class CommandsMenu implements InventoryHolder {
 	public class Homepage extends BaseInventory {
 		
 		public Homepage() {
-			super(27, "Commands");
+			super(27, "Command Menu");
 			
 			/* 
 			 * [] [] XX [] [] [] [] [] []
@@ -80,13 +78,14 @@ public class CommandsMenu implements InventoryHolder {
 				if (Afk.isAfk(pd.getPlayer())) {
 					
 					setAction(3, (p, e) -> {
-						
+						disableAFK(this);
 						p.performCommand("afk");
 					});
 					
 					setItem(3, Material.BLUE_ICE).n("§r§7AFK: §aEnabled").l("§r§7Click to disable!");
 				} else {
 					setAction(3, (p, e) -> {
+						enableAFK(this);
 						p.performCommand("afk");
 					});
 					setItem(3, Material.ICE).n("§r§7AFK: §cDisabled").l("§r§7Click to enable!");
@@ -257,6 +256,35 @@ public class CommandsMenu implements InventoryHolder {
 				p.openInventory(inv.getInventory());
 			});
 			setItem(9, Material.LEVER).n("§r§4Requests");
+			
+			/* 
+			 * [] [] [] XX [] [] [] [] []
+			 * [] [] [] [] [] [] [] [] []
+			 * [] [] [] [] [] [] [] [] []
+			 * toggles PVP in-menu
+			 */
+			if (pd.hasPermission("pgf.cmd.pvp")) {
+				
+				if (pd.hasTag("pvp")) {
+					setAction(6, (p, e) -> {
+						enablePVP(this);
+						p.performCommand("pvp");
+					});
+					
+					setItem(6, Material.DIAMOND_SWORD).n("§r§7PVP: §aEnabled").l("§r§7Click to disable!");
+					
+				} else {
+					
+					setAction(6, (p, e) -> {
+						disablePVP(this);
+						p.performCommand("pvp");
+					});
+					setItem(6, Material.WOODEN_SWORD).n("§r§7PVP: §cDisabled").l("§r§7Click to enable!");
+					
+					
+					
+				}
+			}
 		}
 	}
 	
@@ -544,91 +572,46 @@ public class CommandsMenu implements InventoryHolder {
 		}
 	}
 	
-	public class PlayerList extends ListInventory<PlayerData> {
-		
-		public PlayerList() {
-			super(27, "§r§8Player List");
-
-			setAction(0, (p, e) -> {
-				p.openInventory(new Homepage().getInventory());
-			});
-			setItem(0, Material.FEATHER).n("§r§7Back");
-		}
-		
-		@Override
-		protected Butto toAction(PlayerData entry) {
-			return (p, e) -> {
-				p.openInventory(new PlayerOptions(entry).getInventory());
-			};
-		}
-
-		@Override
-		protected ItemStack toItem(PlayerData entry) {
-				// Is their skin
-			return new ItemWrapper(Skull.getHead(entry.getUniqueId(), null))
-					.n(entry.getRankedName())
-					.l((entry.isOnline()) ? "§r§aOnline" : "§r§cOffline")
-					.gi();
-		}
-		
-		@Override
-		public List<PlayerData> load() {
-			return PlayerData.getPlayerDataSet(x -> x != pd).stream()
-					.sorted((o1, o2) -> {
-						
-						return 0;
-						
-						
-						
-					})
-					.collect(Collectors.toList());
-		}
-		
-		
-		private class PlayerOptions extends BaseInventory {
-			
-			public PlayerOptions(PlayerData player) {
-				super(27, player.getRankedName());
-				
-				
-				setAction(0, (p, e) -> {
-					p.openInventory(new PlayerList().getInventory());
-				});
-				setItem(0, Material.FEATHER).n("§r§7Back");
-				
-				List<String> perms = new ArrayList<>();
-				
-				for (PermissionAttachmentInfo s : pd.getPlayer().getEffectivePermissions()) {
-					if (s.getValue()) {
-						perms.add(s.getPermission());
-					}
-				}
-				
-				if (perms.contains("pgf.cmd.block")) {
-					if (Blocked.GET_BLOCKED(pd.getOfflinePlayer()).contains(player.getUniqueId())) {
-						setAction(14, (p, e) -> {
-							p.performCommand("unblock " + player.getName());
-							p.openInventory(new PlayerOptions(player).getInventory());
-						});
-						setItem(14, Material.RED_STAINED_GLASS_PANE).n("§r§4Unblock");
-						
-					} else {
-						setAction(14, (p, e) -> {
-							p.performCommand("block " + player.getName());
-							p.openInventory(new PlayerOptions(player).getInventory());
-						});
-						setItem(14, Material.WHITE_STAINED_GLASS_PANE).n("§r§4Block");
-						
-					}
-				}
-				// XXX setButton(15, new Button(Material.RED_BANNER, "§r§4Report", "§r§7If someone is bullying or\ngriefing you, use this!" + "\nWIP"));
-				
-			}
-		}
-	}
-	
 	@Override
 	public Inventory getInventory() {
 		return new Homepage().getInventory();
+	}
+	
+	private static void enablePVP(BaseInventory ib) {
+		
+		ib.setAction(6, (p, e) -> {
+			disablePVP(ib);
+			p.performCommand("pvp");
+		});
+		ib.setItem(6, Material.WOODEN_SWORD).n("§r§7PVP: §cDisabled").l("§r§7Click to enable!");
+		
+		
+	}
+	
+	private static void disablePVP(BaseInventory ib) {
+		
+		ib.setAction(6, (p, e) -> {
+			enablePVP(ib);
+			p.performCommand("pvp");
+		});
+		ib.setItem(6, Material.DIAMOND_SWORD).n("§r§7PVP: §aEnabled").l("§r§7Click to disable!");
+	}
+	
+	private static void enableAFK(BaseInventory ib) {
+		
+		ib.setAction(3, (p, e) -> {
+			disableAFK(ib);
+			p.performCommand("afk");
+		});
+		ib.setItem(3, Material.BLUE_ICE).n("§r§7AFK: §aEnabled").l("§r§7Click to disable!");
+	}
+	
+	private static void disableAFK(BaseInventory ib) {
+		
+		ib.setAction(3, (p, e) -> {
+			enableAFK(ib);
+			p.performCommand("afk");
+		});
+		ib.setItem(3, Material.ICE).n("§r§7AFK: §cDisabled").l("§r§7Click to enable!");
 	}
 }
