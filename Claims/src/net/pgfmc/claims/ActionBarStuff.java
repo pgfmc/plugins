@@ -1,7 +1,5 @@
 package net.pgfmc.claims;
 
-import java.lang.reflect.InvocationTargetException;
-
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -75,11 +73,8 @@ public class ActionBarStuff extends BukkitRunnable {
 			
 			packet.getChatComponents().write(0, WrappedChatComponent.fromText(ting));
 			
-			try {
-				protocolManager.sendServerPacket(player, packet);
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-			}
+			
+			protocolManager.sendServerPacket(player, packet);
 		}
 	}
 }
