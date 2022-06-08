@@ -36,9 +36,11 @@ public class Main extends JavaPlugin {
 		getCommand("setwarp").setExecutor(new SetWarp());
 		getCommand("delwarp").setExecutor(new DelWarp());
 		
-		getCommand("back").setExecutor(new Back());
 		
-		getServer().getPluginManager().registerEvents(new Back(), this);
+		Back back = new Back();
+		getCommand("back").setExecutor(back);
+		
+		getServer().getPluginManager().registerEvents(back, this);
 	}
 	
 	@Override

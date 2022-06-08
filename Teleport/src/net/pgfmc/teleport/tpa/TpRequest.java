@@ -56,18 +56,18 @@ public class TpRequest extends RequestType {
 			break;
 			
 		case DENIED:
-			r.asker.sendMessage("§cTpa request denied!");
-			r.target.sendMessage("§cTpa request denied!");
+			r.asker.sendMessage("§cTeleport request denied!");
+			r.target.sendMessage("§cTeleport request denied!");
 			break;
 		case FORCEEND:
 			break;
 		case QUIT:
-			r.asker.sendMessage("§cTpa request cancelled since " + r.target.getRankedName() + " §cquit!");
-			r.target.sendMessage("§cTpa request cancelled since " + r.asker.getRankedName() + " §cquit!");
+			r.asker.sendMessage("§cTeleport request cancelled since " + r.target.getRankedName() + " §cquit!");
+			r.target.sendMessage("§cTeleport request cancelled since " + r.asker.getRankedName() + " §cquit!");
 			break;
 		case TIMEOUT:
-			r.asker.sendMessage("§cTpa request timed out!");
-			r.target.sendMessage("§cTpa request timed out!");
+			r.asker.sendMessage("§cTeleport request timed out!");
+			r.target.sendMessage("§cTeleport request timed out!");
 			break;
 		case REFRESH:
 			r.asker.sendMessage("§6Time refreshed!");
