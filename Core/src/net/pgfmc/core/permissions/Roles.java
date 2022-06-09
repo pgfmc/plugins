@@ -3,8 +3,8 @@ package net.pgfmc.core.permissions;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,6 +21,8 @@ import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.model.user.UserManager;
 import net.luckperms.api.node.Node;
+import net.luckperms.api.node.NodeType;
+import net.luckperms.api.node.types.InheritanceNode;
 import net.pgfmc.bot.Discord;
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.file.Configify;
@@ -32,7 +34,7 @@ public class Roles extends Configify implements Listener {
 	public Roles() {
 		super(Mixins.getFile(CoreMain.plugin.getDataFolder() + File.separator + "roles.yml"));
 		
-		for (Role r : Role.values())
+		for (PGFRole r : PGFRole.values())
 		{
 			setDefaultValue("config-version", "1");
 			setDefaultValue(r.getName() + ".id", "000000000000000000");
@@ -40,7 +42,7 @@ public class Roles extends Configify implements Listener {
 		}
 	}
 	
-	public enum Role {
+	public enum PGFRole {
 		FOUNDER,
 		ADMIN,
 		DEVELOPER,
@@ -50,7 +52,7 @@ public class Roles extends Configify implements Listener {
 		DOOKIE,
 		DONATOR,
 		VETERAN,
-		MEMBER;
+		DEFAULT;
 		
 		private String color;
 		private String id;
@@ -68,14 +70,14 @@ public class Roles extends Configify implements Listener {
 			return id;
 		}
 		
-		public static Role get(String role)
+		public static PGFRole get(String role)
 		{
-			for (Role r : Role.values())
+			for (PGFRole r : PGFRole.values())
 			{
 				if (r.getName().equals(role)) return r;
 			}
 			
-			return Role.MEMBER;
+			return PGFRole.DEFAULT;
 		}
 		
 		public void setColor(String color)
@@ -90,108 +92,94 @@ public class Roles extends Configify implements Listener {
 		
 	}
 	
-	@SuppressWarnings("unchecked")
-	public static void recalculate(PlayerData pd)
+	public static void recalculate(PlayerData pd, Collection<PGFRole> roles)
 	{
 		Bukkit.getLogger().warning("Recalculating roles for player " + pd.getName());
 		
-		String id = (String) Optional.ofNullable(pd.getData("Discord")).orElse(pd.loadFromFile("Discord"));
-		List<String> roles = Arrays.asList(Role.MEMBER.getName());
-		
-		if (!CoreMain.PGFPlugin.BOT.isEnabled() && pd.loadFromFile("Discord") != null)
+		if (roles.isEmpty())
 		{
-			roles = (List<String>) Optional.ofNullable(pd.loadFromFile("roles"))
-					.orElse(Arrays.asList(Role.MEMBER.getName()));
-			
-		} else if (id != null)
-		{
-			List<String> discordRoles = Discord.getMemberRoles(id);
-			if (discordRoles != null) {
-				pd.setData("Discord", id).queue();
-				roles = asString(getRolesById(discordRoles));
-			}
+			roles.add(PGFRole.DEFAULT);
 		}
-		
-		pd.setData("roles", roles).queue();
 		
 		LuckPerms lp = LuckPermsProvider.get();
 		Set<Group> lpGroups = lp.getGroupManager().getLoadedGroups();
+		UserManager userManager = lp.getUserManager();
 		
-		for (Group group : lpGroups)
-		{
-			String groupName = group.getName();
-			UserManager userManager = lp.getUserManager();
+		userManager.modifyUser(pd.getUniqueId(), user -> {
+			// Remove all other inherited groups the user had before.
+	        user.data().clear(NodeType.INHERITANCE::matches);
+		});
+		
+		PGFRole role = getTop(roles);
+		Group group = lpGroups.stream().filter(g -> g.getName().toLowerCase().equals(role.getName())).collect(Collectors.toList()).get(0);
+		
+		userManager.modifyUser(pd.getUniqueId(), user -> {
 			
-			// Add roles
-			if (roles.contains(groupName))
-			{
-				userManager.modifyUser(pd.getUniqueId(), user -> {
-					user.data().add(Node.builder("group." + groupName).build());
-				});
-			} else // Remove roles
-			{
-				userManager.modifyUser(pd.getUniqueId(), user -> {
-					user.data().remove(Node.builder("group." + groupName).build());
-				});
-			}
-		}
+            // Create a node to add to the player.
+            Node node = InheritanceNode.builder(group).build();
+
+            // Add the node to the user.
+            user.data().add(node);
+		});
+		
 	}
 	
 	public static void recalculate(OfflinePlayer p)
 	{
-		recalculate(PlayerData.from(p));
+		recalculate(PlayerData.from(p), getRolesByPlayer(p));
 	}
 	
-	public static Role getRoleById(String id)
+	public static PGFRole getRoleById(String id)
 	{
-		for (Role r : Role.values())
+		for (PGFRole r : PGFRole.values())
 		{
 			if (id.equals(r.getId())) return r;
 		}
 		
-		return Role.MEMBER;
+		return PGFRole.DEFAULT;
 	}
 	
-	public static Set<Role> getRolesByPlayer(OfflinePlayer p)
+	public static Set<PGFRole> getRolesByPlayer(OfflinePlayer p)
 	{
 		PlayerData pd = PlayerData.from(p);
-		@SuppressWarnings("unchecked")
-		List<String> roles = (List<String>) Optional.ofNullable(pd.getData("roles")).orElse(pd.loadFromFile("roles"));
 		
-		if (roles == null) return Set.of(Role.MEMBER);
+		if (CoreMain.PGFPlugin.BOT.isEnabled() && pd.getData("Discord") != null)
+		{
+			return getRolesById(Discord.getMemberRoles(pd.getData("Discord")));
+		}
 		
-		return getRolesByString(roles);
+			return new HashSet<PGFRole>(Set.of(PGFRole.DEFAULT));
 	}
 	
-	public static Set<Role> getRolesById(Collection<String> ids)
+	public static Set<PGFRole> getRolesById(Collection<String> ids)
 	{
-		if (ids.size() == 0 || ids == null) return Set.of(Role.MEMBER);
+		if (ids.size() == 0 || ids == null) return Set.of(PGFRole.DEFAULT);
 		
 		return ids.stream()
 				.map(id -> getRoleById(id))
 				.collect(Collectors.toSet());
 	}
 	
-	public static Set<Role> getRolesByString(Collection<String> roles)
+	public static Set<PGFRole> getRolesByString(Collection<String> roles)
 	{
-		if (roles.size() == 0 || roles == null) return Set.of(Role.MEMBER);
+		if (roles.size() == 0 || roles == null) return Set.of(PGFRole.DEFAULT);
 		
 		return roles.stream()
-				.map(r -> Role.get(r))
+				.map(r -> PGFRole.get(r))
 				.filter(r -> (r != null))
 				.collect(Collectors.toSet());
 	}
 	
-	public static List<String> asString(Collection<Role> roles)
+	public static List<String> asString(Collection<PGFRole> roles)
 	{
-		if (roles.size() == 0 || roles == null) return Arrays.asList(Role.MEMBER.getName());
+		if (roles.size() == 0 || roles == null) return Arrays.asList(PGFRole.DEFAULT.getName());
 		
 		return roles.stream().map(r -> r.getName()).collect(Collectors.toList());
 	}
 	
-	public static Role getTop(Collection<Role> roles)
+	public static PGFRole getTop(Collection<PGFRole> roles)
 	{
-		if (roles.size() == 0 || roles == null) return Role.MEMBER;
+		if (roles.size() == 0 || roles == null) return PGFRole.DEFAULT;
 		if (roles.size() == 1) return roles.stream().collect(Collectors.toList()).get(0);
 		
 		return roles.stream()
@@ -200,7 +188,7 @@ public class Roles extends Configify implements Listener {
 				.get(0);
 	}
 	
-	public static Role getTop(OfflinePlayer p)
+	public static PGFRole getTop(OfflinePlayer p)
 	{
 		return getTop(getRolesByPlayer(p));
 	}
@@ -218,15 +206,14 @@ public class Roles extends Configify implements Listener {
 		
 		Bukkit.getLogger().warning("Reloading roles.yml");
 		
-		for (Role r : Role.values())
+		for (PGFRole r : PGFRole.values())
 		{
 			r.setId(db.getString(r.getName() + ".id"));
 			r.setColor(db.getString(r.getName() + ".color"));
 			
 		}
 		
-		PlayerData.getPlayerDataSet(x -> x.isOnline())
-		.forEach(pd -> Roles.recalculate(pd));
+		PlayerData.getPlayerDataSet().forEach(pd -> recalculate(pd, getRolesByPlayer(pd.getOfflinePlayer())));
 		
 	}
 
