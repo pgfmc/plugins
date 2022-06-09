@@ -17,7 +17,7 @@ public class HomeInput implements Listener {
 		// For homes
 		if (pd.getData("tempHomeLocation") == null) return;
 		
-		SetHome.setHome(pd.getPlayer(), e.getMessage(), pd.getData("tempHomeLocation"));
+		SetHome.setHome(pd, e.getMessage(), pd.getData("tempHomeLocation"));
 		pd.setData("tempHomeLocation", null);
 		
 		e.setCancelled(true);
