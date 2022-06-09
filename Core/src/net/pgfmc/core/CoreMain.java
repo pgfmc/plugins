@@ -15,7 +15,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.pgfmc.core.chat.ProfanityFilter;
-import net.pgfmc.core.cmd.Goto;
 import net.pgfmc.core.cmd.RealName;
 import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.cmd.donator.Nick;
@@ -137,8 +136,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 		});
 		
 		DimManager.updateConfigForWorldPermissionAccess();
-		
-		getCommand("goto").setExecutor(new Goto());
 		
 		// Makes it so you can /<world> if you want instead of /goto ((	PROBABLY DOESN'T WORK ))
 		// getCommand("goto").setAliases(DimManager.getAllWorldNames()); // /hub, /creative, /<world>

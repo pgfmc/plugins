@@ -44,10 +44,9 @@ public class OwnableFile {
 				
 				String playcer = configSec.getString("placer");
 				
-				PlayerData pd = null;
-				if (!playcer.equals("creative")) {
-					PlayerData.from(UUID.fromString(playcer));
-				}
+				PlayerData pd = (playcer.equals("creative")) ?
+						null :
+							PlayerData.from(UUID.fromString(playcer));
 				
 				Set<PlayerData> members = new HashSet<>();
 				for (String berri : configSec.getStringList("members")) {

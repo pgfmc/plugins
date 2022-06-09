@@ -338,7 +338,7 @@ public class CommandsMenu implements InventoryHolder {
 		public HomeMenu(PlayerData pd) {
 			super(27, "§r§8Home");
       
-      HashMap<String, Location> homes = Homes.getHomes(pd.getOfflinePlayer());
+      HashMap<String, Location> homes = Homes.getHomes(pd);
 			
 			setAction(0, (p, e) -> {
 				p.openInventory(new Homepage().getInventory());
@@ -364,11 +364,11 @@ public class CommandsMenu implements InventoryHolder {
 					return;
 				}
 				if (p.hasPermission("pgf.cmd.donator.home") && homes.size() >= 5) {
-					p.sendMessage("§cYou can only have up to 5 homes: " + Homes.getNamedHomes(p));
+					p.sendMessage("§cYou can only have up to 5 homes: " + Homes.getNamedHomes(pd));
 					return;
 				} else if (!p.hasPermission("pgf.cmd.donator.home") && homes.size() >= 3)
 				{
-					p.sendMessage("§cYou can only have up to 3 homes: " + Homes.getNamedHomes(p));
+					p.sendMessage("§cYou can only have up to 3 homes: " + Homes.getNamedHomes(pd));
 					return;
 				}
 				p.openInventory(new SetConfirm().getInventory());
@@ -406,7 +406,7 @@ public class CommandsMenu implements InventoryHolder {
 			public List<String> load() {
 				
 				List<String> list = new ArrayList<>();
-				for (String s : Homes.getHomes(pd.getPlayer()).keySet()) {
+				for (String s : Homes.getHomes(pd).keySet()) {
 					list.add(s);
 				}
 				return list;
@@ -481,7 +481,7 @@ public class CommandsMenu implements InventoryHolder {
 			@Override
 			public List<String> load() {
 				List<String> list = new ArrayList<>();
-				for (String s : Homes.getHomes(pd.getPlayer()).keySet()) {
+				for (String s : Homes.getHomes(pd).keySet()) {
 					list.add(s);
 				}
 				return list;
