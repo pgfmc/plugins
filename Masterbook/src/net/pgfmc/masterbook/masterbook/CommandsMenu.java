@@ -278,6 +278,27 @@ public class CommandsMenu implements InventoryHolder {
 					
 				}
 			}
+			
+			
+			 if (pd.hasPermission("pgf.cmd.lodestone")) {
+				 if (pd.hasTag("loded")) {
+					 setItem(6, Material.GRAY_CONCRETE).n("§cNo Rewards!");
+				 } else {
+					 setItem(6, Material.LODESTONE).n("§aGet a free Lodestone!").l("§8Lodestones can be used to claim land.");
+					 
+					 setAction(6, (p, e) -> {
+						 pd.getPlayer().performCommand("getclaim");
+						 p.closeInventory();
+					 });
+					 
+					 
+					 
+					 
+					 
+					 
+				 }
+			 }
+			
 		}
 	}
 	
