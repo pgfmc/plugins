@@ -12,7 +12,6 @@ import net.pgfmc.core.inventoryAPI.extra.Butto;
 import net.pgfmc.core.inventoryAPI.extra.Buttonable;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.requests.inv.RequestListInventory;
-import net.pgfmc.masterbook.masterbook.CommandsMenu;
 
 /**
  * Abstract class to be extended by other classes :)
@@ -73,10 +72,6 @@ public final class Request implements Buttonable {
 			conf.setItem(0, Material.FEATHER).n("§r§cBack");
 			conf.setAction(0, (pl, ev) -> {
 				RequestListInventory inv = new RequestListInventory(PlayerData.from(p));
-				inv.setItem(0, Material.FEATHER).n("§r§cBack");
-				inv.setAction(0, (player, event) -> {
-					player.openInventory(new CommandsMenu(PlayerData.from(p)).getInventory());
-				});
 				
 				p.openInventory(inv.getInventory());
 			});
