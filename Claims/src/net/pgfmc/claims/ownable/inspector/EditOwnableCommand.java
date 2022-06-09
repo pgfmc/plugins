@@ -3,7 +3,6 @@ package net.pgfmc.claims.ownable.inspector;
 import java.util.List;
 
 import net.pgfmc.claims.ownable.block.Claim;
-import net.pgfmc.core.cmd.base.CreativeOnly;
 import net.pgfmc.core.cmd.base.PlayerCommand;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
@@ -16,7 +15,7 @@ import net.pgfmc.core.playerdataAPI.PlayerData;
  * @since 4.0.2
  *
  */
-public class EditOwnableCommand extends PlayerCommand implements CreativeOnly {
+public class EditOwnableCommand extends PlayerCommand {
 	
 	public EditOwnableCommand(String name) {
 		super(name);

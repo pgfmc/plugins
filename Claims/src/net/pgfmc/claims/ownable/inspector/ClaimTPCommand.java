@@ -5,12 +5,11 @@ import java.util.List;
 import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
-import net.pgfmc.core.cmd.base.CreativeOnly;
 import net.pgfmc.core.cmd.base.PlayerCommand;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.util.Vector4;
 
-public class ClaimTPCommand extends PlayerCommand implements CreativeOnly {
+public class ClaimTPCommand extends PlayerCommand {
 	
 	public ClaimTPCommand(String name) {
 		super(name);
