@@ -17,6 +17,7 @@ public class Main extends JavaPlugin {
 		plugin = this;
 		
 		new HelpCommand("commands");
+		new GiveLodestoneCommand("getClaim");
 		
 		getServer().getPluginManager().registerEvents(new HomeInput(), this);
 		getServer().getPluginManager().registerEvents(new NicknameInput(), this);

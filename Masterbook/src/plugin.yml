@@ -15,3 +15,7 @@ commands:
     description: Open up the help panel
     usage: /<command>
     permission: pgf.cmd.help
+  getClaim:
+    description: Get your free lodestone!
+    usage: /<command>
+    permission: pgf.cmd.lodestone
