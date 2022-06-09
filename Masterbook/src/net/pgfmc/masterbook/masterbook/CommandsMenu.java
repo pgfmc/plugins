@@ -507,7 +507,7 @@ public class CommandsMenu implements InventoryHolder {
 		@Override
 		protected Butto toAction(Player entry) {
 			return (p, e) -> {
-				p.performCommand("tp " + entry.getName());
+				p.performCommand("tpa " + entry.getName());
 				p.openInventory(new Homepage().getInventory());
 			};
 		}
