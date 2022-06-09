@@ -23,7 +23,7 @@ import net.pgfmc.core.inventoryAPI.ListInventory;
 import net.pgfmc.core.inventoryAPI.extra.Butto;
 import net.pgfmc.core.inventoryAPI.extra.ItemWrapper;
 import net.pgfmc.core.permissions.Roles;
-import net.pgfmc.core.permissions.Roles.Role;
+import net.pgfmc.core.permissions.Roles.PGFRole;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.requests.inv.RequestListInventory;
 import net.pgfmc.masterbook.Main;
@@ -159,40 +159,7 @@ public class CommandsMenu implements InventoryHolder {
 			 * home menu
 			 */
 			
-			Role topRole = Roles.getTop(pd.getOfflinePlayer());
-			/* in case I don't like this new UI change - bk
-			Material emblem = Material.RAW_COPPER;
-			switch (topRole) {
-			case VETERAN:
-				emblem = Material.LAPIS_LAZULI;
-				break;
-			case DONATOR:
-				emblem = Material.RAW_GOLD;
-				break;
-			case DOOKIE:
-				emblem = Material.COCOA_BEANS;
-				break;
-			case STAFF:
-				emblem = Material.BLACK_DYE;
-				break;
-			case TRAINEE:
-				emblem = Material.CHORUS_FRUIT;
-				break;
-			case MODERATOR:
-				emblem = Material.POPPED_CHORUS_FRUIT;
-				break;
-			case DEVELOPER:
-				emblem = Material.EMERALD;
-				break;
-			case ADMIN:
-				emblem = Material.DIAMOND;
-				break;
-			case FOUNDER:
-				emblem = Material.DIAMOND;
-				break;
-			default: break;
-			};
-			*/
+			PGFRole topRole = Roles.getTop(pd.getOfflinePlayer());
 			/* 
 			 * [] [] [] [] XX [] [] [] []
 			 * [] [] [] [] [] [] [] [] []
@@ -229,7 +196,7 @@ public class CommandsMenu implements InventoryHolder {
 					p.closeInventory();
 					p.performCommand("echest");
 				});
-				setItem(22, Material.ENDER_CHEST).n("§r§3Ender Chest").l("§r§9VIP perk!");
+				setItem(22, Material.ENDER_CHEST).n("§r§3Ender Chest").l("§r§9Donator perk!");
 			}
 			
 			/* 
