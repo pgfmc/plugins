@@ -202,7 +202,7 @@ public class CommandsMenu implements InventoryHolder {
 			setAction(4, (p, e) -> {
 				if (pd.hasPermission("pgf.cmd.donator.nick"))
 				{
-					pd.setData("nickTemp", "reset");
+					pd.addTag("nick");
 					p.closeInventory();
 					p.sendMessage("§9Type your new nickname in chat.");
 				} else
@@ -290,12 +290,6 @@ public class CommandsMenu implements InventoryHolder {
 						 pd.getPlayer().performCommand("getclaim");
 						 p.closeInventory();
 					 });
-					 
-					 
-					 
-					 
-					 
-					 
 				 }
 			 }
 			

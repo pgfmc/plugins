@@ -1,5 +1,6 @@
 package net.pgfmc.masterbook.chat;
 
+import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -15,20 +16,22 @@ public class NickHomeInput implements Listener {
 	{
 		PlayerData pd = PlayerData.from(e.getPlayer());
 		
-		if (pd.getData("nickTemp") != null) {
-			
+		if (pd.hasTag("nick")) {
+			pd.removeTag("nick");
 			e.setCancelled(true);
 			Nick.setNick(pd.getPlayer(), e.getMessage());
-			pd.setData("nickTemp", null);
 			return;
 		}
 		
 		// For homes
+		
+		Location loc = pd.getData("tempHomeLocation");
+		
 		if (pd.getData("tempHomeLocation") != null) {
-			
-			e.setCancelled(true);
-			SetHome.setHome(pd, e.getMessage(), pd.getData("tempHomeLocation"));
 			pd.setData("tempHomeLocation", null);
+			e.setCancelled(true);
+			SetHome.setHome(pd, e.getMessage(), loc);
+			
 		}
 	}
 }
