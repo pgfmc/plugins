@@ -2,11 +2,14 @@ package net.pgfmc.bot.functions;
 
 import java.util.LinkedList;
 import java.util.Random;
+import java.util.Set;
 
 import org.bukkit.Bukkit;
 
 import net.dv8tion.jda.api.entities.User;
+import net.pgfmc.bot.Discord;
 import net.pgfmc.core.permissions.Roles;
+import net.pgfmc.core.permissions.Roles.PGFRole;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
 public class AccountLinking {
@@ -60,7 +63,10 @@ public class AccountLinking {
 	public static void link(PlayerData pd, String id)
 	{
 		pd.setData("Discord", id).queue();
-		Roles.recalculate(pd);
+		
+		Set<PGFRole> roles = Roles.getRolesById(Discord.getMemberRoles(id));
+		
+		Roles.recalculate(pd, roles);
 	}
 	
 	/**

@@ -14,8 +14,6 @@ import org.bukkit.entity.Player;
 
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.chat.ProfanityFilter;
-import net.pgfmc.core.permissions.Roles;
-import net.pgfmc.core.permissions.Roles.Role;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
 public class Nick implements CommandExecutor {
@@ -76,6 +74,8 @@ public class Nick implements CommandExecutor {
 							|| removeCodes(((String) Optional.ofNullable(PlayerData.getData(op, "nick"))
 									.orElse(op.getName()))).toLowerCase().equals(raw)
 						)).collect(Collectors.toList()).size() == 0) return; // If list is empty (no impostors)
+		
+		Bukkit.getLogger().info("Found impostor for " + pd.getName());
 		
 		// At least 1 impostor, remove nickname
 		pd.setData("nick", null).queue();
@@ -184,7 +184,7 @@ public class Nick implements CommandExecutor {
 	
 	public static String getNick(OfflinePlayer p)
 	{
-		if (Roles.getTop(Roles.getRolesByPlayer(p)) != Role.MEMBER)
+		if (p.getPlayer() != null && p.isOnline() && p.getPlayer().hasPermission("pgf.cmd.donator.nick"))
 		{
 			String nick = PlayerData.getData(p, "nick");
 			
