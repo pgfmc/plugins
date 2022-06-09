@@ -172,26 +172,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 	
 	@EventHandler
 	public void onLoad(ServerLoadEvent e) {
-		
-		PlayerDataManager.initializePD();
-		
-		String ver = getDescription().getVersion();		
-		
-		for (PGFPlugin p : PGFPlugin.values())
-		{
-			Plugin pl = p.getPlugin();
-			if (pl == null)
-			{
-				Bukkit.getLogger().severe("[PGF-" + p.name() + "] is disabled!");
-				p.disable();
-				continue;
-			}
-			
-			if (!pl.getDescription().getVersion().equals(ver))
-			{
-				Bukkit.getLogger().warning("[" + pl.getName() + " (" + pl.getDescription().getVersion() + ")] does not match PGF-Core (" + ver + ") version!");
-			}
-		}
+		PlayerDataManager.initializePD();	
 		
 		Configify.enableConfigify();
 	}
