@@ -1,36 +1,12 @@
 package net.pgfmc.core.util;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
-
-import net.pgfmc.core.CoreMain;
 
 public class DimManager {
-	
-	/**
-	 * Tests if a player can go to a world by checking permissions and if the world exists/is online
-	 * @param p Player
-	 * @param world World
-	 * @return true if the player can go to the world, false if else
-	 */
-	public static boolean canGotoWorld(Player p, String world)
-	{
-		FileConfiguration config = CoreMain.plugin.getConfig();
-		updateConfigForWorldPermissionAccess();
-		
-		// checks if the world exists and that the player has the permission needed (false is either is null or false)
-		boolean access = config.getBoolean("dim.access." + world);
-		boolean permission = p.hasPermission(config.getString("dim.permission." + world));
-		
-		// Optional since one of the above could give null
-		return Optional.ofNullable(access && permission).orElse(false);
-	}
 	
 	/**
 	 * Tests if a player is in a specified world, does not test for dimension
@@ -118,36 +94,6 @@ public class DimManager {
 		return Bukkit.getWorlds().stream().map(x -> {
 			return x.getName();
 		}).collect(Collectors.toList());
-	}
-	
-	/**
-	 * Updates the config so that any new worlds have an option for permission and access
-	 */
-	public static void updateConfigForWorldPermissionAccess()
-	{
-		// note to self, look into config.isSet() -- thx past self
-		// Gets all multiverse worlds, filters the worlds that don't have a permission set
-		getAllWorldNames()
-		.stream().
-		filter( world -> Optional
-				.ofNullable(CoreMain.plugin.getConfig()
-						.get("dim.permission." + world))
-				.isEmpty())
-		// Continuation of above, for each world, set a default permission (pgf.dim.<world name>)
-		.forEach(world -> CoreMain.plugin.getConfig()
-				.set("dim.permission." + world, "pgf.dim." + world));
-		
-		// Gets all multiverse worlds, filters the worlds that don't have an access option set
-				getAllWorldNames()
-				.stream()
-				.filter(world -> Optional
-						.ofNullable(CoreMain.plugin.getConfig()
-								.get("dim.access." + world))
-						.isEmpty())
-				// Continuation of above, for each world, set a default access (true)
-				.forEach(world -> CoreMain.plugin.getConfig().set("dim.access." + world, true));
-				
-				CoreMain.plugin.saveConfig();
 	}
 	
 	/**
