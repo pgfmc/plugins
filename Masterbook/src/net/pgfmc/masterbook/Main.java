@@ -15,7 +15,7 @@ public class Main extends JavaPlugin {
 	{
 		plugin = this;
 		
-		getCommand("commands").setExecutor(new HelpCommand());
+		new HelpCommand("commands");
 		
 		getServer().getPluginManager().registerEvents(new HomeInput(), this);
 		getServer().getPluginManager().registerEvents(new NicknameInput(), this);

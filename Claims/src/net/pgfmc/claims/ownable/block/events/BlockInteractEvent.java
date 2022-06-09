@@ -53,7 +53,7 @@ public class BlockInteractEvent implements Listener {
 						e.setCancelled(true);
 						return;
 					}
-				} else if (access == Security.BLOCKED || access == Security.EXCEPTION) {
+				} else if (access == Security.BLOCKED) {
 					
 					switch(block.getType()) {
 					
@@ -74,7 +74,7 @@ public class BlockInteractEvent implements Listener {
 					
 					e.setCancelled(true);
 				}
-			} 
+			}
 			
 			if (e.getPlayer().isSneaking()) return;
 			if (block != null && block.getType() == Material.LODESTONE) {
