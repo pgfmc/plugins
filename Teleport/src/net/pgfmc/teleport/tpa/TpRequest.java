@@ -23,7 +23,7 @@ public class TpRequest extends RequestType {
 	public static final void registerAll() {
 		TR.registerDeny("tpdeny");
 		TR.registerAccept("tpaccept");
-		TR.registerSend("tp");
+		TR.registerSend("tpa");
 	}
 	
 

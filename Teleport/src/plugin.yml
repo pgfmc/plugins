@@ -32,7 +32,7 @@ commands:
     usage: /<command>
     permission: pgf.cmd.home.homes
     
-  tp:
+  tpa:
     description: Send a teleport request
     usage: /<command> [player]
     permission: pgf.cmd.tp.tpa
