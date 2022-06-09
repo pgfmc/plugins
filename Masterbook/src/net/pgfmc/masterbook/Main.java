@@ -4,6 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import net.pgfmc.masterbook.chat.HomeInput;
 import net.pgfmc.masterbook.chat.NicknameInput;
+import net.pgfmc.masterbook.masterbook.BookClick;
 import net.pgfmc.masterbook.masterbook.HelpCommand;
 
 public class Main extends JavaPlugin {
@@ -19,5 +20,6 @@ public class Main extends JavaPlugin {
 		
 		getServer().getPluginManager().registerEvents(new HomeInput(), this);
 		getServer().getPluginManager().registerEvents(new NicknameInput(), this);
+		getServer().getPluginManager().registerEvents(new BookClick(), this);
 	}
 }

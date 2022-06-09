@@ -40,8 +40,8 @@ public class BBEvent implements Listener {
 					e.setCancelled(true);
 					pd.sendMessage("§cThis land is claimed!");
 					return;
-				case MEMBER:
 					
+				case MEMBER:
 					e.setCancelled(true);
 					pd.sendMessage("§cOnly " + cont.getPlayer().getRankedName() + " §r§ccan remove this claim.");
 					return;
