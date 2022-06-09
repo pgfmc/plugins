@@ -1,49 +1,47 @@
 package net.pgfmc.teleport.home;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
 import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
+import net.pgfmc.core.cmd.base.PlayerCommand;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
-public class Homes implements CommandExecutor {
+public class Homes extends PlayerCommand {
 
-	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		
-		if (!(sender instanceof Player))
-		{
-			sender.sendMessage("§cOnly players can execute this command.");
-			return true;
-		}
-		Player p = (Player) sender;
-		
-		p.sendMessage("§aHomes: §6" + Homes.getNamedHomes(p));
-		
-		return true;
+	public Homes(String name) {
+		super(name);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static HashMap<String, Location> getHomes(OfflinePlayer p)
+	public static HashMap<String, Location> getHomes(PlayerData pd)
 	{
-		return (HashMap<String, Location>) Optional.ofNullable(PlayerData.getData(p, "homes")).orElse(new HashMap<String, Location>());
+		return (HashMap<String, Location>) Optional.ofNullable(pd.getData("homes")).orElse(new HashMap<String, Location>());
 	}
 	
-	/*
-	 * Gets an List<Object> of named homes
-	 * It says Object, but it is String
-	 */
-	public static List<Object> getNamedHomes(OfflinePlayer p)
+	
+	public static List<String> getNamedHomes(PlayerData pd)
 	{
-		return Arrays.asList(getHomes(p).keySet().toArray());
+		List<String> list = new ArrayList<>();
+		for (String s : getHomes(pd).keySet()) {
+			list.add(s);
+		}
+		return list;
+		
+	}
+
+	@Override
+	public List<String> tabComplete(PlayerData pd, String alias, String[] args) {
+		return null;
+	}
+
+	@Override
+	public boolean execute(PlayerData pd, String alias, String[] args) {
+		pd.sendMessage("§aHomes: §6" + Homes.getNamedHomes(pd));
+		return true;
 	}
 	
 

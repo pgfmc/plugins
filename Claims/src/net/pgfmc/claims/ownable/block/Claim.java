@@ -3,6 +3,7 @@ package net.pgfmc.claims.ownable.block;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
@@ -55,7 +56,6 @@ public class Claim {
 		ADMIN, 
 		MEMBER,
 		BLOCKED,
-		EXCEPTION,
 	}
 	
 	public Claim(PlayerData player, Vector4 vec, Set<PlayerData> members) {
@@ -149,6 +149,15 @@ public class Claim {
 	}
 	
 	public Security getAccess(PlayerData player) {
+		
+		if (placer == null) {
+			if (player.getPlayer().getGameMode() == GameMode.CREATIVE) {
+				return Security.ADMIN;
+			} else {
+				return Security.BLOCKED;
+			}
+		}
+		
 		
 		if (player == placer) {
 			return Security.ADMIN;

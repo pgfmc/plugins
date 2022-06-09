@@ -26,10 +26,10 @@ public class Main extends JavaPlugin {
 		TpRequest.registerAll();
 		TpHereRequest.registerAll();
 		
-		getCommand("home").setExecutor(new Home());
-		getCommand("sethome").setExecutor(new SetHome());
-		getCommand("delhome").setExecutor(new DelHome());
-		getCommand("homes").setExecutor(new Homes());
+		new Home("home");
+		new SetHome("sethome");
+		new DelHome("delhome");
+		new Homes("homes");
 		
 		getCommand("warp").setExecutor(new Warp());
 		getCommand("warps").setExecutor(new Warps());
@@ -37,9 +37,7 @@ public class Main extends JavaPlugin {
 		getCommand("delwarp").setExecutor(new DelWarp());
 		
 		
-		Back back = new Back();
-		getCommand("back").setExecutor(back);
-		
+		Back back = new Back("back");
 		getServer().getPluginManager().registerEvents(back, this);
 	}
 	

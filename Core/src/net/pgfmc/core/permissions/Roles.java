@@ -110,7 +110,6 @@ public class Roles extends Configify implements Listener {
 				pd.setData("Discord", id).queue();
 				roles = asString(getRolesById(discordRoles));
 			}
-		
 		}
 		
 		pd.setData("roles", roles).queue();

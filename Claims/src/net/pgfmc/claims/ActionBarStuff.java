@@ -34,7 +34,14 @@ public class ActionBarStuff extends BukkitRunnable {
 			
 			if (block != null && block.getType() == Material.LODESTONE) {
 				Claim claim = ClaimsTable.getOwnable(new Vector4(block));
-				ting = "§7Claimed by " + claim.getPlayer().getRankedName();
+				if (claim != null) {
+					
+					if (claim.getPlayer() == null) {
+						ting = "§dCreative Claim";
+					} else {
+						ting = "§7Claimed by " + claim.getPlayer().getRankedName();
+					}
+				}
 				
 			} else if (player.getInventory().getItemInMainHand().getType() == Material.LODESTONE) {
 				
