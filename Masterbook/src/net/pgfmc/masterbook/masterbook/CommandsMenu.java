@@ -9,11 +9,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionType;
 
 import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.inventoryAPI.BaseInventory;
@@ -24,7 +26,6 @@ import net.pgfmc.core.permissions.Roles;
 import net.pgfmc.core.permissions.Roles.Role;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.requests.inv.RequestListInventory;
-import net.pgfmc.core.util.DimManager;
 import net.pgfmc.masterbook.Main;
 import net.pgfmc.survival.cmd.Afk;
 import net.pgfmc.teleport.home.Homes;
@@ -104,7 +105,14 @@ public class CommandsMenu implements InventoryHolder {
 					p.openInventory(new BackConfirm(pd).getInventory());
 				});
 				
-				setItem(23, Material.ARROW).n("§r§4Back").l("§r§7Go back to your last location");
+				ItemStack item = new ItemWrapper(Material.TIPPED_ARROW).n("§r§4Back").l("§r§7Go back to your last location").gi();
+				
+				PotionMeta pot = (PotionMeta) item.getItemMeta();
+				PotionData potion = new PotionData(PotionType.INSTANT_DAMAGE);
+				pot.setBasePotionData(potion);
+				item.setItemMeta(pot);
+				
+				setItem(23, item);
 			}
 			
 			/* 
@@ -230,7 +238,7 @@ public class CommandsMenu implements InventoryHolder {
 			 * [] [] [] [] [] [] [] [] []
 			 * Requests
 			 */
-			setAction(9, (p, e) -> {
+			setAction(24, (p, e) -> {
 				
 				RequestListInventory inv = new RequestListInventory(PlayerData.from(p));
 				inv.setItem(0, Material.FEATHER).n("§r§cBack");
@@ -240,7 +248,7 @@ public class CommandsMenu implements InventoryHolder {
 				
 				p.openInventory(inv.getInventory());
 			});
-			setItem(9, Material.LEVER).n("§r§4Requests");
+			setItem(24, Material.LEVER).n("§r§4Requests");
 			
 			/* 
 			 * [] [] [] XX [] [] [] [] []
@@ -322,35 +330,6 @@ public class CommandsMenu implements InventoryHolder {
 				p.openInventory(new Homepage().getInventory());
 			});
 			setItem(15, Material.RED_CONCRETE).n("§r§7Cancel");
-		}
-	}
-	
-	private class DimSelect extends ListInventory<World> {
-		
-		public DimSelect(PlayerData pd) {
-			super(27, "§r§5Dimension Select");
-			
-			setAction(0, (p, e) -> {
-				p.openInventory(new Homepage().getInventory());
-			});
-			setItem(0, Material.FEATHER).n("§r§7Back");
-		}
-
-		@Override
-		public List<World> load() {
-			return DimManager.getAllWorlds(false);
-		}
-
-		@Override
-		protected Butto toAction(World entry) {
-			return (p, e) -> {
-				p.performCommand("goto " + entry.getName());
-			};
-		}
-		
-		@Override
-		protected ItemStack toItem(World entry) {
-			return new ItemWrapper(Material.ENDER_PEARL).n("§r§9" + entry.getName()).gi();
 		}
 	}
 	

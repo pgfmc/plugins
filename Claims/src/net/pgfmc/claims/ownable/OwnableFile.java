@@ -42,13 +42,17 @@ public class OwnableFile {
 				
 				ConfigurationSection configSec = database.getConfigurationSection(key);
 				
-				PlayerData pd = PlayerData.from(UUID.fromString(configSec.getString("placer")));
+				String playcer = configSec.getString("placer");
+				
+				PlayerData pd = null;
+				if (!playcer.equals("creative")) {
+					PlayerData.from(UUID.fromString(playcer));
+				}
 				
 				Set<PlayerData> members = new HashSet<>();
 				for (String berri : configSec.getStringList("members")) {
 					members.add(PlayerData.from(UUID.fromString(berri)));
 				}
-				
 				
 				Vector4 vec = Vector4.fromString(key);
 				new Claim(pd, vec, members);
@@ -73,7 +77,11 @@ public class OwnableFile {
 			blocc = database.createSection(id);
 		}
 		
-		blocc.set("placer", player.getUniqueId().toString());
+		blocc.set("placer", (player == null) ?
+				"creative" :
+					player.getUniqueId().toString()
+				);
+		
 		blocc.set("members", ob.getMembers()
 				.stream().map(x -> {
 					return x.getUniqueId().toString();

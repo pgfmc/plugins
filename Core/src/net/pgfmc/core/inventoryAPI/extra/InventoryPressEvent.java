@@ -24,6 +24,10 @@ public class InventoryPressEvent implements Listener {
 	
 	@EventHandler
 	public void onClick(InventoryClickEvent e) {
+		
+		if (e.getClickedInventory() == null || e.getInventory() == null) return;
+		
+		
 		if (e.getInventory().getHolder() instanceof BaseInventory) {
 			if (disallowedActions.contains(e.getAction())) {
 				e.setCancelled(true);

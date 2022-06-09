@@ -1,64 +1,66 @@
 package net.pgfmc.teleport.home;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import net.pgfmc.core.chat.ProfanityFilter;
+import net.pgfmc.core.cmd.base.PlayerCommand;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
-public class SetHome implements CommandExecutor {
+public class SetHome extends PlayerCommand {
+
+	public SetHome(String name) {
+		super(name);
+	}
+	
+	
+	@Override
+	public List<String> tabComplete(PlayerData pd, String alias, String[] args) {
+		return null;
+	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		
-		if (!(sender instanceof Player))
-		{
-			sender.sendMessage("§cOnly players can execute this command.");
-			return true;
-		}
-		Player p = (Player) sender;
+	public boolean execute(PlayerData pd, String alias, String[] args) {
 		
 		if (args.length == 0)
 		{
-			return false;
+			pd.sendMessage("§cPlease enter a name.");
+			return true;
 		}
 		
-		setHome(p, String.join("_", args), p.getLocation());
 		
+		setHome(pd, String.join("_", args), null);
 		return true;
 	}
 	
-	public static void setHome(Player p, String name, Location loc)
+	public static void setHome(PlayerData pd, String name, Location loc)
 	{
-		HashMap<String, Location> homes = Homes.getHomes(p);
+		HashMap<String, Location> homes = Homes.getHomes(pd);
 		
 		name = name.toLowerCase().strip().replace(" ", "_");
 		
 		if (ProfanityFilter.hasProfanity(name))
 		{
-			p.sendMessage(ChatColor.RED + "Please do not include profanity!");
+			pd.sendMessage(ChatColor.RED + "Please do not include profanity!");
 			return;
 		}
 		
 		if (homes.containsKey(name))
 		{
-			p.sendMessage("§cYou cannot have duplicate home names: §6" + name);
+			pd.sendMessage("§cYou cannot have duplicate home names: §6" + name);
 			return;
 		}
 		
-		if (p.hasPermission("pgf.cmd.donator.home") && homes.size() >= 5)
+		if (pd.hasPermission("pgf.cmd.donator.home") && homes.size() >= 5)
 		{
-			p.sendMessage("§cYou can only have up to 5 homes: §6" + Homes.getNamedHomes(p));
+			pd.sendMessage("§cYou can only have up to 5 homes: §6" + Homes.getNamedHomes(pd));
 			return;
-		} else if (!p.hasPermission("pgf.cmd.donator.home") && homes.size() >= 3)
+		} else if (!pd.hasPermission("pgf.cmd.donator.home") && homes.size() >= 3)
 		{
-			p.sendMessage("§cYou can only have up to 3 homes: §6" + Homes.getNamedHomes(p));
+			pd.sendMessage("§cYou can only have up to 3 homes: §6" + Homes.getNamedHomes(pd));
 			return;
 		}
 		
@@ -67,11 +69,13 @@ public class SetHome implements CommandExecutor {
 			homes.put(name, loc);
 		} else
 		{
-			homes.put(name, p.getLocation());
+			homes.put(name, pd.getPlayer().getLocation());
 		}
 		
-		p.sendMessage("§aSet home §6" + name + "§a!");
-		PlayerData.from(p).setData("homes", homes).queue();
+		pd.sendMessage("§aSet home §6" + name + "§a!");
+		pd.setData("homes", homes).queue();
 	}
+
+	
 
 }
