@@ -38,8 +38,8 @@ public class Home extends PlayerCommand {
 	public boolean execute(PlayerData pd, String alias, String[] args) {
 		if (args.length == 0)
 		{
-			//TODO GUI
-			return false;
+			pd.sendMessage("§cPlease enter the name of a home.");
+			return true;
 		}
 		
 		HashMap<String, Location> homes = Homes.getHomes(pd);
