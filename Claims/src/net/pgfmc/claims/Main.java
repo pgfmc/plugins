@@ -44,6 +44,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new TameEvent(), this);
 		getServer().getPluginManager().registerEvents(new BExEvent(), this);
 		
+		
 		new InspectCommand("inspector");
 		new EditOwnableCommand("editownable");
 		new ClaimTPCommand("claimtp");
