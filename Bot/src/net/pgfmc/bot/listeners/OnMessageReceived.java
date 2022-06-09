@@ -17,7 +17,7 @@ import net.pgfmc.bot.functions.AccountLinking;
 import net.pgfmc.bot.listeners.minecraft.OnAsyncPlayerChat;
 import net.pgfmc.core.chat.ProfanityFilter;
 import net.pgfmc.core.permissions.Roles;
-import net.pgfmc.core.permissions.Roles.Role;
+import net.pgfmc.core.permissions.Roles.PGFRole;
 
 public class OnMessageReceived implements EventListener {
 
@@ -62,7 +62,7 @@ public class OnMessageReceived implements EventListener {
 		// message sent in #server by a Member (not a bot)
 		if (e.getChannel().getId().equals(Discord.getServerChannel().getId()) && !user.isBot())
 		{
-			Role r = Role.MEMBER;
+			PGFRole r = PGFRole.DEFAULT;
 			// If member of PGF (mainly for BTS/outside PGF server)
 			if (memberPGF != null)
 			{
@@ -95,7 +95,7 @@ public class OnMessageReceived implements EventListener {
 				return;
 				
 			} else {
-                Role replyRole = Role.MEMBER;
+                PGFRole replyRole = PGFRole.DEFAULT;
                 Member replyMember = Discord.getGuildPGF().getMember(e.getMessage().getReferencedMessage().getAuthor());
                 
                 if (replyMember != null)

@@ -3,6 +3,7 @@ package net.pgfmc.bot;
 import javax.security.auth.login.LoginException;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -17,6 +18,7 @@ import net.pgfmc.bot.listeners.minecraft.OnPlayerDeath;
 import net.pgfmc.bot.listeners.minecraft.OnPlayerJoin;
 import net.pgfmc.bot.listeners.minecraft.OnPlayerQuit;
 import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.playerdataAPI.PlayerDataManager;
 
 public class Main extends JavaPlugin {
 	
@@ -29,6 +31,13 @@ public class Main extends JavaPlugin {
 		plugin = this;
 		plugin.saveDefaultConfig();
 		plugin.reloadConfig();
+		
+		PlayerDataManager.setInit(pd -> {
+			FileConfiguration config = pd.loadFile();
+			
+			pd.setData("Discord", config.getString("Discord"));
+			
+		});
 		
 		getServer().getPluginManager().registerEvents(new OnAsyncPlayerChat(), this);
 		getServer().getPluginManager().registerEvents(new OnPlayerAdvancementDone(), this);

@@ -29,7 +29,6 @@ import net.pgfmc.core.playerdataAPI.cmd.PlayerDataSetCommand;
 import net.pgfmc.core.playerdataAPI.cmd.TagCommand;
 import net.pgfmc.core.requests.RequestEvents;
 import net.pgfmc.core.teleportAPI.SpawnProtect;
-import net.pgfmc.core.util.DimManager;
 
 /**
  * @author bk and CrimsonDart
@@ -77,7 +76,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		
 		public Plugin getPlugin()
 		{
-			return Bukkit.getPluginManager().getPlugin("PGF-" + this.name());
+			return Bukkit.getPluginManager().getPlugin("PGF-" + this.name().toUpperCase().substring(0, 1) + this.name().toLowerCase().substring(1));
 		}
 	}
 	
@@ -134,8 +133,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 			
 			pd.setData("nick", db.getString("nick"));
 		});
-		
-		DimManager.updateConfigForWorldPermissionAccess();
 		
 		// Makes it so you can /<world> if you want instead of /goto ((	PROBABLY DOESN'T WORK ))
 		// getCommand("goto").setAliases(DimManager.getAllWorldNames()); // /hub, /creative, /<world>
