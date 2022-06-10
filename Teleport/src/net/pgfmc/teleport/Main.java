@@ -31,7 +31,7 @@ public class Main extends JavaPlugin {
 		new DelHome("delhome");
 		new Homes("homes");
 		
-		getCommand("warp").setExecutor(new Warp());
+		new Warp("warp");
 		getCommand("warps").setExecutor(new Warps());
 		getCommand("setwarp").setExecutor(new SetWarp());
 		getCommand("delwarp").setExecutor(new DelWarp());
