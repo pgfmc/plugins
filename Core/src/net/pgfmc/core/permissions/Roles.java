@@ -18,7 +18,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
-import net.luckperms.api.model.group.Group;
 import net.luckperms.api.model.user.UserManager;
 import net.luckperms.api.node.Node;
 import net.luckperms.api.node.NodeType;
@@ -102,7 +101,6 @@ public class Roles extends Configify implements Listener {
 		}
 		
 		LuckPerms lp = LuckPermsProvider.get();
-		Set<Group> lpGroups = lp.getGroupManager().getLoadedGroups();
 		UserManager userManager = lp.getUserManager();
 		
 		userManager.modifyUser(pd.getUniqueId(), user -> {
@@ -111,15 +109,17 @@ public class Roles extends Configify implements Listener {
 		});
 		
 		PGFRole role = getTop(roles);
-		Group group = lpGroups.stream().filter(g -> g.getName().toLowerCase().equals(role.getName())).collect(Collectors.toList()).get(0);
+		
+		if (role == PGFRole.DEFAULT) return;
 		
 		userManager.modifyUser(pd.getUniqueId(), user -> {
 			
             // Create a node to add to the player.
-            Node node = InheritanceNode.builder(group).build();
+            Node node = InheritanceNode.builder("group." + role.getName().toLowerCase()).build();
 
             // Add the node to the user.
             user.data().add(node);
+            
 		});
 		
 	}
