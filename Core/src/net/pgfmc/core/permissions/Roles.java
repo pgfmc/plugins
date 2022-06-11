@@ -18,6 +18,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.model.group.Group;
 import net.luckperms.api.model.user.UserManager;
 import net.luckperms.api.node.Node;
 import net.luckperms.api.node.NodeType;
@@ -91,14 +92,9 @@ public class Roles extends Configify implements Listener {
 		
 	}
 	
-	public static void recalculate(PlayerData pd, Collection<PGFRole> roles)
+	public static void recalculate(PlayerData pd)
 	{
 		Bukkit.getLogger().warning("Recalculating roles for player " + pd.getName());
-		
-		if (roles.isEmpty())
-		{
-			roles.add(PGFRole.DEFAULT);
-		}
 		
 		LuckPerms lp = LuckPermsProvider.get();
 		UserManager userManager = lp.getUserManager();
@@ -108,25 +104,27 @@ public class Roles extends Configify implements Listener {
 	        user.data().clear(NodeType.INHERITANCE::matches);
 		});
 		
-		PGFRole role = getTop(roles);
+		Set<PGFRole> droles = getRolesById(Discord.getMemberRoles(pd.getData("Discord")));
+		
+		if (droles == null) return;
+		
+		PGFRole role = getTop(droles);
+		String groupName = role.toString().toLowerCase();
 		
 		if (role == PGFRole.DEFAULT) return;
 		
 		userManager.modifyUser(pd.getUniqueId(), user -> {
 			
+            Group group = lp.getGroupManager().getGroup(groupName);
+            
             // Create a node to add to the player.
-            Node node = InheritanceNode.builder("group." + role.getName().toLowerCase()).build();
+            Node node = InheritanceNode.builder(group).build();
 
             // Add the node to the user.
             user.data().add(node);
             
 		});
 		
-	}
-	
-	public static void recalculate(OfflinePlayer p)
-	{
-		recalculate(PlayerData.from(p), getRolesByPlayer(p));
 	}
 	
 	public static PGFRole getRoleById(String id)
@@ -196,7 +194,7 @@ public class Roles extends Configify implements Listener {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e)
 	{
-		Roles.recalculate(e.getPlayer());
+		Roles.recalculate(PlayerData.from(e.getPlayer()));
 	}
 
 	@Override
@@ -213,7 +211,7 @@ public class Roles extends Configify implements Listener {
 			
 		}
 		
-		PlayerData.getPlayerDataSet().forEach(pd -> recalculate(pd, getRolesByPlayer(pd.getOfflinePlayer())));
+		PlayerData.getPlayerDataSet().forEach(pd -> recalculate(pd));
 		
 	}
 
