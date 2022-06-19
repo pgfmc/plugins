@@ -151,7 +151,7 @@ public class Roles extends Configify implements Listener {
 	
 	public static Set<PGFRole> getRolesById(Collection<String> ids)
 	{
-		if (ids.size() == 0 || ids == null) return Set.of(PGFRole.DEFAULT);
+		if (ids == null || ids.size() == 0) return Set.of(PGFRole.DEFAULT);
 		
 		return ids.stream()
 				.map(id -> getRoleById(id))
@@ -160,7 +160,7 @@ public class Roles extends Configify implements Listener {
 	
 	public static Set<PGFRole> getRolesByString(Collection<String> roles)
 	{
-		if (roles.size() == 0 || roles == null) return Set.of(PGFRole.DEFAULT);
+		if (roles == null || roles.size() == 0) return Set.of(PGFRole.DEFAULT);
 		
 		return roles.stream()
 				.map(r -> PGFRole.get(r))
@@ -170,14 +170,14 @@ public class Roles extends Configify implements Listener {
 	
 	public static List<String> asString(Collection<PGFRole> roles)
 	{
-		if (roles.size() == 0 || roles == null) return Arrays.asList(PGFRole.DEFAULT.getName());
+		if (roles == null || roles.size() == 0) return Arrays.asList(PGFRole.DEFAULT.getName());
 		
 		return roles.stream().map(r -> r.getName()).collect(Collectors.toList());
 	}
 	
 	public static PGFRole getTop(Collection<PGFRole> roles)
 	{
-		if (roles.size() == 0 || roles == null) return PGFRole.DEFAULT;
+		if (roles == null || roles.size() == 0) return PGFRole.DEFAULT;
 		if (roles.size() == 1) return roles.stream().collect(Collectors.toList()).get(0);
 		
 		return roles.stream()
