@@ -9,6 +9,10 @@ import net.pgfmc.claims.ownable.block.events.BBEvent;
 import net.pgfmc.claims.ownable.block.events.BExEvent;
 import net.pgfmc.claims.ownable.block.events.BPE;
 import net.pgfmc.claims.ownable.block.events.BlockInteractEvent;
+import net.pgfmc.claims.ownable.block.events.BucketEvent;
+import net.pgfmc.claims.ownable.block.events.EntityInteractEvent;
+import net.pgfmc.claims.ownable.block.events.HarvestEvent;
+import net.pgfmc.claims.ownable.block.events.PhysicsEvent;
 import net.pgfmc.claims.ownable.entities.TameEvent;
 import net.pgfmc.claims.ownable.inspector.ClaimTPCommand;
 import net.pgfmc.claims.ownable.inspector.EditOwnableCommand;
@@ -43,6 +47,10 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new BPE(), this);
 		getServer().getPluginManager().registerEvents(new TameEvent(), this);
 		getServer().getPluginManager().registerEvents(new BExEvent(), this);
+		getServer().getPluginManager().registerEvents(new EntityInteractEvent(), this);
+		getServer().getPluginManager().registerEvents(new BucketEvent(), this);
+		getServer().getPluginManager().registerEvents(new HarvestEvent(), this);
+		getServer().getPluginManager().registerEvents(new PhysicsEvent(), this);
 		
 		
 		new InspectCommand("inspector");
