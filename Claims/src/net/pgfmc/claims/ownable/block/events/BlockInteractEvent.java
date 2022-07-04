@@ -35,7 +35,10 @@ public class BlockInteractEvent implements Listener {
 		PlayerData pd = PlayerData.from(e.getPlayer());
 		
 		// Right click not air
-		if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.hasBlock()) {
+		if ((e.getAction() == Action.RIGHT_CLICK_BLOCK 
+				|| e.getAction() == Action.PHYSICAL
+				|| e.getAction() == Action.LEFT_CLICK_BLOCK
+				) && e.hasBlock()) {
 			Block block = e.getClickedBlock();
 			
 			// Player is in survival mode
@@ -46,14 +49,7 @@ public class BlockInteractEvent implements Listener {
 				if (claim == null) return; 
 				Security access = claim.getAccess(pd);
 				
-				if (e.getMaterial() != null && e.getMaterial().toString().contains("BUCKET")) { // Disables Bucket placing in claims
-					
-					if (claim.getAccess(pd) == Security.BLOCKED) {
-						pd.sendMessage("§cThis land is claimed.");
-						e.setCancelled(true);
-						return;
-					}
-				} else if (access == Security.BLOCKED) {
+				if (access == Security.BLOCKED) {
 					
 					switch(block.getType()) {
 					
