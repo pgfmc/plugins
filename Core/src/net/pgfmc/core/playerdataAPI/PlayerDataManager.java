@@ -10,6 +10,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -102,7 +103,7 @@ public class PlayerDataManager extends Configify implements Listener {
 		Bukkit.getLogger().info("Queue has been saved.");
 	}
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onJoinEvent(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
 		PlayerData pd = PlayerData.from(p);
