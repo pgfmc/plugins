@@ -44,7 +44,6 @@ public class BlockInteractEvent implements Listener {
 			// Player is in survival mode
 			if (e.getPlayer().getGameMode() == GameMode.SURVIVAL) {
 				
-				
 				Claim claim = ClaimsTable.getClosestClaim(new Vector4(block), Range.PROTECTED);
 				if (claim == null) return; 
 				Security access = claim.getAccess(pd);
@@ -65,7 +64,12 @@ public class BlockInteractEvent implements Listener {
 					case SMOKER: pd.sendMessage("§cThis smoker is claimed!"); break;
 					case BEACON: pd.sendMessage("§cThis beacon is claimed!"); break;
 					default:
-						return;
+						
+						if (e.getMaterial() == Material.ITEM_FRAME) {
+							pd.sendMessage("§cThis land is claimed!");
+							e.setCancelled(true);
+							return;
+						}
 					}
 					
 					e.setCancelled(true);
