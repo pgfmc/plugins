@@ -6,7 +6,6 @@ website: play.pgfmc.net
 main: net.pgfmc.survival.Main
 description: Survival for PGF
 depend: [PGF-Core]
-softdepend: [PGF-Friends]
 load: POSTWORLD
 prefix: PGF-Survival
 
