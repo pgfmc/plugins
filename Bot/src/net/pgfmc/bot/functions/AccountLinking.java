@@ -44,7 +44,7 @@ public class AccountLinking {
 		if (codeMatch != null && !taken) {
 			Bukkit.getLogger().warning("Account linking: Successfully linked (Minecraft)" + codeMatch.getName() + " and (Discord)" + user.getName());
 			link(codeMatch, user.getId());
-			codeMatch.sendMessage("§aYour roles have been updated!");
+			codeMatch.sendMessage("Â§aYour roles have been updated!");
 			return true;
 		}
 		

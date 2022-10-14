@@ -25,7 +25,7 @@ public class Gamemode implements CommandExecutor {
 		
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage("Â§cOnly players can execute this command.");
 			return true;
 		}
 		
@@ -36,13 +36,13 @@ public class Gamemode implements CommandExecutor {
 			Player p2 = Bukkit.getPlayer(args[0]);
 			if (p2 != null) { p = p2; } else
 			{
-				p.sendMessage("§cThat player isn't online.");
+				p.sendMessage("Â§cThat player isn't online.");
 				return true;
 			}
 		}
 		
 		p.setGameMode(mode.get(label));
-		p.sendMessage("§6Gamemode has been set to " + mode.get(label).toString().toLowerCase() + ".");
+		p.sendMessage("Â§6Gamemode has been set to " + mode.get(label).toString().toLowerCase() + ".");
 		return true;
 	}
 	

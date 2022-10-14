@@ -29,14 +29,14 @@ public class TpRequest extends RequestType {
 
 	@Override
 	public ItemStack toItem(Request r) {
-		return new ItemWrapper(Material.ENDER_PEARL).n("§dTp request from " + r.asker.getRankedName()).gi();
+		return new ItemWrapper(Material.ENDER_PEARL).n("Â§dTp request from " + r.asker.getRankedName()).gi();
 	}
 
 	@Override
 	protected boolean sendRequest(Request r) {
-		r.asker.sendMessage("§6Teleport request sent to " + r.target.getRankedName() + "§6!");
-		r.target.sendMessage("§6Incoming Tp request from " + r.asker.getRankedName() + "§6.");
-		r.target.sendMessage("§6Use §b/tpaccept §6to accept!");
+		r.asker.sendMessage("Â§6Teleport request sent to " + r.target.getRankedName() + "Â§6!");
+		r.target.sendMessage("Â§6Incoming Tp request from " + r.asker.getRankedName() + "Â§6.");
+		r.target.sendMessage("Â§6Use Â§b/tpaccept Â§6to accept!");
 		return true;
 	}
 
@@ -45,32 +45,32 @@ public class TpRequest extends RequestType {
 		switch(eB) {
 		case ACCEPT:
 			
-			r.asker.sendMessage("§6Teleporting to " + r.target.getRankedName() + " §r§6in 5 seconds");
-			r.target.sendMessage("§6Teleporting "+ r.asker.getRankedName() +" §r§6here in 5 seconds");
+			r.asker.sendMessage("Â§6Teleporting to " + r.target.getRankedName() + " Â§rÂ§6in 5 seconds");
+			r.target.sendMessage("Â§6Teleporting "+ r.asker.getRankedName() +" Â§rÂ§6here in 5 seconds");
 			
 			new TimedTeleport(r.asker.getPlayer(), r.target.getPlayer(), 5, 40, true).setAct(v -> {
-				r.asker.sendMessage("§aPoof!");
+				r.asker.sendMessage("Â§aPoof!");
 				r.asker.playSound(Sound.ENTITY_ENDERMAN_TELEPORT);
 				if (Afk.isAfk(r.asker.getPlayer())) { Afk.toggleAfk(r.asker.getPlayer()); }
 			});
 			break;
 			
 		case DENIED:
-			r.asker.sendMessage("§cTeleport request denied!");
-			r.target.sendMessage("§cTeleport request denied!");
+			r.asker.sendMessage("Â§cTeleport request denied!");
+			r.target.sendMessage("Â§cTeleport request denied!");
 			break;
 		case FORCEEND:
 			break;
 		case QUIT:
-			r.asker.sendMessage("§cTeleport request cancelled since " + r.target.getRankedName() + " §cquit!");
-			r.target.sendMessage("§cTeleport request cancelled since " + r.asker.getRankedName() + " §cquit!");
+			r.asker.sendMessage("Â§cTeleport request cancelled since " + r.target.getRankedName() + " Â§cquit!");
+			r.target.sendMessage("Â§cTeleport request cancelled since " + r.asker.getRankedName() + " Â§cquit!");
 			break;
 		case TIMEOUT:
-			r.asker.sendMessage("§cTeleport request timed out!");
-			r.target.sendMessage("§cTeleport request timed out!");
+			r.asker.sendMessage("Â§cTeleport request timed out!");
+			r.target.sendMessage("Â§cTeleport request timed out!");
 			break;
 		case REFRESH:
-			r.asker.sendMessage("§6Time refreshed!");
+			r.asker.sendMessage("Â§6Time refreshed!");
 			break;
 		}
 	}

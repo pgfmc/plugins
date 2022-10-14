@@ -25,7 +25,7 @@ public class God implements CommandExecutor, Listener {
 			
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage("Â§cOnly players can execute this command.");
 			return true;
 		}
 		
@@ -36,10 +36,10 @@ public class God implements CommandExecutor, Listener {
 		
 		if (god) {
 			pd.removeTag("god");
-			p.sendMessage("§cDisabled god mode.");
+			p.sendMessage("Â§cDisabled god mode.");
 		} else {
 			pd.addTag("god");
-			p.sendMessage("§aEnabled god mode!");
+			p.sendMessage("Â§aEnabled god mode!");
 		}
 		
 		p.setInvulnerable(!god);
@@ -57,7 +57,7 @@ public class God implements CommandExecutor, Listener {
 		if (god)
 		{
 			p.setInvulnerable(true);
-			p.sendMessage("§aEnabled god mode!");
+			p.sendMessage("Â§aEnabled god mode!");
 		}
 	}
 }

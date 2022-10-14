@@ -19,7 +19,7 @@ public class Warp implements CommandExecutor {
 		
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage("Â§cOnly players can execute this command.");
 			return true;
 		}
 		
@@ -37,14 +37,14 @@ public class Warp implements CommandExecutor {
 		
 		if (warp == null)
 		{
-			sender.sendMessage("§cCould not find warp: §6" + name);
+			sender.sendMessage("Â§cCould not find warp: Â§6" + name);
 			return true;
 		}
 		
-		sender.sendMessage("§aWarping to §6" + name + " §ain 5 seconds!");
+		sender.sendMessage("Â§aWarping to Â§6" + name + " Â§ain 5 seconds!");
 		
 		new TimedTeleport(p, (Location) warp.get(name), 5, 40, true).setAct(v -> {
-			p.sendMessage("§aPoof!");
+			p.sendMessage("Â§aPoof!");
 			p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
 			if (Afk.isAfk(p)) { Afk.toggleAfk(p); }
 		});

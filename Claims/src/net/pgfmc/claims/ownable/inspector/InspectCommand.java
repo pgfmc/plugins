@@ -41,11 +41,11 @@ public class InspectCommand extends PlayerCommand {
 		
 		if (insp) {
 			pd.removeTag("inspector");
-			pd.sendMessage("§6Disabled Inspector mode.");
+			pd.sendMessage("Â§6Disabled Inspector mode.");
 		} else {
 			pd.addTag("inspector");
-			pd.sendMessage("§aEnabled Inspector mode.");
-			pd.sendMessage("§o§7Break Blocks to show Claim information on the block.");
+			pd.sendMessage("Â§aEnabled Inspector mode.");
+			pd.sendMessage("Â§oÂ§7Break Blocks to show Claim information on the block.");
 		}
 		
 		return insp;

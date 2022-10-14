@@ -31,16 +31,16 @@ public class Backup implements CommandExecutor {
 		
 		if (label.equals("backup"))
 		{
-			sender.sendMessage("ง6Creating a backup will restart the server."
-					+ "\nType งfงo/backupconfirm งrง6to backup.");
+			sender.sendMessage("ยง6Creating a backup will restart the server."
+					+ "\nType ยงfยงo/backupconfirm ยงrยง6to backup.");
 			
 			// For confirming later
 			backups.put(sender.getName(), this);
 		} else if (label.equals("backupconfirm"))
 		{
 			try { // lol
-				sender.sendMessage("ง6Creating backup งfงo" + StringDate.date()
-				+ "งrง6.\nThe server will restart once complete.");
+				sender.sendMessage("ยง6Creating backup ยงfยงo" + StringDate.date()
+				+ "ยงrยง6.\nThe server will restart once complete.");
 				backups.get(sender.getName()).backup();
 			} catch (Exception e) {
 				sender.sendMessage("Could not find a backup, first do /backup");

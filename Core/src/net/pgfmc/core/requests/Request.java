@@ -55,7 +55,7 @@ public final class Request implements Buttonable {
 		Request r = this;
 		return (p, e) -> {
 			
-			ConfirmInventory conf = new ConfirmInventory("Accept " + parent.name + " Request from " + r.asker.getDisplayName() + "?", "§r§aAccept", "§r§cReject") {
+			ConfirmInventory conf = new ConfirmInventory("Accept " + parent.name + " Request from " + r.asker.getDisplayName() + "?", "Â§rÂ§aAccept", "Â§rÂ§cReject") {
 				
 				@Override
 				protected void confirmAction(Player p, InventoryClickEvent e) {
@@ -69,7 +69,7 @@ public final class Request implements Buttonable {
 					p.closeInventory();
 				}
 			};
-			conf.setItem(0, Material.FEATHER).n("§r§cBack");
+			conf.setItem(0, Material.FEATHER).n("Â§rÂ§cBack");
 			conf.setAction(0, (pl, ev) -> {
 				RequestListInventory inv = new RequestListInventory(PlayerData.from(p));
 				

@@ -48,15 +48,15 @@ public class BPE implements Listener {
 				
 				new Claim(merger.getPlayer(), new Vector4(block), merger.getMembers());
 				
-				pd.sendMessage("§aSurrounding land claimed!");
-				pd.sendMessage("§6Claim merged with the nearby claim.");
+				pd.sendMessage("Â§aSurrounding land claimed!");
+				pd.sendMessage("Â§6Claim merged with the nearby claim.");
 				pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
 				
 				
 			// Within Foreign claim range	
 			} else if (foreign != null && foreign.getAccess(pd) == Security.BLOCKED) {
 				e.setCancelled(true);
-				pd.sendMessage("§cCannot claim land that would overlap another claim.");
+				pd.sendMessage("Â§cCannot claim land that would overlap another claim.");
 				
 				pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 				
@@ -69,7 +69,7 @@ public class BPE implements Listener {
 						 new Vector4(block), new HashSet<PlayerData>());
 				
 				
-				pd.sendMessage("§aSurrounding land claimed!");
+				pd.sendMessage("Â§aSurrounding land claimed!");
 				pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
 			}
 			return;
@@ -79,7 +79,7 @@ public class BPE implements Listener {
 		
 		if (claim != null && claim.getAccess(pd) == Security.BLOCKED) {
 			
-			pd.sendMessage("§cCannot place blocks in claimed land.");
+			pd.sendMessage("Â§cCannot place blocks in claimed land.");
 			e.setCancelled(true);
 			pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 			return;

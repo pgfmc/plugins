@@ -23,7 +23,7 @@ public class Nick implements CommandExecutor {
 		
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage("Â§cOnly players can execute this command.");
 			return true;
 		}
 		
@@ -47,7 +47,7 @@ public class Nick implements CommandExecutor {
 	 */
 	public static String removeCodes(String nick)
 	{
-		return ChatColor.stripColor(nick.replace('&', '§'));
+		return ChatColor.stripColor(nick.replace('&', 'Â§'));
 	}
 	/**
 	 * This prevents a player from
@@ -92,7 +92,7 @@ public class Nick implements CommandExecutor {
 		
 		if (!p.hasPermission("pgf.cmd.donator.nick"))
 		{
-			p.sendMessage("§cYou do not have permission to use this command.");
+			p.sendMessage("Â§cYou do not have permission to use this command.");
 			return;
 		}
 		nick = nick.replaceAll("[^A-Za-z0-9&]", "")
@@ -115,7 +115,7 @@ public class Nick implements CommandExecutor {
 		 */
 		if (raw.length() <= 0)
 		{
-			p.sendMessage("§cThe nickname must be more than just color codes!");
+			p.sendMessage("Â§cThe nickname must be more than just color codes!");
 			return;
 		}
 		
@@ -124,7 +124,7 @@ public class Nick implements CommandExecutor {
 		 */
 		if (raw.length() > 20)
 		{
-			p.sendMessage("§cThe max nickname length is 20!");
+			p.sendMessage("Â§cThe max nickname length is 20!");
 			return;
 		}
 		
@@ -135,7 +135,7 @@ public class Nick implements CommandExecutor {
 		if (raw.equals("off") || raw.equals("reset") || nick.equals(p.getName()))
 		{
 			pd.setData("nick", null).queue();
-			p.sendMessage("§6Nickname changed to " + pd.getRankedName() + "§6!");
+			p.sendMessage("Â§6Nickname changed to " + pd.getRankedName() + "Â§6!");
 			
 			return;
 		}
@@ -154,13 +154,13 @@ public class Nick implements CommandExecutor {
 					((String) Optional.ofNullable(PlayerData.getData(op2, "nick")).orElse(""))).toLowerCase()
 					.equals(raw2))
 			{
-				p.sendMessage("§cYou cannot have the same name as another player!");
+				p.sendMessage("Â§cYou cannot have the same name as another player!");
 				return;
 			}
 		}
 		
-		pd.setData("nick", nick.replace("&", "§")).queue();
-		p.sendMessage("§6Nickname changed to " + pd.getRankedName() + "§6!");
+		pd.setData("nick", nick.replace("&", "Â§")).queue();
+		p.sendMessage("Â§6Nickname changed to " + pd.getRankedName() + "Â§6!");
 		
 		// p.setDisplayName(pd.getRankedName());
 		p.setPlayerListName(pd.getRankedName());

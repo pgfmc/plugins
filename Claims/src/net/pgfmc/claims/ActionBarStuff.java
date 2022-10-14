@@ -37,9 +37,9 @@ public class ActionBarStuff extends BukkitRunnable {
 				if (claim != null) {
 					
 					if (claim.getPlayer() == null) {
-						ting = "§dCreative Claim";
+						ting = "Â§dCreative Claim";
 					} else {
-						ting = "§7Claimed by " + claim.getPlayer().getRankedName();
+						ting = "Â§7Claimed by " + claim.getPlayer().getRankedName();
 					}
 				}
 				
@@ -55,25 +55,25 @@ public class ActionBarStuff extends BukkitRunnable {
 					Claim foreigner = ClaimsTable.getClosestClaim(calcPos, Range.FOREIGN);
 					
 					if (foreigner == null) {
-						ting = "§aClaims a 41x41 block area";
+						ting = "Â§aClaims a 41x41 block area";
 					} else {
 						
 						Security access = foreigner.getAccess(PlayerData.from(player));
 						if (foreigner != null && (access == Security.MEMBER || access == Security.ADMIN)) {
-							ting = "§aClaims a 41x41 block area";
+							ting = "Â§aClaims a 41x41 block area";
 						} else {
-							ting = "§cCannot place claim here";
+							ting = "Â§cCannot place claim here";
 						}
 					}
 				} else {
 					Security access = merger.getAccess(PlayerData.from(player));
 					
 					if ((access == Security.MEMBER )) {
-						ting = "§6Merge with " + merger.getPlayer().getRankedName() + "'s §6claim" ;
+						ting = "Â§6Merge with " + merger.getPlayer().getRankedName() + "'s Â§6claim" ;
 					} else if (access == Security.ADMIN) {
-						ting = "§6Merge with nearby claim";
+						ting = "Â§6Merge with nearby claim";
 					} else {
-						ting = "§cCannot place claim here";
+						ting = "Â§cCannot place claim here";
 					}
 				}
 			}

@@ -16,7 +16,7 @@ public class UnlinkCommand implements CommandExecutor {
 		
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage("Â§cOnly players can execute this command.");
 			return true;	
 		}
 			
@@ -26,12 +26,12 @@ public class UnlinkCommand implements CommandExecutor {
 			
 			pd.setData("Discord", null).save();
 			Roles.recalculate(pd);
-			pd.sendMessage("§cYour Discord account has been unlinked.");
+			pd.sendMessage("Â§cYour Discord account has been unlinked.");
 			return true;
 			
 		} else {
 			
-			pd.sendMessage("§cYou dont have a Discord account to unlink.");
+			pd.sendMessage("Â§cYou dont have a Discord account to unlink.");
 			return true;
 		}
 	}

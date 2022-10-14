@@ -17,7 +17,7 @@ public class LinkCommand implements CommandExecutor {
 		
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§Only players can execute this command.");
+			sender.sendMessage("Â§Only players can execute this command.");
 			return true;
 		}
 		
@@ -25,18 +25,18 @@ public class LinkCommand implements CommandExecutor {
 		
 		if (pd.getData("Discord") != null)
 		{
-			pd.sendMessage("§cYour Discord has already been linked.");
-			pd.sendMessage("§cUse §r/unlink §cto unlink your account.");
+			pd.sendMessage("Â§cYour Discord has already been linked.");
+			pd.sendMessage("Â§cUse Â§r/unlink Â§cto unlink your account.");
 			return true;
 		}
 		
-		pd.sendMessage("§aGenerating code...");
+		pd.sendMessage("Â§aGenerating code...");
 		Thread thread = new Thread() {
 			public void run() {
 				String code = AccountLinking.generateCode();
 				pd.setData("linkCode", code);
-				sender.sendMessage("§6Message the code §f[ " + code + " ] §6to §aPGF.bot §6in dms");
-				sender.sendMessage("§6to link your account.");
+				sender.sendMessage("Â§6Message the code Â§f[ " + code + " ] Â§6to Â§aPGF.bot Â§6in dms");
+				sender.sendMessage("Â§6to link your account.");
 				
 				Bukkit.getLogger().warning("Account linking Thread ended!");
 			}

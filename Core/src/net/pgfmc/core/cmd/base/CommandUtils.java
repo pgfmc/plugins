@@ -9,14 +9,14 @@ public class CommandUtils {
 	public static PlayerData parsePlayerName(String name, CommandSender sender) {
 		
 		if (name == null) {
-			sender.sendMessage("§cPlease enter a player name.");
+			sender.sendMessage("Â§cPlease enter a player name.");
 			return null;
 		}
 		
 		PlayerData pd = PlayerData.from(name);
 		
 		if (pd == null) {
-			sender.sendMessage("§cInvalid player name.");
+			sender.sendMessage("Â§cInvalid player name.");
 			return null;
 		}
 		

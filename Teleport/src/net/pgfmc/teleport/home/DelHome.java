@@ -45,10 +45,10 @@ public class DelHome extends PlayerCommand {
 		{
 			homes.remove(name);
 			pd.setData("homes", homes).queue();
-			pd.sendMessage("§aHome §6" + name + "§a removed!");
+			pd.sendMessage("Â§aHome Â§6" + name + "Â§a removed!");
 		} else
 		{
-			pd.sendMessage("§cCould not find home §6" + name + "§c.");
+			pd.sendMessage("Â§cCould not find home Â§6" + name + "Â§c.");
 		}
 		
 		return true;
