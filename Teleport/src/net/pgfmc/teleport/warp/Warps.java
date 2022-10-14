@@ -20,11 +20,11 @@ public class Warps implements CommandExecutor {
 		
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage("Â§cOnly players can execute this command.");
 			return true;
 		}
 		
-		sender.sendMessage("§6Warps: " + getWarpNames().toString());
+		sender.sendMessage("Â§6Warps: " + getWarpNames().toString());
 		
 		return true;
 	}

@@ -29,7 +29,7 @@ public class FakeLeave implements CommandExecutor {
 			return true;
 		}
 		
-		Bukkit.broadcastMessage("ง7[งc-ง7]งr " + pd.getRankedName());
+		Bukkit.broadcastMessage("ยง7[ยงc-ยง7]ยงr " + pd.getRankedName());
 		Discord.sendMessage("<:LEAVE:905682349239463957> " + pd.getDisplayName());
 		
 		pd.addTag("fake-leave");

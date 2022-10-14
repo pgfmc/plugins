@@ -19,7 +19,7 @@ public class TagCommand extends CmdBase {
 	public boolean execute(CommandSender sender, String alias, String[] args) {
 		
 		if (args.length == 0) {
-			sender.sendMessage("§cPlease enter a player.");
+			sender.sendMessage("Â§cPlease enter a player.");
 			return true;
 		}
 		
@@ -30,7 +30,7 @@ public class TagCommand extends CmdBase {
 			pd = PlayerData.from(args[0]);
 			
 			if (pd == null) {
-				sender.sendMessage("§cPlease enter a valid player.");
+				sender.sendMessage("Â§cPlease enter a valid player.");
 				return true;
 			}
 		}
@@ -48,20 +48,20 @@ public class TagCommand extends CmdBase {
 			} else if (act.equals("list")) {
 				action = 3;
 			} else {
-				sender.sendMessage("§cPlease enter §dadd§c, §dremove §cor §dlist§c.");
+				sender.sendMessage("Â§cPlease enter Â§daddÂ§c, Â§dremove Â§cor Â§dlistÂ§c.");
 				return true;
 			}
 		}
 		
 		if (action == 3) {
 			
-			sender.sendMessage("§bListing all tags for " + pd.getRankedName());
+			sender.sendMessage("Â§bListing all tags for " + pd.getRankedName());
 			
 			Set<String> tags = pd.getTags();
 			int length = tags.size();
 			
 			int i = 0;
-			String list = "§d";
+			String list = "Â§d";
 			for (String tag : tags) {
 				
 				list = list + tag;
@@ -70,7 +70,7 @@ public class TagCommand extends CmdBase {
 					break;
 				}
 				
-				list = list + "§f,§d";
+				list = list + "Â§f,Â§d";
 				
 				if (i % 3 == 2) {
 					list = list + "\n";
@@ -78,31 +78,31 @@ public class TagCommand extends CmdBase {
 			}
 			
 			if (length > 25) {
-				list = list + "\n§bPlayer has §d" + String.valueOf(length) + " §dtags.";
+				list = list + "\nÂ§bPlayer has Â§d" + String.valueOf(length) + " Â§dtags.";
 			}
 			sender.sendMessage(list);
 			return true;
 		}
 		
 		if (!(args.length >= 3)) {
-			sender.sendMessage("§cPlease enter a tag.");
+			sender.sendMessage("Â§cPlease enter a tag.");
 			return true;
 		}
 		String tag = args[2];
 		
 		if (action == 1) {
 			if (pd.addTag(tag)) {
-				sender.sendMessage("§bAdded tag §d" + tag + " §bto §r" + pd.getRankedName() + "§b.");
+				sender.sendMessage("Â§bAdded tag Â§d" + tag + " Â§bto Â§r" + pd.getRankedName() + "Â§b.");
 			} else {
-				sender.sendMessage(pd.getRankedName() + " §balready has that tag!");
+				sender.sendMessage(pd.getRankedName() + " Â§balready has that tag!");
 			}
 		} else
 		
 		if (action == 2) {
 			if (pd.removeTag(tag)) {
-				sender.sendMessage("§cRemoved tag §d" + tag + " §cfrom §r" + pd.getRankedName() + "§c.");
+				sender.sendMessage("Â§cRemoved tag Â§d" + tag + " Â§cfrom Â§r" + pd.getRankedName() + "Â§c.");
 			} else {
-				sender.sendMessage(pd.getRankedName() + " §cdid not have that tag.");
+				sender.sendMessage(pd.getRankedName() + " Â§cdid not have that tag.");
 			}
 		}
 		

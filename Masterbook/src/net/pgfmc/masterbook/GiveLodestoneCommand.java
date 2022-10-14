@@ -24,7 +24,7 @@ public class GiveLodestoneCommand extends PlayerCommand {
 	public boolean execute(PlayerData pd, String alias, String[] args) {
 		
 		if (pd.hasTag("loded")) {
-			pd.sendMessage("§cYou already got your free Lodestone!");
+			pd.sendMessage("Â§cYou already got your free Lodestone!");
 			return true;
 		} else {
 			pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);

@@ -40,7 +40,7 @@ public class Homes extends PlayerCommand {
 
 	@Override
 	public boolean execute(PlayerData pd, String alias, String[] args) {
-		pd.sendMessage("§aHomes: §6" + Homes.getNamedHomes(pd));
+		pd.sendMessage("Â§aHomes: Â§6" + Homes.getNamedHomes(pd));
 		return true;
 	}
 	

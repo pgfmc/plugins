@@ -18,7 +18,7 @@ public class SetWarp implements CommandExecutor {
 		
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage("Â§cOnly players can execute this command.");
 			return true;
 		}
 		
@@ -33,7 +33,7 @@ public class SetWarp implements CommandExecutor {
 		
 		if (Warps.getWarp(name) != null)
 		{
-			p.sendMessage("§cCannot have duplicate warp names: §6" + name);
+			p.sendMessage("Â§cCannot have duplicate warp names: Â§6" + name);
 			return true;
 		}
 		
@@ -43,7 +43,7 @@ public class SetWarp implements CommandExecutor {
 		
 		warps.add(Map.of(name, p.getLocation()));
 		
-		p.sendMessage("§aSet new warp: §6" + name);
+		p.sendMessage("Â§aSet new warp: Â§6" + name);
 		
 		config.set("warps", warps);
 		Main.plugin.saveConfig();
