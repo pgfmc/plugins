@@ -4,6 +4,7 @@ import java.time.OffsetDateTime;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.ChannelType;
@@ -78,17 +79,17 @@ public class OnMessageReceived implements EventListener {
 			
 			
 			// attempts to bring over formatting from discord.
-			content = format(content, "\\*\\*\\*", "§l§o"); 
-			content = format(content, "\\*\\*", "§l");
-			content = format(content, "\\*", "§o");
-			content = format(content, "__", "§n");
+			content = format(content, "\\*\\*\\*", String.valueOf(ChatColor.BOLD.getChar()) + String.valueOf(ChatColor.ITALIC.getChar())); 
+			content = format(content, "\\*\\*", String.valueOf(ChatColor.BOLD.getChar()));
+			content = format(content, "\\*", String.valueOf(ChatColor.ITALIC.getChar()));
+			content = format(content, "__", String.valueOf(ChatColor.UNDERLINE.getChar()));
 			
 			// If not reply
 			if(e.getMessage().getReferencedMessage() == null || e.getMessage().getReferencedMessage().getAuthor().isBot() || Discord.getGuildPGF() == null)
 			{
 				Bukkit.getServer().broadcastMessage(r.getColor()
 						+ e.getMember().getEffectiveName()
-						+ " §r§8-|| "
+						+ " " + ChatColor.RESET + ChatColor.DARK_GRAY + "-|| "
 						+ OnAsyncPlayerChat.getMessageColor(e.getMember().getId())
 						+ content);
 				
@@ -113,7 +114,7 @@ public class OnMessageReceived implements EventListener {
                 		+ " replied to "
                 		+ replyRole.getColor()
                 		+ replyMember.getEffectiveName()
-                		+ " §r§8-|| "
+                		+ " " + ChatColor.RESET + ChatColor.DARK_GRAY + "|| "
                 		+ OnAsyncPlayerChat.getMessageColor(e.getMember().getId())
                 		+ content);
                 
@@ -140,7 +141,7 @@ public class OnMessageReceived implements EventListener {
 		for (String S : sa) {
 			
 			if (mark) {
-				s = s + mc + S + "§r";
+				s = s + mc + S + ChatColor.RESET;
 				mark = false;
 			} else {
 				s = s + S;

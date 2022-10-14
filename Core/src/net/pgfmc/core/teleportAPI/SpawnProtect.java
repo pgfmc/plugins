@@ -47,7 +47,7 @@ public class SpawnProtect implements Listener {
 		
 		if (p.hasPermission("modifyworld.*")) return;
 		
-		//p.sendMessage("§cYou do not have permission to do that.");
+		//p.sendMessage("cYou do not have permission to do that.");
 		e.setCancelled(true);
 	}
 
