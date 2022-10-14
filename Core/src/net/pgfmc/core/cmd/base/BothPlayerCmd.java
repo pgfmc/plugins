@@ -23,14 +23,14 @@ public abstract class BothPlayerCmd extends PlayerCommand {
 	public boolean execute(PlayerData pd, String alias, String[] args) {
 		
 		if (args.length < 1) {
-			pd.sendMessage("§cPlease input a player's name!");
+			pd.sendMessage("Â§cPlease input a player's name!");
 			return true;
 		}
 		
 		PlayerData pdarg = PlayerData.from(args[0]);
 		
 		if (pdarg == null) {
-			pd.sendMessage("§cPlease input a player's name!");
+			pd.sendMessage("Â§cPlease input a player's name!");
 			return true;
 		}
 		

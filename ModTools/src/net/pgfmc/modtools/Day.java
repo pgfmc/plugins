@@ -14,7 +14,7 @@ public class Day implements CommandExecutor {
 		
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage("Â§cOnly players can execute this command.");
 			return true;
 		}
 		
@@ -22,7 +22,7 @@ public class Day implements CommandExecutor {
 		w.setTime(500);
 		w.setWeatherDuration(1000);
 		
-		sender.sendMessage("§aWeather cleared!");
+		sender.sendMessage("Â§aWeather cleared!");
 		
 		return true;
 	}

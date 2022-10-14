@@ -28,7 +28,7 @@ public class Afk implements CommandExecutor, Listener {
 
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage("Â§cOnly players can execute this command.");
 			return true;
 		}
 		
@@ -109,7 +109,7 @@ public class Afk implements CommandExecutor, Listener {
 		if (pd.hasTag("afk")) // TURN AFK OFF
 		{
 			p.setInvulnerable(false);
-			p.sendMessage("§cAFK mode off.");
+			p.sendMessage("Â§cAFK mode off.");
 			p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 8);
 			
 			pd.removeTag("afk");
@@ -121,10 +121,10 @@ public class Afk implements CommandExecutor, Listener {
 					|| p.isInWater() || p.isRiptiding() || p.isSleeping()
 					|| p.isSwimming() || p.isClimbing())
 			{
-				p.sendMessage("§cYou cannot activate AFK right now.");
+				p.sendMessage("Â§cYou cannot activate AFK right now.");
 				return;
 			}
-			p.sendMessage("§aAFK mode on.");
+			p.sendMessage("Â§aAFK mode on.");
 			p.setInvulnerable(true);
 			p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
 			

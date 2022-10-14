@@ -24,7 +24,7 @@ public class EscapeCommand extends PlayerCommand {
 		Claim ob = ClaimsTable.getClosestClaim(player_location, Range.PROTECTED);
 		
 		if (ob == null) {
-			arg0.sendMessage("§cYou aren't in a claim!");
+			arg0.sendMessage("Â§cYou aren't in a claim!");
 			return true;
 		}
 		
