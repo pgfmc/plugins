@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 
 import net.dv8tion.jda.api.entities.User;
 import net.pgfmc.core.permissions.Roles;
@@ -44,7 +45,7 @@ public class AccountLinking {
 		if (codeMatch != null && !taken) {
 			Bukkit.getLogger().warning("Account linking: Successfully linked (Minecraft)" + codeMatch.getName() + " and (Discord)" + user.getName());
 			link(codeMatch, user.getId());
-			codeMatch.sendMessage("§aYour roles have been updated!");
+			codeMatch.sendMessage(ChatColor.GREEN + "Your roles have been updated!");
 			return true;
 		}
 		
@@ -61,7 +62,7 @@ public class AccountLinking {
 	{
 		pd.setData("Discord", id).queue();
 		
-		Roles.recalculate(pd);
+		Roles.setRoles(pd);
 	}
 	
 	/**

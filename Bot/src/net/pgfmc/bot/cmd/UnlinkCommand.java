@@ -1,5 +1,6 @@
 package net.pgfmc.bot.cmd;
 
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,7 +17,7 @@ public class UnlinkCommand implements CommandExecutor {
 		
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage(ChatColor.RED + "Only players can execute this command.");
 			return true;	
 		}
 			
@@ -25,13 +26,13 @@ public class UnlinkCommand implements CommandExecutor {
 		if (pd.getData("Discord") != null) {
 			
 			pd.setData("Discord", null).save();
-			Roles.recalculate(pd);
-			pd.sendMessage("§cYour Discord account has been unlinked.");
+			Roles.setRoles(pd);
+			pd.sendMessage(ChatColor.RED + "Your Discord account has been unlinked.");
 			return true;
 			
 		} else {
 			
-			pd.sendMessage("§cYou dont have a Discord account to unlink.");
+			pd.sendMessage(ChatColor.RED + "You dont have a Discord account to unlink.");
 			return true;
 		}
 	}

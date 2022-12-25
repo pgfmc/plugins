@@ -1,7 +1,9 @@
 package net.pgfmc.bot;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.security.auth.login.LoginException;
@@ -135,23 +137,31 @@ public class Discord extends ListenerAdapter {
 		return eb;
 	}
 	
+	/**
+	 * Gets a list of the Member's Discord Role names
+	 * 
+	 * @param id The Member's Discord ID
+	 * @return The Role name list in lowercase
+	 */
 	public static List<String> getMemberRoles(String id)
 	{
 		if (id == null) return null;
 		
-		List<String> roles = null;
+		List<String> discordRoles = null;
 		
 		try {
-		roles = getGuildPGF()
+		discordRoles = getGuildPGF()
 		.getMemberById(id)
 		.getRoles().stream()
-		.map(role -> role.getId())
+		.map(role -> role.getName().toLowerCase())
 		.collect(Collectors.toList());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		return roles;
+		if (discordRoles == null || discordRoles.isEmpty()) return new ArrayList<String>(Set.of("member"));
+		
+		return discordRoles;
 		
 		
 	}
