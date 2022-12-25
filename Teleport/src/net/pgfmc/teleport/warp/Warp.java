@@ -1,52 +1,61 @@
 package net.pgfmc.teleport.warp;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.Location;
 import org.bukkit.Sound;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
+import net.pgfmc.core.cmd.base.PlayerCommand;
+import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.teleportAPI.TimedTeleport;
-import net.pgfmc.survival.cmd.Afk;
 
-public class Warp implements CommandExecutor {
+public class Warp extends PlayerCommand {
+
+	public Warp(String name) {
+		super(name);
+	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public List<String> tabComplete(PlayerData pd, String alias, String[] args) {
+  
+		List<String> list = new ArrayList<>();
 		
-		if (!(sender instanceof Player))
-		{
-			sender.sendMessage("§cOnly players can execute this command.");
-			return true;
+		if (args.length == 1) {
+			for (String s : WarpLogic.getWarpNames()) {
+				if (s.startsWith(args[0])) {
+					list.add(s);
+				}
+			}
 		}
 		
-		Player p = (Player) sender;
-		
-		if (args.length == 0)
-		{
-			p.chat("/warps");
+		return list;
+	}
+
+	@Override
+	public boolean execute(PlayerData pd, String alias, String[] args) {
+		if (args.length == 0) {
+			
+			pd.sendMessage("�cPlease enter a warp location.");
 			return true;
 		}
 		
 		String name = args[0].replaceAll("[^A-Za-z0-9]", "").toLowerCase();
 		
-		Map<?, ?> warp = Warps.getWarp(name);
+		Location loc = WarpLogic.getWarp(name);
 		
-		if (warp == null)
+		if (loc == null)
 		{
-			sender.sendMessage("§cCould not find warp: §6" + name);
+			pd.sendMessage("�c" + name  + " is not a warp");
 			return true;
 		}
 		
-		sender.sendMessage("§aWarping to §6" + name + " §ain 5 seconds!");
+		pd.sendMessage("�aWarping to �6" + name + " �ain 5 seconds!");
 		
-		new TimedTeleport(p, (Location) warp.get(name), 5, 40, true).setAct(v -> {
-			p.sendMessage("§aPoof!");
-			p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
-			if (Afk.isAfk(p)) { Afk.toggleAfk(p); }
+		new TimedTeleport(pd.getPlayer(), loc, 5, 40, true).setAct(v -> {
+			pd.sendMessage("�aPoof!");
+			pd.playSound(Sound.ENTITY_ENDERMAN_TELEPORT);
+			if (pd.hasTag("afk")) pd.removeTag("afk");
 		});
 		
 		

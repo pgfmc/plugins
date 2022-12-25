@@ -9,7 +9,6 @@ import net.pgfmc.core.requests.EndBehavior;
 import net.pgfmc.core.requests.Request;
 import net.pgfmc.core.requests.RequestType;
 import net.pgfmc.core.teleportAPI.TimedTeleport;
-import net.pgfmc.survival.cmd.Afk;
 
 public class TpRequest extends RequestType {
 	
@@ -51,7 +50,7 @@ public class TpRequest extends RequestType {
 			new TimedTeleport(r.asker.getPlayer(), r.target.getPlayer(), 5, 40, true).setAct(v -> {
 				r.asker.sendMessage("§aPoof!");
 				r.asker.playSound(Sound.ENTITY_ENDERMAN_TELEPORT);
-				if (Afk.isAfk(r.asker.getPlayer())) { Afk.toggleAfk(r.asker.getPlayer()); }
+				if (r.target.hasTag("afk")) r.target.removeTag("afk");
 			});
 			break;
 			

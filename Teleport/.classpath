@@ -11,11 +11,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="E:/github/.plugins/Survival.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="E:/github/.plugins/Dependencies/spigot-api.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
