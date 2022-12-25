@@ -22,7 +22,7 @@ public class OnPlayerQuit implements Listener {
 			return;
 		}
 		
-		e.setQuitMessage("ง7[งc-ง7]งr " + pd.getRankedName());
+		e.setQuitMessage("ยง7[ยงc-ยง7]ยงr " + pd.getRankedName());
 		Discord.sendMessage("<:LEAVE:905682349239463957> " + pd.getDisplayName()).queue();
 	}
 }

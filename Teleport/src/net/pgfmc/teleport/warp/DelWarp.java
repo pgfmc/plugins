@@ -19,7 +19,7 @@ public class DelWarp implements CommandExecutor {
 		
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage("Â§cOnly players can execute this command.");
 			return true;
 		}
 		
@@ -37,12 +37,12 @@ public class DelWarp implements CommandExecutor {
 		
 		if (warp == null)
 		{
-			sender.sendMessage("§cCould not find warp: §6" + name);
+			sender.sendMessage("Â§cCould not find warp: Â§6" + name);
 			return true;
 		}
 		
 		warps.remove(warp);
-		sender.sendMessage("§aRemoved warp: §6" + name);
+		sender.sendMessage("Â§aRemoved warp: Â§6" + name);
 		
 		config.set("warps", warps);
 		Main.plugin.saveConfig();
