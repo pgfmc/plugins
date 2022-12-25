@@ -27,7 +27,7 @@ public class Blocked implements CommandExecutor {
 		
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage("Â§cOnly players can execute this command.");
 			return true;
 		}
 		if (args.length == 0)
@@ -39,7 +39,7 @@ public class Blocked implements CommandExecutor {
 		
 		if (p2 == null)
 		{
-			p1.sendMessage("§cCould not find player §6§n" + args[0] + "§r§c.");
+			p1.sendMessage("Â§cCould not find player Â§6Â§n" + args[0] + "Â§rÂ§c.");
 			return true;
 		}
 		

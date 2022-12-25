@@ -92,17 +92,11 @@ public class Roles extends Configify implements Listener {
 		
 	}
 	
-	public static void recalculate(PlayerData pd, Collection<PGFRole> roles)
+	public static void recalculate(PlayerData pd)
 	{
 		Bukkit.getLogger().warning("Recalculating roles for player " + pd.getName());
 		
-		if (roles.isEmpty())
-		{
-			roles.add(PGFRole.DEFAULT);
-		}
-		
 		LuckPerms lp = LuckPermsProvider.get();
-		Set<Group> lpGroups = lp.getGroupManager().getLoadedGroups();
 		UserManager userManager = lp.getUserManager();
 		
 		userManager.modifyUser(pd.getUniqueId(), user -> {
@@ -110,23 +104,27 @@ public class Roles extends Configify implements Listener {
 	        user.data().clear(NodeType.INHERITANCE::matches);
 		});
 		
-		PGFRole role = getTop(roles);
-		Group group = lpGroups.stream().filter(g -> g.getName().toLowerCase().equals(role.getName())).collect(Collectors.toList()).get(0);
+		Set<PGFRole> droles = getRolesById(Discord.getMemberRoles(pd.getData("Discord")));
+		
+		if (droles == null) return;
+		
+		PGFRole role = getTop(droles);
+		String groupName = role.toString().toLowerCase();
+		
+		if (role == PGFRole.DEFAULT) return;
 		
 		userManager.modifyUser(pd.getUniqueId(), user -> {
 			
+            Group group = lp.getGroupManager().getGroup(groupName);
+            
             // Create a node to add to the player.
             Node node = InheritanceNode.builder(group).build();
 
             // Add the node to the user.
             user.data().add(node);
+            
 		});
 		
-	}
-	
-	public static void recalculate(OfflinePlayer p)
-	{
-		recalculate(PlayerData.from(p), getRolesByPlayer(p));
 	}
 	
 	public static PGFRole getRoleById(String id)
@@ -153,7 +151,7 @@ public class Roles extends Configify implements Listener {
 	
 	public static Set<PGFRole> getRolesById(Collection<String> ids)
 	{
-		if (ids.size() == 0 || ids == null) return Set.of(PGFRole.DEFAULT);
+		if (ids == null || ids.size() == 0) return Set.of(PGFRole.DEFAULT);
 		
 		return ids.stream()
 				.map(id -> getRoleById(id))
@@ -162,7 +160,7 @@ public class Roles extends Configify implements Listener {
 	
 	public static Set<PGFRole> getRolesByString(Collection<String> roles)
 	{
-		if (roles.size() == 0 || roles == null) return Set.of(PGFRole.DEFAULT);
+		if (roles == null || roles.size() == 0) return Set.of(PGFRole.DEFAULT);
 		
 		return roles.stream()
 				.map(r -> PGFRole.get(r))
@@ -172,14 +170,14 @@ public class Roles extends Configify implements Listener {
 	
 	public static List<String> asString(Collection<PGFRole> roles)
 	{
-		if (roles.size() == 0 || roles == null) return Arrays.asList(PGFRole.DEFAULT.getName());
+		if (roles == null || roles.size() == 0) return Arrays.asList(PGFRole.DEFAULT.getName());
 		
 		return roles.stream().map(r -> r.getName()).collect(Collectors.toList());
 	}
 	
 	public static PGFRole getTop(Collection<PGFRole> roles)
 	{
-		if (roles.size() == 0 || roles == null) return PGFRole.DEFAULT;
+		if (roles == null || roles.size() == 0) return PGFRole.DEFAULT;
 		if (roles.size() == 1) return roles.stream().collect(Collectors.toList()).get(0);
 		
 		return roles.stream()
@@ -196,7 +194,7 @@ public class Roles extends Configify implements Listener {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e)
 	{
-		Roles.recalculate(e.getPlayer());
+		Roles.recalculate(PlayerData.from(e.getPlayer()));
 	}
 
 	@Override
@@ -213,7 +211,7 @@ public class Roles extends Configify implements Listener {
 			
 		}
 		
-		PlayerData.getPlayerDataSet().forEach(pd -> recalculate(pd, getRolesByPlayer(pd.getOfflinePlayer())));
+		PlayerData.getPlayerDataSet().forEach(pd -> recalculate(pd));
 		
 	}
 

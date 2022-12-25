@@ -14,7 +14,7 @@ public class Heal implements CommandExecutor {
 		
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage("Â§cOnly players can execute this command.");
 			return true;
 		}
 		Player p;
@@ -24,7 +24,7 @@ public class Heal implements CommandExecutor {
 			p = Bukkit.getPlayer(args[0]);
 			if (p == null)
 			{
-				sender.sendMessage("§cCould not find player §6§n" + args[0] + "§r§c.");
+				sender.sendMessage("Â§cCould not find player Â§6Â§n" + args[0] + "Â§rÂ§c.");
 				return true;
 			}
 		} else { p = (Player) sender; }
@@ -38,7 +38,7 @@ public class Heal implements CommandExecutor {
 				effect.getType()
 				));
 		
-		p.sendMessage("§aHealed!");
+		p.sendMessage("Â§aHealed!");
 		
 		return true;
 	}

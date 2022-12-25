@@ -28,19 +28,19 @@ public class Restart {
             	
             	switch (timeLeft) {
             		case 60 * 10: // 10 minutes
-            			Bukkit.broadcastMessage("§d10 minutes remain until server restart.");
+            			Bukkit.broadcastMessage("Â§d10 minutes remain until server restart.");
             			break;
             		case 60 * 5: // 5 minutes
-            			Bukkit.broadcastMessage("§d5 minutes remain until server restart.");
+            			Bukkit.broadcastMessage("Â§d5 minutes remain until server restart.");
             			break;
             		case 60: // 1 minute
-            			Bukkit.broadcastMessage("§d60 seconds remain until server restart.");
+            			Bukkit.broadcastMessage("Â§d60 seconds remain until server restart.");
             			break;
             		case 10: // 10 seconds
-            			Bukkit.broadcastMessage("§d10 seconds remain until server restart.");
+            			Bukkit.broadcastMessage("Â§d10 seconds remain until server restart.");
             			break;
             		case 3: // 3 seconds
-            			Bukkit.broadcastMessage("§d§lRestarting, be back soon!");
+            			Bukkit.broadcastMessage("Â§dÂ§lRestarting, be back soon!");
             			break;
                 	default: break;
             	}

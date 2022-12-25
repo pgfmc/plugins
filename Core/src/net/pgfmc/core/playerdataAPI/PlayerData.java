@@ -119,7 +119,7 @@ public final class PlayerData extends AbstractPlayerData {
 	{
 		Nick.removeImpostors(this);
 		// Nick will be player's name if no permission
-		return getRankColor() + Nick.getNick(player.getPlayer());
+		return getRankColor() + Nick.getNick(player);
 	}
 	
 	// No color, has staff diamond

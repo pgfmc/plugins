@@ -21,11 +21,11 @@ public class PvpToggle  extends PlayerCommand {
 		
 		if (pd.hasTag("pvp")) {
 			pd.removeTag("pvp");
-			pd.sendMessage("§cPvP Disabled!");
+			pd.sendMessage("Â§cPvP Disabled!");
 			
 		} else {
 			pd.addTag("pvp");
-			pd.sendMessage("§aPvP Enabled!");
+			pd.sendMessage("Â§aPvP Enabled!");
 		}
 		
 		

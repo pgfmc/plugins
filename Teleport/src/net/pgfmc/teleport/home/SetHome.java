@@ -27,7 +27,7 @@ public class SetHome extends PlayerCommand {
 		
 		if (args.length == 0)
 		{
-			pd.sendMessage("§cPlease enter a name.");
+			pd.sendMessage("Â§cPlease enter a name.");
 			return true;
 		}
 		
@@ -50,17 +50,17 @@ public class SetHome extends PlayerCommand {
 		
 		if (homes.containsKey(name))
 		{
-			pd.sendMessage("§cYou cannot have duplicate home names: §6" + name);
+			pd.sendMessage("Â§cYou cannot have duplicate home names: Â§6" + name);
 			return;
 		}
 		
 		if (pd.hasPermission("pgf.cmd.donator.home") && homes.size() >= 5)
 		{
-			pd.sendMessage("§cYou can only have up to 5 homes: §6" + Homes.getNamedHomes(pd));
+			pd.sendMessage("Â§cYou can only have up to 5 homes: Â§6" + Homes.getNamedHomes(pd));
 			return;
 		} else if (!pd.hasPermission("pgf.cmd.donator.home") && homes.size() >= 3)
 		{
-			pd.sendMessage("§cYou can only have up to 3 homes: §6" + Homes.getNamedHomes(pd));
+			pd.sendMessage("Â§cYou can only have up to 3 homes: Â§6" + Homes.getNamedHomes(pd));
 			return;
 		}
 		
@@ -72,7 +72,7 @@ public class SetHome extends PlayerCommand {
 			homes.put(name, pd.getPlayer().getLocation());
 		}
 		
-		pd.sendMessage("§aSet home §6" + name + "§a!");
+		pd.sendMessage("Â§aSet home Â§6" + name + "Â§a!");
 		pd.setData("homes", homes).queue();
 	}
 

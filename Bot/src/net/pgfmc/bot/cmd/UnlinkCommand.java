@@ -1,8 +1,5 @@
 package net.pgfmc.bot.cmd;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -10,7 +7,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import net.pgfmc.core.permissions.Roles;
-import net.pgfmc.core.permissions.Roles.PGFRole;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
 public class UnlinkCommand implements CommandExecutor {
@@ -20,7 +16,7 @@ public class UnlinkCommand implements CommandExecutor {
 		
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage("Â§cOnly players can execute this command.");
 			return true;	
 		}
 			
@@ -29,13 +25,13 @@ public class UnlinkCommand implements CommandExecutor {
 		if (pd.getData("Discord") != null) {
 			
 			pd.setData("Discord", null).save();
-			Roles.recalculate(pd, new HashSet<PGFRole>(Set.of(PGFRole.DEFAULT)));
-			pd.sendMessage("§cYour Discord account has been unlinked.");
+			Roles.recalculate(pd);
+			pd.sendMessage("Â§cYour Discord account has been unlinked.");
 			return true;
 			
 		} else {
 			
-			pd.sendMessage("§cYou dont have a Discord account to unlink.");
+			pd.sendMessage("Â§cYou dont have a Discord account to unlink.");
 			return true;
 		}
 	}

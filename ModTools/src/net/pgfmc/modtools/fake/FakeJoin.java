@@ -29,7 +29,7 @@ public class FakeJoin implements CommandExecutor {
 			return true;
 		}
 		
-		Bukkit.broadcastMessage("ง7[งa+ง7]งr " + pd.getRankedName());
+		Bukkit.broadcastMessage("ยง7[ยงa+ยง7]ยงr " + pd.getRankedName());
 		Discord.sendMessage("<:JOIN:905023714213625886> " + pd.getDisplayName());
 		
 		pd.removeTag("fake-leave");

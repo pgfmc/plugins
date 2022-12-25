@@ -20,21 +20,21 @@ public class RequestSendCommand extends PlayerCommand {
 	public boolean execute(PlayerData pd, String alias, String[] args) {
 		
 		if (args.length < 1) {
-			pd.sendMessage("§cPlease enter a player!");
+			pd.sendMessage("Â§cPlease enter a player!");
 			return true;
 		}
 		
 		PlayerData target = PlayerData.from(args[0]);
 		if (target == null) {
-			pd.sendMessage("§cPlayer not found");
+			pd.sendMessage("Â§cPlayer not found");
 			return true;
 			
 		} else if (!target.isOnline() && rt.endsOnQuit()) {
-			pd.sendMessage("§cPlayer is not online to receive reqeust.");
+			pd.sendMessage("Â§cPlayer is not online to receive reqeust.");
 			return true;
 			
 		} else if (pd == target) {
-			pd.sendMessage("§cYou can't send a request to yourself!");
+			pd.sendMessage("Â§cYou can't send a request to yourself!");
 			return true;
 			
 		}

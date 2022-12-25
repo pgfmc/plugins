@@ -24,7 +24,7 @@ public class Fly implements CommandExecutor, Listener{
 		
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage("Â§cOnly players can execute this command.");
 			return true;
 		}
 		
@@ -38,10 +38,10 @@ public class Fly implements CommandExecutor, Listener{
 		
 		if (fly) {
 			pd.removeTag("fly");
-			p.sendMessage("§cDisabled flight.");
+			p.sendMessage("Â§cDisabled flight.");
 		} else {
 			pd.addTag("fly");
-			p.sendMessage("§aEnabled flight!");
+			p.sendMessage("Â§aEnabled flight!");
 		}
 		
 		p.setAllowFlight(!fly);
@@ -61,7 +61,7 @@ public class Fly implements CommandExecutor, Listener{
 		{
 			p.setAllowFlight(true);
 			p.setFlying(true);
-			p.sendMessage("§aEnabled flight!");
+			p.sendMessage("Â§aEnabled flight!");
 		}
 	}
 	

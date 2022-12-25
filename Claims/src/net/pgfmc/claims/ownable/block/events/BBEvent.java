@@ -38,17 +38,17 @@ public class BBEvent implements Listener {
 				switch(s) {
 				case BLOCKED:
 					e.setCancelled(true);
-					pd.sendMessage("§cThis land is claimed!");
+					pd.sendMessage("Â§cThis land is claimed!");
 					return;
 					
 				case MEMBER:
 					e.setCancelled(true);
-					pd.sendMessage("§cOnly " + cont.getPlayer().getRankedName() + " §r§ccan remove this claim.");
+					pd.sendMessage("Â§cOnly " + cont.getPlayer().getRankedName() + " Â§rÂ§ccan remove this claim.");
 					return;
 					
 				case ADMIN:
 					cont.remove();
-					pd.sendMessage("§aClaim Removed!");
+					pd.sendMessage("Â§aClaim Removed!");
 					return;
 					
 				}
@@ -59,7 +59,7 @@ public class BBEvent implements Listener {
 			if (claim != null) {
 				
 				if (claim.getAccess(pd) == Security.BLOCKED) {
-					pd.sendMessage("§cThis land is claimed.");
+					pd.sendMessage("Â§cThis land is claimed.");
 					e.setCancelled(true);
 					pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 					return;
@@ -73,27 +73,27 @@ public class BBEvent implements Listener {
 				Claim ob = Claim.getOwnable(e.getBlock());
 				
 				if (ob != null) {
-					pd.sendMessage("§eOwnableBlock data from: §c" + ob.getLocation().toString());
-					pd.sendMessage("§eOwner: §d" + ob.getPlayer().getRankedName());
+					pd.sendMessage("Â§eOwnableBlock data from: Â§c" + ob.getLocation().toString());
+					pd.sendMessage("Â§eOwner: Â§d" + ob.getPlayer().getRankedName());
 					pd.setData("OwnableCache", ob);
-					pd.sendMessage("§dOwnable Selected!");
+					pd.sendMessage("Â§dOwnable Selected!");
 					return;
 				}
 				
 				Claim claim = ClaimsTable.getClosestClaim(new Vector4(e.getBlock()), Range.PROTECTED);
 				
 				if (claim != null) {
-					pd.sendMessage("§bInside claim at §c" + claim.getLocation().toString());
-					pd.sendMessage("§bOwnber: §d" + claim.getPlayer().getRankedName());
+					pd.sendMessage("Â§bInside claim at Â§c" + claim.getLocation().toString());
+					pd.sendMessage("Â§bOwnber: Â§d" + claim.getPlayer().getRankedName());
 				} else {
-					pd.sendMessage("§bNot Inside a claim.");
+					pd.sendMessage("Â§bNot Inside a claim.");
 				}
 			}
 			
 			Claim cont = Claim.getOwnable(e.getBlock());
 			if (cont != null) {
 				cont.remove();
-				pd.sendMessage("§aClaim Removed!");
+				pd.sendMessage("Â§aClaim Removed!");
 				return;
 			}
 		}
