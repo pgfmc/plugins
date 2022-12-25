@@ -1,5 +1,6 @@
 package net.pgfmc.claims.ownable.block.events;
 
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -52,21 +53,21 @@ public class BlockInteractEvent implements Listener {
 					
 					switch(block.getType()) {
 					
-					case BARREL: pd.sendMessage("§cThis barrel is claimed!"); break;
-					case BLAST_FURNACE: pd.sendMessage("§cThis blast furnace is claimed!"); break;
-					case BREWING_STAND: pd.sendMessage("§cThis brewing stand is claimed!"); break;
-					case CHEST: pd.sendMessage("§cThis chest is claimed!"); break;
-					case DISPENSER: pd.sendMessage("§cThis dispenser is claimed!"); break;
-					case DROPPER: pd.sendMessage("§cThis dropper is claimed!"); break;
-					case FURNACE: pd.sendMessage("§cThis furnace is claimed!"); break;
-					case HOPPER: pd.sendMessage("§cThis hopper is claimed!"); break;
-					case SHULKER_BOX: pd.sendMessage("§cThis shulker box is claimed!"); break;
-					case SMOKER: pd.sendMessage("§cThis smoker is claimed!"); break;
-					case BEACON: pd.sendMessage("§cThis beacon is claimed!"); break;
+					case BARREL: pd.sendMessage(ChatColor.RED + "This barrel is claimed!"); break;
+					case BLAST_FURNACE: pd.sendMessage(ChatColor.RED + "This blast furnace is claimed!"); break;
+					case BREWING_STAND: pd.sendMessage(ChatColor.RED + "This brewing stand is claimed!"); break;
+					case CHEST: pd.sendMessage(ChatColor.RED + "This chest is claimed!"); break;
+					case DISPENSER: pd.sendMessage(ChatColor.RED + "This dispenser is claimed!"); break;
+					case DROPPER: pd.sendMessage(ChatColor.RED + "This dropper is claimed!"); break;
+					case FURNACE: pd.sendMessage(ChatColor.RED + "This furnace is claimed!"); break;
+					case HOPPER: pd.sendMessage(ChatColor.RED + "This hopper is claimed!"); break;
+					case SHULKER_BOX: pd.sendMessage(ChatColor.RED + "This shulker box is claimed!"); break;
+					case SMOKER: pd.sendMessage(ChatColor.RED + "This smoker is claimed!"); break;
+					case BEACON: pd.sendMessage(ChatColor.RED + "This beacon is claimed!"); break;
 					default:
 						
 						if (e.getMaterial() == Material.ITEM_FRAME) {
-							pd.sendMessage("�cThis land is claimed!");
+							pd.sendMessage(ChatColor.RED + "This land is claimed!");
 							e.setCancelled(true);
 							return;
 						}

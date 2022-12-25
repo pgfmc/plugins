@@ -27,6 +27,6 @@ public class OnUpdateRole implements EventListener {
 		if (pd == null) return;
 		
 		
-		Roles.recalculate(pd);
+		Roles.setRoles(pd);
 	}
 }

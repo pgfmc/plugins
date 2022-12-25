@@ -12,8 +12,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerLoadEvent;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import net.luckperms.api.LuckPerms;
 import net.pgfmc.core.chat.ProfanityFilter;
 import net.pgfmc.core.cmd.RealName;
 import net.pgfmc.core.cmd.admin.Skull;
@@ -46,6 +48,8 @@ public class CoreMain extends JavaPlugin implements Listener {
 	
 	public static CoreMain plugin;
 	//public static Scoreboard scoreboard;
+	
+	public static LuckPerms luckPermsAPI;
 	
 	public enum PGFPlugin {
 		BACKUP,
@@ -86,7 +90,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 	 */
 	@Override
 	public void onEnable()
-	{ 
+	{
 		// defines all constants for the plugin
 		plugin = this;
 		
@@ -101,6 +105,14 @@ public class CoreMain extends JavaPlugin implements Listener {
 		// makes sure all files exist
 		Mixins.getFile(configPath);
 		new File(PlayerDataPath).mkdirs();
+		
+		// Register the LuckPerms API
+		RegisteredServiceProvider<LuckPerms> lpProvider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+		if (lpProvider != null) {
+		    LuckPerms lpAPI = lpProvider.getProvider();
+		    luckPermsAPI = lpAPI;
+		    
+		}
 		
 		// loads PlayerData
 		

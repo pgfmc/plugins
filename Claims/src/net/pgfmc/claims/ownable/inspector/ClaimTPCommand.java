@@ -2,6 +2,8 @@ package net.pgfmc.claims.ownable.inspector;
 
 import java.util.List;
 
+import org.bukkit.ChatColor;
+
 import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
@@ -27,9 +29,9 @@ public class ClaimTPCommand extends PlayerCommand {
 		
 		if (ob != null) {
 			pd.teleport(ob.getLocation().toLocation());
-			pd.sendMessage("§aTeleported to the active claim!");
+			pd.sendMessage(ChatColor.GREEN + "Teleported to the active claim!");
 		} else {
-			pd.sendMessage("§6No claim in range.");
+			pd.sendMessage(ChatColor.GOLD + "No claim in range.");
 		}
 		return false;
 	}

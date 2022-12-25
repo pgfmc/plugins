@@ -85,15 +85,15 @@ public class OnAsyncPlayerChat implements Listener {
 		Discord.sendMessage(pd.getDisplayName() + " -> " + msg).queue();
 	}
 	
-	public static String getMessageColor(String sender) {
+	public static ChatColor getMessageColor(String sender) {
 		
 		if (sender.equals(lastSender)) {
-			return (altColor) ? "§7" : "§f";
+			return (altColor) ? ChatColor.GRAY : ChatColor.WHITE;
 			
 		}
 		lastSender = sender;
 		altColor = !altColor;
-		return (altColor) ? "§7" : "§f";
+		return (altColor) ? ChatColor.GRAY : ChatColor.WHITE;
 	}
 	
 }

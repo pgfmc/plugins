@@ -1,5 +1,6 @@
 package net.pgfmc.claims.ownable.block.events;
 
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
@@ -38,17 +39,17 @@ public class BBEvent implements Listener {
 				switch(s) {
 				case BLOCKED:
 					e.setCancelled(true);
-					pd.sendMessage("§cThis land is claimed!");
+					pd.sendMessage(ChatColor.RED + "This land is claimed!");
 					return;
 					
 				case MEMBER:
 					e.setCancelled(true);
-					pd.sendMessage("§cOnly " + cont.getPlayer().getRankedName() + " §r§ccan remove this claim.");
+					pd.sendMessage(ChatColor.RED + "Only " + cont.getPlayer().getRankedName() + ChatColor.RESET + ChatColor.RED + " can remove this claim.");
 					return;
 					
 				case ADMIN:
 					cont.remove();
-					pd.sendMessage("§aClaim Removed!");
+					pd.sendMessage(ChatColor.GREEN + "Claim Removed!");
 					return;
 					
 				}
@@ -59,7 +60,7 @@ public class BBEvent implements Listener {
 			if (claim != null) {
 				
 				if (claim.getAccess(pd) == Security.BLOCKED) {
-					pd.sendMessage("§cThis land is claimed.");
+					pd.sendMessage(ChatColor.RED + "This land is claimed.");
 					e.setCancelled(true);
 					pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 					return;
@@ -73,27 +74,27 @@ public class BBEvent implements Listener {
 				Claim ob = Claim.getOwnable(e.getBlock());
 				
 				if (ob != null) {
-					pd.sendMessage("§eOwnableBlock data from: §c" + ob.getLocation().toString());
-					pd.sendMessage("§eOwner: §d" + ob.getPlayer().getRankedName());
+					pd.sendMessage(ChatColor.YELLOW + "OwnableBlock data from: " + ChatColor.RED + ob.getLocation().toString());
+					pd.sendMessage(ChatColor.YELLOW + "Owner: " + ChatColor.LIGHT_PURPLE + ob.getPlayer().getRankedName());
 					pd.setData("OwnableCache", ob);
-					pd.sendMessage("§dOwnable Selected!");
+					pd.sendMessage(ChatColor.LIGHT_PURPLE + "Ownable Selected!");
 					return;
 				}
 				
 				Claim claim = ClaimsTable.getClosestClaim(new Vector4(e.getBlock()), Range.PROTECTED);
 				
 				if (claim != null) {
-					pd.sendMessage("§bInside claim at §c" + claim.getLocation().toString());
-					pd.sendMessage("§bOwnber: §d" + claim.getPlayer().getRankedName());
+					pd.sendMessage(ChatColor.AQUA + "Inside claim at " + ChatColor.RED + claim.getLocation().toString());
+					pd.sendMessage(ChatColor.AQUA + "Ownber: " + ChatColor.LIGHT_PURPLE + claim.getPlayer().getRankedName());
 				} else {
-					pd.sendMessage("§bNot Inside a claim.");
+					pd.sendMessage(ChatColor.AQUA + "Not Inside a claim.");
 				}
 			}
 			
 			Claim cont = Claim.getOwnable(e.getBlock());
 			if (cont != null) {
 				cont.remove();
-				pd.sendMessage("§aClaim Removed!");
+				pd.sendMessage(ChatColor.GREEN + "Claim Removed!");
 				return;
 			}
 		}
