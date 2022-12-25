@@ -26,14 +26,14 @@ public class Sudo implements CommandExecutor {
 		
 		if (target == null)
 		{
-			sender.sendMessage("§cCould not find player §6§n" + args[0] + "§r§c.");
+			sender.sendMessage("Â§cCould not find player Â§6Â§n" + args[0] + "Â§rÂ§c.");
 			return true;
 		}
 		
 		String msg = String.join(" ", args).replace(args[0], "");
 		
 		target.chat(msg);
-		sender.sendMessage("§aCommand successfully ran!");
+		sender.sendMessage("Â§aCommand successfully ran!");
 		
 		return true;
 	}

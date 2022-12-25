@@ -38,7 +38,7 @@ public class Home extends PlayerCommand {
 	public boolean execute(PlayerData pd, String alias, String[] args) {
 		if (args.length == 0)
 		{
-			pd.sendMessage("§cPlease enter the name of a home.");
+			pd.sendMessage("Â§cPlease enter the name of a home.");
 			return true;
 		}
 		
@@ -46,16 +46,16 @@ public class Home extends PlayerCommand {
 		String name = args[0].toLowerCase();
 		if (homes.containsKey(name))
 		{
-			pd.sendMessage("§aTeleporting to home §6" + name + "§a in 5 seconds!");
+			pd.sendMessage("Â§aTeleporting to home Â§6" + name + "Â§a in 5 seconds!");
 			
 			new TimedTeleport(pd.getPlayer(), homes.get(name), 5, 40, true).setAct(v -> {
-				pd.sendMessage("§aPoof!");
+				pd.sendMessage("Â§aPoof!");
 				pd.playSound(Sound.ENTITY_ENDERMAN_TELEPORT);
 				if (pd.hasTag("afk")) pd.removeTag("afk");
 			});;
 		} else
 		{
-			pd.sendMessage("§aCould not find home §6" + name + "§a.");
+			pd.sendMessage("Â§aCould not find home Â§6" + name + "Â§a.");
 			pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 		}
 		

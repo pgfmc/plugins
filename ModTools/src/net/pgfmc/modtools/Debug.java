@@ -16,7 +16,7 @@ public class Debug implements CommandExecutor {
 
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage("Â§cOnly players can execute this command.");
 			return true;
 		}
 		
@@ -27,10 +27,10 @@ public class Debug implements CommandExecutor {
 			boolean t = p.isDebug();
 			
 			if (t) {
-				p.sendMessage("§6Debug disabled!");
+				p.sendMessage("Â§6Debug disabled!");
 				p.setDebug(false);
 			} else {
-				p.sendMessage("§6Debug enabled!");
+				p.sendMessage("Â§6Debug enabled!");
 				p.setDebug(true);
 			}
 		}

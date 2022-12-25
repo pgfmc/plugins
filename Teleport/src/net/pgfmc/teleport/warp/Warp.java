@@ -18,7 +18,7 @@ public class Warp extends PlayerCommand {
 
 	@Override
 	public List<String> tabComplete(PlayerData pd, String alias, String[] args) {
-		
+  
 		List<String> list = new ArrayList<>();
 		
 		if (args.length == 1) {
@@ -36,7 +36,7 @@ public class Warp extends PlayerCommand {
 	public boolean execute(PlayerData pd, String alias, String[] args) {
 		if (args.length == 0) {
 			
-			pd.sendMessage("§cPlease enter a warp location.");
+			pd.sendMessage("ï¿½cPlease enter a warp location.");
 			return true;
 		}
 		
@@ -46,14 +46,14 @@ public class Warp extends PlayerCommand {
 		
 		if (loc == null)
 		{
-			pd.sendMessage("§c" + name  + " is not a warp");
+			pd.sendMessage("ï¿½c" + name  + " is not a warp");
 			return true;
 		}
 		
-		pd.sendMessage("§aWarping to §6" + name + " §ain 5 seconds!");
+		pd.sendMessage("ï¿½aWarping to ï¿½6" + name + " ï¿½ain 5 seconds!");
 		
 		new TimedTeleport(pd.getPlayer(), loc, 5, 40, true).setAct(v -> {
-			pd.sendMessage("§aPoof!");
+			pd.sendMessage("ï¿½aPoof!");
 			pd.playSound(Sound.ENTITY_ENDERMAN_TELEPORT);
 			if (pd.hasTag("afk")) pd.removeTag("afk");
 		});

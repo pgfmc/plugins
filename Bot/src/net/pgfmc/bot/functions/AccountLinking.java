@@ -2,14 +2,11 @@ package net.pgfmc.bot.functions;
 
 import java.util.LinkedList;
 import java.util.Random;
-import java.util.Set;
 
 import org.bukkit.Bukkit;
 
 import net.dv8tion.jda.api.entities.User;
-import net.pgfmc.bot.Discord;
 import net.pgfmc.core.permissions.Roles;
-import net.pgfmc.core.permissions.Roles.PGFRole;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
 public class AccountLinking {
@@ -47,7 +44,7 @@ public class AccountLinking {
 		if (codeMatch != null && !taken) {
 			Bukkit.getLogger().warning("Account linking: Successfully linked (Minecraft)" + codeMatch.getName() + " and (Discord)" + user.getName());
 			link(codeMatch, user.getId());
-			codeMatch.sendMessage("§aYour roles have been updated!");
+			codeMatch.sendMessage("Â§aYour roles have been updated!");
 			return true;
 		}
 		
@@ -64,9 +61,7 @@ public class AccountLinking {
 	{
 		pd.setData("Discord", id).queue();
 		
-		Set<PGFRole> roles = Roles.getRolesById(Discord.getMemberRoles(id));
-		
-		Roles.recalculate(pd, roles);
+		Roles.recalculate(pd);
 	}
 	
 	/**

@@ -27,9 +27,9 @@ public class ClaimTPCommand extends PlayerCommand {
 		
 		if (ob != null) {
 			pd.teleport(ob.getLocation().toLocation());
-			pd.sendMessage("§aTeleported to the active claim!");
+			pd.sendMessage("Â§aTeleported to the active claim!");
 		} else {
-			pd.sendMessage("§6No claim in range.");
+			pd.sendMessage("Â§6No claim in range.");
 		}
 		return false;
 	}

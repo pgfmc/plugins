@@ -42,37 +42,37 @@ public class DumpCommand extends CmdBase {
 	public boolean execute(CommandSender sender, String alias, String[] args) {
 		
 		if (args.length == 0) {
-			sender.sendMessage("§cPlease enter a player.");
+			sender.sendMessage("Â§cPlease enter a player.");
 			return true;
 		}
 		
 		PlayerData pd = PlayerData.from(args[0]);
 		
 		if (pd == null) {
-			sender.sendMessage("§cPlease enter a valid player.");
+			sender.sendMessage("Â§cPlease enter a valid player.");
 			return true;
 		}
 		
 		for (Entry<String, Object> entry : pd.getAllData().entrySet()) {
 			
 			if (entry.getValue() == null) {
-				sender.sendMessage("§f[§b" + entry.getKey() + "§f]: §dnull");
+				sender.sendMessage("Â§f[Â§b" + entry.getKey() + "Â§f]: Â§dnull");
 				
 				continue;
 			}
 			
-			sender.sendMessage("§f[§b" + entry.getKey() + "§f]: §d" + entry.getValue().toString());
+			sender.sendMessage("Â§f[Â§b" + entry.getKey() + "Â§f]: Â§d" + entry.getValue().toString());
 		}
 		
 		// tag list
 		
-		sender.sendMessage("§bListing all tags for " + pd.getRankedName());
+		sender.sendMessage("Â§bListing all tags for " + pd.getRankedName());
 		
 		Set<String> tags = pd.getTags();
 		int length = tags.size();
 		
 		int iit = 0;
-		String list = "§d";
+		String list = "Â§d";
 		for (String tag : tags) {
 			
 			list = list + tag;
@@ -81,7 +81,7 @@ public class DumpCommand extends CmdBase {
 				break;
 			}
 			
-			list = list + "§f,§d";
+			list = list + "Â§f,Â§d";
 			
 			if (iit % 3 == 2) {
 				list = list + "\n";
@@ -89,7 +89,7 @@ public class DumpCommand extends CmdBase {
 		}
 		
 		if (length > 25) {
-			list = list + "\n§bPlayer has §d" + String.valueOf(length) + " §dtags.";
+			list = list + "\nÂ§bPlayer has Â§d" + String.valueOf(length) + " Â§dtags.";
 		}
 		sender.sendMessage(list);
 		

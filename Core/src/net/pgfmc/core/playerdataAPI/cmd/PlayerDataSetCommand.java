@@ -19,7 +19,7 @@ public class PlayerDataSetCommand extends CmdBase {
 		
 		if (args.length == 0) {
 			
-			sender.sendMessage("§cPlease enter a player.");
+			sender.sendMessage("Â§cPlease enter a player.");
 			return true;
 		}
 		
@@ -29,11 +29,11 @@ public class PlayerDataSetCommand extends CmdBase {
 			
 			pd = PlayerData.from(args[0]);
 			if (pd == null) {
-				sender.sendMessage("§cPlease enter a valid player.");
+				sender.sendMessage("Â§cPlease enter a valid player.");
 				return true;
 				
 			} else if (args.length == 1) {
-				sender.sendMessage("§cPlease enter a key.");
+				sender.sendMessage("Â§cPlease enter a key.");
 				return true;
 			}
 		}
@@ -44,7 +44,7 @@ public class PlayerDataSetCommand extends CmdBase {
 			
 			key = args[1];
 			if (args.length == 2) {
-				sender.sendMessage("§cPlease enter a data value.");
+				sender.sendMessage("Â§cPlease enter a data value.");
 				return true;
 			}
 		}
@@ -62,10 +62,10 @@ public class PlayerDataSetCommand extends CmdBase {
 			
 			if (obj instanceof String) {
 				pd.setData(key, data);
-				sender.sendMessage("§aSet §b" + key + " §ato §d" + data + "§a.");
+				sender.sendMessage("Â§aSet Â§b" + key + " Â§ato Â§d" + data + "Â§a.");
 				
 			} else {
-				sender.sendMessage("§cData wasn't a string, couldn't set.");
+				sender.sendMessage("Â§cData wasn't a string, couldn't set.");
 			}
 		}
 		

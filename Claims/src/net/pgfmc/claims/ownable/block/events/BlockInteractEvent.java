@@ -52,21 +52,21 @@ public class BlockInteractEvent implements Listener {
 					
 					switch(block.getType()) {
 					
-					case BARREL: pd.sendMessage("§cThis barrel is claimed!"); break;
-					case BLAST_FURNACE: pd.sendMessage("§cThis blast furnace is claimed!"); break;
-					case BREWING_STAND: pd.sendMessage("§cThis brewing stand is claimed!"); break;
-					case CHEST: pd.sendMessage("§cThis chest is claimed!"); break;
-					case DISPENSER: pd.sendMessage("§cThis dispenser is claimed!"); break;
-					case DROPPER: pd.sendMessage("§cThis dropper is claimed!"); break;
-					case FURNACE: pd.sendMessage("§cThis furnace is claimed!"); break;
-					case HOPPER: pd.sendMessage("§cThis hopper is claimed!"); break;
-					case SHULKER_BOX: pd.sendMessage("§cThis shulker box is claimed!"); break;
-					case SMOKER: pd.sendMessage("§cThis smoker is claimed!"); break;
-					case BEACON: pd.sendMessage("§cThis beacon is claimed!"); break;
+					case BARREL: pd.sendMessage("Â§cThis barrel is claimed!"); break;
+					case BLAST_FURNACE: pd.sendMessage("Â§cThis blast furnace is claimed!"); break;
+					case BREWING_STAND: pd.sendMessage("Â§cThis brewing stand is claimed!"); break;
+					case CHEST: pd.sendMessage("Â§cThis chest is claimed!"); break;
+					case DISPENSER: pd.sendMessage("Â§cThis dispenser is claimed!"); break;
+					case DROPPER: pd.sendMessage("Â§cThis dropper is claimed!"); break;
+					case FURNACE: pd.sendMessage("Â§cThis furnace is claimed!"); break;
+					case HOPPER: pd.sendMessage("Â§cThis hopper is claimed!"); break;
+					case SHULKER_BOX: pd.sendMessage("Â§cThis shulker box is claimed!"); break;
+					case SMOKER: pd.sendMessage("Â§cThis smoker is claimed!"); break;
+					case BEACON: pd.sendMessage("Â§cThis beacon is claimed!"); break;
 					default:
 						
 						if (e.getMaterial() == Material.ITEM_FRAME) {
-							pd.sendMessage("§cThis land is claimed!");
+							pd.sendMessage("ï¿½cThis land is claimed!");
 							e.setCancelled(true);
 							return;
 						}

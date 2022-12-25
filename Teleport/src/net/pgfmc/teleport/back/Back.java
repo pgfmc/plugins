@@ -33,14 +33,14 @@ public class Back extends PlayerCommand implements Listener {
 		Location dest = pd.getData("backLoc");
 		if (dest == null)
 		{
-			pd.sendMessage("§cYou do not have a back location.");
+			pd.sendMessage("Â§cYou do not have a back location.");
 			return true;
 		}
 		
-		pd.sendMessage("§6You will be teleported in 5 seconds.");
+		pd.sendMessage("Â§6You will be teleported in 5 seconds.");
 		
 		new TimedTeleport(pd.getPlayer(), dest, 5, 40, true).setAct(v -> {
-			pd.sendMessage("§aPoof!");
+			pd.sendMessage("Â§aPoof!");
 			pd.playSound(Sound.ENTITY_ENDERMAN_TELEPORT);
 			if (pd.hasTag("afk")) pd.removeTag("afk");
 		});

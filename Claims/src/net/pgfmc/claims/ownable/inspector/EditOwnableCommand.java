@@ -27,12 +27,12 @@ public class EditOwnableCommand extends PlayerCommand {
 		
 		Claim cache = pd.getData("OwnableCache");
 		if (cache == null) {
-			pd.sendMessage("§cNo Ownable Selected!");
+			pd.sendMessage("Â§cNo Ownable Selected!");
 			return true;
 		}
 		
 		if (args == null || args.length > 1) {
-			pd.sendMessage("§dAllowed types: §b'§alock§b'§d, §b'§aowner§b'");
+			pd.sendMessage("Â§dAllowed types: Â§b'Â§alockÂ§b'Â§d, Â§b'Â§aownerÂ§b'");
 			
 		} else if ("owner".equals(args[0])) {
 			
@@ -40,11 +40,11 @@ public class EditOwnableCommand extends PlayerCommand {
 				PlayerData ope = PlayerData.from(args[1]);
 				if (ope != null) {
 					cache.setOwner(ope);
-					pd.sendMessage("§aOwner set to " + ope.getRankedName());
+					pd.sendMessage("Â§aOwner set to " + ope.getRankedName());
 					return true;
 				}
 			}
-			pd.sendMessage("§cPlease Enter a valid player!");
+			pd.sendMessage("Â§cPlease Enter a valid player!");
 		}
 		return true;
 	}

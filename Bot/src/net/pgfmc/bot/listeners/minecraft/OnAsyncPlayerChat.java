@@ -58,7 +58,7 @@ public class OnAsyncPlayerChat implements Listener {
 		// Word blacklist
 		if (ProfanityFilter.hasProfanity(msg))
 		{
-			p.sendMessage("ง4Please do not use blacklisted words!");
+			p.sendMessage(ChatColor.RED + "Please do not use blacklisted words!");
 			e.setCancelled(true);
 			
 			EmbedBuilder eb = new EmbedBuilder();
@@ -80,7 +80,7 @@ public class OnAsyncPlayerChat implements Listener {
 	    Bukkit.getLogger().warning(a);
 	    */
 		
-		e.setFormat(pd.getRankedName() + "ง8 -> " + getMessageColor(p.getUniqueId().toString()) + "%2$s"); // %2$s means 2nd argument (the chat message), %1$s would be the player's display name
+		e.setFormat(pd.getRankedName() + ChatColor.DARK_GRAY + " -> " + getMessageColor(p.getUniqueId().toString()) + "%2$s"); // %2$s means 2nd argument (the chat message), %1$s would be the player's display name
 		
 		Discord.sendMessage(pd.getDisplayName() + " -> " + msg).queue();
 	}
@@ -88,12 +88,12 @@ public class OnAsyncPlayerChat implements Listener {
 	public static String getMessageColor(String sender) {
 		
 		if (sender.equals(lastSender)) {
-			return (altColor) ? "ง7" : "งf";
+			return (altColor) ? "ยง7" : "ยงf";
 			
 		}
 		lastSender = sender;
 		altColor = !altColor;
-		return (altColor) ? "ง7" : "งf";
+		return (altColor) ? "ยง7" : "ยงf";
 	}
 	
 }
