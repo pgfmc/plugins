@@ -1,6 +1,7 @@
 package net.pgfmc.bot.cmd;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,7 +18,7 @@ public class LinkCommand implements CommandExecutor {
 		
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§Only players can execute this command.");
+			sender.sendMessage(ChatColor.RED + "Only players can execute this command.");
 			return true;
 		}
 		
@@ -25,18 +26,18 @@ public class LinkCommand implements CommandExecutor {
 		
 		if (pd.getData("Discord") != null)
 		{
-			pd.sendMessage("§cYour Discord has already been linked.");
-			pd.sendMessage("§cUse §r/unlink §cto unlink your account.");
+			pd.sendMessage(ChatColor.RED + "Your Discord has already been linked.");
+			pd.sendMessage(ChatColor.RED + "Use " + ChatColor.WHITE + "/unlink" + ChatColor.RED + " to unlink your account.");
 			return true;
 		}
 		
-		pd.sendMessage("§aGenerating code...");
+		pd.sendMessage(ChatColor.GREEN + "Generating code...");
 		Thread thread = new Thread() {
 			public void run() {
 				String code = AccountLinking.generateCode();
 				pd.setData("linkCode", code);
-				sender.sendMessage("§6Message the code §f[ " + code + " ] §6to §aPGF.bot §6in dms");
-				sender.sendMessage("§6to link your account.");
+				sender.sendMessage(ChatColor.GOLD + "Message the code " + ChatColor.WHITE + "[ " + code + " ]" + ChatColor.GOLD + " to " + ChatColor.GREEN + "PGF.bot " + ChatColor.GOLD + "in dms");
+				sender.sendMessage(ChatColor.GOLD + "to link your account.");
 				
 				Bukkit.getLogger().warning("Account linking Thread ended!");
 			}

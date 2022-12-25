@@ -1,226 +1,214 @@
 package net.pgfmc.core.permissions;
 
-import java.io.File;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
-import net.luckperms.api.model.group.Group;
 import net.luckperms.api.model.user.UserManager;
 import net.luckperms.api.node.Node;
 import net.luckperms.api.node.NodeType;
 import net.luckperms.api.node.types.InheritanceNode;
 import net.pgfmc.bot.Discord;
 import net.pgfmc.core.CoreMain;
-import net.pgfmc.core.file.Configify;
-import net.pgfmc.core.file.Mixins;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
-public class Roles extends Configify implements Listener {
+public class Roles implements Listener {
 	
-	public Roles() {
-		super(Mixins.getFile(CoreMain.plugin.getDataFolder() + File.separator + "roles.yml"));
-		
-		for (PGFRole r : PGFRole.values())
-		{
-			setDefaultValue("config-version", "1");
-			setDefaultValue(r.getName() + ".id", "000000000000000000");
-			setDefaultValue(r.getName() + ".color", "r");
-		}
-	}
+	
 	
 	public enum PGFRole {
-		FOUNDER,
-		ADMIN,
-		DEVELOPER,
-		MODERATOR,
-		TRAINEE,
-		STAFF,
-		DOOKIE,
-		DONATOR,
-		VETERAN,
-		DEFAULT;
+		FOUNDER("b"),
+		ADMIN("c"),
+		DEVELOPER("2"),
+		MODERATOR("d"),
+		TRAINEE("5"),
+		STAFF("6"),
+		DOOKIE("6"),
+		DONATOR("e"),
+		VETERAN("9"),
+		MEMBER("6");
 		
 		private String color;
-		private String id;
+		
+		PGFRole(String color)
+		{
+			this.color = color;
+			
+		}
 		
 		public String getName()
 		{
 			return name().toLowerCase();
+			
 		}
 		
 		public String getColor() {
+			// 0x2726 is the staff star Unicode
+			
+			if (this.compareTo(STAFF) <= 0)
+			{
+				return ChatColor.COLOR_CHAR + color + new String(Character.toChars(0x2726));
+			}
+			
 			return ChatColor.COLOR_CHAR + color;
+			
 		}
 		
-		public String getId() {
-			return id;
-		}
-		
+		/**
+		 * Gets a PGFRole from an anycase String, null if not found
+		 * @param role
+		 * @return
+		 */
 		public static PGFRole get(String role)
 		{
 			for (PGFRole r : PGFRole.values())
 			{
-				if (r.getName().equals(role)) return r;
+				if (r.getName().equals(role.toLowerCase())) return r;
+				
 			}
 			
-			return PGFRole.DEFAULT;
-		}
-		
-		public void setColor(String color)
-		{
-			this.color = color;//color.replaceAll("[^A-Za-z0-9âœ¦]", "").toLowerCase();
-		}
-		
-		public void setId(String id)
-		{
-			this.id = id;
+			return null;
+			
 		}
 		
 	}
 	
-	public static void recalculate(PlayerData pd)
+	
+	
+	
+	
+	
+	/**
+	 * Set and apply roles to player (update roles)
+	 * 
+	 * @param pd The player to update roles
+	 * @param role The role to apply
+	 */
+	public static void setRoles(PlayerData pd, PGFRole role)
 	{
 		Bukkit.getLogger().warning("Recalculating roles for player " + pd.getName());
 		
 		LuckPerms lp = LuckPermsProvider.get();
 		UserManager userManager = lp.getUserManager();
 		
+		// Remove groups from user, save changes
 		userManager.modifyUser(pd.getUniqueId(), user -> {
-			// Remove all other inherited groups the user had before.
 	        user.data().clear(NodeType.INHERITANCE::matches);
+	        
 		});
 		
-		Set<PGFRole> droles = getRolesById(Discord.getMemberRoles(pd.getData("Discord")));
-		
-		if (droles == null) return;
-		
-		PGFRole role = getTop(droles);
-		String groupName = role.toString().toLowerCase();
-		
-		if (role == PGFRole.DEFAULT) return;
-		
+		// Add group to the user, save changes
 		userManager.modifyUser(pd.getUniqueId(), user -> {
 			
-            Group group = lp.getGroupManager().getGroup(groupName);
-            
-            // Create a node to add to the player.
-            Node node = InheritanceNode.builder(group).build();
-
-            // Add the node to the user.
-            user.data().add(node);
+			if (role.getName().equals("member"))
+			{
+				Node node = InheritanceNode.builder("default").value(true).build();
+				user.data().add(node);
+				
+			} else
+			{
+	            Node node = InheritanceNode.builder(role.getName()).value(true).build();
+	            user.data().add(node);
+	            
+			}
             
 		});
 		
 	}
-	
-	public static PGFRole getRoleById(String id)
+	/**
+	 * Used if you don't have a list of the player's roles
+	 * This will get them for you
+	 * 
+	 * @param pd The player to update roles
+	 */
+	public static void setRoles(PlayerData pd)
 	{
-		for (PGFRole r : PGFRole.values())
-		{
-			if (id.equals(r.getId())) return r;
-		}
+		// Get roles, get top role
+		List<PGFRole> droles = Roles.pgfRoleFromStrings(Discord.getMemberRoles(pd.getData("Discord")));
+		PGFRole role = getTop(droles);
 		
-		return PGFRole.DEFAULT;
+		setRoles(pd, role);
+		
 	}
 	
-	public static Set<PGFRole> getRolesByPlayer(OfflinePlayer p)
-	{
-		PlayerData pd = PlayerData.from(p);
-		
-		if (CoreMain.PGFPlugin.BOT.isEnabled() && pd.getData("Discord") != null)
-		{
-			return getRolesById(Discord.getMemberRoles(pd.getData("Discord")));
-		}
-		
-			return new HashSet<PGFRole>(Set.of(PGFRole.DEFAULT));
-	}
 	
-	public static Set<PGFRole> getRolesById(Collection<String> ids)
-	{
-		if (ids == null || ids.size() == 0) return Set.of(PGFRole.DEFAULT);
-		
-		return ids.stream()
-				.map(id -> getRoleById(id))
-				.collect(Collectors.toSet());
-	}
 	
-	public static Set<PGFRole> getRolesByString(Collection<String> roles)
+	
+	
+	
+	
+	
+	
+	/**
+	 * Returns a list of PGFRole from a list of Discord role names
+	 * 
+	 * @param discordRoles List of Discord role names from PGF-Bot
+	 * @return List of PGFRole
+	 */
+	public static List<PGFRole> pgfRoleFromStrings(List<String> discordRoles)
 	{
-		if (roles == null || roles.size() == 0) return Set.of(PGFRole.DEFAULT);
+		if (discordRoles == null) return new ArrayList<PGFRole>(Set.of(PGFRole.MEMBER));
 		
-		return roles.stream()
+		// Takes a list of string names and gets PGFRole enums and potential null values
+		// Then removes the null values
+		return discordRoles.stream()
 				.map(r -> PGFRole.get(r))
-				.filter(r -> (r != null))
-				.collect(Collectors.toSet());
-	}
-	
-	public static List<String> asString(Collection<PGFRole> roles)
-	{
-		if (roles == null || roles.size() == 0) return Arrays.asList(PGFRole.DEFAULT.getName());
+				.collect(Collectors.toList()).stream()
+				.filter(r -> r != null)
+				.collect(Collectors.toList());
 		
-		return roles.stream().map(r -> r.getName()).collect(Collectors.toList());
 	}
 	
 	public static PGFRole getTop(Collection<PGFRole> roles)
 	{
-		if (roles == null || roles.size() == 0) return PGFRole.DEFAULT;
+		// Return MEMBER Role if null or empty
+		// Return the only Role if only 1 Role in list
+		if (roles == null || roles.isEmpty()) return PGFRole.MEMBER;
 		if (roles.size() == 1) return roles.stream().collect(Collectors.toList()).get(0);
 		
+		// Quick sort against the order of the enums to find the top Role
 		return roles.stream()
 				.sorted((r1, r2) -> r1.compareTo(r2))
 				.collect(Collectors.toList())
 				.get(0);
+		
+	}
+	public static PGFRole getTop(PlayerData pd)
+	{
+		return getTop(Roles.getRolesByPlayer(pd));
+		
 	}
 	
-	public static PGFRole getTop(OfflinePlayer p)
+	public static List<PGFRole> getRolesByPlayer(PlayerData pd)
 	{
-		return getTop(getRolesByPlayer(p));
-	}
-	
-	@EventHandler
-	public void onJoin(PlayerJoinEvent e)
-	{
-		Roles.recalculate(PlayerData.from(e.getPlayer()));
-	}
-
-	@Override
-	public void reload()
-	{
-		FileConfiguration db = getConfig();
 		
-		Bukkit.getLogger().warning("Reloading roles.yml");
-		
-		for (PGFRole r : PGFRole.values())
+		if (CoreMain.PGFPlugin.BOT.isEnabled() && pd.getData("Discord") != null)
 		{
-			r.setId(db.getString(r.getName() + ".id"));
-			r.setColor(db.getString(r.getName() + ".color"));
+			return pgfRoleFromStrings(Discord.getMemberRoles(pd.getData("Discord")));
 			
 		}
 		
-		PlayerData.getPlayerDataSet().forEach(pd -> recalculate(pd));
+		return new ArrayList<PGFRole>(Set.of(PGFRole.MEMBER));
+			
+	}
+	
+	
+	@EventHandler
+	public void assignPlayerRoleOnLogin(PlayerLoginEvent e)
+	{		
+		PlayerData pd = PlayerData.from(e.getPlayer());
 		
+		setRoles(pd, Roles.getTop(Roles.getRolesByPlayer(pd)));
 	}
-
-	@Override
-	public void enable() {
-		reload();
-	}
-
-	@Override
-	public void disable() {}
 	
 }
