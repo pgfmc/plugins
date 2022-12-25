@@ -1,5 +1,6 @@
 package net.pgfmc.bot.listeners.minecraft;
 
+import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -22,7 +23,7 @@ public class OnPlayerQuit implements Listener {
 			return;
 		}
 		
-		e.setQuitMessage("§7[§c-§7]§r " + pd.getRankedName());
+		e.setQuitMessage(ChatColor.GRAY + "[" + ChatColor.RED + "+" + ChatColor.GRAY + "]" + ChatColor.RESET + " " + pd.getRankedName());
 		Discord.sendMessage("<:LEAVE:905682349239463957> " + pd.getDisplayName()).queue();
 	}
 }

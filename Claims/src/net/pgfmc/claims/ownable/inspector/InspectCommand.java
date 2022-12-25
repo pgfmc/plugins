@@ -2,6 +2,8 @@ package net.pgfmc.claims.ownable.inspector;
 
 import java.util.List;
 
+import org.bukkit.ChatColor;
+
 import net.pgfmc.core.cmd.base.PlayerCommand;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
@@ -41,11 +43,11 @@ public class InspectCommand extends PlayerCommand {
 		
 		if (insp) {
 			pd.removeTag("inspector");
-			pd.sendMessage("§6Disabled Inspector mode.");
+			pd.sendMessage(ChatColor.GOLD + "Disabled Inspector mode.");
 		} else {
 			pd.addTag("inspector");
-			pd.sendMessage("§aEnabled Inspector mode.");
-			pd.sendMessage("§o§7Break Blocks to show Claim information on the block.");
+			pd.sendMessage(ChatColor.GREEN + "Enabled Inspector mode.");
+			pd.sendMessage(ChatColor.ITALIC + "" + ChatColor.GRAY + "Break Blocks to show Claim information on the block.");
 		}
 		
 		return insp;

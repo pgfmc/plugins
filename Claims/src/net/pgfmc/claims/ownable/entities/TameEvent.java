@@ -1,5 +1,6 @@
 package net.pgfmc.claims.ownable.entities;
 
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,7 +28,7 @@ public class TameEvent implements Listener {
 				Claim beacon = ClaimsTable.getClosestClaim(new Vector4(player.getLocation()), Range.PROTECTED);
 				
 				if (beacon != null && beacon.getAccess(pd) == Security.BLOCKED) {
-					player.sendMessage("§cCannot tame on claimed land.");
+					player.sendMessage(ChatColor.RED + "Cannot tame on claimed land.");
 					e.setCancelled(true);
 					return;
 				}

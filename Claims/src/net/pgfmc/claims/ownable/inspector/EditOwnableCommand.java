@@ -2,6 +2,8 @@ package net.pgfmc.claims.ownable.inspector;
 
 import java.util.List;
 
+import org.bukkit.ChatColor;
+
 import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.core.cmd.base.PlayerCommand;
 import net.pgfmc.core.playerdataAPI.PlayerData;
@@ -27,12 +29,15 @@ public class EditOwnableCommand extends PlayerCommand {
 		
 		Claim cache = pd.getData("OwnableCache");
 		if (cache == null) {
-			pd.sendMessage("§cNo Ownable Selected!");
+			pd.sendMessage(ChatColor.RED + "No Ownable Selected!");
 			return true;
 		}
 		
 		if (args == null || args.length > 1) {
-			pd.sendMessage("§dAllowed types: §b'§alock§b'§d, §b'§aowner§b'");
+			pd.sendMessage(ChatColor.LIGHT_PURPLE + "Allowed types: " 
+								+ ChatColor.AQUA + "'" + ChatColor.GREEN + "lock" + ChatColor.AQUA 
+								+ "'" + ChatColor.LIGHT_PURPLE + ", " + ChatColor.AQUA + "'" 
+								+ ChatColor.GREEN + "owner" + ChatColor.AQUA + "'"); // "&b'&alock&b'&d, &b'&aowner&b'" // "'lock', 'owner'"
 			
 		} else if ("owner".equals(args[0])) {
 			
@@ -40,11 +45,11 @@ public class EditOwnableCommand extends PlayerCommand {
 				PlayerData ope = PlayerData.from(args[1]);
 				if (ope != null) {
 					cache.setOwner(ope);
-					pd.sendMessage("§aOwner set to " + ope.getRankedName());
+					pd.sendMessage(ChatColor.GREEN + "Owner set to " + ope.getRankedName());
 					return true;
 				}
 			}
-			pd.sendMessage("§cPlease Enter a valid player!");
+			pd.sendMessage(ChatColor.RED + "Please Enter a valid player!");
 		}
 		return true;
 	}
