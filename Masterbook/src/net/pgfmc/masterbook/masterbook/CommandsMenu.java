@@ -159,7 +159,7 @@ public class CommandsMenu implements InventoryHolder {
 			 * home menu
 			 */
 			
-			PGFRole topRole = Roles.getTop(pd.getOfflinePlayer());
+			PGFRole topRole = Roles.getTop(pd);
 			/* 
 			 * [] [] [] [] XX [] [] [] []
 			 * [] [] [] [] [] [] [] [] []
