@@ -3,6 +3,8 @@ package net.pgfmc.claims.cmd;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
+
 import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
@@ -24,7 +26,7 @@ public class EscapeCommand extends PlayerCommand {
 		Claim ob = ClaimsTable.getClosestClaim(player_location, Range.PROTECTED);
 		
 		if (ob == null) {
-			arg0.sendMessage("§cYou aren't in a claim!");
+			arg0.sendMessage(ChatColor.RED + "You aren't in a claim!");
 			return true;
 		}
 		

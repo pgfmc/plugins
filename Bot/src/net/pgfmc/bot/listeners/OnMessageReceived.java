@@ -1,7 +1,6 @@
 package net.pgfmc.bot.listeners;
 
 import java.time.OffsetDateTime;
-import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -63,16 +62,12 @@ public class OnMessageReceived implements EventListener {
 		// message sent in #server by a Member (not a bot)
 		if (e.getChannel().getId().equals(Discord.getServerChannel().getId()) && !user.isBot())
 		{
-			PGFRole r = PGFRole.DEFAULT;
+			PGFRole r = PGFRole.MEMBER;
 			// If member of PGF (mainly for BTS/outside PGF server)
 			if (memberPGF != null)
 			{
-				r = Roles.getTop(
-						Roles.getRolesById(memberPGF
-								.getRoles().stream()
-								.map(role -> role.getId())
-								.collect(Collectors.toList()))
-						);
+				r = Roles.getTop(Roles.pgfRoleFromStrings(Discord.getMemberRoles(memberPGF.getId())));
+				
 			}
 			
 			// content.replace("%", "\\%"); // removes all "%"s from the message.
@@ -96,17 +91,12 @@ public class OnMessageReceived implements EventListener {
 				return;
 				
 			} else {
-                PGFRole replyRole = PGFRole.DEFAULT;
+                PGFRole replyRole = PGFRole.MEMBER;
                 Member replyMember = Discord.getGuildPGF().getMember(e.getMessage().getReferencedMessage().getAuthor());
                 
                 if (replyMember != null)
                 {
-                    replyRole = Roles.getTop(
-                    		Roles.getRolesById(replyMember
-                    				.getRoles().stream()
-                    				.map(role -> role.getId())
-                    				.collect(Collectors.toList()))
-                    		);
+                    replyRole = Roles.getTop(Roles.pgfRoleFromStrings(Discord.getMemberRoles(replyMember.getId())));
                 }
                 
                 Bukkit.getServer().broadcastMessage(r.getColor()

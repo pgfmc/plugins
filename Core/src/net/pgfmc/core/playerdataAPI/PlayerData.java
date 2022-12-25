@@ -153,7 +153,7 @@ public final class PlayerData extends AbstractPlayerData {
 	 * @return The player's role prefix.
 	 */
 	public String getRankColor() {
-		return Roles.getTop(player).getColor();
+		return Roles.getTop(this).getColor();
 	}
 	
 	public void setDebug(boolean d) {
