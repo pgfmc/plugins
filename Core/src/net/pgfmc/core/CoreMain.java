@@ -30,6 +30,7 @@ import net.pgfmc.core.playerdataAPI.cmd.DumpCommand;
 import net.pgfmc.core.playerdataAPI.cmd.PlayerDataSetCommand;
 import net.pgfmc.core.playerdataAPI.cmd.TagCommand;
 import net.pgfmc.core.requests.RequestEvents;
+import net.pgfmc.core.restart.RestartManager;
 import net.pgfmc.core.teleportAPI.SpawnProtect;
 
 /**
@@ -173,6 +174,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new Roles(), this);
 		
 		new ProfanityFilter();
+		new RestartManager();
 	}
 	
 	@Override

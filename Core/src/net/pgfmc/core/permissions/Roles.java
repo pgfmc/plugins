@@ -1,9 +1,9 @@
 package net.pgfmc.core.permissions;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
@@ -23,8 +23,6 @@ import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
 public class Roles implements Listener {
-	
-	
 	
 	public enum PGFRole {
 		FOUNDER("b"),
@@ -83,20 +81,15 @@ public class Roles implements Listener {
 		
 	}
 	
-	
-	
-	
-	
-	
 	/**
 	 * Set and apply roles to player (update roles)
 	 * 
 	 * @param pd The player to update roles
 	 * @param role The role to apply
 	 */
-	public static void setRoles(PlayerData pd, PGFRole role)
+	public static void setRole(PlayerData pd, PGFRole role)
 	{
-		Bukkit.getLogger().warning("Recalculating roles for player " + pd.getName());
+		Bukkit.getLogger().warning("Recalculating role for player " + pd.getName());
 		
 		LuckPerms lp = LuckPermsProvider.get();
 		UserManager userManager = lp.getUserManager();
@@ -124,7 +117,10 @@ public class Roles implements Listener {
             
 		});
 		
+		pd.setData("role", role);
+		
 	}
+	
 	/**
 	 * Used if you don't have a list of the player's roles
 	 * This will get them for you
@@ -134,20 +130,12 @@ public class Roles implements Listener {
 	public static void setRoles(PlayerData pd)
 	{
 		// Get roles, get top role
-		List<PGFRole> droles = Roles.pgfRoleFromStrings(Discord.getMemberRoles(pd.getData("Discord")));
-		PGFRole role = getTop(droles);
+		List<PGFRole> playerRoles = getPlayerRoles(pd);
+		PGFRole role = getTop(playerRoles);
 		
-		setRoles(pd, role);
+		setRole(pd, role);
 		
-	}
-	
-	
-	
-	
-	
-	
-	
-	
+	}	
 	
 	/**
 	 * Returns a list of PGFRole from a list of Discord role names
@@ -155,13 +143,15 @@ public class Roles implements Listener {
 	 * @param discordRoles List of Discord role names from PGF-Bot
 	 * @return List of PGFRole
 	 */
-	public static List<PGFRole> pgfRoleFromStrings(List<String> discordRoles)
+	public static List<PGFRole> getPlayerRoles(PlayerData pd)
 	{
-		if (discordRoles == null) return new ArrayList<PGFRole>(Set.of(PGFRole.MEMBER));
+		if (!CoreMain.PGFPlugin.BOT.isEnabled()) return new ArrayList<PGFRole>(Arrays.asList(PGFRole.MEMBER));
+		
+		List<String> rolesAsString = Discord.getMemberRoles(pd.getData("Discord"));
 		
 		// Takes a list of string names and gets PGFRole enums and potential null values
 		// Then removes the null values
-		return discordRoles.stream()
+		return rolesAsString.stream()
 				.map(r -> PGFRole.get(r))
 				.collect(Collectors.toList()).stream()
 				.filter(r -> r != null)
@@ -183,32 +173,13 @@ public class Roles implements Listener {
 				.get(0);
 		
 	}
-	public static PGFRole getTop(PlayerData pd)
-	{
-		return getTop(Roles.getRolesByPlayer(pd));
-		
-	}
-	
-	public static List<PGFRole> getRolesByPlayer(PlayerData pd)
-	{
-		
-		if (CoreMain.PGFPlugin.BOT.isEnabled() && pd.getData("Discord") != null)
-		{
-			return pgfRoleFromStrings(Discord.getMemberRoles(pd.getData("Discord")));
-			
-		}
-		
-		return new ArrayList<PGFRole>(Set.of(PGFRole.MEMBER));
-			
-	}
-	
 	
 	@EventHandler
 	public void assignPlayerRoleOnLogin(PlayerLoginEvent e)
-	{		
+	{
 		PlayerData pd = PlayerData.from(e.getPlayer());
 		
-		setRoles(pd, Roles.getTop(Roles.getRolesByPlayer(pd)));
+		setRoles(pd);
 	}
 	
 }
