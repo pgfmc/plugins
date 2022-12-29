@@ -2,8 +2,6 @@ package net.pgfmc.modtools;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import net.pgfmc.modtools.fake.FakeJoin;
-import net.pgfmc.modtools.fake.FakeLeave;
 import net.pgfmc.modtools.mute.Mute;
 import net.pgfmc.modtools.mute.Unmute;
 import net.pgfmc.modtools.toggle.DimToggle;
@@ -44,9 +42,6 @@ public class Main extends JavaPlugin {
 		getCommand("unmute").setExecutor(new Unmute());
 		
 		getCommand("broadcast").setExecutor(new Broadcast());
-		
-		getCommand("fakeleave").setExecutor(new FakeLeave());
-		getCommand("fakejoin").setExecutor(new FakeJoin());
 		
 		getServer().getPluginManager().registerEvents(new Fly(), this);
 		getServer().getPluginManager().registerEvents(new God(), this);

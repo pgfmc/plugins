@@ -1,22 +1,21 @@
 package net.pgfmc.bot;
 
-import javax.security.auth.login.LoginException;
-
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.MessageHistory;
-import net.pgfmc.bot.cmd.LinkCommand;
-import net.pgfmc.bot.cmd.ReportCommand;
-import net.pgfmc.bot.cmd.UnlinkCommand;
-import net.pgfmc.bot.functions.StartStopMessage;
-import net.pgfmc.bot.listeners.minecraft.OnAsyncPlayerChat;
-import net.pgfmc.bot.listeners.minecraft.OnPlayerAdvancementDone;
-import net.pgfmc.bot.listeners.minecraft.OnPlayerDeath;
-import net.pgfmc.bot.listeners.minecraft.OnPlayerJoin;
-import net.pgfmc.bot.listeners.minecraft.OnPlayerQuit;
+import net.pgfmc.bot.discord.Discord;
+import net.pgfmc.bot.minecraft.cmd.LinkCommand;
+import net.pgfmc.bot.minecraft.cmd.ReportCommand;
+import net.pgfmc.bot.minecraft.cmd.UnlinkCommand;
+import net.pgfmc.bot.minecraft.listeners.OnAsyncPlayerChat;
+import net.pgfmc.bot.minecraft.listeners.OnPlayerAdvancementDone;
+import net.pgfmc.bot.minecraft.listeners.OnPlayerDeath;
+import net.pgfmc.bot.minecraft.listeners.OnPlayerJoin;
+import net.pgfmc.bot.minecraft.listeners.OnPlayerQuit;
+import net.pgfmc.bot.util.Colors;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.playerdataAPI.PlayerDataManager;
 
@@ -39,6 +38,9 @@ public class Main extends JavaPlugin {
 			
 		});
 		
+		new Discord();
+		
+		
 		getServer().getPluginManager().registerEvents(new OnAsyncPlayerChat(), this);
 		getServer().getPluginManager().registerEvents(new OnPlayerAdvancementDone(), this);
 		getServer().getPluginManager().registerEvents(new OnPlayerDeath(), this);
@@ -49,34 +51,37 @@ public class Main extends JavaPlugin {
 		getCommand("unlink").setExecutor(new UnlinkCommand());
 		getCommand("report").setExecutor(new ReportCommand());
 		
-		// Tries to initialize discord integration
-		try {
-			Discord.initialize();
-		} catch (LoginException e1) {
-			e1.printStackTrace();
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		}
+		MessageEmbed startMessageEmbed = Discord.simpleServerEmbed("Server is starting...", "https://cdn.discordapp.com/emojis/905682398790959125.png?size=44", Colors.GREEN).build();
 		
-		StartStopMessage.enable();
+		Discord.sendEmbed(startMessageEmbed).queue();
+		Discord.sendAlert(startMessageEmbed).queue();
 		
-		MessageHistory feed = new MessageHistory(Discord.getServerChannel());	
-		
-		Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+		MessageHistory feed = new MessageHistory(Discord.getServerChannel());
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
 			@Override
 			public void run() {
 				// Gets the past 20 messages
 				
 				feed.retrievePast(20).queue();
+				
+				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+					@Override
+					public void run() {
+						feed.getRetrievedHistory()
+						.stream()
+						.filter(m -> !m.getEmbeds().isEmpty() && m.getAuthor().getId().equals("721949520728031232"))
+						.forEach(m -> m.delete().queue());
+						
+					}
+					
+				}, 60 * 20);
+				
 			}
+			
 		}, 20);
 		
-		Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-			@Override
-			public void run() {
-				StartStopMessage.deleteStartStopMessages(feed);
-			}
-		}, 60 * 20);
+		
+		
 	}
 	
 	@Override
@@ -84,24 +89,20 @@ public class Main extends JavaPlugin {
 	{
 		StringBuilder builder = new StringBuilder();
 		
-		for (Player p : Bukkit.getServer().getOnlinePlayers())
-		{
-			if (p.hasPermission("pgf.admin.fake.leave"))
-			{
-				if (PlayerData.from(p).hasTag("fake-leave")) continue;
-			}
-			
-			builder.append("<:LEAVE:905682349239463957> " + PlayerData.from(p).getDisplayName() + "\n");
-		}
-		
-		if (!StartStopMessage.isDeleted)
-		{
-			StartStopMessage.deleteStartStopMessages(new MessageHistory(Discord.getServerChannel()));
-		}
+		Bukkit.getServer().getOnlinePlayers().stream()
+		.forEach(player -> {
+			builder.append("<:LEAVE:905682349239463957> " + PlayerData.from(player).getDisplayName() + "\n");
+		});
 		
 		Discord.sendMessage(builder.toString()).queue();
 		
-		StartStopMessage.disable();
+		MessageEmbed stopMessageEmbed = Discord.simpleServerEmbed("Server is stopping..."
+				, "https://cdn.discordapp.com/emojis/905683316844429312.png?size=44"
+				, Colors.RED)
+		.build();
+		
+		Discord.sendEmbed(stopMessageEmbed).queue();
+		Discord.sendAlert(stopMessageEmbed).queue();
 		
 		Discord.JDA.shutdown();
 	}

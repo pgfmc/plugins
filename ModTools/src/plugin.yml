@@ -1,5 +1,5 @@
 name: PGF-Modtools
-version: 5.8.0
+version: 6.2.0
 api-version: 1.19
 authors: [bk, CrimsonDart]
 website: play.pgfmc.net
@@ -78,16 +78,6 @@ commands:
     description: Broadcast to the server!
     aliases: [bc, broadc, bcast, say]
     permission: pgf.admin.broadcast
-  fakejoin:
-    usage: /<command>
-    description: Send a fake join message
-    aliases: [fj, fakej, fjoin]
-    permission: pgf.admin.fake.join
-  fakeleave:
-    usage: /<command>
-    description: Send a fake leave message
-    aliases: [fl, fakel, fleave]
-    permission: pgf.admin.fake.leave
   rollback:
     usage: /<command> [player/undo] [minutes]
     description: Rollback a player's inventory
