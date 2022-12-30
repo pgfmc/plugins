@@ -1,7 +1,10 @@
 package net.pgfmc.bot.discord;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -13,11 +16,13 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.IMentionable;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-import net.dv8tion.jda.api.requests.restaction.MessageAction;
+import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.pgfmc.bot.Main;
@@ -32,6 +37,8 @@ public class Discord extends ListenerAdapter {
 	
 	public static JDA JDA;
 	public static final String PREFIX = "!";
+	public static final String CHANNEL_ALERT = Main.plugin.getConfig().getString("alert-channel");
+	public static final String CHANNEL_SERVER = Main.plugin.getConfig().getString("server-channel");
 	
 	public Discord()
 	{
@@ -69,35 +76,35 @@ public class Discord extends ListenerAdapter {
 		 
 	}
 	
-	public static MessageAction sendMessage(String message)
+	public static MessageCreateAction sendMessage(String message)
 	{
 		if (message == null || message == "") return null;
 		
 		return getServerChannel().sendMessage(message);
 	}
 	
-	public static MessageAction sendEmbed(MessageEmbed embed)
+	public static MessageCreateAction sendEmbed(MessageEmbed embed)
 	{
 		if (embed == null) return null;
-		return getServerChannel().sendMessage(embed);
+		return getServerChannel().sendMessageEmbeds(embed);
 	}
 	
-	public static MessageAction sendAlert(String message) {
+	public static MessageCreateAction sendAlert(String message) {
 		if (message == null || message.equals("")) { return null; }
 		return getAlertChannel().sendMessage(message);
 	}
 	
-	public static MessageAction sendAlert(MessageEmbed embed) {
+	public static MessageCreateAction sendAlert(MessageEmbed embed) {
 		if (embed == null) { return null; }
-		return getAlertChannel().sendMessage(embed);
+		return getAlertChannel().sendMessageEmbeds(embed);
 	}
 	
 	public static TextChannel getServerChannel() {
-		return JDA.getTextChannelById(Main.getChannelID("server-channel"));
+		return JDA.getTextChannelById(CHANNEL_SERVER);
 	}
 	
 	public static TextChannel getAlertChannel() {
-		return JDA.getTextChannelById(Main.getChannelID("alert-channel"));
+		return JDA.getTextChannelById(CHANNEL_ALERT);
 	}
 	
 	public static Guild getGuildPGF()
@@ -170,6 +177,42 @@ public class Discord extends ListenerAdapter {
 		return discordRoles;
 		
 		
+	}
+	
+	/**
+	 * Takes in a message and attempts to convert the Discord mentions from "@user" to "<@theUserId>"
+	 * @param message The message to convert
+	 * @return The converted message
+	 */
+	public static String getMessageWithDiscordMentions(String message)
+	{
+		List<String> playerInvokedMention = Arrays.asList(message.substring(message.indexOf("@")).split("@"))
+	    		.stream().map(mention -> mention.substring(0, mention.indexOf(" "))).collect(Collectors.toList());
+	    List<Member> memberNameMatches = playerInvokedMention.stream().map(mention -> Discord.getGuildPGF().getMembersByName(mention, true)).map(mentions -> mentions.get(0)).collect(Collectors.toList());
+	    List<Member> memberNicknameMatches = playerInvokedMention.stream().map(mention -> Discord.getGuildPGF().getMembersByNickname(mention, true)).map(mentions -> mentions.get(0)).collect(Collectors.toList());
+	    Map<String, IMentionable> memberMatches = new HashMap<>();
+	    
+	    for (int i = 0; i < playerInvokedMention.size() - 1; i++)
+	    {
+	    	if (memberNicknameMatches.size() - 1 >= i)
+		    {
+		    	memberMatches.put(playerInvokedMention.get(i), memberNicknameMatches.get(i));
+		    } else if (memberNameMatches.size() - 1 >= i)
+		    {
+		    	memberMatches.put(playerInvokedMention.get(i), memberNameMatches.get(i));
+		    } else
+		    {
+		    	memberMatches.put(playerInvokedMention.get(i), null);
+		    }
+			
+	    }
+	    
+	    if (!memberMatches.isEmpty())
+	    {
+	    	memberMatches.forEach((text, mention) -> message.replaceFirst(text, mention.getAsMention()));
+	    }
+	    
+	    return message;
 	}
 	
 }
