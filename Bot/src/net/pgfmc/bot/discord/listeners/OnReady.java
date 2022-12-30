@@ -17,8 +17,9 @@ public class OnReady extends ListenerAdapter {
 	public void onReady(ReadyEvent e) {		
 		Bukkit.getLogger().warning("Discord Bot initialized!");
 		
-		// Don't run the code below if Machine isn't MAIN !!!!!!!!
 		if (!Main.plugin.getConfig().getBoolean("enable-command")) return;
+		if (!Discord.CHANNEL_SERVER.equals("784261883632681032")) return; // 784261883632681032 is the PGF #server
+		// Don't run the code below if Machine isn't MAIN !!!!!!!!
 		
 		Guild guild = Discord.getGuildPGF();
 		
