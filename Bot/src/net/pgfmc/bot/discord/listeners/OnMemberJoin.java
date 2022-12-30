@@ -4,21 +4,17 @@ import java.time.OffsetDateTime;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
-import net.dv8tion.jda.api.hooks.EventListener;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.pgfmc.bot.discord.AutoRole;
 import net.pgfmc.bot.discord.Discord;
 import net.pgfmc.bot.util.Colors;
 
-public class OnMemberJoin implements EventListener {
+public class OnMemberJoin extends ListenerAdapter {
 
 	@Override
-	public void onEvent(GenericEvent event) {
-		if (!(event instanceof GuildMemberJoinEvent)) return;
-		
-		GuildMemberJoinEvent e = (GuildMemberJoinEvent) event;
-		
+	public void onGuildMemberJoin(GuildMemberJoinEvent e)
+	{
 		// If the event's guild doesn't match the #server guild
 		if (!e.getGuild().getId().equals(Discord.getServerChannel().getGuild().getId())) return;
 		
@@ -29,7 +25,7 @@ public class OnMemberJoin implements EventListener {
 		
 		Discord.sendAlert(eb.build()).queue();
 		
-		new AutoRole().autoRole(e.getMember());
+		AutoRole.giveMemberRole(e.getMember());
 	}
 
 }

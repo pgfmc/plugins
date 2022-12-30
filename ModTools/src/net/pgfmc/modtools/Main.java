@@ -2,8 +2,6 @@ package net.pgfmc.modtools;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import net.pgfmc.modtools.mute.Mute;
-import net.pgfmc.modtools.mute.Unmute;
 import net.pgfmc.modtools.toggle.DimToggle;
 import net.pgfmc.modtools.toggle.Fly;
 import net.pgfmc.modtools.toggle.God;
@@ -32,14 +30,9 @@ public class Main extends JavaPlugin {
 		
 		getCommand("debug").setExecutor(new Debug());
 		
-		getCommand("day").setExecutor(new Day());
-		
 		getCommand("dimtoggle").setExecutor(new DimToggle());
 		
 		getCommand("invsee").setExecutor(new Invsee());
-		
-		getCommand("mute").setExecutor(new Mute());
-		getCommand("unmute").setExecutor(new Unmute());
 		
 		getCommand("broadcast").setExecutor(new Broadcast());
 		

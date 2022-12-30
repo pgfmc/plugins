@@ -7,11 +7,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.MessageHistory;
 import net.pgfmc.bot.discord.Discord;
-import net.pgfmc.bot.minecraft.cmd.LinkCommand;
-import net.pgfmc.bot.minecraft.cmd.ReportCommand;
-import net.pgfmc.bot.minecraft.cmd.UnlinkCommand;
+import net.pgfmc.bot.minecraft.commands.LinkCommand;
+import net.pgfmc.bot.minecraft.commands.UnlinkCommand;
 import net.pgfmc.bot.minecraft.listeners.OnAsyncPlayerChat;
-import net.pgfmc.bot.minecraft.listeners.OnPlayerAdvancementDone;
 import net.pgfmc.bot.minecraft.listeners.OnPlayerDeath;
 import net.pgfmc.bot.minecraft.listeners.OnPlayerJoin;
 import net.pgfmc.bot.minecraft.listeners.OnPlayerQuit;
@@ -40,16 +38,13 @@ public class Main extends JavaPlugin {
 		
 		new Discord();
 		
-		
 		getServer().getPluginManager().registerEvents(new OnAsyncPlayerChat(), this);
-		getServer().getPluginManager().registerEvents(new OnPlayerAdvancementDone(), this);
 		getServer().getPluginManager().registerEvents(new OnPlayerDeath(), this);
 		getServer().getPluginManager().registerEvents(new OnPlayerJoin(), this);
 		getServer().getPluginManager().registerEvents(new OnPlayerQuit(), this);
 		
 		getCommand("link").setExecutor(new LinkCommand());
 		getCommand("unlink").setExecutor(new UnlinkCommand());
-		getCommand("report").setExecutor(new ReportCommand());
 		
 		MessageEmbed startMessageEmbed = Discord.simpleServerEmbed("Server is starting...", "https://cdn.discordapp.com/emojis/905682398790959125.png?size=44", Colors.GREEN).build();
 		
@@ -61,7 +56,6 @@ public class Main extends JavaPlugin {
 			@Override
 			public void run() {
 				// Gets the past 20 messages
-				
 				feed.retrievePast(20).queue();
 				
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
@@ -79,8 +73,6 @@ public class Main extends JavaPlugin {
 			}
 			
 		}, 20);
-		
-		
 		
 	}
 	
@@ -105,9 +97,7 @@ public class Main extends JavaPlugin {
 		Discord.sendAlert(stopMessageEmbed).queue();
 		
 		Discord.JDA.shutdown();
+		
 	}
 	
-	public static String getChannelID(String entry) {
-		return plugin.getConfig().getString(entry);
-	}
 }

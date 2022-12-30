@@ -16,7 +16,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.luckperms.api.LuckPerms;
-import net.pgfmc.core.chat.ProfanityFilter;
+import net.pgfmc.core.chat.Profanity;
 import net.pgfmc.core.cmd.RealName;
 import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.cmd.donator.Nick;
@@ -173,7 +173,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new RequestEvents(), this);
 		getServer().getPluginManager().registerEvents(new Roles(), this);
 		
-		new ProfanityFilter();
 		new RestartManager();
 	}
 	

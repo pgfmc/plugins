@@ -22,7 +22,6 @@ import net.pgfmc.core.inventoryAPI.BaseInventory;
 import net.pgfmc.core.inventoryAPI.ListInventory;
 import net.pgfmc.core.inventoryAPI.extra.Butto;
 import net.pgfmc.core.inventoryAPI.extra.ItemWrapper;
-import net.pgfmc.core.permissions.Roles;
 import net.pgfmc.core.permissions.Roles.PGFRole;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.requests.inv.RequestListInventory;
@@ -159,7 +158,7 @@ public class CommandsMenu implements InventoryHolder {
 			 * home menu
 			 */
 			
-			PGFRole topRole = Roles.getTop(pd);
+			PGFRole role = pd.getData("role");
 			/* 
 			 * [] [] [] [] XX [] [] [] []
 			 * [] [] [] [] [] [] [] [] []
@@ -179,7 +178,7 @@ public class CommandsMenu implements InventoryHolder {
 				
 			});
 			setItem(4, Skull.getHead(pd.getUniqueId(), null))
-			.n(pd.getRankedName() + " (" + topRole.name().charAt(0) + topRole.getName().substring(1) + ")")
+			.n(pd.getRankedName() + " (" + role.name().charAt(0) + role.getName().substring(1) + ")")
 			.l("§7Change nickname!");
 			
 			

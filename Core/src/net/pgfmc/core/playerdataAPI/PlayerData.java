@@ -102,7 +102,7 @@ public final class PlayerData extends AbstractPlayerData {
 		return null;
 	}
 	
-	public static PlayerData fromDiscordID(String discordUserId)
+	public static PlayerData fromDiscordId(String discordUserId)
 	{
 		for (PlayerData uid : instances)
 		{

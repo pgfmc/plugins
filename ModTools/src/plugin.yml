@@ -48,10 +48,6 @@ commands:
     description: Heal yourself or another player
     usage: /<command> [player]
     permission: pgf.cmd.heal
-  day:
-    usage: /<command>
-    description: Sets the time to day and weather to clear
-    permission: pgf.admin.day
   dimtoggle:
     usage: /<command>
     description: Set a world accessible or not
@@ -65,14 +61,6 @@ commands:
     usage: /<command> [player] [(optional) echest]
     description: See inside a player's inventory
     permission: pgf.admin.invsee
-  mute:
-    usage: /<command> [player]
-    description: Mute a player
-    permission: pgf.admin.mute
-  unmute:
-    usage: /<command> [player]
-    description: Unmute a player
-    permission: pgf.admin.unmute
   broadcast:
     usage: /<command> [message]
     description: Broadcast to the server!

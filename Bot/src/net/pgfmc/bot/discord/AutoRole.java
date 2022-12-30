@@ -10,7 +10,7 @@ public class AutoRole {
 	
 	private static final String MEMBER_ROLE_ID = "579062298526875648";
 	
-	public void maintainRole()
+	public static void giveAllMemberRole()
 	{
 		Guild guild = Discord.getGuildPGF();
 		Role memberRole = guild.getRoleById(MEMBER_ROLE_ID);
@@ -23,7 +23,7 @@ public class AutoRole {
 		
 	}
 	
-	public void autoRole(Member member)
+	public static void giveMemberRole(Member member)
 	{
 		if (member.getUser().isBot()) return;
 		

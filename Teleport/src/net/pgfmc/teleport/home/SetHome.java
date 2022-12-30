@@ -6,7 +6,7 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 
-import net.pgfmc.core.chat.ProfanityFilter;
+import net.pgfmc.core.chat.Profanity;
 import net.pgfmc.core.cmd.base.PlayerCommand;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
@@ -42,7 +42,7 @@ public class SetHome extends PlayerCommand {
 		
 		name = name.toLowerCase().strip().replace(" ", "_");
 		
-		if (ProfanityFilter.hasProfanity(name))
+		if (Profanity.hasProfanity(name))
 		{
 			pd.sendMessage(ChatColor.RED + "Please do not include profanity!");
 			return;
