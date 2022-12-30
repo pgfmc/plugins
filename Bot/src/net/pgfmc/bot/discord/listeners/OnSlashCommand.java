@@ -1,32 +1,23 @@
 package net.pgfmc.bot.discord.listeners;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.bukkit.Bukkit;
-
-import net.dv8tion.jda.api.events.GenericEvent;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
-import net.dv8tion.jda.api.hooks.EventListener;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.pgfmc.bot.discord.Discord;
-import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.bot.discord.commands.Link;
+import net.pgfmc.bot.discord.commands.List;
 
-public class OnSlashCommand implements EventListener {
+public class OnSlashCommand extends ListenerAdapter {
     
-    @Override
-    public void onEvent(GenericEvent event) {
-        if(!(event instanceof SlashCommandEvent)) return;
-        
-        SlashCommandEvent e = (SlashCommandEvent) event;
-        
-        if (!e.getName().equals("list")) return;
-        if (!e.getGuild().getId().equals(Discord.getServerChannel().getGuild().getId())) return;
-        
-        List<String> pl = Bukkit.getOnlinePlayers()
-        		.stream()
-        		.map(p -> PlayerData.from(p).getDisplayName())
-        		.collect(Collectors.toList());
-        e.reply("Online players: " + pl).queue();
+	@Override
+    public void onSlashCommandInteraction(SlashCommandInteractionEvent e)
+	{
+		if (!e.isFromGuild())
+		{
+			if (!e.getGuild().getId().equals(Discord.getServerChannel().getGuild().getId())) return;
+		}
+		
+        if (e.getName().equals("list")) new List(e);
+        if (e.getName().equals("link")) new Link(e);
       
     }
 }

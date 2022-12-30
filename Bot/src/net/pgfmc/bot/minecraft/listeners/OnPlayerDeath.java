@@ -16,6 +16,7 @@ public class OnPlayerDeath implements Listener {
 		e.setDeathMessage(e.getDeathMessage().replace(pd.getName(), pd.getDisplayName()));
 		Discord.sendMessage("<:DEATH:907865162558636072> " + e.getDeathMessage()).queue();
 		e.setDeathMessage(e.getDeathMessage().replace(pd.getDisplayName(), pd.getRankedName()));
+		
 	}
 
 }

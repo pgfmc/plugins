@@ -13,7 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import net.pgfmc.core.CoreMain;
-import net.pgfmc.core.chat.ProfanityFilter;
+import net.pgfmc.core.chat.Profanity;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
 public class Nick implements CommandExecutor {
@@ -104,7 +104,7 @@ public class Nick implements CommandExecutor {
 				.replace("&r", "");
 		String raw = removeCodes(nick);
 		
-		if (ProfanityFilter.hasProfanity(raw))
+		if (Profanity.hasProfanity(raw))
 		{
 			p.sendMessage(ChatColor.RED + "Please do not include profanity!");
 			return;
