@@ -35,11 +35,14 @@ public class LinkCommand implements CommandExecutor {
 			return true;
 		}
 		
+		sender.sendMessage(ChatColor.GREEN + "Generating code...");
+		
 		String code = generateCode();
 		pd.setData("linkCode", code);
 		
-		sender.sendMessage(ChatColor.GOLD + "Message the code " + ChatColor.WHITE + "[ " + code + " ]" + ChatColor.GOLD + " to " + ChatColor.GREEN + "PGF.bot " + ChatColor.GOLD + "in dms");
-		sender.sendMessage(ChatColor.GOLD + "to link your account.");
+		sender.sendMessage(ChatColor.GOLD + "Do " + ChatColor.WHITE 
+							+ "/link " + code + ChatColor.GOLD
+							+ " in any channel in the PGF Discord\nto link your account");
 		
 		return true;
 	}
