@@ -3,6 +3,7 @@ package net.pgfmc.core.cmd.base;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -18,13 +19,13 @@ public abstract class PlayerCommand extends CmdBase {
 	public boolean execute(CommandSender sender, String alias, String[] args) {
 
 		if (!(sender instanceof Player)) {
-			sender.sendMessage("§cThe sender must be a player!");
+			sender.sendMessage(ChatColor.RED + "The sender must be a player!");
 			return true;
 		}
 		
 		PlayerData pd = PlayerData.from((Player) sender);
 		if (pd == null) {
-			sender.sendMessage("§cThe sender must be a player!");
+			sender.sendMessage(ChatColor.RED + "The sender must be a player!");
 			return true;
 		}
 		

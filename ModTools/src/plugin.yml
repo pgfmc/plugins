@@ -6,7 +6,6 @@ website: play.pgfmc.net
 main: net.pgfmc.modtools.Main
 description: Moderator tools for PGF
 depend: [PGF-Core]
-softdepend: [PGF-Bot, JDA-plugin]
 load: POSTWORLD
 prefix: PGF-ModTools
 
@@ -48,11 +47,6 @@ commands:
     description: Heal yourself or another player
     usage: /<command> [player]
     permission: pgf.cmd.heal
-  dimtoggle:
-    usage: /<command>
-    description: Set a world accessible or not
-    permission: pgf.admin.toggledim
-    aliases: [toggleworld, togdim, tdim]
   debug:
     usage: /<command>
     description: Toggles debug mode for this player.

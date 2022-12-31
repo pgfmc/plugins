@@ -3,8 +3,8 @@ package net.pgfmc.core.requests.inv;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.pgfmc.core.inventoryAPI.ButtonInventory;
-import net.pgfmc.core.inventoryAPI.extra.Buttonable;
+import net.pgfmc.core.inventoryapi.ButtonInventory;
+import net.pgfmc.core.inventoryapi.extra.Buttonable;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.requests.Request;
 import net.pgfmc.core.requests.RequestType;
