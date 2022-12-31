@@ -26,6 +26,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="E:/github/.plugins/Dependencies/ProtocolLib.jar"/>
-	<classpathentry kind="lib" path="E:/github/.plugins/Dependencies/JDAPlugin-dev.jar"/>
+	<classpathentry kind="lib" path="E:/github/.plugins/Dependencies/JDAPlugin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
