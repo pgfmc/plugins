@@ -73,7 +73,7 @@ commands:
     description: Deny a teleport request
     usage: /<command> [player]
     permission: pgf.cmd.tp.tpdeny
-
+    
   tphere:
     description: Send a Teleport here request.
     usage: /<command> [player]
@@ -107,32 +107,33 @@ commands:
     usage: /<command> [name]
     permission: pgf.cmd.warp.del
     
- permissions:
-  pgf.cmd.home.*:
-    description: Home wildcard
-    default: op
-    children:
-      pgf.cmd.home.home: true
-      pgf.cmd.home.homes: true
-      pgf.cmd.home.set: true
-      pgf.cmd.home.del: true
-    
-  pgf.cmd.tp.*:
-    description: Tpa wildcard
-    default: op
-    children:
-      pgf.cmd.tp.tpaccept: true
-      pgf.cmd.tp.tpa: true
-      pgf.cmd.tp.tpdeny: true
-      pgf.cmd.tp.tphere: true
-      pgf.cmd.tp.tphereaccept: true
-      pgf.cmd.tp.tpheredeny: true
-    
-  pgf.cmd.warp.*:
-    description: Warp wildcard
-    default: op
-    children:
-      pgf.cmd.warp.warp: true
-      pgf.cmd.warp.warps: true
-      pgf.cmd.warp.set: true
-      pgf.cmd.warp.del: true
+  permissions:
+    pgf.cmd.home.*:
+      description: Home wildcard
+      default: op
+      children:
+        pgf.cmd.home.home: true
+        pgf.cmd.home.homes: true
+        pgf.cmd.home.set: true
+        pgf.cmd.home.del: true
+            
+    pgf.cmd.tp.*:
+      description: Tpa wildcard
+      default: op
+      children:
+        pgf.cmd.tp.tpaccept: true
+        pgf.cmd.tp.tpa: true
+        pgf.cmd.tp.tpdeny: true
+        pgf.cmd.tp.tphere: true
+        pgf.cmd.tp.tphereaccept: true
+        pgf.cmd.tp.tpheredeny: true
+        
+    pgf.cmd.warp.*:
+      description: Warp wildcard
+      default: op
+      children:
+        pgf.cmd.warp.warp: true
+        pgf.cmd.warp.warps: true
+        pgf.cmd.warp.set: true
+        pgf.cmd.warp.del: true
+        
