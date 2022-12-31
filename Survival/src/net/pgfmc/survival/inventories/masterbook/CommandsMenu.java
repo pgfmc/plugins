@@ -31,8 +31,6 @@ import net.pgfmc.survival.teleport.home.Homes;
 
 public class CommandsMenu extends BaseInventory {
 	
-	private BaseInventory HOME_MENU;
-	
 	public CommandsMenu(PlayerData pd)
 	{
 		super(27, "Command Menu");
@@ -127,7 +125,7 @@ public class CommandsMenu extends BaseInventory {
 				@Override
 				protected void cancelAction(Player p, InventoryClickEvent e) {
 					p.closeInventory();
-					p.openInventory(new CommandsMenu(pd).getInventory());
+					//p.openInventory(new CommandsMenu(pd).getInventory());
 					
 				}
 				
@@ -149,12 +147,13 @@ public class CommandsMenu extends BaseInventory {
 		 * [] [] XX [] [] [] [] [] []
 		 * home menu
 		 */
-		HOME_MENU = setOptionalAction(20, new BaseInventory(27, "§r§8Home") {}, bi -> {
+		setOptionalAction(20, new BaseInventory(27, "§r§8Home") {
+			}, bi -> {
 			final HashMap<String, Location> homes = Homes.getHomes(pd);
 			
-			setBack(0, new CommandsMenu(pd));
+			//bi.setBack(0, new CommandsMenu(pd));
 			
-			setOptionalAction(13, new ListInventory<String>(27, "§r§8Home Select") {
+			bi.setOptionalAction(13, new ListInventory<String>(27, "§r§8Home Select") {
 
 				@Override
 				public List<String> load() {
@@ -194,13 +193,13 @@ public class CommandsMenu extends BaseInventory {
 				
 				
 			}, bii -> {
-				bii.setBack(0, HOME_MENU);
+				//bii.setBack(0, new CommandsMenu(pd));
 				
 			});
 			
-			setItem(13, Material.ENDER_PEARL).n("§r§dGo to Home");
+			bi.setItem(13, Material.ENDER_PEARL).n("§r§dGo to Home");
 			
-			setOptionalAction(11, new ConfirmInventory("§r§8Set home here?", "§r§aSet Home", "§r§7Cancel") {
+			bi.setOptionalAction(11, new ConfirmInventory("§r§8Set home here?", "§r§aSet Home", "§r§7Cancel") {
 
 				@Override
 				protected void confirmAction(Player p, InventoryClickEvent e) {
@@ -245,19 +244,19 @@ public class CommandsMenu extends BaseInventory {
 
 				@Override
 				protected void cancelAction(Player p, InventoryClickEvent e) {
-					p.openInventory(HOME_MENU.getInventory());
+					//p.openInventory(new CommandsMenu(pd).getInventory());
 					
 				}
 				
 				
 			}, bii -> {
-				bii.setBack(0, HOME_MENU);
+				//bii.setBack(0, new CommandsMenu(pd));
 				
 			});
 			
-			setItem(11, Material.OAK_SAPLING).n("§r§aSet Home");
+			bi.setItem(11, Material.OAK_SAPLING).n("§r§aSet Home");
 			
-			setOptionalAction(15, new ListInventory<String>(27, "§r§8Delete Home") {
+			bi.setOptionalAction(15, new ListInventory<String>(27, "§r§8Delete Home") {
 
 				@Override
 				public List<String> load() {
@@ -294,11 +293,11 @@ public class CommandsMenu extends BaseInventory {
 				}
 				
 			}, bii -> {
-				bii.setBack(0, HOME_MENU);
+				//bii.setBack(0, new CommandsMenu(pd));
 				
 			});
 			
-			setItem(15, Material.FLINT_AND_STEEL).n("§r§cDelete Home");
+			bi.setItem(15, Material.FLINT_AND_STEEL).n("§r§cDelete Home");
 			
 		});
 		
