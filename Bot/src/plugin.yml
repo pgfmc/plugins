@@ -5,7 +5,7 @@ authors: [bk, CrimsonDart]
 website: play.pgfmc.net
 main: net.pgfmc.bot.Main
 description: Discord-Minecraft chat
-depend: [PGF-Core, JDA-Plugin, ProtocolLib]
+depend: [PGF-Core, JDA-plugin, ProtocolLib]
 load: POSTWORLD
 prefix: PGF-Bot
 

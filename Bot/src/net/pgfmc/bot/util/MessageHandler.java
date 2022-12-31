@@ -28,14 +28,12 @@ public class MessageHandler {
 		type = SenderType.DISCORD;
 		this.message = message;
 		this.user = user;
-		this.player = PlayerData.fromDiscordId(user.getId()).getOfflinePlayer();
 	}
 	
 	public MessageHandler(String message, OfflinePlayer player)
 	{
 		type = SenderType.MINECRAFT;
 		this.message = message;
-		this.user = Discord.JDA.getUserById(PlayerData.from(player).getData("Discord"));
 		this.player = player;
 	}
 	
