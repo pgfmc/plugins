@@ -21,7 +21,9 @@ public class Update {
 	
 	public Update() throws MalformedURLException
 	{
+		System.out.println("Starting udpate...");
 		PLUGIN_DOWNLOAD_URLS.forEach((filePathName, url) -> {
+			System.out.println("Downloading jar " + filePathName.substring(filePathName.indexOf(File.separator)));
 			
 			try {
 				ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream());
@@ -39,6 +41,8 @@ public class Update {
 			}
 			
 		});
+		
+		System.out.println("Finished update!");
 		
 	}
 
