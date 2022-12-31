@@ -2,10 +2,15 @@ package net.pgfmc.modtools;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import net.pgfmc.modtools.toggle.DimToggle;
-import net.pgfmc.modtools.toggle.Fly;
-import net.pgfmc.modtools.toggle.God;
-import net.pgfmc.modtools.toggle.Vanish;
+import net.pgfmc.modtools.commands.Broadcast;
+import net.pgfmc.modtools.commands.Debug;
+import net.pgfmc.modtools.commands.Gamemode;
+import net.pgfmc.modtools.commands.Heal;
+import net.pgfmc.modtools.commands.Invsee;
+import net.pgfmc.modtools.commands.Sudo;
+import net.pgfmc.modtools.commands.toggle.Fly;
+import net.pgfmc.modtools.commands.toggle.God;
+import net.pgfmc.modtools.commands.toggle.Vanish;
 
 public class Main extends JavaPlugin {
 	
@@ -29,8 +34,6 @@ public class Main extends JavaPlugin {
 		getCommand("heal").setExecutor(new Heal());
 		
 		getCommand("debug").setExecutor(new Debug());
-		
-		getCommand("dimtoggle").setExecutor(new DimToggle());
 		
 		getCommand("invsee").setExecutor(new Invsee());
 		

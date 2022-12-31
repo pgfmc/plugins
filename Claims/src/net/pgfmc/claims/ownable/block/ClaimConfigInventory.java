@@ -9,16 +9,14 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import net.pgfmc.core.inventoryAPI.BaseInventory;
-import net.pgfmc.core.inventoryAPI.ConfirmInventory;
-import net.pgfmc.core.inventoryAPI.ListInventory;
-import net.pgfmc.core.inventoryAPI.extra.Butto;
+import net.pgfmc.core.inventoryapi.BaseInventory;
+import net.pgfmc.core.inventoryapi.ConfirmInventory;
+import net.pgfmc.core.inventoryapi.ListInventory;
+import net.pgfmc.core.inventoryapi.extra.Butto;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
 public class ClaimConfigInventory extends BaseInventory {
 	
-	
-
 	public ClaimConfigInventory(Claim claim) {
 		super(27, "Claim Settings");
 		
