@@ -24,7 +24,7 @@ public class OnMessageReceived extends ListenerAdapter {
 	{
 		final User user = e.getAuthor();
 		
-		MessageHandler handler = new MessageHandler(e.getMessage().getContentDisplay(), user);
+		final MessageHandler handler = new MessageHandler(e.getMessage().getContentDisplay(), user);
 		
 		if (handler.getMessage().length() == 0) return;
 		
@@ -45,7 +45,7 @@ public class OnMessageReceived extends ListenerAdapter {
 		}
 		
 		// return if message isn't in #server or a bot
-		if (!(e.getChannel().getId().equals(Discord.getServerChannel().getId()) || user.isBot())) return;
+		if (!e.getChannel().getId().equals(Discord.getServerChannel().getId()) || user.isBot()) return;
 		
 		PGFRole memberRole = PGFRole.MEMBER;
 		
@@ -60,20 +60,6 @@ public class OnMessageReceived extends ListenerAdapter {
 					.collect(Collectors.toList()));
 			
 		}
-		
-		// attempts to bring over formatting from discord.
-		handler.setMessage(
-				formatDiscordToMinecraft(handler.getMessage(), "\\*\\*\\*", String.valueOf(ChatColor.BOLD.getChar()) + String.valueOf(ChatColor.ITALIC.getChar()))
-				);
-		handler.setMessage(
-				formatDiscordToMinecraft(handler.getMessage(), "\\*\\*", String.valueOf(ChatColor.BOLD.getChar()))
-				);
-		handler.setMessage(
-				formatDiscordToMinecraft(handler.getMessage(), "\\*", String.valueOf(ChatColor.ITALIC.getChar()))
-				);
-		handler.setMessage(
-				formatDiscordToMinecraft(handler.getMessage(), "__", String.valueOf(ChatColor.UNDERLINE.getChar()))
-				);
 		
 		// If not reply
 		if(e.getMessage().getReferencedMessage() == null || e.getMessage().getReferencedMessage().getAuthor().isBot() || Discord.getGuildPGF() == null)
@@ -116,19 +102,6 @@ public class OnMessageReceived extends ListenerAdapter {
             
 		}
 		
-	}
-	
-	private String formatDiscordToMinecraft(String content, String discordCode, String minecraftCode)
-	{
-		String[] codeBlocks = content.split(discordCode);
-		StringBuilder format = new StringBuilder(content);
-		
-		for (int i = 0; i < codeBlocks.length - 1; i++)
-		{
-			format.append((i % 2 == 1) ? (format.append(minecraftCode + codeBlocks[i] + ChatColor.RESET)) : (format.append(codeBlocks[i])));
-		}
-		
-		return format.append(ChatColor.RESET).toString();
 	}
 	
 }
