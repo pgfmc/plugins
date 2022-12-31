@@ -10,7 +10,7 @@ import org.bukkit.plugin.Plugin;
 
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
-import net.pgfmc.bot.Main;
+import net.pgfmc.core.CoreMain;
 
 public class RestartManager {
 	
@@ -20,7 +20,7 @@ public class RestartManager {
 		
 		// Purge CoreProtect data of 14 days or older
 		try {
-		Plugin pluginCoreProtect = Main.plugin.getServer().getPluginManager().getPlugin("CoreProtect");
+		Plugin pluginCoreProtect = CoreMain.plugin.getServer().getPluginManager().getPlugin("CoreProtect");
 		CoreProtectAPI coreProtectAPI = ((CoreProtect) pluginCoreProtect).getAPI();
 		Bukkit.getLogger().warning("Purging CoreProtect data");
 		
@@ -42,13 +42,13 @@ public class RestartManager {
 		calendarNow.add(11, hoursUntilRestart);
 		final Date restartDate = calendarNow.getTime();
 		
-		Bukkit.getScheduler().runTaskTimer(Main.plugin, new Runnable()
+		Bukkit.getScheduler().runTaskTimer(CoreMain.plugin, new Runnable()
 		{
             public void run()
             {
             	// Potential problem with this -> Since it doesn't count with a stored variable, it might skip over a second or send a message twice or whatever
-            	Long secondsUntilRestart = Duration.between(new Date().toInstant(), restartDate.toInstant()).toSeconds();
-            	switch (secondsUntilRestart.intValue()) {
+            	long secondsUntilRestart = Duration.between(new Date().toInstant(), restartDate.toInstant()).toSeconds();
+            	switch ((int) secondsUntilRestart) {
             		case 60 * 10: // 10 minutes
             			Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "10 minutes remain until server restart.");
             			break;
