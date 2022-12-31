@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerCommandSendEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 
 import net.luckperms.api.LuckPerms;
@@ -120,14 +121,13 @@ public class Roles implements Listener {
 		pd.setData("role", role);
 		
 	}
-	
 	/**
 	 * Used if you don't have a list of the player's roles
 	 * This will get them for you
 	 * 
 	 * @param pd The player to update roles
 	 */
-	public static void setRoles(PlayerData pd)
+	public static void setRole(PlayerData pd)
 	{
 		// Get roles, get top role
 		List<PGFRole> playerRoles = getPlayerRoles(pd);
@@ -145,7 +145,7 @@ public class Roles implements Listener {
 	 */
 	public static List<PGFRole> getPlayerRoles(PlayerData pd)
 	{
-		if (!CoreMain.PGFPlugin.BOT.isEnabled()) return new ArrayList<PGFRole>(Arrays.asList(PGFRole.MEMBER));
+		if (!CoreMain.PGFPlugin.BOT.isEnabled() || pd.getData("Discord") == null) return new ArrayList<PGFRole>(Arrays.asList(PGFRole.MEMBER));
 		
 		List<String> rolesAsString = Discord.getMemberRoles(pd.getData("Discord"));
 		
@@ -179,7 +179,15 @@ public class Roles implements Listener {
 	{
 		PlayerData pd = PlayerData.from(e.getPlayer());
 		
-		setRoles(pd);
+		setRole(pd);
+	}
+	
+	@EventHandler
+	public void onCommandSend(PlayerCommandSendEvent e)
+	{
+		PlayerData pd = PlayerData.from(e.getPlayer());
+		
+		setRole(pd);
 	}
 	
 }
