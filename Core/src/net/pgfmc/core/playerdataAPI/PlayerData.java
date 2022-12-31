@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -153,7 +154,7 @@ public final class PlayerData extends AbstractPlayerData {
 	 * @return The player's role prefix.
 	 */
 	public String getRankColor() {
-		return ((PGFRole) getData("role")).getColor();
+		return ((PGFRole) Optional.ofNullable(getData("role")).orElse(PGFRole.MEMBER)).getColor();
 	}
 	
 	public void setDebug(boolean d) {
