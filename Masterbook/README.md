@@ -1,2 +1,0 @@
-# Masterbook
-Masterbook for PGF
