@@ -42,7 +42,7 @@ public class LinkCommand implements CommandExecutor {
 		
 		sender.sendMessage(ChatColor.GOLD + "Do " + ChatColor.WHITE 
 							+ "/link " + code + ChatColor.GOLD
-							+ " in any channel in the PGF Discord\nto link your account");
+							+ " in any channel in the " + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + "PGF Discord\n" + ChatColor.RESET + ChatColor.GOLD + "to finish linking your account (" + ChatColor.BLUE + "discord.gg/zdxeREe" + ChatColor.GOLD + ")");
 		
 		return true;
 	}
