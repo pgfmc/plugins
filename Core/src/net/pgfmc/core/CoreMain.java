@@ -16,14 +16,13 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.luckperms.api.LuckPerms;
-import net.pgfmc.core.chat.Profanity;
 import net.pgfmc.core.cmd.RealName;
 import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.cmd.donator.Nick;
 import net.pgfmc.core.file.Configify;
 import net.pgfmc.core.file.Mixins;
 import net.pgfmc.core.file.ReloadConfigify;
-import net.pgfmc.core.inventoryAPI.extra.InventoryPressEvent;
+import net.pgfmc.core.inventoryapi.extra.InventoryPressEvent;
 import net.pgfmc.core.permissions.Roles;
 import net.pgfmc.core.playerdataAPI.PlayerDataManager;
 import net.pgfmc.core.playerdataAPI.cmd.DumpCommand;
@@ -31,7 +30,7 @@ import net.pgfmc.core.playerdataAPI.cmd.PlayerDataSetCommand;
 import net.pgfmc.core.playerdataAPI.cmd.TagCommand;
 import net.pgfmc.core.requests.RequestEvents;
 import net.pgfmc.core.restart.RestartManager;
-import net.pgfmc.core.teleportAPI.SpawnProtect;
+import net.pgfmc.core.teleportapi.SpawnProtect;
 
 /**
  * @author bk and CrimsonDart

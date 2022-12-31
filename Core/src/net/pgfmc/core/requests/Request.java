@@ -7,9 +7,9 @@ import org.bukkit.inventory.ItemStack;
 
 import net.pgfmc.core.event_handler.requests.RequestEndEvent;
 import net.pgfmc.core.event_handler.requests.RequestSendEvent;
-import net.pgfmc.core.inventoryAPI.ConfirmInventory;
-import net.pgfmc.core.inventoryAPI.extra.Butto;
-import net.pgfmc.core.inventoryAPI.extra.Buttonable;
+import net.pgfmc.core.inventoryapi.ConfirmInventory;
+import net.pgfmc.core.inventoryapi.extra.Butto;
+import net.pgfmc.core.inventoryapi.extra.Buttonable;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 import net.pgfmc.core.requests.inv.RequestListInventory;
 

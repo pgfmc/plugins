@@ -2,9 +2,10 @@ package net.pgfmc.masterbook;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import net.pgfmc.masterbook.chat.NickHomeInput;
-import net.pgfmc.masterbook.masterbook.BookClick;
-import net.pgfmc.masterbook.masterbook.HelpCommand;
+import net.pgfmc.survival.cmd.GiveLodestoneCommand;
+import net.pgfmc.survival.inventories.masterbook.BookClick;
+import net.pgfmc.survival.inventories.masterbook.HelpCommand;
+import net.pgfmc.survival.inventories.masterbook.NickHomeInput;
 
 public class Main extends JavaPlugin {
 	
