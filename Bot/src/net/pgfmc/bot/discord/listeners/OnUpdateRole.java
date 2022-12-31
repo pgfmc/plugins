@@ -17,6 +17,6 @@ public class OnUpdateRole extends ListenerAdapter {
 		
 		if (pd == null) return;
 		
-		Roles.setRoles(pd);
+		Roles.setRole(pd);
 	}
 }

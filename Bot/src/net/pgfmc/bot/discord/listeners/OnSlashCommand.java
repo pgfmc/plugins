@@ -1,6 +1,6 @@
 package net.pgfmc.bot.discord.listeners;
 
-import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.pgfmc.bot.discord.Discord;
 import net.pgfmc.bot.discord.commands.Link;
@@ -9,7 +9,7 @@ import net.pgfmc.bot.discord.commands.List;
 public class OnSlashCommand extends ListenerAdapter {
     
 	@Override
-    public void onSlashCommandInteraction(SlashCommandInteractionEvent e)
+    public void onSlashCommand(SlashCommandEvent e)
 	{
 		if (!e.isFromGuild())
 		{

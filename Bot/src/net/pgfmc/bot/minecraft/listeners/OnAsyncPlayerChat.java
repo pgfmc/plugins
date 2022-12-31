@@ -56,7 +56,10 @@ public class OnAsyncPlayerChat implements Listener {
 			return;
 		}
 		
-		handler.setMessage(Discord.getMessageWithDiscordMentions(handler.getMessage()));
+		if (handler.getMessage().contains("@"))
+		{
+			handler.setMessage(Discord.getMessageWithDiscordMentions(handler.getMessage()));
+		}		
 		
 		e.setFormat(pd.getRankedName() + ChatColor.DARK_GRAY + " -> " + MessageHandler.getTrackColor(player.getUniqueId().toString()) + "%2$s"); // %2$s means 2nd argument (the chat message), %1$s would be the player's display name
 		

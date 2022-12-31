@@ -4,12 +4,12 @@ import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 
-import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.pgfmc.core.playerdataAPI.PlayerData;
 
 public class List {
 	
-	public List(SlashCommandInteractionEvent e)
+	public List(SlashCommandEvent e)
 	{
 		java.util.List<String> pl = Bukkit.getOnlinePlayers()
         		.stream()

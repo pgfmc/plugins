@@ -19,10 +19,10 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.IMentionable;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
+import net.dv8tion.jda.api.requests.restaction.MessageAction;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.pgfmc.bot.Main;
@@ -44,14 +44,14 @@ public class Discord extends ListenerAdapter {
 	{
 		// Tries to initialize discord integration
 		try {
-			JDA = initialize().build().awaitReady();
+			initialize();
 		} catch (LoginException | InterruptedException e) {
 			e.printStackTrace();
 		}
 		
 	}
 	
-	private final JDABuilder initialize() throws LoginException, InterruptedException
+	private final void initialize() throws LoginException, InterruptedException
 	{
 		JDABuilder builder = JDABuilder.createDefault(Main.plugin.getConfig().getString("token")); // bot token, don't share.
 		/*
@@ -69,34 +69,36 @@ public class Discord extends ListenerAdapter {
 		 */
 		
 		// Creates JDA and allows the bot to load all members 
-		 return builder
+		JDA = builder
 		.setChunkingFilter(ChunkingFilter.ALL)
 		.setMemberCachePolicy(MemberCachePolicy.ALL)
-		.enableIntents(GatewayIntent.GUILD_MEMBERS);
-		 
+		.enableIntents(GatewayIntent.GUILD_MEMBERS).build();
+		
+		JDA.awaitReady();
+		
 	}
 	
-	public static MessageCreateAction sendMessage(String message)
+	public static MessageAction sendMessage(String message)
 	{
 		if (message == null || message == "") return null;
 		
 		return getServerChannel().sendMessage(message);
 	}
 	
-	public static MessageCreateAction sendEmbed(MessageEmbed embed)
+	public static MessageAction sendEmbed(MessageEmbed embed)
 	{
 		if (embed == null) return null;
-		return getServerChannel().sendMessageEmbeds(embed);
+		return getServerChannel().sendMessage(embed);
 	}
 	
-	public static MessageCreateAction sendAlert(String message) {
+	public static MessageAction sendAlert(String message) {
 		if (message == null || message.equals("")) { return null; }
 		return getAlertChannel().sendMessage(message);
 	}
 	
-	public static MessageCreateAction sendAlert(MessageEmbed embed) {
+	public static MessageAction sendAlert(MessageEmbed embed) {
 		if (embed == null) { return null; }
-		return getAlertChannel().sendMessageEmbeds(embed);
+		return getAlertChannel().sendMessage(embed);
 	}
 	
 	public static TextChannel getServerChannel() {
@@ -186,10 +188,14 @@ public class Discord extends ListenerAdapter {
 	 */
 	public static String getMessageWithDiscordMentions(String message)
 	{
+		if (!message.contains("@")) return message;
+		
 		List<String> playerInvokedMention = Arrays.asList(message.substring(message.indexOf("@")).split("@"))
-	    		.stream().map(mention -> mention.substring(0, mention.indexOf(" "))).collect(Collectors.toList());
+	    		.stream().filter(mention -> mention.contains(" ")).map(mention -> mention.substring(0, mention.indexOf(" "))).collect(Collectors.toList());
+		
 	    List<Member> memberNameMatches = playerInvokedMention.stream().map(mention -> Discord.getGuildPGF().getMembersByName(mention, true)).map(mentions -> mentions.get(0)).collect(Collectors.toList());
 	    List<Member> memberNicknameMatches = playerInvokedMention.stream().map(mention -> Discord.getGuildPGF().getMembersByNickname(mention, true)).map(mentions -> mentions.get(0)).collect(Collectors.toList());
+	    
 	    Map<String, IMentionable> memberMatches = new HashMap<>();
 	    
 	    for (int i = 0; i < playerInvokedMention.size() - 1; i++)
