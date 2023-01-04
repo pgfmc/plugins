@@ -9,7 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
-import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.api.playerdata.PlayerData;
  /**
   * Fly Command
   * @author bk

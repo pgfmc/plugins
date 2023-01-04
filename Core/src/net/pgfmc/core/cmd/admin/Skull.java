@@ -8,10 +8,10 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import net.pgfmc.core.cmd.base.BothPlayerCmd;
-import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.commands.ServerPlayerAtPlayerCommand;
 
-public class Skull extends BothPlayerCmd {
+public class Skull extends ServerPlayerAtPlayerCommand {
 
 	
 	public Skull(String name) {
