@@ -7,8 +7,8 @@ import java.util.Optional;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import net.pgfmc.core.file.Configify;
-import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.files.Configify;
 import net.pgfmc.modtools.Main;
 
 public class PlayerInventorySaver extends Configify {
