@@ -4,25 +4,25 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import net.pgfmc.survival.balance.ItemProtect;
 import net.pgfmc.survival.balance.PvPEvent;
-import net.pgfmc.survival.commands.Afk;
-import net.pgfmc.survival.commands.GiveLodestoneCommand;
-import net.pgfmc.survival.commands.HelpCommand;
-import net.pgfmc.survival.commands.PvpToggle;
-import net.pgfmc.survival.commands.donator.Craft;
-import net.pgfmc.survival.commands.donator.Echest;
-import net.pgfmc.survival.inventories.masterbook.BookClick;
-import net.pgfmc.survival.inventories.masterbook.NickHomeInput;
-import net.pgfmc.survival.teleport.Back;
-import net.pgfmc.survival.teleport.home.DelHome;
-import net.pgfmc.survival.teleport.home.Home;
-import net.pgfmc.survival.teleport.home.Homes;
-import net.pgfmc.survival.teleport.home.SetHome;
-import net.pgfmc.survival.teleport.tpa.TpHereRequest;
-import net.pgfmc.survival.teleport.tpa.TpRequest;
-import net.pgfmc.survival.teleport.warp.DelWarp;
-import net.pgfmc.survival.teleport.warp.SetWarp;
-import net.pgfmc.survival.teleport.warp.Warp;
-import net.pgfmc.survival.teleport.warp.Warps;
+import net.pgfmc.survival.cmd.Afk;
+import net.pgfmc.survival.cmd.Back;
+import net.pgfmc.survival.cmd.GiveLodestoneCommand;
+import net.pgfmc.survival.cmd.PvpToggle;
+import net.pgfmc.survival.cmd.donator.Craft;
+import net.pgfmc.survival.cmd.donator.Echest;
+import net.pgfmc.survival.cmd.home.DelHome;
+import net.pgfmc.survival.cmd.home.Home;
+import net.pgfmc.survival.cmd.home.Homes;
+import net.pgfmc.survival.cmd.home.SetHome;
+import net.pgfmc.survival.cmd.tpa.TpHereRequest;
+import net.pgfmc.survival.cmd.tpa.TpRequest;
+import net.pgfmc.survival.cmd.warp.DelWarp;
+import net.pgfmc.survival.cmd.warp.SetWarp;
+import net.pgfmc.survival.cmd.warp.Warp;
+import net.pgfmc.survival.cmd.warp.Warps;
+import net.pgfmc.survival.masterbook.MasterbookBook;
+import net.pgfmc.survival.masterbook.MasterbookInput;
+import net.pgfmc.survival.masterbook.cmd.Masterbook;
 
 public class Main extends JavaPlugin {
 	
@@ -45,14 +45,14 @@ public class Main extends JavaPlugin {
 		new DelHome("delhome");
 		new Homes("homes");
 		
-		new HelpCommand("commands");
+		new Masterbook("commands");
 		new GiveLodestoneCommand("getClaim");
 		
 		new PvpToggle();
 		
 		
-		getServer().getPluginManager().registerEvents(new NickHomeInput(), this);
-		getServer().getPluginManager().registerEvents(new BookClick(), this);
+		getServer().getPluginManager().registerEvents(new MasterbookInput(), this);
+		getServer().getPluginManager().registerEvents(new MasterbookBook(), this);
 		
 		getServer().getPluginManager().registerEvents(new Afk(), this);
 		getServer().getPluginManager().registerEvents(new ItemProtect(), this);

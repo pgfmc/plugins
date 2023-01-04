@@ -9,8 +9,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 
-import net.pgfmc.core.file.Configify;
-import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.files.Configify;
 import net.pgfmc.modtools.Main;
 
 public class DatedInventory extends Configify {

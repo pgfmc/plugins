@@ -9,11 +9,15 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import net.pgfmc.core.inventoryapi.BaseInventory;
-import net.pgfmc.core.inventoryapi.ConfirmInventory;
-import net.pgfmc.core.inventoryapi.ListInventory;
-import net.pgfmc.core.inventoryapi.extra.Butto;
-import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.claims.ownable.block.ClaimConfigInventory.AddPlayerConfirm;
+import net.pgfmc.claims.ownable.block.ClaimConfigInventory.PlayerAddInventory;
+import net.pgfmc.claims.ownable.block.ClaimConfigInventory.PlayerViewInventory;
+import net.pgfmc.claims.ownable.block.ClaimConfigInventory.RemovePlayerInventory;
+import net.pgfmc.core.api.inventory.BaseInventory;
+import net.pgfmc.core.api.inventory.ConfirmInventory;
+import net.pgfmc.core.api.inventory.ListInventory;
+import net.pgfmc.core.api.inventory.extra.Butto;
+import net.pgfmc.core.api.playerdata.PlayerData;
 
 public class ClaimConfigInventory extends BaseInventory {
 	
@@ -21,17 +25,17 @@ public class ClaimConfigInventory extends BaseInventory {
 		super(27, "Claim Settings");
 		
 		
-		setItem(0, Material.FEATHER).n("back");
+		setItem(0, Material.FEATHER).n("§r§7Back");
 		setAction(0, (p, e) -> {
 			p.closeInventory();
 		});
 		
-		setItem(11, Material.BOOK).n("Members");
+		setItem(11, Material.BOOK).n("§r§7Members");
 		setAction(11, (p, e) -> {
 			p.openInventory(new PlayerViewInventory(claim).getInventory());
 		});
 		
-		setItem(15, Material.PLAYER_HEAD).n("Add member");
+		setItem(15, Material.PLAYER_HEAD).n("§r§7Add member");
 		setAction(15, (p,e) -> {
 			p.openInventory(new PlayerAddInventory(claim).getInventory());
 		});
@@ -45,7 +49,7 @@ public class ClaimConfigInventory extends BaseInventory {
 			super(27, "Allowed Players");
 			this.claim = claim;
 			
-			setItem(0, Material.FEATHER).n("back");
+			setItem(0, Material.FEATHER).n("§r§7Back");
 			setAction(0, (p, e) -> {
 				p.openInventory(new ClaimConfigInventory(claim).getInventory());
 			});
@@ -102,7 +106,7 @@ public class ClaimConfigInventory extends BaseInventory {
 			super(27, "Add Players");
 			this.claim = claim;
 			
-			setItem(0, Material.FEATHER).n("back");
+			setItem(0, Material.FEATHER).n("§r§7Back");
 			setAction(0, (p, e) -> {
 				p.openInventory(new ClaimConfigInventory(claim).getInventory());
 			});

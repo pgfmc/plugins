@@ -12,11 +12,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
+import net.md_5.bungee.api.ChatColor;
 import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.Claim.Security;
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
-import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.Vector4;
 
 public class EntityEvents implements Listener {
@@ -68,7 +69,7 @@ public class EntityEvents implements Listener {
 			Security access = claim.getAccess(pd);
 			
 			if (access == Security.BLOCKED) {
-				pd.sendMessage("§cThis land is claimed!");
+				pd.sendMessage(ChatColor.RED + "This land is claimed!");
 				e.setCancelled(true);
 				return;
 			}

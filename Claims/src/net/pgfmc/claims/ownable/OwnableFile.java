@@ -16,7 +16,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import net.pgfmc.claims.Main;
 import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
-import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.Vector4;
 
 

@@ -4,7 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.modtools.commands.rollback.api.PlayerInventorySaver;
 
 public class UndoRollbackInventory {
