@@ -5,8 +5,8 @@ import java.util.List;
 import org.bukkit.ChatColor;
 
 import net.pgfmc.claims.ownable.block.Claim;
-import net.pgfmc.core.cmd.base.PlayerCommand;
-import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.commands.PlayerCommand;
 
 /**
  * Command that allows data for Ownables to be changed.
