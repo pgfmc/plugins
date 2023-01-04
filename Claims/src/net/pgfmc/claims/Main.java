@@ -19,8 +19,8 @@ import net.pgfmc.claims.ownable.entities.TameEvent;
 import net.pgfmc.claims.ownable.inspector.ClaimTPCommand;
 import net.pgfmc.claims.ownable.inspector.EditOwnableCommand;
 import net.pgfmc.claims.ownable.inspector.InspectCommand;
-import net.pgfmc.core.file.Mixins;
-import net.pgfmc.core.playerdataAPI.PlayerDataManager;
+import net.pgfmc.core.api.playerdata.PlayerDataManager;
+import net.pgfmc.core.util.files.Mixins;
 
 public class Main extends JavaPlugin {
 	

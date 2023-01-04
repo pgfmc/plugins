@@ -17,7 +17,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.util.Vector;
 
 import net.pgfmc.core.CoreMain;
-import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.api.playerdata.PlayerData;
 
 /**
  * Prevents other players from picking up someone else's items on death.

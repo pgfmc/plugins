@@ -13,8 +13,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import net.pgfmc.core.CoreMain;
-import net.pgfmc.core.chat.Profanity;
-import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.Profanity;
 
 public class Nick implements CommandExecutor {
 
@@ -145,14 +145,14 @@ public class Nick implements CommandExecutor {
 		 */
 		for (OfflinePlayer op2 : Bukkit.getOfflinePlayers())
 		{
-			String raw2 = raw.toLowerCase();
-			if (raw2.equals(pd.getName().toLowerCase())) { break; }
+			String rawLowercase = raw.toLowerCase();
+			if (rawLowercase.equals(pd.getName().toLowerCase())) break;
 			
-			if (op2.getUniqueId().equals(pd.getUniqueId())) { continue; }
+			if (PlayerData.from(op2) == null || op2.getUniqueId().equals(pd.getUniqueId())) continue;
 			
-			if (op2.getName().toLowerCase().equals(raw2) || removeCodes(
+			if (op2.getName().toLowerCase().equals(rawLowercase) || removeCodes(
 					((String) Optional.ofNullable(PlayerData.getData(op2, "nick")).orElse(""))).toLowerCase()
-					.equals(raw2))
+					.equals(rawLowercase))
 			{
 				p.sendMessage("§cYou cannot have the same name as another player!");
 				return;

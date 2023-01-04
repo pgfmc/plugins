@@ -3,10 +3,10 @@ package net.pgfmc.core.cmd;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-import net.pgfmc.core.cmd.base.PlayerArg1Cmd;
-import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.commands.PlayerPlayerArgumentCommand;
 
-public class RealName extends PlayerArg1Cmd {
+public class RealName extends PlayerPlayerArgumentCommand {
 
 	public RealName(String name) {
 		super(name);
