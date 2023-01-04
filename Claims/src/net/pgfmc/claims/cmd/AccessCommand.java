@@ -2,8 +2,8 @@ package net.pgfmc.claims.cmd;
 
 import java.util.List;
 
-import net.pgfmc.core.cmd.base.PlayerCommand;
-import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.commands.PlayerCommand;
 
 public class AccessCommand extends PlayerCommand {
 

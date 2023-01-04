@@ -9,33 +9,33 @@ import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerLoadEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import net.coreprotect.CoreProtect;
+import net.coreprotect.CoreProtectAPI;
 import net.luckperms.api.LuckPerms;
+import net.pgfmc.core.api.inventory.extra.InventoryPressEvent;
+import net.pgfmc.core.api.playerdata.PlayerDataManager;
+import net.pgfmc.core.api.playerdata.cmd.DumpCommand;
+import net.pgfmc.core.api.playerdata.cmd.PlayerDataSetCommand;
+import net.pgfmc.core.api.playerdata.cmd.TagCommand;
+import net.pgfmc.core.api.request.RequestEvents;
+import net.pgfmc.core.api.teleport.SpawnProtect;
+import net.pgfmc.core.bot.Bot;
 import net.pgfmc.core.cmd.RealName;
 import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.cmd.donator.Nick;
-import net.pgfmc.core.file.Configify;
-import net.pgfmc.core.file.Mixins;
-import net.pgfmc.core.file.ReloadConfigify;
-import net.pgfmc.core.inventoryapi.extra.InventoryPressEvent;
-import net.pgfmc.core.permissions.Roles;
-import net.pgfmc.core.playerdataAPI.PlayerDataManager;
-import net.pgfmc.core.playerdataAPI.cmd.DumpCommand;
-import net.pgfmc.core.playerdataAPI.cmd.PlayerDataSetCommand;
-import net.pgfmc.core.playerdataAPI.cmd.TagCommand;
-import net.pgfmc.core.requests.RequestEvents;
-import net.pgfmc.core.restart.RestartManager;
-import net.pgfmc.core.teleportapi.SpawnProtect;
+import net.pgfmc.core.util.files.Configify;
+import net.pgfmc.core.util.files.Mixins;
+import net.pgfmc.core.util.files.ReloadConfigify;
 
 /**
  * @author bk and CrimsonDart
  */
-public class CoreMain extends JavaPlugin implements Listener {
+public class CoreMain extends JavaPlugin {
 	
 	public static String configPath;
 	public static String PlayerDataPath;
@@ -51,15 +51,13 @@ public class CoreMain extends JavaPlugin implements Listener {
 	
 	public static LuckPerms luckPermsAPI;
 	
+	private Bot BOT;
+	
 	public enum PGFPlugin {
-		BACKUP,
-		BOT,
 		CLAIMS,
 		CORE,
-		MASTERBOOK,
 		MODTOOLS,
-		SURVIVAL,
-		TELEPORT;
+		SURVIVAL;
 		
 		private boolean enabled = true;
 		
@@ -80,7 +78,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		
 		public Plugin getPlugin()
 		{
-			return Bukkit.getPluginManager().getPlugin("PGF-" + this.name().toUpperCase().substring(0, 1) + this.name().toLowerCase().substring(1));
+			return Bukkit.getPluginManager().getPlugin("PGF-" + name().toUpperCase().substring(0, 1) + name().toLowerCase().substring(1));
 		}
 	}
 	
@@ -164,23 +162,28 @@ public class CoreMain extends JavaPlugin implements Listener {
 		new TagCommand();
 		new PlayerDataSetCommand();
 		
-		getServer().getPluginManager().registerEvents(this, this);
-		
 		getServer().getPluginManager().registerEvents(new InventoryPressEvent(), this);
 		getServer().getPluginManager().registerEvents(new PlayerDataManager(), this);
 		getServer().getPluginManager().registerEvents(new SpawnProtect(), this);
 		getServer().getPluginManager().registerEvents(new RequestEvents(), this);
-		getServer().getPluginManager().registerEvents(new Roles(), this);
 		
 		new RestartManager();
+		
+		Plugin pluginCoreProtect = plugin.getServer().getPluginManager().getPlugin("CoreProtect");
+		CoreProtectAPI coreProtectAPI = ((CoreProtect) pluginCoreProtect).getAPI();
+		
+		if (coreProtectAPI != null) { coreProtectAPI.performPurge(1209600); } // 14 days in seconds
+		
+		BOT = new Bot();
+		
 	}
 	
 	@Override
 	public void onDisable() {
+		BOT.shutdown();
 		PlayerDataManager.saveQ();
 		Configify.disableConfigify();
 	}
-	
 	
 	@EventHandler
 	public void onLoad(ServerLoadEvent e) {
@@ -188,5 +191,5 @@ public class CoreMain extends JavaPlugin implements Listener {
 		
 		Configify.enableConfigify();
 	}
+	
 }
-
