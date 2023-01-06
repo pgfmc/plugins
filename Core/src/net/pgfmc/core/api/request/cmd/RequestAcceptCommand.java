@@ -31,7 +31,7 @@ public class RequestAcceptCommand extends PlayerCommand {
 			return list;
 		} else  {
 			for (Request r : set) {
-				list.add(r.asker.getDisplayNameRaw());
+				list.add(r.asker.getName());
 			}
 		}
 		
@@ -68,7 +68,7 @@ public class RequestAcceptCommand extends PlayerCommand {
 			
 		} else {
 			for (Request r : set) {
-				pd.sendMessage("§c" + rt.name + " Request from " + r.asker.getDisplayNameRaw() + ".");
+				pd.sendMessage("§c" + rt.name + " Request from " + r.asker.getName() + ".");
 			}
 			pd.sendMessage("§6Use §b/" + alias + " <name> §6to pick a Request.");
 		}

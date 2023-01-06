@@ -18,8 +18,14 @@ public class Link {
 		e.deferReply().queue(); // "Thinking..."
 		
 		User user = e.getUser();
-		String input = e.getOption("code").getAsString();
+		String input = (e.getOption("code").getAsString() + "0000").substring(0, 4);
 		Bukkit.getLogger().warning("Account linking: Input code is " + input);
+		
+		if (input.equals("0000"))
+		{
+			e.getHook().sendMessage("Invalid link code.").queue();
+			return;
+		}
 		
 		PlayerData pdMatch = null; // the playerdata that has the code match.
 		

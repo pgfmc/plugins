@@ -29,7 +29,7 @@ public class Masterbook extends PlayerCommand {
 		Player p = pd.getPlayer();
 		
 		p.closeInventory();
-		p.openInventory(new MasterbookInventory(PlayerData.from(p)).getInventory());
+		p.openInventory(new MasterbookInventory(pd).getInventory());
 		
 		return true;
 	}

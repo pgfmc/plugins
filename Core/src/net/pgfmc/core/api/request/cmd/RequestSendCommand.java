@@ -53,15 +53,15 @@ public class RequestSendCommand extends PlayerCommand {
 				for (PlayerData pds : PlayerData.getPlayerDataSet(x -> x.isOnline())) {
 					if (pds == pd) continue;
 					
-					if (pds.getDisplayNameRaw().startsWith(args[0])) {
-						list.add(pds.getDisplayNameRaw());
+					if (pds.getName().startsWith(args[0])) {
+						list.add(pds.getName());
 					}
 				}
 			} else {
 				for (PlayerData pds : PlayerData.getPlayerDataSet()) {
 					if (pds == pd) continue;
-					if (pds.getDisplayNameRaw().startsWith(args[0])) {
-						list.add(pds.getDisplayNameRaw());
+					if (pds.getName().startsWith(args[0])) {
+						list.add(pds.getName());
 					}
 				}
 			}

@@ -1,9 +1,5 @@
 package net.pgfmc.core.cmd.donator;
 
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -27,58 +23,9 @@ public class Nick implements CommandExecutor {
 			return true;
 		}
 		
-		if (args.length == 0)
-		{
-			return false;
-		}
-		
 		setNick((Player) sender, args);
 		
 		return true;
-	}
-	
-	
-	/**
-	 * Removes the color codes and formatting codes
-	 * from the String
-	 * 
-	 * @param nick String to remove codes from
-	 * @return a "raw" form of "nick", no codes
-	 */
-	public static String removeCodes(String nick)
-	{
-		return ChatColor.stripColor(nick.replace('&', '§'));
-	}
-	/**
-	 * This prevents a player from
-	 * having the same name/nickname as another player
-	 * 
-	 * @param p The sus player
-	 * @return The name to use with color codes
-	 */
-	public static void removeImpostors(PlayerData pd)
-	{
-		// The nickname without color codes
-		String nick = pd.getData("nick");
-		if (nick == null) return;
-		
-		String raw = removeCodes(nick).toLowerCase();
-		
-		// If their raw nickname is just their player name, ignore
-		if (raw.equals(pd.getName().toLowerCase())) return;
-		
-		// If op isn't pd, if op's name is pd's nickname with or without color codes
-		if (Arrays.asList(Bukkit.getOfflinePlayers()).stream()
-				.filter(op -> !op.getUniqueId().equals(pd.getUniqueId()) && (
-						op.getName().toLowerCase().equals(raw)
-							|| removeCodes(((String) Optional.ofNullable(PlayerData.getData(op, "nick"))
-									.orElse(op.getName()))).toLowerCase().equals(raw)
-						)).collect(Collectors.toList()).size() == 0) return; // If list is empty (no impostors)
-		
-		Bukkit.getLogger().info("Found impostor for " + pd.getName());
-		
-		// At least 1 impostor, remove nickname
-		pd.setData("nick", null).queue();
 	}
 	
 	/**
@@ -90,11 +37,12 @@ public class Nick implements CommandExecutor {
 	{
 		PlayerData pd = PlayerData.from(p);
 		
-		if (!p.hasPermission("pgf.cmd.donator.nick"))
+		if (!pd.hasPermission("pgf.cmd.donator.nick"))
 		{
-			p.sendMessage("§cYou do not have permission to use this command.");
+			pd.sendMessage("§cYou do not have permission to use this command.");
 			return;
 		}
+		
 		nick = nick.replaceAll("[^A-Za-z0-9&]", "")
 				.replace("&k", "")
 				.replace("&m", "")
@@ -102,7 +50,7 @@ public class Nick implements CommandExecutor {
 				.replace("&n", "")
 				.replace("&l", "")
 				.replace("&r", "");
-		String raw = removeCodes(nick);
+		String raw = ChatColor.stripColor(nick.replace('&', '§'));
 		
 		if (Profanity.hasProfanity(raw))
 		{
@@ -132,7 +80,7 @@ public class Nick implements CommandExecutor {
 		 * If the raw nickname is "off" or "reset" or the player's name
 		 * then it will reset the nickname to Player.getName()
 		 */
-		if (raw.equals("off") || raw.equals("reset") || nick.equals(p.getName()))
+		if (raw.equals("off") || raw.equals("reset") || nick.equals(p.getName()) || nick.equals(""))
 		{
 			pd.setData("nick", null).queue();
 			p.sendMessage("§6Nickname changed to " + pd.getRankedName() + "§6!");
@@ -140,29 +88,9 @@ public class Nick implements CommandExecutor {
 			return;
 		}
 		
-		/*
-		 * No impostors, check removeImpostors() for comments
-		 */
-		for (OfflinePlayer op2 : Bukkit.getOfflinePlayers())
-		{
-			String rawLowercase = raw.toLowerCase();
-			if (rawLowercase.equals(pd.getName().toLowerCase())) break;
-			
-			if (PlayerData.from(op2) == null || op2.getUniqueId().equals(pd.getUniqueId())) continue;
-			
-			if (op2.getName().toLowerCase().equals(rawLowercase) || removeCodes(
-					((String) Optional.ofNullable(PlayerData.getData(op2, "nick")).orElse(""))).toLowerCase()
-					.equals(rawLowercase))
-			{
-				p.sendMessage("§cYou cannot have the same name as another player!");
-				return;
-			}
-		}
-		
 		pd.setData("nick", nick.replace("&", "§")).queue();
 		p.sendMessage("§6Nickname changed to " + pd.getRankedName() + "§6!");
 		
-		// p.setDisplayName(pd.getRankedName());
 		p.setPlayerListName(pd.getRankedName());
 		p.setCustomName(pd.getRankedName());
 		p.setCustomNameVisible(true);
@@ -179,20 +107,20 @@ public class Nick implements CommandExecutor {
 	
 	public static void setNick(Player p, String[] nick)
 	{
+		if (nick.length <= 0) setNick(p, "");
+		
 		setNick(p, String.join("", nick));
 	}
 	
 	public static String getNick(OfflinePlayer p)
 	{
-		if (p.getPlayer() != null && p.isOnline() && p.getPlayer().hasPermission("pgf.cmd.donator.nick"))
-		{
-			String nick = PlayerData.getData(p, "nick");
-			
-			if (nick != null) return "~" + nick;
-			
-		}
+		if (p.getPlayer() == null
+				|| !p.isOnline()
+				|| !p.getPlayer().hasPermission("pgf.cmd.donator.nick")
+				|| PlayerData.getData(p, "nick") == null) return p.getName();
 		
-		return p.getName();
+		return "~" + ((String) PlayerData.getData(p, "nick"));
+			
 	}
 
 }

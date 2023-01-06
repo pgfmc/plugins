@@ -9,10 +9,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import net.pgfmc.claims.ownable.block.ClaimConfigInventory.AddPlayerConfirm;
-import net.pgfmc.claims.ownable.block.ClaimConfigInventory.PlayerAddInventory;
-import net.pgfmc.claims.ownable.block.ClaimConfigInventory.PlayerViewInventory;
-import net.pgfmc.claims.ownable.block.ClaimConfigInventory.RemovePlayerInventory;
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.inventory.ConfirmInventory;
 import net.pgfmc.core.api.inventory.ListInventory;

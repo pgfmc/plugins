@@ -117,7 +117,7 @@ public class TagCommand extends CommandBase {
 		if (args.length == 1) {
 			
 			for (PlayerData pd : PlayerData.getPlayerDataSet()) {
-				String name = pd.getDisplayNameRaw();
+				String name = pd.getName();
 				
 				if (name.startsWith(args[0])) {
 					list.add(name);

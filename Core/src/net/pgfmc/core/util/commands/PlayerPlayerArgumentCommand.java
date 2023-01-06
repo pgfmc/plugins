@@ -28,7 +28,7 @@ public abstract class PlayerPlayerArgumentCommand extends CommandBase {
 		if (args.length != 1) return null;
 		
 		return PlayerData.getPlayerDataSet(x -> playerPredicate(x)).stream()
-				.map(x -> x.getDisplayNameRaw())
+				.map(x -> x.getName())
 				.collect(Collectors.toList());
 	}
 	
