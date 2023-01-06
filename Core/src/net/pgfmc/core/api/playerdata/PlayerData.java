@@ -13,6 +13,7 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -20,6 +21,7 @@ import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.cmd.donator.Nick;
 import net.pgfmc.core.util.files.Mixins;
 import net.pgfmc.core.util.roles.PGFRole;
+import net.pgfmc.core.util.roles.Roles;
 
 /**
  * stores dynamic, temporary and non-temporary data for each player.
@@ -70,6 +72,8 @@ public final class PlayerData extends AbstractPlayerData {
 	 * @return The Player's PlayerData class.
 	 */
 	public static PlayerData from(OfflinePlayer p) { // gets a player's playerdata.
+		if (p == null) return null;
+		
 		return from(p.getUniqueId());
 	}
 	
@@ -89,18 +93,19 @@ public final class PlayerData extends AbstractPlayerData {
 	}
 	
 	/**
-	 * Gets a player's PlayerData class.
-	 * @param name The player's Minecraft Username, or Nickname.
-	 * @return The player's PlayerData.
+	 * Deprecated; Use UUID
+	 * Gets a PlayerData from a player's real name.s
+	 * @param name The player's real name
+	 * @return PlayerData, null if no matches
 	 */
-	public static PlayerData from(String name) {
-		for (PlayerData uid : instances) {
-			name = name.toLowerCase();
-			if (uid.getName().toLowerCase().equals(name) || uid.getDisplayNameRaw().toLowerCase().equals(name)) {
-				return uid;
-			}
-		}
-		return null;
+	@Deprecated
+	public static PlayerData from(String name)
+	{
+		Set<PlayerData> nameMatches = PlayerData.getPlayerDataSet(pd -> pd.getName().toLowerCase().equals(name));
+		
+		if (nameMatches == null || nameMatches.isEmpty() || (PlayerData) nameMatches.toArray()[0] == null) return null;
+		
+		return (PlayerData) nameMatches.toArray()[0];
 	}
 	
 	public static PlayerData fromDiscordId(String discordUserId)
@@ -116,9 +121,7 @@ public final class PlayerData extends AbstractPlayerData {
 	// getters and setters
 	
 	// Has color, has staff diamond
-	public String getRankedName()
-	{
-		Nick.removeImpostors(this);
+	public String getRankedName() {
 		// Nick will be player's name if no permission
 		return getRankColor() + Nick.getNick(player);
 	}
@@ -126,13 +129,13 @@ public final class PlayerData extends AbstractPlayerData {
 	// No color, has staff diamond
 	public String getDisplayName()
 	{
-		return Nick.removeCodes(getRankedName());
+		return ChatColor.stripColor(getRankedName());
 	}
 	
 	// No color, no staff diamond
 	public String getDisplayNameRaw()
 	{
-		return Nick.removeCodes(getDisplayName()).replaceAll("[^A-Za-z0-9]", "");
+		return ChatColor.stripColor(getDisplayName()).replaceAll(new String(Character.toChars(0x2726)), "");
 	}
 	
 	@Override
@@ -154,7 +157,7 @@ public final class PlayerData extends AbstractPlayerData {
 	 * @return The player's role prefix.
 	 */
 	public String getRankColor() {		
-		return ((PGFRole) Optional.ofNullable(getData("role")).orElse(PGFRole.MEMBER)).getColor();
+		return Roles.getTop(this).getColor();
 	}
 	
 	public void setDebug(boolean d) {

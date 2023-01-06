@@ -1,5 +1,5 @@
 name: PGF-Core
-version: 6.2.0
+version: 7.0.0
 api-version: 1.19
 authors: [bk, CrimsonDart]
 website: play.pgfmc.net
@@ -27,11 +27,6 @@ commands:
     usage: /<command>
     description: Master commands for PGF
     permission: pgf.admin.pgf
-  realname:
-    usage: /<command> [player]
-    description: Get the real name of a nicked player
-    aliases: [rn]
-    permission: pgf.cmd.realname
   dump:
     usage: /<command> [player]
     description: dumps all playerdata to the sender
