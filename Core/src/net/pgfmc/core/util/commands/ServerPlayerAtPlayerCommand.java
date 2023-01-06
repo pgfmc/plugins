@@ -15,7 +15,7 @@ public abstract class ServerPlayerAtPlayerCommand extends PlayerCommand {
 	public List<String> tabComplete(PlayerData sender, String alias, String[] args) {
 		
 		return PlayerData.getPlayerDataSet(x -> playerPredicate(x, sender)).stream()
-				.map(x -> x.getDisplayNameRaw())
+				.map(x -> x.getName())
 				.collect(Collectors.toList());
 	}
 

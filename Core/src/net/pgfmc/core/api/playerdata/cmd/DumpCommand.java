@@ -22,13 +22,13 @@ public class DumpCommand extends CommandBase {
 		
 		if (args.length == 0) {
 			for (PlayerData pd : PlayerData.getPlayerDataSet()) {
-				list.add(pd.getDisplayNameRaw());
+				list.add(pd.getName());
 			}
 			
 		} else if (args.length == 1) {
 			
 			for (PlayerData pd : PlayerData.getPlayerDataSet()) {
-				String arg = pd.getDisplayNameRaw();
+				String arg = pd.getName();
 				if (arg.startsWith(args[0])) {
 					list.add(arg);
 				}
@@ -48,7 +48,8 @@ public class DumpCommand extends CommandBase {
 		
 		PlayerData pd = PlayerData.from(args[0]);
 		
-		if (pd == null) {
+		if (pd == null)
+		{
 			sender.sendMessage("§cPlease enter a valid player.");
 			return true;
 		}
@@ -73,8 +74,8 @@ public class DumpCommand extends CommandBase {
 		
 		int iit = 0;
 		String list = "§d";
-		for (String tag : tags) {
-			
+		for (String tag : tags)
+		{
 			list = list + tag;
 			
 			if (length -1 == iit) {
@@ -95,4 +96,5 @@ public class DumpCommand extends CommandBase {
 		
 		return true;
 	}
+	
 }

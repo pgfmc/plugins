@@ -13,7 +13,6 @@ import net.pgfmc.core.util.commands.ServerPlayerAtPlayerCommand;
 
 public class Skull extends ServerPlayerAtPlayerCommand {
 
-	
 	public Skull(String name) {
 		super(name);
 	}
@@ -22,7 +21,6 @@ public class Skull extends ServerPlayerAtPlayerCommand {
 	public boolean execute(PlayerData pd, String alias, PlayerData arg) {
 		pd.getPlayer().getInventory().addItem(getHead(arg.getUniqueId(), null));
 		return true;
-
 	}
 	
 	@Override
@@ -49,4 +47,5 @@ public class Skull extends ServerPlayerAtPlayerCommand {
 		
 		return item;
 	}
+	
 }

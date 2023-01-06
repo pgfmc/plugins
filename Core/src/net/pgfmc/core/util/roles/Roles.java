@@ -126,12 +126,4 @@ public class Roles implements Listener {
 		setRole(pd);
 	}
 	
-	@EventHandler
-	public void onCommandSend(PlayerCommandSendEvent e)
-	{
-		PlayerData pd = PlayerData.from(e.getPlayer());
-		
-		setRole(pd);
-	}
-	
 }
