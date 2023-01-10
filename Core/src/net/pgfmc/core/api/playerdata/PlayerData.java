@@ -18,10 +18,8 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import net.pgfmc.core.CoreMain;
-import net.pgfmc.core.cmd.donator.Nick;
 import net.pgfmc.core.util.files.Mixins;
 import net.pgfmc.core.util.roles.PGFRole;
-import net.pgfmc.core.util.roles.Roles;
 
 /**
  * stores dynamic, temporary and non-temporary data for each player.
@@ -123,19 +121,28 @@ public final class PlayerData extends AbstractPlayerData {
 	// Has color, has staff diamond
 	public String getRankedName() {
 		// Nick will be player's name if no permission
-		return getRankColor() + Nick.getNick(player);
+		return  getRole().getColor(true) + Optional.ofNullable(getData("nick"))
+														.orElse(getName());
 	}
 	
 	// No color, has staff diamond
-	public String getDisplayName()
+	public String getRankedNameRaw()
 	{
-		return ChatColor.stripColor(getRankedName());
+		return ChatColor.stripColor(getRole().getColor(true)) + getDisplayName();
 	}
 	
 	// No color, no staff diamond
-	public String getDisplayNameRaw()
+	public String getDisplayName()
 	{
-		return ChatColor.stripColor(getDisplayName()).replaceAll(new String(Character.toChars(0x2726)), "");
+		if (!hasPermission("pgf.cmd.donator.nick")) return getName();
+		
+		return ChatColor.stripColor((String) Optional.ofNullable(getData("nick"))
+													.orElse(getName()));
+		
+	}
+	
+	public PGFRole getRole() {
+		return (PGFRole) Optional.ofNullable(getData("role")).orElse(PGFRole.MEMBER);
 	}
 	
 	@Override
@@ -150,14 +157,6 @@ public final class PlayerData extends AbstractPlayerData {
 	
 	public boolean equals(PlayerData o) {
 		return o.getUniqueId().toString().equals(getUniqueId().toString());
-	}
-	
-	/**
-	 * Gets the Player's Role prefix.
-	 * @return The player's role prefix.
-	 */
-	public String getRankColor() {		
-		return Roles.getTop(this).getColor();
 	}
 	
 	public void setDebug(boolean d) {

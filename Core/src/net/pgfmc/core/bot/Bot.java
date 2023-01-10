@@ -52,7 +52,7 @@ public class Bot {
 		
 		Bukkit.getServer().getOnlinePlayers().stream()
 		.forEach(player -> {
-			builder.append("<:LEAVE:905682349239463957> " + PlayerData.from(player).getDisplayName() + "\n");
+			builder.append("<:LEAVE:905682349239463957> " + PlayerData.from(player).getRankedNameRaw() + "\n");
 		});
 		
 		Discord.sendMessage(builder.toString()).queue();

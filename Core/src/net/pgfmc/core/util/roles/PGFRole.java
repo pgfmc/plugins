@@ -15,6 +15,7 @@ public enum PGFRole {
 	MEMBER("6");
 	
 	private String color;
+	public static String STAFF_DIAMOND = new String(Character.toChars(0x2726));
 	
 	PGFRole(String color)
 	{
@@ -28,15 +29,12 @@ public enum PGFRole {
 		
 	}
 	
-	public String getColor() {
+	public String getColor(boolean hasStaffDiamond) {
 		// 0x2726 is the staff star Unicode
 		
-		if (this.compareTo(STAFF) <= 0)
-		{
-			return ChatColor.COLOR_CHAR + color + new String(Character.toChars(0x2726));
-		}
+		if (!hasStaffDiamond || compareTo(STAFF) > 0) return ChatColor.COLOR_CHAR + color;
 		
-		return ChatColor.COLOR_CHAR + color;
+		return ChatColor.COLOR_CHAR + color + STAFF_DIAMOND;
 		
 	}
 	

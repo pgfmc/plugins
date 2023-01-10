@@ -71,7 +71,7 @@ public class MessageHandler {
 		} else
 		if (type == SenderType.MINECRAFT)
 		{			
-			Discord.sendMessage(PlayerData.from(player).getDisplayName() + " -> " + message).queue();
+			Discord.sendMessage(PlayerData.from(player).getRankedNameRaw() + " -> " + message).queue();
 		}
 		
 	}
