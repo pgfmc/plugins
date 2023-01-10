@@ -21,7 +21,7 @@ import net.pgfmc.survival.cmd.warp.SetWarp;
 import net.pgfmc.survival.cmd.warp.Warp;
 import net.pgfmc.survival.cmd.warp.Warps;
 import net.pgfmc.survival.masterbook.MasterbookBook;
-import net.pgfmc.survival.masterbook.MasterbookInput;
+import net.pgfmc.survival.masterbook.NicknameInput;
 import net.pgfmc.survival.masterbook.cmd.Masterbook;
 
 public class Main extends JavaPlugin {
@@ -51,7 +51,7 @@ public class Main extends JavaPlugin {
 		new PvpToggle();
 		
 		
-		getServer().getPluginManager().registerEvents(new MasterbookInput(), this);
+		getServer().getPluginManager().registerEvents(new NicknameInput(), this);
 		getServer().getPluginManager().registerEvents(new MasterbookBook(), this);
 		
 		getServer().getPluginManager().registerEvents(new Afk(), this);

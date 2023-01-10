@@ -1,13 +1,12 @@
 package net.pgfmc.core.cmd.donator;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import net.md_5.bungee.api.ChatColor;
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.Profanity;
@@ -19,108 +18,88 @@ public class Nick implements CommandExecutor {
 		
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage(ChatColor.RED + "Only players can execute this command.");
 			return true;
 		}
 		
-		setNick((Player) sender, args);
+		if (args.length <= 0) return false;
 		
-		return true;
-	}
-	
-	/**
-	 * Set a nickname to a player
-	 * @param p Player
-	 * @param nick Nickname
-	 */
-	public static void setNick(Player p, String nick)
-	{
+		if (String.join("", args) == null || String.join("", args).strip().equals(""))
+		{
+			sender.sendMessage(ChatColor.RED + "Invalid nickname: Invalid characters.");
+			return true;
+		}
+		
+		Player p = (Player) sender;
 		PlayerData pd = PlayerData.from(p);
 		
 		if (!pd.hasPermission("pgf.cmd.donator.nick"))
 		{
-			pd.sendMessage("§cYou do not have permission to use this command.");
-			return;
+			pd.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
+			return true;
 		}
 		
-		nick = nick.replaceAll("[^A-Za-z0-9&]", "")
-				.replace("&k", "")
-				.replace("&m", "")
-				.replace("&o", "")
-				.replace("&n", "")
-				.replace("&l", "")
-				.replace("&r", "");
-		String raw = ChatColor.stripColor(nick.replace('&', '§'));
+		String nickWithColor = "~" + String.join("", args).strip();
+		nickWithColor = ChatColor.translateAlternateColorCodes('&', nickWithColor);
+		nickWithColor = nickWithColor.replaceAll("[^A-Za-z0-9&]", "")
+				.replace(ChatColor.COLOR_CHAR + "k", "")
+				.replace(ChatColor.COLOR_CHAR + "m", "")
+				.replace(ChatColor.COLOR_CHAR + "o", "")
+				.replace(ChatColor.COLOR_CHAR + "n", "")
+				.replace(ChatColor.COLOR_CHAR + "l", "")
+				.replace(ChatColor.COLOR_CHAR + "r", "");
 		
-		if (Profanity.hasProfanity(raw))
+		String nickWithoutColor = ChatColor.stripColor(nickWithColor);
+		
+		if (Profanity.hasProfanity(nickWithoutColor))
 		{
-			p.sendMessage(ChatColor.RED + "Please do not include profanity!");
-			return;
+			p.sendMessage(ChatColor.RED + "Invalid nickname: Contains profanity!");
+			return true;
 		}
 		
 		/*
 		 * A raw length of 0 means the nickname had no content, just color codes (lmao)
 		 */
-		if (raw.length() <= 0)
+		if (nickWithoutColor.length() <= 0)
 		{
-			p.sendMessage("§cThe nickname must be more than just color codes!");
-			return;
+			p.sendMessage(ChatColor.RED + "Invalid nickname: Not long enough.");
+			return true;
 		}
 		
 		/*
 		 * The nickname without color codes must be less than 20 characters
 		 */
-		if (raw.length() > 20)
+		if (nickWithoutColor.length() > 21)
 		{
-			p.sendMessage("§cThe max nickname length is 20!");
-			return;
+			p.sendMessage(ChatColor.RED + "Invalid nickname: Too long.");
+			return true;
 		}
 		
 		/*
 		 * If the raw nickname is "off" or "reset" or the player's name
 		 * then it will reset the nickname to Player.getName()
 		 */
-		if (raw.equals("off") || raw.equals("reset") || nick.equals(p.getName()) || nick.equals(""))
+		if (nickWithoutColor.equals("off") || nickWithoutColor.equals("reset") || nickWithColor.equals(p.getName()) || nickWithColor.equals(""))
 		{
 			pd.setData("nick", null).queue();
-			p.sendMessage("§6Nickname changed to " + pd.getRankedName() + "§6!");
+			p.sendMessage(ChatColor.GOLD + "Nickname changed to " + pd.getRankedName() + ChatColor.GOLD + "!");
 			
-			return;
+			return true;
 		}
 		
-		pd.setData("nick", nick.replace("&", "§")).queue();
-		p.sendMessage("§6Nickname changed to " + pd.getRankedName() + "§6!");
+		pd.setData("nick", nickWithColor).queue();
+		p.sendMessage(ChatColor.GOLD + "Nickname changed to " + pd.getRankedName() + ChatColor.GOLD + "!");
 		
 		p.setPlayerListName(pd.getRankedName());
 		p.setCustomName(pd.getRankedName());
 		p.setCustomNameVisible(true);
 		
-		for (Player playerP : Bukkit.getOnlinePlayers()) {
-			if (playerP == p) continue;
-			p.hidePlayer(CoreMain.plugin, playerP);
-			p.showPlayer(CoreMain.plugin, playerP);
-		}
+		Bukkit.getOnlinePlayers().stream().forEach(player -> {
+			p.hidePlayer(CoreMain.plugin, player);
+			p.showPlayer(CoreMain.plugin, player);
+		});
 		
-		p.hidePlayer(CoreMain.plugin, p);
-		p.showPlayer(CoreMain.plugin, p);
-	}
-	
-	public static void setNick(Player p, String[] nick)
-	{
-		if (nick.length <= 0) setNick(p, "");
-		
-		setNick(p, String.join("", nick));
-	}
-	
-	public static String getNick(OfflinePlayer p)
-	{
-		if (p.getPlayer() == null
-				|| !p.isOnline()
-				|| !p.getPlayer().hasPermission("pgf.cmd.donator.nick")
-				|| PlayerData.getData(p, "nick") == null) return p.getName();
-		
-		return "~" + ((String) PlayerData.getData(p, "nick"));
-			
+		return true;
 	}
 
 }

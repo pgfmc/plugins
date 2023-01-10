@@ -158,7 +158,7 @@ public class ClaimConfigInventory extends BaseInventory {
 		PlayerData player;
 		
 		public AddPlayerConfirm(Claim claim, PlayerData player) {
-			super("Add " + player.getDisplayNameRaw() + "?", "Add Player", "Cancel");
+			super("Add " + player.getDisplayName() + "?", "Add Player", "Cancel");
 			this.claim = claim;
 			this.player = player;
 			
@@ -185,7 +185,7 @@ public class ClaimConfigInventory extends BaseInventory {
 		PlayerData player;
 		
 		public RemovePlayerInventory(Claim claim, PlayerData player) {
-			super("Remove " + player.getDisplayNameRaw() + "?", "Remove Player", "Cancel");
+			super("Remove " + player.getDisplayName() + "?", "Remove Player", "Cancel");
 			this.claim = claim;
 			this.player = player;
 		}
