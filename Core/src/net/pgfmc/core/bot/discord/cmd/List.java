@@ -13,7 +13,7 @@ public class List {
 	{
 		java.util.List<String> pl = Bukkit.getOnlinePlayers()
         		.stream()
-        		.map(p -> PlayerData.from(p).getDisplayName())
+        		.map(p -> PlayerData.from(p).getRankedNameRaw())
         		.collect(Collectors.toList());
         e.reply("Online players: " + pl).queue();
 	}
