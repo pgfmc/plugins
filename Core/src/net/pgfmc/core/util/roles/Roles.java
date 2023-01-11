@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
@@ -118,7 +118,7 @@ public class Roles implements Listener {
 	}
 	
 	@EventHandler
-	public void assignPlayerRoleOnLogin(PlayerLoginEvent e)
+	public void assignPlayerRoleOnJoin(PlayerJoinEvent e)
 	{
 		PlayerData pd = PlayerData.from(e.getPlayer());
 		

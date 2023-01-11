@@ -72,7 +72,7 @@ public class Discord extends ListenerAdapter {
 		JDA = builder
 		.setChunkingFilter(ChunkingFilter.ALL)
 		.setMemberCachePolicy(MemberCachePolicy.ALL)
-		.enableIntents(GatewayIntent.GUILD_MEMBERS).build();
+		.enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.MESSAGE_CONTENT).build();
 		
 		JDA.awaitReady();
 		

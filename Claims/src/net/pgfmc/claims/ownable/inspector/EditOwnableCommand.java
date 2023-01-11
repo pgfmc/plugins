@@ -42,6 +42,7 @@ public class EditOwnableCommand extends PlayerCommand {
 		} else if ("owner".equals(args[0])) {
 			
 			if (args.length > 1) {
+				@SuppressWarnings("deprecation")
 				PlayerData ope = PlayerData.from(args[1]);
 				if (ope != null) {
 					cache.setOwner(ope);

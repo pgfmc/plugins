@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.util.concurrent.TimeUnit;
 
+import net.pgfmc.startq.actions.Backup;
 import net.pgfmc.startq.actions.QuickFiles;
 import net.pgfmc.startq.actions.Update;
 
@@ -18,14 +19,12 @@ public class Main {
 		checkForServerJar();
 		
 		System.out.println("Working directory: " + WORKING_DIRECTORY);
-		System.out.println("Backup directory: " + BACKUP_DIRECTORY);
 		
-		//if (!BACKUP_DIRECTORY.equals("null")) new Backup(); // Runs first
+		if (!BACKUP_DIRECTORY.equals("null")) new Backup(); // Runs first
 		new QuickFiles(); // Runs second
 		try { new Update(); } catch (MalformedURLException e) { e.printStackTrace(); } // Runs third
 		
-		System.out.println("Done! Closing in 5 seconds...");
-		TimeUnit.SECONDS.sleep(5);
+		System.out.println("Done!");
 		
 		System.exit(0); // Turns the program off with no error code
 		

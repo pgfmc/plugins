@@ -16,7 +16,6 @@ public class RequestDenyCommand extends PlayerCommand {
 
 	public RequestDenyCommand(String name, RequestType rt) {
 		super(name);
-		System.out.println("1..");
 		this.rt = rt;
 	}
 

@@ -1,6 +1,7 @@
 package net.pgfmc.core;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Calendar;
@@ -43,6 +44,7 @@ import net.pgfmc.core.cmd.donator.Nick;
 import net.pgfmc.core.util.files.Configify;
 import net.pgfmc.core.util.files.Mixins;
 import net.pgfmc.core.util.files.ReloadConfigify;
+import net.pgfmc.core.util.roles.Roles;
 
 /**
  * @author bk and CrimsonDart
@@ -160,6 +162,8 @@ public class CoreMain extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new OnPlayerJoin(), this);
 		getServer().getPluginManager().registerEvents(new OnPlayerQuit(), this);
 		
+		getServer().getPluginManager().registerEvents(new Roles(), this);
+		
 		/**
 		 * Initialize classes
 		 */
@@ -205,7 +209,10 @@ public class CoreMain extends JavaPlugin {
 		restartDate.add(Calendar.HOUR, Math.abs(3 - now.get(Calendar.HOUR))); // Finds how many hours until 3 AM/PM then gets that Calendar
 		restartDate.setTimeZone(TimeZone.getDefault()); // ZonedDateTime from restart date and system's time zone
 		
-		long secondsUntilRestart = Duration.between(Instant.now(), restartDate.toInstant()).getSeconds();  // Calculate amount of time to wait until we run.
+		long secondsUntilRestartCountdown = Duration.between(Instant.now(), restartDate.toInstant()).getSeconds();  // Calculate amount of time to wait until we run.
+		
+		Bukkit.broadcastMessage("Restart date:" + new SimpleDateFormat("MMM dd, YYYY @ kkmm").format(restartDate));
+		
 		
 		Executors.newSingleThreadScheduledExecutor().schedule(new Runnable() {
 			
@@ -251,7 +258,7 @@ public class CoreMain extends JavaPlugin {
 				
 				}, 0, 20);
 				
-			}}, secondsUntilRestart, TimeUnit.SECONDS);
+			}}, secondsUntilRestartCountdown, TimeUnit.SECONDS);
 		
 	}
 	

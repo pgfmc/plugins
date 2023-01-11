@@ -18,6 +18,7 @@ public class Backup {
 	public Backup()
 	{
 		System.out.println("Starting Backup...");
+		System.out.println("Backup directory: " + PATH_DESTINATION);
 		
 		Zipper.zip(new File(PATH_SOURCE), new File(PATH_DESTINATION), DATE_FORMAT.format(new Date()) + ".zip");
 		
