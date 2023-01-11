@@ -1,5 +1,6 @@
 package net.pgfmc.core.bot.minecraft.listeners;
 
+import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -13,9 +14,9 @@ public class OnPlayerDeath implements Listener {
 	public void onDie(PlayerDeathEvent e) {
 		PlayerData pd = PlayerData.from(e.getEntity());
 		
-		e.setDeathMessage(e.getDeathMessage().replace(pd.getName(), pd.getRankedNameRaw()));
+		e.setDeathMessage(e.getDeathMessage().replace(pd.getName(), ChatColor.stripColor(pd.getRankedName())));
 		Discord.sendMessage("<:DEATH:907865162558636072> " + e.getDeathMessage()).queue();
-		e.setDeathMessage(e.getDeathMessage().replace(pd.getRankedNameRaw(), pd.getRankedName()));
+		e.setDeathMessage(e.getDeathMessage().replace(ChatColor.stripColor(pd.getRankedName()), pd.getRankedName()));
 		
 	}
 

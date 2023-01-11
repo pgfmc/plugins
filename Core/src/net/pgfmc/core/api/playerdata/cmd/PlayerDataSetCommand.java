@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bukkit.command.CommandSender;
 
+import net.md_5.bungee.api.ChatColor;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.commands.CommandBase;
 
@@ -23,51 +24,41 @@ public class PlayerDataSetCommand extends CommandBase {
 			return true;
 		}
 		
-		PlayerData pd = null;
-			
-		if (args.length >= 1) {
-			
-			pd = PlayerData.from(args[0]);
-			if (pd == null) {
-				sender.sendMessage("§cPlease enter a valid player.");
-				return true;
-				
-			} else if (args.length == 1) {
-				sender.sendMessage("§cPlease enter a key.");
-				return true;
-			}
+		if (args.length == 1)
+		{
+			sender.sendMessage("§cPlease enter a key.");
+			return true;
 		}
 		
-		String key = null;
-		
-		if (args.length >= 2) {
+		@SuppressWarnings("deprecation")
+		PlayerData pd = PlayerData.from(args[0]);
 			
-			key = args[1];
-			if (args.length == 2) {
-				sender.sendMessage("§cPlease enter a data value.");
-				return true;
-			}
+		if (pd == null) {
+			sender.sendMessage(ChatColor.RED + "Player not found.");
+			return true;
 		}
 		
-		String data = null;
-		
-		if (args.length >= 3) {
-			
-			data = args[2];
-			Object obj = pd.getData(key);
-			
-			if (data == "null") {
-				data = null;
-			}
-			
-			if (obj instanceof String) {
-				pd.setData(key, data);
-				sender.sendMessage("§aSet §b" + key + " §ato §d" + data + "§a.");
-				
-			} else {
-				sender.sendMessage("§cData wasn't a string, couldn't set.");
-			}
+		if (args.length == 2) {
+			sender.sendMessage("§cPlease enter a data value.");
+			return true;
 		}
+		
+		String key = args[1];
+		
+		String data = args[2];
+		Object obj = pd.getData(key);
+		
+		if (data == "null") {
+			data = null;
+		}
+		
+		if (!(obj instanceof String)) {
+			sender.sendMessage("§cData wasn't a string, couldn't set.");
+			return true;
+		}
+		
+		pd.setData(key, data);
+		sender.sendMessage("§aSet §b" + key + " §ato §d" + data + "§a.");
 		
 		return true;
 	}
@@ -89,6 +80,7 @@ public class PlayerDataSetCommand extends CommandBase {
 		
 		if (args.length == 2) {
 			
+			@SuppressWarnings("deprecation")
 			PlayerData pd = PlayerData.from(args[0]);
 			if (pd == null) return list;
 			

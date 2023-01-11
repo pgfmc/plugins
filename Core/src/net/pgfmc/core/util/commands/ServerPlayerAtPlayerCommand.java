@@ -27,6 +27,7 @@ public abstract class ServerPlayerAtPlayerCommand extends PlayerCommand {
 			return true;
 		}
 		
+		@SuppressWarnings("deprecation")
 		PlayerData pdarg = PlayerData.from(args[0]);
 		
 		if (pdarg == null) {
