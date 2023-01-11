@@ -38,7 +38,7 @@ public class EntityEvents implements Listener {
 			if (p.getGameMode() == GameMode.SURVIVAL) {
 				doStuff(e, PlayerData.from(p), entity);
 			}
-		} else {
+		} else if (e.getDamager() instanceof Projectile) {
 			Projectile proj = (Projectile) e.getDamager();
 			if (proj.getShooter() instanceof OfflinePlayer) {
 				
@@ -48,7 +48,7 @@ public class EntityEvents implements Listener {
 					doStuff(e, PlayerData.from(p), entity);
 				}
 			}
-		}
+		} else return;
 	}
 	
 	EnumSet<EntityType> protection = EnumSet.of(EntityType.ALLAY, EntityType.ARMOR_STAND, EntityType.AXOLOTL, EntityType.BAT, EntityType.BEE, EntityType.BOAT, EntityType.CAT, 
