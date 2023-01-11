@@ -24,6 +24,7 @@ public class RequestSendCommand extends PlayerCommand {
 			return true;
 		}
 		
+		@SuppressWarnings("deprecation")
 		PlayerData target = PlayerData.from(args[0]);
 		if (target == null) {
 			pd.sendMessage("§cPlayer not found");

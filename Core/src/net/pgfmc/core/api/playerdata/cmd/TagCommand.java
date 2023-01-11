@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.bukkit.command.CommandSender;
 
+import net.md_5.bungee.api.ChatColor;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.commands.CommandBase;
 
@@ -19,41 +20,42 @@ public class TagCommand extends CommandBase {
 	public boolean execute(CommandSender sender, String alias, String[] args) {
 		
 		if (args.length == 0) {
-			sender.sendMessage("§cPlease enter a player.");
+			sender.sendMessage(ChatColor.RED + "Please enter a player.");
 			return true;
 		}
 		
-		PlayerData pd = null;
+		@SuppressWarnings("deprecation")
+		PlayerData pd = PlayerData.from(args[0]);
 		
-		if (args.length >= 1) {
-			
-			pd = PlayerData.from(args[0]);
-			
-			if (pd == null) {
-				sender.sendMessage("§cPlease enter a valid player.");
-				return true;
-			}
+		if (pd == null) {
+			sender.sendMessage("§cPlease enter a valid player.");
+			return true;
 		}
 		
-		int action = 0;
-		
-		if (args.length >= 2) {
-			
-			String act = args[1];
-			
-			if (act.equals("add")) {
-				action = 1;
-			} else if (act.equals("remove")) {
-				action = 2;
-			} else if (act.equals("list")) {
-				action = 3;
-			} else {
-				sender.sendMessage("§cPlease enter §dadd§c, §dremove §cor §dlist§c.");
-				return true;
-			}
+		if (args.length == 1) {
+			sender.sendMessage(ChatColor.RED + "Please enter an action (add, remove, list).");
+			return true;
 		}
 		
-		if (action == 3) {
+		String action = args[1];
+		
+		if (args.length == 2 && (action.equals("add") || action.equals("remove")))
+		{
+			sender.sendMessage(ChatColor.RED + "Please enter a tag.");
+			return true;
+		}
+		
+		if (!action.equals("list"))
+		{
+			sender.sendMessage(ChatColor.RED + "Please enter "
+					+ ChatColor.LIGHT_PURPLE + "add" + ChatColor.RED + ", "
+					+ ChatColor.LIGHT_PURPLE + "remove " + ChatColor.RED + "or "
+					+ ChatColor.LIGHT_PURPLE + "list" + ChatColor.RED + ".");
+			
+			return true;
+		}
+		
+		if (action.equals("list")) {
 			
 			sender.sendMessage("§bListing all tags for " + pd.getRankedName());
 			
@@ -84,13 +86,9 @@ public class TagCommand extends CommandBase {
 			return true;
 		}
 		
-		if (!(args.length >= 3)) {
-			sender.sendMessage("§cPlease enter a tag.");
-			return true;
-		}
 		String tag = args[2];
 		
-		if (action == 1) {
+		if (action.equals("add")) {
 			if (pd.addTag(tag)) {
 				sender.sendMessage("§bAdded tag §d" + tag + " §bto §r" + pd.getRankedName() + "§b.");
 			} else {
@@ -98,7 +96,7 @@ public class TagCommand extends CommandBase {
 			}
 		} else
 		
-		if (action == 2) {
+		if (action.equals("remove")) {
 			if (pd.removeTag(tag)) {
 				sender.sendMessage("§cRemoved tag §d" + tag + " §cfrom §r" + pd.getRankedName() + "§c.");
 			} else {
@@ -109,6 +107,7 @@ public class TagCommand extends CommandBase {
 		return true;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public List<String> tabComplete(CommandSender sender, String alias, String[] args) {
 		

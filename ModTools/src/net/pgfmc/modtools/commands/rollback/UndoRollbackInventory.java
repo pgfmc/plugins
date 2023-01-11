@@ -13,6 +13,7 @@ public class UndoRollbackInventory {
 		
 		if (args.length < 2) return false;
 		
+		@SuppressWarnings("deprecation")
 		PlayerData target = PlayerData.from(args[1]);
 		
 		if (target == null)

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.bukkit.command.CommandSender;
 
+import net.md_5.bungee.api.ChatColor;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.commands.CommandBase;
 
@@ -46,11 +47,12 @@ public class DumpCommand extends CommandBase {
 			return true;
 		}
 		
+		@SuppressWarnings("deprecation")
 		PlayerData pd = PlayerData.from(args[0]);
 		
 		if (pd == null)
 		{
-			sender.sendMessage("§cPlease enter a valid player.");
+			sender.sendMessage(ChatColor.RED + "Player not found.");
 			return true;
 		}
 		

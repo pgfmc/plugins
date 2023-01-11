@@ -125,12 +125,6 @@ public final class PlayerData extends AbstractPlayerData {
 														.orElse(getName());
 	}
 	
-	// No color, has staff diamond
-	public String getRankedNameRaw()
-	{
-		return ChatColor.stripColor(getRole().getColor(true)) + getDisplayName();
-	}
-	
 	// No color, no staff diamond
 	public String getDisplayName()
 	{

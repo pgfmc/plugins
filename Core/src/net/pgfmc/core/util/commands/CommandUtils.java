@@ -13,6 +13,7 @@ public class CommandUtils {
 			return null;
 		}
 		
+		@SuppressWarnings("deprecation")
 		PlayerData pd = PlayerData.from(name);
 		
 		if (pd == null) {

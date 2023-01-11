@@ -1,6 +1,7 @@
 package net.pgfmc.core.bot;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.MessageHistory;
@@ -52,7 +53,7 @@ public class Bot {
 		
 		Bukkit.getServer().getOnlinePlayers().stream()
 		.forEach(player -> {
-			builder.append("<:LEAVE:905682349239463957> " + PlayerData.from(player).getRankedNameRaw() + "\n");
+			builder.append("<:LEAVE:905682349239463957> " + ChatColor.stripColor(PlayerData.from(player).getRankedName()) + "\n");
 		});
 		
 		Discord.sendMessage(builder.toString()).queue();
