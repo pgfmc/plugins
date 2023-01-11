@@ -1,3 +1,4 @@
+   
 /*
  * WorldGuard, a suite of tools for Minecraft
  * Copyright (C) sk89q <http://www.sk89q.com>
@@ -17,32 +18,14 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.sk89q.worldguard.util.collect;
+package net.pgfmc.claims.util;
 
-public abstract class LongHash {
+public class EntryBase {
 
-    public static long toLong(int msw, int lsw) {
-        return ((long) msw << 32) + lsw - Integer.MIN_VALUE;
+    protected long key;
+
+    public EntryBase(long key) {
+        this.key = key;
     }
-
-    public static int msw(long l) {
-        return (int) (l >> 32);
-    }
-
-    public static int lsw(long l) {
-        return (int) (l & 0xFFFFFFFF) + Integer.MIN_VALUE;
-    }
-
-    public boolean containsKey(int msw, int lsw) {
-        return containsKey(toLong(msw, lsw));
-    }
-
-    public void remove(int msw, int lsw) {
-        remove(toLong(msw, lsw));
-    }
-
-    public abstract boolean containsKey(long key);
-
-    public abstract void remove(long key);
 
 }
