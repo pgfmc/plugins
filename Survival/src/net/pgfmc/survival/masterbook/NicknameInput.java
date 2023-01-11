@@ -5,6 +5,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.cmd.donator.Nick;
 
 public class NicknameInput implements Listener {
 	
@@ -16,9 +17,10 @@ public class NicknameInput implements Listener {
 		if (!pd.hasTag("nick")) return;
 		
 		pd.removeTag("nick");
-		e.setCancelled(true);
 		
-		pd.getPlayer().performCommand("nick " + e.getMessage());
+		Nick.setNick(pd, e.getMessage());
+		
+		e.setCancelled(true);
 		
 	}
 	

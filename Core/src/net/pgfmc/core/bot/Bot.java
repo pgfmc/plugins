@@ -56,7 +56,8 @@ public class Bot {
 			builder.append("<:LEAVE:905682349239463957> " + ChatColor.stripColor(PlayerData.from(player).getRankedName()) + "\n");
 		});
 		
-		Discord.sendMessage(builder.toString()).queue();
+		if (!builder.isEmpty()) Discord.sendMessage(builder.toString()).queue();
+		
 		
 		MessageEmbed stopMessageEmbed = Discord.simpleServerEmbed("Server is stopping..."
 				, "https://cdn.discordapp.com/emojis/905683316844429312.png?size=44"

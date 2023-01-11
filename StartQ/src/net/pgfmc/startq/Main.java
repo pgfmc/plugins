@@ -1,12 +1,10 @@
 package net.pgfmc.startq;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.util.concurrent.TimeUnit;
 
 import net.pgfmc.startq.actions.Backup;
 import net.pgfmc.startq.actions.QuickFiles;
-import net.pgfmc.startq.actions.Update;
 
 public class Main {
 	
@@ -20,9 +18,9 @@ public class Main {
 		
 		System.out.println("Working directory: " + WORKING_DIRECTORY);
 		
-		if (!BACKUP_DIRECTORY.equals("null")) new Backup(); // Runs first
+		if (!args[0].equals("null")) new Backup(); // Runs first
 		new QuickFiles(); // Runs second
-		try { new Update(); } catch (MalformedURLException e) { e.printStackTrace(); } // Runs third
+		// try { new Update(); } catch (MalformedURLException e) { e.printStackTrace(); } // Runs third TODO Kinda useless right now, but works
 		
 		System.out.println("Done!");
 		

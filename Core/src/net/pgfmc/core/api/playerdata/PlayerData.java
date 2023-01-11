@@ -118,14 +118,12 @@ public final class PlayerData extends AbstractPlayerData {
 	
 	// getters and setters
 	
-	// Has color, has staff diamond
 	public String getRankedName() {
-		// Nick will be player's name if no permission
+		if (!hasPermission("pgf.cmd.donator.nick")) return getRole().getColor(true) + getName();
 		return  getRole().getColor(true) + Optional.ofNullable(getData("nick"))
 														.orElse(getName());
 	}
 	
-	// No color, no staff diamond
 	public String getDisplayName()
 	{
 		if (!hasPermission("pgf.cmd.donator.nick")) return getName();

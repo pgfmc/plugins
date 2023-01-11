@@ -39,8 +39,6 @@ public class Zipper {
             			// Read all bytes from the current Path file, then write to the ZipOutputStream (which is currently outputting to the above ZipEntry)
             			Files.copy(path, zipper);
             			
-            			System.out.println("Zipped file: " + path.getFileName());
-            			
             			// Must close the current ZipEntry to save/confirm the data
             			zipper.closeEntry();
             		} catch (IOException e) { e.printStackTrace(); }

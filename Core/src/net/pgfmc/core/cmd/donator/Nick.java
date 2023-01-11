@@ -22,7 +22,11 @@ public class Nick implements CommandExecutor {
 			return true;
 		}
 		
-		if (args.length <= 0) return false;
+		if (args.length <= 0)
+		{
+			sender.sendMessage(ChatColor.RED + "Please include a nickname.");
+			return true;
+		}
 		
 		if (String.join("", args) == null || String.join("", args).strip().equals(""))
 		{
@@ -30,16 +34,22 @@ public class Nick implements CommandExecutor {
 			return true;
 		}
 		
-		Player p = (Player) sender;
-		PlayerData pd = PlayerData.from(p);
-		
-		if (!pd.hasPermission("pgf.cmd.donator.nick"))
+		if (!((Player) sender).hasPermission("pgf.cmd.donator.nick"))
 		{
-			pd.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
+			sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
 			return true;
 		}
 		
-		String nickWithColor = "~" + String.join("", args).strip();
+		setNick(PlayerData.from((Player) sender), String.join("", args));
+		
+		return true;
+	}
+	
+	public static void setNick(PlayerData pd, String nick)
+	{
+		Player p = pd.getPlayer();
+		
+		String nickWithColor = "~" + nick.strip();
 		nickWithColor = ChatColor.translateAlternateColorCodes('&', nickWithColor);
 		nickWithColor = nickWithColor.replaceAll("[^A-Za-z0-9&]", "")
 				.replace(ChatColor.COLOR_CHAR + "k", "")
@@ -53,8 +63,8 @@ public class Nick implements CommandExecutor {
 		
 		if (Profanity.hasProfanity(nickWithoutColor))
 		{
-			p.sendMessage(ChatColor.RED + "Invalid nickname: Contains profanity!");
-			return true;
+			pd.sendMessage(ChatColor.RED + "Invalid nickname: Contains profanity!");
+			return;
 		}
 		
 		/*
@@ -62,8 +72,8 @@ public class Nick implements CommandExecutor {
 		 */
 		if (nickWithoutColor.length() <= 0)
 		{
-			p.sendMessage(ChatColor.RED + "Invalid nickname: Not long enough.");
-			return true;
+			pd.sendMessage(ChatColor.RED + "Invalid nickname: Not long enough.");
+			return;
 		}
 		
 		/*
@@ -71,8 +81,8 @@ public class Nick implements CommandExecutor {
 		 */
 		if (nickWithoutColor.length() > 21)
 		{
-			p.sendMessage(ChatColor.RED + "Invalid nickname: Too long.");
-			return true;
+			pd.sendMessage(ChatColor.RED + "Invalid nickname: Too long.");
+			return;
 		}
 		
 		/*
@@ -82,13 +92,13 @@ public class Nick implements CommandExecutor {
 		if (nickWithoutColor.equals("off") || nickWithoutColor.equals("reset") || nickWithColor.equals(p.getName()) || nickWithColor.equals(""))
 		{
 			pd.setData("nick", null).queue();
-			p.sendMessage(ChatColor.GOLD + "Nickname changed to " + pd.getRankedName() + ChatColor.GOLD + "!");
+			pd.sendMessage(ChatColor.GOLD + "Nickname changed to " + pd.getRankedName() + ChatColor.GOLD + "!");
 			
-			return true;
+			return;
 		}
 		
 		pd.setData("nick", nickWithColor).queue();
-		p.sendMessage(ChatColor.GOLD + "Nickname changed to " + pd.getRankedName() + ChatColor.GOLD + "!");
+		pd.sendMessage(ChatColor.GOLD + "Nickname changed to " + pd.getRankedName() + ChatColor.GOLD + "!");
 		
 		p.setPlayerListName(pd.getRankedName());
 		p.setCustomName(pd.getRankedName());
@@ -99,7 +109,6 @@ public class Nick implements CommandExecutor {
 			p.showPlayer(CoreMain.plugin, player);
 		});
 		
-		return true;
 	}
 
 }

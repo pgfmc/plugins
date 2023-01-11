@@ -33,6 +33,7 @@ import net.pgfmc.core.api.playerdata.cmd.TagCommand;
 import net.pgfmc.core.api.request.RequestEvents;
 import net.pgfmc.core.api.teleport.SpawnProtect;
 import net.pgfmc.core.bot.Bot;
+import net.pgfmc.core.bot.minecraft.PlayerAdvancement;
 import net.pgfmc.core.bot.minecraft.cmd.LinkCommand;
 import net.pgfmc.core.bot.minecraft.cmd.UnlinkCommand;
 import net.pgfmc.core.bot.minecraft.listeners.OnAsyncPlayerChat;
@@ -91,8 +92,8 @@ public class CoreMain extends JavaPlugin {
 		 * Create defaults *.yml
 		 */
 		Mixins.getFile(configPath);
-		CoreMain.plugin.saveDefaultConfig();
-		CoreMain.plugin.reloadConfig();
+		saveDefaultConfig();
+		reloadConfig();
 		
 		/**
 		 * LuckPerms API
@@ -172,6 +173,7 @@ public class CoreMain extends JavaPlugin {
 		new TagCommand();
 		new PlayerDataSetCommand();
 		BOT = new Bot();
+		new PlayerAdvancement();
 		
 	}
 	

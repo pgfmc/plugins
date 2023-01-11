@@ -33,6 +33,12 @@ public class Main extends JavaPlugin {
 	{
 		plugin = this;
 		
+		if (getConfig().getConfigurationSection("warps") == null)
+		{
+			getConfig().createSection("warps");
+			saveConfig();
+		}
+		
 		TpRequest.registerAll();
 		TpHereRequest.registerAll();
 		
