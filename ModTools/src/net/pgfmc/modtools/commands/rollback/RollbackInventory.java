@@ -13,6 +13,7 @@ public class RollbackInventory {
 		
 		if (args.length < 2) return false;
 		
+		@SuppressWarnings("deprecation")
 		PlayerData target = PlayerData.from(args[0]);
 		String minutes = args[1].replaceAll("[^0-9]", "");
 		

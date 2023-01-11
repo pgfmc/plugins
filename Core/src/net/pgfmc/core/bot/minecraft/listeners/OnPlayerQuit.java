@@ -17,7 +17,7 @@ public class OnPlayerQuit implements Listener {
 		PlayerData pd = PlayerData.from(e.getPlayer());
 		
 		e.setQuitMessage(ChatColor.GRAY + "[" + ChatColor.RED + "-" + ChatColor.GRAY + "]" + ChatColor.RESET + " " + pd.getRankedName());
-		Discord.sendMessage("<:LEAVE:905682349239463957> " + pd.getRankedNameRaw()).queue();
+		Discord.sendMessage("<:LEAVE:905682349239463957> " + ChatColor.stripColor(pd.getRankedName())).queue();
 		
 	}
 	
