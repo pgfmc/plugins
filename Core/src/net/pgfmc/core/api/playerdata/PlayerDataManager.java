@@ -1,15 +1,14 @@
 package net.pgfmc.core.api.playerdata;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -17,11 +16,11 @@ import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.util.files.Configi;
 
 public class PlayerDataManager extends Configi implements Listener {
-	
-	private static int task = -1;
 
 	private static List<Consumer<Void>> postLoad = new ArrayList<>();
 	protected static List<Consumer<PlayerData>> pdInit = new ArrayList<>();
+	
+	private static int task = -1;
 	
 	/**
 	 * Sets an initialization function to be ran when playerData loads.
@@ -30,7 +29,9 @@ public class PlayerDataManager extends Configi implements Listener {
 	 */
 	public static void setInit(Consumer<PlayerData> consoom) {
 		pdInit.add(consoom);
-		Bukkit.getLogger().warning("PD Initialization Function added!");
+		
+		Bukkit.getLogger().warning("PlayerData init function created!");
+		
 	}
 	
 	/**
@@ -40,7 +41,9 @@ public class PlayerDataManager extends Configi implements Listener {
 	 */
 	public static void setPostLoad(Consumer<Void> consoom) {
 		postLoad.add(consoom);
-		Bukkit.getLogger().warning("Post PD function Init!");
+		
+		Bukkit.getLogger().warning("PlayerData post-load function created!");
+		
 	}
 	
 	/**
@@ -48,61 +51,43 @@ public class PlayerDataManager extends Configi implements Listener {
 	 * Creates a new PlayerData for each Player who has ever played, and loads their data, set by PlayerDataManager.setInit(Consumer<PlayerData>).
 	 * After PD is initialized, the queue is initialized, and postLoad functions are loaded, set by PlayerDataManager.setPostLoad(Consumer<?>).
 	 */
-	public static void initializePD() {
-		for (OfflinePlayer p : Bukkit.getOfflinePlayers()) {
+	public static void initializePlayerData() {
+		
+		for (OfflinePlayer p : Bukkit.getOfflinePlayers())
+		{
 			PlayerData pd = new PlayerData(p);
 			
-			ConfigurationSection cfs = pd.loadFile();
-			
-			for (String s : cfs.getStringList("tags")) {
-				pd.addTag(s);
-			}
+			pd.loadFile().getStringList("tags").stream().forEach(tag -> pd.addTag(tag));
 		}
 		
-		initializeQ();
-		for (Consumer<?> c : postLoad) {
-			c.accept(null);
-			Bukkit.getLogger().warning("PD Post methods ran!");
-		}
-	}
-	
-	
-	/**
-	 * Begins the queue saving loop.
-	 */
-	private static void initializeQ() {
-		task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(CoreMain.plugin, new Runnable() {
-			
-			@Override
-			public void run() {
-				saveQ();
-			}
-			
-		}, 20 * 60);
+		Bukkit.getLogger().warning("PlayerData init functions ran!");
+		Bukkit.getLogger().warning("PlayerData tags added!");
+		
+		postLoad.stream().forEach(consoomer -> consoomer.accept(null));
+		
+		Bukkit.getLogger().warning("PlayerData post-load functions ran!");
+		
 	}
 	
 	/**
 	 * Saves all queued values to file.
 	 */
 	public static void saveQ() {
-		for (PlayerData pd : PlayerData.getPlayerDataSet()) {
-			for (String key : pd.queue) {
-				pd.saveToFile(key, pd.getData(key));
-			}
+		
+		for (PlayerData pd : PlayerData.getPlayerDataSet())
+		{
+			if (pd.queue.isEmpty()) continue;
+			
+			pd.queue.stream().forEach(key -> pd.saveToFile(key, pd.getData(key)));
 			pd.queue.clear();
 			
-			List<String> list = new LinkedList<>();
-			for (String s : pd.getTags()) {
-				list.add(s);
-			}
+			Bukkit.getLogger().info("Queue saved for " + pd.getName() + "!");
 			
-			pd.saveToFile("tags", list);
 		}
 		
-		Bukkit.getLogger().info("Queue has been saved.");
 	}
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOWEST) // Will run first before the rest!
 	public void onJoinEvent(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
 		PlayerData pd = PlayerData.from(p);
@@ -120,17 +105,32 @@ public class PlayerDataManager extends Configi implements Listener {
 
 	@Override
 	public void reload() {
-		saveQ();
-		if (task == -1) return;
-		Bukkit.getServer().getScheduler().cancelTask(task);
-		initializeQ();
-		
+		disable();
+		enable();
 	}
 	
 	@Override
-	public void enable() {}
+	public void enable() {
+		
+		task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(CoreMain.plugin, new Runnable() {
+			@Override
+			public void run() {
+				saveQ();
+			}
+		}, 20 * 60);
+		
+	}
 
 	@Override
-	public void disable() {}
+	public void disable() {
+		
+		if (task != -1)
+		{
+			Bukkit.getServer().getScheduler().cancelTask(task);
+		}
+		
+		saveQ();
+		
+	}
 
 }

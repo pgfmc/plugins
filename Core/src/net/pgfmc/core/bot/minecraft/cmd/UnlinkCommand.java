@@ -26,7 +26,7 @@ public class UnlinkCommand implements CommandExecutor {
 		
 		if (pd.getData("Discord") != null)
 		{
-			pd.setData("Discord", null).save();
+			pd.setData("Discord", null).queue();
 			Roles.setRole(pd);
 			pd.sendMessage(ChatColor.RED + "Your Discord account has been unlinked.");
 			

@@ -9,7 +9,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 
-import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.files.Configi;
 import net.pgfmc.modtools.Main;
@@ -25,7 +24,7 @@ public class DatedInventory extends Configi {
 	
 	public DatedInventory(PlayerData pd)
 	{
-		setConfigFile(new File(CoreMain.pwd + File.separator + "DatedInventory" + File.separator + pd.getUniqueId().toString() + ".yml"));
+		setConfigFile(new File(Main.plugin.getDataFolder().getAbsolutePath() + File.separator + "DatedInventory" + File.separator + pd.getUniqueId().toString() + ".yml"));
 		
 		this.pd = pd;
 		date = new Date().getTime();

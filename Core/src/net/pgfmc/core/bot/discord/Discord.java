@@ -1,22 +1,17 @@
 package net.pgfmc.core.bot.discord;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.security.auth.login.LoginException;
-
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.IMentionable;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
@@ -40,41 +35,19 @@ public class Discord extends ListenerAdapter {
 	public static final String CHANNEL_ALERT = CoreMain.plugin.getConfig().getString("alert-channel");
 	public static final String CHANNEL_SERVER = CoreMain.plugin.getConfig().getString("server-channel");
 	
-	public Discord()
+	public Discord() throws InterruptedException
 	{
-		// Tries to initialize discord integration
-		try {
-			initialize();
-		} catch (LoginException | InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	private final void initialize() throws LoginException, InterruptedException
-	{
-		JDABuilder builder = JDABuilder.createDefault(CoreMain.plugin.getConfig().getString("token")); // bot token, don't share.
-		/*
-		 * Register EventListeners here ---
-		 */
-		
-		builder.addEventListeners(new OnReady());
-		builder.addEventListeners(new OnMessageReceived());
-		builder.addEventListeners(new OnUpdateRole());
-		builder.addEventListeners(new OnSlashCommand());
-		builder.addEventListeners(new OnMemberJoin());
-		
-		/*
-		 * ---
-		 */
-		
-		// Creates JDA and allows the bot to load all members 
-		JDA = builder
-		.setChunkingFilter(ChunkingFilter.ALL)
-		.setMemberCachePolicy(MemberCachePolicy.ALL)
-		.enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.MESSAGE_CONTENT).build();
-		
-		JDA.awaitReady();
+		JDABuilder.createDefault(CoreMain.plugin.getConfig().getString("token"))
+						.addEventListeners(new OnReady()
+										 , new OnMessageReceived()
+										 , new OnUpdateRole()
+										 , new OnSlashCommand()
+										 , new OnMemberJoin())
+						.setChunkingFilter(ChunkingFilter.ALL)
+						.setMemberCachePolicy(MemberCachePolicy.ALL)
+						.enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.MESSAGE_CONTENT)
+					.build()
+					.awaitReady();
 		
 	}
 	
@@ -190,35 +163,37 @@ public class Discord extends ListenerAdapter {
 	{
 		if (!message.contains("@")) return message;
 		
-		List<String> playerInvokedMention = Arrays.asList(message.substring(message.indexOf("@")).split("@"))
-	    		.stream().filter(mention -> mention.contains(" ")).map(mention -> mention.substring(0, mention.indexOf(" "))).collect(Collectors.toList());
+		String workingMessage = message;
 		
-	    List<Member> memberNameMatches = playerInvokedMention.stream().map(mention -> Discord.getGuildPGF().getMembersByName(mention, true)).map(mentions -> mentions.get(0)).collect(Collectors.toList());
-	    List<Member> memberNicknameMatches = playerInvokedMention.stream().map(mention -> Discord.getGuildPGF().getMembersByNickname(mention, true)).map(mentions -> mentions.get(0)).collect(Collectors.toList());
-	    
-	    Map<String, IMentionable> memberMatches = new HashMap<>();
-	    
-	    for (int i = 0; i < playerInvokedMention.size() - 1; i++)
-	    {
-	    	if (memberNicknameMatches.size() - 1 >= i)
-		    {
-		    	memberMatches.put(playerInvokedMention.get(i), memberNicknameMatches.get(i));
-		    } else if (memberNameMatches.size() - 1 >= i)
-		    {
-		    	memberMatches.put(playerInvokedMention.get(i), memberNameMatches.get(i));
-		    } else
-		    {
-		    	memberMatches.put(playerInvokedMention.get(i), null);
-		    }
+		int startOfMention = workingMessage.indexOf("@");                      // 0 1 2 3 4 5 6
+		int endOfMention = workingMessage.indexOf(" ", startOfMention);        // - - @ b k - -
+		
+		if (startOfMention == workingMessage.length() - 1) return message;
+		
+		if (endOfMention == -1)
+		{
+			endOfMention = workingMessage.length();
+		}
+		
+		String username = workingMessage.substring(startOfMention + 1, endOfMention);
+		Bukkit.getLogger().warning("Name to match: " + username);
+		
+		List<Member> nicknameMatches = Discord.getGuildPGF().getMembersByEffectiveName(username, true);
+		List<Member> usernameMatches = Discord.getGuildPGF().getMembersByName(username, true);
+		
+		if (nicknameMatches == null || nicknameMatches.isEmpty())
+		{
 			
-	    }
-	    
-	    if (!memberMatches.isEmpty())
-	    {
-	    	memberMatches.forEach((text, mention) -> message.replaceFirst(text, mention.getAsMention()));
-	    }
-	    
-	    return message;
+			if (usernameMatches == null || usernameMatches.isEmpty()) return message;
+			
+			workingMessage = workingMessage.replaceAll(workingMessage.substring(startOfMention, endOfMention), usernameMatches.get(0).getAsMention());
+			
+			return workingMessage;
+		}
+		
+		workingMessage = workingMessage.replaceAll(workingMessage.substring(startOfMention, endOfMention), nicknameMatches.get(0).getAsMention());
+		
+		return workingMessage;
 	}
 	
 }

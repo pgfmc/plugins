@@ -1,11 +1,12 @@
 package net.pgfmc.core.bot;
 
+import java.util.concurrent.TimeUnit;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.MessageHistory;
-import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.bot.discord.Discord;
 import net.pgfmc.core.bot.util.Colors;
@@ -15,39 +16,25 @@ public class Bot {
 	
 	public Bot()
 	{
-		new Discord();
+		try {
+			new Discord();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		
 		MessageEmbed startMessageEmbed = Discord.simpleServerEmbed("Server is starting...", "https://cdn.discordapp.com/emojis/905682398790959125.png?size=44", Colors.GREEN).build();
 		
 		Discord.sendEmbed(startMessageEmbed).queue();
 		Discord.sendAlert(startMessageEmbed).queue();
 		
-		MessageHistory feed = new MessageHistory(Discord.getServerChannel());
-		Bukkit.getScheduler().scheduleSyncDelayedTask(CoreMain.plugin, new Runnable() {
-			@Override
-			public void run() {
-				// Gets the past 20 messages
-				feed.retrievePast(20).queue();
-				
-				Bukkit.getScheduler().scheduleSyncDelayedTask(CoreMain.plugin, new Runnable() {
-					@Override
-					public void run() {
-						feed.getRetrievedHistory()
-						.stream()
-						.filter(m -> !m.getEmbeds().isEmpty() && m.getAuthor().getId().equals("721949520728031232"))
-						.forEach(m -> m.delete().queue());
-						
-					}
-					
-				}, 60 * 20);
-				
-			}
-			
-		}, 20);
+		new MessageHistory(Discord.getServerChannel()).retrievePast(20).queueAfter(1, TimeUnit.MINUTES, messages -> {
+			messages.stream().filter(message -> !message.getEmbeds().isEmpty() && message.getAuthor().getId().equals("721949520728031232"))
+			.forEach(message -> message.delete().queue());
+		});
 		
 	}
 	
-	public void shutdown()
+	public static void shutdown()
 	{
 		StringBuilder builder = new StringBuilder();
 		

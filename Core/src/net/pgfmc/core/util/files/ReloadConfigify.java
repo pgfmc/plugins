@@ -15,15 +15,11 @@ public class ReloadConfigify implements CommandExecutor {
 		
 		if (args.length == 1 && args[0].equals("reload"))
 		{
-			sender.sendMessage(ChatColor.GREEN + "Configify reloaded!");
+			sender.sendMessage(ChatColor.GREEN + "Configi reloaded!");
 			Configi.reloadConfigify();
 		}
 		
 		return true;
 	}
 	
-	public void reload()
-	{
-		Configi.reloadConfigify();
-	}
 }

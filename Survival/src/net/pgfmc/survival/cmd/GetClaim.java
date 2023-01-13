@@ -10,9 +10,9 @@ import org.bukkit.inventory.ItemStack;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.commands.PlayerCommand;
 
-public class GiveLodestoneCommand extends PlayerCommand {
+public class GetClaim extends PlayerCommand {
 
-	public GiveLodestoneCommand(String name) {
+	public GetClaim(String name) {
 		super(name);
 	}
 
@@ -29,12 +29,11 @@ public class GiveLodestoneCommand extends PlayerCommand {
 			pd.sendMessage(ChatColor.RED + "You already got your free Lodestone!");
 			
 			return true;
-		} else {
-			pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
-			pd.getPlayer().getInventory().addItem(new ItemStack(Material.LODESTONE));
-			pd.addTag("loded");
-			
 		}
+		
+		pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
+		pd.getPlayer().getInventory().addItem(new ItemStack(Material.LODESTONE));
+		pd.addTag("loded");
 		
 		return true;
 	}

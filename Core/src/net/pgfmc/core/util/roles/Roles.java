@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -61,12 +62,7 @@ public class Roles implements Listener {
 		pd.setData("role", role);
 		
 	}
-	/**
-	 * Used if you don't have a list of the player's roles
-	 * This will get them for you
-	 * 
-	 * @param pd The player to update roles
-	 */
+	
 	public static void setRole(PlayerData pd)
 	{
 		// Get roles, get top role
@@ -77,12 +73,6 @@ public class Roles implements Listener {
 		
 	}	
 	
-	/**
-	 * Returns a list of PGFRole from a list of Discord role names
-	 * 
-	 * @param discordRoles List of Discord role names from PGF-Bot
-	 * @return List of PGFRole
-	 */
 	public static List<PGFRole> getPlayerRoles(PlayerData pd)
 	{
 		List<String> rolesAsString = Discord.getMemberRoles(pd.getData("Discord"));
@@ -117,7 +107,7 @@ public class Roles implements Listener {
 		return getTop(getPlayerRoles(pd));
 	}
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOW) // Runs first before all others!
 	public void assignPlayerRoleOnJoin(PlayerJoinEvent e)
 	{
 		PlayerData pd = PlayerData.from(e.getPlayer());

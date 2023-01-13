@@ -6,7 +6,7 @@ import net.pgfmc.survival.balance.ItemProtect;
 import net.pgfmc.survival.balance.PvPEvent;
 import net.pgfmc.survival.cmd.Afk;
 import net.pgfmc.survival.cmd.Back;
-import net.pgfmc.survival.cmd.GiveLodestoneCommand;
+import net.pgfmc.survival.cmd.GetClaim;
 import net.pgfmc.survival.cmd.PvpToggle;
 import net.pgfmc.survival.cmd.donator.Craft;
 import net.pgfmc.survival.cmd.donator.Echest;
@@ -52,7 +52,7 @@ public class Main extends JavaPlugin {
 		new Homes("homes");
 		
 		new Masterbook("commands");
-		new GiveLodestoneCommand("getClaim");
+		new GetClaim("getClaim");
 		
 		new PvpToggle();
 		

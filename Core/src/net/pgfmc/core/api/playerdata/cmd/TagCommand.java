@@ -2,7 +2,6 @@ package net.pgfmc.core.api.playerdata.cmd;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import org.bukkit.command.CommandSender;
 
@@ -39,50 +38,35 @@ public class TagCommand extends CommandBase {
 		
 		String action = args[1];
 		
+		if (!(action.equals("add") || action.equals("remove") || action.equals("list")))
+		{
+			sender.sendMessage(ChatColor.RED + "Please enter "
+					+ ChatColor.LIGHT_PURPLE + "add" + ChatColor.RED + ", "
+					+ ChatColor.LIGHT_PURPLE + "remove" + ChatColor.RED + ", or "
+					+ ChatColor.LIGHT_PURPLE + "list" + ChatColor.RED + ".");
+			
+			return true;
+		}
+		
 		if (args.length == 2 && (action.equals("add") || action.equals("remove")))
 		{
 			sender.sendMessage(ChatColor.RED + "Please enter a tag.");
 			return true;
 		}
 		
-		if (!action.equals("list"))
+		if ((args.length == 3 && action.equals("list")) || args.length > 3)
 		{
-			sender.sendMessage(ChatColor.RED + "Please enter "
-					+ ChatColor.LIGHT_PURPLE + "add" + ChatColor.RED + ", "
-					+ ChatColor.LIGHT_PURPLE + "remove " + ChatColor.RED + "or "
-					+ ChatColor.LIGHT_PURPLE + "list" + ChatColor.RED + ".");
-			
+			sender.sendMessage(ChatColor.RED + "Invalid syntax -> Usage: /<command> <player> <add | remove | list> [tag]");
 			return true;
 		}
 		
 		if (action.equals("list")) {
 			
-			sender.sendMessage("§bListing all tags for " + pd.getRankedName());
+			sender.sendMessage(ChatColor.LIGHT_PURPLE + "Listing all tags for " + pd.getRankedName()
+								+ ChatColor.LIGHT_PURPLE + "\n-> "
+								+ ChatColor.GOLD + String.join(", ", pd.getTags())
+								+ ChatColor.LIGHT_PURPLE + " <-");
 			
-			Set<String> tags = pd.getTags();
-			int length = tags.size();
-			
-			int i = 0;
-			String list = "§d";
-			for (String tag : tags) {
-				
-				list = list + tag;
-				
-				if (length -1 == i) {
-					break;
-				}
-				
-				list = list + "§f,§d";
-				
-				if (i % 3 == 2) {
-					list = list + "\n";
-				}
-			}
-			
-			if (length > 25) {
-				list = list + "\n§bPlayer has §d" + String.valueOf(length) + " §dtags.";
-			}
-			sender.sendMessage(list);
 			return true;
 		}
 		

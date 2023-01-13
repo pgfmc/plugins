@@ -16,14 +16,9 @@ import net.pgfmc.core.bot.util.Colors;
 import net.pgfmc.core.bot.util.MessageHandler;
 import net.pgfmc.core.util.Profanity;
 
-/**
- * Makes all the chat colorful :)
- * @author bk (basically CrimsonDart now)
- *
- */
 public class OnAsyncPlayerChat implements Listener {
 	
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.HIGH) // Runs last right before HIGHEST
 	public void onChat(AsyncPlayerChatEvent e)
 	{
 		if (e.isCancelled()) return;

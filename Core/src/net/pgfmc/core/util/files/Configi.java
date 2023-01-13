@@ -9,11 +9,11 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 public abstract class Configi {
 	
-	private static Map<Configi, File> configs = new HashMap<>();
+	private static Map<Configi, File> instances = new HashMap<>();
 	
 	public Configi()
 	{
-		configs.put(this, null);
+		instances.put(this, null);
 	}
 	
 	public abstract void reload();
@@ -22,44 +22,44 @@ public abstract class Configi {
 	
 	public static final void reloadConfigify()
 	{
-		configs.forEach((configi, file) -> {
+		instances.forEach((configi, file) -> {
 			configi.reload();
-			Bukkit.getLogger().info(file.getName() + " is reloaded (" + configi.getClass().getSimpleName() + ")");
+			Bukkit.getLogger().warning("[Configi] " + configi.getClass().getName() + " is reloaded!");
 		});
 		
 	}
 	
 	public static final void enableConfigify()
 	{
-		configs.forEach((configi, file) -> {
+		instances.forEach((configi, file) -> {
 			configi.enable();
-			Bukkit.getLogger().info(file.getName() + " is enabled (" + configi.getClass().getSimpleName() + ")");
+			Bukkit.getLogger().warning("[Configi] " + configi.getClass().getName() + " is enabled!");
 		});
 		
 	}
 	
 	public static final void disableConfigify()
 	{
-		configs.forEach((configi, file) -> {
+		instances.forEach((configi, file) -> {
 			configi.disable();
-			Bukkit.getLogger().info(file.getName() + " is disabled (" + configi.getClass().getSimpleName() + ")");
+			Bukkit.getLogger().warning("[Configi] " + configi.getClass().getName() + " is disabled!");
 		});
 		
 	}
 	
 	public final FileConfiguration getFileConfiguration()
 	{
-		return Mixins.getDatabase(configs.get(this));
+		return Mixins.getDatabase(instances.get(this));
 	}
 	
 	public final void setConfigFile(File file)
 	{
-		configs.put(this, file);
+		instances.put(this, file);
 	}
 	
 	public final <T> boolean setDefaultValue(String key, T value)
 	{
-		File file = configs.get(this);
+		File file = instances.get(this);
 		
 		if (file == null) return false;
 		
