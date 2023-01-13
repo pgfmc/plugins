@@ -20,7 +20,7 @@ import net.pgfmc.survival.cmd.warp.DelWarp;
 import net.pgfmc.survival.cmd.warp.SetWarp;
 import net.pgfmc.survival.cmd.warp.Warp;
 import net.pgfmc.survival.cmd.warp.Warps;
-import net.pgfmc.survival.masterbook.MasterbookBook;
+import net.pgfmc.survival.masterbook.BookInput;
 import net.pgfmc.survival.masterbook.NicknameInput;
 import net.pgfmc.survival.masterbook.cmd.Masterbook;
 
@@ -58,7 +58,7 @@ public class Main extends JavaPlugin {
 		
 		
 		getServer().getPluginManager().registerEvents(new NicknameInput(), this);
-		getServer().getPluginManager().registerEvents(new MasterbookBook(), this);
+		getServer().getPluginManager().registerEvents(new BookInput(), this);
 		
 		getServer().getPluginManager().registerEvents(new Afk(), this);
 		getServer().getPluginManager().registerEvents(new ItemProtect(), this);
