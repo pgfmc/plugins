@@ -16,7 +16,7 @@ import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.request.cmd.RequestAcceptCommand;
 import net.pgfmc.core.api.request.cmd.RequestDenyCommand;
 import net.pgfmc.core.api.request.cmd.RequestSendCommand;
-import net.pgfmc.core.util.files.Configify;
+import net.pgfmc.core.util.files.Configi;
 import net.pgfmc.core.util.files.Mixins;
 
 /**
@@ -24,7 +24,7 @@ import net.pgfmc.core.util.files.Mixins;
  * @author CrimsonDart
  *
  */
-public abstract class RequestType extends Configify {
+public abstract class RequestType extends Configi {
 	
 	// FIELDS
 	

@@ -9,11 +9,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 
+import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.api.playerdata.PlayerData;
-import net.pgfmc.core.util.files.Configify;
+import net.pgfmc.core.util.files.Configi;
 import net.pgfmc.modtools.Main;
 
-public class DatedInventory extends Configify {
+public class DatedInventory extends Configi {
 	
 	private PlayerData pd;
 	private long date;
@@ -24,7 +25,7 @@ public class DatedInventory extends Configify {
 	
 	public DatedInventory(PlayerData pd)
 	{
-		super(new File(Main.plugin.getDataFolder() + File.separator + "DatedInventory" + File.separator + pd.getUniqueId().toString() + ".yml"));
+		setConfigFile(new File(CoreMain.pwd + File.separator + "DatedInventory" + File.separator + pd.getUniqueId().toString() + ".yml"));
 		
 		this.pd = pd;
 		date = new Date().getTime();
@@ -97,7 +98,7 @@ public class DatedInventory extends Configify {
 			public void run() {
 				LinkedList<DatedInventory> inventories = (LinkedList<DatedInventory>) Optional.ofNullable(pd.getData("dated-inventories")).orElse(new LinkedList<DatedInventory>());
 				DatedInventory that = inventories.remove(0);
-				FileConfiguration file = getConfig();
+				FileConfiguration file = getFileConfiguration();
 				
 				file.set("dated-inventories." + String.valueOf(date), that);
 				//save(file);

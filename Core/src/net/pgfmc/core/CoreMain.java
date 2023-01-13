@@ -42,7 +42,7 @@ import net.pgfmc.core.bot.minecraft.listeners.OnPlayerJoin;
 import net.pgfmc.core.bot.minecraft.listeners.OnPlayerQuit;
 import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.cmd.donator.Nick;
-import net.pgfmc.core.util.files.Configify;
+import net.pgfmc.core.util.files.Configi;
 import net.pgfmc.core.util.files.Mixins;
 import net.pgfmc.core.util.files.ReloadConfigify;
 import net.pgfmc.core.util.roles.Roles;
@@ -182,7 +182,7 @@ public class CoreMain extends JavaPlugin {
 		
 		BOT.shutdown();
 		PlayerDataManager.saveQ();
-		Configify.disableConfigify();
+		Configi.disableConfigify();
 		
 	}
 	
@@ -191,7 +191,7 @@ public class CoreMain extends JavaPlugin {
 		
 		PlayerDataManager.initializePD();
 		
-		Configify.enableConfigify();
+		Configi.enableConfigify();
 		
 		startRestartThread();
 		

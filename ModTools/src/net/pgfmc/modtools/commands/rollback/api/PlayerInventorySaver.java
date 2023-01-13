@@ -8,17 +8,17 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
-import net.pgfmc.core.util.files.Configify;
+import net.pgfmc.core.util.files.Configi;
 import net.pgfmc.modtools.Main;
 
-public class PlayerInventorySaver extends Configify {
+public class PlayerInventorySaver extends Configi {
 	
 	private PlayerData pd;
 	private int taskId;
 	
 	public PlayerInventorySaver(PlayerData pd)
 	{
-		super(new File(Main.plugin.getDataFolder() + File.separator + "DatedInventory" + File.separator + pd.getUniqueId().toString() + ".yml"));
+		setConfigFile(new File(Main.plugin.getDataFolder() + File.separator + "DatedInventory" + File.separator + pd.getUniqueId().toString() + ".yml"));
 		
 		this.pd = pd;
 		taskId = startTimer();
@@ -109,7 +109,7 @@ public class PlayerInventorySaver extends Configify {
 		
 		LinkedList<DatedInventory> inventories = (LinkedList<DatedInventory>) Optional.ofNullable(pd.getData("dated-inventories")).orElse(new LinkedList<DatedInventory>());
 		Bukkit.getLogger().warning("All saved inventories for " + pd.getRankedName() + ": " + inventories);
-		FileConfiguration file = getConfig();
+		FileConfiguration file = getFileConfiguration();
 		
 		inventories.stream().forEach(di -> file.set("dated-inventories." + String.valueOf(di.getDate()), di));
 		
