@@ -3,11 +3,10 @@ package net.pgfmc.claims.ownable.block.table;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.sk89q.worldguard.util.collect.LongHash;
-import com.sk89q.worldguard.util.collect.LongHashTable;
-
 import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
+import net.pgfmc.claims.util.LongHash;
+import net.pgfmc.claims.util.LongHashTable;
 import net.pgfmc.core.util.Vector4;
 
 /**

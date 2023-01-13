@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.api.playerdata.PlayerData;
 
 /**
  * Command toggle AFK mode.
@@ -81,24 +81,6 @@ public class Afk implements CommandExecutor, Listener {
 			PlayerData.from(p).removeTag("afk");
 		}
 	}
-	
-	/*
-	@EventHandler
-	public void onTeleport(PlayerTeleportEvent e)
-	{
-		Player p = e.getPlayer();
-		if (Afk.isAfk(p) && e.getCause() != TeleportCause.UNKNOWN)
-		{
-			// Moved, more like a safeguard
-			if (!e.getFrom().equals(e.getTo()))
-			{
-				toggleAfk(p);
-				Bukkit.getLogger().warning("Teleported! Cause: " + e.getCause());
-			}
-		}
-	}
-	*/
-	
 	
 	@SuppressWarnings("deprecation")
 	public static void toggleAfk(Player p)
