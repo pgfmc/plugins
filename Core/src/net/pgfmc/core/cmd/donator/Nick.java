@@ -1,20 +1,15 @@
 package net.pgfmc.core.cmd.donator;
 
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import net.md_5.bungee.api.ChatColor;
 import net.pgfmc.core.CoreMain;
-import net.pgfmc.core.chat.ProfanityFilter;
-import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.Profanity;
 
 public class Nick implements CommandExecutor {
 
@@ -23,108 +18,70 @@ public class Nick implements CommandExecutor {
 		
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage(ChatColor.RED + "Only players can execute this command.");
 			return true;
 		}
 		
-		if (args.length == 0)
+		if (args.length <= 0)
 		{
-			return false;
+			sender.sendMessage(ChatColor.RED + "Please include a nickname.");
+			return true;
 		}
 		
-		setNick((Player) sender, args);
+		if (String.join("", args) == null || String.join("", args).strip().equals(""))
+		{
+			sender.sendMessage(ChatColor.RED + "Invalid nickname: Invalid characters.");
+			return true;
+		}
+		
+		if (!((Player) sender).hasPermission("pgf.cmd.donator.nick"))
+		{
+			sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
+			return true;
+		}
+		
+		setNick(PlayerData.from((Player) sender), String.join("", args));
 		
 		return true;
 	}
 	
-	
-	/**
-	 * Removes the color codes and formatting codes
-	 * from the String
-	 * 
-	 * @param nick String to remove codes from
-	 * @return a "raw" form of "nick", no codes
-	 */
-	public static String removeCodes(String nick)
+	public static void setNick(PlayerData pd, String nick)
 	{
-		return ChatColor.stripColor(nick.replace('&', '§'));
-	}
-	/**
-	 * This prevents a player from
-	 * having the same name/nickname as another player
-	 * 
-	 * @param p The sus player
-	 * @return The name to use with color codes
-	 */
-	public static void removeImpostors(PlayerData pd)
-	{
-		// The nickname without color codes
-		String nick = pd.getData("nick");
-		if (nick == null) return;
+		Player p = pd.getPlayer();
 		
-		String raw = removeCodes(nick).toLowerCase();
+		String nickWithColor = "~" + nick.strip();
+		nickWithColor = ChatColor.translateAlternateColorCodes('&', nickWithColor);
+		nickWithColor = nickWithColor.replaceAll("[^A-Za-z0-9&]", "")
+				.replace(ChatColor.COLOR_CHAR + "k", "")
+				.replace(ChatColor.COLOR_CHAR + "m", "")
+				.replace(ChatColor.COLOR_CHAR + "o", "")
+				.replace(ChatColor.COLOR_CHAR + "n", "")
+				.replace(ChatColor.COLOR_CHAR + "l", "")
+				.replace(ChatColor.COLOR_CHAR + "r", "");
 		
-		// If their raw nickname is just their player name, ignore
-		if (raw.equals(pd.getName().toLowerCase())) return;
+		String nickWithoutColor = ChatColor.stripColor(nickWithColor);
 		
-		// If op isn't pd, if op's name is pd's nickname with or without color codes
-		if (Arrays.asList(Bukkit.getOfflinePlayers()).stream()
-				.filter(op -> !op.getUniqueId().equals(pd.getUniqueId()) && (
-						op.getName().toLowerCase().equals(raw)
-							|| removeCodes(((String) Optional.ofNullable(PlayerData.getData(op, "nick"))
-									.orElse(op.getName()))).toLowerCase().equals(raw)
-						)).collect(Collectors.toList()).size() == 0) return; // If list is empty (no impostors)
-		
-		Bukkit.getLogger().info("Found impostor for " + pd.getName());
-		
-		// At least 1 impostor, remove nickname
-		pd.setData("nick", null).queue();
-	}
-	
-	/**
-	 * Set a nickname to a player
-	 * @param p Player
-	 * @param nick Nickname
-	 */
-	public static void setNick(Player p, String nick)
-	{
-		PlayerData pd = PlayerData.from(p);
-		
-		if (!p.hasPermission("pgf.cmd.donator.nick"))
+		if (Profanity.hasProfanity(nickWithoutColor))
 		{
-			p.sendMessage("§cYou do not have permission to use this command.");
-			return;
-		}
-		nick = nick.replaceAll("[^A-Za-z0-9&]", "")
-				.replace("&k", "")
-				.replace("&m", "")
-				.replace("&o", "")
-				.replace("&n", "")
-				.replace("&l", "")
-				.replace("&r", "");
-		String raw = removeCodes(nick);
-		
-		if (ProfanityFilter.hasProfanity(raw))
-		{
-			p.sendMessage(ChatColor.RED + "Please do not include profanity!");
+			pd.sendMessage(ChatColor.RED + "Invalid nickname: Contains profanity!");
 			return;
 		}
 		
 		/*
 		 * A raw length of 0 means the nickname had no content, just color codes (lmao)
 		 */
-		if (raw.length() <= 0)
+		if (nickWithoutColor.length() <= 0)
 		{
-			p.sendMessage("§cThe nickname must be more than just color codes!");
+			pd.sendMessage(ChatColor.RED + "Invalid nickname: Not long enough.");
 			return;
 		}
 		
 		/*
 		 * The nickname without color codes must be less than 20 characters
 		 */
-		if (raw.length() > 20)
+		if (nickWithoutColor.length() > 21)
 		{
-			p.sendMessage("§cThe max nickname length is 20!");
+			pd.sendMessage(ChatColor.RED + "Invalid nickname: Too long.");
 			return;
 		}
 		
@@ -132,67 +89,26 @@ public class Nick implements CommandExecutor {
 		 * If the raw nickname is "off" or "reset" or the player's name
 		 * then it will reset the nickname to Player.getName()
 		 */
-		if (raw.equals("off") || raw.equals("reset") || nick.equals(p.getName()))
+		if (nickWithoutColor.equals("off") || nickWithoutColor.equals("reset") || nickWithColor.equals(p.getName()) || nickWithColor.equals(""))
 		{
 			pd.setData("nick", null).queue();
-			p.sendMessage("§6Nickname changed to " + pd.getRankedName() + "§6!");
+			pd.sendMessage(ChatColor.GOLD + "Nickname changed to " + pd.getRankedName() + ChatColor.GOLD + "!");
 			
 			return;
 		}
 		
-		/*
-		 * No impostors, check removeImpostors() for comments
-		 */
-		for (OfflinePlayer op2 : Bukkit.getOfflinePlayers())
-		{
-			String raw2 = raw.toLowerCase();
-			if (raw2.equals(pd.getName().toLowerCase())) { break; }
-			
-			if (op2.getUniqueId().equals(pd.getUniqueId())) { continue; }
-			
-			if (op2.getName().toLowerCase().equals(raw2) || removeCodes(
-					((String) Optional.ofNullable(PlayerData.getData(op2, "nick")).orElse(""))).toLowerCase()
-					.equals(raw2))
-			{
-				p.sendMessage("§cYou cannot have the same name as another player!");
-				return;
-			}
-		}
+		pd.setData("nick", nickWithColor).queue();
+		pd.sendMessage(ChatColor.GOLD + "Nickname changed to " + pd.getRankedName() + ChatColor.GOLD + "!");
 		
-		pd.setData("nick", nick.replace("&", "§")).queue();
-		p.sendMessage("§6Nickname changed to " + pd.getRankedName() + "§6!");
-		
-		// p.setDisplayName(pd.getRankedName());
 		p.setPlayerListName(pd.getRankedName());
 		p.setCustomName(pd.getRankedName());
 		p.setCustomNameVisible(true);
 		
-		for (Player playerP : Bukkit.getOnlinePlayers()) {
-			if (playerP == p) continue;
-			p.hidePlayer(CoreMain.plugin, playerP);
-			p.showPlayer(CoreMain.plugin, playerP);
-		}
+		Bukkit.getOnlinePlayers().stream().forEach(player -> {
+			p.hidePlayer(CoreMain.plugin, player);
+			p.showPlayer(CoreMain.plugin, player);
+		});
 		
-		p.hidePlayer(CoreMain.plugin, p);
-		p.showPlayer(CoreMain.plugin, p);
-	}
-	
-	public static void setNick(Player p, String[] nick)
-	{
-		setNick(p, String.join("", nick));
-	}
-	
-	public static String getNick(OfflinePlayer p)
-	{
-		if (p.getPlayer() != null && p.isOnline() && p.getPlayer().hasPermission("pgf.cmd.donator.nick"))
-		{
-			String nick = PlayerData.getData(p, "nick");
-			
-			if (nick != null) return "~" + nick;
-			
-		}
-		
-		return p.getName();
 	}
 
 }

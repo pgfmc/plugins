@@ -5,8 +5,8 @@ import java.util.List;
 import org.bukkit.ChatColor;
 
 import net.pgfmc.claims.ownable.block.Claim;
-import net.pgfmc.core.cmd.base.PlayerCommand;
-import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.commands.PlayerCommand;
 
 /**
  * Command that allows data for Ownables to be changed.
@@ -42,6 +42,7 @@ public class EditOwnableCommand extends PlayerCommand {
 		} else if ("owner".equals(args[0])) {
 			
 			if (args.length > 1) {
+				@SuppressWarnings("deprecation")
 				PlayerData ope = PlayerData.from(args[1]);
 				if (ope != null) {
 					cache.setOwner(ope);
