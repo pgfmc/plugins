@@ -14,9 +14,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import net.pgfmc.core.CoreMain;
-import net.pgfmc.core.util.files.Configify;
+import net.pgfmc.core.util.files.Configi;
 
-public class PlayerDataManager extends Configify implements Listener {
+public class PlayerDataManager extends Configi implements Listener {
 	
 	private static int task = -1;
 
@@ -124,12 +124,13 @@ public class PlayerDataManager extends Configify implements Listener {
 		if (task == -1) return;
 		Bukkit.getServer().getScheduler().cancelTask(task);
 		initializeQ();
+		
 	}
-	
 	
 	@Override
 	public void enable() {}
 
 	@Override
 	public void disable() {}
+
 }

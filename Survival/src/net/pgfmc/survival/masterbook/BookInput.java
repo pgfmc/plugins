@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.survival.masterbook.inv.MasterbookInventory;
 
-public class MasterbookBook implements Listener {
+public class BookInput implements Listener {
 	
 	@EventHandler
 	public void bookClick(PlayerInteractEvent e)

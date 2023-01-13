@@ -274,8 +274,7 @@ public final class PlayerData extends AbstractPlayerData {
 
 		FileConfiguration database = Mixins.getDatabase(CoreMain.PlayerDataPath + File.separator + getUniqueId().toString() + ".yml");
 		database.set(path, payload);
-		//queue.forEach((s, o) -> database.set(s, o));
-		//queue.clear();
+		
 		Bukkit.getLogger().warning("Queue saved to system!");
 		
 		Mixins.saveDatabase(database, CoreMain.PlayerDataPath + File.separator + getUniqueId().toString() + ".yml");
