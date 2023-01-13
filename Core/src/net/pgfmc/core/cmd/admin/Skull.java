@@ -13,8 +13,8 @@ import net.pgfmc.core.util.commands.ServerPlayerAtPlayerCommand;
 
 public class Skull extends ServerPlayerAtPlayerCommand {
 
-	public Skull(String name) {
-		super(name);
+	public Skull() {
+		super("skull");
 	}
 	
 	@Override

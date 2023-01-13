@@ -1,6 +1,5 @@
 package net.pgfmc.core;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
@@ -17,7 +16,9 @@ import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerLoadEvent;
+import org.bukkit.event.server.ServerLoadEvent.LoadType;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -26,6 +27,7 @@ import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
 import net.luckperms.api.LuckPerms;
 import net.pgfmc.core.api.inventory.extra.InventoryPressEvent;
+import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.playerdata.PlayerDataManager;
 import net.pgfmc.core.api.playerdata.cmd.DumpCommand;
 import net.pgfmc.core.api.playerdata.cmd.PlayerDataSetCommand;
@@ -33,7 +35,6 @@ import net.pgfmc.core.api.playerdata.cmd.TagCommand;
 import net.pgfmc.core.api.request.RequestEvents;
 import net.pgfmc.core.api.teleport.SpawnProtect;
 import net.pgfmc.core.bot.Bot;
-import net.pgfmc.core.bot.minecraft.PlayerAdvancement;
 import net.pgfmc.core.bot.minecraft.cmd.LinkCommand;
 import net.pgfmc.core.bot.minecraft.cmd.UnlinkCommand;
 import net.pgfmc.core.bot.minecraft.listeners.OnAsyncPlayerChat;
@@ -43,30 +44,17 @@ import net.pgfmc.core.bot.minecraft.listeners.OnPlayerQuit;
 import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.cmd.donator.Nick;
 import net.pgfmc.core.util.files.Configi;
-import net.pgfmc.core.util.files.Mixins;
 import net.pgfmc.core.util.files.ReloadConfigify;
 import net.pgfmc.core.util.roles.Roles;
 
 /**
  * @author bk and CrimsonDart
  */
-public class CoreMain extends JavaPlugin {
-	
-	public static String configPath;
-	public static String PlayerDataPath;
-	public static final String currentSeason = "Season 10";
-	public static final String homeDir = "C:" + File.separator + "Users" + File.separator + "pgfmc"
-			+ File.separator + "PGF" + File.separator;
-	// "Print Working Directory" gets the working directory of the server
-	public static String pwd;
-	public static String backupDir;
+public class CoreMain extends JavaPlugin implements Listener {
 	
 	public static CoreMain plugin;
-	//public static Scoreboard scoreboard;
 	
 	public static LuckPerms luckPermsAPI;
-	
-	private Bot BOT;
 	
 	/**
 	 * creates all files, loads all worlds, PlayerData, commands and events.
@@ -81,17 +69,9 @@ public class CoreMain extends JavaPlugin {
 		 */
 		plugin = this;
 		
-		pwd = plugin.getServer().getWorldContainer().getAbsolutePath();
-		configPath = plugin.getDataFolder() + File.separator + "config.yml";
-		PlayerDataPath = plugin.getDataFolder() + File.separator + "playerData";
-		backupDir =  homeDir + "Backups" + File.separator
-				+ "Main" + File.separator + currentSeason
-				+ File.separator;
-		
 		/**
 		 * Create defaults *.yml
 		 */
-		Mixins.getFile(configPath);
 		saveDefaultConfig();
 		reloadConfig();
 		
@@ -144,6 +124,10 @@ public class CoreMain extends JavaPlugin {
 			
 		});
 		
+		PlayerDataManager.setPostLoad(x -> {
+			PlayerData.getPlayerDataSet().forEach(pd -> Roles.setRole(pd));
+		});
+		
 		/**
 		 * Register commands and listeners
 		 */
@@ -165,34 +149,30 @@ public class CoreMain extends JavaPlugin {
 		
 		getServer().getPluginManager().registerEvents(new Roles(), this);
 		
+		getServer().getPluginManager().registerEvents(this, this);
+		
 		/**
 		 * Initialize classes
 		 */
-		new Skull("skull");
+		new Skull();
 		new DumpCommand();
 		new TagCommand();
 		new PlayerDataSetCommand();
-		BOT = new Bot();
-		new PlayerAdvancement();
-		
+		new Bot();
 	}
 	
 	@Override
 	public void onDisable() {
-		
-		BOT.shutdown();
-		PlayerDataManager.saveQ();
 		Configi.disableConfigify();
+		Bot.shutdown();
 		
 	}
 	
 	@EventHandler
 	public void onLoad(ServerLoadEvent e) {
+		if (e.getType() == LoadType.RELOAD) return;
 		
-		PlayerDataManager.initializePD();
-		
-		Configi.enableConfigify();
-		
+		PlayerDataManager.initializePlayerData();
 		startRestartThread();
 		
 		// Purge CoreProtect data of 14 days or older
@@ -200,7 +180,8 @@ public class CoreMain extends JavaPlugin {
 		CoreProtectAPI coreProtectAPI = ((CoreProtect) pluginCoreProtect).getAPI();
 		
 		if (coreProtectAPI != null) { coreProtectAPI.performPurge(1209600); } // 14 days in seconds
-				
+		
+		Configi.enableConfigify();
 	}
 	
 	private void startRestartThread()
@@ -208,12 +189,13 @@ public class CoreMain extends JavaPlugin {
 		Calendar now = Calendar.getInstance();
 		Calendar restartDate = now;
 		
-		restartDate.add(Calendar.HOUR, Math.abs(3 - now.get(Calendar.HOUR))); // Finds how many hours until 3 AM/PM then gets that Calendar
+		restartDate.add(Calendar.HOUR, 12 - Math.abs(3 - now.get(Calendar.HOUR))); // Finds how many hours until 3 AM/PM
+		restartDate.add(Calendar.MINUTE, -1 * now.get(Calendar.MINUTE));
 		restartDate.setTimeZone(TimeZone.getDefault()); // ZonedDateTime from restart date and system's time zone
 		
-		long secondsUntilRestartCountdown = Duration.between(Instant.now(), restartDate.toInstant()).getSeconds();  // Calculate amount of time to wait until we run.
+		long secondsUntilRestartCountdown = (Duration.between(Instant.now(), restartDate.toInstant()).getSeconds()) - (60 * 10);  // Calculate amount of time to wait until we run.
 		
-		Bukkit.broadcastMessage("Restart date:" + new SimpleDateFormat("MMM dd, YYYY @ kkmm").format(restartDate));
+		Bukkit.getLogger().warning("Restart date:" + new SimpleDateFormat("MMM dd, YYYY @ kkmm").format(restartDate.getTime()));
 		
 		
 		Executors.newSingleThreadScheduledExecutor().schedule(new Runnable() {

@@ -1,6 +1,7 @@
 package net.pgfmc.core.api.playerdata;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -9,7 +10,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import org.bukkit.Bukkit;
@@ -27,7 +27,7 @@ import net.pgfmc.core.util.roles.PGFRole;
  * @since 2.0.0
  * @version 4.0.2
  */
-public final class PlayerData extends AbstractPlayerData {
+public final class PlayerData extends PlayerDataExtra {
 	
 	// fields
 	
@@ -45,21 +45,17 @@ public final class PlayerData extends AbstractPlayerData {
 	 * Creates a new PlayerData for anyone who joins the server for the first time.
 	 * @param p Player who joined.
 	 */
-	PlayerData(OfflinePlayer p) {
+	public PlayerData(OfflinePlayer p) {
 		super(p);
 		
-		PlayerData pd = from(p);
-		if (pd == null) {
-			
-			
-			for (Consumer<PlayerData> consoomer : PlayerDataManager.pdInit) {
-				
-				consoomer.accept(this);
-			}
-			
-			instances.add(this);
-			Bukkit.getLogger().warning(p.getName() + " has been loaded!");
-		}
+		if (from(p) != null) return;
+		
+		PlayerDataManager.pdInit.stream().forEach(consoomer -> consoomer.accept(this));
+		
+		instances.add(this);
+		
+		Bukkit.getLogger().warning("PlayerData loaded for " + p.getName() + "!");
+		
 	}
 	
 	// find PlayerData functions ------------------------------------------
@@ -99,7 +95,7 @@ public final class PlayerData extends AbstractPlayerData {
 	@Deprecated
 	public static PlayerData from(String name)
 	{
-		Set<PlayerData> nameMatches = PlayerData.getPlayerDataSet(pd -> pd.getName().toLowerCase().equals(name));
+		Set<PlayerData> nameMatches = PlayerData.getPlayerDataSet(pd -> pd.getName().toLowerCase().equals(name.toLowerCase()));
 		
 		if (nameMatches == null || nameMatches.isEmpty() || (PlayerData) nameMatches.toArray()[0] == null) return null;
 		
@@ -206,9 +202,6 @@ public final class PlayerData extends AbstractPlayerData {
 			queue.add(data);
 		}
 		
-		public void save() {
-			saveToFile(data, getData(data));
-		}
 	}
 	
 	/**
@@ -237,11 +230,27 @@ public final class PlayerData extends AbstractPlayerData {
 	}
 	
 	public boolean addTag(String tag) {
-		return tags.add(tag);
+		
+		if (tags.add(tag))
+		{
+			saveToFile("tags", new ArrayList<String>(tags));
+			
+			return true;
+		}
+		
+		return false;
 	}
 	
 	public boolean removeTag(String tag) {
-		return tags.remove(tag);
+		
+		if (tags.remove(tag))
+		{
+			saveToFile("tags", new ArrayList<String>(tags));
+			
+			return true;
+		}
+		
+		return false;
 	}
 	
 	public Set<String> getTags() {
@@ -257,11 +266,11 @@ public final class PlayerData extends AbstractPlayerData {
 	 * @return a player's associated FileConfiguration from database.yml.
 	 */
 	public Object loadFromFile(String path) {
-		return Mixins.getDatabase(CoreMain.PlayerDataPath + File.separator + getUniqueId().toString() + ".yml").get(path);
+		return Mixins.getDatabase(CoreMain.plugin.getDataFolder().getAbsolutePath() + File.separator + "playerdata" + File.separator + getUniqueId().toString() + ".yml").get(path);
 	}
 	
 	public FileConfiguration loadFile() {
-		return Mixins.getDatabase(CoreMain.PlayerDataPath + File.separator + getUniqueId().toString() + ".yml");
+		return Mixins.getDatabase(CoreMain.plugin.getDataFolder().getAbsolutePath() + File.separator + "playerdata" + File.separator + getUniqueId().toString() + ".yml");
 	}
 	
 	/**
@@ -269,15 +278,14 @@ public final class PlayerData extends AbstractPlayerData {
 	 * @author bk
 	 * @param path Name of the data saved.
 	 * @param payload The data saved.
+	 * @return 
 	 */
-	public void saveToFile(String path, Object payload) {
+	public <T> void saveToFile(String path, T payload) {
 
-		FileConfiguration database = Mixins.getDatabase(CoreMain.PlayerDataPath + File.separator + getUniqueId().toString() + ".yml");
+		FileConfiguration database = Mixins.getDatabase(CoreMain.plugin.getDataFolder().getAbsolutePath() + File.separator + "playerdata" + File.separator + getUniqueId().toString() + ".yml");
 		database.set(path, payload);
 		
-		Bukkit.getLogger().warning("Queue saved to system!");
-		
-		Mixins.saveDatabase(database, CoreMain.PlayerDataPath + File.separator + getUniqueId().toString() + ".yml");
+		Mixins.saveDatabase(database, CoreMain.plugin.getDataFolder().getAbsolutePath() + File.separator + "playerdata" + File.separator + getUniqueId().toString() + ".yml");
 	}
 	
 	/**
