@@ -9,31 +9,29 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import net.pgfmc.core.inventoryAPI.BaseInventory;
-import net.pgfmc.core.inventoryAPI.ConfirmInventory;
-import net.pgfmc.core.inventoryAPI.ListInventory;
-import net.pgfmc.core.inventoryAPI.extra.Butto;
-import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.api.inventory.BaseInventory;
+import net.pgfmc.core.api.inventory.ConfirmInventory;
+import net.pgfmc.core.api.inventory.ListInventory;
+import net.pgfmc.core.api.inventory.extra.Butto;
+import net.pgfmc.core.api.playerdata.PlayerData;
 
 public class ClaimConfigInventory extends BaseInventory {
 	
-	
-
 	public ClaimConfigInventory(Claim claim) {
 		super(27, "Claim Settings");
 		
 		
-		setItem(0, Material.FEATHER).n("back");
+		setItem(0, Material.FEATHER).n("§r§7Back");
 		setAction(0, (p, e) -> {
 			p.closeInventory();
 		});
 		
-		setItem(11, Material.BOOK).n("Members");
+		setItem(11, Material.BOOK).n("§r§7Members");
 		setAction(11, (p, e) -> {
 			p.openInventory(new PlayerViewInventory(claim).getInventory());
 		});
 		
-		setItem(15, Material.PLAYER_HEAD).n("Add member");
+		setItem(15, Material.PLAYER_HEAD).n("§r§7Add member");
 		setAction(15, (p,e) -> {
 			p.openInventory(new PlayerAddInventory(claim).getInventory());
 		});
@@ -47,7 +45,7 @@ public class ClaimConfigInventory extends BaseInventory {
 			super(27, "Allowed Players");
 			this.claim = claim;
 			
-			setItem(0, Material.FEATHER).n("back");
+			setItem(0, Material.FEATHER).n("§r§7Back");
 			setAction(0, (p, e) -> {
 				p.openInventory(new ClaimConfigInventory(claim).getInventory());
 			});
@@ -104,7 +102,7 @@ public class ClaimConfigInventory extends BaseInventory {
 			super(27, "Add Players");
 			this.claim = claim;
 			
-			setItem(0, Material.FEATHER).n("back");
+			setItem(0, Material.FEATHER).n("§r§7Back");
 			setAction(0, (p, e) -> {
 				p.openInventory(new ClaimConfigInventory(claim).getInventory());
 			});
@@ -160,7 +158,7 @@ public class ClaimConfigInventory extends BaseInventory {
 		PlayerData player;
 		
 		public AddPlayerConfirm(Claim claim, PlayerData player) {
-			super("Add " + player.getDisplayNameRaw() + "?", "Add Player", "Cancel");
+			super("Add " + player.getDisplayName() + "?", "Add Player", "Cancel");
 			this.claim = claim;
 			this.player = player;
 			
@@ -187,7 +185,7 @@ public class ClaimConfigInventory extends BaseInventory {
 		PlayerData player;
 		
 		public RemovePlayerInventory(Claim claim, PlayerData player) {
-			super("Remove " + player.getDisplayNameRaw() + "?", "Remove Player", "Cancel");
+			super("Remove " + player.getDisplayName() + "?", "Remove Player", "Cancel");
 			this.claim = claim;
 			this.player = player;
 		}

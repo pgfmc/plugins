@@ -8,21 +8,19 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import net.pgfmc.core.cmd.base.BothPlayerCmd;
-import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.commands.ServerPlayerAtPlayerCommand;
 
-public class Skull extends BothPlayerCmd {
+public class Skull extends ServerPlayerAtPlayerCommand {
 
-	
-	public Skull(String name) {
-		super(name);
+	public Skull() {
+		super("skull");
 	}
 	
 	@Override
 	public boolean execute(PlayerData pd, String alias, PlayerData arg) {
 		pd.getPlayer().getInventory().addItem(getHead(arg.getUniqueId(), null));
 		return true;
-
 	}
 	
 	@Override
@@ -49,4 +47,5 @@ public class Skull extends BothPlayerCmd {
 		
 		return item;
 	}
+	
 }

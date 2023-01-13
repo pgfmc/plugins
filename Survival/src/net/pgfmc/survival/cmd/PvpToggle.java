@@ -2,8 +2,8 @@ package net.pgfmc.survival.cmd;
 
 import java.util.List;
 
-import net.pgfmc.core.cmd.base.PlayerCommand;
-import net.pgfmc.core.playerdataAPI.PlayerData;
+import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.commands.PlayerCommand;
 
 public class PvpToggle  extends PlayerCommand {
 
