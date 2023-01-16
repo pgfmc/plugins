@@ -1,13 +1,13 @@
-package net.pgfmc.survival.cmd;
+package net.pgfmc.survival.cmd.pvp;
 
 import java.util.List;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.commands.PlayerCommand;
 
-public class PvpToggle  extends PlayerCommand {
+public class Pvp  extends PlayerCommand {
 
-	public PvpToggle() {
+	public Pvp() {
 		super("pvp");
 	}
 
