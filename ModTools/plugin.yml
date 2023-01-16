@@ -61,7 +61,7 @@ commands:
     aliases: [bc, broadc, bcast, say]
     permission: pgf.admin.broadcast
   rollback:
-    usage: /<command> [player/undo] [minutes]
+    usage: /<command> [player]
     description: Rollback a player's inventory
     aliases: [rb, rollb, rollb, rollbackinventory]
     permission: pgf.admin.rollbackinventory
