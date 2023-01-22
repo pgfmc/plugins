@@ -1,4 +1,4 @@
-package net.pgfmc.survival.balance;
+package net.pgfmc.survival.cmd.pvp;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -9,10 +9,10 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
 
-public class PvPEvent implements Listener {
+public class PvpEvent implements Listener {
 	
 	@EventHandler
-	public void hitta(EntityDamageByEntityEvent e) {
+	public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
 		
 		if (!(e.getEntity() instanceof Player)) return;
 		
@@ -25,6 +25,7 @@ public class PvPEvent implements Listener {
 			if (damager.hasTag("pvp") && target.hasTag("pvp")) return;
 				
 			e.setDamage(0);
+			e.setCancelled(true);
 			
 			return;
 		}
@@ -33,12 +34,13 @@ public class PvPEvent implements Listener {
 		{
 			Projectile proj = (Projectile) e.getDamager();
 			
-			if (!(proj.getShooter() instanceof OfflinePlayer)) return;
+			if (!(proj.getShooter() instanceof Player)) return;
 			
 			PlayerData damager = PlayerData.from((OfflinePlayer) proj.getShooter());
 			
 			if (damager.hasTag("pvp") && target.hasTag("pvp")) return;
-				
+			
+			e.setDamage(0);
 			e.setCancelled(true);
 			
 			return;
