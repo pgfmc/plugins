@@ -3,6 +3,7 @@ package net.pgfmc.core.api.inventory;
 import java.util.List;
 
 import org.bukkit.Material;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import net.pgfmc.core.api.inventory.extra.Butto;
@@ -58,14 +59,15 @@ public abstract class ListInventory<T> extends BaseInventory {
 			throw new IllegalArgumentException();
 		}
 		
-		refresh();
+		// getInventory(); XXX Not needed, check first though
 	}
 	
 	/**
 	 * reloads the list that this ListInventory is based on.
 	 */
 	@SuppressWarnings("unchecked")
-	public void refresh() {
+	@Override
+	public Inventory getInventory() {
 		List<T> entries = load();
 		
 		int pageSize = (inv.getSize() == 27) ? 21 : (inv.getSize() == 54) ? 36 : -1;
@@ -79,6 +81,8 @@ public abstract class ListInventory<T> extends BaseInventory {
 		}
 		
 		setPage(1);
+		
+		return inv;
 	}
 	
 	/**

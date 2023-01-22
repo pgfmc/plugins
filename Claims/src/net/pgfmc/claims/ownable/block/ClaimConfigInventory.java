@@ -49,7 +49,6 @@ public class ClaimConfigInventory extends BaseInventory {
 			setAction(0, (p, e) -> {
 				p.openInventory(new ClaimConfigInventory(claim).getInventory());
 			});
-			refresh();
 			
 		}
 
@@ -106,7 +105,6 @@ public class ClaimConfigInventory extends BaseInventory {
 			setAction(0, (p, e) -> {
 				p.openInventory(new ClaimConfigInventory(claim).getInventory());
 			});
-			refresh();
 			
 		}
 
