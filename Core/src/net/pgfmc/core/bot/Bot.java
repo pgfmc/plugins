@@ -52,6 +52,7 @@ public class Bot {
 		.build();
 		
 		// #.complete will block the thread
+		// This makes sure the messages are sent before the bot shuts down
 		Discord.sendEmbed(stopMessageEmbed).complete();
 		Discord.sendAlert(stopMessageEmbed).complete();
 		

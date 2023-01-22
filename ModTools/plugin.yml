@@ -1,5 +1,5 @@
 name: PGF-Modtools
-version: 7.0.1
+version: 7.0.2
 api-version: 1.19
 authors: [bk, CrimsonDart]
 website: play.pgfmc.net
@@ -61,7 +61,7 @@ commands:
     aliases: [bc, broadc, bcast, say]
     permission: pgf.admin.broadcast
   rollback:
-    usage: /<command> [player/undo] [minutes]
+    usage: /<command> [player]
     description: Rollback a player's inventory
     aliases: [rb, rollb, rollb, rollbackinventory]
     permission: pgf.admin.rollbackinventory

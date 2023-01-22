@@ -1,4 +1,4 @@
-package net.pgfmc.modtools.commands;
+package net.pgfmc.modtools.cmd;
 
 import java.util.Map;
 
