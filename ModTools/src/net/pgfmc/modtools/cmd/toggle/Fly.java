@@ -1,4 +1,4 @@
-package net.pgfmc.modtools.commands.toggle;
+package net.pgfmc.modtools.cmd.toggle;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
