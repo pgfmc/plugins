@@ -20,7 +20,6 @@ public class RequestListInventory extends ButtonInventory {
 		if (pd != null) {
 			System.out.println("pd isn't null");
 		}
-		refresh();
 	}
 	
 	@Override

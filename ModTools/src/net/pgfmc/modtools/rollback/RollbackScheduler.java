@@ -11,20 +11,19 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.modtools.Main;
-import net.pgfmc.modtools.rollback.inv.RollbackInventory;
 
-public class InventoryRollback implements Listener {
+public class RollbackScheduler implements Listener {
 	
 	public static int INVENTORY_ROLLBACK_TASK_ID;
 	public static DateFormat INVENTORY_DATE_FORMAT = new SimpleDateFormat("MMM dd, YYYY @ kkmm");
 	
-	public InventoryRollback()
+	public RollbackScheduler()
 	{
 		INVENTORY_ROLLBACK_TASK_ID = Bukkit.getScheduler().runTaskTimer(Main.plugin, new Runnable() {
 			@Override
 			public void run() {
 				PlayerData.getPlayerDataSet(pd -> pd.isOnline()).stream()
-													.forEach(pd -> new RollbackInventory(pd));
+													.forEach(pd -> new RollbackBackup(pd, BackupCause.SCHEDULED));
 			}
 		}, 20 * 60, 20 * 60 * 5).getTaskId(); // Start after 1 minute, repeat every 5 minutes
 	}
@@ -34,8 +33,7 @@ public class InventoryRollback implements Listener {
 	{
 		Player p = e.getEntity();
 		
-		new RollbackInventory(PlayerData.from(p)); // XXX I do not know if the saved inventory
-												   // XXX will be before or after death
+		new RollbackBackup(PlayerData.from(p), BackupCause.DEATH);
 		
 	}
 	
