@@ -3,17 +3,18 @@ package net.pgfmc.survival;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.pgfmc.survival.balance.ItemProtect;
-import net.pgfmc.survival.balance.PvPEvent;
-import net.pgfmc.survival.cmd.Afk;
 import net.pgfmc.survival.cmd.Back;
 import net.pgfmc.survival.cmd.GetClaim;
-import net.pgfmc.survival.cmd.PvpToggle;
+import net.pgfmc.survival.cmd.afk.Afk;
+import net.pgfmc.survival.cmd.afk.AfkEvents;
 import net.pgfmc.survival.cmd.donator.Craft;
 import net.pgfmc.survival.cmd.donator.Echest;
 import net.pgfmc.survival.cmd.home.DelHome;
 import net.pgfmc.survival.cmd.home.Home;
 import net.pgfmc.survival.cmd.home.Homes;
 import net.pgfmc.survival.cmd.home.SetHome;
+import net.pgfmc.survival.cmd.pvp.PvpEvent;
+import net.pgfmc.survival.cmd.pvp.Pvp;
 import net.pgfmc.survival.cmd.tpa.TpHereRequest;
 import net.pgfmc.survival.cmd.tpa.TpRequest;
 import net.pgfmc.survival.cmd.warp.DelWarp;
@@ -54,15 +55,15 @@ public class Main extends JavaPlugin {
 		new Masterbook("commands");
 		new GetClaim("getClaim");
 		
-		new PvpToggle();
+		new Pvp();
 		
 		
 		getServer().getPluginManager().registerEvents(new NicknameInput(), this);
 		getServer().getPluginManager().registerEvents(new BookInput(), this);
 		
-		getServer().getPluginManager().registerEvents(new Afk(), this);
+		getServer().getPluginManager().registerEvents(new AfkEvents(), this);
 		getServer().getPluginManager().registerEvents(new ItemProtect(), this);
-		getServer().getPluginManager().registerEvents(new PvPEvent(), this);
+		getServer().getPluginManager().registerEvents(new PvpEvent(), this);
 		
 		new Warp("warp");
 		getCommand("warps").setExecutor(new Warps());

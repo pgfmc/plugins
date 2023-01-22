@@ -50,6 +50,7 @@ public final class Request implements Buttonable {
 		parent.requests.remove(this);
 		parent.endRequest(this, eB);
 		new RequestEndEvent(this, eB);
+		isEnded = true;
 	}
 	
 	public Butto toAction() {
