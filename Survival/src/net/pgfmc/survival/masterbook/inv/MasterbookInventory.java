@@ -17,7 +17,6 @@ import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.util.ItemWrapper;
 import net.pgfmc.core.util.roles.PGFRole;
 import net.pgfmc.core.util.roles.Roles;
-import net.pgfmc.survival.cmd.Afk;
 import net.pgfmc.survival.masterbook.inv.home.inv.HomeHomepage;
 
 public class MasterbookInventory implements InventoryHolder {
@@ -70,19 +69,23 @@ public class MasterbookInventory implements InventoryHolder {
 			 */
 			if (pd.hasPermission("pgf.cmd.afk"))
 			{
-				if (Afk.isAfk(pd.getPlayer()))
+				if (pd.hasTag("afk"))
 				{
 					setAction(3, (p, e) -> {
-						disableAFK(this);
 						p.performCommand("afk");
+						
+						p.closeInventory();
+						p.openInventory(new MasterbookInventory(pd).getInventory());
 					});
 					
 					setItem(3, Material.BLUE_ICE).n("§r§7AFK: §aEnabled").l("§r§7Click to disable!");
 					
-				} else {
+				} else if (!pd.hasTag("afk")){
 					setAction(3, (p, e) -> {
-						enableAFK(this);
 						p.performCommand("afk");
+						
+						p.closeInventory();
+						p.openInventory(new MasterbookInventory(pd).getInventory());
 					});
 					
 					setItem(3, Material.ICE).n("§r§7AFK: §cDisabled").l("§r§7Click to enable!");
