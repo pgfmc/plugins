@@ -51,8 +51,10 @@ public class Bot {
 				, Colors.RED)
 		.build();
 		
-		Discord.sendEmbed(stopMessageEmbed).queue();
-		Discord.sendAlert(stopMessageEmbed).queue();
+		// #.complete will block the thread
+		// This makes sure the messages are sent before the bot shuts down
+		Discord.sendEmbed(stopMessageEmbed).complete();
+		Discord.sendAlert(stopMessageEmbed).complete();
 		
 		Discord.JDA.shutdown();
 		
