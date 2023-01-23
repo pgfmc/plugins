@@ -62,7 +62,7 @@
 			<artifactId>core</artifactId>
 			<version>0.0.0</version>
 			<scope>system</scope>
-			<systemPath>E:/github/repositories/Core/target/Core-jar-with-dependencies.jar</systemPath>
+			<systemPath>${env.PLUGINS_HOME}/plugins/Core/target/Core-jar-with-dependencies.jar</systemPath>
 		</dependency>
 	</dependencies>
 	<repositories>
