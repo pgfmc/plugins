@@ -12,7 +12,7 @@ public class OnPlayerQuit implements Listener {
 	
 	@EventHandler
 	public void onQuit(PlayerQuitEvent e)
-	{
+	{		
 		PlayerData pd = PlayerData.from(e.getPlayer());
 		
 		e.setQuitMessage(ChatColor.GRAY + "[" + ChatColor.RED + "-" + ChatColor.GRAY + "]" + ChatColor.RESET + " " + pd.getRankedName());
