@@ -13,14 +13,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import net.pgfmc.core.CoreMain;
-import net.pgfmc.core.util.files.Configi;
 
-public class PlayerDataManager extends Configi implements Listener {
+public class PlayerDataManager implements Listener {
 
 	private static List<Consumer<Void>> postLoad = new ArrayList<>();
 	protected static List<Consumer<PlayerData>> pdInit = new ArrayList<>();
-	
-	private static int task = -1;
 	
 	/**
 	 * Sets an initialization function to be ran when playerData loads.
@@ -67,6 +64,13 @@ public class PlayerDataManager extends Configi implements Listener {
 		
 		Bukkit.getLogger().warning("PlayerData post-load functions ran!");
 		
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(CoreMain.plugin, new Runnable() {
+			@Override
+			public void run() {
+				saveQ();
+			}
+		}, 20 * 60);
+		
 	}
 	
 	/**
@@ -100,36 +104,6 @@ public class PlayerDataManager extends Configi implements Listener {
 		p.setPlayerListName(pd.getRankedName());
 		p.setCustomName(pd.getRankedName());
 		p.setCustomNameVisible(true);
-		
-	}
-
-	@Override
-	public void reload() {
-		disable();
-		enable();
-	}
-	
-	@Override
-	public void enable() {
-		
-		task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(CoreMain.plugin, new Runnable() {
-			@Override
-			public void run() {
-				saveQ();
-			}
-		}, 20 * 60);
-		
-	}
-
-	@Override
-	public void disable() {
-		
-		if (task != -1)
-		{
-			Bukkit.getServer().getScheduler().cancelTask(task);
-		}
-		
-		saveQ();
 		
 	}
 
