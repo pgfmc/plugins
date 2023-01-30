@@ -12,12 +12,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import net.luckperms.api.LuckPerms;
-import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.UserManager;
 import net.luckperms.api.node.Node;
 import net.luckperms.api.node.NodeType;
-import net.luckperms.api.node.types.InheritanceNode;
+import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.bot.discord.Discord;
 
@@ -33,30 +31,24 @@ public class Roles implements Listener {
 	{
 		Bukkit.getLogger().warning("Recalculating role for player " + pd.getName());
 		
-		LuckPerms lp = LuckPermsProvider.get();
-		UserManager userManager = lp.getUserManager();
+		UserManager userManager = CoreMain.luckPermsAPI.getUserManager();
 		
-		// Remove groups from user, save changes
+		// Remove then add groups, save changes
 		userManager.modifyUser(pd.getUniqueId(), user -> {
 	        user.data().clear(NodeType.INHERITANCE::matches);
 	        
-		});
-		
-		// Add group to the user, save changes
-		userManager.modifyUser(pd.getUniqueId(), user -> {
-			
-			if (role.getName().equals("member"))
+	        if (role.getName().equals("member"))
 			{
-				Node node = InheritanceNode.builder("default").value(true).build();
-				user.data().add(node);
+				Node node = Node.builder("group.default").build();
+				Bukkit.getLogger().warning("Updated roles: " + user.data().add(node).toString());
 				
 			} else
 			{
-	            Node node = InheritanceNode.builder(role.getName()).value(true).build();
-	            user.data().add(node);
+	            Node node = Node.builder("group." + role.getName()).build();
+	            Bukkit.getLogger().warning("Updated roles: " + user.data().add(node).toString());
 	            
 			}
-            
+	        
 		});
 		
 		pd.setData("role", role);
@@ -75,6 +67,8 @@ public class Roles implements Listener {
 	
 	public static List<PGFRole> getPlayerRoles(PlayerData pd)
 	{
+		if (pd == null) return new ArrayList<PGFRole>(Arrays.asList(PGFRole.MEMBER));
+		
 		List<String> rolesAsString = Discord.getMemberRoles(pd.getData("Discord"));
 		if (rolesAsString == null || rolesAsString.isEmpty()) return new ArrayList<PGFRole>(Arrays.asList(PGFRole.MEMBER));
 		
