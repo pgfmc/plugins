@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
@@ -45,10 +46,10 @@ public class DelHome extends PlayerCommand {
 		{
 			homes.remove(name);
 			pd.setData("homes", homes).queue();
-			pd.sendMessage("§aHome §6" + name + "§a removed!");
+			pd.sendMessage(ChatColor.GREEN + "Home " + ChatColor.GOLD + name + ChatColor.GREEN + " removed!");
 		} else
 		{
-			pd.sendMessage("§cCould not find home §6" + name + "§c.");
+			pd.sendMessage(ChatColor.RED + "cCould not find home " + ChatColor.GOLD + name + ChatColor.RED + ".");
 		}
 		
 		return true;

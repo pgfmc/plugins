@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
@@ -74,7 +75,7 @@ public class ItemProtect implements Listener {
 		}, 2400); // two minutes
 		
 		e.getDrops().clear();
-		p.sendMessage("§dYour dropped items are protected for 2 minutes.");
+		p.sendMessage(ChatColor.LIGHT_PURPLE + "Your dropped items are protected for 2 minutes.");
 	}
 	
 	@EventHandler

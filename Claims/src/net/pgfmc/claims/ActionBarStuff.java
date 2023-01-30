@@ -1,5 +1,6 @@
 package net.pgfmc.claims;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -37,9 +38,9 @@ public class ActionBarStuff extends BukkitRunnable {
 				if (claim != null) {
 					
 					if (claim.getPlayer() == null) {
-						ting = "§dCreative Claim";
+						ting = ChatColor.LIGHT_PURPLE + "Creative Claim";
 					} else {
-						ting = "§7Claimed by " + claim.getPlayer().getRankedName();
+						ting = ChatColor.GRAY + "Claimed by " + claim.getPlayer().getRankedName();
 					}
 				}
 				
@@ -55,25 +56,25 @@ public class ActionBarStuff extends BukkitRunnable {
 					Claim foreigner = ClaimsTable.getClosestClaim(calcPos, Range.FOREIGN);
 					
 					if (foreigner == null) {
-						ting = "§aClaims a 41x41 block area";
+						ting = ChatColor.GREEN + "Claims a 41x41 block area";
 					} else {
 						
 						Security access = foreigner.getAccess(PlayerData.from(player));
 						if (foreigner != null && (access == Security.MEMBER || access == Security.ADMIN)) {
-							ting = "§aClaims a 41x41 block area";
+							ting = ChatColor.GREEN + "Claims a 41x41 block area";
 						} else {
-							ting = "§cCannot place claim here";
+							ting = ChatColor.RED + "Cannot place claim here";
 						}
 					}
 				} else {
 					Security access = merger.getAccess(PlayerData.from(player));
 					
 					if ((access == Security.MEMBER )) {
-						ting = "§6Merge with " + merger.getPlayer().getRankedName() + "'s §6claim" ;
+						ting = ChatColor.GOLD + "Merge with " + merger.getPlayer().getRankedName() + "'s " + ChatColor.GOLD + "claim" ;
 					} else if (access == Security.ADMIN) {
-						ting = "§6Merge with nearby claim";
+						ting = ChatColor.GOLD + "Merge with nearby claim";
 					} else {
-						ting = "§cCannot place claim here";
+						ting = ChatColor.RED + "Cannot place claim here";
 					}
 				}
 			}
