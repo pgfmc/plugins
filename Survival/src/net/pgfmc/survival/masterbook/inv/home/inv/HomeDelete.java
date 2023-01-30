@@ -61,7 +61,7 @@ public class HomeDelete extends ListInventory<String> {
 	
 	@Override
 	protected ItemStack toItem(String entry) {
-		return new ItemWrapper(Material.PAPER).n(ChatColor.RESET + "" + ChatColor.GREEN + entry).gi();
+		return new ItemWrapper(Material.PAPER).n(ChatColor.RESET + "" + ChatColor.GOLD + entry).gi();
 	}
 
 }
