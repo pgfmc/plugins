@@ -74,8 +74,6 @@ public class MasterbookInventory implements InventoryHolder {
 				{
 					setAction(3, (p, e) -> {
 						p.performCommand("afk");
-						
-						p.closeInventory();
 						p.openInventory(new MasterbookInventory(pd).getInventory());
 					});
 					
@@ -84,8 +82,6 @@ public class MasterbookInventory implements InventoryHolder {
 				} else if (!pd.hasTag("afk")){
 					setAction(3, (p, e) -> {
 						p.performCommand("afk");
-						
-						p.closeInventory();
 						p.openInventory(new MasterbookInventory(pd).getInventory());
 					});
 					
@@ -153,7 +149,7 @@ public class MasterbookInventory implements InventoryHolder {
 			setAction(4, (p, e) -> {
 				if (pd.hasPermission("pgf.cmd.donator.nick"))
 				{
-					pd.addTag("nick"); // TODO make this better or soemthing
+					pd.addTag("nick");
 					p.closeInventory();
 					p.sendMessage(ChatColor.BLUE + "Type your new nickname in chat.");
 					
@@ -209,7 +205,7 @@ public class MasterbookInventory implements InventoryHolder {
 				if (pd.hasTag("pvp"))
 				{
 					setAction(5, (p, e) -> {
-						enablePVP(this);
+						p.openInventory(new MasterbookInventory(pd).getInventory());
 						p.performCommand("pvp");
 					});
 					
@@ -217,7 +213,7 @@ public class MasterbookInventory implements InventoryHolder {
 					
 				} else {
 					setAction(5, (p, e) -> {
-						disablePVP(this);
+						p.openInventory(new MasterbookInventory(pd).getInventory());
 						p.performCommand("pvp");
 					});
 					
@@ -253,50 +249,6 @@ public class MasterbookInventory implements InventoryHolder {
 	@Override
 	public Inventory getInventory() {
 		return new Homepage().getInventory();
-	}
-	
-	private static void enablePVP(BaseInventory inventory)
-	{
-		inventory.setAction(5, (p, e) -> {
-			disablePVP(inventory);
-			p.performCommand("pvp");
-		});
-		
-		inventory.setItem(5, Material.WOODEN_SWORD).n(ChatColor.RESET + "" + ChatColor.GRAY + "PVP: " + ChatColor.RED + "Disabled").l(ChatColor.RESET + "" + ChatColor.GRAY + "Click to enable!");
-		
-	}
-	
-	private static void disablePVP(BaseInventory inventory)
-	{
-		inventory.setAction(5, (p, e) -> {
-			enablePVP(inventory);
-			p.performCommand("pvp");
-		});
-		
-		inventory.setItem(5, Material.DIAMOND_SWORD).n(ChatColor.RESET + "" + ChatColor.GRAY + "PVP: " + ChatColor.GREEN + "Enabled").l(ChatColor.RESET + "" + ChatColor.GRAY + "Click to disable!");
-		
-	}
-	
-	private static void enableAFK(BaseInventory inventory)
-	{
-		inventory.setAction(3, (p, e) -> {
-			disableAFK(inventory);
-			p.performCommand("afk");
-		});
-		
-		inventory.setItem(3, Material.BLUE_ICE).n(ChatColor.RESET + "" + ChatColor.GRAY + "AFK: " + ChatColor.GREEN + "Enabled").l(ChatColor.RESET + "" + ChatColor.GRAY + "Click to disable!");
-		
-	}
-	
-	private static void disableAFK(BaseInventory inventory)
-	{
-		inventory.setAction(3, (p, e) -> {
-			enableAFK(inventory);
-			p.performCommand("afk");
-		});
-		
-		inventory.setItem(3, Material.ICE).n(ChatColor.RESET + "" + ChatColor.GRAY + "AFK: " + ChatColor.RED + "Disabled").l(ChatColor.RESET + "" + ChatColor.GRAY + "Click to enable!");
-		
 	}
 	
 }
