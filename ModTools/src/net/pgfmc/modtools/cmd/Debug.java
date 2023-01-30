@@ -1,5 +1,6 @@
 package net.pgfmc.modtools.cmd;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,7 +15,7 @@ public class Debug implements CommandExecutor {
 
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage(ChatColor.RED + "Only players can execute this command.");
 			return true;
 		}
 		
@@ -25,11 +26,11 @@ public class Debug implements CommandExecutor {
 			boolean t = p.isDebug();
 			
 			if (t) {
-				p.sendMessage("§6Debug disabled!");
+				p.sendMessage(ChatColor.GOLD + "Debug disabled!");
 				p.setDebug(false);
 				
 			} else {
-				p.sendMessage("§6Debug enabled!");
+				p.sendMessage(ChatColor.GOLD + "Debug enabled!");
 				p.setDebug(true);
 				
 			}

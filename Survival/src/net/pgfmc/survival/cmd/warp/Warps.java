@@ -1,5 +1,6 @@
 package net.pgfmc.survival.cmd.warp;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,11 +14,11 @@ public class Warps implements CommandExecutor {
 		
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage(ChatColor.RED + "Only players can execute this command.");
 			return true;
 		}
 		
-		sender.sendMessage("§6Warps: " + String.join(", ", WarpLogic.getWarpNames()));
+		sender.sendMessage(ChatColor.GOLD + "6Warps: " + String.join(", ", WarpLogic.getWarpNames()));
 		
 		return true;
 	}
