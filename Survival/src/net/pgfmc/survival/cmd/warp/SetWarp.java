@@ -1,5 +1,6 @@
 package net.pgfmc.survival.cmd.warp;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,7 +16,7 @@ public class SetWarp implements CommandExecutor {
 		
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage(ChatColor.RED + "Only players can execute this command.");
 			return true;
 		}
 		
@@ -30,7 +31,7 @@ public class SetWarp implements CommandExecutor {
 		
 		if (WarpLogic.getWarp(name) != null)
 		{
-			p.sendMessage("§cCannot have duplicate warp names: §6" + name);
+			p.sendMessage(ChatColor.RED + "Cannot have duplicate warp names: " + ChatColor.GOLD + name);
 			return true;
 		}
 		
@@ -38,7 +39,7 @@ public class SetWarp implements CommandExecutor {
 		
 		config.set(name, p.getLocation());
 		
-		p.sendMessage("§aSet new warp: §6" + name);
+		p.sendMessage(ChatColor.GREEN + "Set new warp: " + ChatColor.GOLD + name);
 		
 		Main.plugin.saveConfig();
 		

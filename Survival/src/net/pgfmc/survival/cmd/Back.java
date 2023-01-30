@@ -2,6 +2,7 @@ package net.pgfmc.survival.cmd;
 
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
@@ -33,14 +34,14 @@ public class Back extends PlayerCommand implements Listener {
 		Location dest = pd.getData("backLoc");
 		if (dest == null)
 		{
-			pd.sendMessage("§cYou do not have a back location.");
+			pd.sendMessage(ChatColor.RED + "You do not have a back location.");
 			return true;
 		}
 		
-		pd.sendMessage("§6You will be teleported in 5 seconds.");
+		pd.sendMessage(ChatColor.GOLD + "You will be teleported in 5 seconds.");
 		
 		new TimedTeleport(pd.getPlayer(), dest, 5, 40, true).setAct(v -> {
-			pd.sendMessage("§aPoof!");
+			pd.sendMessage(ChatColor.GREEN + "Poof!");
 			pd.playSound(Sound.ENTITY_ENDERMAN_TELEPORT);
 			if (pd.hasTag("afk")) pd.removeTag("afk");
 		});

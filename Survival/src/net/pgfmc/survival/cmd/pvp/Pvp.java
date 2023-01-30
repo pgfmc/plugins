@@ -2,6 +2,8 @@ package net.pgfmc.survival.cmd.pvp;
 
 import java.util.List;
 
+import org.bukkit.ChatColor;
+
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.commands.PlayerCommand;
 
@@ -21,11 +23,11 @@ public class Pvp  extends PlayerCommand {
 		
 		if (pd.hasTag("pvp")) {
 			pd.removeTag("pvp");
-			pd.sendMessage("§cPvP Disabled!");
+			pd.sendMessage(ChatColor.RED + "PvP Disabled!");
 			
 		} else {
 			pd.addTag("pvp");
-			pd.sendMessage("§aPvP Enabled!");
+			pd.sendMessage(ChatColor.GREEN + "PvP Enabled!");
 		}
 		
 		

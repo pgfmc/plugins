@@ -3,9 +3,9 @@ package net.pgfmc.core.api.playerdata.cmd;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-import net.md_5.bungee.api.ChatColor;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.commands.CommandBase;
 
@@ -27,7 +27,7 @@ public class TagCommand extends CommandBase {
 		PlayerData pd = PlayerData.from(args[0]);
 		
 		if (pd == null) {
-			sender.sendMessage("§cPlease enter a valid player.");
+			sender.sendMessage(ChatColor.RED + "Please enter a valid player.");
 			return true;
 		}
 		
@@ -74,17 +74,17 @@ public class TagCommand extends CommandBase {
 		
 		if (action.equals("add")) {
 			if (pd.addTag(tag)) {
-				sender.sendMessage("§bAdded tag §d" + tag + " §bto §r" + pd.getRankedName() + "§b.");
+				sender.sendMessage(ChatColor.AQUA + "Added tag " + ChatColor.LIGHT_PURPLE + tag + " " + ChatColor.AQUA + "to " + ChatColor.RESET + pd.getRankedName() + ChatColor.AQUA + ".");
 			} else {
-				sender.sendMessage(pd.getRankedName() + " §balready has that tag!");
+				sender.sendMessage(pd.getRankedName() + ChatColor.AQUA + " already has that tag!");
 			}
 		} else
 		
 		if (action.equals("remove")) {
 			if (pd.removeTag(tag)) {
-				sender.sendMessage("§cRemoved tag §d" + tag + " §cfrom §r" + pd.getRankedName() + "§c.");
+				sender.sendMessage(ChatColor.RED + "Removed tag " + ChatColor.LIGHT_PURPLE + tag + " " + ChatColor.RED + "from " + ChatColor.RESET + pd.getRankedName() + ChatColor.RED + ".");
 			} else {
-				sender.sendMessage(pd.getRankedName() + " §cdid not have that tag.");
+				sender.sendMessage(pd.getRankedName() + ChatColor.RED + " did not have that tag.");
 			}
 		}
 		

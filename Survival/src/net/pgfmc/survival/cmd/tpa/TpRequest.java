@@ -1,5 +1,6 @@
 package net.pgfmc.survival.cmd.tpa;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
@@ -28,14 +29,14 @@ public class TpRequest extends RequestType {
 
 	@Override
 	public ItemStack toItem(Request r) {
-		return new ItemWrapper(Material.ENDER_PEARL).n("§dTp request from " + r.asker.getRankedName()).gi();
+		return new ItemWrapper(Material.ENDER_PEARL).n(ChatColor.LIGHT_PURPLE + "Tp request from " + r.asker.getRankedName()).gi();
 	}
 
 	@Override
 	protected boolean sendRequest(Request r) {
-		r.asker.sendMessage("§6Teleport request sent to " + r.target.getRankedName() + "§6!");
-		r.target.sendMessage("§6Incoming Tp request from " + r.asker.getRankedName() + "§6.");
-		r.target.sendMessage("§6Use §b/tpaccept §6to accept!");
+		r.asker.sendMessage(ChatColor.GOLD + "Teleport request sent to " + r.target.getRankedName() + ChatColor.GOLD + "!");
+		r.target.sendMessage(ChatColor.GOLD + "Incoming Tp request from " + r.asker.getRankedName() + ChatColor.GOLD + ".");
+		r.target.sendMessage(ChatColor.GOLD + "Use " + ChatColor.AQUA + "/tpaccept " + ChatColor.GOLD + "to accept!");
 		return true;
 	}
 
@@ -44,32 +45,32 @@ public class TpRequest extends RequestType {
 		switch(eB) {
 		case ACCEPT:
 			
-			r.asker.sendMessage("§6Teleporting to " + r.target.getRankedName() + " §r§6in 5 seconds");
-			r.target.sendMessage("§6Teleporting "+ r.asker.getRankedName() +" §r§6here in 5 seconds");
+			r.asker.sendMessage(ChatColor.GOLD + "Teleporting to " + r.target.getRankedName() + ChatColor.RESET + ChatColor.GOLD + " in 5 seconds");
+			r.target.sendMessage(ChatColor.GOLD + "Teleporting "+ r.asker.getRankedName() + ChatColor.RESET + ChatColor.GOLD + " here in 5 seconds");
 			
 			new TimedTeleport(r.asker.getPlayer(), r.target.getPlayer(), 5, 40, true).setAct(v -> {
-				r.asker.sendMessage("§aPoof!");
+				r.asker.sendMessage(ChatColor.GREEN + "Poof!");
 				r.asker.playSound(Sound.ENTITY_ENDERMAN_TELEPORT);
 				if (r.target.hasTag("afk")) r.target.removeTag("afk");
 			});
 			break;
 			
 		case DENIED:
-			r.asker.sendMessage("§cTeleport request denied!");
-			r.target.sendMessage("§cTeleport request denied!");
+			r.asker.sendMessage(ChatColor.RED + "Teleport request denied!");
+			r.target.sendMessage(ChatColor.RED + "Teleport request denied!");
 			break;
 		case FORCEEND:
 			break;
 		case QUIT:
-			r.asker.sendMessage("§cTeleport request cancelled since " + r.target.getRankedName() + " §cquit!");
-			r.target.sendMessage("§cTeleport request cancelled since " + r.asker.getRankedName() + " §cquit!");
+			r.asker.sendMessage(ChatColor.RED + "Teleport request cancelled since " + r.target.getRankedName() + ChatColor.RED + " quit!");
+			r.target.sendMessage(ChatColor.RED + "Teleport request cancelled since " + r.asker.getRankedName() + ChatColor.RED + " quit!");
 			break;
 		case TIMEOUT:
-			r.asker.sendMessage("§cTeleport request timed out!");
-			r.target.sendMessage("§cTeleport request timed out!");
+			r.asker.sendMessage(ChatColor.RED + "Teleport request timed out!");
+			r.target.sendMessage(ChatColor.RED + "Teleport request timed out!");
 			break;
 		case REFRESH:
-			r.asker.sendMessage("§6Time refreshed!");
+			r.asker.sendMessage(ChatColor.GOLD + "Time refreshed!");
 			break;
 		}
 	}

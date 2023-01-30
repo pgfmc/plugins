@@ -1,11 +1,11 @@
 package net.pgfmc.claims.ownable.block.events;
 
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
-import net.md_5.bungee.api.ChatColor;
 import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.Claim.Security;
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;

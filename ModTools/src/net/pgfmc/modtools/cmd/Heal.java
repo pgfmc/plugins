@@ -1,6 +1,7 @@
 package net.pgfmc.modtools.cmd;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,7 +15,7 @@ public class Heal implements CommandExecutor {
 		
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage(ChatColor.RED + "Only players can execute this command.");
 			return true;
 		}
 		
@@ -25,7 +26,7 @@ public class Heal implements CommandExecutor {
 			p = Bukkit.getPlayer(args[0]);
 			if (p == null)
 			{
-				sender.sendMessage("§cCould not find player §6§n" + args[0] + "§r§c.");
+				sender.sendMessage(ChatColor.RED + "Could not find player " + ChatColor.GOLD + ChatColor.UNDERLINE + args[0] + ChatColor.RESET + ChatColor.RED + ".");
 				return true;
 			}
 		} else {
@@ -39,7 +40,7 @@ public class Heal implements CommandExecutor {
 		p.getActivePotionEffects().stream()
 				.forEach(effect -> p.removePotionEffect(effect.getType()));
 		
-		p.sendMessage("§aHealed!");
+		p.sendMessage(ChatColor.GREEN + "Healed!");
 		
 		return true;
 	}

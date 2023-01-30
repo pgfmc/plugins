@@ -1,7 +1,6 @@
 package net.pgfmc.core.api.request;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -57,7 +56,7 @@ public final class Request implements Buttonable {
 		Request r = this;
 		return (p, e) -> {
 			
-			ConfirmInventory conf = new ConfirmInventory("Accept " + parent.name + " Request from " + ChatColor.stripColor(r.asker.getRankedName()) + "?", "§r§aAccept", "§r§cReject") {
+			ConfirmInventory conf = new ConfirmInventory("Accept " + parent.name + " Request from " + ChatColor.stripColor(r.asker.getRankedName()) + "?", ChatColor.RESET + "" + ChatColor.GREEN + "Accept", ChatColor.RESET + "" + ChatColor.RED + "Reject") {
 				
 				@Override
 				protected void confirmAction(Player p, InventoryClickEvent e) {
@@ -71,12 +70,7 @@ public final class Request implements Buttonable {
 					p.closeInventory();
 				}
 			};
-			conf.setItem(0, Material.FEATHER).n("§r§cBack");
-			conf.setAction(0, (pl, ev) -> {
-				RequestListInventory inv = new RequestListInventory(PlayerData.from(p));
-				
-				p.openInventory(inv.getInventory());
-			});
+			conf.setBack(0, new RequestListInventory(PlayerData.from(p)).getInventory());
 			
 			p.openInventory(conf.getInventory());
 		};
