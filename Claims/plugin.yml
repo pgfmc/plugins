@@ -1,5 +1,5 @@
 name: PGF-Claims
-version: 7.0.5
+version: 7.0.6
 api-version: 1.19
 author: [bk, CrimsonDart]
 main: net.pgfmc.claims.Main
