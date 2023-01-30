@@ -16,7 +16,6 @@ import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.request.cmd.RequestAcceptCommand;
 import net.pgfmc.core.api.request.cmd.RequestDenyCommand;
 import net.pgfmc.core.api.request.cmd.RequestSendCommand;
-import net.pgfmc.core.util.files.Configi;
 import net.pgfmc.core.util.files.Mixins;
 
 /**
@@ -24,7 +23,7 @@ import net.pgfmc.core.util.files.Mixins;
  * @author CrimsonDart
  *
  */
-public abstract class RequestType extends Configi {
+public abstract class RequestType {
 	
 	// FIELDS
 	
@@ -62,6 +61,8 @@ public abstract class RequestType extends Configi {
 		this.time = time;
 		this.name = typeName;
 		instances.add(this);
+		
+		loadRequestsFromFile();
 	}
 	
 	/**
@@ -168,8 +169,7 @@ public abstract class RequestType extends Configi {
 		new RequestAcceptCommand(label, this);
 	}
 	
-	@Override
-	public void enable() {
+	public void loadRequestsFromFile() {
 		
 		FileConfiguration cs = Mixins.getDatabase(CoreMain.plugin.getDataFolder() + File.separator + "requests.yml");
 		
@@ -183,29 +183,28 @@ public abstract class RequestType extends Configi {
 		}
 	}
 	
-	@Override
-	public void disable() {
-		FileConfiguration cs = Mixins.getDatabase(CoreMain.plugin.getDataFolder() + File.separator + "requests.yml");
+	public static void saveRequestsToFile() {
 		
-		ConfigurationSection configsec = cs.createSection(name);
-		
-		for (Request r : requests) {
+		instances.stream().forEach(requestType -> {
 			
-			if (!isPersistent) continue;
+			FileConfiguration cs = Mixins.getDatabase(CoreMain.plugin.getDataFolder() + File.separator + "requests.yml");
 			
-			configsec.set(r.asker.getUniqueId().toString(), r.target.getUniqueId().toString());
-		}
+			ConfigurationSection configsec = cs.createSection(requestType.name);
+			
+			for (Request r : requestType.requests) {
+				
+				if (!requestType.isPersistent) continue;
+				
+				configsec.set(r.asker.getUniqueId().toString(), r.target.getUniqueId().toString());
+			}
+			
+			cs.set(requestType.name, configsec);
+			Mixins.saveDatabase(cs, CoreMain.plugin.getDataFolder() + File.separator + "requests.yml");
+			
+			requestType.requests.clear();
 		
-		cs.set(name, configsec);
-		Mixins.saveDatabase(cs, CoreMain.plugin.getDataFolder() + File.separator + "requests.yml");
+		});
 		
-		requests.clear();
-	}
-	
-	@Override
-	public void reload() {
-		disable();
-		enable();
 	}
 	
 	protected void setJoinMessage(String messa) {
