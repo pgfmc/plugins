@@ -3,6 +3,7 @@ package net.pgfmc.claims.ownable.block;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -20,18 +21,17 @@ public class ClaimConfigInventory extends BaseInventory {
 	public ClaimConfigInventory(Claim claim) {
 		super(27, "Claim Settings");
 		
-		
-		setItem(0, Material.FEATHER).n("§r§7Back");
+		setItem(0, Material.FEATHER).n(ChatColor.RESET + "" +  ChatColor.GRAY + "Exit");
 		setAction(0, (p, e) -> {
 			p.closeInventory();
 		});
 		
-		setItem(11, Material.BOOK).n("§r§7Members");
+		setItem(11, Material.BOOK).n(ChatColor.RESET + "" +  ChatColor.GRAY + "Members");
 		setAction(11, (p, e) -> {
 			p.openInventory(new PlayerViewInventory(claim).getInventory());
 		});
 		
-		setItem(15, Material.PLAYER_HEAD).n("§r§7Add member");
+		setItem(15, Material.PLAYER_HEAD).n(ChatColor.RESET + "" +  ChatColor.GRAY + "Add member");
 		setAction(15, (p,e) -> {
 			p.openInventory(new PlayerAddInventory(claim).getInventory());
 		});
@@ -45,10 +45,7 @@ public class ClaimConfigInventory extends BaseInventory {
 			super(27, "Allowed Players");
 			this.claim = claim;
 			
-			setItem(0, Material.FEATHER).n("§r§7Back");
-			setAction(0, (p, e) -> {
-				p.openInventory(new ClaimConfigInventory(claim).getInventory());
-			});
+			setBack(0, new ClaimConfigInventory(claim).getInventory());
 			
 		}
 
@@ -101,10 +98,7 @@ public class ClaimConfigInventory extends BaseInventory {
 			super(27, "Add Players");
 			this.claim = claim;
 			
-			setItem(0, Material.FEATHER).n("§r§7Back");
-			setAction(0, (p, e) -> {
-				p.openInventory(new ClaimConfigInventory(claim).getInventory());
-			});
+			setBack(0, new ClaimConfigInventory(claim).getInventory());
 			
 		}
 

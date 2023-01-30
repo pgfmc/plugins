@@ -1,6 +1,7 @@
 package net.pgfmc.survival.masterbook.inv;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.inventory.Inventory;
@@ -47,7 +48,7 @@ public class MasterbookInventory implements InventoryHolder {
 						p.openInventory(new DiscordConfirmInventory(pd).getInventory());
 					});
 					
-					setItem(2, Material.AMETHYST_SHARD).n("§dUnlink Discord");
+					setItem(2, Material.AMETHYST_SHARD).n(ChatColor.LIGHT_PURPLE + "Unlink Discord");
 				
 				} else {
 					
@@ -55,7 +56,7 @@ public class MasterbookInventory implements InventoryHolder {
 						p.closeInventory();
 						p.performCommand("link");
 					});
-					setItem(2, Material.QUARTZ).n("§dLink Discord");
+					setItem(2, Material.QUARTZ).n(ChatColor.LIGHT_PURPLE + "Link Discord");
 					
 				}
 				
@@ -78,7 +79,7 @@ public class MasterbookInventory implements InventoryHolder {
 						p.openInventory(new MasterbookInventory(pd).getInventory());
 					});
 					
-					setItem(3, Material.BLUE_ICE).n("§r§7AFK: §aEnabled").l("§r§7Click to disable!");
+					setItem(3, Material.BLUE_ICE).n(ChatColor.RESET + "" + ChatColor.GRAY + "AFK: " + ChatColor.GREEN + "Enabled").l(ChatColor.RESET + "" + ChatColor.GRAY + "Click to disable!");
 					
 				} else if (!pd.hasTag("afk")){
 					setAction(3, (p, e) -> {
@@ -88,7 +89,7 @@ public class MasterbookInventory implements InventoryHolder {
 						p.openInventory(new MasterbookInventory(pd).getInventory());
 					});
 					
-					setItem(3, Material.ICE).n("§r§7AFK: §cDisabled").l("§r§7Click to enable!");
+					setItem(3, Material.ICE).n(ChatColor.RESET + "" + ChatColor.GRAY + "AFK: " + ChatColor.RED + "Disabled").l(ChatColor.RESET + "" + ChatColor.GRAY + "Click to enable!");
 					
 				}
 				
@@ -104,7 +105,7 @@ public class MasterbookInventory implements InventoryHolder {
 				p.openInventory(new BackConfirmInventory(pd).getInventory());
 			});
 			
-			ItemStack item = new ItemWrapper(Material.TIPPED_ARROW).n("§r§4Back").l("§r§7Go back to your last location").gi();
+			ItemStack item = new ItemWrapper(Material.TIPPED_ARROW).n(ChatColor.RESET + "" + ChatColor.DARK_RED + "Back").l(ChatColor.RESET + "" + ChatColor.GRAY + "Go back to your last location").gi();
 			
 			PotionMeta pot = (PotionMeta) item.getItemMeta();
 			PotionData potion = new PotionData(PotionType.INSTANT_DAMAGE);
@@ -123,7 +124,7 @@ public class MasterbookInventory implements InventoryHolder {
 				p.openInventory(new HomeHomepage(pd).getInventory());
 			});
 					
-			setItem(20, Material.COMPASS).n("§r§eHomes");
+			setItem(20, Material.COMPASS).n(ChatColor.RESET + "" + ChatColor.YELLOW + "Homes");
 			
 			if (Bukkit.getOnlinePlayers().size() == 1)
 			{
@@ -131,14 +132,14 @@ public class MasterbookInventory implements InventoryHolder {
 					pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
 				});
 				
-				setItem(21, Material.GRAY_CONCRETE).n("§r§5Tpa").l("§r§cNo players online.");
+				setItem(21, Material.GRAY_CONCRETE).n(ChatColor.RESET + "" + ChatColor.DARK_PURPLE + "Tpa").l(ChatColor.RESET + "" + ChatColor.RED + "No players online.");
 				
 			} else {
 				setAction(21, (p, e) -> {
 					p.openInventory(new TpaListInventory(pd).getInventory());
 				});
 			
-				setItem(21, Material.ENDER_PEARL).n("§r§5Tpa").l("§r§7Teleport to another player!");
+				setItem(21, Material.ENDER_PEARL).n(ChatColor.RESET + "" + ChatColor.DARK_PURPLE + "Tpa").l(ChatColor.RESET + "" + ChatColor.GRAY + "Teleport to another player!");
 			}
 			
 			// Other buttons -
@@ -154,10 +155,10 @@ public class MasterbookInventory implements InventoryHolder {
 				{
 					pd.addTag("nick"); // TODO make this better or soemthing
 					p.closeInventory();
-					p.sendMessage("§9Type your new nickname in chat.");
+					p.sendMessage(ChatColor.BLUE + "Type your new nickname in chat.");
 					
 				} else {
-					p.sendMessage("§cYou need donator for that!");
+					p.sendMessage(ChatColor.RED + "You need donator for that!");
 					
 				}
 				
@@ -167,7 +168,7 @@ public class MasterbookInventory implements InventoryHolder {
 			
 			setItem(4, Skull.getHead(pd.getUniqueId(), null))
 					.n(pd.getRankedName() + " (" + role.getName().substring(0,1).toUpperCase() + role.getName().substring(1).toLowerCase() + ")")
-					.l("§7Change nickname!");
+					.l(ChatColor.RESET + "" + ChatColor.GRAY + "Change nickname!");
 			
 			/* 
 			 * [] [] [] [] [] [] [] [] []
@@ -179,7 +180,7 @@ public class MasterbookInventory implements InventoryHolder {
 				p.performCommand("echest");
 			});
 			
-			setItem(22, Material.ENDER_CHEST).n("§r§3Ender Chest").l("§r§9Donator perk!");
+			setItem(22, Material.ENDER_CHEST).n(ChatColor.RESET + "" + ChatColor.DARK_AQUA + "Ender Chest").l(ChatColor.RESET + "" + ChatColor.BLUE + "Donator perk!");
 			
 			/* 
 			 * [] [] [] [] [] [] [] [] []
@@ -195,7 +196,7 @@ public class MasterbookInventory implements InventoryHolder {
 				
 			});
 			
-			setItem(24, Material.LEVER).n("§r§4Requests");
+			setItem(24, Material.LEVER).n(ChatColor.RESET + "" + ChatColor.DARK_RED + "Requests");
 			
 			/* 
 			 * [] [] [] XX [] [] [] [] []
@@ -212,7 +213,7 @@ public class MasterbookInventory implements InventoryHolder {
 						p.performCommand("pvp");
 					});
 					
-					setItem(5, Material.DIAMOND_SWORD).n("§r§7PVP: §aEnabled").l("§r§7Click to disable!");
+					setItem(5, Material.DIAMOND_SWORD).n(ChatColor.RESET + "" + ChatColor.GRAY + "PVP: " + ChatColor.GREEN + "Enabled").l(ChatColor.RESET + "" + ChatColor.GRAY + "Click to disable!");
 					
 				} else {
 					setAction(5, (p, e) -> {
@@ -220,7 +221,7 @@ public class MasterbookInventory implements InventoryHolder {
 						p.performCommand("pvp");
 					});
 					
-					setItem(5, Material.WOODEN_SWORD).n("§r§7PVP: §cDisabled").l("§r§7Click to enable!");
+					setItem(5, Material.WOODEN_SWORD).n(ChatColor.RESET + "" + ChatColor.GRAY + "PVP: " + ChatColor.RED + "Disabled").l(ChatColor.RESET + "" + ChatColor.GRAY + "Click to enable!");
 					
 				}
 				
@@ -230,10 +231,10 @@ public class MasterbookInventory implements InventoryHolder {
 			 {
 				 if (pd.hasTag("loded"))
 				 {
-					 setItem(6, Material.GRAY_CONCRETE).n("§cNo Rewards!");
+					 setItem(6, Material.GRAY_CONCRETE).n(ChatColor.RESET + "" + ChatColor.RED + "No Rewards!");
 					 
 				 } else {
-					 setItem(6, Material.LODESTONE).n("§aGet a free Lodestone!").l("§8Lodestones can be used to claim land.");
+					 setItem(6, Material.LODESTONE).n(ChatColor.RESET + "" + ChatColor.GREEN + "Get a free Lodestone!").l(ChatColor.RESET + "" + ChatColor.DARK_GRAY + "Lodestones can be used to claim land.");
 					 
 					 setAction(6, (p, e) -> {
 						 pd.getPlayer().performCommand("getclaim");
@@ -261,7 +262,7 @@ public class MasterbookInventory implements InventoryHolder {
 			p.performCommand("pvp");
 		});
 		
-		inventory.setItem(5, Material.WOODEN_SWORD).n("§r§7PVP: §cDisabled").l("§r§7Click to enable!");
+		inventory.setItem(5, Material.WOODEN_SWORD).n(ChatColor.RESET + "" + ChatColor.GRAY + "PVP: " + ChatColor.RED + "Disabled").l(ChatColor.RESET + "" + ChatColor.GRAY + "Click to enable!");
 		
 	}
 	
@@ -272,7 +273,7 @@ public class MasterbookInventory implements InventoryHolder {
 			p.performCommand("pvp");
 		});
 		
-		inventory.setItem(5, Material.DIAMOND_SWORD).n("§r§7PVP: §aEnabled").l("§r§7Click to disable!");
+		inventory.setItem(5, Material.DIAMOND_SWORD).n(ChatColor.RESET + "" + ChatColor.GRAY + "PVP: " + ChatColor.GREEN + "Enabled").l(ChatColor.RESET + "" + ChatColor.GRAY + "Click to disable!");
 		
 	}
 	
@@ -283,7 +284,7 @@ public class MasterbookInventory implements InventoryHolder {
 			p.performCommand("afk");
 		});
 		
-		inventory.setItem(3, Material.BLUE_ICE).n("§r§7AFK: §aEnabled").l("§r§7Click to disable!");
+		inventory.setItem(3, Material.BLUE_ICE).n(ChatColor.RESET + "" + ChatColor.GRAY + "AFK: " + ChatColor.GREEN + "Enabled").l(ChatColor.RESET + "" + ChatColor.GRAY + "Click to disable!");
 		
 	}
 	
@@ -294,7 +295,7 @@ public class MasterbookInventory implements InventoryHolder {
 			p.performCommand("afk");
 		});
 		
-		inventory.setItem(3, Material.ICE).n("§r§7AFK: §cDisabled").l("§r§7Click to enable!");
+		inventory.setItem(3, Material.ICE).n(ChatColor.RESET + "" + ChatColor.GRAY + "AFK: " + ChatColor.RED + "Disabled").l(ChatColor.RESET + "" + ChatColor.GRAY + "Click to enable!");
 		
 	}
 	

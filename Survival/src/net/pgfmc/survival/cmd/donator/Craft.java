@@ -1,5 +1,6 @@
 package net.pgfmc.survival.cmd.donator;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,7 +13,7 @@ public class Craft implements CommandExecutor {
 		
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage(ChatColor.RED + "Only players can execute this command.");
 			return true;
 		}
 		
