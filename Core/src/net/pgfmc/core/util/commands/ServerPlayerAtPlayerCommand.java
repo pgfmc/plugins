@@ -3,6 +3,8 @@ package net.pgfmc.core.util.commands;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.bukkit.ChatColor;
+
 import net.pgfmc.core.api.playerdata.PlayerData;
 
 public abstract class ServerPlayerAtPlayerCommand extends PlayerCommand {
@@ -23,7 +25,7 @@ public abstract class ServerPlayerAtPlayerCommand extends PlayerCommand {
 	public boolean execute(PlayerData pd, String alias, String[] args) {
 		
 		if (args.length < 1) {
-			pd.sendMessage("§cPlease input a player's name!");
+			pd.sendMessage(ChatColor.RED + "Please input a player's name!");
 			return true;
 		}
 		
@@ -31,7 +33,7 @@ public abstract class ServerPlayerAtPlayerCommand extends PlayerCommand {
 		PlayerData pdarg = PlayerData.from(args[0]);
 		
 		if (pdarg == null) {
-			pd.sendMessage("§cPlease input a player's name!");
+			pd.sendMessage(ChatColor.RED + "Please input a player's name!");
 			return true;
 		}
 		

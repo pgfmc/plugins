@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -21,7 +22,7 @@ public class HomeDelete extends ListInventory<String> {
 	private HashMap<String, Location> homes;
 
 	public HomeDelete(PlayerData pd) {
-		super(27, "§r§8Delete Home");
+		super(27, ChatColor.RESET + "" + ChatColor.DARK_GRAY + "Delete Home");
 		
 		this.pd = pd;
 		this.homes = Homes.getHomes(pd);
@@ -40,14 +41,14 @@ public class HomeDelete extends ListInventory<String> {
 		if (!pd.hasPermission("pgf.cmd.home.del"))
 		{
 			return (p, e) -> {
-				p.sendMessage("§cYou don't have permission to execute this command.");
+				p.sendMessage(ChatColor.RED + "You don't have permission to execute this command.");
 			};
 		}
 		
 		if (homes.size() == 0)
 		{
 			return (p, e) -> {
-				p.sendMessage("§cYou do not have any homes.");
+				p.sendMessage(ChatColor.RED + "You do not have any homes.");
 			};
 		}
 		
@@ -60,7 +61,7 @@ public class HomeDelete extends ListInventory<String> {
 	
 	@Override
 	protected ItemStack toItem(String entry) {
-		return new ItemWrapper(Material.PAPER).n("§r§a" + entry).gi();
+		return new ItemWrapper(Material.PAPER).n(ChatColor.RESET + "" + ChatColor.GREEN + entry).gi();
 	}
 
 }

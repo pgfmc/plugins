@@ -1,5 +1,6 @@
 package net.pgfmc.survival.cmd.warp;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,7 +17,7 @@ public class DelWarp implements CommandExecutor {
 		
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage(ChatColor.RED + "Only players can execute this command.");
 			return true;
 		}
 		
@@ -31,7 +32,7 @@ public class DelWarp implements CommandExecutor {
 		
 		config.set(name, null); // Completely deletes it
 		
-		sender.sendMessage("§aRemoved warp: §6" + name);
+		sender.sendMessage(ChatColor.GREEN + "Removed warp: " + ChatColor.GOLD + name);
 		
 		Main.plugin.saveConfig();
 		

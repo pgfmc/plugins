@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-import net.md_5.bungee.api.ChatColor;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.commands.CommandBase;
 
@@ -43,7 +43,7 @@ public class DumpCommand extends CommandBase {
 	public boolean execute(CommandSender sender, String alias, String[] args) {
 		
 		if (args.length == 0) {
-			sender.sendMessage("§cPlease enter a player.");
+			sender.sendMessage(ChatColor.RED + "Please enter a player.");
 			return true;
 		}
 		
@@ -59,23 +59,23 @@ public class DumpCommand extends CommandBase {
 		for (Entry<String, Object> entry : pd.getAllData().entrySet()) {
 			
 			if (entry.getValue() == null) {
-				sender.sendMessage("§f[§b" + entry.getKey() + "§f]: §dnull");
+				sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.AQUA + entry.getKey() + ChatColor.WHITE + "]: " + ChatColor.LIGHT_PURPLE + "null");
 				
 				continue;
 			}
 			
-			sender.sendMessage("§f[§b" + entry.getKey() + "§f]: §d" + entry.getValue().toString());
+			sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.AQUA + entry.getKey() + ChatColor.WHITE + "]: " + ChatColor.LIGHT_PURPLE + entry.getValue().toString());
 		}
 		
 		// tag list
 		
-		sender.sendMessage("§bListing all tags for " + pd.getRankedName());
+		sender.sendMessage(ChatColor.AQUA + "Listing all tags for " + pd.getRankedName());
 		
 		Set<String> tags = pd.getTags();
 		int length = tags.size();
 		
 		int iit = 0;
-		String list = "§d";
+		String list = String.valueOf(ChatColor.LIGHT_PURPLE);
 		for (String tag : tags)
 		{
 			list = list + tag;
@@ -84,7 +84,7 @@ public class DumpCommand extends CommandBase {
 				break;
 			}
 			
-			list = list + "§f,§d";
+			list = list + ChatColor.WHITE + "," +  ChatColor.LIGHT_PURPLE;
 			
 			if (iit % 3 == 2) {
 				list = list + "\n";
@@ -92,7 +92,7 @@ public class DumpCommand extends CommandBase {
 		}
 		
 		if (length > 25) {
-			list = list + "\n§bPlayer has §d" + String.valueOf(length) + " §dtags.";
+			list = list + "\n" + ChatColor.AQUA + "Player has " + ChatColor.LIGHT_PURPLE + String.valueOf(length) + " " + ChatColor.LIGHT_PURPLE + "tags.";
 		}
 		sender.sendMessage(list);
 		

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
@@ -40,7 +41,7 @@ public class Homes extends PlayerCommand {
 
 	@Override
 	public boolean execute(PlayerData pd, String alias, String[] args) {
-		pd.sendMessage("§aHomes: §6" + Homes.getNamedHomes(pd));
+		pd.sendMessage(ChatColor.GREEN + "Homes: " + ChatColor.GOLD + Homes.getNamedHomes(pd));
 		return true;
 	}
 	

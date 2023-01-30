@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.bukkit.ChatColor;
+
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.request.EndBehavior;
 import net.pgfmc.core.api.request.Request;
@@ -52,14 +54,14 @@ public class RequestAcceptCommand extends PlayerCommand {
 				}
 			}
 			
-			pd.sendMessage("§cNo request found for " + args[0]);
+			pd.sendMessage(ChatColor.RED + "No request found for " + args[0]);
 			return true;
 		}
 		
 		Set<Request> set = rt.findRequests(pd);
 		
 		if (set.size() == 0) {
-			pd.sendMessage("§cNo requests to accept!");
+			pd.sendMessage(ChatColor.RED + "No requests to accept!");
 			return true;
 		} else if (set.size() == 1) {
 			for (Request r : set) {
@@ -69,9 +71,9 @@ public class RequestAcceptCommand extends PlayerCommand {
 			
 		} else {
 			for (Request r : set) {
-				pd.sendMessage("§c" + rt.name + " Request from " + r.asker.getName() + ".");
+				pd.sendMessage(ChatColor.RED + rt.name + " Request from " + r.asker.getName() + ".");
 			}
-			pd.sendMessage("§6Use §b/" + alias + " <name> §6to pick a Request.");
+			pd.sendMessage(ChatColor.GOLD + "Use " + ChatColor.AQUA + "/" + alias + " <name> " + ChatColor.GOLD + "to pick a Request.");
 		}
 		return true;
 	}

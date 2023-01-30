@@ -1,5 +1,6 @@
 package net.pgfmc.modtools.cmd.toggle;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -24,7 +25,7 @@ public class Fly implements CommandExecutor, Listener{
 		
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage(ChatColor.RED + "Only players can execute this command.");
 			return true;
 		}
 		
@@ -38,10 +39,10 @@ public class Fly implements CommandExecutor, Listener{
 		
 		if (fly) {
 			pd.removeTag("fly");
-			p.sendMessage("§cDisabled flight.");
+			p.sendMessage(ChatColor.RED + "Disabled flight.");
 		} else {
 			pd.addTag("fly");
-			p.sendMessage("§aEnabled flight!");
+			p.sendMessage(ChatColor.GREEN + "Enabled flight!");
 		}
 		
 		p.setAllowFlight(!fly);
@@ -61,7 +62,7 @@ public class Fly implements CommandExecutor, Listener{
 		{
 			p.setAllowFlight(true);
 			p.setFlying(true);
-			p.sendMessage("§aEnabled flight!");
+			p.sendMessage(ChatColor.GREEN + "Enabled flight!");
 		}
 	}
 	
