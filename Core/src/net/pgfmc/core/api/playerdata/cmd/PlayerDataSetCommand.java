@@ -3,9 +3,9 @@ package net.pgfmc.core.api.playerdata.cmd;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-import net.md_5.bungee.api.ChatColor;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.commands.CommandBase;
 
@@ -20,13 +20,13 @@ public class PlayerDataSetCommand extends CommandBase {
 		
 		if (args.length == 0) {
 			
-			sender.sendMessage("§cPlease enter a player.");
+			sender.sendMessage(ChatColor.RED + "Please enter a player.");
 			return true;
 		}
 		
 		if (args.length == 1)
 		{
-			sender.sendMessage("§cPlease enter a key.");
+			sender.sendMessage(ChatColor.RED + "Please enter a key.");
 			return true;
 		}
 		
@@ -39,7 +39,7 @@ public class PlayerDataSetCommand extends CommandBase {
 		}
 		
 		if (args.length == 2) {
-			sender.sendMessage("§cPlease enter a data value.");
+			sender.sendMessage(ChatColor.RED + "Please enter a data value.");
 			return true;
 		}
 		
@@ -53,12 +53,12 @@ public class PlayerDataSetCommand extends CommandBase {
 		}
 		
 		if (!(obj instanceof String)) {
-			sender.sendMessage("§cData wasn't a string, couldn't set.");
+			sender.sendMessage(ChatColor.RED + "Data wasn't a string, couldn't set.");
 			return true;
 		}
 		
 		pd.setData(key, data);
-		sender.sendMessage("§aSet §b" + key + " §ato §d" + data + "§a.");
+		sender.sendMessage(ChatColor.GREEN + "Set " + ChatColor.AQUA + key + " " + ChatColor.GREEN + "to " + ChatColor.AQUA + data + ChatColor.GREEN + ".");
 		
 		return true;
 	}

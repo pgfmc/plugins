@@ -33,6 +33,7 @@ import net.pgfmc.core.api.playerdata.cmd.DumpCommand;
 import net.pgfmc.core.api.playerdata.cmd.PlayerDataSetCommand;
 import net.pgfmc.core.api.playerdata.cmd.TagCommand;
 import net.pgfmc.core.api.request.RequestEvents;
+import net.pgfmc.core.api.request.RequestType;
 import net.pgfmc.core.api.teleport.SpawnProtect;
 import net.pgfmc.core.bot.Bot;
 import net.pgfmc.core.bot.minecraft.cmd.LinkCommand;
@@ -43,8 +44,6 @@ import net.pgfmc.core.bot.minecraft.listeners.OnPlayerJoin;
 import net.pgfmc.core.bot.minecraft.listeners.OnPlayerQuit;
 import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.cmd.donator.Nick;
-import net.pgfmc.core.util.files.Configi;
-import net.pgfmc.core.util.files.ReloadConfigify;
 import net.pgfmc.core.util.roles.Roles;
 
 /**
@@ -132,7 +131,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 		 * Register commands and listeners
 		 */
 		getCommand("nick").setExecutor(new Nick());
-		getCommand("pgf").setExecutor(new ReloadConfigify());
 		
 		getCommand("link").setExecutor(new LinkCommand());
 		getCommand("unlink").setExecutor(new UnlinkCommand());
@@ -163,8 +161,9 @@ public class CoreMain extends JavaPlugin implements Listener {
 	
 	@Override
 	public void onDisable() {
-		Configi.disableConfigify();
 		Bot.shutdown();
+		PlayerDataManager.saveQ();
+		RequestType.saveRequestsToFile();
 		
 	}
 	
@@ -181,7 +180,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 		
 		if (coreProtectAPI != null) { coreProtectAPI.performPurge(1209600); } // 14 days in seconds
 		
-		Configi.enableConfigify();
 	}
 	
 	private void startRestartThread()

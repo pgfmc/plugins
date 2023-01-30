@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 
@@ -38,7 +39,7 @@ public class Home extends PlayerCommand {
 	public boolean execute(PlayerData pd, String alias, String[] args) {
 		if (args.length == 0)
 		{
-			pd.sendMessage("§cPlease enter the name of a home.");
+			pd.sendMessage(ChatColor.RED + "Please enter the name of a home.");
 			return true;
 		}
 		
@@ -46,16 +47,16 @@ public class Home extends PlayerCommand {
 		String name = args[0].toLowerCase();
 		if (homes.containsKey(name))
 		{
-			pd.sendMessage("§aTeleporting to home §6" + name + "§a in 5 seconds!");
+			pd.sendMessage(ChatColor.GREEN + "Teleporting to home " + ChatColor.GOLD + name + ChatColor.GREEN + " in 5 seconds!");
 			
 			new TimedTeleport(pd.getPlayer(), homes.get(name), 5, 40, true).setAct(v -> {
-				pd.sendMessage("§aPoof!");
+				pd.sendMessage(ChatColor.GREEN + "Poof!");
 				pd.playSound(Sound.ENTITY_ENDERMAN_TELEPORT);
 				if (pd.hasTag("afk")) pd.removeTag("afk");
 			});;
 		} else
 		{
-			pd.sendMessage("§aCould not find home §6" + name + "§a.");
+			pd.sendMessage(ChatColor.GREEN + "Could not find home " + ChatColor.GOLD + name + ChatColor.GREEN + ".");
 			pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 		}
 		

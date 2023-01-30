@@ -1,5 +1,6 @@
 package net.pgfmc.survival.masterbook.inv;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
@@ -11,7 +12,7 @@ public class DiscordConfirmInventory extends ConfirmInventory {
 	private PlayerData pd;
 
 	protected DiscordConfirmInventory(PlayerData pd) {
-		super("§r§8Unlink account?","§dUnlink","§r§7Back");
+		super(ChatColor.RESET + "" + ChatColor.DARK_GRAY + "Unlink account?", ChatColor.RESET + "" + ChatColor.LIGHT_PURPLE + "Unlink", ChatColor.RESET + "" + ChatColor.GRAY + "Back");
 		
 		this.pd = pd;
 	}

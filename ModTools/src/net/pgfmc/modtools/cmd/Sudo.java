@@ -1,6 +1,7 @@
 package net.pgfmc.modtools.cmd;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,14 +26,14 @@ public class Sudo implements CommandExecutor {
 		
 		if (target == null)
 		{
-			sender.sendMessage("§cCould not find player §6§n" + args[0] + "§r§c.");
+			sender.sendMessage(ChatColor.RED + "Could not find player " + ChatColor.GOLD + ChatColor.UNDERLINE + args[0] + ChatColor.RESET + ChatColor.RED + ".");
 			return true;
 		}
 		
 		String msg = String.join(" ", args).replace(args[0], "");
 		
 		target.chat(msg);
-		sender.sendMessage("§aCommand successfully ran!");
+		sender.sendMessage(ChatColor.GREEN + "Command successfully ran!");
 		
 		return true;
 	}

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -21,7 +22,7 @@ public class HomeSelect extends ListInventory<String> {
 	
 	public HomeSelect(PlayerData pd)
 	{
-		super(27, "§r§8Home Select");
+		super(27, ChatColor.RESET + "" + ChatColor.DARK_GRAY + "Home Select");
 		
 		this.pd = pd;
 		this.homes = Homes.getHomes(pd);
@@ -40,7 +41,7 @@ public class HomeSelect extends ListInventory<String> {
 		if (!pd.hasPermission("pgf.cmd.home.home"))
 		{
 			return (p, e) -> {
-				pd.sendMessage("§cYou don't have permission to execute this command.");
+				pd.sendMessage(ChatColor.RED + "You don't have permission to execute this command.");
 			};
 			
 		}
@@ -48,7 +49,7 @@ public class HomeSelect extends ListInventory<String> {
 		if (homes.size() == 0)
 		{
 			return (p, e) -> {
-				pd.sendMessage("§cYou do not have any homes.");
+				pd.sendMessage(ChatColor.RED + "You do not have any homes.");
 			};
 			
 		}

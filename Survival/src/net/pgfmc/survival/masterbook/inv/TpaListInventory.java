@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -18,7 +19,7 @@ public class TpaListInventory extends ListInventory<Player> {
 	private PlayerData pd;
 
 	public TpaListInventory(PlayerData pd) {
-		super(27, "§r§8Select who to teleport to!");
+		super(27, ChatColor.RESET + "" + ChatColor.DARK_GRAY + "Select who to teleport to!");
 		
 		this.pd = pd;
 		
@@ -44,7 +45,7 @@ public class TpaListInventory extends ListInventory<Player> {
 	
 	@Override
 	protected ItemStack toItem(Player entry) {
-		return new ItemWrapper(Material.PLAYER_HEAD).n("§r§a" + entry.getName()).gi();
+		return new ItemWrapper(Material.PLAYER_HEAD).n(ChatColor.RESET + "" + ChatColor.GREEN + entry.getName()).gi();
 	}
 	
 }

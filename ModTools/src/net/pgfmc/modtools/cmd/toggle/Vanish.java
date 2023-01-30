@@ -1,6 +1,7 @@
 package net.pgfmc.modtools.cmd.toggle;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -27,7 +28,7 @@ public class Vanish implements CommandExecutor, Listener {
 		
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage(ChatColor.RED + "Only players can execute this command.");
 			return true;
 		}
 		
@@ -42,14 +43,14 @@ public class Vanish implements CommandExecutor, Listener {
 		if (vanish)
 		{
 			Bukkit.getOnlinePlayers().stream().forEach(pl -> pl.showPlayer(Main.plugin, p));
-			p.sendMessage("§cVanish off.");
+			p.sendMessage(ChatColor.RED + "Vanish off.");
 			p.performCommand("fakejoin");
 			pd.removeTag("vanish");
 			
 			
 		} else {
 			Bukkit.getOnlinePlayers().stream().filter(pl -> !pl.hasPermission("pgf.admin.vanish.exempt")).forEach(pl -> pl.hidePlayer(Main.plugin, p));
-			p.sendMessage("§aVanished!");
+			p.sendMessage(ChatColor.GREEN + "Vanished!");
 			p.performCommand("fakeleave");
 			pd.addTag("vanish");
 			
@@ -69,7 +70,7 @@ public class Vanish implements CommandExecutor, Listener {
 		{
 			p.setInvisible(true);
 			p.setSilent(true);
-			p.sendMessage("§aVanish on!");
+			p.sendMessage(ChatColor.GREEN + "aVanish on!");
 			
 		}
 		

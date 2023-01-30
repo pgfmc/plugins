@@ -1,5 +1,6 @@
 package net.pgfmc.modtools.cmd.toggle;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,7 +26,7 @@ public class God implements CommandExecutor, Listener {
 			
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§cOnly players can execute this command.");
+			sender.sendMessage(ChatColor.RED + "Only players can execute this command.");
 			return true;
 		}
 		
@@ -36,11 +37,11 @@ public class God implements CommandExecutor, Listener {
 		
 		if (god) {
 			pd.removeTag("god");
-			p.sendMessage("§cDisabled god mode.");
+			p.sendMessage(ChatColor.RED + "cDisabled god mode.");
 			
 		} else {
 			pd.addTag("god");
-			p.sendMessage("§aEnabled god mode!");
+			p.sendMessage(ChatColor.GREEN + "Enabled god mode!");
 			
 		}
 		
@@ -58,7 +59,7 @@ public class God implements CommandExecutor, Listener {
 		if (god)
 		{
 			p.setInvulnerable(true);
-			p.sendMessage("§aEnabled god mode!");
+			p.sendMessage(ChatColor.GREEN + "Enabled god mode!");
 			
 		}
 		
