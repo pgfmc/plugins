@@ -64,7 +64,8 @@ public class OnMessageReceived extends ListenerAdapter {
 		// If not reply
 		if(e.getMessage().getReferencedMessage() == null || e.getMessage().getReferencedMessage().getAuthor().isBot() || Discord.getGuildPGF() == null)
 		{
-			handler.setMessage(memberRole.getColor(true)
+			handler.setMessage(memberRole.getColor()
+					+ ((memberRole.compareTo(PGFRole.STAFF) <= 0) ? PGFRole.STAFF_DIAMOND : "")
 					+ e.getMember().getEffectiveName()
 					+ ChatColor.RESET + ChatColor.DARK_GRAY + " -|| "
 					+ MessageHandler.getTrackColor(e.getMember().getId())
@@ -87,10 +88,12 @@ public class OnMessageReceived extends ListenerAdapter {
 						.collect(Collectors.toList()));
             }
             
-            handler.setMessage(memberRole.getColor(true)
+            handler.setMessage(memberRole.getColor()
+            		+ ((memberRole.compareTo(PGFRole.STAFF) <= 0) ? PGFRole.STAFF_DIAMOND : "")
             		+ e.getMember().getEffectiveName()
             		+ " replied to "
-            		+ replyRole.getColor(true)
+            		+ replyRole.getColor()
+            		+ ((memberRole.compareTo(PGFRole.STAFF) <= 0) ? PGFRole.STAFF_DIAMOND : "")
             		+ replyMember.getEffectiveName()
             		+ ChatColor.RESET + ChatColor.DARK_GRAY + " || "
             		+ MessageHandler.getTrackColor(e.getMember().getId())

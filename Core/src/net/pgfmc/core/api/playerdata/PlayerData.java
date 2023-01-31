@@ -115,9 +115,9 @@ public final class PlayerData extends PlayerDataExtra {
 	// getters and setters
 	
 	public String getRankedName() {
-		if (!hasPermission("pgf.cmd.donator.nick")) return getRole().getColor(true) + getName();
-		return  getRole().getColor(true) + Optional.ofNullable(getData("nick"))
-														.orElse(getName());
+		return  getRole().getColor()
+				+ ((getRole().compareTo(PGFRole.STAFF) <= 0) ? PGFRole.STAFF_DIAMOND : "")
+				+ Optional.ofNullable(getData("nick")).orElse(getName());
 	}
 	
 	public String getDisplayName()

@@ -3,21 +3,21 @@ package net.pgfmc.core.util.roles;
 import org.bukkit.ChatColor;
 
 public enum PGFRole {
-	FOUNDER("b"),
-	ADMIN("c"),
-	DEVELOPER("2"),
-	MODERATOR("d"),
-	TRAINEE("5"),
-	STAFF("6"),
-	DOOKIE("6"),
-	DONATOR("e"),
-	VETERAN("9"),
-	MEMBER("6");
+	FOUNDER(ChatColor.AQUA),
+	ADMIN(ChatColor.RED),
+	DEVELOPER(ChatColor.DARK_GREEN),
+	MODERATOR(ChatColor.LIGHT_PURPLE),
+	TRAINEE(ChatColor.DARK_PURPLE),
+	STAFF(ChatColor.GOLD),
+	DOOKIE(ChatColor.GOLD),
+	DONATOR(ChatColor.YELLOW),
+	VETERAN(ChatColor.BLUE),
+	MEMBER(ChatColor.GOLD);
 	
-	private String color;
-	public static String STAFF_DIAMOND = new String(Character.toChars(0x2726));
+	private ChatColor color;
+	public static String STAFF_DIAMOND = new String(Character.toChars(0x2726)); // 0x2726 is the staff star Unicode
 	
-	PGFRole(String color)
+	PGFRole(ChatColor color)
 	{
 		this.color = color;
 		
@@ -29,12 +29,8 @@ public enum PGFRole {
 		
 	}
 	
-	public String getColor(boolean hasStaffDiamond) {
-		// 0x2726 is the staff star Unicode
-		
-		if (!hasStaffDiamond || compareTo(STAFF) > 0) return ChatColor.COLOR_CHAR + color;
-		
-		return ChatColor.COLOR_CHAR + color + STAFF_DIAMOND;
+	public ChatColor getColor() {
+		return color;
 		
 	}
 	

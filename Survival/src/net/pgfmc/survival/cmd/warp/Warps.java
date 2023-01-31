@@ -18,7 +18,7 @@ public class Warps implements CommandExecutor {
 			return true;
 		}
 		
-		sender.sendMessage(ChatColor.GOLD + "6Warps: " + String.join(", ", WarpLogic.getWarpNames()));
+		sender.sendMessage(ChatColor.GOLD + "Warps: " + String.join(", ", WarpLogic.getWarpNames()));
 		
 		return true;
 	}
