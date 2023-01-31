@@ -24,9 +24,6 @@ import net.pgfmc.core.util.files.Mixins;
 
 public class Main extends JavaPlugin {
 	
-	// all relevant file paths.
-	public static final String BlockContainersPath = "plugins" + File.separator + "PGF-Claims" + File.separator + "BlockContainers.yml";
-	
 	public static Main plugin;
 	
 	@Override
@@ -37,7 +34,7 @@ public class Main extends JavaPlugin {
 		plugin.reloadConfig();
 		
 		// loads files.
-		Mixins.getFile(BlockContainersPath);
+		Mixins.getFile(getDataFolder() + File.separator + "BlockContainers.yml");
 		
 		// new EscapeCommand();
 		
