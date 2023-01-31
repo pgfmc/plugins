@@ -94,59 +94,56 @@ public class Main extends JavaPlugin {
 				
 				PlayerData.getPlayerDataSet(pd -> pd.isOnline()).stream().forEach(pd -> {
 					
+					final String prefix = ChatColor.GRAY + "<" + ChatColor.RED + "!"  + ChatColor.GRAY + "> " + ChatColor.GOLD;
+					
 					if (!pd.hasTag("tip-masterbook")) {
-						pd.sendMessage(ChatColor.GRAY + "<" + ChatColor.RED + ChatColor.GRAY + "> " + ChatColor.GOLD
-								+ "Use \"/c\" to open the Command Menu" + "\n"
+						pd.sendMessage(prefix + "Use \"/c\" to open the Command Menu"
+								+ "\n"
 								+ "You can access common commands here");
 						pd.addTag("tip-masterbook");
 						
 					} else if (!pd.hasTag("tip-discord")) {
-						pd.sendMessage(ChatColor.GRAY + "<" + ChatColor.RED + ChatColor.GRAY + "> " + ChatColor.GOLD
-								+ "Join the Discord server!" + "\n" + ChatColor.BLUE + ChatColor.UNDERLINE
+						pd.sendMessage(prefix + "Join the Discord server!"
+								+ "\n" + ChatColor.BLUE + ChatColor.UNDERLINE
 								+ "https://discord.gg/zdxeREe");
 						pd.addTag("tip-discord");
 						
 					} else if (!pd.hasTag("tip-link")) {
-						pd.sendMessage(ChatColor.GRAY + "<" + ChatColor.RED + ChatColor.GRAY + "> " + ChatColor.GOLD
-								+ "You can link your Discord account to your Minecraft account" + "\n"
+						pd.sendMessage(prefix + "You can link your Discord account to your Minecraft account"
+								+ "\n"
 								+ "to unlock special features (and more for donators!)");
 						pd.addTag("tip-link");
 						
 					} else if (!pd.hasTag("tip-donatorad")) {
-						pd.sendMessage(ChatColor.GRAY + "<" + ChatColor.RED + ChatColor.GRAY + "> " + ChatColor.GOLD
-								+ "By donating to the server, you can unlock special perks." + "\n"
+						pd.sendMessage(prefix + "By donating to the server, you can unlock special perks."
+								+ "\n"
 								+ "You can donate by joining the Discord (thanks!)");
 						pd.addTag("tip-donatorad");
 						
 					} else if (!pd.hasTag("tip-afk")) {
-						pd.sendMessage(ChatColor.GRAY + "<" + ChatColor.RED + ChatColor.GRAY + "> " + ChatColor.GOLD
-								+ "You can enable AFK mode to become invulnerable");
+						pd.sendMessage(prefix + "You can enable AFK mode to become invulnerable");
 						pd.addTag("tip-afk");
 						
 					} else if (!pd.hasTag("tip-home")) {
-						pd.sendMessage(ChatColor.GRAY + "<" + ChatColor.RED + ChatColor.GRAY + "> " + ChatColor.GOLD
-								+ "You can set and travel to homes");
+						pd.sendMessage(prefix + "You can set and travel to homes");
 						pd.addTag("tip-home");
 						
 					} else if (!pd.hasTag("tip-tpa")) {
-						pd.sendMessage(ChatColor.GRAY + "<" + ChatColor.RED + ChatColor.GRAY + "> " + ChatColor.GOLD
-								+ "You can send teleport requests to other players");
+						pd.sendMessage(prefix + "You can send teleport requests to other players");
 						pd.addTag("tip-tpa");
 						
 					} else if (!pd.hasTag("tip-claim")) {
-						pd.sendMessage(ChatColor.GRAY + "<" + ChatColor.RED + ChatColor.GRAY + "> " + ChatColor.GOLD
-								+ "Use loadstones to claim land! Add players to your claim");
+						pd.sendMessage(prefix + "Use loadstones to claim land! Add players to your claim");
 						pd.addTag("tip-claim");
 						
 					} else if (!pd.hasTag("tip-back")) {
-						pd.sendMessage(ChatColor.GRAY + "<" + ChatColor.RED + ChatColor.GRAY + "> " + ChatColor.GOLD
-								+ "You can teleport back to your last known location" + "\n"
+						pd.sendMessage(prefix + "You can teleport back to your last known location"
+								+ "\n"
 								+ "E.g. Death location, teleport location");
 						pd.addTag("tip-back");
 						
 					} else if (!pd.hasTag("tip-protectitems")) {
-						pd.sendMessage(ChatColor.GRAY + "<" + ChatColor.RED + ChatColor.GRAY + "> " + ChatColor.GOLD
-								+ "Items are protected for 2 minutes apon death");
+						pd.sendMessage(prefix + "Items are protected for 2 minutes apon death");
 						pd.addTag("tip-protectitems");
 						
 					}
