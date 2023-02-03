@@ -8,13 +8,13 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import net.pgfmc.core.api.inventory.ConfirmInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.modtools.rollback.RollbackBackup;
-import net.pgfmc.modtools.rollback.inv.RollbackOnlinePlayersListInventory;
+import net.pgfmc.modtools.rollback.inv.InventoryOnlinePlayersList;
 
-public class RollbackBackupConfirmInventory extends ConfirmInventory {
+public class InventoryBackupConfirm extends ConfirmInventory {
 	
 	RollbackBackup inventory;
 
-	public RollbackBackupConfirmInventory(String name, RollbackBackup inventory) {
+	public InventoryBackupConfirm(String name, RollbackBackup inventory) {
 		super(name, ChatColor.GREEN + "Rollback", ChatColor.RED + "Cancel");
 		
 		this.inventory = inventory;
@@ -49,7 +49,7 @@ public class RollbackBackupConfirmInventory extends ConfirmInventory {
 		
 		if (target == null) return;
 		
-		p.openInventory(new RollbackOnlinePlayersListInventory().getInventory());
+		p.openInventory(new InventoryOnlinePlayersList().getInventory());
 		
 	}
 
