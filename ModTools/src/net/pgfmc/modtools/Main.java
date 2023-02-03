@@ -17,8 +17,8 @@ import net.pgfmc.modtools.cmd.Sudo;
 import net.pgfmc.modtools.cmd.toggle.Fly;
 import net.pgfmc.modtools.cmd.toggle.God;
 import net.pgfmc.modtools.cmd.toggle.Vanish;
-import net.pgfmc.modtools.rollback.RollbackBackup;
-import net.pgfmc.modtools.rollback.RollbackScheduler;
+import net.pgfmc.modtools.rollback.InventoryBackup;
+import net.pgfmc.modtools.rollback.InventoryBackupScheduler;
 import net.pgfmc.modtools.rollback.cmd.Inventory;
 
 public class Main extends JavaPlugin {
@@ -53,7 +53,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new Fly(), this);
 		getServer().getPluginManager().registerEvents(new God(), this);
 		getServer().getPluginManager().registerEvents(new Vanish(), this);
-		getServer().getPluginManager().registerEvents(new RollbackScheduler(), this);
+		getServer().getPluginManager().registerEvents(new InventoryBackupScheduler(), this);
 		
 		
 	}
@@ -61,11 +61,11 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onDisable()
 	{
-		Bukkit.getScheduler().cancelTask(RollbackScheduler.INVENTORY_ROLLBACK_TASK_ID);
+		Bukkit.getScheduler().cancelTask(InventoryBackupScheduler.INVENTORY_ROLLBACK_TASK_ID);
 		
 		PlayerData.getPlayerDataSet().stream().forEach(pd -> {
 			@SuppressWarnings("unchecked")
-			List<RollbackBackup> inventories = (List<RollbackBackup>) Optional.ofNullable(pd.getData("inventories")).orElse(new ArrayList<RollbackBackup>());
+			List<InventoryBackup> inventories = (List<InventoryBackup>) Optional.ofNullable(pd.getData("inventories")).orElse(new ArrayList<InventoryBackup>());
 			
 			inventories.stream().forEach(inventory -> {
 				Bukkit.getScheduler().cancelTask(inventory.getTaskId());
