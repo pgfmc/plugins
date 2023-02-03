@@ -60,11 +60,11 @@ commands:
     description: Broadcast to the server!
     aliases: [bc, broadc, bcast, say]
     permission: pgf.admin.broadcast
-  rollback:
-    usage: /<command> [player]
-    description: Rollback a player's inventory
-    aliases: [rb, rollb, rollb, rollbackinventory]
-    permission: pgf.admin.rollbackinventory
+  inventory:
+    usage: /<command> [(optional) player]
+    description: View a player's backed up inventories
+    aliases: [inv]
+    permission: pgf.admin.inventory
     
 permissions:
   pgf.admin.gamemode.*:

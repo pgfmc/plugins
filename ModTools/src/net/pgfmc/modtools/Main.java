@@ -19,7 +19,7 @@ import net.pgfmc.modtools.cmd.toggle.God;
 import net.pgfmc.modtools.cmd.toggle.Vanish;
 import net.pgfmc.modtools.rollback.RollbackBackup;
 import net.pgfmc.modtools.rollback.RollbackScheduler;
-import net.pgfmc.modtools.rollback.cmd.Rollback;
+import net.pgfmc.modtools.rollback.cmd.Inventory;
 
 public class Main extends JavaPlugin {
 	
@@ -48,7 +48,7 @@ public class Main extends JavaPlugin {
 		
 		getCommand("broadcast").setExecutor(new Broadcast());
 		
-		getCommand("rollback").setExecutor(new Rollback());
+		getCommand("inventory").setExecutor(new Inventory());
 		
 		getServer().getPluginManager().registerEvents(new Fly(), this);
 		getServer().getPluginManager().registerEvents(new God(), this);
