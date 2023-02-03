@@ -14,11 +14,11 @@ import net.pgfmc.core.api.inventory.ListInventory;
 import net.pgfmc.core.api.inventory.extra.Butto;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.ItemWrapper;
-import net.pgfmc.modtools.rollback.inv.inv.RollbackBackupListInventory;
+import net.pgfmc.modtools.rollback.inv.inv.InventoryBackupList;
 
-public class RollbackOnlinePlayersListInventory extends ListInventory<Player> {
+public class InventoryOnlinePlayersList extends ListInventory<Player> {
 	
-	public RollbackOnlinePlayersListInventory() {
+	public InventoryOnlinePlayersList() {
 		super(InventoryType.CHEST.getDefaultSize(), "Online Players");
 		
 	}
@@ -33,7 +33,7 @@ public class RollbackOnlinePlayersListInventory extends ListInventory<Player> {
 		
 		return (p, e) -> {
 			p.closeInventory();
-			p.openInventory(new RollbackBackupListInventory(PlayerData.from(entry)).getInventory());
+			p.openInventory(new InventoryBackupList(PlayerData.from(entry)).getInventory());
 		};
 		
 	}
