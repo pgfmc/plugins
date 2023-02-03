@@ -1,6 +1,6 @@
 package net.pgfmc.modtools.rollback;
 
-public enum BackupCause {
+public enum InventoryBackupCause {
 	DEATH,
 	SCHEDULED,
 	ROLLBACK
