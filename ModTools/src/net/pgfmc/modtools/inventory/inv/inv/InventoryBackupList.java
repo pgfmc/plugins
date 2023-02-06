@@ -58,13 +58,13 @@ public class InventoryBackupList extends ListInventory<InventoryBackup> {
 
 	@Override
 	protected ItemStack toItem(InventoryBackup entry) {
-		final int itemStackCount = Arrays.asList(entry.getInventory().getContents())
+		final int totalItemStackCount = Arrays.asList(entry.getInventory().getContents())
 								.stream()
 								.filter(item -> item != null)
 								.collect(Collectors.toList())
 								.size();
 		
-		if (itemStackCount == 0)
+		if (totalItemStackCount == 0)
 		{
 			return new ItemWrapper(Material.WHITE_DYE)
 					.n(InventoryBackupScheduler.INVENTORY_DATE_FORMAT.format(entry.getDate()))
@@ -72,7 +72,7 @@ public class InventoryBackupList extends ListInventory<InventoryBackup> {
 					.gi();
 		}
 		
-		if (itemStackCount <= 9)
+		if (totalItemStackCount <= 9)
 		{
 			return new ItemWrapper(Material.GRAY_DYE)
 					.n(InventoryBackupScheduler.INVENTORY_DATE_FORMAT.format(entry.getDate()))
@@ -80,7 +80,7 @@ public class InventoryBackupList extends ListInventory<InventoryBackup> {
 					.gi();
 		}
 		
-		if (itemStackCount <= 18)
+		if (totalItemStackCount <= 18)
 		{
 			return new ItemWrapper(Material.YELLOW_DYE)
 					.n(InventoryBackupScheduler.INVENTORY_DATE_FORMAT.format(entry.getDate()))
@@ -88,7 +88,7 @@ public class InventoryBackupList extends ListInventory<InventoryBackup> {
 					.gi();
 		}
 		
-		if (itemStackCount < 27)
+		if (totalItemStackCount < 27)
 		{
 			return new ItemWrapper(Material.ORANGE_DYE)
 					.n(InventoryBackupScheduler.INVENTORY_DATE_FORMAT.format(entry.getDate()))
@@ -96,7 +96,7 @@ public class InventoryBackupList extends ListInventory<InventoryBackup> {
 					.gi();
 		}
 		
-		if (itemStackCount == 27)
+		if (totalItemStackCount == 27)
 		{
 			return new ItemWrapper(Material.RED_DYE)
 					.n(InventoryBackupScheduler.INVENTORY_DATE_FORMAT.format(entry.getDate()))
