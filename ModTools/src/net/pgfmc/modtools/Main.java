@@ -17,9 +17,9 @@ import net.pgfmc.modtools.cmd.Sudo;
 import net.pgfmc.modtools.cmd.toggle.Fly;
 import net.pgfmc.modtools.cmd.toggle.God;
 import net.pgfmc.modtools.cmd.toggle.Vanish;
-import net.pgfmc.modtools.rollback.InventoryBackup;
-import net.pgfmc.modtools.rollback.InventoryBackupScheduler;
-import net.pgfmc.modtools.rollback.cmd.Inventory;
+import net.pgfmc.modtools.inventory.InventoryBackup;
+import net.pgfmc.modtools.inventory.InventoryBackupScheduler;
+import net.pgfmc.modtools.inventory.cmd.Inventory;
 
 public class Main extends JavaPlugin {
 	

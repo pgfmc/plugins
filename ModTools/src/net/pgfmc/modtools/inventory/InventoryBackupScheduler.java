@@ -1,4 +1,4 @@
-package net.pgfmc.modtools.rollback;
+package net.pgfmc.modtools.inventory;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
