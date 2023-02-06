@@ -1,4 +1,4 @@
-package net.pgfmc.modtools.rollback.inv.inv;
+package net.pgfmc.modtools.inventory.inv.inv;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,10 +15,10 @@ import net.pgfmc.core.api.inventory.ListInventory;
 import net.pgfmc.core.api.inventory.extra.Butto;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.ItemWrapper;
-import net.pgfmc.modtools.rollback.InventoryBackup;
-import net.pgfmc.modtools.rollback.InventoryBackupScheduler;
-import net.pgfmc.modtools.rollback.inv.InventoryOnlinePlayersList;
-import net.pgfmc.modtools.rollback.inv.inv.inv.InventoryBackupConfirm;
+import net.pgfmc.modtools.inventory.InventoryBackup;
+import net.pgfmc.modtools.inventory.InventoryBackupScheduler;
+import net.pgfmc.modtools.inventory.inv.InventoryOnlinePlayersList;
+import net.pgfmc.modtools.inventory.inv.inv.inv.InventoryBackupConfirm;
 
 public class InventoryBackupList extends ListInventory<InventoryBackup> {
 	

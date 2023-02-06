@@ -1,4 +1,4 @@
-package net.pgfmc.modtools.rollback.inv.inv.inv;
+package net.pgfmc.modtools.inventory.inv.inv.inv;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -7,8 +7,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 import net.pgfmc.core.api.inventory.ConfirmInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
-import net.pgfmc.modtools.rollback.InventoryBackup;
-import net.pgfmc.modtools.rollback.inv.InventoryOnlinePlayersList;
+import net.pgfmc.modtools.inventory.InventoryBackup;
+import net.pgfmc.modtools.inventory.inv.InventoryOnlinePlayersList;
 
 public class InventoryBackupConfirm extends ConfirmInventory {
 	

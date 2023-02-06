@@ -1,4 +1,4 @@
-package net.pgfmc.modtools.rollback;
+package net.pgfmc.modtools.inventory;
 
 import java.util.ArrayList;
 import java.util.Date;
