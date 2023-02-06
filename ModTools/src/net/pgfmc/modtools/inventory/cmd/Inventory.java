@@ -1,4 +1,4 @@
-package net.pgfmc.modtools.rollback.cmd;
+package net.pgfmc.modtools.inventory.cmd;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -8,8 +8,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
-import net.pgfmc.modtools.rollback.inv.InventoryOnlinePlayersList;
-import net.pgfmc.modtools.rollback.inv.inv.InventoryBackupList;
+import net.pgfmc.modtools.inventory.inv.InventoryOnlinePlayersList;
+import net.pgfmc.modtools.inventory.inv.inv.InventoryBackupList;
 
 public class Inventory implements CommandExecutor {
 
