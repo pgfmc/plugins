@@ -50,7 +50,10 @@ public class InventoryBackupList extends ListInventory<InventoryBackup> {
 			}
 			
 			p.closeInventory();
-			p.openInventory(new InventoryBackupConfirm(InventoryBackupScheduler.INVENTORY_DATE_FORMAT.format(entry.getDate()) + " - " + entry.getCause().name(), entry).getInventory());
+			p.openInventory(new InventoryBackupConfirm(InventoryBackupScheduler.INVENTORY_DATE_FORMAT.format(entry.getDate())
+															+ " - "
+															+ entry.getCause().name()
+														, entry).getInventory());
 			
 		};
 		
@@ -64,47 +67,37 @@ public class InventoryBackupList extends ListInventory<InventoryBackup> {
 								.collect(Collectors.toList())
 								.size();
 		
+		Material itemDyeColor = Material.BARRIER;
+		
 		if (totalItemStackCount == 0)
 		{
-			return new ItemWrapper(Material.WHITE_DYE)
-					.n(InventoryBackupScheduler.INVENTORY_DATE_FORMAT.format(entry.getDate()))
-					.l(entry.getCause().name())
-					.gi();
+			itemDyeColor = Material.WHITE_DYE;
 		}
 		
 		if (totalItemStackCount <= 9)
 		{
-			return new ItemWrapper(Material.GRAY_DYE)
-					.n(InventoryBackupScheduler.INVENTORY_DATE_FORMAT.format(entry.getDate()))
-					.l(entry.getCause().name())
-					.gi();
+			itemDyeColor = Material.GRAY_DYE;
 		}
 		
 		if (totalItemStackCount <= 18)
 		{
-			return new ItemWrapper(Material.YELLOW_DYE)
-					.n(InventoryBackupScheduler.INVENTORY_DATE_FORMAT.format(entry.getDate()))
-					.l(entry.getCause().name())
-					.gi();
+			itemDyeColor = Material.YELLOW_DYE;
 		}
 		
 		if (totalItemStackCount < 27)
 		{
-			return new ItemWrapper(Material.ORANGE_DYE)
-					.n(InventoryBackupScheduler.INVENTORY_DATE_FORMAT.format(entry.getDate()))
-					.l(entry.getCause().name())
-					.gi();
+			itemDyeColor = Material.ORANGE_DYE;
 		}
 		
 		if (totalItemStackCount == 27)
 		{
-			return new ItemWrapper(Material.RED_DYE)
-					.n(InventoryBackupScheduler.INVENTORY_DATE_FORMAT.format(entry.getDate()))
-					.l(entry.getCause().name())
-					.gi();
+			itemDyeColor = Material.RED_DYE;
 		}
 		
-		return new ItemWrapper(Material.BARRIER).gi(); // This shouldn't happen lol
+		return new ItemWrapper(itemDyeColor)
+				.n(InventoryBackupScheduler.INVENTORY_DATE_FORMAT.format(entry.getDate()))
+				.l(entry.getCause().name())
+				.gi();
 		
 		
 	}
