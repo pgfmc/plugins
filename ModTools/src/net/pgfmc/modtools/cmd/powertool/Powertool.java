@@ -1,6 +1,8 @@
 package net.pgfmc.modtools.cmd.powertool;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -14,6 +16,7 @@ import net.pgfmc.core.api.playerdata.PlayerData;
 
 public class Powertool implements CommandExecutor {
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		
@@ -34,9 +37,9 @@ public class Powertool implements CommandExecutor {
 		
 		String power = String.join(" ", args);
 		ItemStack tool = p.getInventory().getItemInMainHand();
-		Map<Material, String> tools = pd.getData("powertools");
+		Map<Material, String> tools = (Map<Material, String>) Optional.ofNullable(pd.getData("powertools")).orElse(new HashMap<>());
 		
-		if (args[0].equals("remove"))
+		if (args.length == 1 && args[0].equals("remove"))
 		{
 			if (tool == null)
 			{
@@ -46,12 +49,39 @@ public class Powertool implements CommandExecutor {
 			
 			if (!tools.containsKey(tool.getType())) return true;
 			
+			p.sendMessage(ChatColor.GREEN + "Removed powertool (/" + tools.get(tool.getType()) + ")!");
+			
 			tools.remove(tool.getType());
 			pd.setData("powertools", tools);
 			
-			p.sendMessage(ChatColor.GREEN + "Removed powertool (/" + tools.get(tool.getType()) + ")!");
+			return true;
+		}
+		
+		if (args.length == 1 && args[0].equals("list"))
+		{
+			if (tools.isEmpty())
+			{
+				p.sendMessage(ChatColor.GREEN + "Powertools: none");
+				return true;
+			}
+			
+			p.sendMessage(ChatColor.RED + "Active powertools:"
+					+ "\n"
+					+ tools.toString());
 			
 			return true;
+			
+		}
+		
+		if (args.length == 1 && args[0].equals("clear"))
+		{
+			p.sendMessage(ChatColor.GREEN + "Cleared (" + tools.size() + ") powertools.");
+			
+			tools.clear();
+			pd.setData("powertools", tools);
+			
+			return true;
+			
 		}
 		
 		if (tool == null)
