@@ -1,5 +1,5 @@
 name: PGF-Modtools
-version: 7.0.7
+version: 7.0.8
 api-version: 1.19
 authors: [bk, CrimsonDart]
 website: play.pgfmc.net
@@ -65,6 +65,11 @@ commands:
     description: Rollback a player's inventory
     aliases: [rb, rollb, rollb, rollbackinventory]
     permission: pgf.admin.rollbackinventory
+  powertool:
+    usage: /<command> [command without slash]
+    description: Bind a command to any tool
+    aliases: [pt, pwt]
+    permission: pgf.admin.powertool
     
 permissions:
   pgf.admin.gamemode.*:
