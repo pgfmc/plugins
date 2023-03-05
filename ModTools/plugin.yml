@@ -65,6 +65,11 @@ commands:
     description: Rollback a player's inventory
     aliases: [rb, rollb, rollb, rollbackinventory]
     permission: pgf.admin.rollbackinventory
+  powertool:
+    usage: /<command> [command without slash]
+    description: Bind a command to any tool
+    aliases: [pt, pwt]
+    permission: pgf.admin.powertool
     
 permissions:
   pgf.admin.gamemode.*:
