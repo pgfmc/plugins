@@ -14,6 +14,8 @@ import net.pgfmc.modtools.cmd.Gamemode;
 import net.pgfmc.modtools.cmd.Heal;
 import net.pgfmc.modtools.cmd.Invsee;
 import net.pgfmc.modtools.cmd.Sudo;
+import net.pgfmc.modtools.cmd.powertool.Powertool;
+import net.pgfmc.modtools.cmd.powertool.PowertoolExecutor;
 import net.pgfmc.modtools.cmd.toggle.Fly;
 import net.pgfmc.modtools.cmd.toggle.God;
 import net.pgfmc.modtools.cmd.toggle.Vanish;
@@ -50,10 +52,13 @@ public class Main extends JavaPlugin {
 		
 		getCommand("inventory").setExecutor(new Inventory());
 		
+		getCommand("powertool").setExecutor(new Powertool());
+		
 		getServer().getPluginManager().registerEvents(new Fly(), this);
 		getServer().getPluginManager().registerEvents(new God(), this);
 		getServer().getPluginManager().registerEvents(new Vanish(), this);
 		getServer().getPluginManager().registerEvents(new InventoryBackupScheduler(), this);
+		getServer().getPluginManager().registerEvents(new PowertoolExecutor(), this);
 		
 		
 	}
