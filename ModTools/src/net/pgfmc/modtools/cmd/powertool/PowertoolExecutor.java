@@ -11,7 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.ItemStack;
 
 import net.md_5.bungee.api.ChatColor;
 import net.pgfmc.core.api.playerdata.PlayerData;
@@ -28,13 +27,13 @@ public class PowertoolExecutor implements Listener {
 		Player p = e.getPlayer();
 		PlayerData pd = PlayerData.from(p);
 		
-		ItemStack tool = p.getInventory().getItemInMainHand();
+		Material tool = p.getInventory().getItemInMainHand().getType();
 		Map<Material, String> tools = (Map<Material, String>) Optional.ofNullable(pd.getData("powertools")).orElse(new HashMap<>());
 		
-		if (tools.isEmpty() || tool == null) return;
-		if (!tools.containsKey(tool.getType())) return;
+		if (tools.isEmpty() || tool == Material.AIR) return;
+		if (!tools.containsKey(tool)) return;
 		
-		p.performCommand(tools.get(tool.getType()));
+		p.performCommand(tools.get(tool));
 		e.setCancelled(true);
 		
 	}
@@ -52,7 +51,7 @@ public class PowertoolExecutor implements Listener {
 		
 		if (tools.isEmpty()) return;
 		
-		p.sendMessage(ChatColor.RED + "" + ChatColor.UNDERLINE + "WARNING!"
+		p.sendMessage(ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "WARNING!"
 				+ "\n"
 				+ ChatColor.RESET + ChatColor.RED + "Active powertools:"
 				+ "\n"

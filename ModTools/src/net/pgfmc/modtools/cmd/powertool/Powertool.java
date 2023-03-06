@@ -9,7 +9,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import net.md_5.bungee.api.ChatColor;
 import net.pgfmc.core.api.playerdata.PlayerData;
@@ -36,22 +35,22 @@ public class Powertool implements CommandExecutor {
 		PlayerData pd = PlayerData.from(p);
 		
 		String power = String.join(" ", args);
-		ItemStack tool = p.getInventory().getItemInMainHand();
+		Material tool = p.getInventory().getItemInMainHand().getType();
 		Map<Material, String> tools = (Map<Material, String>) Optional.ofNullable(pd.getData("powertools")).orElse(new HashMap<>());
 		
 		if (args.length == 1 && args[0].equals("remove"))
 		{
-			if (tool == null)
+			if (tool == Material.AIR)
 			{
 				p.sendMessage(ChatColor.RED + "Invalid tool.");
 				return true;
 			}
 			
-			if (!tools.containsKey(tool.getType())) return true;
+			if (!tools.containsKey(tool)) return true;
 			
-			p.sendMessage(ChatColor.GREEN + "Removed powertool (/" + tools.get(tool.getType()) + ")!");
+			p.sendMessage(ChatColor.GREEN + "Removed powertool (/" + tools.get(tool) + ")!");
 			
-			tools.remove(tool.getType());
+			tools.remove(tool);
 			pd.setData("powertools", tools);
 			
 			return true;
@@ -84,7 +83,7 @@ public class Powertool implements CommandExecutor {
 			
 		}
 		
-		if (tool == null)
+		if (tool == Material.AIR)
 		{
 			p.sendMessage(ChatColor.RED + "Invalid tool.");
 			return true;
@@ -96,13 +95,13 @@ public class Powertool implements CommandExecutor {
 			return true;
 		}
 		
-		if (tools.containsKey(tool.getType()))
+		if (tools.containsKey(tool))
 		{
-			p.sendMessage(ChatColor.RED + "Overwriting existing powertool. (/" + tools.get(tool.getType()) + ")");
+			p.sendMessage(ChatColor.RED + "Overwriting existing powertool. (/" + tools.get(tool) + ")");
 			
 		}
 		
-		tools.put(tool.getType(), power);
+		tools.put(tool, power);
 		pd.setData("powertools", tools);
 		
 		p.sendMessage(ChatColor.GREEN + "Powertool applied! Use \"/powertool remove\" to remove it.");
