@@ -13,6 +13,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
@@ -77,7 +78,7 @@ public class PowertoolExecutor implements Listener {
 		Player p = e.getPlayer();
 		PlayerData pd = PlayerData.from(p);
 		
-		Material tool = p.getInventory().getItemInMainHand().getType();
+		Material tool = ((ItemStack) Optional.ofNullable(p.getInventory().getItem(e.getNewSlot())).orElse(new ItemStack(Material.AIR))).getType();
 		Map<Material, String> tools = (Map<Material, String>) Optional.ofNullable(pd.getData("powertools")).orElse(new HashMap<>());
 		
 		if (tools.isEmpty() || tool == Material.AIR) return;
@@ -101,7 +102,7 @@ public class PowertoolExecutor implements Listener {
 				
 			}
 			
-		}, 5);
+		}, 5 * 20);
 		
 	}
 
