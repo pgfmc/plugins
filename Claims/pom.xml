@@ -67,8 +67,7 @@
 			<groupId>net.pgfmc.core</groupId>
 			<artifactId>core</artifactId>
 			<version>0.0.0</version>
-			<scope>system</scope>
-			<systemPath>${env.PLUGINS_HOME}/plugins/Core/target/Core-jar-with-dependencies.jar</systemPath>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<repositories>
