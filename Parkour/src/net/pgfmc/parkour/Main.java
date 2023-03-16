@@ -1,4 +1,4 @@
-package pgf.plugins.Parkour.src.net.pgfmc.parkour;
+package net.pgfmc.parkour;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
