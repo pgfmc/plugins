@@ -1,0 +1,8 @@
+name: PGF-Parkour
+version: 7.1.0
+api-version: 1.19
+author: [bk, CrimsonDart]
+main: net.pgfmc.parkour.Main
+description: Scripting code for the Project Zcloud Parkour
+depend: [PGF-Core, ProtocolLib]
+prefix: PGF-Parkour
