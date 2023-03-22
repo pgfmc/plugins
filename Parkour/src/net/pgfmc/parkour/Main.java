@@ -12,6 +12,7 @@ import net.pgfmc.parkour.events.PlayerInteract;
 
 
 public class Main extends JavaPlugin {
+	
     public static Main plugin;
 
     @Override
