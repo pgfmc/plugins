@@ -12,10 +12,14 @@ import net.pgfmc.core.bot.discord.Discord;
 import net.pgfmc.core.bot.util.Colors;
 
 public class Bot {
-	public static String configPath;
+	
+	
 	
 	public Bot()
 	{
+		
+		
+		
 		try {
 			new Discord();
 		} catch (InterruptedException e) {
