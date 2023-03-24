@@ -1,4 +1,49 @@
-server-channel: '771247931005206579'
-alert-channel: '938677080349093898'
-
-token: <discord bot token here>
+# config.yml - Core
+#
+#
+# ---------------
+# Discord options
+# ---------------
+discord:
+# -------------------------------------------------------
+# Enable/Disable the Discord bot and all of it's features
+#
+  enable: true
+# -------------------------------------------------------
+# Discord bot token for connecting the Discord server and user roles
+# Must be changed from default
+#
+  token: token
+# -------------------------------------------------------
+# Discord server channel IDs for receiving Minecraft messages and alerts
+# server-channel is for Minecraft chat messages
+# alert-channel is for staff alerts
+# Can be left default/empty to disable the messages
+#
+  server-channel: '000000000000000000'
+  alert-channel: '000000000000000000'
+# -------------------------------------------------------
+#
+# ------------
+# Role options
+# ------------
+roles:
+# -------------------------------------------------------
+# Enable/Disable roles for players
+# This would still use Core features with vanilla commands only
+# Operators are mostly unaffected
+# Will fallback to false if LuckPerms is not installed
+#
+  enable: true
+# -------------------------------------------------------
+# The role that should be auto-assigned for first time players
+# Generally used for test servers only
+# Can be any role in the enum list
+# Will ignore this option if roles is disabled/LuckPerms is not installed
+#
+  default-role: default
+# -------------------------------------------------------
+# Grant op for new players
+# USE WITH CAUTION. Doesn't affect existing players
+  auto-op: false
+# -------------------------------------------------------
