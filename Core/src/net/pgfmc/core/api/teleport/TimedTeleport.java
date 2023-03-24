@@ -20,7 +20,7 @@ public class TimedTeleport {
 	
 	public TimedTeleport(LivingEntity entity, Location dest, int count)
 	{
-		SafeLocation safe = new SafeLocation(dest);
+		final SafeLocation safe = new SafeLocation(dest);
 		
 		new BukkitRunnable() {
 			@Override
@@ -34,13 +34,12 @@ public class TimedTeleport {
 	}
 	public TimedTeleport(Player p, Location dest, int count, int protectTime)
 	{
-		SafeLocation safe = new SafeLocation(dest);
+		final SafeLocation safe = new SafeLocation(dest);
 		
 		new BukkitRunnable() {
 			@Override
 			public void run() {
 				if (safe.getThread().isAlive()) return;
-				SpawnProtect.TEMP_PROTECT(p, 20 * 2);
 				p.teleport(safe.getLocation());
 				if (act != null) { act.accept(null); }
 				cancel();
@@ -49,7 +48,7 @@ public class TimedTeleport {
 	}
 	public TimedTeleport(Player p, Location dest, int count, boolean logBack)
 	{
-		SafeLocation safe = new SafeLocation(dest);
+		final SafeLocation safe = new SafeLocation(dest);
 		
 		new BukkitRunnable() {
 			@Override
@@ -64,13 +63,12 @@ public class TimedTeleport {
 	}
 	public TimedTeleport(Player p, Location dest, int count, int protectTime, boolean logBack)
 	{
-		SafeLocation safe = new SafeLocation(dest);
+		final SafeLocation safe = new SafeLocation(dest);
 		
 		new BukkitRunnable() {
 			@Override
 			public void run() {
 				if (safe.getThread().isAlive()) return;
-				SpawnProtect.TEMP_PROTECT(p, 20 * 2);
 				PlayerData.setData(p, "backLoc", p.getLocation());
 				p.teleport(safe.getLocation());
 				if (act != null) { act.accept(null); }
