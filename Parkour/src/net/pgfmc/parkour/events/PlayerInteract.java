@@ -6,20 +6,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.Vector4;
-import net.pgfmc.parkour.levels.CharredCaves1;
-
-
-
-
-
+import net.pgfmc.parkour.levels.RuinedCaverns;
 
 public class PlayerInteract implements Listener {
-
-
-    private Region cca1 = new Region(new Vector4(-39, 38, -55, 0), new Vector4(98, 98, 49, 1));
-
-
-
 
     @EventHandler
     public void playerInteractEvent(PlayerInteractEvent e) {
@@ -28,8 +17,9 @@ public class PlayerInteract implements Listener {
 
         pd.sendMessage(pos.toString());
 
-       if (cca1.contains(pos)) {
-           CharredCaves1.script(pos, pd);
-       }
+        if (RuinedCaverns.act1.contains(pos)) {
+            RuinedCaverns.interact(pos, pd);
+        }
+
     }
 }
