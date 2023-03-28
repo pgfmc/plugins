@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import net.pgfmc.core.api.playerdata.PlayerDataManager;
 import net.pgfmc.parkour.events.PlayerInteract;
+import net.pgfmc.parkour.events.PlayerMove;
 
 
 
@@ -21,6 +22,7 @@ public class Main extends JavaPlugin {
         plugin = this;
 
         getServer().getPluginManager().registerEvents(new PlayerInteract(), this);
+        getServer().getPluginManager().registerEvents(new PlayerMove(), this);
 
         PlayerDataManager.setInit(pd -> {
 
