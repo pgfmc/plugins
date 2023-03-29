@@ -28,7 +28,7 @@ public class Update {
 			try {
 				ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream());
 				
-				FileOutputStream fileOutputStream = new FileOutputStream(new File(Main.WORKING_DIRECTORY).getAbsolutePath() + File.separator + filePathName);
+				FileOutputStream fileOutputStream = new FileOutputStream(new File(Main.SERVER_DIR).getAbsolutePath() + File.separator + filePathName);
 				FileChannel fileChannel = fileOutputStream.getChannel();
 				
 				fileChannel.transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
