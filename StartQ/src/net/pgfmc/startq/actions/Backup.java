@@ -9,7 +9,7 @@ import net.pgfmc.startq.util.Zipper;
 
 public class Backup {
 	
-	private final String PATH_SOURCE = Main.WORKING_DIRECTORY;
+	private final String PATH_SOURCE = Main.SERVER_DIR;
 	private final String PATH_DESTINATION = Main.BACKUP_DIRECTORY;
 	
 	// Date format for the archive file name
