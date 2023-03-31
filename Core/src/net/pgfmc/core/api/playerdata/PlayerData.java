@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -34,9 +35,8 @@ public final class PlayerData extends PlayerDataExtra {
 	/**
 	 * Hashmap to contain all instances of PlayerData, so they can be accesed.
 	 */
-	private static final Set<PlayerData> instances = new HashSet<PlayerData>();
-	private static final Set<PlayerData> debug = new HashSet<PlayerData>();
-	
+	private static final HashMap<String, PlayerData> instances = new HashMap<String, PlayerData>();
+
 	private HashMap<String, Object> data = new HashMap<String, Object>();
 	private Set<String> tags = new HashSet<>();
 	protected List<String> queue = new LinkedList<String>();
@@ -52,7 +52,7 @@ public final class PlayerData extends PlayerDataExtra {
 		
 		PlayerDataManager.pdInit.stream().forEach(consoomer -> consoomer.accept(this));
 		
-		instances.add(this);
+		instances.put(p.getUniqueId().toString(), this);
 		
 		Bukkit.getLogger().warning("PlayerData loaded for " + p.getName() + "!");
 		
@@ -78,9 +78,9 @@ public final class PlayerData extends PlayerDataExtra {
 	 */
 	public static PlayerData from(UUID id) {
 		Objects.requireNonNull(id);
-		for (PlayerData uid : instances) {
-			if (id.toString().equals(uid.getUniqueId().toString())) {
-				return uid;
+		for (String uid : instances.keySet()) {
+			if (id.toString().equals(uid)) {
+				return instances.get(uid);
 			}
 		}
 		return null;
@@ -104,9 +104,10 @@ public final class PlayerData extends PlayerDataExtra {
 	
 	public static PlayerData fromDiscordId(String discordUserId)
 	{
-		for (PlayerData uid : instances)
-		{
-			if (discordUserId.equals(uid.getData("Discord"))) return uid;
+		for (PlayerData pd : getPlayerDataSet()) {
+			if (discordUserId.equals(pd.getData("Discord"))) {
+				return pd;
+			}
 		}
 		return null;
 		
@@ -149,18 +150,16 @@ public final class PlayerData extends PlayerDataExtra {
 	
 	public void setDebug(boolean d) {
 		if (d) {
-			debug.add(this);
+			addTag("debug");
 		} else {
-			debug.remove(this);
+			removeTag("debug");
 		}
 	}
 	
-	public boolean isDebug() {
-		return (debug.contains(this));
-	}
-	
 	public static void sendDebug(String message) {
-		for (PlayerData pd : debug) {
+		for (PlayerData pd : getPlayerDataSet((pd -> {
+						return pd.hasTag("debug");
+					}))) {
 			pd.sendMessage(message);
 		}
 	}
@@ -305,7 +304,8 @@ public final class PlayerData extends PlayerDataExtra {
 		
 		Set<PlayerData> set = new HashSet<>();
 		
-		for (PlayerData pd : instances) {
+		for (String s : instances.keySet()) {
+			PlayerData pd = instances.get(s);
 			if (predicate.test(pd)) {
 				set.add(pd);
 			}

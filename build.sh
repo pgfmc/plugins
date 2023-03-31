@@ -1,4 +1,23 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
+
+
+
+# The below section determines which plugins to compile
+# I didnt like waiting all the time when i only wanted to compile Parkour,
+# so i added this.
+#
+# just do ./build.sh <plugin> and itll work perfectly
+# until it doesnt of course.
+
+#echo $#
+
+cd "$PLUGINS_HOME/plugins"
+if ! [ $PWD == "$PLUGINS_HOME/plugins" ]; then
+	echo "CD into plugins failed!"
+	echo "current working directory:"
+	echo $PWD
+   exit 1
+fi
 
 echo "Input version or return for unchanged: "
 read -r version_number
@@ -9,28 +28,31 @@ else
 	echo "New version is ${version_number}"
 fi
 
-echo ""
-sleep 1s
+if [ $# -gt 0 ]; then
+	compiling_plugins=$@
+else
+	compiling_plugins=("Core" "Claims" "ModTools" "Survival" "Parkour")
+fi
+
 echo "Exporting jars.."
-
-cd $PLUGINS_HOME/plugins
-
-for name in Core Claims ModTools Survival; do
+for name in ${compiling_plugins[@]}; do
 	cd $name
 
 	if ! [ -z "$version_number" ]; then
 		sed -i "s/^version: .*/version: ${version_number}/" plugin.yml
 	fi
 
-	mvn clean package
+	mvn clean install
 	cd ../
 	wait
 done
 
-for name in Core Claims ModTools Survival; do
+echo "copying jars into build..."
+sleep 1s
+
+for name in ${compiling_plugins[@]}; do
 	cp -f $name/target/$name-jar-with-dependencies.jar ../build/$name.jar
 	wait
 done
 
-echo ""
-read -n1 -r -p "Press any key to continue.." key
+echo "All Finished!"
