@@ -6,7 +6,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.Vector4;
-import net.pgfmc.parkour.levels.RuinedCaverns;
+import net.pgfmc.parkour.levels.Level;
 
 public class PlayerInteract implements Listener {
 
@@ -17,9 +17,11 @@ public class PlayerInteract implements Listener {
 
         pd.sendMessage(pos.toString());
 
-        if (RuinedCaverns.act1.contains(pos)) {
-            RuinedCaverns.interact(pos, pd);
+        for (Level level : Level.levels) {
+            if (level.contains(pos)) {
+                level.interact(pos, pd);
+                return;
+            }
         }
-
     }
 }

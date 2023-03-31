@@ -23,8 +23,8 @@ public class Debug implements CommandExecutor {
 		
 		if (p != null)
 		{
-			boolean t = p.isDebug();
-			
+			boolean t = p.hasTag("debug");
+
 			if (t) {
 				p.sendMessage(ChatColor.GOLD + "Debug disabled!");
 				p.setDebug(false);
