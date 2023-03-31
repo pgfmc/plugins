@@ -7,7 +7,7 @@ import net.pgfmc.parkour.events.Region;
 public class RuinedCaverns {
 
    public static void interact(Vector4 pos, PlayerData pd) {
-
+       pd.sendMessage("Gottem.");
 
    }
 
