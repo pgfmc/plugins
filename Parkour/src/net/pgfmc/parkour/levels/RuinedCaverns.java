@@ -19,12 +19,12 @@ public class RuinedCaverns {
 
         @Override
         public void move(Vector4 pos, PlayerData pd) {
-            pd.sendMessage("Moved! ! ! ! ");
+            pd.sendMessage(getName());
         }
 
         @Override
         public void interact(Vector4 pos, PlayerData pd) {
-            pd.sendMessage("Gottem.");
+            pd.sendMessage("Interacted @" + getName());
 
         }
 
