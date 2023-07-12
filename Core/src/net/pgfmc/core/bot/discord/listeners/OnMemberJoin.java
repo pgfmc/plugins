@@ -20,7 +20,7 @@ public class OnMemberJoin extends ListenerAdapter {
 		
 		User user = e.getUser();
 		
-		EmbedBuilder eb = Discord.simpleServerEmbed("<:JOIN:905023714213625886> " + user.getEffectiveName() + "(" + user.getName() + ")", user.getEffectiveAvatarUrl(), Colors.GREEN)
+		EmbedBuilder eb = Discord.simpleServerEmbed(user.getEffectiveName() + " (@" + user.getName() + ") joined.", user.getEffectiveAvatarUrl(), Colors.GREEN)
 								.setTimestamp(OffsetDateTime.now());
 		
 		Discord.sendAlert(eb.build()).queue();
