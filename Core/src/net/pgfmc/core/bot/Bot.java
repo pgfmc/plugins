@@ -1,5 +1,6 @@
 package net.pgfmc.core.bot;
 
+import java.time.OffsetDateTime;
 import java.util.concurrent.TimeUnit;
 
 import org.bukkit.Bukkit;
@@ -22,7 +23,9 @@ public class Bot {
 			e.printStackTrace();
 		}
 		
-		MessageEmbed startMessageEmbed = Discord.simpleServerEmbed("Server is starting...", "https://cdn.discordapp.com/emojis/905682398790959125.png?size=44", Colors.GREEN).build();
+		MessageEmbed startMessageEmbed = Discord.simpleServerEmbed("Server is starting...", "https://cdn.discordapp.com/emojis/905682398790959125.png?size=44", Colors.GREEN)
+												.setTimestamp(OffsetDateTime.now())
+											.build();
 		
 		Discord.sendEmbed(startMessageEmbed).queue();
 		Discord.sendAlert(startMessageEmbed).queue();
@@ -49,6 +52,7 @@ public class Bot {
 		MessageEmbed stopMessageEmbed = Discord.simpleServerEmbed("Server is stopping..."
 				, "https://cdn.discordapp.com/emojis/905683316844429312.png?size=44"
 				, Colors.RED)
+				.setTimestamp(OffsetDateTime.now())
 		.build();
 		
 		// #.complete will block the thread
