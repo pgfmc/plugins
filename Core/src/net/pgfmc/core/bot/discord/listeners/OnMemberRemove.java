@@ -19,7 +19,7 @@ public class OnMemberRemove extends ListenerAdapter {
 		
 		User user = e.getUser();
 		
-		EmbedBuilder eb = Discord.simpleServerEmbed("<:LEAVE:905682349239463957> " + user.getEffectiveName() + "(" + user.getName() + ")", user.getEffectiveAvatarUrl(), Colors.RED)
+		EmbedBuilder eb = Discord.simpleServerEmbed(user.getEffectiveName() + " (@" + user.getName() + ") left.", user.getEffectiveAvatarUrl(), Colors.RED)
 								.setTimestamp(OffsetDateTime.now());
 		
 		Discord.sendAlert(eb.build()).queue();
