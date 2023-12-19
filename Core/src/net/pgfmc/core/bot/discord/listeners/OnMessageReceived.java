@@ -33,7 +33,7 @@ public class OnMessageReceived extends ListenerAdapter {
 			e.getChannel().sendMessage(user.getAsMention() + ", please do not use blacklisted words!");
 			e.getMessage().delete().queue();
 			
-			EmbedBuilder eb = Discord.simpleServerEmbed(user.getEffectiveName() + "(" + user.getName() + ")", user.getAvatarUrl(), Colors.RED)
+			EmbedBuilder eb = Discord.simpleServerEmbed(user.getEffectiveName() + " (@" + user.getName() + ")", user.getAvatarUrl(), Colors.RED)
 									.setTitle("Blacklisted word detected! (Discord)")
 									.setDescription("A blacklisted word was detected by " + user.getName() + " in Discord.")
 									.addField("User", user.getName(), false)
