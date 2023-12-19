@@ -33,12 +33,12 @@ public class OnMessageReceived extends ListenerAdapter {
 			e.getChannel().sendMessage(user.getAsMention() + ", please do not use blacklisted words!");
 			e.getMessage().delete().queue();
 			
-			EmbedBuilder eb = Discord.simpleServerEmbed(user.getAsTag(), user.getAvatarUrl(), Colors.RED);
-			eb.setTitle("Blacklisted word detected! (Discord)");
-			eb.setDescription("A blacklisted word was detected by " + user.getName() + " in Discord.");
-			eb.addField("User", user.getName(), false);
-			eb.addField("Message", "|| " + handler.getMessage() + " ||", false);
-			eb.setTimestamp(OffsetDateTime.now());
+			EmbedBuilder eb = Discord.simpleServerEmbed(user.getEffectiveName() + " (@" + user.getName() + ")", user.getAvatarUrl(), Colors.RED)
+									.setTitle("Blacklisted word detected! (Discord)")
+									.setDescription("A blacklisted word was detected by " + user.getName() + " in Discord.")
+									.addField("User", user.getName(), false)
+									.addField("Message", "|| " + handler.getMessage() + " ||", false)
+									.setTimestamp(OffsetDateTime.now());
 			
 			Discord.sendAlert(eb.build()).queue();
 			return;
