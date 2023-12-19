@@ -22,6 +22,7 @@ import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.bot.discord.listeners.OnMemberJoin;
+import net.pgfmc.core.bot.discord.listeners.OnMemberRemove;
 import net.pgfmc.core.bot.discord.listeners.OnMessageReceived;
 import net.pgfmc.core.bot.discord.listeners.OnReady;
 import net.pgfmc.core.bot.discord.listeners.OnSlashCommand;
@@ -42,7 +43,8 @@ public class Discord extends ListenerAdapter {
 										 , new OnMessageReceived()
 										 , new OnUpdateRole()
 										 , new OnSlashCommand()
-										 , new OnMemberJoin())
+										 , new OnMemberJoin()
+										 , new OnMemberRemove())
 						.setChunkingFilter(ChunkingFilter.ALL)
 						.setMemberCachePolicy(MemberCachePolicy.ALL)
 						.enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.MESSAGE_CONTENT)
