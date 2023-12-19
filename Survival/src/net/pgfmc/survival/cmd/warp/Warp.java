@@ -3,6 +3,7 @@ package net.pgfmc.survival.cmd.warp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 
@@ -36,7 +37,7 @@ public class Warp extends PlayerCommand {
 	public boolean execute(PlayerData pd, String alias, String[] args) {
 		if (args.length == 0) {
 			
-			pd.sendMessage("�cPlease enter a warp location.");
+			pd.sendMessage(ChatColor.RED + "Please enter a warp location.");
 			return true;
 		}
 		
@@ -46,14 +47,14 @@ public class Warp extends PlayerCommand {
 		
 		if (loc == null)
 		{
-			pd.sendMessage("�c" + name  + " is not a warp");
+			pd.sendMessage(ChatColor.RED + name  + " is not a warp");
 			return true;
 		}
 		
-		pd.sendMessage("�aWarping to �6" + name + " �ain 5 seconds!");
+		pd.sendMessage(ChatColor.GREEN + "Warping to " + ChatColor.GOLD + name + ChatColor.GREEN + " in 5 seconds!");
 		
 		new TimedTeleport(pd.getPlayer(), loc, 5, 40, true).setAct(v -> {
-			pd.sendMessage("�aPoof!");
+			pd.sendMessage(ChatColor.GREEN + "Poof!");
 			pd.playSound(Sound.ENTITY_ENDERMAN_TELEPORT);
 			if (pd.hasTag("afk")) pd.removeTag("afk");
 		});
