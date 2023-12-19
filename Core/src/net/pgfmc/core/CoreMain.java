@@ -7,11 +7,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -44,6 +41,7 @@ import net.pgfmc.core.bot.minecraft.listeners.OnPlayerJoin;
 import net.pgfmc.core.bot.minecraft.listeners.OnPlayerQuit;
 import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.cmd.donator.Nick;
+import net.pgfmc.core.util.RestartScheduler;
 import net.pgfmc.core.util.roles.Roles;
 
 /**
@@ -193,54 +191,9 @@ public class CoreMain extends JavaPlugin implements Listener {
 		
 		long secondsUntilRestartCountdown = (Duration.between(Instant.now(), restartDate.toInstant()).getSeconds()) - (60 * 10);  // Calculate amount of time to wait until we run.
 		
-		Bukkit.getLogger().warning("Restart date:" + new SimpleDateFormat("MMM dd, YYYY @ kkmm").format(restartDate.getTime()));
+		Bukkit.getLogger().warning("Restart date: " + new SimpleDateFormat("MMM dd, YYYY @ kkmm").format(restartDate.getTime()));
 		
-		
-		Executors.newSingleThreadScheduledExecutor().schedule(new Runnable() {
-			
-			private int secondsElapsed = 0;
-
-			@Override
-			public void run() {
-				
-				Bukkit.getScheduler().runTaskTimer(CoreMain.plugin, new Runnable() {
-
-					@Override
-					public void run() {
-						
-						switch (secondsElapsed) {
-						case 0:
-							Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "Scheduled restart in 10 minutes.");
-							break;
-						case 60 * 5:
-							Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "Scheduled restart in 5 minutes.");
-							break;
-						case 60 * 9:
-							Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "Scheduled restart in 60 seconds.");
-							break;
-						case (60 * 9) + 50:
-							Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "Scheduled restart in 10 seconds."
-													+ ChatColor.RED + "\n" + "This won't take long!");
-							break;
-						case (60 * 9) + 57:
-							Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "Scheduled restart in 3 seconds."
-													+ ChatColor.RED + "\n" + "Be back soon!");
-							break;
-						case 60 * 10:
-							Bukkit.shutdown();
-							break;
-						default:
-							break;
-							
-						}
-						
-						secondsElapsed += 1;
-						
-					}
-				
-				}, 0, 20);
-				
-			}}, secondsUntilRestartCountdown, TimeUnit.SECONDS);
+		new RestartScheduler().runTaskTimer(this, secondsUntilRestartCountdown * 20, 20);
 		
 	}
 	
