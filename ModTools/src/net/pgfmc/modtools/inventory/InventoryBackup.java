@@ -8,7 +8,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.modtools.Main;
@@ -16,7 +16,7 @@ import net.pgfmc.modtools.Main;
 public class InventoryBackup {
 	
 	private UUID uuid;
-	private Inventory inventory;
+	private ItemStack[] inventoryContents;
 	private float exp;
 	
 	private int taskId;
@@ -32,7 +32,7 @@ public class InventoryBackup {
 		Player p = pd.getPlayer();
 		
 		this.uuid = p.getUniqueId();
-		this.inventory = p.getInventory();
+		this.inventoryContents = p.getInventory().getContents();
 		this.exp = p.getExp();
 		
 		List<InventoryBackup> inventories = (List<InventoryBackup>) Optional.ofNullable(((List<InventoryBackup>) pd.getData("inventories")))
@@ -58,9 +58,9 @@ public class InventoryBackup {
 		return Bukkit.getPlayer(uuid);
 	}
 	
-	public Inventory getInventory()
+	public ItemStack[] getInventoryContents()
 	{
-		return inventory;
+		return inventoryContents;
 	}
 	
 	public float getExp()
@@ -91,7 +91,7 @@ public class InventoryBackup {
 		
 		new InventoryBackup(PlayerData.from(p), InventoryBackupCause.ROLLBACK);
 		
-		p.getInventory().setContents(inventory.getContents());
+		p.getInventory().setContents(getInventoryContents());
 		p.setExp(exp);
 		
 		return true;

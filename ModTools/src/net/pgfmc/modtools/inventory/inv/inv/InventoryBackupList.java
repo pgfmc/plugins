@@ -61,7 +61,7 @@ public class InventoryBackupList extends ListInventory<InventoryBackup> {
 
 	@Override
 	protected ItemStack toItem(InventoryBackup entry) {
-		final int totalItemStackCount = Arrays.asList(entry.getInventory().getContents())
+		final int totalItemStackCount = Arrays.asList(entry.getInventoryContents())
 								.stream()
 								.filter(item -> item != null)
 								.collect(Collectors.toList())
@@ -72,24 +72,16 @@ public class InventoryBackupList extends ListInventory<InventoryBackup> {
 		if (totalItemStackCount == 0)
 		{
 			itemDyeColor = Material.WHITE_DYE;
-		}
-		
-		if (totalItemStackCount <= 9)
+		} else if (totalItemStackCount <= 9)
 		{
 			itemDyeColor = Material.GRAY_DYE;
-		}
-		
-		if (totalItemStackCount <= 18)
+		} else if (totalItemStackCount <= 18)
 		{
 			itemDyeColor = Material.YELLOW_DYE;
-		}
-		
-		if (totalItemStackCount < 27)
+		} else if (totalItemStackCount < 27)
 		{
 			itemDyeColor = Material.ORANGE_DYE;
-		}
-		
-		if (totalItemStackCount == 27)
+		} else if (totalItemStackCount == 27)
 		{
 			itemDyeColor = Material.RED_DYE;
 		}
