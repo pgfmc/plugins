@@ -1,4 +1,4 @@
-package net.pgfmc.modtools.rollback;
+package net.pgfmc.modtools.inventory;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -12,18 +12,18 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.modtools.Main;
 
-public class RollbackScheduler implements Listener {
+public class InventoryBackupScheduler implements Listener {
 	
 	public static int INVENTORY_ROLLBACK_TASK_ID;
 	public static DateFormat INVENTORY_DATE_FORMAT = new SimpleDateFormat("MMM dd, YYYY @ kkmm");
 	
-	public RollbackScheduler()
+	public InventoryBackupScheduler()
 	{
 		INVENTORY_ROLLBACK_TASK_ID = Bukkit.getScheduler().runTaskTimer(Main.plugin, new Runnable() {
 			@Override
 			public void run() {
 				PlayerData.getPlayerDataSet(pd -> pd.isOnline()).stream()
-													.forEach(pd -> new RollbackBackup(pd, BackupCause.SCHEDULED));
+													.forEach(pd -> new InventoryBackup(pd, InventoryBackupCause.SCHEDULED));
 			}
 		}, 20 * 60, 20 * 60 * 5).getTaskId(); // Start after 1 minute, repeat every 5 minutes
 	}
@@ -33,7 +33,7 @@ public class RollbackScheduler implements Listener {
 	{
 		Player p = e.getEntity();
 		
-		new RollbackBackup(PlayerData.from(p), BackupCause.DEATH);
+		new InventoryBackup(PlayerData.from(p), InventoryBackupCause.DEATH);
 		
 	}
 	
