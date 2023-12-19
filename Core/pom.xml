@@ -60,7 +60,7 @@
 		<dependency>
 			<groupId>net.coreprotect</groupId>
 			<artifactId>coreprotect</artifactId>
-			<version>21.3</version>
+			<version>22.2</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -78,7 +78,7 @@
 		<dependency>
 			<groupId>net.dv8tion</groupId>
 			<artifactId>JDA</artifactId>
-			<version>5.0.0-beta.12</version>
+			<version>5.0.0-beta.18</version>
 		</dependency>
 	</dependencies>
 	<repositories>
