@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -15,7 +16,7 @@ import net.pgfmc.modtools.Main;
 
 public class InventoryBackup {
 	
-	private UUID uuid;
+	private String uuid;
 	private ItemStack[] inventoryContents;
 	private float exp;
 	
@@ -31,7 +32,7 @@ public class InventoryBackup {
 		
 		Player p = pd.getPlayer();
 		
-		this.uuid = p.getUniqueId();
+		this.uuid = p.getUniqueId().toString();
 		this.inventoryContents = p.getInventory().getContents();
 		this.exp = p.getExp();
 		
@@ -53,9 +54,14 @@ public class InventoryBackup {
 		return taskId;
 	}
 	
-	public Player getPlayer()
+	public String getPlayerUUID()
 	{
-		return Bukkit.getPlayer(uuid);
+		return uuid;
+	}
+	
+	public OfflinePlayer getOfflinePlayer()
+	{
+		return Bukkit.getOfflinePlayer(UUID.fromString(uuid));
 	}
 	
 	public ItemStack[] getInventoryContents()
@@ -105,14 +111,14 @@ public class InventoryBackup {
 			@Override
 			public void run() {
 				// TODO remove this from instances and save to file
-				List<InventoryBackup> inventories = (List<InventoryBackup>) Optional.ofNullable(((List<InventoryBackup>) PlayerData.from(getPlayer()).getData("inventories")))
+				List<InventoryBackup> inventories = (List<InventoryBackup>) Optional.ofNullable(((List<InventoryBackup>) PlayerData.from(getOfflinePlayer()).getData("inventories")))
 						.orElse(new ArrayList<InventoryBackup>());
 				
 				InventoryBackup inventory = inventories.get(0);
 				
 				inventories.remove(0);
 				
-				PlayerData.from(getPlayer()).setData("inventories", inventories);
+				PlayerData.from(getOfflinePlayer()).setData("inventories", inventories);
 				
 				inventory.saveToFile(); // TODO				
 				
