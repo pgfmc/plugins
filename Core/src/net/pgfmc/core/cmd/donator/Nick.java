@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.Profanity;
-import net.pgfmc.core.util.roles.Roles;
+import net.pgfmc.core.util.roles.PGFRoles;
 
 public class Nick implements CommandExecutor {
 
@@ -99,7 +99,7 @@ public class Nick implements CommandExecutor {
 		pd.setData("nick", nickWithColor).queue();
 		pd.sendMessage(ChatColor.GOLD + "Nickname changed to " + pd.getRankedName() + ChatColor.GOLD + "!");
 		
-		Roles.updatePlayerNameplate(pd);
+		PGFRoles.updatePlayerNameplate(pd);
 		
 	}
 

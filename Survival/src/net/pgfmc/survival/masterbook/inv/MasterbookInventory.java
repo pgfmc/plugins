@@ -17,7 +17,7 @@ import net.pgfmc.core.api.request.inv.RequestListInventory;
 import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.util.ItemWrapper;
 import net.pgfmc.core.util.roles.PGFRole;
-import net.pgfmc.core.util.roles.Roles;
+import net.pgfmc.core.util.roles.PGFRoles;
 import net.pgfmc.survival.masterbook.inv.home.inv.HomeHomepage;
 
 public class MasterbookInventory implements InventoryHolder {
@@ -160,7 +160,7 @@ public class MasterbookInventory implements InventoryHolder {
 				
 			});
 			
-			PGFRole role = Roles.getTop(pd);
+			PGFRole role = PGFRoles.getPlayerTopRole(pd);
 			
 			setItem(4, Skull.getHead(pd.getUniqueId(), null))
 					.n(pd.getRankedName() + " (" + role.getName().substring(0,1).toUpperCase() + role.getName().substring(1).toLowerCase() + ")")

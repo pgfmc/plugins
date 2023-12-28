@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
-import net.pgfmc.core.util.roles.Roles;
+import net.pgfmc.core.util.roles.PGFRoles;
 
 public class UnlinkCommand implements CommandExecutor {
 	
@@ -27,7 +27,7 @@ public class UnlinkCommand implements CommandExecutor {
 		if (pd.getData("Discord") != null)
 		{
 			pd.setData("Discord", null).queue();
-			Roles.setRole(pd);
+			PGFRoles.updatePlayerRole(pd);
 			pd.sendMessage(ChatColor.RED + "Your Discord account has been unlinked.");
 			
 			return true;

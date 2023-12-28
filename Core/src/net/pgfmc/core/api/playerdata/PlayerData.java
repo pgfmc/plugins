@@ -128,14 +128,14 @@ public final class PlayerData extends PlayerDataExtra {
 		if (getRole().compareTo(PGFRole.STAFF) <= 0)
 		{
 			// Add the staff diamond icon to the beginning of the name
-			newName = PGFRole.STAFF_DIAMOND + newName;
+			newName = getRole().getColor() + PGFRole.STAFF_DIAMOND + newName + ChatColor.RESET;
 		}
 		
 		// If the player has pvp enabled
 		if (hasTag("pvp"))
 		{
 			// Add the pvp swords icon to the ending of the name
-			newName = newName + pvpSwordsIcon;
+			newName = newName + ChatColor.GRAY + " " + pvpSwordsIcon + ChatColor.RESET;
 		}
 		
 		return newName;
