@@ -114,22 +114,46 @@ public final class PlayerData extends PlayerDataExtra {
 	
 	// getters and setters
 	
+	// This is the pvp swords icon for when a player has pvp enabled
+	// It will show up in their name (similar to the staff diamond icon)
+	// Used in getRankedName()
+	private final String pvpSwordsIcon = new String(Character.toChars(0x2694));
+	
 	public String getRankedName() {
-		return  getRole().getColor()
-				+ ((getRole().compareTo(PGFRole.STAFF) <= 0) ? PGFRole.STAFF_DIAMOND : "")
-				+ Optional.ofNullable(getData("nick")).orElse(getName());
+		
+		// This will use the player's nickname, or, if they don't have a nickname, their regular Minecraft user name
+		String newName = (String) Optional.ofNullable(getData("nick")).orElse(getName());
+		
+		// If the player's role is STAFF or higher
+		if (getRole().compareTo(PGFRole.STAFF) <= 0)
+		{
+			// Add the staff diamond icon to the beginning of the name
+			newName = PGFRole.STAFF_DIAMOND + newName;
+		}
+		
+		// If the player has pvp enabled
+		if (hasTag("pvp"))
+		{
+			// Add the pvp swords icon to the ending of the name
+			newName = newName + pvpSwordsIcon;
+		}
+		
+		return newName;
 	}
 	
 	public String getDisplayName()
 	{
+		// Returns their regular Minecraft user name if the player isn't a donator
 		if (!hasPermission("pgf.cmd.donator.nick")) return getName();
 		
+		// Returns their nickname, but with no color codes or symbols (or their regular user name if no nickname)
 		return ChatColor.stripColor((String) Optional.ofNullable(getData("nick"))
 													.orElse(getName()));
 		
 	}
 	
 	public PGFRole getRole() {
+		// Returns the player's role, or MEMBER if no role
 		return (PGFRole) Optional.ofNullable(getData("role")).orElse(PGFRole.MEMBER);
 	}
 	

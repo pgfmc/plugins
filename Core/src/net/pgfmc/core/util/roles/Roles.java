@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -20,6 +21,31 @@ import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.bot.discord.Discord;
 
 public class Roles implements Listener {
+	
+	// Updates all player nameplates so that they appear correct
+	// Example: A player changes their nickname: this method should be called
+	//			so that other players can correctly see the new nickname
+	public static void updatePlayerNameplate(PlayerData playerdata)
+	{
+		final Player player = playerdata.getPlayer();
+		
+		// Updates playerlist, custom name value (spigot/bukkit), and makes the custom name visible to the CLIENT
+		player.setPlayerListName(playerdata.getRankedName());
+		player.setCustomName(playerdata.getRankedName());
+		player.setCustomNameVisible(true);
+		
+		// Do this for every player
+		for (final Player otherPlayer : Bukkit.getOnlinePlayers())
+		{
+			// Skip this iteration if the players are the same
+			if (otherPlayer == playerdata.getPlayer()) continue;
+			
+			// Weird way to update the name of a player for other players to see it
+			player.hidePlayer(CoreMain.plugin, otherPlayer);
+			player.showPlayer(CoreMain.plugin, otherPlayer);
+		}
+		
+	}
 	
 	/**
 	 * Set and apply roles to player (update roles)
@@ -52,6 +78,8 @@ public class Roles implements Listener {
 		});
 		
 		pd.setData("role", role);
+		
+		updatePlayerNameplate(pd);
 		
 	}
 	

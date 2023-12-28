@@ -6,8 +6,9 @@ import org.bukkit.ChatColor;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.commands.PlayerCommand;
+import net.pgfmc.core.util.roles.Roles;
 
-public class Pvp  extends PlayerCommand {
+public class Pvp extends PlayerCommand {
 
 	public Pvp() {
 		super("pvp");
@@ -25,12 +26,17 @@ public class Pvp  extends PlayerCommand {
 			pd.removeTag("pvp");
 			pd.sendMessage(ChatColor.RED + "PvP Disabled!");
 			
+			Roles.updatePlayerNameplate(pd);
+			
 		} else {
 			pd.addTag("pvp");
 			pd.sendMessage(ChatColor.GREEN + "PvP Enabled!");
+			
+			Roles.updatePlayerNameplate(pd);
 		}
 		
 		
 		return true;
 	}
+	
 }
