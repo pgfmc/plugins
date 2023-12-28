@@ -1,15 +1,14 @@
 package net.pgfmc.core.cmd.donator;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.Profanity;
+import net.pgfmc.core.util.roles.Roles;
 
 public class Nick implements CommandExecutor {
 
@@ -100,14 +99,7 @@ public class Nick implements CommandExecutor {
 		pd.setData("nick", nickWithColor).queue();
 		pd.sendMessage(ChatColor.GOLD + "Nickname changed to " + pd.getRankedName() + ChatColor.GOLD + "!");
 		
-		p.setPlayerListName(pd.getRankedName());
-		p.setCustomName(pd.getRankedName());
-		p.setCustomNameVisible(true);
-		
-		Bukkit.getOnlinePlayers().stream().forEach(player -> {
-			p.hidePlayer(CoreMain.plugin, player);
-			p.showPlayer(CoreMain.plugin, player);
-		});
+		Roles.updatePlayerNameplate(pd);
 		
 	}
 
