@@ -42,7 +42,7 @@ import net.pgfmc.core.bot.minecraft.listeners.OnPlayerQuit;
 import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.cmd.donator.Nick;
 import net.pgfmc.core.util.RestartScheduler;
-import net.pgfmc.core.util.roles.Roles;
+import net.pgfmc.core.util.roles.PGFRoles;
 
 /**
  * @author bk and CrimsonDart
@@ -122,7 +122,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		});
 		
 		PlayerDataManager.setPostLoad(x -> {
-			PlayerData.getPlayerDataSet().forEach(pd -> Roles.setRole(pd));
+			PlayerData.getPlayerDataSet().forEach(pd -> PGFRoles.updatePlayerRole(pd));
 		});
 		
 		/**
@@ -143,7 +143,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new OnPlayerJoin(), this);
 		getServer().getPluginManager().registerEvents(new OnPlayerQuit(), this);
 		
-		getServer().getPluginManager().registerEvents(new Roles(), this);
+		getServer().getPluginManager().registerEvents(new PGFRoles(), this);
 		
 		getServer().getPluginManager().registerEvents(this, this);
 		
