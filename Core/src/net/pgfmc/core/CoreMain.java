@@ -1,13 +1,11 @@
 package net.pgfmc.core;
 
-import java.text.SimpleDateFormat;
-import java.io.File;
-import java.io.IOException;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -252,7 +250,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 			return;
 		}
 		
-
+		// array of all files in the playerdata directory
 		// filters out any unwanted files in the subdirectories
 		final File[] playerdataFiles = playerdataDirectory.listFiles(new FilenameFilter() {
 			@Override
@@ -327,7 +325,8 @@ public class CoreMain extends JavaPlugin implements Listener {
 				e.printStackTrace();
 			}
 			
-
+			
+			
 		}
 		
 		
