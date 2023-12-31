@@ -28,7 +28,6 @@ public class Bot {
 											.build();
 		
 		Discord.sendEmbed(startMessageEmbed).queue();
-		Discord.sendAlert(startMessageEmbed).queue();
 		
 		new MessageHistory(Discord.getServerChannel()).retrievePast(20).queueAfter(1, TimeUnit.MINUTES, messages -> {
 			messages.stream().filter(message -> !message.getEmbeds().isEmpty() && message.getAuthor().getId().equals("721949520728031232"))
@@ -58,7 +57,6 @@ public class Bot {
 		// #.complete will block the thread
 		// This makes sure the messages are sent before the bot shuts down
 		Discord.sendEmbed(stopMessageEmbed).complete();
-		Discord.sendAlert(stopMessageEmbed).complete();
 		
 		Discord.JDA.shutdown();
 		
