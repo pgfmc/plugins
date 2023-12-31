@@ -17,7 +17,7 @@ import net.pgfmc.claims.Main;
 import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
 import net.pgfmc.core.api.playerdata.PlayerData;
-import net.pgfmc.core.util.Vector4;
+import net.pgfmc.core.util.vector4.Vector4;
 
 
 

@@ -2,7 +2,7 @@ package net.pgfmc.claims.ownable.block.table;
 
 import net.pgfmc.claims.Main;
 import net.pgfmc.claims.ownable.block.Claim;
-import net.pgfmc.core.util.Vector4;
+import net.pgfmc.core.util.vector4.Vector4;
 
 public class ClaimsLogic {
 	

@@ -7,7 +7,7 @@ import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.util.LongHash;
 import net.pgfmc.claims.util.LongHashTable;
-import net.pgfmc.core.util.Vector4;
+import net.pgfmc.core.util.vector4.Vector4;
 
 /**
  * Stores all Claims in a hierarchy of data;
