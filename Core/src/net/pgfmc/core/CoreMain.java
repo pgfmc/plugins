@@ -40,8 +40,8 @@ import net.pgfmc.core.bot.minecraft.listeners.OnPlayerJoin;
 import net.pgfmc.core.bot.minecraft.listeners.OnPlayerQuit;
 import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.cmd.donator.Nick;
-import net.pgfmc.core.util.ServerMessage;
 import net.pgfmc.core.util.RestartScheduler;
+import net.pgfmc.core.util.ServerMessage;
 import net.pgfmc.core.util.roles.PGFRoles;
 
 /**
@@ -75,15 +75,15 @@ public class CoreMain extends JavaPlugin implements Listener {
 		/**
 		 * LuckPerms API
 		 */
-		RegisteredServiceProvider<LuckPerms> lpProvider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+		final RegisteredServiceProvider<LuckPerms> lpProvider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
 		if (lpProvider != null) {
-		    LuckPerms lpAPI = lpProvider.getProvider();
+		    final LuckPerms lpAPI = lpProvider.getProvider();
 		    luckPermsAPI = lpAPI;
 		    
 		}
 		
 		PlayerDataManager.setInit(playerdata -> {
-			FileConfiguration playerdataFile = playerdata.loadFile();
+			final FileConfiguration playerdataFile = playerdata.getPlayerDataFile();
 			playerdataFile.getStringList("tags").stream().forEach(tag -> playerdata.addTag(tag));
 		});
 		
@@ -93,17 +93,28 @@ public class CoreMain extends JavaPlugin implements Listener {
 		PlayerDataManager.setInit(pd -> pd.setData("Name", pd.getName()).queue());
 		
 		PlayerDataManager.setInit(pd -> {
+			final FileConfiguration db = pd.getPlayerDataFile();
+			final ConfigurationSection config = db.getConfigurationSection("homes");
+			
+			if (config == null) return;
 			
 			Map<String, Location> homes = new HashMap<>();
-			FileConfiguration db = pd.loadFile();
 			
-			if (db == null) return;
-		
-			ConfigurationSection config = db.getConfigurationSection("homes");
+			config.getKeys(false).forEach(home -> {
+				final Location homeLocation = config.getLocation(home);
+				
+				if (homeLocation != null)
+				{
+					homes.put(home, homeLocation);
+				} else
+				{
+					Bukkit.getLogger().warning("Could not load home for " + pd.getName() + ".");
+				}
+				
+				
+			});
 			
-			if (config != null) {
-				config.getKeys(false).forEach(home -> homes.put(home, config.getLocation(home)));
-			}
+			if (homes.isEmpty()) return;
 			
 			pd.setData("homes", homes);
 			
@@ -111,18 +122,23 @@ public class CoreMain extends JavaPlugin implements Listener {
 		
 		PlayerDataManager.setInit(pd -> {
 			
-			FileConfiguration db = pd.loadFile();
+			final FileConfiguration db = pd.getPlayerDataFile();
 			
-			if (db == null) return;
+			final String nickname = db.getString("nick");
 			
-			pd.setData("nick", db.getString("nick"));
+			if (nickname == null) return;
+			
+			pd.setData("nick", nickname);
 			
 		});
 		
 		PlayerDataManager.setInit(pd -> {
-			FileConfiguration config = pd.loadFile();
+			final FileConfiguration config = pd.getPlayerDataFile();
+			final String discordID = config.getString("Discord");
 			
-			pd.setData("Discord", config.getString("Discord"));
+			if (discordID == null) return;
+			
+			pd.setData("Discord", discordID);
 			
 		});
 		
