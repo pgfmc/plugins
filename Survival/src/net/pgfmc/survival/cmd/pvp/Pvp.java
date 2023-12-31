@@ -26,14 +26,14 @@ public class Pvp extends PlayerCommand {
 		if (pd.hasTag("pvp")) {
 			pd.removeTag("pvp");
 			
-			ServerMessage.sendServerMessage(pd.getRankedName() + ChatColor.GREEN + " enabled PVP.");
+			ServerMessage.sendServerMessage(pd.getRankedName() + ChatColor.GREEN + " disabled PVP.");
 			
 			PGFRoles.updatePlayerNameplate(pd);
 			
 		} else {
 			pd.addTag("pvp");
 			
-			ServerMessage.sendServerMessage(pd.getRankedName() + ChatColor.RED + " disabled PVP.");
+			ServerMessage.sendServerMessage(pd.getRankedName() + ChatColor.RED + " enabled PVP!");
 			
 			PGFRoles.updatePlayerNameplate(pd);
 		}
