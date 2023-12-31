@@ -287,15 +287,12 @@ public final class PlayerData extends PlayerDataExtra {
 	
 	/**
 	 * @author bk
-	 * @return a player's associated FileConfiguration from database.yml.
+	 * @return a player's associated FileConfiguration
 	 */
-	public Object loadFromFile(String path) {
-		return Mixins.getDatabase(CoreMain.plugin.getDataFolder().getAbsolutePath() + File.separator + "playerdata" + File.separator + getUniqueId().toString() + ".yml").get(path);
+	public FileConfiguration getPlayerDataFile() {
+		return Mixins.getDatabase(CoreMain.plugin.getDataFolder() + File.separator + "playerdata" + File.separator + getUniqueId().toString() + ".yml");
 	}
 	
-	public FileConfiguration loadFile() {
-		return Mixins.getDatabase(CoreMain.plugin.getDataFolder().getAbsolutePath() + File.separator + "playerdata" + File.separator + getUniqueId().toString() + ".yml");
-	}
 	
 	/**
 	 * Saves A Player's data.
@@ -306,7 +303,7 @@ public final class PlayerData extends PlayerDataExtra {
 	 */
 	public <T> void saveToFile(String path, T payload) {
 
-		FileConfiguration database = Mixins.getDatabase(CoreMain.plugin.getDataFolder().getAbsolutePath() + File.separator + "playerdata" + File.separator + getUniqueId().toString() + ".yml");
+		FileConfiguration database = Mixins.getDatabase(CoreMain.plugin.getDataFolder() + File.separator + "playerdata" + File.separator + getUniqueId().toString() + ".yml");
 		database.set(path, payload);
 		
 		Mixins.saveDatabase(database, CoreMain.plugin.getDataFolder().getAbsolutePath() + File.separator + "playerdata" + File.separator + getUniqueId().toString() + ".yml");
