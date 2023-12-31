@@ -1,8 +1,11 @@
 package net.pgfmc.core;
 
 import java.text.SimpleDateFormat;
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +36,7 @@ import net.pgfmc.core.api.request.RequestEvents;
 import net.pgfmc.core.api.request.RequestType;
 import net.pgfmc.core.api.teleport.SpawnProtect;
 import net.pgfmc.core.bot.Bot;
+import net.pgfmc.core.bot.discord.Discord;
 import net.pgfmc.core.bot.minecraft.cmd.LinkCommand;
 import net.pgfmc.core.bot.minecraft.cmd.UnlinkCommand;
 import net.pgfmc.core.bot.minecraft.listeners.OnAsyncPlayerChat;
@@ -60,6 +64,11 @@ public class CoreMain extends JavaPlugin implements Listener {
 	@Override
 	public void onEnable()
 	{
+		// XXX DEBUG CODE
+		//
+		// Tests for any corruption in PlayerData
+		// Will send an alert if there is
+		testForPlayerDataCorruption();
 		
 		/**
 		 * Constants
@@ -159,6 +168,8 @@ public class CoreMain extends JavaPlugin implements Listener {
 	
 	@Override
 	public void onDisable() {
+		makeBackupOfPlayerDataToTestForCorruptionLater(); // XXX DEBUG CODE
+		
 		Bot.shutdown();
 		PlayerDataManager.saveQ();
 		RequestType.saveRequestsToFile();
@@ -178,6 +189,22 @@ public class CoreMain extends JavaPlugin implements Listener {
 		
 		if (coreProtectAPI != null) { coreProtectAPI.performPurge(1209600); } // 14 days in seconds
 		
+		
+		// XXX DEBUG CODE
+		//
+		// Sends alerts if there are any errors
+		if (errorMessages.isEmpty())
+		{
+			Bukkit.getLogger().warning("(PlayerData Corruption) No errors found with PlayerData!");
+		} else
+		{
+			errorMessages.forEach(error -> {
+				Discord.sendAlert("(PlayerData Corruption) " + error).queue();
+			});
+			
+		}
+	
+		
 	}
 	
 	private void startRestartThread()
@@ -194,6 +221,95 @@ public class CoreMain extends JavaPlugin implements Listener {
 		Bukkit.getLogger().warning("Restart date: " + new SimpleDateFormat("MMM dd, YYYY @ kkmm").format(restartDate.getTime()));
 		
 		new RestartScheduler().runTaskTimer(this, secondsUntilRestartCountdown * 20, 20);
+		
+	}
+	
+	// XXX DEBUG CODE
+	//
+	// Error messages for testForPlayerDataCorruption()
+	// These will be sent to #alert on Discord after the Bot is booted
+	private ArrayList<String> errorMessages = new ArrayList<>();
+	
+	// XXX DEBUG CODE
+	//
+	// Tests for file corruption in playerdata directory
+	// logs errors to be reported later
+	private void testForPlayerDataCorruption()
+	{
+		// playerdata directory
+		final File playerdataDirectory = new File(getDataFolder() + File.separator + "playerdata");
+		
+		// error if the playerdata directory does not exist
+		if (!playerdataDirectory.exists())
+		{
+			errorMessages.add("(PlayerData Corruption) Playerdata directory does not exist.");
+			return;
+		}
+		
+		// array of all files in the playerdata directory
+		final File[] playerdataFiles = playerdataDirectory.listFiles();
+		
+		// for each file in the playerdata directory..
+		for (final File playerdataFile : playerdataFiles)
+		{
+			// file object that will represent the backup of this file
+			final File backupFile = new File(playerdataFile.getParent() + File.separator + "backup" + File.separator + playerdataFile.getName());
+			backupFile.mkdirs(); // make any necessary directories
+			
+			// tests if the backup file and working playerdata file are mismatched
+			// error if they are mismatched
+			try {
+				// returns -1L if no mismatch
+				if (java.nio.file.Files.mismatch(playerdataFile.toPath(), backupFile.toPath()) == -1L) continue;
+				
+				errorMessages.add("(PlayerData Corruption) Playerdata file does not match backup: " + playerdataFile.getName());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+	}
+	
+	// XXX DEBUG CODE
+	//
+	// Makes a backup of the playerdata files
+	// The playerdata files on startup will be compared with the backup files
+	// in a different function (testForPlayerDataCorruption())
+	private void makeBackupOfPlayerDataToTestForCorruptionLater()
+	{
+		// playerdata directory
+		final File playerdataDirectory = new File(getDataFolder() + File.separator + "playerdata");
+		
+		// error if the playerdata directory does not exist
+		if (!playerdataDirectory.exists())
+		{
+			Discord.sendAlert("(PlayerData Corruption) Could not find playerdata directory on shutdown!").complete();
+			return;
+		}
+		
+		// array of all files in the playerdata directory
+		final File[] playerdataFiles = playerdataDirectory.listFiles();
+		
+		// for each file in the playerdata directory..
+		for (final File playerdataFile : playerdataFiles)
+		{
+			// file object that will represent the backup of this file
+			final File backupFile = new File(playerdataFile.getParent() + File.separator + "backup" + File.separator + playerdataFile.getName());
+			backupFile.mkdirs(); // make any necessary directories
+			
+			// copy file to backup
+			try {
+				com.google.common.io.Files.copy(playerdataFile, backupFile);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		
 		
 	}
 	
