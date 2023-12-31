@@ -55,11 +55,6 @@ commands:
     usage: /<command> [player] [(optional) echest]
     description: See inside a player's inventory
     permission: pgf.admin.invsee
-  broadcast:
-    usage: /<command> [message]
-    description: Broadcast to the server!
-    aliases: [bc, broadc, bcast, say]
-    permission: pgf.admin.broadcast
   inventory:
     usage: /<command> [(optional) player]
     description: View a player's backed up inventories
