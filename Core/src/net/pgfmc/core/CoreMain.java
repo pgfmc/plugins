@@ -3,6 +3,11 @@ package net.pgfmc.core;
 import java.text.SimpleDateFormat;
 import java.io.File;
 import java.io.IOException;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -199,7 +204,8 @@ public class CoreMain extends JavaPlugin implements Listener {
 		} else
 		{
 			errorMessages.forEach(error -> {
-				Discord.sendAlert("(PlayerData Corruption) " + error).queue();
+				Discord.sendAlert(error).queue();
+				Bukkit.getLogger().warning(error);
 			});
 			
 		}
@@ -246,21 +252,29 @@ public class CoreMain extends JavaPlugin implements Listener {
 			return;
 		}
 		
-		// array of all files in the playerdata directory
-		final File[] playerdataFiles = playerdataDirectory.listFiles();
+
+		// filters out any unwanted files in the subdirectories
+		final File[] playerdataFiles = playerdataDirectory.listFiles(new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String name) {
+				return playerdataDirectory.toPath().getFileName().equals(dir.toPath().getFileName()) && name.endsWith(".yml");
+			}
+		});
 		
 		// for each file in the playerdata directory..
 		for (final File playerdataFile : playerdataFiles)
 		{
 			// file object that will represent the backup of this file
-			final File backupFile = new File(playerdataFile.getParent() + File.separator + "backup" + File.separator + playerdataFile.getName());
-			backupFile.mkdirs(); // make any necessary directories
+			final File backupFile = new File(playerdataDirectory.getPath() + File.separator + "backup" + File.separator + playerdataFile.getName());
 			
 			// tests if the backup file and working playerdata file are mismatched
 			// error if they are mismatched
 			try {
+				Files.createDirectories(new File(playerdataDirectory.getPath() + File.separator + "backup").toPath()); // Create backup directory if necessary
+				if (backupFile.createNewFile()) continue; // Create a new blank file if it doesn't exist, skip this playerdata
+				
 				// returns -1L if no mismatch
-				if (java.nio.file.Files.mismatch(playerdataFile.toPath(), backupFile.toPath()) == -1L) continue;
+				if (Files.mismatch(playerdataFile.toPath(), backupFile.toPath()) == -1L) continue;
 				
 				errorMessages.add("(PlayerData Corruption) Playerdata file does not match backup: " + playerdataFile.getName());
 			} catch (IOException e) {
@@ -290,23 +304,30 @@ public class CoreMain extends JavaPlugin implements Listener {
 		}
 		
 		// array of all files in the playerdata directory
-		final File[] playerdataFiles = playerdataDirectory.listFiles();
+		// filters out any unwanted files in the subdirectories
+		final File[] playerdataFiles = playerdataDirectory.listFiles(new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String name) {
+				return playerdataDirectory.toPath().getFileName().equals(dir.toPath().getFileName()) && name.endsWith(".yml"); // "playerdata" == "playerdata"
+			}
+		});
 		
 		// for each file in the playerdata directory..
 		for (final File playerdataFile : playerdataFiles)
 		{
 			// file object that will represent the backup of this file
 			final File backupFile = new File(playerdataFile.getParent() + File.separator + "backup" + File.separator + playerdataFile.getName());
-			backupFile.mkdirs(); // make any necessary directories
 			
-			// copy file to backup
 			try {
-				com.google.common.io.Files.copy(playerdataFile, backupFile);
+				Files.createDirectories(backupFile.toPath().getParent()); // Create backup directory
+				Files.copy(playerdataFile.toPath(), backupFile.toPath(), StandardCopyOption.REPLACE_EXISTING); // Copy this file to backup
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
+
 		}
 		
 		
