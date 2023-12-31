@@ -118,6 +118,7 @@ public final class PlayerData extends PlayerDataExtra {
 	// It will show up in their name (similar to the staff diamond icon)
 	// Used in getRankedName()
 	private final String pvpSwordsIcon = new String(Character.toChars(0x2694));
+	private final String peaceIcon = new String(Character.toChars(0x262E));
 	
 	public String getRankedName() {
 		
@@ -136,6 +137,10 @@ public final class PlayerData extends PlayerDataExtra {
 		{
 			// Add the pvp swords icon to the ending of the name
 			newName = newName + ChatColor.GRAY + " " + pvpSwordsIcon + ChatColor.RESET;
+		} else
+		{
+			// Add the pvp swords icon to the ending of the name
+			newName = newName + ChatColor.GRAY + " " + peaceIcon + ChatColor.RESET;
 		}
 		
 		return newName;
