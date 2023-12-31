@@ -48,6 +48,11 @@ commands:
     usage: /<command>
     description: unlinks the user's discord account.
     permission: pgf.cmd.unlink
+  broadcast:
+    usage: /<command> [message]
+    description: Broadcast to the server!
+    aliases: [bc, broadc, bcast, say, servermessage]
+    permission: pgf.admin.broadcast
 
 permissions:
   pgf.cmd.playerdata.*:
