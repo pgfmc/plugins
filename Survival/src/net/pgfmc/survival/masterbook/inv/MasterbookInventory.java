@@ -8,7 +8,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
 import net.pgfmc.core.api.inventory.BaseInventory;
@@ -103,10 +102,9 @@ public class MasterbookInventory implements InventoryHolder {
 			
 			ItemStack item = new ItemWrapper(Material.TIPPED_ARROW).n(ChatColor.RESET + "" + ChatColor.DARK_RED + "Back").l(ChatColor.RESET + "" + ChatColor.GRAY + "Go back to your last location").gi();
 			
-			PotionMeta pot = (PotionMeta) item.getItemMeta();
-			PotionData potion = new PotionData(PotionType.INSTANT_DAMAGE);
-			pot.setBasePotionData(potion);
-			item.setItemMeta(pot);
+			PotionMeta potion = (PotionMeta) item.getItemMeta();
+			potion.setBasePotionType(PotionType.INSTANT_DAMAGE);
+			item.setItemMeta(potion);
 			
 			setItem(23, item);
 			
