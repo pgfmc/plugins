@@ -143,7 +143,7 @@ public class Main extends JavaPlugin {
 						pd.addTag("tip-back");
 						
 					} else if (!pd.hasTag("tip-protectitems")) {
-						pd.sendMessage(prefix + "Items are protected for 2 minutes apon death");
+						pd.sendMessage(prefix + "Items are protected for 2 minutes upon death");
 						pd.addTag("tip-protectitems");
 						
 					}
