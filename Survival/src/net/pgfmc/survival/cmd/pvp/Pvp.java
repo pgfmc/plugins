@@ -26,15 +26,14 @@ public class Pvp extends PlayerCommand {
 		if (pd.hasTag("pvp")) {
 			pd.removeTag("pvp");
 			
-			// 0x262E is peace symbol
-			ServerMessage.sendServerMessage(pd.getRankedName() + ChatColor.GREEN + " has disabled PVP!");
+			ServerMessage.sendServerMessage(pd.getRankedName() + ChatColor.GREEN + " enabled PVP.");
 			
 			PGFRoles.updatePlayerNameplate(pd);
 			
 		} else {
 			pd.addTag("pvp");
-			// 0x2694 is swords clashing symbol
-			ServerMessage.sendServerMessage(pd.getRankedName() + ChatColor.RED + " has enabled PVP!");
+			
+			ServerMessage.sendServerMessage(pd.getRankedName() + ChatColor.RED + " disabled PVP.");
 			
 			PGFRoles.updatePlayerNameplate(pd);
 		}
