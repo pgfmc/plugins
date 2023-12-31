@@ -1,4 +1,4 @@
-package net.pgfmc.core.util;
+package net.pgfmc.core.util.vector4;
 
 import java.io.Serializable;
 
@@ -37,7 +37,7 @@ public class Vector4 implements Cloneable, Serializable {
 		this.x = loc.getBlockX();
 		this.y = loc.getBlockY();
 		this.z = loc.getBlockZ();
-		this.w = DimManager.worldToInt(loc.getWorld());
+		this.w = WorldNumbered.worldToInt(loc.getWorld());
 	}
 	
 	/**
@@ -47,7 +47,7 @@ public class Vector4 implements Cloneable, Serializable {
 		this.x = block.getX();
 		this.y = block.getY();
 		this.z = block.getZ();
-		this.w = DimManager.worldToInt(block.getWorld());
+		this.w = WorldNumbered.worldToInt(block.getWorld());
 	}
 	
 	/**
@@ -86,7 +86,7 @@ public class Vector4 implements Cloneable, Serializable {
 	 * @return World
 	 */
 	public World world() {
-		return DimManager.intToWorld(w, "survival");
+		return WorldNumbered.intToWorld(w, "survival");
 	}
 	
 	/**
