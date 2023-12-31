@@ -1,6 +1,5 @@
 package net.pgfmc.core;
 
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Calendar;
@@ -41,6 +40,7 @@ import net.pgfmc.core.bot.minecraft.listeners.OnPlayerJoin;
 import net.pgfmc.core.bot.minecraft.listeners.OnPlayerQuit;
 import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.cmd.donator.Nick;
+import net.pgfmc.core.util.ServerMessage;
 import net.pgfmc.core.util.RestartScheduler;
 import net.pgfmc.core.util.roles.PGFRoles;
 
@@ -134,7 +134,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		 * Register commands and listeners
 		 */
 		getCommand("nick").setExecutor(new Nick());
-		
+		getCommand("broadcast").setExecutor(new ServerMessage());
 		getCommand("link").setExecutor(new LinkCommand());
 		getCommand("unlink").setExecutor(new UnlinkCommand());
 		
