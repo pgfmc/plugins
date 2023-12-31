@@ -13,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import net.pgfmc.core.CoreMain;
+import net.pgfmc.core.util.roles.PGFRoles;
 
 public class PlayerDataManager implements Listener {
 
@@ -50,11 +51,9 @@ public class PlayerDataManager implements Listener {
 	 */
 	public static void initializePlayerData() {
 		
-		for (OfflinePlayer p : Bukkit.getOfflinePlayers())
+		for (final OfflinePlayer p : Bukkit.getOfflinePlayers())
 		{
-			PlayerData pd = new PlayerData(p);
-			
-			pd.loadFile().getStringList("tags").stream().forEach(tag -> pd.addTag(tag));
+			new PlayerData(p);
 		}
 		
 		Bukkit.getLogger().warning("PlayerData init functions ran!");
@@ -100,10 +99,7 @@ public class PlayerDataManager implements Listener {
 			pd = new PlayerData(p);
 		}
 		
-		// p.setDisplayName(pd.getRankedName());
-		p.setPlayerListName(pd.getRankedName());
-		p.setCustomName(pd.getRankedName());
-		p.setCustomNameVisible(true);
+		PGFRoles.updatePlayerNameplate(pd);
 		
 	}
 

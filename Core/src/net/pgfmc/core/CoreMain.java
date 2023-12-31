@@ -82,6 +82,11 @@ public class CoreMain extends JavaPlugin implements Listener {
 		    
 		}
 		
+		PlayerDataManager.setInit(playerdata -> {
+			FileConfiguration playerdataFile = playerdata.loadFile();
+			playerdataFile.getStringList("tags").stream().forEach(tag -> playerdata.addTag(tag));
+		});
+		
 		/**
 		 * PlayerData initialization
 		 */
@@ -191,7 +196,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		
 		long secondsUntilRestartCountdown = (Duration.between(Instant.now(), restartDate.toInstant()).getSeconds()) - (60 * 10);  // Calculate amount of time to wait until we run.
 		
-		Bukkit.getLogger().warning("Restart date: " + new SimpleDateFormat("MMM dd, YYYY @ kkmm").format(restartDate.getTime()));
+		Bukkit.getLogger().warning("Restart date: " + secondsUntilRestartCountdown/60/60 + " hours from now.");
 		
 		new RestartScheduler().runTaskTimer(this, secondsUntilRestartCountdown * 20, 20);
 		
