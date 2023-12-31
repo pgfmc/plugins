@@ -118,7 +118,6 @@ public final class PlayerData extends PlayerDataExtra {
 	// It will show up in their name (similar to the staff diamond icon)
 	// Used in getRankedName()
 	private final String pvpSwordsIcon = new String(Character.toChars(0x2694));
-	private final String peaceIcon = new String(Character.toChars(0x262E));
 	
 	public String getRankedName() {
 		
@@ -129,21 +128,17 @@ public final class PlayerData extends PlayerDataExtra {
 		if (getRole().compareTo(PGFRole.STAFF) <= 0)
 		{
 			// Add the staff diamond icon to the beginning of the name
-			newName = getRole().getColor() + PGFRole.STAFF_DIAMOND + newName + ChatColor.RESET;
+			newName = getRole().getColor() + PGFRole.STAFF_DIAMOND + newName;
 		}
 		
 		// If the player has pvp enabled
 		if (hasTag("pvp"))
 		{
 			// Add the pvp swords icon to the ending of the name
-			newName = newName + ChatColor.GRAY + " " + pvpSwordsIcon + ChatColor.RESET;
-		} else
-		{
-			// Add the pvp swords icon to the ending of the name
-			newName = newName + ChatColor.GRAY + " " + peaceIcon + ChatColor.RESET;
+			newName = newName + ChatColor.GRAY + " " + pvpSwordsIcon;
 		}
 		
-		return newName;
+		return newName + ChatColor.RESET;
 	}
 	
 	public String getDisplayName()
