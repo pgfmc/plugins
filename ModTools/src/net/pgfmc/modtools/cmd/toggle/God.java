@@ -37,7 +37,7 @@ public class God implements CommandExecutor, Listener {
 		
 		if (god) {
 			pd.removeTag("god");
-			p.sendMessage(ChatColor.RED + "cDisabled god mode.");
+			p.sendMessage(ChatColor.RED + "Disabled god mode.");
 			
 		} else {
 			pd.addTag("god");
