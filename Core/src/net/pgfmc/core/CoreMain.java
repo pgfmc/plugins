@@ -43,6 +43,7 @@ import net.pgfmc.core.bot.discord.Discord;
 import net.pgfmc.core.bot.minecraft.cmd.LinkCommand;
 import net.pgfmc.core.bot.minecraft.cmd.UnlinkCommand;
 import net.pgfmc.core.bot.minecraft.listeners.OnAsyncPlayerChat;
+import net.pgfmc.core.bot.minecraft.listeners.OnPlayerAdvancementDone;
 import net.pgfmc.core.bot.minecraft.listeners.OnPlayerDeath;
 import net.pgfmc.core.bot.minecraft.listeners.OnPlayerJoin;
 import net.pgfmc.core.bot.minecraft.listeners.OnPlayerQuit;
@@ -172,6 +173,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new OnPlayerDeath(), this);
 		getServer().getPluginManager().registerEvents(new OnPlayerJoin(), this);
 		getServer().getPluginManager().registerEvents(new OnPlayerQuit(), this);
+		getServer().getPluginManager().registerEvents(new OnPlayerAdvancementDone(), this);
 		
 		getServer().getPluginManager().registerEvents(new RoleManager(), this);
 		
