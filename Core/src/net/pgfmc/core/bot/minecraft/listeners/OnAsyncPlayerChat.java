@@ -26,7 +26,7 @@ public class OnAsyncPlayerChat implements Listener {
 		final Player player = e.getPlayer();
 		final PlayerData pd = PlayerData.from(player);
 		
-		final MessageHandler handler = new MessageHandler(e.getMessage(), player);
+		final MessageHandler handler = new MessageHandler(player).setMessage(e.getMessage());
 		
 		if (handler.getMessage().length() > 95)
 		{

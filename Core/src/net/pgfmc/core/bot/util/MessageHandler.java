@@ -10,7 +10,7 @@ import net.pgfmc.core.bot.discord.Discord;
 
 public class MessageHandler {
 	
-	public enum SenderType {
+	private enum SenderType {
 		DISCORD,
 		MINECRAFT;
 	}
@@ -23,18 +23,16 @@ public class MessageHandler {
 	private User user = null;
 	private OfflinePlayer player = null;
 	
-	public MessageHandler(String message, User user)
+	public MessageHandler(User sender)
 	{
 		type = SenderType.DISCORD;
-		this.message = message;
-		this.user = user;
+		this.user = sender;
 	}
 	
-	public MessageHandler(String message, OfflinePlayer player)
+	public MessageHandler(OfflinePlayer sender)
 	{
 		type = SenderType.MINECRAFT;
-		this.message = message;
-		this.player = player;
+		this.player = sender;
 	}
 	
 	public MessageHandler setMessage(String message)
@@ -68,8 +66,7 @@ public class MessageHandler {
 		if (type == SenderType.DISCORD)
 		{
 			Bukkit.getServer().broadcastMessage(message);
-		} else
-		if (type == SenderType.MINECRAFT)
+		} else if (type == SenderType.MINECRAFT)
 		{			
 			Discord.sendMessage(ChatColor.stripColor(PlayerData.from(player).getRankedName()) + " -> " + message).queue();
 		}
