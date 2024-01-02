@@ -24,7 +24,7 @@ public class OnMessageReceived extends ListenerAdapter {
 	{
 		final User user = e.getAuthor();
 		
-		final MessageHandler handler = new MessageHandler(e.getMessage().getContentDisplay(), user);
+		final MessageHandler handler = new MessageHandler(user).setMessage(e.getMessage().getContentDisplay());
 		
 		if (handler.getMessage().length() == 0) return;
 		
