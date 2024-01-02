@@ -27,6 +27,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.luckperms.api.LuckPerms;
 import net.pgfmc.core.api.inventory.extra.InventoryPressEvent;
 import net.pgfmc.core.api.playerdata.PlayerData;
@@ -45,6 +46,7 @@ import net.pgfmc.core.bot.minecraft.listeners.OnAsyncPlayerChat;
 import net.pgfmc.core.bot.minecraft.listeners.OnPlayerDeath;
 import net.pgfmc.core.bot.minecraft.listeners.OnPlayerJoin;
 import net.pgfmc.core.bot.minecraft.listeners.OnPlayerQuit;
+import net.pgfmc.core.bot.util.Colors;
 import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.cmd.donator.Nick;
 import net.pgfmc.core.util.RestartScheduler;
@@ -222,10 +224,17 @@ public class CoreMain extends JavaPlugin implements Listener {
 			Bukkit.getLogger().warning("(PlayerData Corruption) No errors found with PlayerData!");
 		} else
 		{
+			StringBuilder message = new StringBuilder();
 			errorMessages.forEach(error -> {
-				Discord.sendAlert(error).queue();
-				Bukkit.getLogger().warning(error);
+				
+				message.append("* " + error + "\n");
 			});
+			
+			EmbedBuilder embed = Discord.simpleServerEmbed("PlayerData Corruption", "https://cdn.discordapp.com/emojis/883396023601483857.webp?size=44&quality=lossless", Colors.BLACK);
+			embed.setDescription(message.toString());
+			
+			Discord.sendAlert(embed.build()).queue();
+			Bukkit.getLogger().warning("(Playerdata Corruption)\n" + message.toString());
 			
 		}
 	
@@ -267,7 +276,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		// error if the playerdata directory does not exist
 		if (!playerdataDirectory.exists())
 		{
-			errorMessages.add("(PlayerData Corruption) Playerdata directory does not exist.");
+			errorMessages.add("Playerdata directory does not exist.");
 			return;
 		}
 		
@@ -295,7 +304,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 				// returns -1L if no mismatch
 				if (Files.mismatch(playerdataFile.toPath(), backupFile.toPath()) == -1L) continue;
 				
-				errorMessages.add("(PlayerData Corruption) Playerdata file does not match backup: " + playerdataFile.getName());
+				errorMessages.add("Playerdata file does not match backup: " + playerdataFile.getName());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -318,7 +327,11 @@ public class CoreMain extends JavaPlugin implements Listener {
 		// error if the playerdata directory does not exist
 		if (!playerdataDirectory.exists())
 		{
-			Discord.sendAlert("(PlayerData Corruption) Could not find playerdata directory on shutdown!").complete();
+			EmbedBuilder embed = Discord.simpleServerEmbed("PlayerData Corruption", "https://cdn.discordapp.com/emojis/883396023601483857.webp?size=44&quality=lossless", Colors.BLACK);
+			embed.setDescription("* Could not find playerdata directory on shutdown!");
+			
+			Discord.sendAlert(embed.build()).complete();
+			Bukkit.getLogger().warning("(PlayerData Corruption) Could not find playerdata directory on shutdown!");
 			return;
 		}
 		
