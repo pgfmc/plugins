@@ -108,7 +108,7 @@ abstract class PlayerDataExtra {
 		try {
 			List<String> nodes = new ArrayList<String>(CoreMain.luckPermsAPI.getGroupManager().searchAll(NodeMatcher.key(permission)).get().keySet());
 			
-			if (nodes == null || nodes.isEmpty()) throw new NullPointerException("Permission does not exist in LuckPerms for the OfflinePlayer.");
+			if (nodes == null || nodes.isEmpty()) throw new NullPointerException("Permission does not exist in LuckPerms.");
 			
 			nodes.forEach(node -> Bukkit.getLogger().warning("Node found: " + node));
 			

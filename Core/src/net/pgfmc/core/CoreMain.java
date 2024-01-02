@@ -96,11 +96,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 		    
 		}
 		
-		PlayerDataManager.setInit(playerdata -> {
-			final FileConfiguration playerdataFile = playerdata.getPlayerDataFile();
-			playerdataFile.getStringList("tags").stream().forEach(tag -> playerdata.addTag(tag));
-		});
-		
 		/**
 		 * PlayerData initialization
 		 */

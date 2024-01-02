@@ -6,14 +6,15 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 import net.pgfmc.core.api.inventory.ConfirmInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.survival.masterbook.MasterbookInventory;
 
 public class BackConfirmInventory extends ConfirmInventory {
 	
 	private PlayerData pd;
 	
-	protected BackConfirmInventory(PlayerData pd)
+	public BackConfirmInventory(PlayerData pd)
 	{
-		super(ChatColor.RESET + "" + ChatColor.DARK_GRAY + "Go back?", ChatColor.RESET + "" + ChatColor.LIGHT_PURPLE + "Teleport", ChatColor.RESET + "" + ChatColor.GRAY + "Back");
+		super(ChatColor.RESET + "" + ChatColor.DARK_GRAY + "Teleport Back", ChatColor.RESET + "" + ChatColor.DARK_GREEN + "Continue", ChatColor.RESET + "" + ChatColor.GRAY + "Cancel");
 		
 		this.pd = pd;
 	}
