@@ -28,16 +28,16 @@ public class Pvp extends PlayerCommand {
 		if (pd.hasTag("pvp")) {
 			pd.removeTag("pvp");
 			
-			ServerMessage.sendServerMessage(pd.getRankedName() + ChatColor.GREEN + " disabled PVP");
-			Discord.sendMessage(ChatColor.stripColor(":shield: " + pd.getRankedName() + " disabled PVP")).queue();;
+			ServerMessage.sendServerMessage(pd.getRankedName() + ChatColor.GRAY + " disabled PVP");
+			Discord.sendMessage(ChatColor.stripColor(":shield: " + pd.getRankedName() + " disabled PVP")).queue();
 			
 			RoleManager.updatePlayerNameplate(pd);
 			
 		} else {
 			pd.addTag("pvp");
 			
-			ServerMessage.sendServerMessage(pd.getRankedName() + ChatColor.RED + " enabled PVP");
-			Discord.sendMessage(ChatColor.stripColor(":crossed_swords: " + pd.getRankedName() + " enabled PVP")).queue();;
+			ServerMessage.sendServerMessage(pd.getRankedName() + ChatColor.DARK_RED + " enabled PVP");
+			Discord.sendMessage(ChatColor.stripColor(":crossed_swords: " + pd.getRankedName() + " enabled PVP")).queue();
 			
 			RoleManager.updatePlayerNameplate(pd);
 		}
