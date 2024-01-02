@@ -175,12 +175,15 @@ public abstract class RequestType {
 		
 		ConfigurationSection configsec = cs.getConfigurationSection(name);
 		
+		if (configsec == null) return;
+		
 		for (String key : configsec.getKeys(false)) {
 			PlayerData aska = PlayerData.from(UUID.fromString(key));
 			PlayerData targe = PlayerData.from(UUID.fromString(configsec.getString(key)));
 			
 			new Request(aska, targe, this);
 		}
+		
 	}
 	
 	public static void saveRequestsToFile() {

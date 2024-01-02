@@ -35,34 +35,34 @@ public enum PGFAdvancement {
 	 * @param player An online player
 	 * @return If the advancement was granted
 	 */
-	public boolean grantToPlayer(Player player)
+	public void grantToPlayer(Player player)
 	{
-		// Online players only
-		if (player == null || !player.isOnline()) return false;
+		Bukkit.getScheduler().runTask(CoreMain.plugin, new Runnable() {
+			@Override
+			public void run() {
+				// Online players only
+				if (player == null || !player.isOnline()) return;
+				
+				// The location of the advancement in the datapack
+				// e.g. pgfmc:social_sync
+				// 'pgfmc:' is the namespace
+				// 'social_sync' is the name of the advancement
+				final NamespacedKey key = NamespacedKey.fromString("pgfmc:" + toString());
+				// The advancement itself
+				final Advancement advancement = Bukkit.getAdvancement(key);
+				// Contains information about if criteria are completed
+				final AdvancementProgress progress = player.getAdvancementProgress(advancement);
+				
+				
+				// Force complete each criteria
+				// Once all criteria is complete/awarded, the advancement will be granted automatically by the game
+				for (final String criteria : advancement.getCriteria())
+				{
+					progress.awardCriteria(criteria);
+				}
+				
+			}});
 		
-		// The location of the advancement in the datapack
-		// e.g. pgfmc:social_sync
-		// 'pgfmc:' is the namespace
-		// 'social_sync' is the name of the advancement
-		final NamespacedKey key = NamespacedKey.fromString("pgfmc:" + toString());
-		// The advancement itself
-		final Advancement advancement = Bukkit.getAdvancement(key);
-		// Contains information about if criteria are completed
-		final AdvancementProgress progress = player.getAdvancementProgress(advancement);
-		
-		
-		// Force complete each criteria
-		// Once all criteria is complete/awarded, the advancement will be granted automatically by the game
-		for (final String criteria : advancement.getCriteria())
-		{
-			progress.awardCriteria(criteria);
-		}
-		
-		// Double check to see if the advancement will be awarded (all criteria completed)
-		if (progress.isDone()) return true;
-		
-		// Some error probably happened
-		return false;
 	}
 	
 	// The enum names match the advancement names
