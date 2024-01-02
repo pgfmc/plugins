@@ -190,7 +190,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 	}
 	
 	@Override
-	public void onDisable() {		
+	public void onDisable() {
 		Bot.shutdown();
 		PlayerDataManager.saveQ();
 		RequestType.saveRequestsToFile();
@@ -231,7 +231,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 			
 			Discord.sendAlert(embed.build()).queue();
 			Bukkit.getLogger().warning("(Playerdata Corruption)\n" + message.toString());
-			
+      
 		}
 	
 		
