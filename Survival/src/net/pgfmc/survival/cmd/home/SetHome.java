@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 
+import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.Profanity;
 import net.pgfmc.core.util.commands.PlayerCommand;
@@ -74,8 +75,14 @@ public class SetHome extends PlayerCommand {
 		
 		pd.sendMessage(ChatColor.GREEN + "Set home " + ChatColor.GOLD + name + ChatColor.GREEN + "!");
 		pd.setData("homes", homes).queue();
-	}
-
-	
+		
+		// Grants advancement
+		if (homes.size() >= 5)
+		{
+			PGFAdvancement.THEYRE_MY_VACATION_HOMES.grantToPlayer(pd.getPlayer());
+			
+		}
+		
+	}	
 
 }
