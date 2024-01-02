@@ -13,13 +13,14 @@ import net.pgfmc.core.api.inventory.ListInventory;
 import net.pgfmc.core.api.inventory.extra.Butto;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.ItemWrapper;
+import net.pgfmc.survival.masterbook.MasterbookInventory;
 
 public class TpaListInventory extends ListInventory<Player> {
 	
 	private PlayerData pd;
 
 	public TpaListInventory(PlayerData pd) {
-		super(27, ChatColor.RESET + "" + ChatColor.DARK_GRAY + "Select who to teleport to!");
+		super(27, ChatColor.RESET + "" + ChatColor.DARK_GRAY + "Teleport Menu");
 		
 		this.pd = pd;
 		
@@ -36,9 +37,9 @@ public class TpaListInventory extends ListInventory<Player> {
 	@Override
 	protected Butto toAction(Player entry) {
 		
-		return (p, e) -> {
-			p.performCommand("tpa " + entry.getName());
-			p.openInventory(new MasterbookInventory(pd).getInventory());
+		return (player, event) -> {
+			player.performCommand("tpa " + entry.getName());
+			player.closeInventory();
 		};
 		
 	}

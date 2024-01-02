@@ -40,7 +40,7 @@ public class HomeSelect extends ListInventory<String> {
 		
 		if (!pd.hasPermission("pgf.cmd.home.home"))
 		{
-			return (p, e) -> {
+			return (player, event) -> {
 				pd.sendMessage(ChatColor.RED + "You don't have permission to execute this command.");
 			};
 			
@@ -48,15 +48,15 @@ public class HomeSelect extends ListInventory<String> {
 		
 		if (homes.size() == 0)
 		{
-			return (p, e) -> {
+			return (player, event) -> {
 				pd.sendMessage(ChatColor.RED + "You do not have any homes.");
 			};
 			
 		}
 		
-		return (p, e) -> {
-			p.performCommand("home " + entry);
-			p.closeInventory();
+		return (player, event) -> {
+			player.performCommand("home " + entry);
+			player.closeInventory();
 		};
 		
 	}

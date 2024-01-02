@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -48,6 +49,7 @@ public class Link {
 		pdMatch.setData("Discord", user.getId()).queue();
 		RoleManager.updatePlayerRole(pdMatch);
 		
+		pdMatch.playSound(pdMatch.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
 		pdMatch.sendMessage(ChatColor.GREEN + "Your roles have been updated!");
 		e.getHook().sendMessage("Your account has been linked to " + pdMatch.getName() + ".").queue();
 		

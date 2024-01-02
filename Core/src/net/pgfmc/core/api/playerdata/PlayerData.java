@@ -38,7 +38,7 @@ public final class PlayerData extends PlayerDataExtra {
 	private static final Set<PlayerData> debug = new HashSet<PlayerData>();
 	
 	private HashMap<String, Object> data = new HashMap<String, Object>();
-	private Set<String> tags = new HashSet<>();
+	protected Set<String> tags = new HashSet<>();
 	protected List<String> queue = new LinkedList<String>();
 	
 	/**
@@ -50,6 +50,7 @@ public final class PlayerData extends PlayerDataExtra {
 		
 		if (from(p) != null) return;
 		
+		getPlayerDataFile().getStringList("tags").stream().forEach(tag -> addTag(tag));
 		PlayerDataManager.pdInit.stream().forEach(consoomer -> consoomer.accept(this));
 		
 		instances.add(this);
@@ -129,6 +130,9 @@ public final class PlayerData extends PlayerDataExtra {
 		{
 			// Add the staff diamond icon to the beginning of the name
 			newName = getRole().getColor() + PGFRole.STAFF_DIAMOND + newName;
+		} else
+		{
+			newName = getRole().getColor() + newName;
 		}
 		
 		// If the player has pvp enabled

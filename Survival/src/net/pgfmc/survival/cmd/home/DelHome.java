@@ -49,7 +49,7 @@ public class DelHome extends PlayerCommand {
 			pd.sendMessage(ChatColor.GREEN + "Home " + ChatColor.GOLD + name + ChatColor.GREEN + " removed!");
 		} else
 		{
-			pd.sendMessage(ChatColor.RED + "cCould not find home " + ChatColor.GOLD + name + ChatColor.RED + ".");
+			pd.sendMessage(ChatColor.RED + "Could not find home " + ChatColor.GOLD + name + ChatColor.RED + ".");
 		}
 		
 		return true;

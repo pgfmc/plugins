@@ -63,11 +63,20 @@
 			<version>0.0.0</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+    		<groupId>net.wesjd</groupId>
+    		<artifactId>anvilgui</artifactId>
+    		<version>1.9.2-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 	<repositories>
 		<repository>
 			<id>spigot-repo</id>
 			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+		</repository>
+		<repository>
+    		<id>codemc-snapshots</id>
+    		<url>https://repo.codemc.io/repository/maven-snapshots/</url>
 		</repository>
 	</repositories>
 </project>

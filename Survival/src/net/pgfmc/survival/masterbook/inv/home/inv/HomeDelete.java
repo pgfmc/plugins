@@ -14,7 +14,6 @@ import net.pgfmc.core.api.inventory.extra.Butto;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.ItemWrapper;
 import net.pgfmc.survival.cmd.home.Homes;
-import net.pgfmc.survival.masterbook.inv.MasterbookInventory;
 
 public class HomeDelete extends ListInventory<String> {
 	
@@ -27,7 +26,7 @@ public class HomeDelete extends ListInventory<String> {
 		this.pd = pd;
 		this.homes = Homes.getHomes(pd);
 		
-		setBack(0, new MasterbookInventory(pd).getInventory());
+		setBack(0, new HomeHomepage(pd).getInventory());
 	}
 
 	@Override
@@ -40,21 +39,21 @@ public class HomeDelete extends ListInventory<String> {
 		
 		if (!pd.hasPermission("pgf.cmd.home.del"))
 		{
-			return (p, e) -> {
-				p.sendMessage(ChatColor.RED + "You don't have permission to execute this command.");
+			return (player, event) -> {
+				player.sendMessage(ChatColor.RED + "You don't have permission to execute this command.");
 			};
 		}
 		
 		if (homes.size() == 0)
 		{
-			return (p, e) -> {
-				p.sendMessage(ChatColor.RED + "You do not have any homes.");
+			return (player, event) -> {
+				player.sendMessage(ChatColor.RED + "You do not have any homes.");
 			};
 		}
 		
-		return (p, e) -> {
-			p.performCommand("delhome " + entry);
-			p.closeInventory();
+		return (player, event) -> {
+			player.performCommand("delhome " + entry);
+			player.openInventory(new HomeHomepage(pd).getInventory());
 		};
 		
 	}
