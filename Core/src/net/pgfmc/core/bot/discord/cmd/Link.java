@@ -9,7 +9,7 @@ import org.bukkit.ChatColor;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.pgfmc.core.api.playerdata.PlayerData;
-import net.pgfmc.core.util.roles.PGFRoles;
+import net.pgfmc.core.util.roles.RoleManager;
 
 public class Link {
 	
@@ -46,10 +46,11 @@ public class Link {
 		Bukkit.getLogger().warning("Account linking: Successfully linked (Minecraft)" + pdMatch.getName() + " and (Discord)" + user.getName());
 		
 		pdMatch.setData("Discord", user.getId()).queue();
-		PGFRoles.updatePlayerRole(pdMatch);
+		RoleManager.updatePlayerRole(pdMatch);
 		
 		pdMatch.sendMessage(ChatColor.GREEN + "Your roles have been updated!");
 		e.getHook().sendMessage("Your account has been linked to " + pdMatch.getName() + ".").queue();
+		
 	}
 
 }
