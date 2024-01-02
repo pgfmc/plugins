@@ -51,7 +51,7 @@ import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.cmd.donator.Nick;
 import net.pgfmc.core.util.RestartScheduler;
 import net.pgfmc.core.util.ServerMessage;
-import net.pgfmc.core.util.roles.PGFRoles;
+import net.pgfmc.core.util.roles.RoleManager;
 
 /**
  * @author bk and CrimsonDart
@@ -157,7 +157,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		});
 		
 		PlayerDataManager.setPostLoad(x -> {
-			PlayerData.getPlayerDataSet().forEach(pd -> PGFRoles.updatePlayerRole(pd));
+			PlayerData.getPlayerDataSet().forEach(pd -> RoleManager.updatePlayerRole(pd));
 		});
 		
 		/**
@@ -178,7 +178,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new OnPlayerJoin(), this);
 		getServer().getPluginManager().registerEvents(new OnPlayerQuit(), this);
 		
-		getServer().getPluginManager().registerEvents(new PGFRoles(), this);
+		getServer().getPluginManager().registerEvents(new RoleManager(), this);
 		
 		getServer().getPluginManager().registerEvents(this, this);
 		
@@ -193,13 +193,12 @@ public class CoreMain extends JavaPlugin implements Listener {
 	}
 	
 	@Override
-	public void onDisable() {
-		makeBackupOfPlayerDataToTestForCorruptionLater(); // XXX DEBUG CODE
-		
+	public void onDisable() {		
 		Bot.shutdown();
 		PlayerDataManager.saveQ();
 		RequestType.saveRequestsToFile();
 		
+		makeBackupOfPlayerDataToTestForCorruptionLater(); // XXX DEBUG CODE
 	}
 	
 	@EventHandler
@@ -327,10 +326,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 		// error if the playerdata directory does not exist
 		if (!playerdataDirectory.exists())
 		{
-			EmbedBuilder embed = Discord.simpleServerEmbed("PlayerData Corruption", "https://cdn.discordapp.com/emojis/883396023601483857.webp?size=44&quality=lossless", Colors.BLACK);
-			embed.setDescription("* Could not find playerdata directory on shutdown!");
-			
-			Discord.sendAlert(embed.build()).complete();
 			Bukkit.getLogger().warning("(PlayerData Corruption) Could not find playerdata directory on shutdown!");
 			return;
 		}

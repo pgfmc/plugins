@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.bukkit.entity.Player;
 
+import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.commands.PlayerCommand;
 import net.pgfmc.survival.masterbook.inv.MasterbookInventory;
@@ -30,6 +31,9 @@ public class Masterbook extends PlayerCommand {
 		
 		p.closeInventory();
 		p.openInventory(new MasterbookInventory(pd).getInventory());
+		
+		// Grants advancement
+		PGFAdvancement.EXPERT_EXECUTOR.grantToPlayer(p);
 		
 		return true;
 	}

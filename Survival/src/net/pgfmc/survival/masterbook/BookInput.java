@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.survival.masterbook.inv.MasterbookInventory;
 
@@ -26,6 +27,9 @@ public class BookInput implements Listener {
 		
 		p.closeInventory();
 		p.openInventory(new MasterbookInventory(PlayerData.from(p)).getInventory());
+		
+		// Grants advancement
+		PGFAdvancement.EXPERT_EXECUTOR.grantToPlayer(p);
 		
 	}
 	
