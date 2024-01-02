@@ -6,8 +6,8 @@ import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
+import net.pgfmc.core.util.vector4.Vector4;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
-import net.pgfmc.core.util.Vector4;
 
 public class BExEvent implements Listener {
 	

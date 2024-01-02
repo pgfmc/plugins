@@ -11,8 +11,9 @@ import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.Claim.Security;
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
+import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.playerdata.PlayerData;
-import net.pgfmc.core.util.Vector4;
+import net.pgfmc.core.util.vector4.Vector4;
 
 /**
  * Class that manages Block breaks.
@@ -50,6 +51,10 @@ public class BBEvent implements Listener {
 				case ADMIN:
 					cont.remove();
 					pd.sendMessage(ChatColor.GREEN + "Claim Removed!");
+					
+					// Grants advancement
+					PGFAdvancement.RELOCATING.grantToPlayer(pd.getPlayer());
+					
 					return;
 					
 				}

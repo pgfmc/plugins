@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.guild.member.GenericGuildMemberEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.pgfmc.core.api.playerdata.PlayerData;
-import net.pgfmc.core.util.roles.Roles;
+import net.pgfmc.core.util.roles.RoleManager;
 
 public class OnUpdateRole extends ListenerAdapter {
 
@@ -17,6 +17,6 @@ public class OnUpdateRole extends ListenerAdapter {
 		
 		if (pd == null) return;
 		
-		Roles.setRole(pd);
+		RoleManager.updatePlayerRole(pd);
 	}
 }

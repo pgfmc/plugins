@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
 
+import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.request.EndBehavior;
 import net.pgfmc.core.api.request.Request;
 import net.pgfmc.core.api.request.RequestType;
@@ -29,14 +30,19 @@ public class TpRequest extends RequestType {
 
 	@Override
 	public ItemStack toItem(Request r) {
-		return new ItemWrapper(Material.ENDER_PEARL).n(ChatColor.LIGHT_PURPLE + "Tp request from " + r.asker.getRankedName()).gi();
+		return new ItemWrapper(Material.ENDER_PEARL).n(ChatColor.LIGHT_PURPLE + "Teleport request from " + r.asker.getRankedName()).gi();
 	}
 
 	@Override
 	protected boolean sendRequest(Request r) {
 		r.asker.sendMessage(ChatColor.GOLD + "Teleport request sent to " + r.target.getRankedName() + ChatColor.GOLD + "!");
-		r.target.sendMessage(ChatColor.GOLD + "Incoming Tp request from " + r.asker.getRankedName() + ChatColor.GOLD + ".");
+		r.target.sendMessage(ChatColor.GOLD + "Incoming Teleport request from " + r.asker.getRankedName() + ChatColor.GOLD + ".");
 		r.target.sendMessage(ChatColor.GOLD + "Use " + ChatColor.AQUA + "/tpaccept " + ChatColor.GOLD + "to accept!");
+		r.target.playSound(r.target.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
+		
+		// Grants advancement
+		PGFAdvancement.TP_PLEASE.grantToPlayer(r.asker.getPlayer());
+		
 		return true;
 	}
 
@@ -46,6 +52,7 @@ public class TpRequest extends RequestType {
 		case ACCEPT:
 			
 			r.asker.sendMessage(ChatColor.GOLD + "Teleporting to " + r.target.getRankedName() + ChatColor.RESET + ChatColor.GOLD + " in 5 seconds");
+			r.asker.playSound(r.asker.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
 			r.target.sendMessage(ChatColor.GOLD + "Teleporting "+ r.asker.getRankedName() + ChatColor.RESET + ChatColor.GOLD + " here in 5 seconds");
 			
 			new TimedTeleport(r.asker.getPlayer(), r.target.getPlayer(), 5, 40, true).setAct(v -> {

@@ -10,6 +10,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.inventory.ConfirmInventory;
 import net.pgfmc.core.api.inventory.ListInventory;
@@ -163,7 +164,12 @@ public class ClaimConfigInventory extends BaseInventory {
 			arg0.closeInventory();
 			arg0.sendMessage("Added " + player.getRankedName() + " to your base.");
 			claim.forwardUpdateFrom(claim, null);
+			
+			// Grants advancement
+			PGFAdvancement.MAKE_FRIENDS.grantToPlayer(arg0);
+			
 		}
+		
 	}
 	
 	public static class RemovePlayerInventory extends ConfirmInventory {

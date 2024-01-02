@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.teleport.TimedTeleport;
 import net.pgfmc.core.util.commands.PlayerCommand;
@@ -43,12 +44,14 @@ public class Back extends PlayerCommand implements Listener {
 		new TimedTeleport(pd.getPlayer(), dest, 5, 40, true).setAct(v -> {
 			pd.sendMessage(ChatColor.GREEN + "Poof!");
 			pd.playSound(Sound.ENTITY_ENDERMAN_TELEPORT);
+			
 			if (pd.hasTag("afk")) pd.removeTag("afk");
+			pd.setData("backLoc", null); // wipes back location, dont want this to be too op
+			
+			// Grants advancement
+			PGFAdvancement.CALL_ME_TRACER.grantToPlayer(pd.getPlayer());
+			
 		});
-		
-		
-		// added by crimson
-		pd.setData("backLoc", null); // wipes back location, dont want this to be too op
 		
 		return true;
 	}

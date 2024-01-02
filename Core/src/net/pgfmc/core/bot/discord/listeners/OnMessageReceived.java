@@ -15,7 +15,7 @@ import net.pgfmc.core.bot.util.Colors;
 import net.pgfmc.core.bot.util.MessageHandler;
 import net.pgfmc.core.util.Profanity;
 import net.pgfmc.core.util.roles.PGFRole;
-import net.pgfmc.core.util.roles.Roles;
+import net.pgfmc.core.util.roles.RoleManager;
 
 public class OnMessageReceived extends ListenerAdapter {
 
@@ -24,7 +24,7 @@ public class OnMessageReceived extends ListenerAdapter {
 	{
 		final User user = e.getAuthor();
 		
-		final MessageHandler handler = new MessageHandler(e.getMessage().getContentDisplay(), user);
+		final MessageHandler handler = new MessageHandler(user).setMessage(e.getMessage().getContentDisplay());
 		
 		if (handler.getMessage().length() == 0) return;
 		
@@ -52,7 +52,7 @@ public class OnMessageReceived extends ListenerAdapter {
 		// If member of PGF (mainly for BTS/outside PGF server)
 		if (Discord.getGuildPGF().isMember(user))
 		{
-			memberRole = Roles.getTop(Discord.getMemberRoles(user.getId())
+			memberRole = RoleManager.getTopRoleFromList(Discord.getMemberRoles(user.getId())
 					.stream()
 					.map(roleName -> PGFRole.get(roleName))
 					.collect(Collectors.toList()).stream()
@@ -80,7 +80,7 @@ public class OnMessageReceived extends ListenerAdapter {
             
             if (replyMember != null)
             {
-            	replyRole = Roles.getTop(Discord.getMemberRoles(replyMember.getId())
+            	replyRole = RoleManager.getTopRoleFromList(Discord.getMemberRoles(replyMember.getId())
 						.stream()
 						.map(roleName -> PGFRole.get(roleName))
 						.collect(Collectors.toList()).stream()
