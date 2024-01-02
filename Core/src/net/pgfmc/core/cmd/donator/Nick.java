@@ -24,21 +24,20 @@ public class Nick implements CommandExecutor {
 		
 		Player p = (Player) sender;
 		
+		if (!(p.hasPermission("pgf.cmd.donator.nick")))
+		{
+			sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
+			return true;
+		}
+		
 		if (args.length <= 0)
 		{
-			sender.sendMessage(ChatColor.RED + "Please include a nickname.");
-			return true;
+			args = new String[] {"off"};
 		}
 		
 		if (String.join("", args) == null || String.join("", args).strip().equals(""))
 		{
 			sender.sendMessage(ChatColor.RED + "Invalid nickname: Invalid characters.");
-			return true;
-		}
-		
-		if (!((Player) sender).hasPermission("pgf.cmd.donator.nick"))
-		{
-			sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
 			return true;
 		}
 		
