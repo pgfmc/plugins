@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
 
+import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.request.EndBehavior;
 import net.pgfmc.core.api.request.Request;
 import net.pgfmc.core.api.request.RequestType;
@@ -37,6 +38,10 @@ public class TpRequest extends RequestType {
 		r.asker.sendMessage(ChatColor.GOLD + "Teleport request sent to " + r.target.getRankedName() + ChatColor.GOLD + "!");
 		r.target.sendMessage(ChatColor.GOLD + "Incoming Tp request from " + r.asker.getRankedName() + ChatColor.GOLD + ".");
 		r.target.sendMessage(ChatColor.GOLD + "Use " + ChatColor.AQUA + "/tpaccept " + ChatColor.GOLD + "to accept!");
+		
+		// Grants advancement
+		PGFAdvancement.TP_PLEASE.grantToPlayer(r.asker.getPlayer());
+		
 		return true;
 	}
 

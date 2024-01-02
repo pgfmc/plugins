@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.playerdata.PlayerData;
 
 public class Afk implements CommandExecutor {
@@ -19,7 +20,16 @@ public class Afk implements CommandExecutor {
 			return true;
 		}
 		
-		AfkEvents.toggleAfk(PlayerData.from((Player) sender));
+		Player player = (Player) sender;
+		
+		AfkEvents.toggleAfk(PlayerData.from(player));
+		
+		// Grants advancement
+		//
+		// A side effect of placing this here
+		// is that the advancement is granted on either
+		// enable or disable
+		PGFAdvancement.DINNERS_READY.grantToPlayer(player);
 		
 		return true;
 	}
