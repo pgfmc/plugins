@@ -15,6 +15,7 @@ import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.Claim.Security;
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
+import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.vector4.Vector4;
 
@@ -52,6 +53,9 @@ public class BPE implements Listener {
 				pd.sendMessage(ChatColor.GREEN + "Surrounding land claimed!");
 				pd.sendMessage(ChatColor.GOLD + "Claim merged with the nearby claim.");
 				pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
+				
+				// Grants advancement
+				PGFAdvancement.COLONIZATION.grantToPlayer(pd.getPlayer());
 				
 				
 			// Within Foreign claim range	

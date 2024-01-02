@@ -17,10 +17,11 @@ import net.luckperms.api.model.user.UserManager;
 import net.luckperms.api.node.Node;
 import net.luckperms.api.node.NodeType;
 import net.pgfmc.core.CoreMain;
+import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.bot.discord.Discord;
 
-public class PGFRoles implements Listener {
+public class RoleManager implements Listener {
 	
 	// Updates all player nameplates so that they appear correct
 	// Example: A player changes their nickname: this method should be called
@@ -84,6 +85,15 @@ public class PGFRoles implements Listener {
 		
 		updatePlayerNameplate(pd);
 		
+		// Grants advancement
+		//
+		// If the role is Veteran or higher
+		if (role.compareTo(PGFRole.VETERAN) <= 0)
+		{
+			PGFAdvancement.THANK_YOU.grantToPlayer(pd.getPlayer());
+			
+		}
+		
 	}
 	
 	public static void updatePlayerRole(PlayerData pd)
@@ -102,6 +112,9 @@ public class PGFRoles implements Listener {
 		
 		List<String> rolesAsString = Discord.getMemberRoles(pd.getData("Discord"));
 		if (rolesAsString == null || rolesAsString.isEmpty()) return new ArrayList<PGFRole>(Arrays.asList(PGFRole.MEMBER));
+		
+		// Grants advancement
+		PGFAdvancement.SOCIAL_SYNC.grantToPlayer(pd.getPlayer());
 		
 		// Takes a list of string names and gets PGFRole enums and potential null values
 		// Then removes the null values
