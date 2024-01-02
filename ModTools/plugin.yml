@@ -1,6 +1,6 @@
 name: PGF-Modtools
-version: 7.3.5
-api-version: 1.19
+version: 8.0.0
+api-version: 1.20
 authors: [bk, CrimsonDart]
 website: play.pgfmc.net
 main: net.pgfmc.modtools.Main
@@ -55,11 +55,6 @@ commands:
     usage: /<command> [player] [(optional) echest]
     description: See inside a player's inventory
     permission: pgf.admin.invsee
-  broadcast:
-    usage: /<command> [message]
-    description: Broadcast to the server!
-    aliases: [bc, broadc, bcast, say]
-    permission: pgf.admin.broadcast
   inventory:
     usage: /<command> [(optional) player]
     description: View a player's backed up inventories

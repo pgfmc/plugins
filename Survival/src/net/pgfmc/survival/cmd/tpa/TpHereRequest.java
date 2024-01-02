@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
 
+import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.request.EndBehavior;
 import net.pgfmc.core.api.request.Request;
 import net.pgfmc.core.api.request.RequestType;
@@ -29,14 +30,19 @@ public static final TpHereRequest TH = new TpHereRequest();
 
 	@Override
 	public ItemStack toItem(Request r) {
-		return new ItemWrapper(Material.ENDER_EYE).n(ChatColor.LIGHT_PURPLE + "Tp here request from " + r.asker.getRankedName()).gi();
+		return new ItemWrapper(Material.ENDER_EYE).n(ChatColor.LIGHT_PURPLE + "Teleport Here request from " + r.asker.getRankedName()).gi();
 	}
 
 	@Override
 	protected boolean sendRequest(Request r) {
-		r.asker.sendMessage(ChatColor.GOLD + "Teleport here request sent to " + r.target.getRankedName() + ChatColor.GOLD + "!");
-		r.target.sendMessage(ChatColor.GOLD + "Incoming Tph request from " + r.asker.getRankedName() + ChatColor.GOLD + ".");
+		r.asker.sendMessage(ChatColor.GOLD + "Teleport Here request sent to " + r.target.getRankedName() + ChatColor.GOLD + "!");
+		r.target.sendMessage(ChatColor.GOLD + "Incoming Teleport Here request from " + r.asker.getRankedName() + ChatColor.GOLD + ".");
 		r.target.sendMessage(ChatColor.GOLD + "Use " + ChatColor.AQUA + "/tpha " + ChatColor.GOLD + "to accept!");
+		r.target.playSound(r.target.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
+		
+		// Grants advancement
+		PGFAdvancement.TP_PLEASE.grantToPlayer(r.asker.getPlayer());
+		
 		return true;
 	}
 
@@ -47,6 +53,7 @@ public static final TpHereRequest TH = new TpHereRequest();
 			
 			r.target.sendMessage(ChatColor.GOLD + "Teleporting to " + r.asker.getRankedName() + ChatColor.RESET + ChatColor.GOLD + " 5 seconds");
 			r.asker.sendMessage(ChatColor.GOLD + "Teleporting "+ r.target.getRankedName() + ChatColor.RESET + ChatColor.GOLD + " here in 5 seconds");
+			r.asker.playSound(r.asker.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
 			
 			new TimedTeleport(r.target.getPlayer(), r.asker.getPlayer(), 5, 40, true).setAct(v -> {
 				r.target.sendMessage(ChatColor.GREEN + "Poof!");
@@ -56,18 +63,18 @@ public static final TpHereRequest TH = new TpHereRequest();
 			break;
 			
 		case DENIED:
-			r.asker.sendMessage(ChatColor.RED + "Tph request denied!");
-			r.target.sendMessage(ChatColor.RED + "Tph request denied!");
+			r.asker.sendMessage(ChatColor.RED + "Teleport Here request denied!");
+			r.target.sendMessage(ChatColor.RED + "Teleport Here request denied!");
 			break;
 		case FORCEEND:
 			break;
 		case QUIT:
-			r.asker.sendMessage(ChatColor.RED + "Tph request cancelled since " + r.target.getRankedName() + ChatColor.RED + " quit!");
-			r.target.sendMessage(ChatColor.RED + "Tph request cancelled since " + r.asker.getRankedName() + ChatColor.RED + " quit!");
+			r.asker.sendMessage(ChatColor.RED + "Teleport Here request cancelled since " + r.target.getRankedName() + ChatColor.RED + " quit!");
+			r.target.sendMessage(ChatColor.RED + "Teleport Here request cancelled since " + r.asker.getRankedName() + ChatColor.RED + " quit!");
 			break;
 		case TIMEOUT:
-			r.asker.sendMessage(ChatColor.RED + "Tph request timed out!");
-			r.target.sendMessage(ChatColor.RED + "Tph request timed out!");
+			r.asker.sendMessage(ChatColor.RED + "Teleport Here request timed out!");
+			r.target.sendMessage(ChatColor.RED + "Teleport Here request timed out!");
 			break;
 		case REFRESH:
 			r.asker.sendMessage(ChatColor.GOLD + "Time refreshed!");

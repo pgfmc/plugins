@@ -1,6 +1,6 @@
 name: PGF-Survival
-version: 7.3.5
-api-version: 1.19
+version: 8.0.0
+api-version: 1.20
 authors: [bk, CrimsonDart]
 website: play.pgfmc.net
 main: net.pgfmc.survival.Main
@@ -31,13 +31,9 @@ commands:
     
   commands:
     aliases: [c, m]
-    description: Open up the help panel
+    description: Open up the Command Menu
     usage: /<command>
     permission: pgf.cmd.help
-  getClaim:
-    description: Get your free lodestone!
-    usage: /<command>
-    permission: pgf.cmd.lodestone
     
   back:
     description: Sends the player to the last known location

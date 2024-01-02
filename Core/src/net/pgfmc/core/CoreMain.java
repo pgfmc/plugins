@@ -5,7 +5,6 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -28,6 +27,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.luckperms.api.LuckPerms;
 import net.pgfmc.core.api.inventory.extra.InventoryPressEvent;
 import net.pgfmc.core.api.playerdata.PlayerData;
@@ -43,13 +43,16 @@ import net.pgfmc.core.bot.discord.Discord;
 import net.pgfmc.core.bot.minecraft.cmd.LinkCommand;
 import net.pgfmc.core.bot.minecraft.cmd.UnlinkCommand;
 import net.pgfmc.core.bot.minecraft.listeners.OnAsyncPlayerChat;
+import net.pgfmc.core.bot.minecraft.listeners.OnPlayerAdvancementDone;
 import net.pgfmc.core.bot.minecraft.listeners.OnPlayerDeath;
 import net.pgfmc.core.bot.minecraft.listeners.OnPlayerJoin;
 import net.pgfmc.core.bot.minecraft.listeners.OnPlayerQuit;
+import net.pgfmc.core.bot.util.Colors;
 import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.cmd.donator.Nick;
 import net.pgfmc.core.util.RestartScheduler;
-import net.pgfmc.core.util.roles.Roles;
+import net.pgfmc.core.util.ServerMessage;
+import net.pgfmc.core.util.roles.RoleManager;
 
 /**
  * @author bk and CrimsonDart
@@ -87,9 +90,9 @@ public class CoreMain extends JavaPlugin implements Listener {
 		/**
 		 * LuckPerms API
 		 */
-		RegisteredServiceProvider<LuckPerms> lpProvider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+		final RegisteredServiceProvider<LuckPerms> lpProvider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
 		if (lpProvider != null) {
-		    LuckPerms lpAPI = lpProvider.getProvider();
+		    final LuckPerms lpAPI = lpProvider.getProvider();
 		    luckPermsAPI = lpAPI;
 		    
 		}
@@ -100,17 +103,28 @@ public class CoreMain extends JavaPlugin implements Listener {
 		PlayerDataManager.setInit(pd -> pd.setData("Name", pd.getName()).queue());
 		
 		PlayerDataManager.setInit(pd -> {
+			final FileConfiguration db = pd.getPlayerDataFile();
+			final ConfigurationSection config = db.getConfigurationSection("homes");
+			
+			if (config == null) return;
 			
 			Map<String, Location> homes = new HashMap<>();
-			FileConfiguration db = pd.loadFile();
 			
-			if (db == null) return;
-		
-			ConfigurationSection config = db.getConfigurationSection("homes");
+			config.getKeys(false).forEach(home -> {
+				final Location homeLocation = config.getLocation(home);
+				
+				if (homeLocation != null)
+				{
+					homes.put(home, homeLocation);
+				} else
+				{
+					Bukkit.getLogger().warning("Could not load home for " + pd.getName() + ".");
+				}
+				
+				
+			});
 			
-			if (config != null) {
-				config.getKeys(false).forEach(home -> homes.put(home, config.getLocation(home)));
-			}
+			if (homes.isEmpty()) return;
 			
 			pd.setData("homes", homes);
 			
@@ -118,30 +132,35 @@ public class CoreMain extends JavaPlugin implements Listener {
 		
 		PlayerDataManager.setInit(pd -> {
 			
-			FileConfiguration db = pd.loadFile();
+			final FileConfiguration db = pd.getPlayerDataFile();
 			
-			if (db == null) return;
+			final String nickname = db.getString("nick");
 			
-			pd.setData("nick", db.getString("nick"));
+			if (nickname == null) return;
+			
+			pd.setData("nick", nickname);
 			
 		});
 		
 		PlayerDataManager.setInit(pd -> {
-			FileConfiguration config = pd.loadFile();
+			final FileConfiguration config = pd.getPlayerDataFile();
+			final String discordID = config.getString("Discord");
 			
-			pd.setData("Discord", config.getString("Discord"));
+			if (discordID == null) return;
+			
+			pd.setData("Discord", discordID);
 			
 		});
 		
 		PlayerDataManager.setPostLoad(x -> {
-			PlayerData.getPlayerDataSet().forEach(pd -> Roles.setRole(pd));
+			PlayerData.getPlayerDataSet().forEach(pd -> RoleManager.updatePlayerRole(pd));
 		});
 		
 		/**
 		 * Register commands and listeners
 		 */
 		getCommand("nick").setExecutor(new Nick());
-		
+		getCommand("broadcast").setExecutor(new ServerMessage());
 		getCommand("link").setExecutor(new LinkCommand());
 		getCommand("unlink").setExecutor(new UnlinkCommand());
 		
@@ -154,8 +173,9 @@ public class CoreMain extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new OnPlayerDeath(), this);
 		getServer().getPluginManager().registerEvents(new OnPlayerJoin(), this);
 		getServer().getPluginManager().registerEvents(new OnPlayerQuit(), this);
+		getServer().getPluginManager().registerEvents(new OnPlayerAdvancementDone(), this);
 		
-		getServer().getPluginManager().registerEvents(new Roles(), this);
+		getServer().getPluginManager().registerEvents(new RoleManager(), this);
 		
 		getServer().getPluginManager().registerEvents(this, this);
 		
@@ -171,12 +191,11 @@ public class CoreMain extends JavaPlugin implements Listener {
 	
 	@Override
 	public void onDisable() {
-		makeBackupOfPlayerDataToTestForCorruptionLater(); // XXX DEBUG CODE
-		
 		Bot.shutdown();
 		PlayerDataManager.saveQ();
 		RequestType.saveRequestsToFile();
 		
+		makeBackupOfPlayerDataToTestForCorruptionLater(); // XXX DEBUG CODE
 	}
 	
 	@EventHandler
@@ -201,11 +220,18 @@ public class CoreMain extends JavaPlugin implements Listener {
 			Bukkit.getLogger().warning("(PlayerData Corruption) No errors found with PlayerData!");
 		} else
 		{
+			StringBuilder message = new StringBuilder();
 			errorMessages.forEach(error -> {
-				Discord.sendAlert(error).queue();
-				Bukkit.getLogger().warning(error);
+				
+				message.append("* " + error + "\n");
 			});
 			
+			EmbedBuilder embed = Discord.simpleServerEmbed("PlayerData Corruption", "https://cdn.discordapp.com/emojis/883396023601483857.webp?size=44&quality=lossless", Colors.BLACK);
+			embed.setDescription(message.toString());
+			
+			Discord.sendAlert(embed.build()).queue();
+			Bukkit.getLogger().warning("(Playerdata Corruption)\n" + message.toString());
+      
 		}
 	
 		
@@ -222,7 +248,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		
 		long secondsUntilRestartCountdown = (Duration.between(Instant.now(), restartDate.toInstant()).getSeconds()) - (60 * 10);  // Calculate amount of time to wait until we run.
 		
-		Bukkit.getLogger().warning("Restart date: " + new SimpleDateFormat("MMM dd, YYYY @ kkmm").format(restartDate.getTime()));
+		Bukkit.getLogger().warning("Restart date: " + secondsUntilRestartCountdown/60/60 + " hours from now.");
 		
 		new RestartScheduler().runTaskTimer(this, secondsUntilRestartCountdown * 20, 20);
 		
@@ -246,7 +272,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		// error if the playerdata directory does not exist
 		if (!playerdataDirectory.exists())
 		{
-			errorMessages.add("(PlayerData Corruption) Playerdata directory does not exist.");
+			errorMessages.add("Playerdata directory does not exist.");
 			return;
 		}
 		
@@ -274,7 +300,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 				// returns -1L if no mismatch
 				if (Files.mismatch(playerdataFile.toPath(), backupFile.toPath()) == -1L) continue;
 				
-				errorMessages.add("(PlayerData Corruption) Playerdata file does not match backup: " + playerdataFile.getName());
+				errorMessages.add("Playerdata file does not match backup: " + playerdataFile.getName());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -297,7 +323,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		// error if the playerdata directory does not exist
 		if (!playerdataDirectory.exists())
 		{
-			Discord.sendAlert("(PlayerData Corruption) Could not find playerdata directory on shutdown!").complete();
+			Bukkit.getLogger().warning("(PlayerData Corruption) Could not find playerdata directory on shutdown!");
 			return;
 		}
 		

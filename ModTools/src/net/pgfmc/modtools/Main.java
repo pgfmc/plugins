@@ -8,7 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
-import net.pgfmc.modtools.cmd.Broadcast;
 import net.pgfmc.modtools.cmd.Debug;
 import net.pgfmc.modtools.cmd.Gamemode;
 import net.pgfmc.modtools.cmd.Heal;
@@ -47,8 +46,6 @@ public class Main extends JavaPlugin {
 		getCommand("debug").setExecutor(new Debug());
 		
 		getCommand("invsee").setExecutor(new Invsee());
-		
-		getCommand("broadcast").setExecutor(new Broadcast());
 		
 		getCommand("inventory").setExecutor(new Inventory());
 		

@@ -3,6 +3,8 @@ package net.pgfmc.core.api.request.inv;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
+
 import net.pgfmc.core.api.inventory.ButtonInventory;
 import net.pgfmc.core.api.inventory.extra.Buttonable;
 import net.pgfmc.core.api.playerdata.PlayerData;
@@ -15,28 +17,21 @@ public class RequestListInventory extends ButtonInventory {
 	private PlayerData pd;
 	
 	public RequestListInventory(PlayerData pd) {
-		super(27, "Requests");
+		super(27, ChatColor.RESET + "" + "Requests Menu");
 		this.pd = pd;
-		if (pd != null) {
-			System.out.println("pd isn't null");
-		}
+		
 	}
 	
 	@Override
 	protected List<Buttonable> load() {
 		
+		List<Buttonable> matchedRequestsList = new LinkedList<>();
 		
-		if (pd == null) {
-			System.out.println("pd is null");
+		for (Request matchedRequest : RequestType.getInAllRequests(request -> request.target == pd)) {
+			matchedRequestsList.add(matchedRequest);
 		}
 		
-		List<Buttonable> list = new LinkedList<>();
-		
-		for (Request r : RequestType.getInAllRequests(x -> x.target == pd)) {
-			System.out.println("Request added");
-			list.add(r);
-		}
-		
-		return list;
+		return matchedRequestsList;
 	}
+	
 }

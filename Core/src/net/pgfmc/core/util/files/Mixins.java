@@ -46,10 +46,6 @@ public interface Mixins {
 		return YamlConfiguration.loadConfiguration(getFile(dir));
 	}
 	
-	static FileConfiguration getDatabase(File file) {
-		return YamlConfiguration.loadConfiguration(file);
-	}
-	
 	static void saveDatabase(FileConfiguration database, String dir) {
 		try {
 			database.save(dir);
