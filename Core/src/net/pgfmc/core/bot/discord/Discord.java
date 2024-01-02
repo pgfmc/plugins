@@ -56,11 +56,10 @@ public class Discord extends ListenerAdapter {
 	public static MessageCreateAction sendMessage(String message)
 	{
 		if (message == null || message == "") return null;
-		
 		return getServerChannel().sendMessage(message);
 	}
 	
-	public static MessageCreateAction sendEmbed(MessageEmbed embed)
+	public static MessageCreateAction sendMessage(MessageEmbed embed)
 	{
 		if (embed == null) return null;
 		return getServerChannel().sendMessageEmbeds(embed);
