@@ -71,16 +71,16 @@ abstract class PlayerDataExtra {
 		return getOfflinePlayer().isOnline();
 	}
 	
-	public void teleport(Entity o) {
-		if (!isOnline()) return;
+	public boolean teleport(Entity o) {
+		if (!isOnline()) return false;
 		
-		getPlayer().teleport(o);
+		return getPlayer().teleport(o);
 	}
 	
-	public void teleport(Location o) {
-		if (!isOnline()) return;
+	public boolean teleport(Location o) {
+		if (!isOnline()) return false;
 		
-		getPlayer().teleport(o);
+		return getPlayer().teleport(o);
 	}
 	
 	public void teleport(PlayerData o) {
@@ -108,7 +108,7 @@ abstract class PlayerDataExtra {
 		try {
 			List<String> nodes = new ArrayList<String>(CoreMain.luckPermsAPI.getGroupManager().searchAll(NodeMatcher.key(permission)).get().keySet());
 			
-			if (nodes == null || nodes.isEmpty()) throw new NullPointerException("Permission does not exist in LuckPerms for the OfflinePlayer.");
+			if (nodes == null || nodes.isEmpty()) throw new NullPointerException("Permission does not exist in LuckPerms.");
 			
 			nodes.forEach(node -> Bukkit.getLogger().warning("Node found: " + node));
 			
@@ -131,7 +131,7 @@ abstract class PlayerDataExtra {
 		
 		throw new NullPointerException("Permission does not exist in LuckPerms for the OfflinePlayer.");
 		
-	} // Wow this is horrible, but what else can you do ;//
+	}
 	
 	public boolean hasPermission(Permission permission) {
 		return hasPermission(permission.getName());

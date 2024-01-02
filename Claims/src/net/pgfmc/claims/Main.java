@@ -2,6 +2,8 @@ package net.pgfmc.claims;
 
 import java.io.File;
 
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.pgfmc.claims.ownable.OwnableFile;
@@ -20,6 +22,8 @@ import net.pgfmc.claims.ownable.inspector.ClaimTPCommand;
 import net.pgfmc.claims.ownable.inspector.EditOwnableCommand;
 import net.pgfmc.claims.ownable.inspector.InspectCommand;
 import net.pgfmc.core.api.playerdata.PlayerDataManager;
+import net.pgfmc.core.util.ItemWrapper;
+import net.pgfmc.core.util.Rewards;
 import net.pgfmc.core.util.files.Mixins;
 
 public class Main extends JavaPlugin {
@@ -32,6 +36,17 @@ public class Main extends JavaPlugin {
 		plugin = this;
 		plugin.saveDefaultConfig();
 		plugin.reloadConfig();
+		
+		PlayerDataManager.setInit(playerdata -> {
+			if (playerdata.hasTag("rewards-lodestone")) return;
+			
+			final ItemStack reward = new ItemWrapper(Material.LODESTONE).a(1).gi();
+			
+			Rewards.giveRewardToPlayer(playerdata, reward);
+			
+			playerdata.addTag("rewards-lodestone");
+			
+		});
 		
 		// loads files.
 		Mixins.getFile(getDataFolder() + File.separator + "BlockContainers.yml");

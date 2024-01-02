@@ -1,15 +1,15 @@
 package net.pgfmc.core.cmd.donator;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import net.pgfmc.core.CoreMain;
+import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.Profanity;
+import net.pgfmc.core.util.roles.RoleManager;
 
 public class Nick implements CommandExecutor {
 
@@ -22,10 +22,17 @@ public class Nick implements CommandExecutor {
 			return true;
 		}
 		
+		Player p = (Player) sender;
+		
+		if (!(p.hasPermission("pgf.cmd.donator.nick")))
+		{
+			sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
+			return true;
+		}
+		
 		if (args.length <= 0)
 		{
-			sender.sendMessage(ChatColor.RED + "Please include a nickname.");
-			return true;
+			args = new String[] {"off"};
 		}
 		
 		if (String.join("", args) == null || String.join("", args).strip().equals(""))
@@ -34,22 +41,11 @@ public class Nick implements CommandExecutor {
 			return true;
 		}
 		
-		if (!((Player) sender).hasPermission("pgf.cmd.donator.nick"))
-		{
-			sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
-			return true;
-		}
+		PlayerData pd = PlayerData.from(p);
 		
-		setNick(PlayerData.from((Player) sender), String.join("", args));
+		String nick = String.join("", args);
 		
-		return true;
-	}
-	
-	public static void setNick(PlayerData pd, String nick)
-	{
-		Player p = pd.getPlayer();
-		
-		String nickWithColor = "~" + nick.strip();
+		String nickWithColor = nick.strip();
 		nickWithColor = ChatColor.translateAlternateColorCodes('&', nickWithColor);
 		nickWithColor = nickWithColor.replaceAll("[^A-Za-z0-9&]", "")
 				.replace(ChatColor.COLOR_CHAR + "k", "")
@@ -64,7 +60,7 @@ public class Nick implements CommandExecutor {
 		if (Profanity.hasProfanity(nickWithoutColor))
 		{
 			pd.sendMessage(ChatColor.RED + "Invalid nickname: Contains profanity!");
-			return;
+			return true;
 		}
 		
 		/*
@@ -73,7 +69,7 @@ public class Nick implements CommandExecutor {
 		if (nickWithoutColor.length() <= 0)
 		{
 			pd.sendMessage(ChatColor.RED + "Invalid nickname: Not long enough.");
-			return;
+			return true;
 		}
 		
 		/*
@@ -82,8 +78,13 @@ public class Nick implements CommandExecutor {
 		if (nickWithoutColor.length() > 21)
 		{
 			pd.sendMessage(ChatColor.RED + "Invalid nickname: Too long.");
-			return;
+			return true;
 		}
+		
+		// Grants advancement
+		//
+		// Will trigger with nickname reset also
+		PGFAdvancement.IMPERSONATOR.grantToPlayer(p);
 		
 		/*
 		 * If the raw nickname is "off" or "reset" or the player's name
@@ -94,21 +95,15 @@ public class Nick implements CommandExecutor {
 			pd.setData("nick", null).queue();
 			pd.sendMessage(ChatColor.GOLD + "Nickname changed to " + pd.getRankedName() + ChatColor.GOLD + "!");
 			
-			return;
+			return true;
 		}
 		
 		pd.setData("nick", nickWithColor).queue();
 		pd.sendMessage(ChatColor.GOLD + "Nickname changed to " + pd.getRankedName() + ChatColor.GOLD + "!");
 		
-		p.setPlayerListName(pd.getRankedName());
-		p.setCustomName(pd.getRankedName());
-		p.setCustomNameVisible(true);
+		RoleManager.updatePlayerNameplate(pd);
 		
-		Bukkit.getOnlinePlayers().stream().forEach(player -> {
-			p.hidePlayer(CoreMain.plugin, player);
-			p.showPlayer(CoreMain.plugin, player);
-		});
-		
+		return true;
 	}
 
 }
