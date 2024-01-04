@@ -37,6 +37,10 @@ public enum PGFAdvancement {
 	 */
 	public void grantToPlayer(Player player)
 	{
+		// This class is null inside the Bukkit Scheduler
+		// 
+		final PGFAdvancement pgfAdvancement = this;
+		
 		Bukkit.getScheduler().runTask(CoreMain.plugin, new Runnable() {
 			@Override
 			public void run() {
@@ -47,7 +51,7 @@ public enum PGFAdvancement {
 				// e.g. pgfmc:social_sync
 				// 'pgfmc:' is the namespace
 				// 'social_sync' is the name of the advancement
-				final NamespacedKey key = NamespacedKey.fromString("pgfmc:" + toString());
+				final NamespacedKey key = NamespacedKey.fromString("pgfmc:" + pgfAdvancement.toString());
 				// The advancement itself
 				final Advancement advancement = Bukkit.getAdvancement(key);
 				// Contains information about if criteria are completed
