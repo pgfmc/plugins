@@ -23,6 +23,7 @@ import net.pgfmc.survival.masterbook.inv.RewardsListInventory;
 import net.pgfmc.survival.masterbook.inv.TpaListInventory;
 import net.pgfmc.survival.masterbook.inv.home.inv.HomeHomepage;
 import net.pgfmc.survival.masterbook.inv.profile.inv.ProfileInventory;
+import net.pgfmc.survival.masterbook.inv.staff.inv.StaffInventory;
 
 public class MasterbookInventory implements InventoryHolder {
 	
@@ -279,6 +280,25 @@ public class MasterbookInventory implements InventoryHolder {
 				setItem(6, Material.BOOKSHELF).n(ChatColor.RESET + "" + ChatColor.YELLOW + "Rewards (" + numberOfRewards + ")");
 				
 			}
+			
+			
+			/* 
+			 * Staff Commands
+			 * [] [] [] [] [] [] [] [] []
+			 * [] [] [] [] XX [] [] [] []
+			 * [] [] [] [] [] [] [] [] []
+			 */
+			if (role.compareTo(PGFRole.STAFF) <= 0)
+			{
+				setAction(13, (player, event) -> {
+					player.openInventory(new StaffInventory(pd).getInventory());
+					
+				});
+				
+				setItem(13, Material.SPYGLASS).n(ChatColor.RESET + "" + ChatColor.LIGHT_PURPLE + "Staff Commands");
+				
+			}
+			
 			
 		}
 		
