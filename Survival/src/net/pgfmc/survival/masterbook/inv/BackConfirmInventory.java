@@ -28,7 +28,6 @@ public class BackConfirmInventory extends ConfirmInventory {
 
 	@Override
 	protected void cancelAction(Player p, InventoryClickEvent e) {
-		p.closeInventory();
 		p.openInventory(new MasterbookInventory(pd).getInventory());
 		
 	}

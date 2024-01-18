@@ -1,10 +1,13 @@
 package net.pgfmc.survival;
 
+import java.io.File;
+
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.md_5.bungee.api.ChatColor;
 import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.files.Mixins;
 import net.pgfmc.survival.balance.ItemProtect;
 import net.pgfmc.survival.cmd.Back;
 import net.pgfmc.survival.cmd.afk.Afk;
@@ -25,6 +28,7 @@ import net.pgfmc.survival.cmd.warp.DelWarp;
 import net.pgfmc.survival.cmd.warp.SetWarp;
 import net.pgfmc.survival.cmd.warp.Warp;
 import net.pgfmc.survival.cmd.warp.Warps;
+import net.pgfmc.survival.masterbook.inv.staff.inv.giverewards.inv.GiveRewardsListInventory;
 
 public class Main extends JavaPlugin {
 	
@@ -33,6 +37,10 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onEnable()
 	{
+		// Creates rewards.yml for the player rewards
+		// If it doesn't exist
+		Mixins.getDatabase(getDataFolder() + File.separator + "rewards.yml");
+		
 		plugin = this;
 		
 		if (getConfig().getConfigurationSection("warps") == null)
@@ -56,12 +64,14 @@ public class Main extends JavaPlugin {
 		new Masterbook("commands");
 		
 		new Pvp();
+		new Rewards();
 		
 		
 		getServer().getPluginManager().registerEvents(new BookInput(), this);
 		getServer().getPluginManager().registerEvents(new AfkEvents(), this);
 		getServer().getPluginManager().registerEvents(new ItemProtect(), this);
 		getServer().getPluginManager().registerEvents(new PvpEvent(), this);
+		getServer().getPluginManager().registerEvents(new GiveRewardsListInventory(), this);
 		
 		new Warp("warp");
 		getCommand("warps").setExecutor(new Warps());
@@ -78,6 +88,7 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onDisable()
 	{
+		Rewards.saveRewardsFile();
 		
 	}
 	

@@ -1,16 +1,11 @@
 package net.pgfmc.survival.masterbook;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemStack;
 
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
@@ -18,11 +13,13 @@ import net.pgfmc.core.api.request.inv.RequestListInventory;
 import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.util.roles.PGFRole;
 import net.pgfmc.core.util.roles.RoleManager;
+import net.pgfmc.survival.Rewards;
 import net.pgfmc.survival.masterbook.inv.BackConfirmInventory;
 import net.pgfmc.survival.masterbook.inv.RewardsListInventory;
 import net.pgfmc.survival.masterbook.inv.TpaListInventory;
 import net.pgfmc.survival.masterbook.inv.home.inv.HomeHomepage;
 import net.pgfmc.survival.masterbook.inv.profile.inv.ProfileInventory;
+import net.pgfmc.survival.masterbook.inv.staff.inv.StaffInventory;
 
 public class MasterbookInventory implements InventoryHolder {
 	
@@ -35,7 +32,6 @@ public class MasterbookInventory implements InventoryHolder {
 	
 	public class Homepage extends BaseInventory {
 		
-		@SuppressWarnings("unchecked")
 		public Homepage()
 		{
 			super(27, "Command Menu");
@@ -259,8 +255,7 @@ public class MasterbookInventory implements InventoryHolder {
 			 * [] [] [] [] [] [] [] [] []
 			 * [] [] [] [] [] [] [] [] []
 			 */
-			final List<ItemStack> rewards = (List<ItemStack>) Optional.ofNullable(pd.getData("rewards")).orElse(new ArrayList<ItemStack>());
-			final int numberOfRewards = rewards.size();
+			final int numberOfRewards = Rewards.getPlayerRewardsMap(pd).size();
 			
 			if (numberOfRewards == 0)
 			{
@@ -279,6 +274,25 @@ public class MasterbookInventory implements InventoryHolder {
 				setItem(6, Material.BOOKSHELF).n(ChatColor.RESET + "" + ChatColor.YELLOW + "Rewards (" + numberOfRewards + ")");
 				
 			}
+			
+			
+			/* 
+			 * Staff Commands
+			 * [] [] [] [] [] [] [] [] []
+			 * [] [] [] [] XX [] [] [] []
+			 * [] [] [] [] [] [] [] [] []
+			 */
+			if (role.compareTo(PGFRole.STAFF) <= 0)
+			{
+				setAction(13, (player, event) -> {
+					player.openInventory(new StaffInventory(pd).getInventory());
+					
+				});
+				
+				setItem(13, Material.SPYGLASS).n(ChatColor.RESET + "" + ChatColor.LIGHT_PURPLE + "Staff Commands");
+				
+			}
+			
 			
 		}
 		
