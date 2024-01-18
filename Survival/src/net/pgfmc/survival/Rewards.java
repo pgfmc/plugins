@@ -50,7 +50,7 @@ public class Rewards {
 	
 	public static Map<String, ItemStack> getRewardsMap()
 	{
-		return REWARDS;
+		return new HashMap<>(REWARDS);
 	}
 	
 	/**
@@ -61,7 +61,7 @@ public class Rewards {
 	 */
 	public static void addRewardToList(String tag_id, ItemStack reward)
 	{
-		REWARDS.put(tag_id, reward);
+		REWARDS.put(tag_id, reward.clone());
 	}
 	
 	public static void removeRewardFromList(String tag_id)
@@ -82,7 +82,7 @@ public class Rewards {
 		getRewardsMap().forEach((reward_id, reward) -> {
 			if (!playerdata.hasTag(reward_id))
 			{
-				playerRewardsMap.put(reward_id, reward);
+				playerRewardsMap.put(reward_id, reward.clone());
 				
 			}			
 			

@@ -26,7 +26,7 @@ public class StaffInventory extends BaseInventory {
 			player.openInventory(new GiveRewardsListInventory(playerdata).getInventory());
 		});
 		
-		setItem(6, Material.CHISELED_BOOKSHELF).n(ChatColor.RESET + "" + ChatColor.YELLOW + "Give Rewards");
+		setItem(6, Material.BOOKSHELF).n(ChatColor.RESET + "" + ChatColor.YELLOW + "Give Rewards");
 		
 		
 	}
