@@ -71,7 +71,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new AfkEvents(), this);
 		getServer().getPluginManager().registerEvents(new ItemProtect(), this);
 		getServer().getPluginManager().registerEvents(new PvpEvent(), this);
-		getServer().getPluginManager().registerEvents(new GiveRewardsListInventory(null), this);
+		getServer().getPluginManager().registerEvents(new GiveRewardsListInventory(), this);
 		
 		new Warp("warp");
 		getCommand("warps").setExecutor(new Warps());
@@ -88,6 +88,7 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onDisable()
 	{
+		Rewards.saveRewardsFile();
 		
 	}
 	

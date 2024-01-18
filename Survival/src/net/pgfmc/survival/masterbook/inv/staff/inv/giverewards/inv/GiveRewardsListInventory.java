@@ -12,10 +12,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 import net.pgfmc.core.api.inventory.ListInventory;
 import net.pgfmc.core.api.inventory.extra.Butto;
 import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.ItemWrapper;
+import net.pgfmc.survival.Main;
 import net.pgfmc.survival.Rewards;
 import net.pgfmc.survival.masterbook.inv.staff.inv.StaffInventory;
 import net.wesjd.anvilgui.AnvilGUI;
@@ -34,13 +37,25 @@ public class GiveRewardsListInventory extends ListInventory<String> implements L
 		
 	}
 	
+	/**
+	 * Don't use this constructor
+	 * For Listener only
+	 */
+	public GiveRewardsListInventory()
+	{
+		super(27, ChatColor.GRAY + "Give Rewards");
+	}
+	
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent e)
 	{
 		if (!(e.getInventory().getHolder() instanceof GiveRewardsListInventory)) return;
+		if (!(e.getClickedInventory() instanceof PlayerInventory)) return;
+		if (e.getCurrentItem() == null) return;
 		
 		final ItemStack reward = e.getCurrentItem();
 		final Player player = (Player) e.getWhoClicked();
+		final PlayerData playerdata = PlayerData.from(player);
 		Builder builder = new AnvilGUI.Builder();
 		
 		builder.onClose(stateSnapshot -> {});
@@ -76,6 +91,9 @@ public class GiveRewardsListInventory extends ListInventory<String> implements L
 	        
 		});
 		
+		builder.text("reward_id_here").title(ChatColor.GRAY + "Enter Reward ID").plugin(Main.plugin);
+		builder.open(player);
+		
 	}
 
 	@Override
@@ -93,7 +111,7 @@ public class GiveRewardsListInventory extends ListInventory<String> implements L
 
 	@Override
 	protected ItemStack toItem(String entry) {
-		return Rewards.getRewardsMap().get(entry);
+		return new ItemWrapper(Rewards.getRewardsMap().get(entry)).l(ChatColor.RESET + "" + ChatColor.GRAY + entry).gi();
 	}
 
 }
