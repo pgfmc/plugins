@@ -7,6 +7,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import net.md_5.bungee.api.ChatColor;
 import net.pgfmc.core.api.inventory.ConfirmInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.ItemWrapper;
 import net.pgfmc.survival.Rewards;
 
 public class RemoveRewardConfirmInventory extends ConfirmInventory {
@@ -15,9 +16,9 @@ public class RemoveRewardConfirmInventory extends ConfirmInventory {
 	private String reward_id;
 
 	protected RemoveRewardConfirmInventory(final PlayerData playerdata, final String reward_id) {
-		super(ChatColor.GRAY + "Remove Reward: " + reward_id, ChatColor.GREEN + "Confirm", ChatColor.RED + "Cancel");
+		super(ChatColor.GRAY + "Remove Reward", ChatColor.GREEN + "Confirm", ChatColor.RED + "Cancel");
 		
-		setItem(13, Rewards.getRewardsMap().get(reward_id));
+		setItem(13, new ItemWrapper(Rewards.getRewardsMap().get(reward_id)).l(ChatColor.RESET + "" + ChatColor.GRAY + reward_id).gi());
 		
 		this.playerdata = playerdata;
 		this.reward_id = reward_id;
@@ -28,6 +29,7 @@ public class RemoveRewardConfirmInventory extends ConfirmInventory {
 	protected void confirmAction(Player p, InventoryClickEvent e) {
 		Rewards.removeRewardFromList(reward_id);
 		playerdata.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
+		p.openInventory(new GiveRewardsListInventory(playerdata).getInventory());
 		
 	}
 
