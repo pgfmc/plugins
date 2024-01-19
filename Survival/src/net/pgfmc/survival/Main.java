@@ -1,6 +1,9 @@
 package net.pgfmc.survival;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -29,6 +32,8 @@ import net.pgfmc.survival.cmd.warp.SetWarp;
 import net.pgfmc.survival.cmd.warp.Warp;
 import net.pgfmc.survival.cmd.warp.Warps;
 import net.pgfmc.survival.masterbook.staff.giverewards.GiveRewardsListInventory;
+import net.pgfmc.survival.masterbook.staff.inventorybackups.noninv.InventoryBackup;
+import net.pgfmc.survival.masterbook.staff.inventorybackups.noninv.InventoryBackupScheduler;
 
 public class Main extends JavaPlugin {
 	
@@ -62,7 +67,7 @@ public class Main extends JavaPlugin {
 		new Homes("homes");
 		
 		new Masterbook("commands");
-		
+
 		new Pvp();
 		new Rewards();
 		
@@ -72,6 +77,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new ItemProtect(), this);
 		getServer().getPluginManager().registerEvents(new PvpEvent(), this);
 		getServer().getPluginManager().registerEvents(new GiveRewardsListInventory(), this);
+		getServer().getPluginManager().registerEvents(new InventoryBackupScheduler(), this);
 		
 		new Warp("warp");
 		getCommand("warps").setExecutor(new Warps());
@@ -88,7 +94,20 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onDisable()
 	{
+		Bukkit.getScheduler().cancelTask(InventoryBackupScheduler.INVENTORY_ROLLBACK_TASK_ID);
+		
+		PlayerData.getPlayerDataSet().stream().forEach(pd -> {
+			@SuppressWarnings("unchecked")
+			List<InventoryBackup> inventories = (List<InventoryBackup>) Optional.ofNullable(pd.getData("inventories")).orElse(new ArrayList<InventoryBackup>());
+			
+			inventories.stream().forEach(inventory -> {
+				Bukkit.getScheduler().cancelTask(inventory.getTaskId());
+				
+			});
+		});
+		
 		Rewards.saveRewardsFile();
+		
 		
 	}
 	

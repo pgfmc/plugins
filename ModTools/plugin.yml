@@ -55,11 +55,6 @@ commands:
     usage: /<command> [player] [(optional) echest]
     description: See inside a player's inventory
     permission: pgf.admin.invsee
-  inventory:
-    usage: /<command> [(optional) player]
-    description: View a player's backed up inventories
-    aliases: [inv]
-    permission: pgf.admin.inventory
   powertool:
     usage: /<command> [command without slash]
     description: Bind a command to any tool
