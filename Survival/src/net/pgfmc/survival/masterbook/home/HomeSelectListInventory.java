@@ -22,7 +22,7 @@ public class HomeSelectListInventory extends ListInventory<String> {
 	
 	public HomeSelectListInventory(PlayerData pd)
 	{
-		super(27, ChatColor.RESET + "" + ChatColor.DARK_GRAY + "Home Select");
+		super(27, "Home Select");
 		
 		this.pd = pd;
 		this.homes = Homes.getHomes(pd);
@@ -63,7 +63,7 @@ public class HomeSelectListInventory extends ListInventory<String> {
 	
 	@Override
 	protected ItemStack toItem(String entry) {
-		return new ItemWrapper(Material.PAPER).n(ChatColor.RESET + "" + ChatColor.GOLD + entry).gi();
+		return new ItemWrapper(Material.PAPER).n(ChatColor.GOLD + entry).gi();
 	}
 	
 }

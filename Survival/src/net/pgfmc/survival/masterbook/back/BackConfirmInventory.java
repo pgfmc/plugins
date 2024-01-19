@@ -14,7 +14,7 @@ public class BackConfirmInventory extends ConfirmInventory {
 	
 	public BackConfirmInventory(PlayerData pd)
 	{
-		super(ChatColor.RESET + "" + ChatColor.DARK_GRAY + "Teleport Back", ChatColor.RESET + "" + ChatColor.DARK_GREEN + "Continue", ChatColor.RESET + "" + ChatColor.GRAY + "Cancel");
+		super("Teleport Back", ChatColor.DARK_GREEN + "Continue", ChatColor.GRAY + "Cancel");
 		
 		this.pd = pd;
 	}
