@@ -3,11 +3,12 @@ package net.pgfmc.core.api.inventory;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 
 public abstract class ConfirmInventory extends BaseInventory {
 
 	protected ConfirmInventory(String name, String confirm, String cancel) {
-		super(27, name);
+		super(InventoryType.CHEST, name);
 		
 		
 		setItem(11, Material.GREEN_CONCRETE).n(confirm);

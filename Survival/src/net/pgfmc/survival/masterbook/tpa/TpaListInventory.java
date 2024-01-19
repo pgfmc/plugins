@@ -1,26 +1,24 @@
-package net.pgfmc.survival.masterbook.inv;
+package net.pgfmc.survival.masterbook.tpa;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import net.pgfmc.core.api.inventory.ListInventory;
 import net.pgfmc.core.api.inventory.extra.Butto;
 import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.util.ItemWrapper;
 import net.pgfmc.survival.masterbook.MasterbookInventory;
 
-public class TpaListInventory extends ListInventory<Player> {
+public class TpaListInventory extends ListInventory<PlayerData> {
 	
 	private PlayerData pd;
 
 	public TpaListInventory(PlayerData pd) {
-		super(27, ChatColor.RESET + "" + ChatColor.DARK_GRAY + "Teleport Menu");
+		super(27, "Teleport Menu");
 		
 		this.pd = pd;
 		
@@ -28,14 +26,14 @@ public class TpaListInventory extends ListInventory<Player> {
 	}
 
 	@Override
-	public List<Player> load() {
-		return Bukkit.getOnlinePlayers().stream()
-				.filter(player -> !player.getUniqueId().equals(pd.getUniqueId()))
-				.collect(Collectors.toList());
+	public List<PlayerData> load() {
+		// Converts to List<Player> (ignores/removes the executor)
+				return PlayerData.getPlayerDataSet(playerdata -> playerdata.isOnline() && playerdata != this.pd)
+									.stream().collect(Collectors.toList());
 	}
 	
 	@Override
-	protected Butto toAction(Player entry) {
+	protected Butto toAction(PlayerData entry) {
 		
 		return (player, event) -> {
 			player.performCommand("tpa " + entry.getName());
@@ -45,8 +43,8 @@ public class TpaListInventory extends ListInventory<Player> {
 	}
 	
 	@Override
-	protected ItemStack toItem(Player entry) {
-		return new ItemWrapper(Material.PLAYER_HEAD).n(ChatColor.RESET + "" + ChatColor.GREEN + entry.getName()).gi();
+	protected ItemStack toItem(PlayerData entry) {
+		return new ItemWrapper(Skull.getHead(entry.getUniqueId())).n(ChatColor.GREEN + entry.getRankedName()).gi();
 	}
 	
 }

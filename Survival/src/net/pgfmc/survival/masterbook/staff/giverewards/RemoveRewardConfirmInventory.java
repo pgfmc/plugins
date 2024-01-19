@@ -1,10 +1,10 @@
-package net.pgfmc.survival.masterbook.inv.staff.inv.giverewards.inv;
+package net.pgfmc.survival.masterbook.staff.giverewards;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-import net.md_5.bungee.api.ChatColor;
 import net.pgfmc.core.api.inventory.ConfirmInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.ItemWrapper;
@@ -16,9 +16,9 @@ public class RemoveRewardConfirmInventory extends ConfirmInventory {
 	private String reward_id;
 
 	protected RemoveRewardConfirmInventory(final PlayerData playerdata, final String reward_id) {
-		super(ChatColor.GRAY + "Remove Reward", ChatColor.GREEN + "Confirm", ChatColor.RED + "Cancel");
+		super("Remove Reward", ChatColor.GREEN + "Confirm", ChatColor.RED + "Cancel");
 		
-		setItem(13, new ItemWrapper(Rewards.getRewardsMap().get(reward_id)).l(ChatColor.RESET + "" + ChatColor.GRAY + reward_id).gi());
+		setItem(13, new ItemWrapper(Rewards.getRewardsMap().get(reward_id)).l(ChatColor.GRAY + reward_id).gi());
 		
 		this.playerdata = playerdata;
 		this.reward_id = reward_id;
