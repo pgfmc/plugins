@@ -1,4 +1,4 @@
-package net.pgfmc.survival.masterbook.staff.inventorysee;
+package net.pgfmc.survival.masterbook.staff.inventorybackups;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,12 +13,12 @@ import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.util.ItemWrapper;
 import net.pgfmc.survival.masterbook.staff.StaffInventory;
 
-public class InventorySeeListInventory extends ListInventory<PlayerData> {
+public class InventoryBackupsListInventory extends ListInventory<PlayerData> {
 	
 	private PlayerData playerdata;
 
-	public InventorySeeListInventory(final PlayerData playerdata) {
-		super(27, "Select Inventory");
+	public InventoryBackupsListInventory(final PlayerData playerdata) {
+		super("Select Player");
 		
 		this.playerdata = playerdata;
 		
@@ -28,23 +28,22 @@ public class InventorySeeListInventory extends ListInventory<PlayerData> {
 
 	@Override
 	protected List<PlayerData> load() {
-		// Converts to List<PlayerData> (ignores/removes the staff member)
+		// Converts to List<PlayerData>
 		return PlayerData.getPlayerDataSet(playerdata -> playerdata.isOnline())
 								.stream().collect(Collectors.toList());
-		// return PlayerData.getPlayerDataSet(playerdata -> playerdata.isOnline() && playerdata != this.playerdata)
-							//.stream().collect(Collectors.toList());
 	}
 
 	@Override
 	protected Butto toAction(PlayerData entry) {
 		return (player, event) -> {
-			player.openInventory(new InventorySeeSelectInventory(playerdata, entry).getInventory());
+			player.openInventory(new InventoryBackupList(playerdata, entry).getInventory());
 		};
+		
 	}
 
 	@Override
 	protected ItemStack toItem(PlayerData entry) {
-		return new ItemWrapper(Skull.getHead(entry.getUniqueId())).n(entry.getRankedName()).l(ChatColor.GRAY + "Click to select an inventory.").gi();
+		return new ItemWrapper(Skull.getHead(entry.getUniqueId())).n(entry.getRankedName()).l(ChatColor.GRAY + "Click to see backups.").gi();
 	}
 
 }

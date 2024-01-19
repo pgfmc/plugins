@@ -1,4 +1,4 @@
-package net.pgfmc.modtools.inventory.inv.inv;
+package net.pgfmc.survival.masterbook.staff.inventorybackups;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,35 +7,33 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.bukkit.Material;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 
-import net.md_5.bungee.api.ChatColor;
 import net.pgfmc.core.api.inventory.ListInventory;
 import net.pgfmc.core.api.inventory.extra.Butto;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.ItemWrapper;
-import net.pgfmc.modtools.inventory.InventoryBackup;
-import net.pgfmc.modtools.inventory.InventoryBackupScheduler;
-import net.pgfmc.modtools.inventory.inv.InventoryOnlinePlayersList;
-import net.pgfmc.modtools.inventory.inv.inv.inv.InventoryBackupConfirm;
+import net.pgfmc.survival.masterbook.staff.inventorybackups.noninv.InventoryBackup;
+import net.pgfmc.survival.masterbook.staff.inventorybackups.noninv.InventoryBackupScheduler;
 
 public class InventoryBackupList extends ListInventory<InventoryBackup> {
 	
-	PlayerData pd;
+	PlayerData playerdata;
+	PlayerData target;
 
-	public InventoryBackupList(PlayerData pd) {
-		super(InventoryType.CHEST.getDefaultSize(), pd.getRankedName() + "'s Inventories");
+	public InventoryBackupList(PlayerData playerdata, PlayerData target) {
+		super(target.getRankedName() + "'s Inventories");
 		
-		this.pd = pd;
+		this.playerdata = playerdata;
+		this.target = target;
 		
-		setBack(0, new InventoryOnlinePlayersList().getInventory());
+		setBack(0, new InventoryBackupsListInventory(playerdata).getInventory());
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	protected List<InventoryBackup> load() {		
-		return (List<InventoryBackup>) Optional.ofNullable(((List<InventoryBackup>) pd.getData("inventories")))
+		return (List<InventoryBackup>) Optional.ofNullable(((List<InventoryBackup>) target.getData("inventories")))
 		.orElse(new ArrayList<InventoryBackup>());
 	}
 
@@ -43,17 +41,7 @@ public class InventoryBackupList extends ListInventory<InventoryBackup> {
 	protected Butto toAction(InventoryBackup entry) {
 		
 		return (p, e) -> {
-			if (!p.hasPermission("pgf.admin.inventory.restore"))
-			{
-				p.sendMessage(ChatColor.RED + "You do not have permission to execute this command.");
-				return;
-			}
-			
-			p.closeInventory();
-			p.openInventory(new InventoryBackupConfirm(InventoryBackupScheduler.INVENTORY_DATE_FORMAT.format(entry.getDate())
-															+ " - "
-															+ entry.getCause().name()
-														, entry).getInventory());
+			p.openInventory(new InventoryBackupConfirm(playerdata, target, entry).getInventory());
 			
 		};
 		
