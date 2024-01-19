@@ -23,7 +23,18 @@ function main
 		else
 			# Copy files from startQ
 			echo "Moving plugins from StartQ..."
+			# server jar
 			find "$SCRIPT_DIR/startQ" -name "server.jar" -exec mv "{}" "$SCRIPT_DIR" \;
+			
+			# Datapack update
+			# None of these worked..? y
+			# parent_dir="$("$(dirname "$(find "$SCRIPT_DIR/startQ" -type f -name "pack.mcmeta")")")"
+			# parent_dir="$("$(dirname "$(find "$SCRIPT_DIR/startQ" -type f -name "pack.mcmeta" -exec echo {} \;)")")"
+			# parent_dir="$("$(dirname "$(find "$SCRIPT_DIR/startQ" -type f -name "pack.mcmeta" -exec echo . \;)")")"
+			# parent_dir="$("$(find "$SCRIPT_DIR/startQ" -type f -name "pack.mcmeta" -exec echo "$(dirname {})" \;)")"
+			# mv "$parent_dir" "$SCRIPT_DIR/survival/datapacks"
+			
+			# plugin jars
 			find "$SCRIPT_DIR/startQ" -type f -exec mv "{}" "$SCRIPT_DIR/plugins" \;
 			echo "Done!"
 		fi
@@ -101,4 +112,5 @@ function main
 }
 
 main
+
 
