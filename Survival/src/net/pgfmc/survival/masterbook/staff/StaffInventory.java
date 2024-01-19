@@ -7,6 +7,7 @@ import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.survival.masterbook.MasterbookInventory;
 import net.pgfmc.survival.masterbook.staff.giverewards.GiveRewardsListInventory;
+import net.pgfmc.survival.masterbook.staff.inventorybackups.InventoryBackupsListInventory;
 import net.pgfmc.survival.masterbook.staff.inventorysee.InventorySeeListInventory;
 
 public class StaffInventory extends BaseInventory {
@@ -42,6 +43,18 @@ public class StaffInventory extends BaseInventory {
 		
 		setItem(5, Material.PLAYER_HEAD).n(ChatColor.YELLOW + "Inventory See");
 		
+		
+		/* 
+		 * Inventory Backups
+		 * [] [] [] [] XX [] [] [] []
+		 * [] [] [] [] [] [] [] [] []
+		 * [] [] [] [] [] [] [] [] []
+		 */
+		setAction(4, (player, event) -> {
+			player.openInventory(new InventoryBackupsListInventory(playerdata).getInventory());
+		});
+		
+		setItem(4, Material.CHEST_MINECART).n(ChatColor.YELLOW + "Inventory Backups");
 		
 	}
 

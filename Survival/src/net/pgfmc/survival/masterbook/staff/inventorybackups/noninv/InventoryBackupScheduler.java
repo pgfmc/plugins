@@ -1,4 +1,4 @@
-package net.pgfmc.modtools.inventory;
+package net.pgfmc.survival.masterbook.staff.inventorybackups.noninv;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -10,7 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
-import net.pgfmc.modtools.Main;
+import net.pgfmc.survival.Main;
 
 public class InventoryBackupScheduler implements Listener {
 	
@@ -36,7 +36,5 @@ public class InventoryBackupScheduler implements Listener {
 		new InventoryBackup(PlayerData.from(p), InventoryBackupCause.DEATH);
 		
 	}
-	
-	
 
 }
