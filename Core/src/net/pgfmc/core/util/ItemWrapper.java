@@ -1,9 +1,8 @@
 package net.pgfmc.core.util;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -36,33 +35,20 @@ public class ItemWrapper {
 	
 	public ItemWrapper n(String name) {
 		ItemMeta imeta = item.getItemMeta();
-		imeta.setDisplayName(ChatColor.RESET + name);
+		imeta.setDisplayName(name);
 		item.setItemMeta(imeta);
 		return this;
 	}
 	
 	public ItemWrapper l(String lore) {
-		return l(Arrays.asList(lore.split("\n")));
-	}
-	
-	public ItemWrapper l(List<String> lore)
-	{
-		for (int i = 0; i < lore.size(); i++)
-		{
-			if (i > 0)
-			{
-				lore.set(i, ChatColor.RESET + ChatColor.getLastColors(lore.get(i - 1)) + lore.get(i));
-				
-			} else
-			{
-				lore.set(i, ChatColor.RESET + lore.get(i));
-				
-			}
-			
-		}
-		
 		ItemMeta imeta = item.getItemMeta();
-		imeta.setLore(lore);
+		
+		String[] lorelist = lore.split("\n");
+		ArrayList<String> liszt = new ArrayList<>(lorelist.length);
+		for (String s : lorelist) {
+			liszt.add(s);
+		}
+		imeta.setLore(liszt);
 		item.setItemMeta(imeta);
 		return this;
 	}
