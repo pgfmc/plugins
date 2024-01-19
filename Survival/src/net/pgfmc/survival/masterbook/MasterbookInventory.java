@@ -14,20 +14,20 @@ import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.util.roles.PGFRole;
 import net.pgfmc.core.util.roles.RoleManager;
 import net.pgfmc.survival.Rewards;
-import net.pgfmc.survival.masterbook.inv.BackConfirmInventory;
-import net.pgfmc.survival.masterbook.inv.RewardsListInventory;
-import net.pgfmc.survival.masterbook.inv.TpaListInventory;
-import net.pgfmc.survival.masterbook.inv.home.inv.HomeHomepage;
-import net.pgfmc.survival.masterbook.inv.profile.inv.ProfileInventory;
-import net.pgfmc.survival.masterbook.inv.staff.inv.StaffInventory;
+import net.pgfmc.survival.masterbook.back.BackConfirmInventory;
+import net.pgfmc.survival.masterbook.home.HomeHomepageInventory;
+import net.pgfmc.survival.masterbook.profile.ProfileInventory;
+import net.pgfmc.survival.masterbook.rewards.RewardsListInventory;
+import net.pgfmc.survival.masterbook.staff.StaffInventory;
+import net.pgfmc.survival.masterbook.tpa.TpaListInventory;
 
 public class MasterbookInventory implements InventoryHolder {
 	
-	private PlayerData pd;
+	private PlayerData playerdata;
 	
-	public MasterbookInventory(PlayerData pd)
+	public MasterbookInventory(final PlayerData playerdata)
 	{
-		this.pd = pd;
+		this.playerdata = playerdata;
 	}
 	
 	public class Homepage extends BaseInventory {
@@ -42,28 +42,28 @@ public class MasterbookInventory implements InventoryHolder {
 			 * [] [] [] [] [] [] [] [] []
 			 * [] [] [] [] [] [] [] [] []
 			 */
-			if (pd.hasPermission("pgf.cmd.afk"))
+			if (playerdata.hasPermission("pgf.cmd.afk"))
 			{
-				if (pd.hasTag("afk"))
+				if (playerdata.hasTag("afk"))
 				{
 					setAction(2, (player, event) -> {
 						player.performCommand("afk");
-						player.openInventory(new MasterbookInventory(pd).getInventory());
+						player.openInventory(new MasterbookInventory(playerdata).getInventory());
 						
 					});
 					
-					setItem(2, Material.BLUE_ICE).n(ChatColor.RESET + "" + ChatColor.GRAY + "AFK: " + ChatColor.GREEN + "Enabled")
-												.l(ChatColor.RESET + "" + ChatColor.GRAY + "Take no damage while enabled.");
+					setItem(2, Material.BLUE_ICE).n(ChatColor.GRAY + "AFK: " + ChatColor.GREEN + "Enabled")
+												.l(ChatColor.GRAY + "Take no damage while enabled.");
 					
-				} else if (!pd.hasTag("afk")) {
+				} else if (!playerdata.hasTag("afk")) {
 					setAction(2, (player, event) -> {
 						player.performCommand("afk");
-						player.openInventory(new MasterbookInventory(pd).getInventory());
+						player.openInventory(new MasterbookInventory(playerdata).getInventory());
 						
 					});
 					
-					setItem(2, Material.ICE).n(ChatColor.RESET + "" + ChatColor.GRAY + "AFK: " + ChatColor.RED + "Disabled")
-											.l(ChatColor.RESET + "" + ChatColor.GRAY + "Take no damage while enabled.");
+					setItem(2, Material.ICE).n(ChatColor.GRAY + "AFK: " + ChatColor.RED + "Disabled")
+											.l(ChatColor.GRAY + "Take no damage while enabled.");
 					
 				}
 				
@@ -75,23 +75,23 @@ public class MasterbookInventory implements InventoryHolder {
 			 * [] [] [] [] [] [] [] [] []
 			 * [] [] [] [] XX [] [] [] []
 			 */
-			if (pd.getData("backLoc") == null)
+			if (playerdata.getData("backLoc") == null)
 			{
 				setAction(22, (player, event) -> {
-					pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
-					pd.sendMessage(ChatColor.RED + "No back location available.");
+					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+					playerdata.sendMessage(ChatColor.RED + "No back location available.");
 				});
 				
-				setItem(22, Material.MINER_POTTERY_SHERD).n(ChatColor.RESET + "" + ChatColor.DARK_GREEN + "Teleport Back")
-														.l(ChatColor.RESET + "" + ChatColor.GRAY + "Go back to where you teleported from.");;
+				setItem(22, Material.MINER_POTTERY_SHERD).n(ChatColor.DARK_GREEN + "Teleport Back")
+														.l(ChatColor.GRAY + "Go back to where you teleported from.");;
 			
 			} else {
 				setAction(22, (player, event) -> {
-					player.openInventory(new BackConfirmInventory(pd).getInventory());
+					player.openInventory(new BackConfirmInventory(playerdata).getInventory());
 				});
 				
-				setItem(22, Material.NETHERITE_UPGRADE_SMITHING_TEMPLATE).n(ChatColor.RESET + "" + ChatColor.DARK_GREEN + "Teleport Back")
-																		.l(ChatColor.RESET + "" + ChatColor.GRAY + "Go back to where you teleported from.");
+				setItem(22, Material.NETHERITE_UPGRADE_SMITHING_TEMPLATE).n(ChatColor.DARK_GREEN + "Teleport Back")
+																		.l(ChatColor.GRAY + "Go back to where you teleported from.");
 				
 			}
 			
@@ -103,10 +103,10 @@ public class MasterbookInventory implements InventoryHolder {
 			 * [] [] XX [] [] [] [] [] []
 			 */
 			setAction(20, (player, event) -> {
-				player.openInventory(new HomeHomepage(pd).getInventory());
+				player.openInventory(new HomeHomepageInventory(playerdata).getInventory());
 			});
 					
-			setItem(20, Material.COMPASS).n(ChatColor.RESET + "" + ChatColor.YELLOW + "Home Menu");
+			setItem(20, Material.COMPASS).n(ChatColor.YELLOW + "Home Menu");
 			
 			
 			/* 
@@ -118,19 +118,19 @@ public class MasterbookInventory implements InventoryHolder {
 			if (Bukkit.getOnlinePlayers().size() > 1)
 			{
 				setAction(21, (player, event) -> {
-					player.openInventory(new TpaListInventory(pd).getInventory());
+					player.openInventory(new TpaListInventory(playerdata).getInventory());
 				});
 			
-				setItem(21, Material.ENDER_PEARL).n(ChatColor.RESET + "" + ChatColor.DARK_PURPLE + "Teleport Menu")
-												.l(ChatColor.RESET + "" + ChatColor.GRAY + "Teleport to another player.");
+				setItem(21, Material.ENDER_PEARL).n(ChatColor.DARK_PURPLE + "Teleport Menu")
+												.l(ChatColor.GRAY + "Teleport to another player.");
 				
 			} else {
 				setAction(21, (player, event) -> {
-					pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 				});
 				
-				setItem(21, Material.ENDER_EYE).n(ChatColor.RESET + "" + ChatColor.DARK_PURPLE + "Teleport Menu")
-												.l(ChatColor.RESET + "" + ChatColor.RED + "No players online.");
+				setItem(21, Material.ENDER_EYE).n(ChatColor.DARK_PURPLE + "Teleport Menu")
+												.l(ChatColor.RED + "No players online.");
 				
 			}
 			
@@ -141,15 +141,15 @@ public class MasterbookInventory implements InventoryHolder {
 			 * [] [] [] [] [] [] [] [] []
 			 */
 			setAction(4, (player, event) -> {
-				player.openInventory(new ProfileInventory(pd).getInventory());
+				player.openInventory(new ProfileInventory(playerdata).getInventory());
 				
 			});
 			
-			final PGFRole role = RoleManager.getPlayerTopRole(pd);
+			final PGFRole role = RoleManager.getPlayerTopRole(playerdata);
 			
-			setItem(4, Skull.getHead(pd.getUniqueId(), null))
-					.n(pd.getRankedName() + " (" + role.getName().substring(0,1).toUpperCase() + role.getName().substring(1).toLowerCase() + ")")
-					.l(ChatColor.RESET + "" + ChatColor.GRAY + "Open Profile.");
+			setItem(4, Skull.getHead(playerdata.getUniqueId()))
+					.n(playerdata.getRankedName() + " (" + role.getName().substring(0,1).toUpperCase() + role.getName().substring(1).toLowerCase() + ")")
+					.l(ChatColor.GRAY + "Open Profile.");
 			
 			/* 
 			 * Ender Chest
@@ -157,7 +157,7 @@ public class MasterbookInventory implements InventoryHolder {
 			 * [] [] [] [] [] [] [] [] []
 			 * [] [] [] [] [] XX [] [] []
 			 */
-			if (pd.hasPermission("pgf.cmd.donator.echest"))
+			if (playerdata.hasPermission("pgf.cmd.donator.echest"))
 			{
 				setAction(23, (player, event) -> {
 					player.performCommand("echest");
@@ -166,14 +166,14 @@ public class MasterbookInventory implements InventoryHolder {
 			} else
 			{
 				setAction(23, (player, event) -> {
-					pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
-					pd.sendMessage(ChatColor.RED + "Only donators can use this command.");
+					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+					playerdata.sendMessage(ChatColor.RED + "Only donators can use this command.");
 				});
 				
 			}
 			
-			setItem(23, Material.ENDER_CHEST).n(ChatColor.RESET + "" + ChatColor.DARK_AQUA + "Ender Chest")
-											.l(ChatColor.RESET + "" + ChatColor.BLUE + "Open an Ender Chest. Donator perk!");
+			setItem(23, Material.ENDER_CHEST).n(ChatColor.DARK_AQUA + "Ender Chest")
+											.l(ChatColor.BLUE + "Open an Ender Chest. Donator perk!");
 			
 			/* 
 			 * Crafting Table
@@ -181,7 +181,7 @@ public class MasterbookInventory implements InventoryHolder {
 			 * [] [] [] [] [] [] [] [] []
 			 * [] [] [] [] [] [] XX [] []
 			 */
-			if (pd.hasPermission("pgf.cmd.donator.craft"))
+			if (playerdata.hasPermission("pgf.cmd.donator.craft"))
 			{
 				setAction(24, (player, event) -> {
 					player.performCommand("craft");
@@ -190,14 +190,14 @@ public class MasterbookInventory implements InventoryHolder {
 			} else
 			{
 				setAction(24, (player, event) -> {
-					pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
-					pd.sendMessage(ChatColor.RED + "Only donators can use this command.");
+					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+					playerdata.sendMessage(ChatColor.RED + "Only donators can use this command.");
 				});
 				
 			}
 			
-			setItem(24, Material.CRAFTING_TABLE).n(ChatColor.RESET + "" + ChatColor.DARK_AQUA + "Crafting Table")
-											.l(ChatColor.RESET + "" + ChatColor.BLUE + "Open a Crafting Table. Donator perk!");
+			setItem(24, Material.CRAFTING_TABLE).n(ChatColor.DARK_AQUA + "Crafting Table")
+											.l(ChatColor.BLUE + "Open a Crafting Table. Donator perk!");
 			
 			
 			/* 
@@ -207,14 +207,14 @@ public class MasterbookInventory implements InventoryHolder {
 			 * [] [] [] [] [] [] [] [] []
 			 */
 			setAction(5, (player, event) -> {
-				RequestListInventory inv = new RequestListInventory(pd);
-				inv.setBack(0, new MasterbookInventory(pd).getInventory());
+				RequestListInventory inv = new RequestListInventory(playerdata);
+				inv.setBack(0, new MasterbookInventory(playerdata).getInventory());
 				
 				player.openInventory(inv.getInventory());
 				
 			});
 			
-			setItem(5, Material.WRITABLE_BOOK).n(ChatColor.RESET + "" + ChatColor.DARK_RED + "Requests Menu");
+			setItem(5, Material.WRITABLE_BOOK).n(ChatColor.DARK_RED + "Requests Menu");
 			
 			/* 
 			 * PVP Toggle
@@ -222,28 +222,28 @@ public class MasterbookInventory implements InventoryHolder {
 			 * [] [] [] [] [] [] [] [] []
 			 * [] [] [] [] [] [] [] [] []
 			 */
-			if (pd.hasPermission("pgf.cmd.pvp"))
+			if (playerdata.hasPermission("pgf.cmd.pvp"))
 			{
-				if (pd.hasTag("pvp"))
+				if (playerdata.hasTag("pvp"))
 				{
 					setAction(3, (player, event) -> {
 						player.performCommand("pvp");
-						player.openInventory(new MasterbookInventory(pd).getInventory());
-						pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+						player.openInventory(new MasterbookInventory(playerdata).getInventory());
+						playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 					});
 					
-					setItem(3, Material.DIAMOND_SWORD).n(ChatColor.RESET + "" + ChatColor.GRAY + "PVP: " + ChatColor.DARK_RED + "Enabled")
-														.l(ChatColor.RESET + "" + ChatColor.GRAY + "Fight other players while enabled.");
+					setItem(3, Material.DIAMOND_SWORD).n(ChatColor.GRAY + "PVP: " + ChatColor.DARK_RED + "Enabled")
+														.l(ChatColor.GRAY + "Fight other players while enabled.");
 					
 				} else {
 					setAction(3, (player, event) -> {
 						player.performCommand("pvp");
-						player.openInventory(new MasterbookInventory(pd).getInventory());
-						pd.playSound(pd.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
+						player.openInventory(new MasterbookInventory(playerdata).getInventory());
+						playerdata.playSound(playerdata.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
 					});
 					
-					setItem(3, Material.WOODEN_SWORD).n(ChatColor.RESET + "" + ChatColor.GRAY + "PVP: Disabled")
-													.l(ChatColor.RESET + "" + ChatColor.GRAY + "Fight other players while enabled.");
+					setItem(3, Material.WOODEN_SWORD).n(ChatColor.GRAY + "PVP: Disabled")
+													.l(ChatColor.GRAY + "Fight other players while enabled.");
 					
 				}
 				
@@ -255,23 +255,23 @@ public class MasterbookInventory implements InventoryHolder {
 			 * [] [] [] [] [] [] [] [] []
 			 * [] [] [] [] [] [] [] [] []
 			 */
-			final int numberOfRewards = Rewards.getPlayerRewardsMap(pd).size();
+			final int numberOfRewards = Rewards.getPlayerRewardsMap(playerdata).size();
 			
 			if (numberOfRewards == 0)
 			{
 				setAction(6, (player, event) -> {
-					pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 				});
 				
-				setItem(6, Material.CHISELED_BOOKSHELF).n(ChatColor.RESET + "" + ChatColor.YELLOW + "Rewards (" + numberOfRewards + ")");
+				setItem(6, Material.CHISELED_BOOKSHELF).n(ChatColor.YELLOW + "Rewards (" + numberOfRewards + ")");
 				
 			} else
 			{
 				setAction(6, (player, event) -> {
-					player.openInventory(new RewardsListInventory(pd).getInventory());
+					player.openInventory(new RewardsListInventory(playerdata).getInventory());
 				});
 				
-				setItem(6, Material.BOOKSHELF).n(ChatColor.RESET + "" + ChatColor.YELLOW + "Rewards (" + numberOfRewards + ")");
+				setItem(6, Material.BOOKSHELF).n(ChatColor.YELLOW + "Rewards (" + numberOfRewards + ")");
 				
 			}
 			
@@ -285,11 +285,11 @@ public class MasterbookInventory implements InventoryHolder {
 			if (role.compareTo(PGFRole.STAFF) <= 0)
 			{
 				setAction(13, (player, event) -> {
-					player.openInventory(new StaffInventory(pd).getInventory());
+					player.openInventory(new StaffInventory(playerdata).getInventory());
 					
 				});
 				
-				setItem(13, Material.SPYGLASS).n(ChatColor.RESET + "" + ChatColor.LIGHT_PURPLE + "Staff Commands");
+				setItem(13, Material.SPYGLASS).n(ChatColor.LIGHT_PURPLE + "Staff Commands");
 				
 			}
 			
