@@ -1,4 +1,4 @@
-package net.pgfmc.survival.masterbook.home;
+package net.pgfmc.survival.masterbook.inv.home.inv;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -16,19 +16,19 @@ import net.wesjd.anvilgui.AnvilGUI.Builder;
 /*
  * https://github.com/WesJD/AnvilGUI
  */
-public class HomeHomepageInventory extends BaseInventory {
+public class HomeHomepage extends BaseInventory {
 	
-	public HomeHomepageInventory(PlayerData playerdata)
+	public HomeHomepage(PlayerData playerdata)
 	{
-		super(27, "Home Menu");
+		super(27, ChatColor.RESET + "" + ChatColor.DARK_GRAY + "Home Menu");
 		
 		setBack(0, new MasterbookInventory(playerdata).getInventory());
 		
 		setAction(13, (player, event) -> {
-			player.openInventory(new HomeSelectListInventory(playerdata).getInventory());
+			player.openInventory(new HomeSelect(playerdata).getInventory());
 		});
 		
-		setItem(13, Material.ENDER_PEARL).n(ChatColor.LIGHT_PURPLE + "Go to Home");
+		setItem(13, Material.ENDER_PEARL).n(ChatColor.RESET + "" + ChatColor.LIGHT_PURPLE + "Go to Home");
 		
 		setAction(11, (player, event) -> {
 			Builder builder = new AnvilGUI.Builder();
@@ -44,7 +44,7 @@ public class HomeHomepageInventory extends BaseInventory {
 		        return Arrays.asList(AnvilGUI.ResponseAction.run(new Runnable() {
 					@Override
 					public void run() {
-						player.openInventory(new HomeHomepageInventory(playerdata).getInventory());
+						player.openInventory(new HomeHomepage(playerdata).getInventory());
 						
 					}}));
 		    });
@@ -54,13 +54,13 @@ public class HomeHomepageInventory extends BaseInventory {
 			
 		});
 		
-		setItem(11, Material.OAK_SAPLING).n(ChatColor.GREEN + "Set Home");
+		setItem(11, Material.OAK_SAPLING).n(ChatColor.RESET + "" + ChatColor.GREEN + "Set Home");
 		
 		setAction(15, (player, event) -> {
-			player.openInventory(new HomeDeleteListInventory(playerdata).getInventory());
+			player.openInventory(new HomeDelete(playerdata).getInventory());
 		});
 		
-		setItem(15, Material.FLINT_AND_STEEL).n(ChatColor.RED + "Delete Home");
+		setItem(15, Material.FLINT_AND_STEEL).n(ChatColor.RESET + "" + ChatColor.RED + "Delete Home");
 		
 	}
 	
