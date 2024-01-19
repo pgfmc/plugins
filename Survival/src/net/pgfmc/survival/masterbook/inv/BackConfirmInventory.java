@@ -1,4 +1,4 @@
-package net.pgfmc.survival.masterbook.back;
+package net.pgfmc.survival.masterbook.inv;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -14,7 +14,7 @@ public class BackConfirmInventory extends ConfirmInventory {
 	
 	public BackConfirmInventory(PlayerData pd)
 	{
-		super("Teleport Back", ChatColor.DARK_GREEN + "Continue", ChatColor.GRAY + "Cancel");
+		super(ChatColor.RESET + "" + ChatColor.DARK_GRAY + "Teleport Back", ChatColor.RESET + "" + ChatColor.DARK_GREEN + "Continue", ChatColor.RESET + "" + ChatColor.GRAY + "Cancel");
 		
 		this.pd = pd;
 	}
