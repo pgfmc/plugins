@@ -29,7 +29,7 @@ public class GiveRewardsListInventory extends ListInventory<String> implements L
 	private PlayerData playerdata;
 
 	public GiveRewardsListInventory(final PlayerData playerdata) {
-		super(27, ChatColor.GRAY + "Give Rewards");
+		super(27, "Give Rewards");
 		
 		setBack(0, new StaffInventory(playerdata).getInventory());
 		
@@ -43,7 +43,7 @@ public class GiveRewardsListInventory extends ListInventory<String> implements L
 	 */
 	public GiveRewardsListInventory()
 	{
-		super(27, ChatColor.GRAY + "Give Rewards");
+		super(27, "Give Rewards");
 	}
 	
 	@EventHandler
@@ -91,7 +91,7 @@ public class GiveRewardsListInventory extends ListInventory<String> implements L
 	        
 		});
 		
-		builder.text("reward_id_here").title(ChatColor.GRAY + "Enter Reward ID").plugin(Main.plugin);
+		builder.text("reward_id_here").title("Enter Reward ID").plugin(Main.plugin);
 		builder.open(player);
 		
 	}
@@ -111,7 +111,7 @@ public class GiveRewardsListInventory extends ListInventory<String> implements L
 
 	@Override
 	protected ItemStack toItem(String entry) {
-		return new ItemWrapper(Rewards.getRewardsMap().get(entry)).l(ChatColor.RESET + "" + ChatColor.GRAY + entry).gi();
+		return new ItemWrapper(Rewards.getRewardsMap().get(entry)).l(ChatColor.GRAY + entry).gi();
 	}
 
 }

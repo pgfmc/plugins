@@ -22,12 +22,12 @@ public class ClaimConfigInventory extends BaseInventory {
 	public ClaimConfigInventory(Claim claim) {
 		super(27, "Claim Settings");
 		
-		setItem(11, Material.BOOK).n(ChatColor.RESET + "" +  ChatColor.GRAY + "Members");
+		setItem(11, Material.BOOK).n(ChatColor.GRAY + "Members");
 		setAction(11, (p, e) -> {
 			p.openInventory(new PlayerViewInventory(claim).getInventory());
 		});
 		
-		setItem(15, Material.PLAYER_HEAD).n(ChatColor.RESET + "" +  ChatColor.GRAY + "Add member");
+		setItem(15, Material.PLAYER_HEAD).n(ChatColor.GRAY + "Add member");
 		setAction(15, (p,e) -> {
 			p.openInventory(new PlayerAddInventory(claim).getInventory());
 		});

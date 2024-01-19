@@ -21,7 +21,7 @@ public class HomeDeleteListInventory extends ListInventory<String> {
 	private HashMap<String, Location> homes;
 
 	public HomeDeleteListInventory(PlayerData pd) {
-		super(27, ChatColor.RESET + "" + ChatColor.DARK_GRAY + "Delete Home");
+		super(27, "Delete Home");
 		
 		this.pd = pd;
 		this.homes = Homes.getHomes(pd);
@@ -60,7 +60,7 @@ public class HomeDeleteListInventory extends ListInventory<String> {
 	
 	@Override
 	protected ItemStack toItem(String entry) {
-		return new ItemWrapper(Material.PAPER).n(ChatColor.RESET + "" + ChatColor.GOLD + entry).gi();
+		return new ItemWrapper(Material.PAPER).n(ChatColor.GOLD + entry).gi();
 	}
 
 }

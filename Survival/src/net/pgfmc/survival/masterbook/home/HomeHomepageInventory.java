@@ -20,7 +20,7 @@ public class HomeHomepageInventory extends BaseInventory {
 	
 	public HomeHomepageInventory(PlayerData playerdata)
 	{
-		super(27, ChatColor.RESET + "" + ChatColor.DARK_GRAY + "Home Menu");
+		super(27, "Home Menu");
 		
 		setBack(0, new MasterbookInventory(playerdata).getInventory());
 		
@@ -28,7 +28,7 @@ public class HomeHomepageInventory extends BaseInventory {
 			player.openInventory(new HomeSelectListInventory(playerdata).getInventory());
 		});
 		
-		setItem(13, Material.ENDER_PEARL).n(ChatColor.RESET + "" + ChatColor.LIGHT_PURPLE + "Go to Home");
+		setItem(13, Material.ENDER_PEARL).n(ChatColor.LIGHT_PURPLE + "Go to Home");
 		
 		setAction(11, (player, event) -> {
 			Builder builder = new AnvilGUI.Builder();
@@ -54,13 +54,13 @@ public class HomeHomepageInventory extends BaseInventory {
 			
 		});
 		
-		setItem(11, Material.OAK_SAPLING).n(ChatColor.RESET + "" + ChatColor.GREEN + "Set Home");
+		setItem(11, Material.OAK_SAPLING).n(ChatColor.GREEN + "Set Home");
 		
 		setAction(15, (player, event) -> {
 			player.openInventory(new HomeDeleteListInventory(playerdata).getInventory());
 		});
 		
-		setItem(15, Material.FLINT_AND_STEEL).n(ChatColor.RESET + "" + ChatColor.RED + "Delete Home");
+		setItem(15, Material.FLINT_AND_STEEL).n(ChatColor.RED + "Delete Home");
 		
 	}
 	

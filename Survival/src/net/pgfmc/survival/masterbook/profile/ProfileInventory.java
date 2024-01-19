@@ -20,7 +20,7 @@ import net.wesjd.anvilgui.AnvilGUI.Builder;
 public class ProfileInventory extends BaseInventory {
 
 	public ProfileInventory(PlayerData playerdata) {
-		super(27, ChatColor.RESET + "" + ChatColor.DARK_GRAY + "Profile");
+		super(27, "Profile");
 		
 		setBack(0, new MasterbookInventory(playerdata).getInventory());
 		
@@ -46,8 +46,8 @@ public class ProfileInventory extends BaseInventory {
 				final String discordGlobalName = Discord.JDA.getUserById(discordID).getGlobalName();
 				final PGFRole role = playerdata.getRole();
 				
-				setItem(11, Material.AMETHYST_SHARD).n(ChatColor.RESET + "" + ChatColor.LIGHT_PURPLE + "Unlink Account")
-													.l(ChatColor.RESET + "" + role.getColor() + discordGlobalName);
+				setItem(11, Material.AMETHYST_SHARD).n(ChatColor.LIGHT_PURPLE + "Unlink Account")
+													.l(role.getColor() + discordGlobalName);
 			
 			} else {
 				
@@ -59,7 +59,7 @@ public class ProfileInventory extends BaseInventory {
 				});
 				
 				setItem(11, Material.QUARTZ).n(ChatColor.LIGHT_PURPLE + "Link Account")
-				.l(ChatColor.RESET + "" + ChatColor.GRAY + "Click to get a link code.");
+				.l(ChatColor.GRAY + "Click to get a link code.");
 				
 			}
 			
@@ -79,8 +79,8 @@ public class ProfileInventory extends BaseInventory {
 			
 		});
 		
-		setItem(13, Material.FLOWER_BANNER_PATTERN).n(ChatColor.RESET + "" + ChatColor.LIGHT_PURPLE + "PGF Season 12")
-												.l("Click to see Discord and Donation info.");
+		setItem(13, Material.FLOWER_BANNER_PATTERN).n(ChatColor.LIGHT_PURPLE + "PGF Season 12")
+												.l(ChatColor.GRAY + "Click to see Discord and Donation info.");
 		
 		
 		/* 
@@ -131,8 +131,8 @@ public class ProfileInventory extends BaseInventory {
 			
 		}
 		
-		setItem(15, Material.NAME_TAG).n(ChatColor.RESET + "" + ChatColor.DARK_PURPLE + "Change Nickname")
-		.l(ChatColor.RESET + playerdata.getRankedName());
+		setItem(15, Material.NAME_TAG).n(ChatColor.DARK_PURPLE + "Change Nickname")
+		.l(playerdata.getRankedName());
 		
 	}
 
