@@ -1,4 +1,4 @@
-package net.pgfmc.survival.masterbook.inv;
+package net.pgfmc.survival.masterbook.tpa;
 
 import java.util.List;
 import java.util.stream.Collectors;

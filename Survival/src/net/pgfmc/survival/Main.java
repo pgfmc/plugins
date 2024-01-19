@@ -28,7 +28,7 @@ import net.pgfmc.survival.cmd.warp.DelWarp;
 import net.pgfmc.survival.cmd.warp.SetWarp;
 import net.pgfmc.survival.cmd.warp.Warp;
 import net.pgfmc.survival.cmd.warp.Warps;
-import net.pgfmc.survival.masterbook.inv.staff.inv.giverewards.inv.GiveRewardsListInventory;
+import net.pgfmc.survival.masterbook.staff.giverewards.GiveRewardsListInventory;
 
 public class Main extends JavaPlugin {
 	

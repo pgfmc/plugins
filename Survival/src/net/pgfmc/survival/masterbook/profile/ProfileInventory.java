@@ -1,4 +1,4 @@
-package net.pgfmc.survival.masterbook.inv.profile.inv;
+package net.pgfmc.survival.masterbook.profile;
 
 import java.util.Arrays;
 import java.util.Collections;
