@@ -51,9 +51,9 @@ public class TpRequest extends RequestType {
 		switch(eB) {
 		case ACCEPT:
 			
-			r.asker.sendMessage(ChatColor.GOLD + "Teleporting to " + r.target.getRankedName() + ChatColor.RESET + ChatColor.GOLD + " in 5 seconds");
+			r.asker.sendMessage(ChatColor.GOLD + "Teleporting to " + r.target.getRankedName() + ChatColor.GOLD + " in 5 seconds");
 			r.asker.playSound(r.asker.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
-			r.target.sendMessage(ChatColor.GOLD + "Teleporting "+ r.asker.getRankedName() + ChatColor.RESET + ChatColor.GOLD + " here in 5 seconds");
+			r.target.sendMessage(ChatColor.GOLD + "Teleporting "+ r.asker.getRankedName() + ChatColor.GOLD + " here in 5 seconds");
 			
 			new TimedTeleport(r.asker.getPlayer(), r.target.getPlayer(), 5, 40, true).setAct(v -> {
 				r.asker.sendMessage(ChatColor.GREEN + "Poof!");
