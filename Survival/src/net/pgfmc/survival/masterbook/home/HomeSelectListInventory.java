@@ -1,4 +1,4 @@
-package net.pgfmc.survival.masterbook.inv.home.inv;
+package net.pgfmc.survival.masterbook.home;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,19 +15,19 @@ import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.ItemWrapper;
 import net.pgfmc.survival.cmd.home.Homes;
 
-public class HomeSelect extends ListInventory<String> {
+public class HomeSelectListInventory extends ListInventory<String> {
 	
 	private PlayerData pd;
 	private HashMap<String, Location> homes;
 	
-	public HomeSelect(PlayerData pd)
+	public HomeSelectListInventory(PlayerData pd)
 	{
 		super(27, ChatColor.RESET + "" + ChatColor.DARK_GRAY + "Home Select");
 		
 		this.pd = pd;
 		this.homes = Homes.getHomes(pd);
 		
-		setBack(0, new HomeHomepage(pd).getInventory());
+		setBack(0, new HomeHomepageInventory(pd).getInventory());
 	}
 	
 	@Override
