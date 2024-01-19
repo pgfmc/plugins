@@ -14,12 +14,12 @@ import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.util.roles.PGFRole;
 import net.pgfmc.core.util.roles.RoleManager;
 import net.pgfmc.survival.Rewards;
-import net.pgfmc.survival.masterbook.inv.BackConfirmInventory;
-import net.pgfmc.survival.masterbook.inv.RewardsListInventory;
-import net.pgfmc.survival.masterbook.inv.TpaListInventory;
-import net.pgfmc.survival.masterbook.inv.home.inv.HomeHomepage;
-import net.pgfmc.survival.masterbook.inv.profile.inv.ProfileInventory;
-import net.pgfmc.survival.masterbook.inv.staff.inv.StaffInventory;
+import net.pgfmc.survival.masterbook.back.BackConfirmInventory;
+import net.pgfmc.survival.masterbook.home.HomeHomepageInventory;
+import net.pgfmc.survival.masterbook.profile.ProfileInventory;
+import net.pgfmc.survival.masterbook.rewards.RewardsListInventory;
+import net.pgfmc.survival.masterbook.staff.StaffInventory;
+import net.pgfmc.survival.masterbook.tpa.TpaListInventory;
 
 public class MasterbookInventory implements InventoryHolder {
 	
@@ -103,7 +103,7 @@ public class MasterbookInventory implements InventoryHolder {
 			 * [] [] XX [] [] [] [] [] []
 			 */
 			setAction(20, (player, event) -> {
-				player.openInventory(new HomeHomepage(pd).getInventory());
+				player.openInventory(new HomeHomepageInventory(pd).getInventory());
 			});
 					
 			setItem(20, Material.COMPASS).n(ChatColor.RESET + "" + ChatColor.YELLOW + "Home Menu");

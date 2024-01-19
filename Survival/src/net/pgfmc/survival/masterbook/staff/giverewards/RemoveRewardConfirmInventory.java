@@ -1,4 +1,4 @@
-package net.pgfmc.survival.masterbook.inv.staff.inv.giverewards.inv;
+package net.pgfmc.survival.masterbook.staff.giverewards;
 
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;

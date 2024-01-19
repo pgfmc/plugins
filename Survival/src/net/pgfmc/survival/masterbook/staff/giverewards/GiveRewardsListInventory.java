@@ -1,4 +1,4 @@
-package net.pgfmc.survival.masterbook.inv.staff.inv.giverewards.inv;
+package net.pgfmc.survival.masterbook.staff.giverewards;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,7 +20,7 @@ import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.ItemWrapper;
 import net.pgfmc.survival.Main;
 import net.pgfmc.survival.Rewards;
-import net.pgfmc.survival.masterbook.inv.staff.inv.StaffInventory;
+import net.pgfmc.survival.masterbook.staff.StaffInventory;
 import net.wesjd.anvilgui.AnvilGUI;
 import net.wesjd.anvilgui.AnvilGUI.Builder;
 

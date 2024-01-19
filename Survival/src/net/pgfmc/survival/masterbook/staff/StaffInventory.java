@@ -1,4 +1,4 @@
-package net.pgfmc.survival.masterbook.inv.staff.inv;
+package net.pgfmc.survival.masterbook.staff;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -6,7 +6,7 @@ import org.bukkit.Material;
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.survival.masterbook.MasterbookInventory;
-import net.pgfmc.survival.masterbook.inv.staff.inv.giverewards.inv.GiveRewardsListInventory;
+import net.pgfmc.survival.masterbook.staff.giverewards.GiveRewardsListInventory;
 
 public class StaffInventory extends BaseInventory {
 

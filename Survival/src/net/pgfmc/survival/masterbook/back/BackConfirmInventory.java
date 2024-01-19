@@ -1,4 +1,4 @@
-package net.pgfmc.survival.masterbook.inv;
+package net.pgfmc.survival.masterbook.back;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
