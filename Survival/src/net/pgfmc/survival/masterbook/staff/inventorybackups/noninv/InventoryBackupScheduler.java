@@ -15,7 +15,7 @@ import net.pgfmc.survival.Main;
 public class InventoryBackupScheduler implements Listener {
 	
 	public static int INVENTORY_ROLLBACK_TASK_ID;
-	public static DateFormat INVENTORY_DATE_FORMAT = new SimpleDateFormat("MMM dd, YYYY @ kkmm");
+	public static DateFormat INVENTORY_DATE_FORMAT = new SimpleDateFormat("HH:mm:ss z");
 	
 	public InventoryBackupScheduler()
 	{
