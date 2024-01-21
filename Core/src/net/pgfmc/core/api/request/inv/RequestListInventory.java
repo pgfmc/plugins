@@ -17,7 +17,7 @@ public class RequestListInventory extends ButtonInventory {
 	private PlayerData pd;
 	
 	public RequestListInventory(PlayerData pd) {
-		super(27, ChatColor.RESET + "" + "Requests Menu");
+		super(27, "Requests Menu");
 		this.pd = pd;
 		
 	}
