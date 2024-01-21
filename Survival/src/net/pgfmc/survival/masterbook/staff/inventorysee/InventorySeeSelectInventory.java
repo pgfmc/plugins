@@ -2,17 +2,19 @@ package net.pgfmc.survival.masterbook.staff.inventorysee;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.event.inventory.InventoryType;
 
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.cmd.admin.Skull;
+import net.pgfmc.survival.masterbook.staff.manageplayers.ManagePlayerInventory;
 
 public class InventorySeeSelectInventory extends BaseInventory {
 
-	protected InventorySeeSelectInventory(final PlayerData playerdata, final PlayerData target) {
-		super(27, "Inventory See");
+	public InventorySeeSelectInventory(final PlayerData playerdata, final PlayerData target) {
+		super(InventoryType.CHEST, "Inventory See");
 		
-		setBack(0, new InventorySeeListInventory(playerdata).getInventory());
+		setBack(0, new ManagePlayerInventory(playerdata, target).getInventory());
 		
 		setItem(13, Skull.getHead(target.getUniqueId())).n(target.getRankedName()).l(ChatColor.GRAY + "Select an inventory.");
 		

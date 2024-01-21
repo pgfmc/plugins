@@ -80,9 +80,7 @@ public abstract class ListInventory<T> extends BaseInventory {
 		
 		pages = (T[][]) new Object[(int) Math.ceil(entries.size() / (float) pageSize)][pageSize];
 		
-		for (int i = 0;
-				i < entries.size();
-				i++	) {
+		for (int i = 0; i < entries.size(); i++) {
 			pages[i / pageSize][i % pageSize] = entries.get(i);
 		}
 		

@@ -95,6 +95,8 @@ public class Nick implements CommandExecutor {
 			pd.setData("nick", null).queue();
 			pd.sendMessage(ChatColor.GOLD + "Nickname changed to " + pd.getRankedName() + ChatColor.GOLD + "!");
 			
+			RoleManager.updatePlayerNameplate(pd);
+			
 			return true;
 		}
 		

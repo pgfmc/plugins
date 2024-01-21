@@ -156,4 +156,5 @@ public abstract class BaseInventory implements InventoryHolder {
 	public Inventory getInventory() {
 		return inv;
 	}
+	
 }
