@@ -45,7 +45,7 @@ public class BBEvent implements Listener {
 					
 				case MEMBER:
 					e.setCancelled(true);
-					pd.sendMessage(ChatColor.RED + "Only " + cont.getPlayer().getRankedName() + ChatColor.RESET + ChatColor.RED + " can remove this claim.");
+					pd.sendMessage(ChatColor.RED + "Only " + cont.getPlayer().getRankedName() + ChatColor.RED + " can remove this claim.");
 					return;
 					
 				case ADMIN:
