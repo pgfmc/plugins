@@ -7,6 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -37,6 +38,7 @@ public abstract class BaseInventory implements InventoryHolder {
 	 */
 	protected Inventory inv;
 	
+	@Deprecated
 	public BaseInventory(int size, String name) {
 		
 		if (size != 27 && size != 54 && size != 5 && size != 9) return;
@@ -45,6 +47,16 @@ public abstract class BaseInventory implements InventoryHolder {
 		this.inv = Bukkit.createInventory(this, size, name);
 		
 		buttons = new Butto[size];
+	}
+	
+	public BaseInventory(InventoryType type, String name) {
+	
+		if (type == null || !type.isCreatable()) return;
+		
+		
+		this.inv = Bukkit.createInventory(this, type, name);
+		
+		buttons = new Butto[type.getDefaultSize()];
 	}
 	
 	public void setAction(int slot, Butto b) {
@@ -102,7 +114,7 @@ public abstract class BaseInventory implements InventoryHolder {
 			p.openInventory(inventory);
 		});
 		
-		setItem(slot, Material.FEATHER).n(ChatColor.RESET + "" + ChatColor.GRAY + "Back");
+		setItem(slot, Material.FEATHER).n(ChatColor.GRAY + "Back");
 	}
 	
 	/*
@@ -144,4 +156,5 @@ public abstract class BaseInventory implements InventoryHolder {
 	public Inventory getInventory() {
 		return inv;
 	}
+	
 }
