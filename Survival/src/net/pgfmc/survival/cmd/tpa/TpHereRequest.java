@@ -51,8 +51,8 @@ public static final TpHereRequest TH = new TpHereRequest();
 		switch(eB) {
 		case ACCEPT:
 			
-			r.target.sendMessage(ChatColor.GOLD + "Teleporting to " + r.asker.getRankedName() + ChatColor.GOLD + " 5 seconds");
-			r.asker.sendMessage(ChatColor.GOLD + "Teleporting "+ r.target.getRankedName() + ChatColor.GOLD + " here in 5 seconds");
+			r.target.sendMessage(ChatColor.GOLD + "Teleporting to " + r.asker.getRankedName() + ChatColor.RESET + ChatColor.GOLD + " 5 seconds");
+			r.asker.sendMessage(ChatColor.GOLD + "Teleporting "+ r.target.getRankedName() + ChatColor.RESET + ChatColor.GOLD + " here in 5 seconds");
 			r.asker.playSound(r.asker.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
 			
 			new TimedTeleport(r.target.getPlayer(), r.asker.getPlayer(), 5, 40, true).setAct(v -> {
