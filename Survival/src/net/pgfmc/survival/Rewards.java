@@ -23,28 +23,17 @@ public class Rewards {
 	
 	private static Map<String, ItemStack> REWARDS = new HashMap<>();
 	private static FileConfiguration REWARDS_YML = Mixins.getDatabase(Main.plugin.getDataFolder() + File.separator + "rewards.yml");
+	private static boolean LOADED = false;
 	
-	public Rewards()
+	public static void loadRewardsFile()
 	{
+		if (LOADED) return;
 		
 		
-		Set<String> reward_ids = REWARDS_YML.getKeys(false);
-
+		final Set<String> reward_ids = REWARDS_YML.getKeys(false);
 		reward_ids.stream().forEach(reward_id -> REWARDS.put(reward_id, REWARDS_YML.getItemStack(reward_id)));
-
-		saveRewardsFile();
 		
-	}
-	
-	public static void saveRewardsFile()
-	{		
-		try {
-			REWARDS.forEach((reward_id, reward) -> REWARDS_YML.set(reward_id, reward));
-			REWARDS_YML.save(Main.plugin.getDataFolder() + File.separator + "rewards.yml");
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		LOADED = true;
 		
 	}
 	
@@ -57,16 +46,30 @@ public class Rewards {
 	 * Add a reward (a list of items) to the available rewards.
 	 * 
 	 * @param reward The reward
-	 * @param tag_id The identifier for this reward
+	 * @param reward_id The identifier for this reward
 	 */
-	public static void addRewardToList(String tag_id, ItemStack reward)
+	public static void addRewardToList(String reward_id, ItemStack reward)
 	{
-		REWARDS.put(tag_id, reward.clone());
+		try {
+			REWARDS.put(reward_id, reward.clone());
+			REWARDS_YML.set(reward_id, reward);
+			REWARDS_YML.save(Main.plugin.getDataFolder() + File.separator + "rewards.yml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
-	public static void removeRewardFromList(String tag_id)
+	public static void removeRewardFromList(String reward_id)
 	{
-		REWARDS.remove(tag_id);
+		try {
+			REWARDS.remove(reward_id);
+			REWARDS_YML.set(reward_id, null);
+			REWARDS_YML.save(Main.plugin.getDataFolder() + File.separator + "rewards.yml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	/**

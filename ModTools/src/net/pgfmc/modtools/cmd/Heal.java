@@ -19,28 +19,31 @@ public class Heal implements CommandExecutor {
 			return true;
 		}
 		
-		Player p;
+		Player target;
 		
 		if (args.length >= 1)
 		{
-			p = Bukkit.getPlayer(args[0]);
-			if (p == null)
+			target = Bukkit.getPlayer(args[0]);
+			
+			if (target == null || !target.isOnline())
 			{
 				sender.sendMessage(ChatColor.RED + "Could not find player " + ChatColor.GOLD + ChatColor.UNDERLINE + args[0] + ChatColor.RESET + ChatColor.RED + ".");
 				return true;
 			}
+			
 		} else {
-			p = (Player) sender;
+			target = (Player) sender;
+			
 		}
 		
-		p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
-		p.setFoodLevel(20);
-		p.setSaturation(20);
+		target.setHealth(target.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
+		target.setFoodLevel(20);
+		target.setSaturation(20);
 		
-		p.getActivePotionEffects().stream()
-				.forEach(effect -> p.removePotionEffect(effect.getType()));
+		target.getActivePotionEffects().stream()
+				.forEach(effect -> target.removePotionEffect(effect.getType()));
 		
-		p.sendMessage(ChatColor.GREEN + "Healed!");
+		target.sendMessage(ChatColor.GREEN + "Healed!");
 		
 		return true;
 	}

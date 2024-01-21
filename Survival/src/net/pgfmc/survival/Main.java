@@ -42,11 +42,12 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onEnable()
 	{
+		plugin = this;
+		
 		// Creates rewards.yml for the player rewards
 		// If it doesn't exist
 		Mixins.getDatabase(getDataFolder() + File.separator + "rewards.yml");
-		
-		plugin = this;
+		Rewards.loadRewardsFile();
 		
 		if (getConfig().getConfigurationSection("warps") == null)
 		{
@@ -69,7 +70,6 @@ public class Main extends JavaPlugin {
 		new Masterbook("commands");
 
 		new Pvp();
-		new Rewards();
 		
 		
 		getServer().getPluginManager().registerEvents(new BookInput(), this);
@@ -105,8 +105,6 @@ public class Main extends JavaPlugin {
 				
 			});
 		});
-		
-		Rewards.saveRewardsFile();
 		
 		
 	}
