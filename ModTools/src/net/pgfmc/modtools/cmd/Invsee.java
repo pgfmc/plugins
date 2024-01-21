@@ -7,6 +7,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import net.pgfmc.core.api.playerdata.PlayerData;
+
 public class Invsee implements CommandExecutor {
 
 	@Override
@@ -18,37 +20,35 @@ public class Invsee implements CommandExecutor {
 			return true;
 		}
 		
-		Player p = (Player) sender;
+		final Player player = (Player) sender;
 		
-		// GUI
 		if (args.length == 0)
 		{
-			// TODO
-			return false;
-		} else { // NO GUI
-			Player target = Bukkit.getPlayer(args[0]);
-			
-			if (target == null)
-			{
-				p.sendMessage(ChatColor.RED + "Could not find player " + args[0] + ".");
-				return true;
-			}
-			
-			if (args.length == 1)
-			{
-				p.sendMessage(ChatColor.GREEN + "Opening inventory of player " + args[0] + ".");
-				p.openInventory(target.getInventory());
-			} else if (args.length == 2 && args[1].equals("echest"))
-			{
-				p.sendMessage(ChatColor.GREEN + "Opening enderchest of player " + args[0] + ".");
-				p.openInventory(target.getEnderChest());
-			}
-			
+			sender.sendMessage(ChatColor.RED + "Please include a player: /invsee <player>");
 			return true;
-			
 		}
 		
+		final Player targetPlayer = Bukkit.getPlayer(args[0]);
 		
+		if (targetPlayer == null)
+		{
+			player.sendMessage(ChatColor.RED + "Could not find player " + args[0] + ".");
+			return true;
+		}
+		
+		final PlayerData target = PlayerData.from(targetPlayer);
+		
+		if (args.length == 1)
+		{
+			player.sendMessage(ChatColor.GOLD + "Opening " + target.getRankedName() + ChatColor.GOLD + "'s Inventory");
+			player.openInventory(targetPlayer.getInventory());
+		} else if (args.length == 2 && args[1].equals("echest"))
+		{
+			player.sendMessage(ChatColor.GOLD + "Opening " + target.getRankedName() + ChatColor.GOLD + "'s Ender Chest");
+			player.openInventory(targetPlayer.getEnderChest());
+		}
+		
+		return true;
 	}
 
 }

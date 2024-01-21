@@ -1,4 +1,4 @@
-package net.pgfmc.survival.masterbook.inv.home.inv;
+package net.pgfmc.survival.masterbook.home;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,52 +15,55 @@ import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.ItemWrapper;
 import net.pgfmc.survival.cmd.home.Homes;
 
-public class HomeDelete extends ListInventory<String> {
+public class HomeSelectListInventory extends ListInventory<String> {
 	
 	private PlayerData pd;
 	private HashMap<String, Location> homes;
-
-	public HomeDelete(PlayerData pd) {
-		super(27, ChatColor.RESET + "" + ChatColor.DARK_GRAY + "Delete Home");
+	
+	public HomeSelectListInventory(PlayerData pd)
+	{
+		super(27, "Home Select");
 		
 		this.pd = pd;
 		this.homes = Homes.getHomes(pd);
 		
-		setBack(0, new HomeHomepage(pd).getInventory());
+		setBack(0, new HomeHomepageInventory(pd).getInventory());
 	}
-
+	
 	@Override
 	public List<String> load() {
-		return Homes.getHomes(pd).keySet().stream().collect(Collectors.toList());
+		return homes.keySet().stream().collect(Collectors.toList());
 	}
 	
 	@Override
 	protected Butto toAction(String entry) {
 		
-		if (!pd.hasPermission("pgf.cmd.home.del"))
+		if (!pd.hasPermission("pgf.cmd.home.home"))
 		{
 			return (player, event) -> {
-				player.sendMessage(ChatColor.RED + "You don't have permission to execute this command.");
+				pd.sendMessage(ChatColor.RED + "You don't have permission to execute this command.");
 			};
+			
 		}
 		
 		if (homes.size() == 0)
 		{
 			return (player, event) -> {
-				player.sendMessage(ChatColor.RED + "You do not have any homes.");
+				pd.sendMessage(ChatColor.RED + "You do not have any homes.");
 			};
+			
 		}
 		
 		return (player, event) -> {
-			player.performCommand("delhome " + entry);
-			player.openInventory(new HomeHomepage(pd).getInventory());
+			player.performCommand("home " + entry);
+			player.closeInventory();
 		};
 		
 	}
 	
 	@Override
 	protected ItemStack toItem(String entry) {
-		return new ItemWrapper(Material.PAPER).n(ChatColor.RESET + "" + ChatColor.GOLD + entry).gi();
+		return new ItemWrapper(Material.PAPER).n(ChatColor.GOLD + entry).gi();
 	}
-
+	
 }
