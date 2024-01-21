@@ -3,6 +3,7 @@ package net.pgfmc.core.api.inventory;
 import java.util.List;
 
 import org.bukkit.Material;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -59,7 +60,12 @@ public abstract class ListInventory<T> extends BaseInventory {
 			throw new IllegalArgumentException();
 		}
 		
-		// getInventory(); XXX Not needed, check first though
+	}
+	
+	public ListInventory(String name)
+	{
+		super (InventoryType.CHEST, name);
+		
 	}
 	
 	/**
@@ -74,9 +80,7 @@ public abstract class ListInventory<T> extends BaseInventory {
 		
 		pages = (T[][]) new Object[(int) Math.ceil(entries.size() / (float) pageSize)][pageSize];
 		
-		for (int i = 0;
-				i < entries.size();
-				i++	) {
+		for (int i = 0; i < entries.size(); i++) {
 			pages[i / pageSize][i % pageSize] = entries.get(i);
 		}
 		

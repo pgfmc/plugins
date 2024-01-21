@@ -1,4 +1,4 @@
-package net.pgfmc.modtools.inventory;
+package net.pgfmc.survival.masterbook.staff.inventorybackups.noninv;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
-import net.pgfmc.modtools.Main;
+import net.pgfmc.survival.Main;
 
 public class InventoryBackup {
 	
@@ -84,16 +84,12 @@ public class InventoryBackup {
 		return timeOf;
 	}
 	
-	public void saveToFile()
-	{
-		// TODO
-	}
-	
 	public boolean restore()
 	{
-		Player p = Bukkit.getPlayer(uuid);
 		
-		if (p == null || !p.isOnline()) return false;
+		if (!getOfflinePlayer().isOnline()) return false;
+		
+		Player p = getOfflinePlayer().getPlayer();
 		
 		new InventoryBackup(PlayerData.from(p), InventoryBackupCause.ROLLBACK);
 		
@@ -110,17 +106,12 @@ public class InventoryBackup {
 
 			@Override
 			public void run() {
-				// TODO remove this from instances and save to file
 				List<InventoryBackup> inventories = (List<InventoryBackup>) Optional.ofNullable(((List<InventoryBackup>) PlayerData.from(getOfflinePlayer()).getData("inventories")))
 						.orElse(new ArrayList<InventoryBackup>());
-				
-				InventoryBackup inventory = inventories.get(0);
 				
 				inventories.remove(0);
 				
 				PlayerData.from(getOfflinePlayer()).setData("inventories", inventories);
-				
-				inventory.saveToFile(); // TODO				
 				
 			}
 			

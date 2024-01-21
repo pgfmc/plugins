@@ -9,10 +9,10 @@ import org.bukkit.command.CommandSender;
 public class ServerMessage implements CommandExecutor {
 	
 	// Undecided if this should be the standard for all server messages
-	private String MESSAGE_PREFIX = ChatColor.GRAY + "["
-											+ ChatColor.BOLD + ChatColor.LIGHT_PURPLE + "PGF"
+	private static String MESSAGE_PREFIX = ChatColor.GRAY + "["
+											+ ChatColor.BOLD + ChatColor.GOLD + "PGF"
 											+ ChatColor.GRAY + "] "
-											+ ChatColor.RESET + ChatColor.DARK_RED;
+											+ ChatColor.RESET + ChatColor.LIGHT_PURPLE;
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -28,7 +28,7 @@ public class ServerMessage implements CommandExecutor {
 	
 	public static void sendServerMessage(final String message)
 	{
-		Bukkit.broadcastMessage(message);
+		Bukkit.broadcastMessage(MESSAGE_PREFIX + message);
 	}
 	
 }
