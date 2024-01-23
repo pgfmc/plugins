@@ -15,22 +15,27 @@ echo "Exporting jars.."
 
 cd $PLUGINS_HOME/plugins
 
-for name in Core Claims ModTools Survival; do
+for name in core claims modtools survival; do
 	cd $name
 
 	if ! [ -z "$version_number" ]; then
 		sed -i "s/^version: .*/version: ${version_number}/" plugin.yml
 	fi
-
-	mvn clean package
+	
 	cd ../
-	wait
 done
 
-for name in Core Claims ModTools Survival; do
-	cp -f $name/target/$name-jar-with-dependencies.jar ../build/$name.jar
-	wait
+cd "./Maven"
+mvn -e clean install
+cd ../
+
+wait
+
+for name in core claims modtools survival; do
+	cp -f $name/target/$name.jar ../.build/"${name^}".jar
 done
+
+wait
 
 echo ""
 read -n1 -r -p "Press any key to continue.." key
