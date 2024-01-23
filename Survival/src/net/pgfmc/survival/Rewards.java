@@ -43,7 +43,7 @@ public class Rewards {
 	}
 	
 	/**
-	 * Add a reward (a list of items) to the available rewards.
+	 * Add a reward
 	 * 
 	 * @param reward The reward
 	 * @param reward_id The identifier for this reward
@@ -60,6 +60,11 @@ public class Rewards {
 		
 	}
 	
+	/**
+	 * Remove a reward
+	 * 
+	 * @param reward_id
+	 */
 	public static void removeRewardFromList(String reward_id)
 	{
 		try {
