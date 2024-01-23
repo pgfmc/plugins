@@ -308,28 +308,31 @@ public class MasterbookInventory implements InventoryHolder {
 			if (role.compareTo(PGFRole.VETERAN) <= 0)
 			{
 				setAction(10, (player, event) -> {
-					final HaloParticle particle_effect = playerdata.getData("particle_effect");
+					final String particle_effect = playerdata.getData("particle_effect");
 					
 					if (particle_effect == null)
 					{
-						playerdata.setData("particle_effect", HaloParticle.CHERRY).queue();
-					} else if (particle_effect == HaloParticle.CHERRY)
+						playerdata.setData("particle_effect", HaloParticle.CHERRY.toString()).queue();
+					} else if (particle_effect.equals(HaloParticle.CHERRY.toString()))
 					{
-						playerdata.setData("particle_effect", HaloParticle.HEART).queue();
-					} else if (particle_effect == HaloParticle.HEART)
+						playerdata.setData("particle_effect", HaloParticle.HEART.toString()).queue();
+					} else if (particle_effect.equals(HaloParticle.HEART.toString()))
 					{
-						playerdata.setData("particle_effect", HaloParticle.NOTE).queue();
-					} else if (particle_effect == HaloParticle.NOTE)
+						playerdata.setData("particle_effect", HaloParticle.NOTE.toString()).queue();
+					} else if (particle_effect.equals(HaloParticle.NOTE.toString()))
+					{
+						playerdata.setData("particle_effect", null).queue();
+					} else
 					{
 						playerdata.setData("particle_effect", null).queue();
 					}
 					
-					playerdata.playSound(player.getLocation(), Sound.BLOCK_LEVER_CLICK, 1.0F, 2.0F);
+					playerdata.playSound(player.getLocation(), Sound.BLOCK_LEVER_CLICK, 1.0F, 1.5F);
 					player.openInventory(new MasterbookInventory(playerdata).getInventory());
 					
 				});
 				
-				final HaloParticle particle = playerdata.getData("particle_effect");
+				final HaloParticle particle = HaloParticle.fromString(playerdata.getData("particle_effect"));
 				
 				if (particle == null)
 				{
