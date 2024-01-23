@@ -31,6 +31,25 @@ public class HaloEffect {
 			
 		}
 		
+		public static HaloParticle fromString(String name)
+		{
+			if (name == null) return null;
+			
+			if (name.contains("halo_"))
+			{
+				name = name.substring(5).toUpperCase();
+				
+			}
+			
+			for (final HaloParticle particle: HaloParticle.values())
+			{
+				if (name.equals(particle.name())) return particle;
+				
+			}
+			
+			return null;			
+		}
+		
 		public Particle getParticle()
 		{
 			return particle;
@@ -69,7 +88,7 @@ public class HaloEffect {
 					
 					Set<PlayerData> playerdatas = PlayerData.getPlayerDataSet(playerdata -> playerdata.isOnline()
 																							&& playerdata.getData("particle_effect") != null
-																							&& playerdata.getData("particle_effect") == particle);
+																							&& playerdata.getData("particle_effect").equals(particle.toString()));
 					
 					// For each PlayerData in PLAYERDATAS
 					// Spawn the particle in the correct place

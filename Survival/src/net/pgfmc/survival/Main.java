@@ -37,7 +37,6 @@ import net.pgfmc.survival.masterbook.staff.giverewards.GiveRewardsListInventory;
 import net.pgfmc.survival.masterbook.staff.inventorybackups.noninv.InventoryBackup;
 import net.pgfmc.survival.masterbook.staff.inventorybackups.noninv.InventoryBackupScheduler;
 import net.pgfmc.survival.particleeffects.HaloEffect;
-import net.pgfmc.survival.particleeffects.HaloEffect.HaloParticle;
 
 public class Main extends JavaPlugin {
 	
@@ -66,8 +65,7 @@ public class Main extends JavaPlugin {
 			
 			if (config.get("particle_effect") == null) return;
 			
-			HaloParticle particle = (HaloParticle) config.get("particle_effect");
-			
+			final String particle = config.getString("particle_effect");
 			playerdata.setData("particle_effect", particle);			
 			
 		});
