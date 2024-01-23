@@ -2,15 +2,23 @@
 	xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>net.pgfmc.core</groupId>
-	<artifactId>core</artifactId>
-	<version>0.0.0</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+	
+	<artifactId>core</artifactId>
+	<packaging>jar</packaging>
+	<parent>
+		<groupId>net.pgfmc</groupId>
+		<artifactId>parent</artifactId>
+		<version>8</version>
+		<relativePath>../Parent/pom.xml</relativePath>
+	</parent>
+	
 	<build>
-		<finalName>Core</finalName>
+		<finalName>${project.name}</finalName>
 		<sourceDirectory>src/</sourceDirectory>
+		
 		<resources>
 			<resource>
 				<targetPath>.</targetPath>
@@ -21,78 +29,80 @@
 				</includes>
 			</resource>
 		</resources>
+		
 		<plugins>
+			
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
+				<version>3.12.1</version>
 				<configuration>
 					<release>17</release>
 				</configuration>
 			</plugin>
+			
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>3.1.1</version>
-				<configuration>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.5.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                
+                <configuration>
+	              <relocations>
+					  
+	                <relocation>
+	                  <pattern>net.dv8tion</pattern>
+	                  <shadedPattern>net.pgfmc.net.dv8tion</shadedPattern>
+	                </relocation>
+	                
+	              </relocations>
+	            </configuration>
+	            
+            </plugin>
+			
 		</plugins>
+		
 	</build>
+	
 	<dependencies>
-		<dependency>
-			<groupId>org.spigotmc</groupId>
-			<artifactId>spigot-api</artifactId>
-			<version>1.20.2-R0.1-SNAPSHOT</version>
-			<scope>provided</scope>
-		</dependency>
+		
 		<dependency>
 			<groupId>net.coreprotect</groupId>
 			<artifactId>coreprotect</artifactId>
 			<version>22.2</version>
 			<scope>provided</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>net.luckperms</groupId>
 			<artifactId>api</artifactId>
 			<version>5.4</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.comphenix.protocol</groupId>
-			<artifactId>ProtocolLib</artifactId>
-			<version>5.1.0</version>
-			<scope>provided</scope>
-		</dependency>
+		
 		<dependency>
 			<groupId>net.dv8tion</groupId>
 			<artifactId>JDA</artifactId>
-			<version>5.0.0-beta.18</version>
+			<version>5.0.0-beta.20</version>
+			<scope>compile</scope>
 		</dependency>
+		
 	</dependencies>
+	
 	<repositories>
-		<repository>
-			<id>spigot-repo</id>
-			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-		</repository>
+		
 		<repository>
 			<id>playpro-repo</id>
 			<url>https://maven.playpro.com</url>
 		</repository>
-		<repository>
-			<id>dmulloy2-repo</id>
-			<url>https://repo.dmulloy2.net/repository/public/</url>
-		</repository>
+		
 	</repositories>
+	
 </project>
