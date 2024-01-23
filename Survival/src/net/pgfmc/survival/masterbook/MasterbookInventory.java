@@ -1,5 +1,7 @@
 package net.pgfmc.survival.masterbook;
 
+import java.util.Arrays;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -20,6 +22,7 @@ import net.pgfmc.survival.masterbook.profile.ProfileInventory;
 import net.pgfmc.survival.masterbook.rewards.RewardsListInventory;
 import net.pgfmc.survival.masterbook.staff.StaffInventory;
 import net.pgfmc.survival.masterbook.tpa.TpaListInventory;
+import net.pgfmc.survival.particleeffects.HaloEffect.HaloParticle;
 
 public class MasterbookInventory implements InventoryHolder {
 	
@@ -293,6 +296,52 @@ public class MasterbookInventory implements InventoryHolder {
 				
 			}
 			
+			
+			
+			
+			/* 
+			 * Particle Effects
+			 * [] [] [] [] [] [] [] [] []
+			 * [] XX [] [] [] [] [] [] []
+			 * [] [] [] [] [] [] [] [] []
+			 */
+			if (role.compareTo(PGFRole.VETERAN) <= 0)
+			{
+				setAction(10, (player, event) -> {
+					final HaloParticle particle_effect = playerdata.getData("particle_effect");
+					
+					if (particle_effect == null)
+					{
+						playerdata.setData("particle_effect", HaloParticle.CHERRY).queue();
+					} else if (particle_effect == HaloParticle.CHERRY)
+					{
+						playerdata.setData("particle_effect", HaloParticle.HEART).queue();
+					} else if (particle_effect == HaloParticle.HEART)
+					{
+						playerdata.setData("particle_effect", HaloParticle.NOTE).queue();
+					} else if (particle_effect == HaloParticle.NOTE)
+					{
+						playerdata.setData("particle_effect", null).queue();
+					}
+					
+					playerdata.playSound(player.getLocation(), Sound.BLOCK_LEVER_CLICK, 1.0F, 2.0F);
+					player.openInventory(new MasterbookInventory(playerdata).getInventory());
+					
+				});
+				
+				final HaloParticle particle = playerdata.getData("particle_effect");
+				
+				if (particle == null)
+				{
+					setItem(10, Material.DRAGON_BREATH).n(ChatColor.DARK_RED + "Particle Effects").l(Arrays.asList(ChatColor.RED + "Off"
+							, ChatColor.GRAY + "Click to cycle particle effects."));
+				} else
+				{
+					setItem(10, Material.DRAGON_BREATH).n(ChatColor.DARK_RED + "Particle Effects").l(Arrays.asList(ChatColor.RED + "" + particle.name()
+							, ChatColor.GRAY + "Click to cycle particle effects."));
+				}
+				
+			}
 			
 		}
 		
