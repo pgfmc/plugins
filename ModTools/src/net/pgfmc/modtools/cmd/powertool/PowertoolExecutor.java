@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,7 +22,6 @@ import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
 
-import net.md_5.bungee.api.ChatColor;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.modtools.Main;
 
