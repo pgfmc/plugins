@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import net.md_5.bungee.api.ChatColor;
 import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.api.playerdata.PlayerDataManager;
 import net.pgfmc.core.util.files.Mixins;
 import net.pgfmc.survival.balance.ItemProtect;
 import net.pgfmc.survival.cmd.Back;
@@ -34,6 +36,7 @@ import net.pgfmc.survival.cmd.warp.Warps;
 import net.pgfmc.survival.masterbook.staff.giverewards.GiveRewardsListInventory;
 import net.pgfmc.survival.masterbook.staff.inventorybackups.noninv.InventoryBackup;
 import net.pgfmc.survival.masterbook.staff.inventorybackups.noninv.InventoryBackupScheduler;
+import net.pgfmc.survival.particleeffects.HaloEffect;
 
 public class Main extends JavaPlugin {
 	
@@ -49,46 +52,55 @@ public class Main extends JavaPlugin {
 		Mixins.getDatabase(getDataFolder() + File.separator + "rewards.yml");
 		Rewards.loadRewardsFile();
 		
+		// Create warps section in config.yml if it doesn't exist
 		if (getConfig().getConfigurationSection("warps") == null)
 		{
 			getConfig().createSection("warps");
 			saveConfig();
 		}
 		
+		// PlayerData Inits
+		PlayerDataManager.setInit(playerdata -> {
+			final FileConfiguration config = playerdata.getPlayerDataFile();
+			
+			if (config.get("particle_effect") == null) return;
+			
+			final String particle = config.getString("particle_effect");
+			playerdata.setData("particle_effect", particle);			
+			
+		});
+		
+		// Other Inits
+		startHelpTipsTimer();
+		new HaloEffect();
+		// Register tp requests
 		TpRequest.registerAll();
 		TpHereRequest.registerAll();
-		
+	
+		// Commands
 		getCommand("afk").setExecutor(new Afk());
 		getCommand("echest").setExecutor(new Echest());
 		getCommand("craft").setExecutor(new Craft());
-		
+		getCommand("warps").setExecutor(new Warps());
+		getCommand("setwarp").setExecutor(new SetWarp());
+		getCommand("delwarp").setExecutor(new DelWarp());
 		new Home("home");
 		new SetHome("sethome");
 		new DelHome("delhome");
 		new Homes("homes");
-		
 		new Masterbook("commands");
-
 		new Pvp();
+		new Warp("warp");
 		
-		
+		// Listeners
 		getServer().getPluginManager().registerEvents(new BookInput(), this);
 		getServer().getPluginManager().registerEvents(new AfkEvents(), this);
 		getServer().getPluginManager().registerEvents(new ItemProtect(), this);
 		getServer().getPluginManager().registerEvents(new PvpEvent(), this);
 		getServer().getPluginManager().registerEvents(new GiveRewardsListInventory(), this);
 		getServer().getPluginManager().registerEvents(new InventoryBackupScheduler(), this);
-		
-		new Warp("warp");
-		getCommand("warps").setExecutor(new Warps());
-		getCommand("setwarp").setExecutor(new SetWarp());
-		getCommand("delwarp").setExecutor(new DelWarp());
-		
-		Back back = new Back("back");
-		getServer().getPluginManager().registerEvents(back, this);
-		
-		startHelpTipsTimer();
-		
+		getServer().getPluginManager().registerEvents(new Back("back"), this);
+
 	}
 	
 	@Override
