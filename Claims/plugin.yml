@@ -1,5 +1,5 @@
 name: PGF-Claims
-version: 8.1.1
+version: 8.1.2
 api-version: 1.20
 author: [bk, CrimsonDart]
 main: net.pgfmc.claims.Main
