@@ -1,5 +1,5 @@
 # Config for PGF-Claims
 
-claim-range: 20
+claim-range: 25
 claim-merge-range: 50
 foreign-claim-range: 90
