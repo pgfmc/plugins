@@ -91,6 +91,7 @@ public class Main extends JavaPlugin {
 		new Masterbook("commands");
 		new Pvp();
 		new Warp("warp");
+		new Back("back");
 		
 		// Listeners
 		getServer().getPluginManager().registerEvents(new BookInput(), this);
@@ -99,7 +100,6 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new PvpEvent(), this);
 		getServer().getPluginManager().registerEvents(new GiveRewardsListInventory(), this);
 		getServer().getPluginManager().registerEvents(new InventoryBackupScheduler(), this);
-		getServer().getPluginManager().registerEvents(new Back("back"), this);
 
 	}
 	
