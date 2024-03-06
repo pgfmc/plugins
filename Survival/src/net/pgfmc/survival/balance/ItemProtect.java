@@ -1,24 +1,22 @@
 package net.pgfmc.survival.balance;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.util.Vector;
 
-import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.survival.Main;
 
 /**
  * Prevents other players from picking up someone else's items on death.
@@ -28,108 +26,56 @@ import net.pgfmc.core.api.playerdata.PlayerData;
  */
 public class ItemProtect implements Listener {
 	
-	private static HashMap<Item, Entry> items = new HashMap<>();
-	
 	@EventHandler
 	public void onDeath(PlayerDeathEvent e) {
 		
 		// declare variables
-		Player p = e.getEntity();
-		Location loc = p.getLocation();
-		World world = p.getWorld();
-		PlayerData pd = PlayerData.from(p);
+		final Player player = e.getEntity();
+		final Location deathLocation = player.getLocation();
+		final World world = player.getWorld();
+		final PlayerData playerdata = PlayerData.from(player);
 		
-		if (!p.hasPermission("pgf.itemprotect")) return;
+		// set back location
+		playerdata.setData("backLoc", deathLocation);
 		
-		// converts dropped items
-		List<Item> droppedItems = e.getDrops().stream().map((x -> {
-			return world.dropItem(loc, x);
-		})).collect(Collectors.toList());
+		// convert itemstack to item by dropping the items on the ground (need to clear the original drops)
+		List<Item> droppedItems = e.getDrops().stream().map((itemstack -> world.dropItem(deathLocation, itemstack))).collect(Collectors.toList());
+		e.getDrops().clear();
 		
 		// activates the items
 		for (Item drop : droppedItems) {
-			
+			// "Sets the owner of this item. Other entities will not be able to pickup this item when an owner is set."
+			drop.setOwner(playerdata.getUniqueId());
 			drop.setGlowing(true);
 			drop.setInvulnerable(true);
 			drop.setVelocity(new Vector());
 			
-			items.put(drop, new Entry(pd, drop));
 		}
 		
+		playerdata.playSound(deathLocation, Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
+		playerdata.sendMessage(ChatColor.LIGHT_PURPLE + "Your dropped items are protected for 2 minutes.");
+		playerdata.sendMessage(ChatColor.LIGHT_PURPLE + "Teleport to your back location; available in the command menu!");
+		
 		// starts timer for deactivating the items
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(CoreMain.plugin, new Runnable() {
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
 			
 			@Override
 			public void run()
 			{
-				for (Item drop : droppedItems) {
-					Entry data = items.get(drop);
+				for (Item drop : droppedItems)
+				{
+					if (!drop.isValid()) continue;
 					
-					if (data != null) {
-						data.remove();
-					}
+					drop.setOwner(null);
+					drop.setGlowing(false);
+					drop.setInvulnerable(false);
 					
 				}
+				
 			}
 			
 		}, 2400); // two minutes
 		
-		e.getDrops().clear();
-		p.sendMessage(ChatColor.LIGHT_PURPLE + "Your dropped items are protected for 2 minutes.");
 	}
 	
-	@EventHandler
-	public void onPickup(EntityPickupItemEvent e)
-	{
-		if (!(e.getEntity() instanceof OfflinePlayer)) return;
-		
-		Item item = e.getItem();
-		Entry data = items.get(item);
-		
-		if (data == null) return;
-			
-		PlayerData pd = PlayerData.from((OfflinePlayer) e.getEntity());
-		e.setCancelled(!(data.pickup(pd)));
-		
-	}
-	
-	/**
-	 * An entry for each Item dropped by a player after death.
-	 * @author james
-	 *
-	 */
-	private static class Entry {
-		
-		PlayerData pd;
-		Item drop;
-		
-		protected Entry(PlayerData pd, Item drop) {
-			
-			this.pd = pd;
-			this.drop = drop;
-		}
-		
-		public boolean pickup(PlayerData picker) {
-			
-			if (pd == picker) {
-				remove();
-				return true;
-			} else {
-				return false;
-			}
-		}
-		
-		public void remove() {
-			items.remove(drop);
-			
-			if (drop.isValid()) {
-				drop.setGlowing(false);
-				drop.setInvulnerable(false);
-			}
-		}
-		
-		
-	}
-
 }
-
