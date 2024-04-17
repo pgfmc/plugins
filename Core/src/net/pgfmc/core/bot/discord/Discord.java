@@ -14,6 +14,7 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -23,11 +24,13 @@ import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.bot.discord.listeners.OnMemberJoin;
 import net.pgfmc.core.bot.discord.listeners.OnMemberRemove;
+import net.pgfmc.core.bot.discord.listeners.OnMessageDelete;
 import net.pgfmc.core.bot.discord.listeners.OnMessageReceived;
 import net.pgfmc.core.bot.discord.listeners.OnReady;
 import net.pgfmc.core.bot.discord.listeners.OnSlashCommand;
 import net.pgfmc.core.bot.discord.listeners.OnUpdateRole;
 import net.pgfmc.core.bot.util.Colors;
+import net.pgfmc.core.bot.util.MessageHandler;
 
 public class Discord extends ListenerAdapter {
 	
@@ -39,15 +42,17 @@ public class Discord extends ListenerAdapter {
 	public Discord() throws InterruptedException
 	{
 		JDABuilder.createDefault(CoreMain.plugin.getConfig().getString("token"))
-						.addEventListeners(new OnReady()
-										 , new OnMessageReceived()
-										 , new OnUpdateRole()
-										 , new OnSlashCommand()
-										 , new OnMemberJoin()
-										 , new OnMemberRemove())
+						.addEventListeners(new OnReady(),
+										   new OnMessageReceived(),
+										   new OnUpdateRole(),
+										   new OnSlashCommand(),
+										   new OnMemberJoin(),
+										   new OnMemberRemove(),
+										   new OnMessageDelete(),
+										   new MessageHandler((User) null))
 						.setChunkingFilter(ChunkingFilter.ALL)
 						.setMemberCachePolicy(MemberCachePolicy.ALL)
-						.enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.MESSAGE_CONTENT)
+						.enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MESSAGES)
 					.build()
 					.awaitReady();
 		
