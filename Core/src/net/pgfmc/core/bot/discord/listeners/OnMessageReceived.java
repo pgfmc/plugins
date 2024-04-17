@@ -22,6 +22,7 @@ public class OnMessageReceived extends ListenerAdapter {
 	@Override
 	public void onMessageReceived(MessageReceivedEvent e)
 	{
+		
 		final User user = e.getAuthor();
 		
 		final MessageHandler handler = new MessageHandler(user).setMessage(e.getMessage().getContentDisplay());
@@ -43,6 +44,8 @@ public class OnMessageReceived extends ListenerAdapter {
 			Discord.sendAlert(eb.build()).queue();
 			return;
 		}
+		
+		
 		
 		// return if message isn't in #server or a bot
 		if (!e.getChannel().getId().equals(Discord.getServerChannel().getId()) || user.isBot()) return;
