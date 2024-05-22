@@ -13,8 +13,6 @@ echo ""
 sleep 1s
 echo "Exporting jars.."
 
-cd $PLUGINS_HOME
-
 for name in Core Claims ModTools Survival; do
 	cd $name
 
