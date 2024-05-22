@@ -45,7 +45,7 @@ public class SpawnProtect implements Listener {
 	{
 		Player p = e.getPlayer();
 		
-		if (p.hasPermission("modifyworld.*")) return;
+		if (p.hasPermission("net.pgfmc.core.modifyworld")) return;
 		
 		//p.sendMessage("cYou do not have permission to do that.");
 		e.setCancelled(true);

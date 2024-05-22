@@ -70,7 +70,7 @@ public class ServerSelectorInventory extends BaseInventory {
 		/**
 		 * The Survival server
 		 */
-		if (playerdata.hasPermission("net.pgfmc.servers.survival"))
+		if (playerdata.hasPermission("net.pgfmc.proxycore.connect.survival"))
 		{
 			if (Main.thisServerName != null && Main.thisServerName.equals("survival")) // Connected
 			{
@@ -139,7 +139,7 @@ public class ServerSelectorInventory extends BaseInventory {
 		 * 
 		 * Staff only
 		 */
-		if (playerdata.hasPermission("net.pgfmc.servers.test"))
+		if (playerdata.hasPermission("net.pgfmc.proxycore.connect.test"))
 		{
 			if (Main.thisServerName != null && Main.thisServerName.equals("test")) // Connected
 			{
@@ -206,7 +206,7 @@ public class ServerSelectorInventory extends BaseInventory {
 		/**
 		 * The Past seasons server
 		 */
-		if (playerdata.hasPermission("net.pgfmc.servers.past"))
+		if (playerdata.hasPermission("net.pgfmc.proxycore.connect.past"))
 		{
 			if (Main.thisServerName != null && Main.thisServerName.equals("past")) // Connected
 			{
@@ -278,7 +278,7 @@ public class ServerSelectorInventory extends BaseInventory {
 		 */
 		for (final String server : servers.keySet())
 		{
-			if (!playerdata.hasPermission("net.pgfmc.servers." + server)) continue;
+			if (!playerdata.hasPermission("net.pgfmc.proxycore.connect." + server)) continue;
 			
 			final String serverNamePronounified = server.substring(0, 1).toUpperCase() + server.substring(1);
 			
