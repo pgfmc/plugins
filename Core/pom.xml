@@ -6,13 +6,13 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	
-	<artifactId>core</artifactId>
+	<artifactId>Core</artifactId>
 	<packaging>jar</packaging>
 	<parent>
 		<groupId>net.pgfmc</groupId>
 		<artifactId>parent</artifactId>
 		<version>8</version>
-		<relativePath>../Parent/pom.xml</relativePath>
+		<relativePath>../Maven/pom.xml</relativePath>
 	</parent>
 	
 	<build>
