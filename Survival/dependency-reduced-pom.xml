@@ -7,7 +7,7 @@
     <relativePath>../Maven/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>survival</artifactId>
+  <artifactId>Survival</artifactId>
   <build>
     <sourceDirectory>src/</sourceDirectory>
     <resources>
