@@ -9,16 +9,16 @@
 	
 	<groupId>net.pgfmc</groupId>
 	<artifactId>parent</artifactId>
-	<version>8</version>
+	<version>9</version>
 	<packaging>pom</packaging>
 	
 	<modules>
 		<module>../Core</module>
+		<module>../Proxycore-Spigot</module>
 		<module>../Claims</module>
 		<module>../ModTools</module>
 		<module>../Survival</module>
-		<module>../Proxycore-spigot</module>
-		<module>../Proxycore-velocity</module>
+		<module>../Proxycore-Velocity</module>
 	</modules>
 	
 	<build>
