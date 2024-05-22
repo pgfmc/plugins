@@ -31,7 +31,7 @@ public class PowertoolExecutor implements Listener {
 	@EventHandler
 	public void onPowertool(PlayerInteractEvent e)
 	{
-		if (!e.getPlayer().hasPermission("pgf.admin.powertool")) return;
+		if (!e.getPlayer().hasPermission("net.pgfmc.modtools.powertool")) return;
 		if (!(e.getAction() == Action.LEFT_CLICK_BLOCK || e.getAction() == Action.LEFT_CLICK_AIR)) return;
 		
 		Player p = e.getPlayer();
@@ -52,7 +52,7 @@ public class PowertoolExecutor implements Listener {
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e)
 	{
-		if (!e.getPlayer().hasPermission("pgf.admin.powertool")) return;
+		if (!e.getPlayer().hasPermission("net.pgfmc.modtools.powertool")) return;
 		
 		Player p = e.getPlayer();
 		PlayerData pd = PlayerData.from(p);
@@ -73,7 +73,7 @@ public class PowertoolExecutor implements Listener {
 	@EventHandler
 	public void onPlayerSwitchToItem(PlayerItemHeldEvent e)
 	{
-		if (!e.getPlayer().hasPermission("pgf.admin.powertool")) return;
+		if (!e.getPlayer().hasPermission("net.pgfmc.modtools.powertool")) return;
 		
 		Player p = e.getPlayer();
 		PlayerData pd = PlayerData.from(p);

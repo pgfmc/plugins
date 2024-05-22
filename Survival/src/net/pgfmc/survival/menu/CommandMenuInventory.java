@@ -51,7 +51,7 @@ public class CommandMenuInventory implements InventoryHolder {
 			 * [] [] [] [] [] [] [] [] []
 			 * [] [] [] [] [] [] [] [] []
 			 */
-			if (playerdata.hasPermission("pgf.cmd.afk"))
+			if (playerdata.hasPermission("net.pgfmc.survival.afk"))
 			{
 				if (playerdata.hasTag("afk"))
 				{
@@ -163,7 +163,7 @@ public class CommandMenuInventory implements InventoryHolder {
 			 * [] [] [] [] [] [] [] [] []
 			 * [] [] [] [] [] XX [] [] []
 			 */
-			if (playerdata.hasPermission("pgf.cmd.donator.echest"))
+			if (playerdata.hasPermission("net.pgfmc.survival.echest"))
 			{
 				setAction(23, (player, event) -> {
 					player.performCommand("echest");
@@ -187,7 +187,7 @@ public class CommandMenuInventory implements InventoryHolder {
 			 * [] [] [] [] [] [] [] [] []
 			 * [] [] [] [] [] [] XX [] []
 			 */
-			if (playerdata.hasPermission("pgf.cmd.donator.craft"))
+			if (playerdata.hasPermission("net.pgfmc.survival.craft"))
 			{
 				setAction(24, (player, event) -> {
 					player.performCommand("craft");
@@ -251,7 +251,7 @@ public class CommandMenuInventory implements InventoryHolder {
 			 * [] [] [] [] [] [] [] [] []
 			 * [] [] [] [] [] [] [] [] []
 			 */
-			if (playerdata.hasPermission("pgf.cmd.pvp"))
+			if (playerdata.hasPermission("net.pgfmc.survival.pvp"))
 			{
 				if (playerdata.hasTag("pvp"))
 				{
@@ -332,7 +332,7 @@ public class CommandMenuInventory implements InventoryHolder {
 			 * [] [] [] [] [] [] [] [] []
 			 * [] [] [] [] [] [] [] [] []
 			 */
-			if (role.compareTo(PGFRole.VETERAN) <= 0) // has permission
+			if (role.compareTo(PGFRole.VETERAN) <= 0 || playerdata.hasPermission("net.pgfmc.survival.particleeffects")) // has permission
 			{
 				setAction(4, (player, event) -> {
 					final String particle_effect = playerdata.getData("particle_effect");
@@ -400,7 +400,7 @@ public class CommandMenuInventory implements InventoryHolder {
 			 * XX [] [] [] [] [] [] [] []
 			 * [] [] [] [] [] [] [] [] []
 			 */
-			if (playerdata.hasPermission("net.pgfmc.connect"))
+			if (playerdata.hasPermission("net.pgfmc.survival.connect"))
 			{
 				setItem(9, Material.COMPASS)
 					.n(ChatColor.GOLD + "Server Selector")

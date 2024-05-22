@@ -29,7 +29,7 @@ public final class ConnectCommand implements CommandExecutor {
 		final Player player = (Player) sender;
 		
 		
-		if (!player.hasPermission("net.pgfmc.cmd.connect"))
+		if (!player.hasPermission("net.pgfmc.proxycore.connect"))
 		{
 			player.sendMessage(Lang.PERMISSION_DENIED.getLang());
 			return true;

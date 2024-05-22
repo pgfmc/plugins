@@ -37,7 +37,7 @@ public class HomeDeleteListInventory extends ListInventory<String> {
 	@Override
 	protected Butto toAction(String entry) {
 		
-		if (!pd.hasPermission("pgf.cmd.home.del"))
+		if (!pd.hasPermission("net.pgfmc.survival.home.delhome"))
 		{
 			return (player, event) -> {
 				player.sendMessage(ChatColor.RED + "You don't have permission to execute this command.");

@@ -31,7 +31,7 @@ public class ProfileInventory extends BaseInventory {
 		 * [] [] XX [] [] [] [] [] []
 		 * [] [] [] [] [] [] [] [] []
 		 */
-		if (playerdata.hasPermission("pgf.cmd.link"))
+		if (playerdata.hasPermission("net.pgfmc.core.link"))
 		{
 			final String discordID = playerdata.getData("Discord");
 			
@@ -91,7 +91,7 @@ public class ProfileInventory extends BaseInventory {
 		 * [] [] [] [] [] [] XX [] []
 		 * [] [] [] [] [] [] [] [] []
 		 */
-		if (playerdata.hasPermission("pgf.cmd.donator.nick"))
+		if (playerdata.hasPermission("net.pgfmc.survival.nick"))
 		{
 			setAction(15, (player, event) -> {
 				final String nickname = (String) Optional.ofNullable(playerdata.getData("nick")).orElse(player.getName());
