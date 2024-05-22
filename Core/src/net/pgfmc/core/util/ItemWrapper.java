@@ -62,6 +62,7 @@ public class ItemWrapper {
 		}
 		
 		ItemMeta imeta = item.getItemMeta();
+		imeta.setLore(null); // clear lore first
 		imeta.setLore(lore);
 		item.setItemMeta(imeta);
 		return this;
