@@ -10,10 +10,6 @@ load: POSTWORLD
 prefix: PGF-Core
 
 commands:
-  goto:
-    description: Teleport to a different world
-    usage: /<command> [world]
-    permission: pgf.cmd.goto
   nick:
     usage: /<command> [nickname]
     description: Set a custom nickname

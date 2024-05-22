@@ -159,6 +159,9 @@ public class CoreMain extends JavaPlugin implements Listener {
 		/**
 		 * Register commands and listeners
 		 */
+		// Listener for Proxycore
+		getServer().getMessenger().registerOutgoingPluginChannel(this, "pgf:main");
+		
 		getCommand("nick").setExecutor(new Nick());
 		getCommand("broadcast").setExecutor(new ServerMessage());
 		getCommand("link").setExecutor(new LinkCommand());

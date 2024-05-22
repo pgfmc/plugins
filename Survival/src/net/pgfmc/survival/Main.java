@@ -23,8 +23,8 @@ import net.pgfmc.survival.cmd.home.DelHome;
 import net.pgfmc.survival.cmd.home.Home;
 import net.pgfmc.survival.cmd.home.Homes;
 import net.pgfmc.survival.cmd.home.SetHome;
-import net.pgfmc.survival.cmd.masterbook.BookInput;
-import net.pgfmc.survival.cmd.masterbook.Masterbook;
+import net.pgfmc.survival.cmd.menu.CommandMenuBookInput;
+import net.pgfmc.survival.cmd.menu.CommandMenu;
 import net.pgfmc.survival.cmd.pvp.Pvp;
 import net.pgfmc.survival.cmd.pvp.PvpEvent;
 import net.pgfmc.survival.cmd.tpa.TpHereRequest;
@@ -33,9 +33,9 @@ import net.pgfmc.survival.cmd.warp.DelWarp;
 import net.pgfmc.survival.cmd.warp.SetWarp;
 import net.pgfmc.survival.cmd.warp.Warp;
 import net.pgfmc.survival.cmd.warp.Warps;
-import net.pgfmc.survival.masterbook.staff.giverewards.GiveRewardsListInventory;
-import net.pgfmc.survival.masterbook.staff.inventorybackups.noninv.InventoryBackup;
-import net.pgfmc.survival.masterbook.staff.inventorybackups.noninv.InventoryBackupScheduler;
+import net.pgfmc.survival.menu.staff.giverewards.GiveRewardsListInventory;
+import net.pgfmc.survival.menu.staff.inventorybackups.noninv.InventoryBackup;
+import net.pgfmc.survival.menu.staff.inventorybackups.noninv.InventoryBackupScheduler;
 import net.pgfmc.survival.particleeffects.HaloEffect;
 
 public class Main extends JavaPlugin {
@@ -88,13 +88,13 @@ public class Main extends JavaPlugin {
 		new SetHome("sethome");
 		new DelHome("delhome");
 		new Homes("homes");
-		new Masterbook("commands");
+		new CommandMenu("menu");
 		new Pvp();
 		new Warp("warp");
 		new Back("back");
 		
 		// Listeners
-		getServer().getPluginManager().registerEvents(new BookInput(), this);
+		getServer().getPluginManager().registerEvents(new CommandMenuBookInput(), this);
 		getServer().getPluginManager().registerEvents(new AfkEvents(), this);
 		getServer().getPluginManager().registerEvents(new ItemProtect(), this);
 		getServer().getPluginManager().registerEvents(new PvpEvent(), this);

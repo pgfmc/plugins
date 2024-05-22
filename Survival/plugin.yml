@@ -6,6 +6,7 @@ website: play.pgfmc.net
 main: net.pgfmc.survival.Main
 description: Survival for PGF
 depend: [PGF-Core]
+softdepend: [PGF-Proxycore]
 load: POSTWORLD
 prefix: PGF-Survival
 
@@ -29,8 +30,8 @@ commands:
     usage: /<command>
     permission: pgf.cmd.pvp
     
-  commands:
-    aliases: [c, m]
+  menu:
+    aliases: [c, m, commands]
     description: Open up the Command Menu
     usage: /<command>
     permission: pgf.cmd.help
