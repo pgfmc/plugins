@@ -15,7 +15,7 @@
 	<modules>
 		<module>../Core</module>
 		<module>../Claims</module>
-		<module>../Modtools</module>
+		<module>../ModTools</module>
 		<module>../Survival</module>
 		<module>../Proxycore-spigot</module>
 		<module>../Proxycore-velocity</module>

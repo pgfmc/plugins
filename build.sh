@@ -13,9 +13,7 @@ echo ""
 sleep 1s
 echo "Exporting jars.."
 
-cd $PLUGINS_HOME/plugins
-
-for name in core claims modtools survival; do
+for name in Core Claims ModTools Survival Proxycore-spigot Proxycore-velocity; do
 	cd $name
 
 	if ! [ -z "$version_number" ]; then
@@ -25,15 +23,21 @@ for name in core claims modtools survival; do
 	cd ../
 done
 
-cd "./Maven"
+cd "Maven"
 mvn -e clean install
 cd ../
 
 wait
 
-for name in core claims modtools survival; do
-	cp -f $name/target/$name.jar ../.build/"${name^}".jar
+if ! [ -d "target" ]; then
+    mkdir "target"
+fi
+
+for name in Core Claims ModTools Survival Proxycore-spigot Proxycore-velocity; do
+    cp -f $name/target/$name.jar target/"${name^}".jar
 done
+
+
 
 wait
 
