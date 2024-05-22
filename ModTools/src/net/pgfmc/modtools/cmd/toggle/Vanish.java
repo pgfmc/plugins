@@ -49,7 +49,7 @@ public class Vanish implements CommandExecutor, Listener {
 			
 			
 		} else {
-			Bukkit.getOnlinePlayers().stream().filter(pl -> !pl.hasPermission("pgf.admin.vanish.exempt")).forEach(pl -> pl.hidePlayer(Main.plugin, p));
+			Bukkit.getOnlinePlayers().stream().filter(pl -> !pl.hasPermission("net.pgfmc.modtools.vanish.exempt")).forEach(pl -> pl.hidePlayer(Main.plugin, p));
 			p.sendMessage(ChatColor.GREEN + "Vanished!");
 			p.performCommand("fakeleave");
 			pd.addTag("vanish");

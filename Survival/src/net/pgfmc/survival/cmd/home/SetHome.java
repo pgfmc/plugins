@@ -51,12 +51,12 @@ public class SetHome extends PlayerCommand {
 			return true;
 		}
 		
-		if (pd.hasPermission("pgf.cmd.donator.home") && homes.size() >= 5)
+		if (pd.hasPermission("net.pgfmc.survival.home.donator") && homes.size() >= 5)
 		{
 			pd.sendMessage(ChatColor.RED + "You can only have up to 5 homes: " + ChatColor.GOLD + Homes.getNamedHomes(pd));
 			pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 			return true;
-		} else if (!pd.hasPermission("pgf.cmd.donator.home") && homes.size() >= 3)
+		} else if (!pd.hasPermission("net.pgfmc.survival.home.donator") && homes.size() >= 3)
 		{
 			pd.sendMessage(ChatColor.RED + "You can only have up to 3 homes: " + ChatColor.GOLD + Homes.getNamedHomes(pd));
 			pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);

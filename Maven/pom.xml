@@ -3,19 +3,22 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<properties>
+		<java.version>21</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	
 	<groupId>net.pgfmc</groupId>
 	<artifactId>parent</artifactId>
-	<version>8</version>
+	<version>9</version>
 	<packaging>pom</packaging>
 	
 	<modules>
 		<module>../Core</module>
+		<module>../Proxycore-Spigot</module>
 		<module>../Claims</module>
 		<module>../ModTools</module>
 		<module>../Survival</module>
+		<module>../Proxycore-Velocity</module>
 	</modules>
 	
 	<build>

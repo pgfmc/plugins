@@ -7,7 +7,7 @@
 # plugins
 Has all of the plugins used on the PGF server.
 
-use build.sh to build the plugins automatically. outputs plugins to the target folder in the repo.
+Run the `build.sh` to build the jar files. Files will be output to `target`.
 
 
 ## Core
@@ -27,3 +27,4 @@ Contains some simple commands, a custom perms manager, and multiple small framew
   
   Once you have a PlayerData object, you can use:  
   `pd.setData(String name, Object data)` to set `data` to 
+

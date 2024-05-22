@@ -158,7 +158,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		
 		/**
 		 * Register commands and listeners
-		 */
+		 */		
 		getCommand("nick").setExecutor(new Nick());
 		getCommand("broadcast").setExecutor(new ServerMessage());
 		getCommand("link").setExecutor(new LinkCommand());
