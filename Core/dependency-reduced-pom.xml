@@ -3,7 +3,7 @@
   <parent>
     <artifactId>parent</artifactId>
     <groupId>net.pgfmc</groupId>
-    <version>8</version>
+    <version>9</version>
     <relativePath>../Maven/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>

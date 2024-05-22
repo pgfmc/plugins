@@ -1,5 +1,5 @@
 name: PGF-Core
-version: 8.2.0
+version: 9.0.0
 api-version: 1.20
 authors: [bk, CrimsonDart]
 website: play.pgfmc.net
@@ -10,56 +10,39 @@ load: POSTWORLD
 prefix: PGF-Core
 
 commands:
-  goto:
-    description: Teleport to a different world
-    usage: /<command> [world]
-    permission: pgf.cmd.goto
   nick:
     usage: /<command> [nickname]
     description: Set a custom nickname
-    permission: pgf.cmd.donator.nick
+    permission: net.pgfmc.core.nick
     aliases: [nickname, nn]
   skull:
     usage: /<command> [player]
     description: Obtain a player skull
-    permission: pgf.admin.skull
-  pgf:
-    usage: /<command>
-    description: Master commands for PGF
-    permission: pgf.admin.pgf
+    permission: net.pgfmc.core.skull
   dump:
     usage: /<command> [player]
     description: dumps all playerdata to the sender
-    permission: pgf.cmd.playerdata.dump
+    permission: net.pgfmc.core.dump
   tag:
     usage: /<command> <player> <add | remove | list> [tag]
     description: manages playerdata tags.
-    permission: pgf.cmd.playerdata.tag
+    permission: net.pgfmc.core.tag
   setplayerdata:
     usage: /<command> <player> <entry> <data (String)>
     description: sets a player's data point.
-    permission: pgf.cmd.playerdata.set
+    permission: net.pgfmc.core.setplayerdata
     aliasees: [spd]
   link:
     usage: /<command>
     description: sends the sender a code to link their discord account
-    permission: pgf.cmd.link
+    permission: net.pgfmc.core.link
   unlink:
     usage: /<command>
     description: unlinks the user's discord account.
-    permission: pgf.cmd.unlink
+    permission: net.pgfmc.core.unlink
   broadcast:
     usage: /<command> [message]
     description: Broadcast to the server!
     aliases: [bc, broadc, bcast, say, servermessage]
-    permission: pgf.admin.broadcast
-
-permissions:
-  pgf.cmd.playerdata.*:
-    description: PlayerData wildcard
-    default: op
-    children:
-      pgf.cmd.playerdata.tag: true
-      pgf.cmd.playerdata.dump: true
-      pgf.cmd.playerdata.set: true
+    permission: net.pgfmc.core.broadcast
     

@@ -24,7 +24,7 @@ public class Nick implements CommandExecutor {
 		
 		Player p = (Player) sender;
 		
-		if (!(p.hasPermission("pgf.cmd.donator.nick")))
+		if (!(p.hasPermission("net.pgfmc.core.nick")))
 		{
 			sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
 			return true;

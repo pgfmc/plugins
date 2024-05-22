@@ -1,11 +1,12 @@
 name: PGF-Survival
-version: 8.2.0
+version: 9.0.0
 api-version: 1.20
 authors: [bk, CrimsonDart]
 website: play.pgfmc.net
 main: net.pgfmc.survival.Main
 description: Survival for PGF
 depend: [PGF-Core]
+softdepend: [PGF-Proxycore]
 load: POSTWORLD
 prefix: PGF-Survival
 
@@ -14,122 +15,87 @@ commands:
     description: Opens the player's ender chest
     usage: /<command>
     aliases: [enderchest, ech]
-    permission: pgf.cmd.donator.echest
+    permission: net.pgfmc.survival.echest
   afk:
     description: Signals that a player is inactive
     usage: /<command>
-    permission: pgf.cmd.afk
+    permission: net.pgfmc.survival.afk
   craft:
     description: Open the crafting inventory!
     usage: /<command>
     aliases: [bench]
-    permission: pgf.cmd.donator.craft
+    permission: net.pgfmc.survival.craft
   pvp: 
     description: Toggles PvP mode
     usage: /<command>
-    permission: pgf.cmd.pvp
-    
-  commands:
-    aliases: [c, m]
+    permission: net.pgfmc.survival.pvp
+  menu:
+    aliases: [c, m, commands]
     description: Open up the Command Menu
     usage: /<command>
-    permission: pgf.cmd.help
-    
+    permission: net.pgfmc.survival.menu
   back:
     description: Sends the player to the last known location
     usage: /<command>
     aliases: [bk]
-    permission: pgf.cmd.back
+    permission: net.pgfmc.survival.back
   home:
     description: Teleport to a home
     usage: /<command> [home]
-    permission: pgf.cmd.home.home
+    permission: net.pgfmc.survival.home.home
   sethome:
     description: Set a home
     usage: /<command> [home]
-    permission: pgf.cmd.home.set
+    permission: net.pgfmc.survival.home.sethome
   delhome:
     description: Delete a home
     usage: /<command> [home]
-    permission: pgf.cmd.home.del
+    permission: net.pgfmc.survival.home.delhome
   homes:
     description: See a list of homes
     usage: /<command>
-    permission: pgf.cmd.home.homes
-    
+    permission: net.pgfmc.survival.home.homes
   tpa:
     description: Send a teleport request
     usage: /<command> [player]
-    permission: pgf.cmd.tp.tpa
+    permission: net.pgfmc.survival.tp.tpa
   tpaccept:
     description: Accept a teleport request
     usage: /<command> [player]
-    permission: pgf.cmd.tp.tpaccept
+    permission: net.pgfmc.survival.tp.tpaccept
   tpdeny:
     description: Deny a teleport request
     usage: /<command> [player]
-    permission: pgf.cmd.tp.tpdeny
-    
+    permission: net.pgfmc.survival.tp.tpdeny
   tphere:
     description: Send a Teleport here request.
     usage: /<command> [player]
-    permission: pgf.cmd.tp.tphere
+    permission: net.pgfmc.survival.tp.tphere
     aliases: [tph]
   tphereaccept:
     description: Accept a teleport here request.
     usage: /<command> [player]
-    permission: pgf.cmd.tp.tphereaccept
+    permission: net.pgfmc.survival.tp.tphereaccept
     aliases: [tpha]
   tpheredeny:
     description: Deny a teleport here request.
     usage: /<command> [player]
-    permission: pgf.cmd.tp.tpheredeny
+    permission: net.pgfmc.survival.tp.tpheredeny
     aliases: [tphd]
-    
   warp:
     description: Warp to a location
     usage: /<command> [name]
-    permission: pgf.cmd.warp.warp
+    permission: net.pgfmc.survival.warp.warp
   warps:
     description: List all warps
     usage: /<command>
-    permission: pgf.cmd.warp.warps
+    permission: net.pgfmc.survival.warp.warps
   setwarp:
     description: Set a new warp
     usage: /<command> [name]
-    permission: pgf.cmd.warp.set
+    permission: net.pgfmc.survival.warp.setwarp
   delwarp:
     description: Delete a warp
     usage: /<command> [name]
-    permission: pgf.cmd.warp.del
+    permission: net.pgfmc.survival.warp.delwarp
     
-  permissions:
-    pgf.cmd.home.*:
-      description: Home wildcard
-      default: op
-      children:
-        pgf.cmd.home.home: true
-        pgf.cmd.home.homes: true
-        pgf.cmd.home.set: true
-        pgf.cmd.home.del: true
-            
-    pgf.cmd.tp.*:
-      description: Tpa wildcard
-      default: op
-      children:
-        pgf.cmd.tp.tpaccept: true
-        pgf.cmd.tp.tpa: true
-        pgf.cmd.tp.tpdeny: true
-        pgf.cmd.tp.tphere: true
-        pgf.cmd.tp.tphereaccept: true
-        pgf.cmd.tp.tpheredeny: true
-        
-    pgf.cmd.warp.*:
-      description: Warp wildcard
-      default: op
-      children:
-        pgf.cmd.warp.warp: true
-        pgf.cmd.warp.warps: true
-        pgf.cmd.warp.set: true
-        pgf.cmd.warp.del: true
-        
