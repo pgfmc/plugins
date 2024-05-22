@@ -21,6 +21,7 @@ import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.util.Lang;
 import net.pgfmc.core.util.roles.PGFRole;
 import net.pgfmc.core.util.roles.RoleManager;
+import net.pgfmc.proxycore.serverselector.ServerSelectorInventory;
 import net.pgfmc.survival.Rewards;
 import net.pgfmc.survival.menu.back.BackConfirmInventory;
 import net.pgfmc.survival.menu.home.HomeHomepageInventory;
@@ -355,7 +356,7 @@ public class CommandMenuInventory implements InventoryHolder {
 					}
 					
 					playerdata.playSound(player.getLocation(), Sound.BLOCK_LEVER_CLICK, 1.0F, 1.5F);
-					player.openInventory(new CommandMenuInventory(playerdata).getInventory());
+					player.openInventory(new CommandMenuInventory(playerdata).getInventory()); // refresh
 					
 				});
 				
@@ -411,7 +412,10 @@ public class CommandMenuInventory implements InventoryHolder {
 				if (proxycorePlugin != null && proxycorePlugin.isEnabled()) // Proxycore is loaded and working
 				{
 					setAction(9, (player, event) -> {
-						player.performCommand("connect");
+						final BaseInventory serverSelector = new ServerSelectorInventory(playerdata);
+						serverSelector.setBack(0, new CommandMenuInventory(playerdata).getInventory());
+						
+						player.openInventory(serverSelector.getInventory());
 					});
 					
 				} else // Proxycore is not loaded
