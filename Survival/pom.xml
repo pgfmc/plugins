@@ -81,6 +81,13 @@
 		</dependency>
 		
 		<dependency>
+			<groupId>net.pgfmc</groupId>
+			<artifactId>proxycore-spigot</artifactId>
+			<version>8</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
     		<groupId>net.wesjd</groupId>
     		<artifactId>anvilgui</artifactId>
     		<version>1.9.4-SNAPSHOT</version>
