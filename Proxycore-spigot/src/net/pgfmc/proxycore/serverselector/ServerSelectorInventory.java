@@ -39,12 +39,12 @@ public class ServerSelectorInventory extends BaseInventory {
 		super(InventoryType.HOPPER, "Server Selector");
 		
 		/**
-		 * The hopper is filled in left to right.
+		 * The hopper is filled in right to left.
 		 *
 		 * This integer is used to keep track of where
 		 * to place the next button.
 		 */
-		int i = 0;
+		int i = 4;
 		
 		/**
 		 * Registered servers. May be online or offline.
@@ -84,7 +84,7 @@ public class ServerSelectorInventory extends BaseInventory {
 					
 					player.sendMessage(ChatColor.RED + "You are already connected to Survival.");
 					
-					playerdata.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1F, 0F);
+					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 					
 				});
 				
@@ -123,14 +123,14 @@ public class ServerSelectorInventory extends BaseInventory {
 					
 					player.sendMessage(ChatColor.RED + "Survival is offline.");
 					
-					playerdata.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1F, 0F);
+					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 					
 				});
 				
 			}
 			
 			servers.remove("survival");
-			i++;
+			i--;
 			
 		}
 		
@@ -153,7 +153,7 @@ public class ServerSelectorInventory extends BaseInventory {
 					
 					player.sendMessage(ChatColor.RED + "You are already connected to Test.");
 					
-					playerdata.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1F, 0F);
+					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 					
 				});
 				
@@ -192,14 +192,14 @@ public class ServerSelectorInventory extends BaseInventory {
 					
 					player.sendMessage(ChatColor.RED + "Test is offline.");
 					
-					playerdata.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1F, 0F);
+					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 					
 				});
 				
 			}
 			
 			servers.remove("test");
-			i++;
+			i--;
 			
 		}
 		
@@ -210,7 +210,7 @@ public class ServerSelectorInventory extends BaseInventory {
 		{
 			if (Main.thisServerName != null && Main.thisServerName.equals("past")) // Connected
 			{
-				setItem(i, Material.LEATHER_HELMET)
+				setItem(i, Material.DIRT_PATH)
 				.n(ChatColor.GREEN + blackStarIcon + " Past Seasons (Connected)")
 				.l(Arrays.asList(ChatColor.GRAY + "You are connected to Past Seasons.",
 						ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Celebrate PGF's 5th anniversary",
@@ -221,13 +221,13 @@ public class ServerSelectorInventory extends BaseInventory {
 					
 					player.sendMessage(ChatColor.RED + "You are already connected to Survival.");
 					
-					playerdata.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1F, 0F);
+					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 					
 				});
 				
 			} else if (servers.get("past") == null || servers.get("past") == true) // Online
 			{
-				setItem(i, Material.LEATHER_HELMET)
+				setItem(i, Material.DIRT_PATH)
 				.n(ChatColor.GREEN + "Past Seasons")
 				.l(Arrays.asList(ChatColor.GRAY + "Click to join Past Seasons.",
 						ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Celebrate PGF's 5th anniversary",
@@ -252,8 +252,8 @@ public class ServerSelectorInventory extends BaseInventory {
 			} else // Offline
 			{
 				setItem(i, Material.RED_STAINED_GLASS)
-				.n(ChatColor.DARK_RED + "Past - Offline")
-				.l(Arrays.asList(ChatColor.GRAY + "Click to join Past.",
+				.n(ChatColor.DARK_RED + "Past Seasons - Offline")
+				.l(Arrays.asList(ChatColor.GRAY + "Click to join Past Seasons.",
 						ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Celebrate PGF's 5th anniversary",
 						 blackRightPointingPointerIcon + " " + "by exploring past seasons."));
 				
@@ -262,14 +262,14 @@ public class ServerSelectorInventory extends BaseInventory {
 					
 					player.sendMessage(ChatColor.RED + "Past Seasons is offline.");
 					
-					playerdata.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1F, 0F);
+					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 					
 				});
 				
 			}
 			
 			servers.remove("past");
-			i++;
+			i--;
 			
 		}
 		
@@ -278,6 +278,7 @@ public class ServerSelectorInventory extends BaseInventory {
 		 */
 		for (final String server : servers.keySet())
 		{
+			if (i == 1) break; // max 3 servers
 			if (!playerdata.hasPermission("net.pgfmc.proxycore.connect." + server)) continue;
 			
 			final String serverNamePronounified = server.substring(0, 1).toUpperCase() + server.substring(1);
@@ -293,7 +294,7 @@ public class ServerSelectorInventory extends BaseInventory {
 					
 					player.sendMessage(ChatColor.RED + "You are already connected to " + serverNamePronounified + ".");
 					
-					playerdata.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1F, 0F);
+					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 					
 				});
 				
@@ -330,13 +331,13 @@ public class ServerSelectorInventory extends BaseInventory {
 					
 					player.sendMessage(ChatColor.RED + serverNamePronounified + " is offline.");
 					
-					playerdata.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1F, 0F);
+					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 					
 				});
 				
 			}
 			
-			i++;
+			i--;
 			
 		}
 		
