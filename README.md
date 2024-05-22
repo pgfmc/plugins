@@ -1,5 +1,15 @@
+
+
+
+
+
+
 # plugins
 Has all of the plugins used on the PGF server.
+
+use build.sh to build the plugins automatically. outputs plugins to the target folder in the repo.
+
+
 ## Core
 Implements core (heh heh) functionality for the PGF server.
 Contains some simple commands, a custom perms manager, and multiple small frameworks.
@@ -17,13 +27,3 @@ Contains some simple commands, a custom perms manager, and multiple small framew
   
   Once you have a PlayerData object, you can use:  
   `pd.setData(String name, Object data)` to set `data` to 
-
-# Build
-How to build the plugins
-
-* Clone the repository
-* Create new folder "build" in the parent directory
-* Copy build.sh into the new folder "build"
-* Run build.sh (Bash)
-
-(!) Create system variable $PLUGIN_HOME for the parent directory of the cloned repository (!)
