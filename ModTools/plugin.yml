@@ -13,59 +13,51 @@ commands:
   gmc:
     description: Change the player gamemode to creative
     usage: /<command> [player]
-    permission: pgf.admin.gamemode.creative
+    permission: net.pgfmc.modtools.gamemode.creative
   gms:
     description: Change the player gamemode to survival
     usage: /<command> [player]
-    permission: pgf.admin.gamemode.survival
+    permission: net.pgfmc.modtools.gamemode.survival
   gma:
     description: Change the player gamemode to adventure
     usage: /<command> [player]
-    permission: pgf.admin.gamemode.adventure
+    permission: net.pgfmc.modtools.gamemode.adventure
   gmsp:
     description: Change the player gamemode to spectator
     usage: /<command> [player]
-    permission: pgf.admin.gamemode.spectator
+    permission: net.pgfmc.modtools.gamemode.spectator
   vanish:
     description: Sets the player invisible
     usage: /<command>
     aliases: [v, invis]
-    permission: pgf.admin.vanish
+    permission: net.pgfmc.modtools.vanish
   fly:
     description: Sets the player in flight
     usage: /<command>
-    permission: pgf.cmd.fly
+    permission: net.pgfmc.modtools.fly
   god:
     description: Sets the player to a god-like state
     usage: /<command>
-    permission: pgf.admin.god
+    permission: net.pgfmc.modtools.god
   sudo:
     description: Forcefully execute a chat message or command (include slash for commands)
     usage: /<command> [player] [msg or /cmd]
-    permission: pgf.admin.sudo
+    permission: net.pgfmc.modtools.sudo
   heal:
     description: Heal yourself or another player
     usage: /<command> [player]
-    permission: pgf.cmd.heal
+    permission: net.pgfmc.modtools.heal
   debug:
     usage: /<command>
     description: Toggles debug mode for this player.
-    permission: pgf.admin.debug
+    permission: net.pgfmc.modtools.debug
   invsee:
     usage: /<command> [player] [(optional) echest]
     description: See inside a player's inventory
-    permission: pgf.admin.invsee
+    permission: net.pgfmc.modtools.invsee
   powertool:
     usage: /<command> [command without slash]
     description: Bind a command to any tool
     aliases: [pt, pwt]
-    permission: pgf.admin.powertool
+    permission: net.pgfmc.modtools.powertool
     
-permissions:
-  pgf.admin.gamemode.*:
-    description: Gamemode wildcard
-    children:
-      pgf.admin.gamemode.creative: true
-      pgf.admin.gamemode.survival: true
-      pgf.admin.gamemode.adventure: true
-      pgf.admin.gamemode.spectator: true

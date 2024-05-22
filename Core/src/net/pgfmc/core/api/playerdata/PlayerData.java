@@ -148,7 +148,7 @@ public final class PlayerData extends PlayerDataExtra {
 	public String getDisplayName()
 	{
 		// Returns their regular Minecraft user name if the player isn't a donator
-		if (!hasPermission("pgf.cmd.donator.nick")) return getName();
+		if (!hasPermission("net.pgfmc.core.nick")) return getName();
 		
 		// Returns their nickname, but with no color codes or symbols (or their regular user name if no nickname)
 		return ChatColor.stripColor((String) Optional.ofNullable(getData("nick"))

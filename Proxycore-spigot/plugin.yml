@@ -12,5 +12,5 @@ commands:
   connect:
     usage: /<command> [server] [player]
     description: Connect to another server
-    permission: net.pgfmc.cmd.server
+    permission: net.pgfmc.proxycore.connect
     aliases: [server, goto]
