@@ -9,12 +9,10 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.InventoryType;
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
-
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.proxycore.Main;
+import net.pgfmc.proxycore.PluginMessage.PluginMessageType;
 
 /**
  * This is the server selector inventory for ConnectCommand.
@@ -72,7 +70,7 @@ public class ServerSelectorInventory extends BaseInventory {
 		 */
 		if (playerdata.hasPermission("net.pgfmc.proxycore.connect.survival"))
 		{
-			if (Main.thisServerName != null && Main.thisServerName.equals("survival")) // Connected
+			if (Main.getServerName() != null && Main.getServerName().equals("survival")) // Connected
 			{
 				setItem(i, Material.GRASS_BLOCK)
 				.n(ChatColor.GREEN + blackStarIcon + " Survival (Connected)")
@@ -102,10 +100,7 @@ public class ServerSelectorInventory extends BaseInventory {
 					
 					Main.plugin.getLogger().info("Attempting to connect " + playerdata.getName() + " to Survival.");
 					
-					final ByteArrayDataOutput out = ByteStreams.newDataOutput();
-					out.writeUTF("Connect");
-					out.writeUTF("survival");
-					player.sendPluginMessage(Main.plugin, "pgf:main", out.toByteArray());
+					PluginMessageType.CONNECT.send(player, "survival");
 					
 					playerdata.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1F, 2F);
 					
@@ -141,7 +136,7 @@ public class ServerSelectorInventory extends BaseInventory {
 		 */
 		if (playerdata.hasPermission("net.pgfmc.proxycore.connect.test"))
 		{
-			if (Main.thisServerName != null && Main.thisServerName.equals("test")) // Connected
+			if (Main.getServerName() != null && Main.getServerName().equals("test")) // Connected
 			{
 				setItem(i, Material.COMMAND_BLOCK)
 				.n(ChatColor.GREEN + blackStarIcon + " Test (Connected)")
@@ -171,10 +166,7 @@ public class ServerSelectorInventory extends BaseInventory {
 					
 					Main.plugin.getLogger().info("Attempting to connect " + playerdata.getName() + " to Test.");
 					
-					final ByteArrayDataOutput out = ByteStreams.newDataOutput();
-					out.writeUTF("Connect");
-					out.writeUTF("test");
-					player.sendPluginMessage(Main.plugin, "pgf:main", out.toByteArray());
+					PluginMessageType.CONNECT.send(player, "test");
 					
 					playerdata.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1F, 2F);
 					
@@ -208,7 +200,7 @@ public class ServerSelectorInventory extends BaseInventory {
 		 */
 		if (playerdata.hasPermission("net.pgfmc.proxycore.connect.past"))
 		{
-			if (Main.thisServerName != null && Main.thisServerName.equals("past")) // Connected
+			if (Main.getServerName() != null && Main.getServerName().equals("past")) // Connected
 			{
 				setItem(i, Material.DIRT_PATH)
 				.n(ChatColor.GREEN + blackStarIcon + " Past Seasons (Connected)")
@@ -240,10 +232,7 @@ public class ServerSelectorInventory extends BaseInventory {
 					
 					Main.plugin.getLogger().info("Attempting to connect " + playerdata.getName() + " to Past Seasons.");
 					
-					final ByteArrayDataOutput out = ByteStreams.newDataOutput();
-					out.writeUTF("Connect");
-					out.writeUTF("past");
-					player.sendPluginMessage(Main.plugin, "pgf:main", out.toByteArray());
+					PluginMessageType.CONNECT.send(player, "past");
 					
 					playerdata.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1F, 2F);
 					
@@ -283,7 +272,7 @@ public class ServerSelectorInventory extends BaseInventory {
 			
 			final String serverNamePronounified = server.substring(0, 1).toUpperCase() + server.substring(1);
 			
-			if (Main.thisServerName != null && Main.thisServerName.equals(server)) // Connected
+			if (Main.getServerName() != null && Main.getServerName().equals(server)) // Connected
 			{
 				setItem(i, Material.SAND)
 				.n(ChatColor.GREEN + blackStarIcon + " " + serverNamePronounified + " (Connected)")
@@ -311,10 +300,7 @@ public class ServerSelectorInventory extends BaseInventory {
 					
 					Main.plugin.getLogger().info("Attempting to connect " + playerdata.getName() + " to " + serverNamePronounified + ".");
 					
-					final ByteArrayDataOutput out = ByteStreams.newDataOutput();
-					out.writeUTF("Connect");
-					out.writeUTF(server);
-					player.sendPluginMessage(Main.plugin, "pgf:main", out.toByteArray());
+					PluginMessageType.CONNECT.send(player, server);
 					
 					playerdata.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1F, 2F);
 					

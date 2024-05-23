@@ -6,23 +6,17 @@ import java.util.Map;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.messaging.PluginMessageListener;
 
-import com.google.common.io.ByteArrayDataInput;
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
-
-import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.proxycore.PluginMessage.PluginMessageType;
+import net.pgfmc.proxycore.listeners.ConnectResponse;
 import net.pgfmc.proxycore.serverselector.ConnectCommand;
 import net.pgfmc.proxycore.util.Logger;
 
-public class Main extends JavaPlugin implements PluginMessageListener, Logger {
+public class Main extends JavaPlugin {
 	
-	public static String thisServerName;
+	private static String thisServerName = null;
 	public static Main plugin;
 	/**
 	 * Registered servers' names and if they are currently online
@@ -39,164 +33,28 @@ public class Main extends JavaPlugin implements PluginMessageListener, Logger {
 		/**
 		 * Register Listeners
 		 */
-		getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-		getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this);
-		getServer().getMessenger().registerOutgoingPluginChannel(this, "pgf:main");
-		getServer().getMessenger().registerIncomingPluginChannel(this, "pgf:main", this);
+		new ConnectResponse(PluginMessageType.CONNECT);
+		//**
 		
 		/**
 		 * Register Commands
 		 */
 		getServer().getPluginCommand("connect").setExecutor(new ConnectCommand());
+		//**
 		
 		/**
-		 * Initialize and loop methods
+		 * Initialize methods and loops
 		 */
 		loopForPluginMessages();
-		
+		//**
 	}
 	
 	@Override
 	public void onDisable () {}
-
-	/**
-	 * Plugin Message listener
-	 */
-	@Override
-	public void onPluginMessageReceived(String channel, Player player, byte[] message) {
-		Logger.debug("Received a plugin message: ");
-		Logger.debug("Identifier: " + channel);
-		Logger.debug("Player: " + player.getName());
-		
-		/**
-		 * BungeeCord (bungeecord:main) is a Channel Identifier
-		 * that is automatically handled by Velocity.
-		 * 
-		 * ------------------
-		 * 
-		 * [GetServers] Response
-		 * 
-		 * Returns a csv list of the registered servers on the proxy
-		 * 
-		 * PLUGIN MESSAGE FORM (BungeeCord): GetServers, CSV server names
-		 */
-		if (channel.equals("BungeeCord") || channel.equals("bungeecord:main"))
-		{
-			final ByteArrayDataInput in = ByteStreams.newDataInput(message);
-			final String subchannel = in.readUTF();
-			
-			if (subchannel.equals("GetServers"))
-			{				
-				final String serverNamesCSV = in.readUTF();
-				
-				Logger.debug("Subchannel: " + subchannel);
-				Logger.debug("CSV Server Names: " + serverNamesCSV);
-				
-				// CSV to Array
-				final String[] servers = serverNamesCSV.toLowerCase().split(", ");
-				final Map<String, Boolean> newRegisteredServers = new HashMap<>();
-				
-				for (final String server : servers)
-				{
-					newRegisteredServers.put(server, registeredServers.getOrDefault(server, Boolean.TRUE));
-				}
-				
-				/**
-				 * Clear and re-add servers in case the
-				 * registered servers in the velocity.toml changed.
-				 */
-				registeredServers.clear();
-				registeredServers.putAll(newRegisteredServers);
-				
-				return;
-			}
-			
-			if (subchannel.equals("GetServer"))
-			{
-				final String serverName = in.readUTF();
-				
-				Logger.debug("This Server Name: " + serverName);
-				
-				thisServerName = serverName;
-				
-				return;
-			}
-			
-			
-			
-			return;
-		}
-		
-		if (!channel.equals("pgf:main")) return;
-		
-		final PlayerData playerdata = PlayerData.from(player);
-		final ByteArrayDataInput in = ByteStreams.newDataInput(message);
-		final String subchannel = in.readUTF();
-		
-		Logger.debug("Subchannel: " + subchannel);
-		
-		/**
-		 * [ConnectReponse]
-		 * 
-		 * The ConnectResponse subchannel is used for responding to
-		 * the Connect subchannel. It says if the connection attempt was successful or not.
-		 * 
-		 * PLUGIN MESSAGE FORM (pgf:main): ConnectResponse, <server name>, <true/false>
-		 */
-		if (subchannel.equals("ConnectResponse"))
-		{
-			if (player == null || !player.isOnline())
-			{
-				Logger.warn("Received invalid form in subchannel: ConnectResponse");
-				Logger.warn("PLUGIN MESSAGE FORM (pgf:main): ConnectResponse, <attempted server name>, <True/False>");
-				
-				return;
-			}
-			
-			final String attemptedServerName = in.readUTF();
-			final String resultString = in.readUTF();
-			final boolean result = Boolean.parseBoolean(resultString);
-			
-			if (result)
-			{
-				Logger.debug("Successfully connected " + " to server: " + attemptedServerName);
-				
-				player.sendMessage(ChatColor.GREEN + "Poof!");
-				playerdata.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 0.2F, 1.0F);
-			} else
-			{
-				Logger.warn("This is the value of <True/False>: " + resultString);
-				Logger.warn("Failed to connect to server: " + attemptedServerName);
-				
-				player.sendMessage(ChatColor.RED + "Failed to connect to " + attemptedServerName + ".");
-				playerdata.playSound(Sound.ENTITY_VILLAGER_NO);
-			}
-			
-			return;
-		}
-		
-		/**
-    	 * [PingServerResponse]
-    	 * 
-    	 * The PingServerResponse says if the proxy could ping the specified server.
-    	 * 
-    	 * PLUGIN MESSAGE FORM (pgf:main): PingServerResponse, <server name>, <true/false>
-    	 */
-		if (subchannel.equals("PingServerResponse"))
-		{
-			final String serverName = in.readUTF();
-			final Boolean isOnline = Boolean.parseBoolean(in.readUTF());
-			
-			Logger.debug("Server Name: " + serverName);
-			Logger.debug("Online: " + isOnline);
-			
-			if (serverName == null || isOnline == null) return;
-			
-			registeredServers.put(serverName, isOnline);
-			
-			return;
-		}		
-		
+	
+	public static String getServerName()
+	{
+		return thisServerName;
 	}
 	
 	/**
@@ -224,7 +82,7 @@ public class Main extends JavaPlugin implements PluginMessageListener, Logger {
 				// The randomly selected online player to send the Plugin Message through
 				final Player player = (Player) onlinePlayers.toArray()[random.nextInt(onlinePlayers.size())];
 				
-				getServers(); // Doesn't require a player, but cannot receive the response without an online player
+				getServers(player); // Doesn't require a player, but cannot receive the response without an online player
 				pingServer(player); // Doesn't require a player, but cannot receive the response without an online player
 				
 				// Don't need to check this server's name again
@@ -245,12 +103,50 @@ public class Main extends JavaPlugin implements PluginMessageListener, Logger {
 			 * PLUGIN MESSAGE FORM (BungeeCord): GetServers
 			 * 
 			 */
-			private final void getServers()
+			private final void getServers(final Player player)
 			{
-				final ByteArrayDataOutput out = ByteStreams.newDataOutput();
-				out.writeUTF("GetServers");
-				
-				Bukkit.getServer().sendPluginMessage(Main.plugin, "BungeeCord", out.toByteArray());
+				PluginMessageType.GET_SERVERS.send(player)
+					.whenComplete((args, exception) -> {
+						if (exception != null)
+						{
+							Logger.error("Exception occurred for plugin message GET_SERVERS:");
+							exception.printStackTrace();
+							
+							return;
+						}
+						/**
+						 * BungeeCord (bungeecord:main) is a Channel Identifier
+						 * that is automatically handled by Velocity.
+						 * 
+						 * ------------------
+						 * 
+						 * [GetServers] Response
+						 * 
+						 * Returns a csv list of the registered servers on the proxy
+						 * 
+						 * PLUGIN MESSAGE FORM (BungeeCord): GetServers, CSV server names
+						 */
+						final String serverNamesCSV = args.get(1);
+						
+						Logger.debug("CSV Server Names: " + serverNamesCSV);
+						
+						// CSV to Array
+						final String[] servers = serverNamesCSV.toLowerCase().split(", ");
+						final Map<String, Boolean> newRegisteredServers = new HashMap<>();
+						
+						for (final String server : servers)
+						{
+							newRegisteredServers.put(server, registeredServers.getOrDefault(server, Boolean.TRUE));
+						}
+						
+						/**
+						 * Clear and re-add servers in case the
+						 * registered servers in the velocity.toml changed.
+						 */
+						registeredServers.clear();
+						registeredServers.putAll(newRegisteredServers);
+						
+					});
 				
 			}
 			
@@ -268,11 +164,33 @@ public class Main extends JavaPlugin implements PluginMessageListener, Logger {
 			{
 				for (final String server : Main.registeredServers.keySet())
 				{
-					final ByteArrayDataOutput out = ByteStreams.newDataOutput();
-					out.writeUTF("PingServer");
-					out.writeUTF(server);
-					
-					player.sendPluginMessage(Main.plugin, "pgf:main", out.toByteArray());
+					PluginMessageType.PING_SERVER.send(player, server)
+						.whenComplete((args, exception) -> {
+							if (exception != null)
+							{
+								Logger.error("Exception occurred for plugin message PING_SERVER:");
+								exception.printStackTrace();
+								
+								return;
+							}
+							/**
+					    	 * [PingServerResponse]
+					    	 * 
+					    	 * The PingServerResponse says if the proxy could ping the specified server.
+					    	 * 
+					    	 * PLUGIN MESSAGE FORM (pgf:main): PingServerResponse, <server name>, <true/false>
+					    	 */
+							final String serverName = args.get(1);
+							final Boolean isOnline = Boolean.parseBoolean(args.get(2));
+							
+							Logger.debug("Server Name: " + serverName);
+							Logger.debug("Online: " + isOnline);
+							
+							if (serverName == null || isOnline == null) return;
+							
+							registeredServers.put(serverName, isOnline);
+							
+						});
 					
 				}
 				
@@ -289,10 +207,23 @@ public class Main extends JavaPlugin implements PluginMessageListener, Logger {
 			 */
 			private final void getServer(final Player player)
 			{
-				final ByteArrayDataOutput out = ByteStreams.newDataOutput();
-				out.writeUTF("GetServer");
-				
-				player.sendPluginMessage(Main.plugin, "BungeeCord", out.toByteArray());
+				PluginMessageType.GET_SERVER.send(player)
+					.whenComplete((args, exception) -> {
+						if (exception != null)
+						{
+							Logger.error("Exception occurred for plugin message GET_SERVER:");
+							exception.printStackTrace();
+							
+							return;
+						}
+						
+						final String serverName = args.get(1);
+						
+						Logger.debug("This Server Name: " + serverName);
+						
+						thisServerName = serverName;
+						
+					});
 				
 			}
 			
