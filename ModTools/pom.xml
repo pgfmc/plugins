@@ -19,7 +19,7 @@
 		
 		<dependency>
 			<groupId>net.pgfmc</groupId>
-			<artifactId>core</artifactId>
+			<artifactId>Core</artifactId>
 			<version>9</version>
 			<scope>provided</scope>
 		</dependency>
