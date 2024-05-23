@@ -37,7 +37,7 @@ import net.pgfmc.proxycore.util.Logger;
  * 
  * This plugin listens for and sends packets/plugin messages on the pgf:main Channel Identifier.
  */
-public class Main implements Logger {
+public class Main {
 	
 	/**
 	 * The Channel Identifier for this Velocity plugin.
@@ -58,7 +58,7 @@ public class Main implements Logger {
      */
     @Inject
     public Main(ProxyServer proxy, org.slf4j.Logger logger, @DataDirectory Path dataDirectory) {
-    	this.plugin = this;
+    	plugin = this;
         this.proxy = proxy;
         this.logger = logger;
         this.dataDirectory = dataDirectory;
@@ -93,6 +93,7 @@ public class Main implements Logger {
     @Subscribe
     public void onPluginMessageFromPlugin(PluginMessageEvent event)
     {
+    	Logger.debug("------------------------------");
     	Logger.debug("Received a plugin message: ");
     	Logger.debug("Identifier: " + event.getIdentifier());
     	Logger.debug("Source: " + event.getSource());
@@ -119,12 +120,11 @@ public class Main implements Logger {
     	 * 
     	 * ---------------------
     	 * 
-    	 * [ConnectReponse]
+    	 * [Connect] Reponse
     	 * 
-    	 * The ConnectResponse subchannel is used for responding to
-    	 * the Connect subchannel. It says if the connection attempt was successful or not.
+    	 * The Connect response subchannel says if the connection attempt was successful or not.
     	 * 
-    	 * PLUGIN MESSAGE FORM (pgf:main): ConnectResponse, <server name>, <true/false>
+    	 * PLUGIN MESSAGE FORM (pgf:main): Connect, <server name>, <true/false>
     	 */
     	if (subchannel.equals("Connect"))
     	{
@@ -152,7 +152,7 @@ public class Main implements Logger {
 							Logger.debug("Connected " + player.getUsername() + " to server: " + serverName);
 							
 							final ByteArrayDataOutput out = ByteStreams.newDataOutput();
-			    			out.writeUTF("ConnectResponse");
+			    			out.writeUTF("Connect");
 			    			out.writeUTF(serverName);
 			    			out.writeUTF("true"); // Success
 			    			
@@ -170,7 +170,7 @@ public class Main implements Logger {
 							exception.printStackTrace();
 							
 							final ByteArrayDataOutput out = ByteStreams.newDataOutput();
-							out.writeUTF("ConnectResponse");
+							out.writeUTF("Connect");
 							out.writeUTF(serverName);
 			    			out.writeUTF("false"); // Failure
 			    			
@@ -192,7 +192,7 @@ public class Main implements Logger {
     			Logger.warn("Could not connect to server: " + serverName);
     			
     			final ByteArrayDataOutput out = ByteStreams.newDataOutput();
-				out.writeUTF("ConnectResponse");
+				out.writeUTF("Connect");
 				out.writeUTF(serverName);
     			out.writeUTF("false");
     			
@@ -204,14 +204,14 @@ public class Main implements Logger {
     	}
     	
     	/**
-    	 * [PingServer] and [PingServerResponse]
+    	 * [PingServer] and [PingServer] Response
     	 * 
     	 * The PingServer subchannel is used for checking if a server is online and reachable by the proxy.
     	 * 
-    	 * It returns a PingServerResponse that says if it could ping the server.
+    	 * The response says if it could ping the server.
     	 * 
     	 * PLUGIN MESSAGE FORM (pgf:main): PingServer, <server name>
-    	 * PLUGIN MESSAGE FORM (pgf:main): PingServerResponse, <server name>, <true/false>
+    	 * PLUGIN MESSAGE FORM (pgf:main): PingServer, <server name>, <true/false>
     	 */
     	if (subchannel.equals("PingServer"))
     	{
@@ -246,7 +246,7 @@ public class Main implements Logger {
     				} else
     				{
     					final ByteArrayDataOutput out = ByteStreams.newDataOutput();
-    					out.writeUTF("PingServerResponse");
+    					out.writeUTF("PingServer");
     					out.writeUTF(serverName);
     	    			out.writeUTF(isOnline.toString());
     	    			
@@ -312,12 +312,6 @@ public class Main implements Logger {
     			Logger.warn("Could not find server: " + serverName);
     		}
     		
-    	}
-    	
-    	if (subchannel.equals("ConnectOther"))
-    	{
-    		// TODO make connect other command
-    		return;
     	}
     	
     }
