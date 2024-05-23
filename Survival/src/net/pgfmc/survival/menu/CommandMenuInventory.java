@@ -401,7 +401,7 @@ public class CommandMenuInventory implements InventoryHolder {
 			 * XX [] [] [] [] [] [] [] []
 			 * [] [] [] [] [] [] [] [] []
 			 */
-			if (playerdata.hasPermission("net.pgfmc.survival.connect"))
+			if (playerdata.hasPermission("net.pgfmc.proxycore.connect"))
 			{
 				setItem(9, Material.COMPASS)
 					.n(ChatColor.GOLD + "Server Selector")
