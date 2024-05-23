@@ -6,3 +6,4 @@
 .metadata/version.ini
 /.metadata/
 target
+test_upload.sh

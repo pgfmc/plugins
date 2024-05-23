@@ -91,7 +91,7 @@ public class Main {
      * @param event
      */
     @Subscribe
-    public void onPluginMessageFromPlugin(PluginMessageEvent event)
+    public void onPluginMessageFromPlugin(PluginMessageEvent event) 
     {
     	Logger.debug("------------------------------");
     	Logger.debug("Received a plugin message: ");

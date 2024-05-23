@@ -28,11 +28,11 @@ public class InventoryPressEvent implements Listener {
 		if (e.getClickedInventory() == null || e.getInventory() == null) return;
 		
 		
-		if (e.getInventory().getHolder() instanceof BaseInventory) {
-			if (disallowedActions.contains(e.getAction())) {
-				e.setCancelled(true);
-			}
-		}
+		//if (e.getInventory().getHolder() instanceof BaseInventory) {
+			//if (disallowedActions.contains(e.getAction())) {
+				//e.setCancelled(true);
+			//}
+		//}
 		
 		if (e.getClickedInventory().getHolder() instanceof BaseInventory && e.getWhoClicked() instanceof Player) {
 			e.setCancelled(true);
@@ -40,6 +40,7 @@ public class InventoryPressEvent implements Listener {
 		}
 	}
 	
+    @EventHandler
 	public void onslideEvent(InventoryDragEvent e) {
 		if (e.getInventory().getHolder() instanceof BaseInventory) {
 			e.setCancelled(true);
