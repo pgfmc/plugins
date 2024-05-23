@@ -4,7 +4,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	
-	<artifactId>Proxycore-spigot</artifactId>
+	<artifactId>Proxycore-Spigot</artifactId>
 	<packaging>jar</packaging>
 	<parent>
 		<groupId>net.pgfmc</groupId>
@@ -17,7 +17,7 @@
 		
 		<dependency>
 			<groupId>net.pgfmc</groupId>
-			<artifactId>core</artifactId>
+			<artifactId>Core</artifactId>
 			<version>9</version>
 			<scope>provided</scope>
 		</dependency>
