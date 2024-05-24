@@ -1,4 +1,4 @@
-package net.pgfmc.survival.menu.home;
+package net.pgfmc.survival.menu.teleports.home;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +14,7 @@ import net.pgfmc.core.api.inventory.extra.Butto;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.ItemWrapper;
 import net.pgfmc.survival.cmd.home.Homes;
+import net.pgfmc.survival.menu.teleports.Teleports;
 
 public class HomeDeleteListInventory extends ListInventory<String> {
 	
@@ -26,7 +27,7 @@ public class HomeDeleteListInventory extends ListInventory<String> {
 		this.pd = pd;
 		this.homes = Homes.getHomes(pd);
 		
-		setBack(0, new HomeHomepageInventory(pd).getInventory());
+		setBack(0, new Teleports(pd).getInventory());
 	}
 
 	@Override
@@ -53,7 +54,7 @@ public class HomeDeleteListInventory extends ListInventory<String> {
 		
 		return (player, event) -> {
 			player.performCommand("delhome " + entry);
-			player.openInventory(new HomeHomepageInventory(pd).getInventory());
+			player.openInventory(new Teleports(pd).getInventory());
 		};
 		
 	}
@@ -62,5 +63,4 @@ public class HomeDeleteListInventory extends ListInventory<String> {
 	protected ItemStack toItem(String entry) {
 		return new ItemWrapper(Material.PAPER).n(ChatColor.GOLD + entry).gi();
 	}
-
 }
