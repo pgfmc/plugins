@@ -1,5 +1,7 @@
 package net.pgfmc.survival.menu.teleports;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
@@ -13,9 +15,14 @@ import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.request.Request;
 import net.pgfmc.core.api.request.RequestType;
 import net.pgfmc.core.api.request.inv.RequestListInventory;
+import net.pgfmc.survival.Main;
 import net.pgfmc.survival.menu.CommandMenuInventory;
 import net.pgfmc.survival.menu.back.BackConfirmInventory;
+import net.pgfmc.survival.menu.teleports.home.HomeDeleteListInventory;
+import net.pgfmc.survival.menu.teleports.home.HomeSelectListInventory;
 import net.pgfmc.survival.menu.tpa.TpaListInventory;
+import net.wesjd.anvilgui.AnvilGUI;
+import net.wesjd.anvilgui.AnvilGUI.Builder;
 
 public class Teleports extends BaseInventory {
     
@@ -27,7 +34,11 @@ public class Teleports extends BaseInventory {
         final int tpaMenu = 6;
         final int back = 16;
         final int requestMenu = 24;
+        final int spawnWarp = 11;
 
+        final int setHome = 4;
+        final int tpHome = 13;
+        final int removeHome = 22;
 
         // Code for TPA MENU
         // 
@@ -127,11 +138,50 @@ public class Teleports extends BaseInventory {
         //
         //
 
+        setAction(spawnWarp, (player, event) -> {
+            playerdata.getPlayer().performCommand("warp spawn");
+        });
 
+        setItem(spawnWarp, Material.CHERRY_SAPLING).n(ChatColor.RED + "Warp to Spawn");
 
-
-
-
-         
+		
+		setAction(tpHome, (player, event) -> {
+			player.openInventory(new HomeSelectListInventory(playerdata).getInventory());
+		});
+		
+		setItem(tpHome, Material.ENDER_PEARL).n(ChatColor.LIGHT_PURPLE + "Go to Home");
+		
+		setAction(setHome, (player, event) -> {
+			Builder builder = new AnvilGUI.Builder();
+			
+			builder.onClose(stateSnapshot -> {});
+			
+			builder.onClick((slot, stateSnapshot) -> {
+		        if (slot != AnvilGUI.Slot.OUTPUT) return Collections.emptyList(); // Do nothing
+		        
+		        final String homeName = stateSnapshot.getText();
+		        stateSnapshot.getPlayer().performCommand("sethome " + homeName);
+		        
+		        return Arrays.asList(AnvilGUI.ResponseAction.run(new Runnable() {
+					@Override
+					public void run() {
+						player.openInventory(new Teleports(playerdata).getInventory());
+						
+					}}));
+		    });
+			
+			builder.text("Enter name").title("Set Home").plugin(Main.plugin);
+			builder.open(player);
+			
+		});
+		
+		setItem(setHome, Material.RED_BED).n(ChatColor.GREEN + "Set Home");
+		
+		setAction(removeHome, (player, event) -> {
+			player.openInventory(new HomeDeleteListInventory(playerdata).getInventory());
+		});
+		
+		setItem(removeHome, Material.BARRIER).n(ChatColor.RED + "Delete Home");
+		
     }
 }
