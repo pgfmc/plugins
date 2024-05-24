@@ -6,7 +6,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 import net.pgfmc.core.api.inventory.ConfirmInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
-import net.pgfmc.survival.menu.CommandMenuInventory;
+import net.pgfmc.survival.menu.teleports.Teleports;
 
 public class BackConfirmInventory extends ConfirmInventory {
 	
@@ -28,7 +28,7 @@ public class BackConfirmInventory extends ConfirmInventory {
 
 	@Override
 	protected void cancelAction(Player p, InventoryClickEvent e) {
-		p.openInventory(new CommandMenuInventory(pd).getInventory());
+		p.openInventory(new Teleports(pd).getInventory());
 		
 	}
 

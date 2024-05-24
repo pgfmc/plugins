@@ -8,9 +8,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.InventoryView;
 
 import net.pgfmc.core.api.inventory.BaseInventory;
+import net.pgfmc.core.api.playerdata.PlayerData;
 
 public class InventoryPressEvent implements Listener {
 	
@@ -26,18 +31,19 @@ public class InventoryPressEvent implements Listener {
 	public void onClick(InventoryClickEvent e) {
 		
 		if (e.getClickedInventory() == null || e.getInventory() == null) return;
-		
-		
-		//if (e.getInventory().getHolder() instanceof BaseInventory) {
-			//if (disallowedActions.contains(e.getAction())) {
-				//e.setCancelled(true);
-			//}
-		//}
-		
-		if (e.getClickedInventory().getHolder() instanceof BaseInventory && e.getWhoClicked() instanceof Player) {
-			e.setCancelled(true);
+
+        if (!(e.getWhoClicked() instanceof Player)) {
+            return;
+        }
+        Player player = (Player) e.getWhoClicked();
+        PlayerData pd = PlayerData.from(player);
+
+        if ((e.getClickedInventory().getHolder() instanceof BaseInventory)) {
+            e.setCancelled(true);
 			((BaseInventory) e.getClickedInventory().getHolder()).press(e.getSlot(), e);
-		}
+        } else if (pd.hasTag("reduceInventory") && disallowedActions.contains(e.getAction())) {
+            e.setCancelled(true);
+        }
 	}
 	
     @EventHandler
@@ -47,4 +53,33 @@ public class InventoryPressEvent implements Listener {
 			return;
 		}
 	}
+
+    @EventHandler
+    public void onCloseEvent(InventoryCloseEvent e) {
+        if (!(e.getPlayer() instanceof Player)) {
+            return;
+        }
+
+        PlayerData pd = PlayerData.from((Player) e.getPlayer());
+        if (e.getInventory().getHolder() instanceof BaseInventory) {
+            pd.removeTag("reduceInventory");
+        }
+    }
+
+    @EventHandler
+    public void onOpenEvent(InventoryOpenEvent e) {
+        if (!(e.getPlayer() instanceof Player)) {
+            return;
+        }
+
+        PlayerData pd = PlayerData.from((Player) e.getPlayer());
+        if (e.getInventory().getHolder() instanceof BaseInventory) {
+            pd.addTag("reduceInventory");
+        }
+    }
+
+
+
+
+    
 }
