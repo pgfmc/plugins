@@ -1,5 +1,5 @@
 name: PGF-Core
-version: 9.0.1
+version: 13.0.0
 api-version: 1.20
 authors: [bk, CrimsonDart]
 website: play.pgfmc.net
@@ -45,4 +45,8 @@ commands:
     description: Broadcast to the server!
     aliases: [bc, broadc, bcast, say, servermessage]
     permission: net.pgfmc.core.broadcast
+  testinventorysize:
+    usage: /<command>
+    description: Testing the various inventory sizes
+    permission: group.admin
     

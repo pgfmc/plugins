@@ -1,4 +1,4 @@
-package net.pgfmc.survival.menu.home;
+package net.pgfmc.survival.menu.teleports.home;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +14,7 @@ import net.pgfmc.core.api.inventory.extra.Butto;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.ItemWrapper;
 import net.pgfmc.survival.cmd.home.Homes;
+import net.pgfmc.survival.menu.teleports.Teleports;
 
 public class HomeSelectListInventory extends ListInventory<String> {
 	
@@ -27,7 +28,7 @@ public class HomeSelectListInventory extends ListInventory<String> {
 		this.pd = pd;
 		this.homes = Homes.getHomes(pd);
 		
-		setBack(0, new HomeHomepageInventory(pd).getInventory());
+		setBack(0, new Teleports(pd).getInventory());
 	}
 	
 	@Override

@@ -10,7 +10,6 @@ import net.pgfmc.core.api.inventory.extra.Buttonable;
 
 public abstract class ButtonInventory extends ListInventory<Buttonable> {
 
-	@Deprecated
 	public ButtonInventory(int size, String name) {
 		super(size, name);
 	}

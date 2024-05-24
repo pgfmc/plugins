@@ -1,5 +1,5 @@
 name: PGF-Proxycore
-version: 9.0.1
+version: 13.0.0
 api-version: 1.20
 authors: [PGF]
 website: https://www.pgfmc.net
@@ -14,3 +14,7 @@ commands:
     description: Connect to another server
     permission: net.pgfmc.proxycore.connect
     aliases: [server, goto]
+  testmessenger:
+    usage: /<command>
+    description: Test Messenger and PM
+    permission: group.admin

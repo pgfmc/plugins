@@ -13,7 +13,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.playerdata.PlayerDataManager;
 import net.pgfmc.core.util.files.Mixins;
-import net.pgfmc.survival.balance.ItemProtect;
 import net.pgfmc.survival.cmd.Back;
 import net.pgfmc.survival.cmd.afk.Afk;
 import net.pgfmc.survival.cmd.afk.AfkEvents;
@@ -23,8 +22,8 @@ import net.pgfmc.survival.cmd.home.DelHome;
 import net.pgfmc.survival.cmd.home.Home;
 import net.pgfmc.survival.cmd.home.Homes;
 import net.pgfmc.survival.cmd.home.SetHome;
-import net.pgfmc.survival.cmd.menu.CommandMenuBookInput;
 import net.pgfmc.survival.cmd.menu.CommandMenu;
+import net.pgfmc.survival.cmd.menu.CommandMenuBookInput;
 import net.pgfmc.survival.cmd.pvp.Pvp;
 import net.pgfmc.survival.cmd.pvp.PvpEvent;
 import net.pgfmc.survival.cmd.tpa.TpHereRequest;
@@ -96,7 +95,6 @@ public class Main extends JavaPlugin {
 		// Listeners
 		getServer().getPluginManager().registerEvents(new CommandMenuBookInput(), this);
 		getServer().getPluginManager().registerEvents(new AfkEvents(), this);
-		getServer().getPluginManager().registerEvents(new ItemProtect(), this);
 		getServer().getPluginManager().registerEvents(new PvpEvent(), this);
 		getServer().getPluginManager().registerEvents(new GiveRewardsListInventory(), this);
 		getServer().getPluginManager().registerEvents(new InventoryBackupScheduler(), this);

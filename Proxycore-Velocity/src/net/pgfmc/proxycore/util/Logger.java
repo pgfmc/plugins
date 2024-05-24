@@ -5,7 +5,7 @@ import net.pgfmc.proxycore.Main;
 public interface Logger {
 	
 	public static final org.slf4j.Logger VELOCITY_LOGGER = Main.plugin.logger;
-	public static final boolean DEBUG = false; // manually toggle this,,, ;/
+	public static final boolean DEBUG = true; // manually toggle this,,, ;/
 											   // org.slf4j.Logger seems complicated
 	
 	public static void debug(final String message)

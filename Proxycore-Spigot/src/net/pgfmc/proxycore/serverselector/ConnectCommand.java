@@ -1,6 +1,5 @@
 package net.pgfmc.proxycore.serverselector;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,7 +27,7 @@ import net.pgfmc.proxycore.Main;
  * to connect to it.
  */
 public final class ConnectCommand implements TabExecutor {
-
+	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (!(sender instanceof Player))
@@ -73,7 +72,7 @@ public final class ConnectCommand implements TabExecutor {
 							return true;
 						}
 						
-						if (!server.equals(Main.thisServerName)) return true; // Online, but not this server
+						if (!server.equals(Main.getServerName())) return true; // Online, but not this server
 						
 						// this server
 						final String blackStarIcon = new String(Character.toChars(0x2605));
@@ -115,7 +114,7 @@ public final class ConnectCommand implements TabExecutor {
 			return true;
 		}
 		
-		if (Main.registeredServers != null && !Main.registeredServers.isEmpty() && server.equals(Main.thisServerName))
+		if (Main.registeredServers != null && !Main.registeredServers.isEmpty() && server.equals(Main.getServerName()))
 		{
 			playerdata.sendMessage(ChatColor.RED + "You are already connected to " + serverNamePronounified);
 			playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
