@@ -41,6 +41,7 @@ import net.pgfmc.core.bot.minecraft.listeners.OnPlayerJoin;
 import net.pgfmc.core.bot.minecraft.listeners.OnPlayerQuit;
 import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.cmd.donator.Nick;
+import net.pgfmc.core.test.TestInventorySizeCommand;
 import net.pgfmc.core.util.RestartScheduler;
 import net.pgfmc.core.util.ServerMessage;
 import net.pgfmc.core.util.roles.RoleManager;
@@ -172,6 +173,9 @@ public class CoreMain extends JavaPlugin implements Listener {
 		new TagCommand();
 		new PlayerDataSetCommand();
 		new Bot();
+		
+		// XXX DEBUG
+		new TestInventorySizeCommand("testinventorysize");
 	}
 	
 	@Override
