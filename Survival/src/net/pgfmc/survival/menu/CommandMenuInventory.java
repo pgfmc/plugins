@@ -1,7 +1,6 @@
 package net.pgfmc.survival.menu;
 
 import java.util.Arrays;
-import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,21 +13,16 @@ import org.bukkit.plugin.Plugin;
 
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
-import net.pgfmc.core.api.request.Request;
-import net.pgfmc.core.api.request.RequestType;
-import net.pgfmc.core.api.request.inv.RequestListInventory;
 import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.util.Lang;
 import net.pgfmc.core.util.roles.PGFRole;
 import net.pgfmc.core.util.roles.RoleManager;
 import net.pgfmc.proxycore.serverselector.ServerSelectorInventory;
 import net.pgfmc.survival.Rewards;
-import net.pgfmc.survival.menu.back.BackConfirmInventory;
-import net.pgfmc.survival.menu.home.HomeHomepageInventory;
 import net.pgfmc.survival.menu.profile.ProfileInventory;
 import net.pgfmc.survival.menu.rewards.RewardsListInventory;
 import net.pgfmc.survival.menu.staff.StaffInventory;
-import net.pgfmc.survival.menu.tpa.TpaListInventory;
+import net.pgfmc.survival.menu.teleports.Teleports;
 import net.pgfmc.survival.particleeffects.HaloEffect.HaloParticle;
 
 public class CommandMenuInventory implements InventoryHolder {
@@ -79,31 +73,7 @@ public class CommandMenuInventory implements InventoryHolder {
 				}
 				
 			}
-			
-			/* 
-			 * Back
-			 * [] [] [] [] [] [] [] [] []
-			 * [] [] [] [] [] [] [] [] []
-			 * [] [] [] [] XX [] [] [] []
-			 */
-			//if (playerdata.getData("backLoc") == null)
-			//{
-			//	setAction(22, (player, event) -> {
-			//		playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
-			//		playerdata.sendMessage(ChatColor.RED + "No back location available.");
-			//	});
-			//
-			//} else {
-			//	setAction(22, (player, event) -> {
-			//		player.openInventory(new BackConfirmInventory(playerdata).getInventory());
-			//	});
-			//	
-			//}
-		    //	
-			//setItem(22, Material.SPECTRAL_ARROW).n(ChatColor.DARK_GREEN + "Teleport Back")
-			//.l(ChatColor.GRAY + "Go back to where you teleported from.");
-			
-			
+
 			/* 
 			 * Home Menu
 			 * [] [] [] [] [] [] [] [] []
@@ -124,17 +94,15 @@ public class CommandMenuInventory implements InventoryHolder {
 			 * [] [] [] [] XX [] [] [] []
 			 * [] [] [] [] [] [] [] [] []
 			 */
-			if (Bukkit.getOnlinePlayers().size() > 1) {
 
-                // TODO
+            // TODO
 
-				setAction(teleports, (player, event) -> {
-					player.openInventory(new TpaListInventory(playerdata).getInventory());
-				});
-			
-				setItem(teleports, Material.ENDER_PEARL).n(ChatColor.DARK_PURPLE + "Teleport Menu")
-												.l(ChatColor.GRAY + "Different ways to get around.");
-			}
+            setAction(teleports, (player, event) -> {
+                player.openInventory(new Teleports(playerdata).getInventory());
+            });
+
+            setItem(teleports, Material.ENDER_PEARL).n(ChatColor.DARK_PURPLE + "Teleport Menu")
+                .l(ChatColor.GRAY + "Different ways to get around.");
 			
             final int profile = 5;
 			/* 
