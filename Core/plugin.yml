@@ -45,4 +45,8 @@ commands:
     description: Broadcast to the server!
     aliases: [bc, broadc, bcast, say, servermessage]
     permission: net.pgfmc.core.broadcast
+  testinventorysize:
+    usage: /<command>
+    description: Testing the various inventory sizes
+    permission: group.admin
     
