@@ -65,200 +65,272 @@ public class ServerSelectorInventory extends BaseInventory {
 		final String blackRightPointingPointerIcon = new String(Character.toChars(0x25BA));
 		final String blackStarIcon = new String(Character.toChars(0x2605));
 		
-		/**
-		 * The Survival server
-		 */
-		if (playerdata.hasPermission("net.pgfmc.proxycore.connect.survival"))
+		if (Main.getServerName() == null || !Main.getServerName().contains("test"))
 		{
-			if (Main.getServerName() != null && Main.getServerName().equals("survival")) // Connected
+			/**
+			 * The Survival server
+			 */
+			if (playerdata.hasPermission("net.pgfmc.proxycore.connect.survival"))
 			{
-				setItem(i, Material.GRASS_BLOCK)
-				.n(ChatColor.GREEN + blackStarIcon + " Survival (Connected)")
-				.l(Arrays.asList(ChatColor.GRAY + "You are connected to Survival.",
-						ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Claims, homes, tpa, and more."));
+				if (Main.getServerName() != null && Main.getServerName().equals("survival")) // Connected
+				{
+					setItem(i, Material.GRASS_BLOCK)
+					.n(ChatColor.GREEN + blackStarIcon + " Survival (Connected)")
+					.l(Arrays.asList(ChatColor.GRAY + "You are connected to Survival.",
+							ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Claims, homes, tpa, and more."));
+					
+					setAction(i, (player, event) -> {
+						if (playerdata.getPlayer() == null) return;
+						
+						player.sendMessage(ChatColor.RED + "You are already connected to Survival.");
+						
+						playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+						
+					});
+					
+				} else if (servers.get("survival") == null || servers.get("survival") == true) // Online
+				{
+					setItem(i, Material.GRASS_BLOCK)
+					.n(ChatColor.GREEN + "Survival")
+					.l(Arrays.asList(ChatColor.GRAY + "Click to join Survival.",
+							ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Claims, homes, tpa, and more."));
+					
+					setAction(i, (player, event) -> {
+						if (playerdata.getPlayer() == null) return;
+						
+						player.sendMessage(ChatColor.GREEN + "Attempting to connect to Survival.");
+						
+						Main.plugin.getLogger().info("Attempting to connect " + playerdata.getName() + " to Survival.");
+						
+						PluginMessageType.CONNECT.send(player, "survival");
+						
+						playerdata.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1F, 2F);
+						
+					});
+					
+				} else // Offline
+				{
+					setItem(i, Material.RED_STAINED_GLASS)
+					.n(ChatColor.DARK_RED + "Survival - Offline")
+					.l(Arrays.asList(ChatColor.GRAY + "Click to join Survival.",
+							ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Claims, homes, tpa, and more."));
+					
+					setAction(i, (player, event) -> {
+						if (playerdata.getPlayer() == null) return;
+						
+						player.sendMessage(ChatColor.RED + "Survival is offline.");
+						
+						playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+						
+					});
+					
+				}
 				
-				setAction(i, (player, event) -> {
-					if (playerdata.getPlayer() == null) return;
-					
-					player.sendMessage(ChatColor.RED + "You are already connected to Survival.");
-					
-					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
-					
-				});
-				
-			} else if (servers.get("survival") == null || servers.get("survival") == true) // Online
-			{
-				setItem(i, Material.GRASS_BLOCK)
-				.n(ChatColor.GREEN + "Survival")
-				.l(Arrays.asList(ChatColor.GRAY + "Click to join Survival.",
-						ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Claims, homes, tpa, and more."));
-				
-				setAction(i, (player, event) -> {
-					if (playerdata.getPlayer() == null) return;
-					
-					player.sendMessage(ChatColor.GREEN + "Attempting to connect to Survival.");
-					
-					Main.plugin.getLogger().info("Attempting to connect " + playerdata.getName() + " to Survival.");
-					
-					PluginMessageType.CONNECT.send(player, "survival");
-					
-					playerdata.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1F, 2F);
-					
-				});
-				
-			} else // Offline
-			{
-				setItem(i, Material.RED_STAINED_GLASS)
-				.n(ChatColor.DARK_RED + "Survival - Offline")
-				.l(Arrays.asList(ChatColor.GRAY + "Click to join Survival.",
-						ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Claims, homes, tpa, and more."));
-				
-				setAction(i, (player, event) -> {
-					if (playerdata.getPlayer() == null) return;
-					
-					player.sendMessage(ChatColor.RED + "Survival is offline.");
-					
-					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
-					
-				});
+				servers.remove("survival");
+				i--;
 				
 			}
 			
-			servers.remove("survival");
-			i--;
-			
-		}
-		
-		/**
-		 * The Test server
-		 * 
-		 * Staff only
-		 */
-		if (playerdata.hasPermission("net.pgfmc.proxycore.connect.test"))
-		{
-			if (Main.getServerName() != null && Main.getServerName().equals("test")) // Connected
+			/**
+			 * The Past seasons server
+			 */
+			if (playerdata.hasPermission("net.pgfmc.proxycore.connect.past"))
 			{
-				setItem(i, Material.COMMAND_BLOCK)
-				.n(ChatColor.GREEN + blackStarIcon + " Test (Connected)")
-				.l(Arrays.asList(ChatColor.GRAY + "You are connected to Test.",
-						ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Test server for developers."));
+				if (Main.getServerName() != null && Main.getServerName().equals("past")) // Connected
+				{
+					setItem(i, Material.DIRT_PATH)
+					.n(ChatColor.GREEN + blackStarIcon + " Past Seasons (Connected)")
+					.l(Arrays.asList(ChatColor.GRAY + "You are connected to Past Seasons.",
+							ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Celebrate PGF's 5th anniversary",
+							 blackRightPointingPointerIcon + " " +"by exploring past seasons."));
+					
+					setAction(i, (player, event) -> {
+						if (playerdata.getPlayer() == null) return;
+						
+						player.sendMessage(ChatColor.RED + "You are already connected to Survival.");
+						
+						playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+						
+					});
+					
+				} else if (servers.get("past") == null || servers.get("past") == true) // Online
+				{
+					setItem(i, Material.DIRT_PATH)
+					.n(ChatColor.GREEN + "Past Seasons")
+					.l(Arrays.asList(ChatColor.GRAY + "Click to join Past Seasons.",
+							ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Celebrate PGF's 5th anniversary",
+							 blackRightPointingPointerIcon + " " +"by exploring past seasons."));
+					
+					setAction(i, (player, event) -> {
+						if (playerdata.getPlayer() == null) return;
+						
+						player.sendMessage(ChatColor.GREEN + "Attempting to connect to Past Seasons.");
+						
+						Main.plugin.getLogger().info("Attempting to connect " + playerdata.getName() + " to Past Seasons.");
+						
+						PluginMessageType.CONNECT.send(player, "past");
+						
+						playerdata.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1F, 2F);
+						
+					});
+					
+				} else // Offline
+				{
+					setItem(i, Material.RED_STAINED_GLASS)
+					.n(ChatColor.DARK_RED + "Past Seasons - Offline")
+					.l(Arrays.asList(ChatColor.GRAY + "Click to join Past Seasons.",
+							ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Celebrate PGF's 5th anniversary",
+							 blackRightPointingPointerIcon + " " + "by exploring past seasons."));
+					
+					setAction(i, (player, event) -> {
+						if (playerdata.getPlayer() == null) return;
+						
+						player.sendMessage(ChatColor.RED + "Past Seasons is offline.");
+						
+						playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+						
+					});
+					
+				}
 				
-				setAction(i, (player, event) -> {
-					if (playerdata.getPlayer() == null) return;
-					
-					player.sendMessage(ChatColor.RED + "You are already connected to Test.");
-					
-					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
-					
-				});
-				
-			} else if (servers.get("test") == null || servers.get("test") == true) // Online
-			{
-				setItem(i, Material.COMMAND_BLOCK)
-				.n(ChatColor.GREEN + "Test")
-				.l(Arrays.asList(ChatColor.GRAY + "Click to join Test.",
-						ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Test server for developers."));
-				
-				setAction(i, (player, event) -> {
-					if (playerdata.getPlayer() == null) return;
-					
-					player.sendMessage(ChatColor.GREEN + "Attempting to connect to Test.");
-					
-					Main.plugin.getLogger().info("Attempting to connect " + playerdata.getName() + " to Test.");
-					
-					PluginMessageType.CONNECT.send(player, "test");
-					
-					playerdata.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1F, 2F);
-					
-				});
-				
-			} else // Offline
-			{
-				setItem(i, Material.RED_STAINED_GLASS)
-				.n(ChatColor.DARK_RED + "Test - Offline")
-				.l(Arrays.asList(ChatColor.GRAY + "Click to join Test.",
-						ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Test server for developers."));
-				
-				setAction(i, (player, event) -> {
-					if (playerdata.getPlayer() == null) return;
-					
-					player.sendMessage(ChatColor.RED + "Test is offline.");
-					
-					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
-					
-				});
+				servers.remove("past");
+				i--;
 				
 			}
 			
-			servers.remove("test");
-			i--;
-			
-		}
-		
-		/**
-		 * The Past seasons server
-		 */
-		if (playerdata.hasPermission("net.pgfmc.proxycore.connect.past"))
+		} else
 		{
-			if (Main.getServerName() != null && Main.getServerName().equals("past")) // Connected
+			/**
+			 * The Test1 server
+			 * 
+			 * Staff only
+			 */
+			if (playerdata.hasPermission("net.pgfmc.proxycore.connect.test1"))
 			{
-				setItem(i, Material.DIRT_PATH)
-				.n(ChatColor.GREEN + blackStarIcon + " Past Seasons (Connected)")
-				.l(Arrays.asList(ChatColor.GRAY + "You are connected to Past Seasons.",
-						ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Celebrate PGF's 5th anniversary",
-						 blackRightPointingPointerIcon + " " +"by exploring past seasons."));
+				if (Main.getServerName() != null && Main.getServerName().equals("test1")) // Connected
+				{
+					setItem(i, Material.COMMAND_BLOCK)
+					.n(ChatColor.GREEN + blackStarIcon + " Test1 (Connected)")
+					.l(Arrays.asList(ChatColor.GRAY + "You are connected to Test1.",
+							ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Test1 server for developers."));
+					
+					setAction(i, (player, event) -> {
+						if (playerdata.getPlayer() == null) return;
+						
+						player.sendMessage(ChatColor.RED + "You are already connected to Test1.");
+						
+						playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+						
+					});
+					
+				} else if (servers.get("test1") == null || servers.get("test1") == true) // Online
+				{
+					setItem(i, Material.COMMAND_BLOCK)
+					.n(ChatColor.GREEN + "Test1")
+					.l(Arrays.asList(ChatColor.GRAY + "Click to join Test1.",
+							ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Test1 server for developers."));
+					
+					setAction(i, (player, event) -> {
+						if (playerdata.getPlayer() == null) return;
+						
+						player.sendMessage(ChatColor.GREEN + "Attempting to connect to Test1.");
+						
+						Main.plugin.getLogger().info("Attempting to connect " + playerdata.getName() + " to Test1.");
+						
+						PluginMessageType.CONNECT.send(player, "test1");
+						
+						playerdata.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1F, 2F);
+						
+					});
+					
+				} else // Offline
+				{
+					setItem(i, Material.RED_STAINED_GLASS)
+					.n(ChatColor.DARK_RED + "Test1 - Offline")
+					.l(Arrays.asList(ChatColor.GRAY + "Click to join Test1.",
+							ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Test1 server for developers."));
+					
+					setAction(i, (player, event) -> {
+						if (playerdata.getPlayer() == null) return;
+						
+						player.sendMessage(ChatColor.RED + "Test1 is offline.");
+						
+						playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+						
+					});
+					
+				}
 				
-				setAction(i, (player, event) -> {
-					if (playerdata.getPlayer() == null) return;
-					
-					player.sendMessage(ChatColor.RED + "You are already connected to Survival.");
-					
-					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
-					
-				});
-				
-			} else if (servers.get("past") == null || servers.get("past") == true) // Online
-			{
-				setItem(i, Material.DIRT_PATH)
-				.n(ChatColor.GREEN + "Past Seasons")
-				.l(Arrays.asList(ChatColor.GRAY + "Click to join Past Seasons.",
-						ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Celebrate PGF's 5th anniversary",
-						 blackRightPointingPointerIcon + " " +"by exploring past seasons."));
-				
-				setAction(i, (player, event) -> {
-					if (playerdata.getPlayer() == null) return;
-					
-					player.sendMessage(ChatColor.GREEN + "Attempting to connect to Past Seasons.");
-					
-					Main.plugin.getLogger().info("Attempting to connect " + playerdata.getName() + " to Past Seasons.");
-					
-					PluginMessageType.CONNECT.send(player, "past");
-					
-					playerdata.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1F, 2F);
-					
-				});
-				
-			} else // Offline
-			{
-				setItem(i, Material.RED_STAINED_GLASS)
-				.n(ChatColor.DARK_RED + "Past Seasons - Offline")
-				.l(Arrays.asList(ChatColor.GRAY + "Click to join Past Seasons.",
-						ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Celebrate PGF's 5th anniversary",
-						 blackRightPointingPointerIcon + " " + "by exploring past seasons."));
-				
-				setAction(i, (player, event) -> {
-					if (playerdata.getPlayer() == null) return;
-					
-					player.sendMessage(ChatColor.RED + "Past Seasons is offline.");
-					
-					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
-					
-				});
+				servers.remove("test1");
+				i--;
 				
 			}
 			
-			servers.remove("past");
-			i--;
+			/**
+			 * The Test2 server
+			 * 
+			 * Staff only
+			 */
+			if (playerdata.hasPermission("net.pgfmc.proxycore.connect.test2"))
+			{
+				if (Main.getServerName() != null && Main.getServerName().equals("test2")) // Connected
+				{
+					setItem(i, Material.COMMAND_BLOCK)
+					.n(ChatColor.GREEN + blackStarIcon + " Test2 (Connected)")
+					.l(Arrays.asList(ChatColor.GRAY + "You are connected to Test2.",
+							ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Test2 server for developers."));
+					
+					setAction(i, (player, event) -> {
+						if (playerdata.getPlayer() == null) return;
+						
+						player.sendMessage(ChatColor.RED + "You are already connected to Test2.");
+						
+						playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+						
+					});
+					
+				} else if (servers.get("test2") == null || servers.get("test2") == true) // Online
+				{
+					setItem(i, Material.COMMAND_BLOCK)
+					.n(ChatColor.GREEN + "Test2")
+					.l(Arrays.asList(ChatColor.GRAY + "Click to join Test2.",
+							ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Test2 server for developers."));
+					
+					setAction(i, (player, event) -> {
+						if (playerdata.getPlayer() == null) return;
+						
+						player.sendMessage(ChatColor.GREEN + "Attempting to connect to Test2.");
+						
+						Main.plugin.getLogger().info("Attempting to connect " + playerdata.getName() + " to Test2.");
+						
+						PluginMessageType.CONNECT.send(player, "test2");
+						
+						playerdata.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1F, 2F);
+						
+					});
+					
+				} else // Offline
+				{
+					setItem(i, Material.RED_STAINED_GLASS)
+					.n(ChatColor.DARK_RED + "Test2 - Offline")
+					.l(Arrays.asList(ChatColor.GRAY + "Click to join Test2.",
+							ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Test2 server for developers."));
+					
+					setAction(i, (player, event) -> {
+						if (playerdata.getPlayer() == null) return;
+						
+						player.sendMessage(ChatColor.RED + "Test2 is offline.");
+						
+						playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+						
+					});
+					
+				}
+				
+				servers.remove("test2");
+				i--;
+				
+			}
 			
 		}
 		
