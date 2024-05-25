@@ -9,6 +9,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
@@ -20,7 +23,7 @@ import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.proxycore.serverselector.ConnectCommand;
 import net.pgfmc.proxycore.util.Logger;
 
-public class Main extends JavaPlugin implements PluginMessageListener, Logger {
+public class Main extends JavaPlugin implements Listener, PluginMessageListener, Logger {
 	
 	public static String thisServerName;
 	public static Main plugin;
@@ -43,6 +46,9 @@ public class Main extends JavaPlugin implements PluginMessageListener, Logger {
 		getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this);
 		getServer().getMessenger().registerOutgoingPluginChannel(this, "pgf:main");
 		getServer().getMessenger().registerIncomingPluginChannel(this, "pgf:main", this);
+
+		getServer().getPluginManager().registerEvents(this, this);
+		//**
 		
 		/**
 		 * Register Commands
@@ -58,6 +64,33 @@ public class Main extends JavaPlugin implements PluginMessageListener, Logger {
 	
 	@Override
 	public void onDisable () {}
+	
+	@EventHandler
+	public void onPlayerJoin(PlayerJoinEvent e)
+	{
+		final Player player = e.getPlayer();
+		
+		if (player == null || !player.isOnline()) return;
+		
+		final PlayerData playerdata = PlayerData.from(player);
+		
+		final StringBuilder builder = new StringBuilder();
+		builder.append(ChatColor.RED + "[Attention]\n");
+		builder.append(ChatColor.LIGHT_PURPLE + "The " + ChatColor.YELLOW + "\"pgfmc.net\"" + ChatColor.LIGHT_PURPLE + " server address is being replaced\n");
+		builder.append("with " + ChatColor.YELLOW + "\"play.pgfmc.net\"" + ChatColor.LIGHT_PURPLE + ". Please switch to the new address.\n");
+		builder.append("Thank you!");
+		
+		Bukkit.getScheduler().runTaskLater(this, new Runnable() {
+			@Override
+			public void run() {
+				playerdata.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1F, 2F);
+				playerdata.sendMessage(builder.toString());
+				
+			}
+		
+		}, 20*5); // run after 5 seconds
+		
+	}
 
 	/**
 	 * Plugin Message listener
