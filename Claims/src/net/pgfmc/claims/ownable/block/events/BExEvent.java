@@ -1,5 +1,6 @@
 package net.pgfmc.claims.ownable.block.events;
 
+import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockExplodeEvent;
@@ -13,17 +14,21 @@ public class BExEvent implements Listener {
 	
 	@EventHandler
 	public void explodeEvent(BlockExplodeEvent e) {
-		if (ClaimsTable.getNearbyClaims(new Vector4(e.getBlock()), Range.PROTECTED).size() != 0) {
-			e.setCancelled(true);
-			return;
-		}
+        for (Block block : e.blockList()) {
+            if (ClaimsTable.getNearbyClaims(new Vector4(block.getLocation()), Range.PROTECTED).size() != 0) {
+                e.setCancelled(true);
+                return;
+            }
+        }
 	}
 	
 	@EventHandler
 	public void EexplodeEvent(EntityExplodeEvent e) {
-		if (ClaimsTable.getNearbyClaims(new Vector4(e.getLocation()), Range.PROTECTED).size() != 0) {
-			e.setCancelled(true);
-			return;
-		}
+        for (Block block : e.blockList()) {
+            if (ClaimsTable.getNearbyClaims(new Vector4(block.getLocation()), Range.PROTECTED).size() != 0) {
+                e.setCancelled(true);
+                return;
+            }
+        }
 	}
 }
