@@ -13,6 +13,9 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import com.google.inject.Inject;
+import com.velocitypowered.api.command.CommandManager;
+import com.velocitypowered.api.command.CommandMeta;
+import com.velocitypowered.api.command.RawCommand;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PluginMessageEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
@@ -24,6 +27,7 @@ import com.velocitypowered.api.proxy.ServerConnection;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 
+import net.pgfmc.proxycore.commands.StopProxy;
 import net.pgfmc.proxycore.util.Logger;
 
 @Plugin(id = "pgf", name = "Proxycore", version = "0.0.0",
@@ -82,6 +86,22 @@ public class Main {
     	 * Register listeners
     	 */
     	proxy.getChannelRegistrar().register(INDENTIFIER);
+    	
+    	/**
+    	 * Register Commands
+    	 */
+    	final CommandManager manager = proxy.getCommandManager();
+    	
+    	/**
+    	 * proxycore command
+    	 */
+    	final CommandMeta stopproxyMeta = manager.metaBuilder("stopproxy")
+    			.plugin(this)
+    			.build();
+    	
+    	final RawCommand stopproxyCommand = new StopProxy();
+    	
+    	manager.register(stopproxyMeta, stopproxyCommand);
     	
     }
     
