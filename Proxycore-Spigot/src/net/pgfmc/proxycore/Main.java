@@ -9,11 +9,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import net.pgfmc.proxycore.cmd.test.TestPluginMessageCommand;
 import net.pgfmc.proxycore.listeners.ConnectResponse;
 import net.pgfmc.proxycore.serverselector.ConnectCommand;
 import net.pgfmc.proxycore.util.Logger;
 import net.pgfmc.proxycore.util.pluginmessage.PluginMessageType;
-import net.pgfmc.proxycore.util.pluginmessage.test.TestPluginMessageCommand;
 
 public class Main extends JavaPlugin {
 	
