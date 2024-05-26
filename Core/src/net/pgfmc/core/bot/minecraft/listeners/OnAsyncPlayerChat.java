@@ -19,8 +19,7 @@ import net.pgfmc.core.util.Profanity;
 public class OnAsyncPlayerChat implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGH) // Runs last right before HIGHEST
-	public void onChat(AsyncPlayerChatEvent e)
-	{
+	public void onChat(AsyncPlayerChatEvent e) {
 		if (e.isCancelled()) return;
 		
 		final Player player = e.getPlayer();
@@ -28,11 +27,6 @@ public class OnAsyncPlayerChat implements Listener {
 		
 		final MessageHandler handler = new MessageHandler(player).setMessage(e.getMessage());
 		
-		if (handler.getMessage().length() > 95)
-		{
-			player.sendMessage(ChatColor.RED + "Your message is too long (max 95 characters).");
-			handler.setMessage(handler.getMessage().substring(0, 95) + "(...)");
-		}
 		
 		if (Profanity.hasProfanity(handler.getMessage()))
 		{
