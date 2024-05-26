@@ -1,4 +1,4 @@
-package net.pgfmc.proxycore.util.pluginmessage.test;
+package net.pgfmc.proxycore.cmd.test;
 
 import java.util.ArrayList;
 import java.util.Arrays;

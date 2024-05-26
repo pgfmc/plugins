@@ -1,4 +1,4 @@
-package net.pgfmc.core.test;
+package net.pgfmc.core.cmd.test.inventory;
 
 import org.bukkit.event.inventory.InventoryType;
 
