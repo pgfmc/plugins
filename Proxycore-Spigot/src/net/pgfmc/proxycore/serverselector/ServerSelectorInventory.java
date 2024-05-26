@@ -12,7 +12,7 @@ import org.bukkit.event.inventory.InventoryType;
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.proxycore.Main;
-import net.pgfmc.proxycore.PluginMessage.PluginMessageType;
+import net.pgfmc.proxycore.util.pluginmessage.PluginMessageType;
 
 /**
  * This is the server selector inventory for ConnectCommand.
@@ -31,7 +31,7 @@ import net.pgfmc.proxycore.PluginMessage.PluginMessageType;
  * 
  * PLUGIN MESSAGE FORM (pgf:main): Connect, <server name>
  */
-public class ServerSelectorInventory extends BaseInventory {
+public final class ServerSelectorInventory extends BaseInventory {
 
 	public ServerSelectorInventory(final PlayerData playerdata) {
 		super(InventoryType.HOPPER, "Server Selector");

@@ -10,11 +10,11 @@ prefix: PGF-Proxycore
 
 commands:
   connect:
-    usage: /<command> [server] [player]
+    usage: /<command> server
     description: Connect to another server
     permission: net.pgfmc.proxycore.connect
     aliases: [server, goto]
-  testmessenger:
-    usage: /<command>
-    description: Test Messenger and PM
+  testpluginmessage:
+    usage: /<command> subchannel [arguments]
+    description: Send test plugin messages
     permission: group.admin
