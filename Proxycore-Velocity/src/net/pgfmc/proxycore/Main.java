@@ -16,6 +16,7 @@ import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import net.pgfmc.proxycore.commands.StopProxy;
 import net.pgfmc.proxycore.listeners.Connect;
 import net.pgfmc.proxycore.listeners.PingServer;
+import net.pgfmc.proxycore.util.GlobalPlayerData;
 import net.pgfmc.proxycore.util.Logger;
 import net.pgfmc.proxycore.util.pluginmessage.PluginMessageType;
 
@@ -94,6 +95,9 @@ public class Main {
     	
     	manager.register(stopproxyMeta, stopproxyCommand);
     	//
+        //
+
+        GlobalPlayerData.setup();
     	
     }
     
