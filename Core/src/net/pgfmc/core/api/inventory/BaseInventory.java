@@ -11,7 +11,6 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.yaml.snakeyaml.internal.Logger;
 
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.api.inventory.extra.Butto;

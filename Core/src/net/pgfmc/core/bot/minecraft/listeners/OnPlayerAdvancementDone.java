@@ -8,7 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerAdvancementDoneEvent;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
-import net.pgfmc.core.bot.discord.Discord;
+import net.pgfmc.core.util.proxy.PluginMessageType;
 
 public class OnPlayerAdvancementDone implements Listener {
 	
@@ -20,22 +20,22 @@ public class OnPlayerAdvancementDone implements Listener {
 		final Player player = e.getPlayer();
 		final PlayerData playerdata = PlayerData.from(player);
 		final Advancement advancement = e.getAdvancement();
-		String advancementAnnouncement = "";
+		String advancementMessage = "";
 		
 		switch (advancement.getDisplay().getType())
 		{
 			case TASK:
-				advancementAnnouncement = "has made the advancement [" + advancement.getDisplay().getTitle() + "]!";
+				advancementMessage = "has made the advancement [" + advancement.getDisplay().getTitle() + "]!";
 				break;
 			case GOAL:
-				advancementAnnouncement = "has reached the goal [" + advancement.getDisplay().getTitle() + "]!";
+				advancementMessage = "has reached the goal [" + advancement.getDisplay().getTitle() + "]!";
 				break;
 			case CHALLENGE:
-				advancementAnnouncement = "has completed the challenge [" + advancement.getDisplay().getTitle() + "]!";
+				advancementMessage = "has completed the challenge [" + advancement.getDisplay().getTitle() + "]!";
 				break;
 		}
 		
-		Discord.sendMessage("<:dwarf:1191762269261017119> " + ChatColor.stripColor(playerdata.getRankedName()) + " " + advancementAnnouncement).queue();
+		PluginMessageType.DISCORD_MESSAGE.send(player, "<:dwarf:1191762269261017119> " + ChatColor.stripColor(playerdata.getRankedName()) + " " + advancementMessage);
 		
 	}
 	

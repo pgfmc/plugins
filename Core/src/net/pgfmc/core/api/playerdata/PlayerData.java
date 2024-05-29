@@ -18,8 +18,8 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import net.pgfmc.core.CoreMain;
+import net.pgfmc.core.PGFRole;
 import net.pgfmc.core.util.files.Mixins;
-import net.pgfmc.core.util.roles.PGFRole;
 
 /**
  * stores dynamic, temporary and non-temporary data for each player.
@@ -85,32 +85,6 @@ public final class PlayerData extends PlayerDataExtra {
 			}
 		}
 		return null;
-	}
-	
-	/**
-	 * Deprecated; Use UUID
-	 * Gets a PlayerData from a player's real name.s
-	 * @param name The player's real name
-	 * @return PlayerData, null if no matches
-	 */
-	@Deprecated
-	public static PlayerData from(String name)
-	{
-		Set<PlayerData> nameMatches = PlayerData.getPlayerDataSet(pd -> pd.getName().toLowerCase().equals(name.toLowerCase()));
-		
-		if (nameMatches == null || nameMatches.isEmpty() || (PlayerData) nameMatches.toArray()[0] == null) return null;
-		
-		return (PlayerData) nameMatches.toArray()[0];
-	}
-	
-	public static PlayerData fromDiscordId(String discordUserId)
-	{
-		for (PlayerData uid : instances)
-		{
-			if (discordUserId.equals(uid.getData("Discord"))) return uid;
-		}
-		return null;
-		
 	}
 	
 	// getters and setters

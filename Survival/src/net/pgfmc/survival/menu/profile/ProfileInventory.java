@@ -11,8 +11,6 @@ import org.bukkit.event.inventory.InventoryType;
 
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
-import net.pgfmc.core.bot.discord.Discord;
-import net.pgfmc.core.util.roles.PGFRole;
 import net.pgfmc.survival.Main;
 import net.pgfmc.survival.menu.CommandMenuInventory;
 import net.wesjd.anvilgui.AnvilGUI;
@@ -44,11 +42,7 @@ public class ProfileInventory extends BaseInventory {
 					
 				});
 				
-				final String discordGlobalName = Discord.JDA.getUserById(discordID).getGlobalName();
-				final PGFRole role = playerdata.getRole();
-				
-				setItem(11, Material.AMETHYST_SHARD).n(ChatColor.LIGHT_PURPLE + "Unlink Account")
-													.l(role.getColor() + discordGlobalName);
+				setItem(11, Material.AMETHYST_SHARD).n(ChatColor.LIGHT_PURPLE + "Unlink Account");
 			
 			} else {
 				

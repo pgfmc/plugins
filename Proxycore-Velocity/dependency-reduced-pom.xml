@@ -8,6 +8,53 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>Proxycore-Velocity</artifactId>
+  <build>
+    <sourceDirectory>src/</sourceDirectory>
+    <resources>
+      <resource>
+        <targetPath>.</targetPath>
+        <filtering>true</filtering>
+        <directory>${basedir}/</directory>
+        <includes>
+          <include>*.yml</include>
+        </includes>
+      </resource>
+    </resources>
+    <finalName>${project.name}</finalName>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.12.1</version>
+        <configuration>
+          <release>17</release>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.5.1</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <relocations>
+            <relocation>
+              <pattern>net.dv8tion</pattern>
+              <shadedPattern>net.pgfmc.proxycore.net.dv8tion</shadedPattern>
+            </relocation>
+            <relocation>
+              <pattern>com.moandjiezana.toml</pattern>
+              <shadedPattern>net.pgfmc.proxycore.com.moandjiezana.toml</shadedPattern>
+            </relocation>
+          </relocations>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
   <repositories>
     <repository>
       <id>papermc</id>
@@ -16,15 +63,15 @@
   </repositories>
   <dependencies>
     <dependency>
-      <groupId>net.pgfmc</groupId>
-      <artifactId>Core</artifactId>
-      <version>9</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>com.velocitypowered</groupId>
       <artifactId>velocity-api</artifactId>
       <version>3.3.0-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.luckperms</groupId>
+      <artifactId>api</artifactId>
+      <version>5.4</version>
       <scope>provided</scope>
     </dependency>
     <dependency>

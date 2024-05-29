@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.request.EndBehavior;
@@ -43,9 +45,15 @@ public class RequestAcceptCommand extends PlayerCommand {
 	@Override
 	public boolean execute(PlayerData pd, String alias, String[] args) {
 		if (args.length > 0) { // if an argument was entered.
+			final Player player = Bukkit.getPlayer(args[0]);
 			
-			@SuppressWarnings("deprecation")
-			PlayerData pds = PlayerData.from(args[0]);
+			if (player == null)
+			{
+				pd.sendMessage(ChatColor.RED + "No request found for " + args[0]);
+				return true;
+			}
+			
+			PlayerData pds = PlayerData.from(player);
 			if (pds != null) {
 				Request r = rt.findRequest(pds, pd);
 				if (r != null) {

@@ -3,25 +3,26 @@ package net.pgfmc.core;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.TimeZone;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerLoadEvent;
 import org.bukkit.event.server.ServerLoadEvent.LoadType;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
-import net.luckperms.api.LuckPerms;
 import net.pgfmc.core.api.inventory.extra.InventoryPressEvent;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.playerdata.PlayerDataManager;
@@ -31,29 +32,38 @@ import net.pgfmc.core.api.playerdata.cmd.TagCommand;
 import net.pgfmc.core.api.request.RequestEvents;
 import net.pgfmc.core.api.request.RequestType;
 import net.pgfmc.core.api.teleport.SpawnProtect;
-import net.pgfmc.core.bot.Bot;
-import net.pgfmc.core.bot.minecraft.cmd.LinkCommand;
-import net.pgfmc.core.bot.minecraft.cmd.UnlinkCommand;
-import net.pgfmc.core.bot.minecraft.listeners.OnAsyncPlayerChat;
 import net.pgfmc.core.bot.minecraft.listeners.OnPlayerAdvancementDone;
 import net.pgfmc.core.bot.minecraft.listeners.OnPlayerDeath;
-import net.pgfmc.core.bot.minecraft.listeners.OnPlayerJoin;
-import net.pgfmc.core.bot.minecraft.listeners.OnPlayerQuit;
 import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.cmd.donator.Nick;
+import net.pgfmc.core.cmd.serverselector.ConnectCommand;
 import net.pgfmc.core.cmd.test.inventory.TestInventorySizeCommand;
+import net.pgfmc.core.cmd.test.pluginmessage.TestPluginMessageCommand;
+import net.pgfmc.core.listeners.ConnectResponse;
+import net.pgfmc.core.listeners.PlayerRoleResponse;
+import net.pgfmc.core.listeners.minecraft.OnAsyncPlayerChat;
+import net.pgfmc.core.listeners.minecraft.OnPlayerJoin;
+import net.pgfmc.core.listeners.minecraft.OnPlayerQuit;
+import net.pgfmc.core.util.Logger;
 import net.pgfmc.core.util.RestartScheduler;
 import net.pgfmc.core.util.ServerMessage;
-import net.pgfmc.core.util.roles.RoleManager;
+import net.pgfmc.core.util.proxy.PluginMessageType;
 
 /**
  * @author bk and CrimsonDart
  */
 public class CoreMain extends JavaPlugin implements Listener {
 	
+	/**
+	 * Registered servers' names and if they are currently online
+	 * 
+	 * Online status is updated by Main.loopForPluginMessages()
+	 */
+	private final static Map<String, Boolean> REGISTERED_SERVERS = new HashMap<>();
+	
 	public static CoreMain plugin;
 	
-	public static LuckPerms luckPermsAPI;
+	private static String thisServerName;
 	
 	/**
 	 * creates all files, loads all worlds, PlayerData, commands and events.
@@ -62,9 +72,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 	@Override
 	public void onEnable()
 	{
-		/**
-		 * Constants
-		 */
 		plugin = this;
 		
 		/**
@@ -72,16 +79,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 		 */
 		saveDefaultConfig();
 		reloadConfig();
-		
-		/**
-		 * LuckPerms API
-		 */
-		final RegisteredServiceProvider<LuckPerms> lpProvider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
-		if (lpProvider != null) {
-		    final LuckPerms lpAPI = lpProvider.getProvider();
-		    luckPermsAPI = lpAPI;
-		    
-		}
 		
 		/**
 		 * PlayerData initialization
@@ -129,58 +126,52 @@ public class CoreMain extends JavaPlugin implements Listener {
 		});
 		
 		PlayerDataManager.setInit(pd -> {
-			final FileConfiguration config = pd.getPlayerDataFile();
-			final String discordID = config.getString("Discord");
-			
-			if (discordID == null) return;
-			
-			pd.setData("Discord", discordID);
+			PluginMessageType.PLAYER_ROLE.send(CoreMain.plugin.getServer(), pd.getUniqueId().toString());
 			
 		});
-		
-		PlayerDataManager.setPostLoad(x -> {
-			PlayerData.getPlayerDataSet().forEach(pd -> RoleManager.updatePlayerRole(pd));
-		});
+		//
 		
 		/**
-		 * Register commands and listeners
+		 * Register commands
 		 */		
 		getCommand("nick").setExecutor(new Nick());
 		getCommand("broadcast").setExecutor(new ServerMessage());
-		getCommand("link").setExecutor(new LinkCommand());
-		getCommand("unlink").setExecutor(new UnlinkCommand());
-		
-		getServer().getPluginManager().registerEvents(new InventoryPressEvent(), this);
-		getServer().getPluginManager().registerEvents(new PlayerDataManager(), this);
-		getServer().getPluginManager().registerEvents(new SpawnProtect(), this);
-		getServer().getPluginManager().registerEvents(new RequestEvents(), this);
-		
-		getServer().getPluginManager().registerEvents(new OnAsyncPlayerChat(), this);
-		getServer().getPluginManager().registerEvents(new OnPlayerDeath(), this);
-		getServer().getPluginManager().registerEvents(new OnPlayerJoin(), this);
-		getServer().getPluginManager().registerEvents(new OnPlayerQuit(), this);
-		getServer().getPluginManager().registerEvents(new OnPlayerAdvancementDone(), this);
-		
-		getServer().getPluginManager().registerEvents(new RoleManager(), this);
-		
-		getServer().getPluginManager().registerEvents(this, this);
-		
-		/**
-		 * Initialize classes
-		 */
+		getCommand("connect").setExecutor(new ConnectCommand());
 		new Skull();
 		new DumpCommand();
 		new TagCommand();
 		new PlayerDataSetCommand();
-		new Bot();
-		
-		// XXX DEBUG
 		new TestInventorySizeCommand("testinventorysize");
+		//
+		
+		/**
+		 * Register listeners
+		 */
+		getServer().getPluginManager().registerEvents(new InventoryPressEvent(), this);
+		getServer().getPluginManager().registerEvents(new PlayerDataManager(), this);
+		getServer().getPluginManager().registerEvents(new SpawnProtect(), this);
+		getServer().getPluginManager().registerEvents(new RequestEvents(), this);
+		getServer().getPluginManager().registerEvents(new OnPlayerDeath(), this);
+		getServer().getPluginManager().registerEvents(new OnPlayerAdvancementDone(), this);
+		getServer().getPluginManager().registerEvents(new OnAsyncPlayerChat(), this);
+		getServer().getPluginManager().registerEvents(new OnPlayerJoin(), this);
+		getServer().getPluginManager().registerEvents(new OnPlayerQuit(), this);
+		getServer().getPluginManager().registerEvents(this, this);
+		new ConnectResponse();
+		new PlayerRoleResponse();
+		new TestPluginMessageCommand("testpluginmessage");
+		//
+		
+		/**
+		 * Initialize classes, loops, methods
+		 */
+		loopForPluginMessages();
+		//
+		
 	}
 	
 	@Override
 	public void onDisable() {
-		Bot.shutdown();
 		PlayerDataManager.saveQ();
 		RequestType.saveRequestsToFile();
 		
@@ -217,5 +208,218 @@ public class CoreMain extends JavaPlugin implements Listener {
 		new RestartScheduler().runTaskTimer(this, secondsUntilRestartCountdown * 20, 20);
 		
 	}
+	
+	public static final String getThisServerName()
+	{
+		return thisServerName;
+	}
+	
+	public static final Map<String, Boolean> getRegisteredServersMap()
+	{
+		return REGISTERED_SERVERS;
+	}
+	
+	// Updates all player nameplates so that they appear correct
+	// Example: A player changes their nickname: this method should be called
+	//			so that other players can correctly see the new nickname
+	public static final void updatePlayerNameplate(PlayerData playerdata)
+	{
+		// Don't do this if the playerdata is offline
+		if (!playerdata.isOnline()) return;
+		
+		final Player player = playerdata.getPlayer();
+		
+		// Updates playerlist, custom name value (spigot/bukkit), and makes the custom name visible to the CLIENT
+		player.setPlayerListName(playerdata.getRankedName());
+		player.setCustomName(playerdata.getRankedName());
+		player.setCustomNameVisible(true);
+		
+		// Do this for every player
+		for (final Player otherPlayer : Bukkit.getOnlinePlayers())
+		{
+			// Skip this iteration if the players are the same
+			if (otherPlayer == playerdata.getPlayer()) continue;
+			
+			// Weird way to update the name of a player for other players to see it
+			player.hidePlayer(CoreMain.plugin, otherPlayer);
+			player.showPlayer(CoreMain.plugin, otherPlayer);
+		}
+		
+	}
+	
+	/**
+	 * A loop for operations that require repeatedly
+	 * sending Plugin Messages to the proxy.
+	 */
+	private final void loopForPluginMessages()
+	{
+		/**
+		 * Used to randomly select an online player to send the Plugin Message through.
+		 */
+		final Random random = new Random(System.currentTimeMillis());
+		
+		Bukkit.getScheduler().runTaskTimerAsynchronously(this, new Runnable() {
+			
+			@Override
+			public void run() {
+				final Collection<? extends Player> onlinePlayers = Bukkit.getOnlinePlayers();
+				
+				/**
+				 * The server can only connect to the proxy through proxied players.
+				 */
+				if (onlinePlayers.isEmpty()) return;
+				
+				// The randomly selected online player to send the Plugin Message through
+				final Player player = (Player) onlinePlayers.toArray()[random.nextInt(onlinePlayers.size())];
+				
+				getServers(player); // Doesn't require a player, but cannot receive the response without an online player
+				pingServer(player); // Doesn't require a player, but cannot receive the response without an online player
+				
+				// Don't need to check this server's name again
+				// *Might* change during runtime, but eh..
+				if (thisServerName == null || thisServerName.isEmpty())
+				{
+					getServer(player);
+				}
+				
+			}
+			
+			/**
+			 * [GetServers]
+			 * 
+			 * Use Bungeecord channel to ask for a list of servers. Response
+			 * is handled in the plugin message received listener (in Main).
+			 * 
+			 * PLUGIN MESSAGE FORM (BungeeCord): GetServers
+			 * 
+			 */
+			private final void getServers(final Player player)
+			{
+				PluginMessageType.GET_SERVERS.send(player)
+					.whenComplete((args, exception) -> {
+						if (exception != null)
+						{
+							Logger.error("Exception occurred for plugin message GET_SERVERS:");
+							exception.printStackTrace();
+							
+							return;
+						}
+						/**
+						 * BungeeCord (bungeecord:main) is a Channel Identifier
+						 * that is automatically handled by Velocity.
+						 * 
+						 * ------------------
+						 * 
+						 * [GetServers] Response
+						 * 
+						 * Returns a csv list of the registered servers on the proxy
+						 * 
+						 * PLUGIN MESSAGE FORM (BungeeCord): GetServers, CSV server names
+						 */
+						final String serverNamesCSV = args.get(1);
+						
+						Logger.debug("CSV Server Names: " + serverNamesCSV);
+						
+						// CSV to Array
+						final String[] servers = serverNamesCSV.toLowerCase().split(", ");
+						final Map<String, Boolean> newRegisteredServers = new HashMap<>();
+						
+						for (final String server : servers)
+						{
+							newRegisteredServers.put(server, REGISTERED_SERVERS.getOrDefault(server, Boolean.TRUE));
+						}
+						
+						/**
+						 * Clear and re-add servers in case the
+						 * registered servers in the velocity.toml changed.
+						 */
+						REGISTERED_SERVERS.clear();
+						REGISTERED_SERVERS.putAll(newRegisteredServers);
+						
+					});
+				
+			}
+			
+			/**
+			 * Updates onlineServers for use throughout the plugin
+			 * by checking the ping of each registered server.
+			 * 
+			 * [PingServer]
+			 * 
+			 * The PingServer subchannel is used for checking if a server is online and reachable by the proxy.
+	    	 * 
+	    	 * PLUGIN MESSAGE FORM (pgf:main): PingServer, <server name>
+			 */
+			private final void pingServer(final Player player)
+			{
+				for (final String server : REGISTERED_SERVERS.keySet())
+				{
+					PluginMessageType.PING_SERVER.send(player, server)
+						.whenComplete((args, exception) -> {
+							if (exception != null)
+							{
+								Logger.error("Exception occurred for plugin message PING_SERVER:");
+								exception.printStackTrace();
+								
+								return;
+							}
+							/**
+					    	 * [PingServerResponse]
+					    	 * 
+					    	 * The PingServerResponse says if the proxy could ping the specified server.
+					    	 * 
+					    	 * PLUGIN MESSAGE FORM (pgf:main): PingServerResponse, <server name>, <true/false>
+					    	 */
+							final String serverName = args.get(1);
+							final Boolean isOnline = Boolean.parseBoolean(args.get(2));
+							
+							Logger.debug("Server Name: " + serverName);
+							Logger.debug("Online: " + isOnline);
+							
+							if (serverName == null || isOnline == null) return;
+							
+							REGISTERED_SERVERS.put(serverName, isOnline);
+							
+						});
+					
+				}
+				
+			}
+			
+			/**
+			 * [GetServer]
+			 * 
+			 * Gets the server the player is connected to (this server)
+			 * 
+			 * PLUGIN FORM (BungeeCord): GetServer
+			 * 
+			 * @param player
+			 */
+			private final void getServer(final Player player)
+			{
+				PluginMessageType.GET_SERVER.send(player)
+					.whenComplete((args, exception) -> {
+						if (exception != null)
+						{
+							Logger.error("Exception occurred for plugin message GET_SERVER:");
+							exception.printStackTrace();
+							
+							return;
+						}
+						
+						final String serverName = args.get(1);
+						
+						Logger.debug("This Server Name: " + serverName);
+						
+						thisServerName = serverName;
+						
+					});
+				
+			}
+			
+		}, 200L, 200L); // 10 seconds
+		
+	}
+	
 	
 }
