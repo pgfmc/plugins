@@ -37,8 +37,8 @@ public enum PluginMessageType {
 	// pgf:main
 	CONNECT(PluginMessage.CHANNEL_PGF, "Connect", PluginMessageMatchType.SENDER),
 	PING_SERVER(PluginMessage.CHANNEL_PGF, "PingServer", PluginMessageMatchType.ARGUMENT),
-	PLAYER_ROLE(PluginMessage.CHANNEL_PGF, "GetPlayerRole", PluginMessageMatchType.ARGUMENT),
-	DISCORD_MESSAGE(PluginMessage.CHANNEL_PGF, "DiscordMessage", PluginMessageMatchType.NONE);
+	DISCORD_MESSAGE(PluginMessage.CHANNEL_PGF, "DiscordMessage", PluginMessageMatchType.NONE),
+	PLAYER_DATA(PluginMessage.CHANNEL_PGF, "PlayerData", PluginMessageMatchType.ARGUMENT);
 	
 	/**
 	 * Determines how to check if the plugin message response matches the original plugin message

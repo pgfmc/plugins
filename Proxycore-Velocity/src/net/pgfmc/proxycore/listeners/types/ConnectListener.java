@@ -13,10 +13,10 @@ import net.pgfmc.proxycore.util.Logger;
 import net.pgfmc.proxycore.util.proxy.PluginMessage;
 import net.pgfmc.proxycore.util.proxy.PluginMessageType;
 
-public class Connect extends PluginMessage {
+public class ConnectListener extends PluginMessage {
 
-	public Connect(PluginMessageType type) {
-		super(type);
+	public ConnectListener() {
+		super(PluginMessageType.CONNECT);
 		
 	}
 	

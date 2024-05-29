@@ -10,15 +10,6 @@ load: POSTWORLD
 prefix: PGF-Core
 
 commands:
-  nick:
-    usage: /<command> [nickname]
-    description: Set a custom nickname
-    permission: net.pgfmc.core.nick
-    aliases: [nickname, nn]
-  skull:
-    usage: /<command> [player]
-    description: Obtain a player skull
-    permission: net.pgfmc.core.skull
   dump:
     usage: /<command> [player]
     description: dumps all playerdata to the sender

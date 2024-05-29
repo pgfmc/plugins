@@ -6,7 +6,7 @@ import org.bukkit.event.inventory.InventoryType;
 
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
-import net.pgfmc.core.cmd.admin.Skull;
+import net.pgfmc.survival.cmd.Skull;
 import net.pgfmc.survival.menu.staff.manageplayers.ManagePlayerInventory;
 
 public class InventorySeeSelectInventory extends BaseInventory {
