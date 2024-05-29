@@ -9,10 +9,10 @@ import net.pgfmc.proxycore.bot.Discord;
 import net.pgfmc.proxycore.util.proxy.PluginMessage;
 import net.pgfmc.proxycore.util.proxy.PluginMessageType;
 
-public class DiscordMessage extends PluginMessage {
+public class DiscordMessageListener extends PluginMessage {
 
-	public DiscordMessage(PluginMessageType type) {
-		super(type);
+	public DiscordMessageListener() {
+		super(PluginMessageType.DISCORD_MESSAGE);
 		
 	}
 

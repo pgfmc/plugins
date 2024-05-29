@@ -14,6 +14,7 @@ import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.playerdata.PlayerDataManager;
 import net.pgfmc.core.util.files.Mixins;
 import net.pgfmc.survival.cmd.Back;
+import net.pgfmc.survival.cmd.Skull;
 import net.pgfmc.survival.cmd.afk.Afk;
 import net.pgfmc.survival.cmd.afk.AfkEvents;
 import net.pgfmc.survival.cmd.donator.Craft;
@@ -91,6 +92,7 @@ public class Main extends JavaPlugin {
 		new Pvp();
 		new Warp("warp");
 		new Back("back");
+		new Skull();
 		
 		// Listeners
 		getServer().getPluginManager().registerEvents(new CommandMenuBookInput(), this);

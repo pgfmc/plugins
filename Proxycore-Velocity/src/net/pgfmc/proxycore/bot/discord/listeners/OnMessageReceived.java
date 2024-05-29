@@ -9,7 +9,6 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent.Builder;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.proxycore.bot.Discord;
 import net.pgfmc.proxycore.bot.util.MessageHandler;
@@ -59,24 +58,19 @@ public class OnMessageReceived extends MessageHandler {
 			
 		}
 		
-		final Builder textComponentBuilder = Component.text();
-		
 		// If it isn't a reply
 		if(message.getReferencedMessage() == null || message.getReferencedMessage().getAuthor().isBot())
 		{
-			textComponentBuilder.append(
-					Component.text(((memberRole.compareTo(PGFRole.STAFF) <= 0) ? PGFRole.STAFF_DIAMOND : "") + e.getMember().getEffectiveName())
-						.color(memberRole.getColor()));
+			final Component component = Component.text()
+					.append(Component.text(((memberRole.compareTo(PGFRole.STAFF) <= 0) ? PGFRole.STAFF_DIAMOND : "") + e.getMember().getEffectiveName())
+						.color(memberRole.getColor()))
+					.append(Component.text(" -|| ")
+							.color(NamedTextColor.GRAY))
+					.append(Component.text(message.getContentDisplay()))
+					.color(getExpectedTextColor(user.getEffectiveName()))
+					.build();
 			
-			textComponentBuilder.append(
-					Component.text(" -|| ")
-						.color(NamedTextColor.GRAY));
-			
-			textComponentBuilder.append(
-					Component.text(message.getContentDisplay()))
-						.color(getExpectedTextColor(user.getEffectiveName()));
-			
-			sendToMinecraft(textComponentBuilder.build());
+			sendToMinecraft(component);
 			
 			return;
 		} else { // is reply
@@ -89,23 +83,18 @@ public class OnMessageReceived extends MessageHandler {
             	
             }
             
-            textComponentBuilder.append(
-					Component.text(((memberRole.compareTo(PGFRole.STAFF) <= 0) ? PGFRole.STAFF_DIAMOND : "") + e.getMember().getEffectiveName() + " replied to ")
-						.color(memberRole.getColor()));
-            
-            textComponentBuilder.append(
-					Component.text(((memberRole.compareTo(PGFRole.STAFF) <= 0) ? PGFRole.STAFF_DIAMOND : "") + replyMember.getEffectiveName())
-						.color(replyRole.getColor()));
+            final Component component = Component.text()
+            		.append(Component.text(((memberRole.compareTo(PGFRole.STAFF) <= 0) ? PGFRole.STAFF_DIAMOND : "") + e.getMember().getEffectiveName() + " replied to ")
+            				.color(memberRole.getColor()))
+            		.append(Component.text(((memberRole.compareTo(PGFRole.STAFF) <= 0) ? PGFRole.STAFF_DIAMOND : "") + replyMember.getEffectiveName())
+            				.color(replyRole.getColor()))
+            		.append(Component.text(" -|| ")
+            				.color(NamedTextColor.GRAY))
+            		.append(Component.text(message.getContentDisplay())
+            				.color(getExpectedTextColor(user.getEffectiveName())))
+            		.build();
 			
-			textComponentBuilder.append(
-					Component.text(" -|| ")
-						.color(NamedTextColor.GRAY));
-			
-			textComponentBuilder.append(
-					Component.text(message.getContentDisplay()))
-						.color(getExpectedTextColor(user.getEffectiveName()));
-			
-			sendToMinecraft(textComponentBuilder.build());
+			sendToMinecraft(component);
             
             return;
 		}

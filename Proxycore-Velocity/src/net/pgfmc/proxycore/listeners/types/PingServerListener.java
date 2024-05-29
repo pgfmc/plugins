@@ -18,10 +18,10 @@ import net.pgfmc.proxycore.util.Logger;
 import net.pgfmc.proxycore.util.proxy.PluginMessage;
 import net.pgfmc.proxycore.util.proxy.PluginMessageType;
 
-public class PingServer extends PluginMessage {
+public class PingServerListener extends PluginMessage {
 
-	public PingServer(PluginMessageType type) {
-		super(type);
+	public PingServerListener() {
+		super(PluginMessageType.PING_SERVER);
 		
 	}
 	

@@ -17,8 +17,8 @@ import net.pgfmc.proxycore.util.Logger;
 public enum PluginMessageType {
 	CONNECT("Connect"),
 	PING_SERVER("PingServer"),
-	GET_PLAYER_ROLE("GetPlayerRole"),
-	DISCORD_MESSAGE("DiscordMessage");
+	DISCORD_MESSAGE("DiscordMessage"),
+	PLAYER_DATA("PlayerData");
 	
 	final String subchannel;
 	

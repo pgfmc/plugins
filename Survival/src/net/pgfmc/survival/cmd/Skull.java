@@ -1,4 +1,4 @@
-package net.pgfmc.core.cmd.admin;
+package net.pgfmc.survival.cmd;
 
 import java.util.UUID;
 

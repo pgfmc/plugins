@@ -1,23 +1,24 @@
 package net.pgfmc.proxycore.listeners.velocity;
 
+import java.util.UUID;
+
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.PlayerChatEvent;
 import com.velocitypowered.api.proxy.Player;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent.Builder;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.proxycore.bot.Discord;
 import net.pgfmc.proxycore.bot.util.MessageHandler;
-import net.pgfmc.proxycore.roles.PGFRole;
-import net.pgfmc.proxycore.roles.RoleManager;
+import net.pgfmc.proxycore.util.GlobalPlayerData;
 
 public final class OnPlayerChat extends MessageHandler {
 	
 	@Subscribe
 	public void onChat(PlayerChatEvent e) {
 		final Player player = e.getPlayer();
+		final UUID uuid = player.getUniqueId();
 		final String message = e.getMessage();
 		
 		sendToDiscord(player.getUsername(), Discord.convertDiscordMentions(message));
@@ -41,19 +42,15 @@ public final class OnPlayerChat extends MessageHandler {
 		}
 		*/
 		
-		final PGFRole role = RoleManager.getRoleFromPlayerUuid(player.getUniqueId());
-		final Builder textComponentBuilder = Component.text();
-		
-		textComponentBuilder.append(Component.text(((role.compareTo(PGFRole.STAFF) <= 0) ? PGFRole.STAFF_DIAMOND : "") + player.getUsername())
-				.color(role.getColor()));
-		
-		textComponentBuilder.append(Component.text(" -> ")
-				.color(NamedTextColor.DARK_GRAY));
-		
-		textComponentBuilder.append(Component.text(message)
-				.color(getExpectedTextColor(player.getUsername())));
+		final Component component = Component.text()
+				.append(GlobalPlayerData.getRankedName(uuid))
+				.append(Component.text(" -> ")
+						.color(NamedTextColor.DARK_GRAY))
+				.append(Component.text(message)
+						.color(getExpectedTextColor(player.getUsername())))
+				.build();
 				
-		sendToMinecraft(textComponentBuilder.build());
+		sendToMinecraft(component);
 		
 	}
 

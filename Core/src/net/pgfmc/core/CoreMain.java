@@ -34,13 +34,11 @@ import net.pgfmc.core.api.request.RequestType;
 import net.pgfmc.core.api.teleport.SpawnProtect;
 import net.pgfmc.core.bot.minecraft.listeners.OnPlayerAdvancementDone;
 import net.pgfmc.core.bot.minecraft.listeners.OnPlayerDeath;
-import net.pgfmc.core.cmd.admin.Skull;
-import net.pgfmc.core.cmd.donator.Nick;
 import net.pgfmc.core.cmd.serverselector.ConnectCommand;
 import net.pgfmc.core.cmd.test.inventory.TestInventorySizeCommand;
 import net.pgfmc.core.cmd.test.pluginmessage.TestPluginMessageCommand;
 import net.pgfmc.core.listeners.ConnectResponse;
-import net.pgfmc.core.listeners.PlayerRoleResponse;
+import net.pgfmc.core.listeners.PlayerDataResponse;
 import net.pgfmc.core.listeners.minecraft.OnAsyncPlayerChat;
 import net.pgfmc.core.listeners.minecraft.OnPlayerJoin;
 import net.pgfmc.core.listeners.minecraft.OnPlayerQuit;
@@ -126,18 +124,17 @@ public class CoreMain extends JavaPlugin implements Listener {
 		});
 		
 		PlayerDataManager.setInit(pd -> {
-			PluginMessageType.PLAYER_ROLE.send(CoreMain.plugin.getServer(), pd.getUniqueId().toString());
+			PluginMessageType.PLAYER_DATA.send(CoreMain.plugin.getServer(), pd.getUniqueId().toString(), "role");
+			PluginMessageType.PLAYER_DATA.send(CoreMain.plugin.getServer(), pd.getUniqueId().toString(), "discord");
 			
 		});
 		//
 		
 		/**
 		 * Register commands
-		 */		
-		getCommand("nick").setExecutor(new Nick());
+		 */
 		getCommand("broadcast").setExecutor(new ServerMessage());
 		getCommand("connect").setExecutor(new ConnectCommand());
-		new Skull();
 		new DumpCommand();
 		new TagCommand();
 		new PlayerDataSetCommand();
@@ -158,7 +155,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new OnPlayerQuit(), this);
 		getServer().getPluginManager().registerEvents(this, this);
 		new ConnectResponse();
-		new PlayerRoleResponse();
+		new PlayerDataResponse();
 		new TestPluginMessageCommand("testpluginmessage");
 		//
 		

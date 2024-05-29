@@ -7,6 +7,7 @@ import com.google.inject.Inject;
 import com.velocitypowered.api.command.CommandManager;
 import com.velocitypowered.api.command.CommandMeta;
 import com.velocitypowered.api.command.RawCommand;
+import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
@@ -19,17 +20,18 @@ import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.pgfmc.proxycore.bot.Bot;
 import net.pgfmc.proxycore.commands.LinkCommand;
+import net.pgfmc.proxycore.commands.NicknameCommand;
 import net.pgfmc.proxycore.commands.StopProxyCommand;
 import net.pgfmc.proxycore.commands.UnlinkCommand;
-import net.pgfmc.proxycore.listeners.types.Connect;
-import net.pgfmc.proxycore.listeners.types.DiscordMessage;
-import net.pgfmc.proxycore.listeners.types.PingServer;
+import net.pgfmc.proxycore.listeners.types.ConnectListener;
+import net.pgfmc.proxycore.listeners.types.DiscordMessageListener;
+import net.pgfmc.proxycore.listeners.types.PingServerListener;
+import net.pgfmc.proxycore.listeners.types.PlayerDataListener;
 import net.pgfmc.proxycore.listeners.velocity.OnDisconnect;
 import net.pgfmc.proxycore.listeners.velocity.OnPlayerChat;
 import net.pgfmc.proxycore.listeners.velocity.OnPostLogin;
-import net.pgfmc.proxycore.roles.RoleManager;
+import net.pgfmc.proxycore.listeners.velocity.OnServerPostConnect;
 import net.pgfmc.proxycore.util.Logger;
-import net.pgfmc.proxycore.util.proxy.PluginMessageType;
 
 @Plugin(id = "pgf", name = "Proxycore", version = "0.0.0",
         url = "https://www.pgfmc.net", description = "Core functionality for the proxy", authors = {"PGF"})
@@ -90,9 +92,7 @@ public class Main {
     	/**
 		 * LuckPerms API
 		 */
-		
-		final LuckPerms luckPermsApi = LuckPermsProvider.get();
-		lp = luckPermsApi;
+		lp = LuckPermsProvider.get();
     	
     	/**
     	 * Initialize classes
@@ -103,13 +103,14 @@ public class Main {
     	 * Register listeners
     	 */
     	proxy.getChannelRegistrar().register(IDENTIFIER);
-    	new RoleManager(PluginMessageType.GET_PLAYER_ROLE, luckPermsApi);
     	proxy.getEventManager().register(this, new OnPlayerChat());
     	proxy.getEventManager().register(this, new OnPostLogin());
     	proxy.getEventManager().register(this, new OnDisconnect());
-    	new Connect(PluginMessageType.CONNECT);
-    	new PingServer(PluginMessageType.PING_SERVER);
-    	new DiscordMessage(PluginMessageType.DISCORD_MESSAGE);
+    	new ConnectListener();
+    	new PingServerListener();
+    	new DiscordMessageListener();
+    	new PlayerDataListener();
+    	new OnServerPostConnect();
     	
     	/**
     	 * Register Commands
@@ -126,7 +127,6 @@ public class Main {
     	final RawCommand stopproxyCommand = new StopProxyCommand();
     	
     	manager.register(stopproxyMeta, stopproxyCommand);
-    	//
     	
     	/**
     	 * link
@@ -138,7 +138,6 @@ public class Main {
     	final RawCommand linkCommand = new LinkCommand();
     	
     	manager.register(linkMeta, linkCommand);
-    	//
     	
     	/**
     	 * unlink
@@ -150,7 +149,18 @@ public class Main {
     	final RawCommand unlinkCommand = new UnlinkCommand();
     	
     	manager.register(unlinkMeta, unlinkCommand);
-    	//
+    	
+    	/**
+    	 * unlink
+    	 */
+    	final CommandMeta nicknameMeta = manager.metaBuilder("nickname")
+    			.plugin(this)
+    			.aliases("nick")
+    			.build();
+    	
+    	final SimpleCommand nicknameCommand = new NicknameCommand();
+    	
+    	manager.register(nicknameMeta, nicknameCommand);
     	
     }
     

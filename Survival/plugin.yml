@@ -28,6 +28,10 @@ commands:
     description: Toggles PvP mode
     usage: /<command>
     permission: net.pgfmc.survival.pvp
+  skull:
+    usage: /<command> [player]
+    description: Obtain a player skull
+    permission: net.pgfmc.core.skull
   menu:
     aliases: [c, m, commands]
     description: Open up the Command Menu

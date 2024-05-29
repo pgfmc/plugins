@@ -1,28 +1,28 @@
 package net.pgfmc.proxycore.commands;
 
 import java.util.List;
-import java.util.regex.Pattern;
-
-import org.bukkit.command.CommandSender;
+import java.util.UUID;
 
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent.Builder;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.pgfmc.proxycore.util.GlobalPlayerData;
 
-public class Nickname implements SimpleCommand {
+public class NicknameCommand implements SimpleCommand {
 	
 	@Override
 	public void execute(final Invocation invocation)
 	{
 		if (!(invocation.source() instanceof Player))
 		{
-			// TODO send message
+			invocation.source().sendMessage(Component.text("Only players can execute this command.").color(NamedTextColor.RED));
 			return;
 		}
 		
 		final Player player = (Player) invocation.source();
+		final UUID uuid = player.getUniqueId();
 		final List<String> args = List.of(invocation.arguments());
 		
 		if (args.isEmpty())
@@ -46,20 +46,30 @@ public class Nickname implements SimpleCommand {
 		 */
 		if (nickname.equals("off") || nickname.equals(player.getUsername()))
 		{
-			pd.setData("nick", null).queue();
-			pd.sendMessage(ChatColor.GOLD + "Nickname changed to " + pd.getRankedName() + ChatColor.GOLD + "!");
+			GlobalPlayerData.setData(uuid, "nickname", player.getUsername());
 			
-			CoreMain.updatePlayerNameplate(pd);
+			player.sendMessage(Component.text()
+					.append(Component.text("Nickname changed to ")
+							.color(NamedTextColor.GOLD))
+					.append(GlobalPlayerData.getRankedName(uuid))
+					.append(Component.text("!")
+							.color(NamedTextColor.GOLD))
+					.build());
 			
 			return;
 		}
 		
-		pd.setData("nick", nickWithColor).queue();
-		pd.sendMessage(ChatColor.GOLD + "Nickname changed to " + pd.getRankedName() + ChatColor.GOLD + "!");
+		GlobalPlayerData.setData(uuid, "nickname", nickname);
 		
-		CoreMain.updatePlayerNameplate(pd);
+		player.sendMessage(Component.text()
+				.append(Component.text("Nickname changed to ")
+						.color(NamedTextColor.GOLD))
+				.append(GlobalPlayerData.getRankedName(uuid))
+				.append(Component.text("!")
+						.color(NamedTextColor.GOLD))
+				.build());
 		
-		return true;
+		return;
 	}
 	
 	@Override
