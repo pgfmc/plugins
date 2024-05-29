@@ -2,7 +2,9 @@ package net.pgfmc.claims.ownable.inspector;
 
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.core.api.playerdata.PlayerData;
@@ -42,8 +44,15 @@ public class EditOwnableCommand extends PlayerCommand {
 		} else if ("owner".equals(args[0])) {
 			
 			if (args.length > 1) {
-				@SuppressWarnings("deprecation")
-				PlayerData ope = PlayerData.from(args[1]);
+				final Player player = Bukkit.getPlayer(args[1]);
+				
+				if (player == null)
+				{
+					pd.sendMessage(ChatColor.RED + "Please Enter a valid player!");
+					return true;
+				}
+				
+				PlayerData ope = PlayerData.from(player);
 				if (ope != null) {
 					cache.setOwner(ope);
 					pd.sendMessage(ChatColor.GREEN + "Owner set to " + ope.getRankedName());

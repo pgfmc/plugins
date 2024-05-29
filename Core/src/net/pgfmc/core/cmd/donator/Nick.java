@@ -6,10 +6,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.Profanity;
-import net.pgfmc.core.util.roles.RoleManager;
 
 public class Nick implements CommandExecutor {
 
@@ -95,7 +95,7 @@ public class Nick implements CommandExecutor {
 			pd.setData("nick", null).queue();
 			pd.sendMessage(ChatColor.GOLD + "Nickname changed to " + pd.getRankedName() + ChatColor.GOLD + "!");
 			
-			RoleManager.updatePlayerNameplate(pd);
+			CoreMain.updatePlayerNameplate(pd);
 			
 			return true;
 		}
@@ -103,7 +103,7 @@ public class Nick implements CommandExecutor {
 		pd.setData("nick", nickWithColor).queue();
 		pd.sendMessage(ChatColor.GOLD + "Nickname changed to " + pd.getRankedName() + ChatColor.GOLD + "!");
 		
-		RoleManager.updatePlayerNameplate(pd);
+		CoreMain.updatePlayerNameplate(pd);
 		
 		return true;
 	}

@@ -10,7 +10,7 @@ public class RestartScheduler extends BukkitRunnable {
 	
 	@Override
 	public void run()
-	{				
+	{
 		switch (secondsElapsed) {
 		
 		case 0:

@@ -2,22 +2,19 @@ package net.pgfmc.survival.menu;
 
 import java.util.Arrays;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.plugin.Plugin;
 
+import net.pgfmc.core.PGFRole;
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.cmd.admin.Skull;
+import net.pgfmc.core.cmd.serverselector.ServerSelectorInventory;
 import net.pgfmc.core.util.Lang;
-import net.pgfmc.core.util.roles.PGFRole;
-import net.pgfmc.core.util.roles.RoleManager;
-import net.pgfmc.proxycore.serverselector.ServerSelectorInventory;
 import net.pgfmc.survival.Rewards;
 import net.pgfmc.survival.menu.profile.ProfileInventory;
 import net.pgfmc.survival.menu.rewards.RewardsListInventory;
@@ -115,10 +112,10 @@ public class CommandMenuInventory implements InventoryHolder {
 				player.openInventory(new ProfileInventory(playerdata).getInventory());
 			});
 			
-			final PGFRole role = RoleManager.getPlayerTopRole(playerdata);
+			final PGFRole role = playerdata.getData("role");
 			
 			setItem(profile, Skull.getHead(playerdata.getUniqueId()))
-					.n(playerdata.getRankedName() + " (" + role.getName().substring(0,1).toUpperCase() + role.getName().substring(1).toLowerCase() + ")")
+					.n(playerdata.getRankedName() + " (" + role.toString() + ")")
 					.l(ChatColor.GRAY + "Open Profile.");
 			
 			/* 
@@ -363,8 +360,6 @@ public class CommandMenuInventory implements InventoryHolder {
 
             final int servers = 10;
 			/* 
-			 * Soft Depends on Proxycore
-			 * 
 			 * Connect / Server Selector
 			 * [] [] [] [] [] [] [] [] []
 			 * [] XX [] [] [] [] [] [] []
@@ -376,25 +371,12 @@ public class CommandMenuInventory implements InventoryHolder {
 					.n(ChatColor.GOLD + "Server Selector")
 					.l(ChatColor.GRAY + "Connect to another server on the network.");
 				
-				final Plugin proxycorePlugin = Bukkit.getServer().getPluginManager().getPlugin("PGF-Proxycore");
-				
-				if (proxycorePlugin != null && proxycorePlugin.isEnabled()) // Proxycore is loaded and working
-				{
-					setAction(servers, (player, event) -> {
-						final BaseInventory serverSelector = new ServerSelectorInventory(playerdata);
-						serverSelector.setBack(0, new CommandMenuInventory(playerdata).getInventory());
-						
-						player.openInventory(serverSelector.getInventory());
-					});
+				setAction(servers, (player, event) -> {
+					final BaseInventory serverSelector = new ServerSelectorInventory(playerdata);
+					serverSelector.setBack(0, new CommandMenuInventory(playerdata).getInventory());
 					
-				} else // Proxycore is not loaded
-				{
-					setAction(servers, (player, event) -> {
-						player.sendMessage(ChatColor.RED + "The server selector is not available right now.");
-						playerdata.playSound(Sound.ENTITY_VILLAGER_NO);
-					});
-					
-				}
+					player.openInventory(serverSelector.getInventory());
+				});
 				
 			}
 			

@@ -13,7 +13,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import net.pgfmc.core.CoreMain;
-import net.pgfmc.core.util.roles.RoleManager;
 
 public class PlayerDataManager implements Listener {
 
@@ -100,7 +99,7 @@ public class PlayerDataManager implements Listener {
 			pd = new PlayerData(p);
 		}
 		
-		RoleManager.updatePlayerNameplate(pd);
+		CoreMain.updatePlayerNameplate(pd);
 		
 	}
 

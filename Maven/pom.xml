@@ -14,7 +14,6 @@
 	
 	<modules>
 		<module>../Core</module>
-		<module>../Proxycore-Spigot</module>
 		<module>../Claims</module>
 		<module>../ModTools</module>
 		<module>../Survival</module>

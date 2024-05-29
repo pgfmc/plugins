@@ -3,7 +3,9 @@ package net.pgfmc.core.api.request.cmd;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.request.RequestType;
@@ -26,21 +28,22 @@ public class RequestSendCommand extends PlayerCommand {
 			return true;
 		}
 		
-		@SuppressWarnings("deprecation")
-		PlayerData target = PlayerData.from(args[0]);
-		if (target == null) {
+		final Player player = Bukkit.getPlayer(args[0]);
+		
+		if (player == null) {
 			pd.sendMessage(ChatColor.RED + "Player not found");
 			return true;
 			
-		} else if (!target.isOnline() && rt.endsOnQuit()) {
+		} else if (!player.isOnline() && rt.endsOnQuit()) {
 			pd.sendMessage(ChatColor.RED + "Player is not online to receive reqeust.");
 			return true;
 			
-		} else if (pd == target) {
+		} else if (pd.getPlayer() == player) {
 			pd.sendMessage(ChatColor.RED + "You can't send a request to yourself!");
 			return true;
 			
 		}
+		PlayerData target = PlayerData.from(player);
 		rt.createRequest(pd, target);
 		
 		return true;

@@ -1,7 +1,9 @@
 package net.pgfmc.core.util.commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
 
@@ -14,14 +16,14 @@ public class CommandUtils {
 			return null;
 		}
 		
-		@SuppressWarnings("deprecation")
-		PlayerData pd = PlayerData.from(name);
+		final Player player = Bukkit.getPlayer(name);
 		
-		if (pd == null) {
+		if (player == null) {
 			sender.sendMessage(ChatColor.RED + "Invalid player name.");
 			return null;
 		}
 		
+		PlayerData pd = PlayerData.from(player);
 		return pd;
 		
 	}

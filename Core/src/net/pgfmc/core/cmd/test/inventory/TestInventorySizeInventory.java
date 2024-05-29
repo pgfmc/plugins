@@ -22,7 +22,7 @@ public class TestInventorySizeInventory extends BaseInventory {
 		setAction(16, (player, event) -> {
 			
 			final StringBuilder builder = new StringBuilder();
-			builder.append(ChatColor.LIGHT_PURPLE + "" + ChatColor.UNDERLINE + "Creatable InventoryType:\n");
+			builder.append(ChatColor.LIGHT_PURPLE + "Creatable InventoryType:\n");
 			
 			for (final InventoryType type : InventoryType.values())
 			{
