@@ -4,7 +4,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	
-	<artifactId>Proxycore-Velocity</artifactId>
+	<artifactId>Proxycore</artifactId>
 	<packaging>jar</packaging>
 	<parent>
 		<groupId>net.pgfmc</groupId>

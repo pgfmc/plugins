@@ -17,7 +17,7 @@
 		<module>../Claims</module>
 		<module>../ModTools</module>
 		<module>../Survival</module>
-		<module>../Proxycore-Velocity</module>
+		<module>../Proxycore</module>
 	</modules>
 	
 	<build>
