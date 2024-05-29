@@ -1,6 +1,7 @@
 package net.pgfmc.proxycore;
 
 import java.nio.file.Path;
+import java.util.UUID;
 
 import com.google.inject.Inject;
 import com.velocitypowered.api.command.CommandManager;
@@ -97,8 +98,6 @@ public class Main {
     	//
         //
 
-        GlobalPlayerData.setup();
-    	
     }
     
 }

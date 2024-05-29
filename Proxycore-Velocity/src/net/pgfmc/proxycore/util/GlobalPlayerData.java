@@ -1,6 +1,7 @@
 package net.pgfmc.proxycore.util;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -8,50 +9,53 @@ import java.util.UUID;
 
 import com.moandjiezana.toml.Toml;
 
-import net.pgfmc.proxycore.Main;
-
 public class GlobalPlayerData {
     
+    public static String dataPath = "/pgf/proxied-test/velocity/plugins/PGF-Proxycore" + File.separator.toString() + "playerdata" + File.separator.toString();
 
-    public UUID playerUuid;
-    public String playerNick;
-    public String discordID;
+    public static String getDiscordID(UUID uuid) {
 
-    public static void setup() {
-
-        UUID me = UUID.fromString("8ebdc17a-8225-4b6f-8d49-e761fbfb5741");
-    
-        Path path = Main.plugin.dataDirectory;
-
-        String pathname = "/pgf/proxied-test/velocity/plugins/Proxycore-Velocity" + File.separator.toString() + "playerdata" + File.separator.toString() + me + ".toml";
-
-        path = Path.of(pathname);
-
-        Logger.log(path.toString());
-
-
+        Path path = Path.of(dataPath + uuid.toString() + ".toml");
 
         try {
             Toml file = new Toml().read(Files.readString(path));
-            String discord = file.getString("discord");
-            String nick = file.getString("nick");
-            Logger.log("discord: " + discord + " and nick: " + nick); 
+            return file.getString("discord");
 
         } catch (IOException ex) {
-            Logger.error("Failed to load playerdata file!");
+            return null;
         }
+    }
 
+    public static String getNickname(UUID uuid) {
 
+        Path path = Path.of(dataPath + uuid.toString() + ".toml");
 
+        try {
+            Toml file = new Toml().read(Files.readString(path));
+            return file.getString("nick");
 
-        //Logger.error(input.toString());
+        } catch (IOException ex) {
+            return null;
+        }
+    }
 
-        //System.out.println(input);
+    public static void setData(UUID uuid, String id, String nick) {
 
+        String path = dataPath + uuid.toString() + ".toml";
+        String data = "discord = \"" + id + "\"\nnick = \"" + nick + "\"";
+        File file = new File(path);
 
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
+            }
 
+            FileWriter fw = new FileWriter(file);
+            fw.write(data);
+            fw.close();
 
-
-
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }
