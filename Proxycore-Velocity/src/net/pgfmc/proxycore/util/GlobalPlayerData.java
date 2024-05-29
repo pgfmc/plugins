@@ -42,7 +42,20 @@ public class GlobalPlayerData {
     public static void setData(UUID uuid, String id, String nick) {
 
         String path = dataPath + uuid.toString() + ".toml";
-        String data = "discord = \"" + id + "\"\nnick = \"" + nick + "\"";
+        String data = "";
+
+        if (id != null) {
+            data = "discord = \"" + id + "\"";
+        }
+
+        if (id != null && nick != null) {
+            data = data + "\n";
+        }
+
+        if (nick != null) {
+            data = data + "nick = \"" + nick + "\"";
+        }
+
         File file = new File(path);
 
         try {
