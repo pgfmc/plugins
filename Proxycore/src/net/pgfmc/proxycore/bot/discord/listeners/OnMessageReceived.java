@@ -65,7 +65,7 @@ public class OnMessageReceived extends MessageHandler {
 					.append(Component.text(((memberRole.compareTo(PGFRole.STAFF) <= 0) ? PGFRole.STAFF_DIAMOND : "") + e.getMember().getEffectiveName())
 						.color(memberRole.getColor()))
 					.append(Component.text(" -|| ")
-							.color(NamedTextColor.GRAY))
+							.color(NamedTextColor.DARK_GRAY))
 					.append(Component.text(message.getContentDisplay()))
 					.color(getExpectedTextColor(user.getEffectiveName()))
 					.build();
@@ -89,7 +89,7 @@ public class OnMessageReceived extends MessageHandler {
             		.append(Component.text(((memberRole.compareTo(PGFRole.STAFF) <= 0) ? PGFRole.STAFF_DIAMOND : "") + replyMember.getEffectiveName())
             				.color(replyRole.getColor()))
             		.append(Component.text(" -|| ")
-            				.color(NamedTextColor.GRAY))
+            				.color(NamedTextColor.DARK_GRAY))
             		.append(Component.text(message.getContentDisplay())
             				.color(getExpectedTextColor(user.getEffectiveName())))
             		.build();

@@ -1,7 +1,5 @@
 package net.pgfmc.proxycore.util.proxy;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.google.common.io.ByteArrayDataOutput;
@@ -9,6 +7,7 @@ import com.google.common.io.ByteStreams;
 import com.velocitypowered.api.proxy.messages.ChannelMessageSink;
 
 import net.pgfmc.proxycore.Main;
+import net.pgfmc.proxycore.roles.PGFRole;
 import net.pgfmc.proxycore.util.Logger;
 
 /**
@@ -55,7 +54,7 @@ public enum PluginMessageType {
 	 * @param sender A Player or a ServerConnection
 	 * @param args The arguments. Do not include the subchannel
 	 */
-	public final void send(final ChannelMessageSink sender, final List<String> args)
+	private final void sendPluginMessage(final ChannelMessageSink sender, final List<Object> arguments)
 	{
 		Logger.debug("------------------------------");
 		Logger.debug("Sending plugin message.");
@@ -68,24 +67,53 @@ public enum PluginMessageType {
 		out.writeUTF(subchannel);
 		
 		// include any arguments
-		for (final String arg : args)
+		for (final Object arg : arguments)
 		{
-			Logger.debug("arg: " + arg);
-			out.writeUTF(arg);
+			
+			if (arg instanceof String) {
+				out.writeUTF((String) arg);
+				
+			} else if (arg instanceof Integer) {
+				out.writeInt((Integer) arg);
+				
+			} else if (arg instanceof Boolean) {
+				out.writeBoolean((Boolean) arg);
+				
+			} else if (arg instanceof Double) {
+				out.writeDouble((Double) arg);
+				
+			} else if (arg instanceof Float) {
+				out.writeFloat((Float) arg);
+				
+			} else if (arg instanceof Long) {
+				out.writeLong((Long) arg);
+				
+			} else if (arg instanceof Short) {
+				out.writeShort((Short) arg);
+				
+			} else if (arg instanceof PGFRole) {
+				out.writeUTF(((PGFRole) arg).name());
+				
+			} else
+			{
+				Logger.warn("Cannot send unsupported data type: " + arg.getClass().toString());
+				return;
+			}
+			
 		}
 		
 		sender.sendPluginMessage(Main.IDENTIFIER, out.toByteArray());
 		
 	}
 	
-	public final void send(final ChannelMessageSink sender, final String... arguments)
+	public final void send(final ChannelMessageSink sender, final Object... arguments)
 	{
-		send(sender, Arrays.asList(arguments));
+		sendPluginMessage(sender, List.of(arguments));
 	}
 	
 	public final void send(final ChannelMessageSink sender)
 	{
-		send(sender, new ArrayList<String>());
+		sendPluginMessage(sender, List.of());
 	}
 	
 }

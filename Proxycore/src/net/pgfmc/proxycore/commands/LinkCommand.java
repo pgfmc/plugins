@@ -30,7 +30,7 @@ public final class LinkCommand implements RawCommand {
 		final Player player = (Player) invocation.source();
 		final String discordUserId = RoleManager.getDiscordUserIdFromPlayerUuid(player.getUniqueId());
 		
-		if (discordUserId != null)
+		if (discordUserId != null && !discordUserId.isBlank())
 		{
 			player.sendMessage(Component.text()
 					.append(Component.text("Your Discord has already been linked.")

@@ -1,8 +1,8 @@
 package net.pgfmc.proxycore.listeners.types;
 
-import java.util.List;
 import java.util.UUID;
 
+import com.google.common.io.ByteArrayDataInput;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ServerConnection;
 
@@ -18,12 +18,11 @@ public class PlayerDataListener extends PluginMessage {
 	}
 
 	@Override
-	public void onPluginMessageReceived(ServerConnection connection, Player player, List<String> args) {
-		final UUID uuid = UUID.fromString(args.get(1));
-		final String key = args.get(2);
-		final String value = GlobalPlayerData.getData(uuid, key);
+	public void onPluginMessageReceived(ServerConnection connection, Player player, ByteArrayDataInput in, final byte[] message) {
+		in.readUTF();
+		final UUID uuid = UUID.fromString(in.readUTF());
 		
-		getType().send(connection, uuid.toString(), key, value);
+		GlobalPlayerData.propogateGlobalPlayerData(uuid);
 		
 	}
 

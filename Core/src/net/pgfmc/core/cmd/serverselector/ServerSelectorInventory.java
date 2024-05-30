@@ -65,7 +65,7 @@ public final class ServerSelectorInventory extends BaseInventory {
 		final String blackRightPointingPointerIcon = new String(Character.toChars(0x25BA));
 		final String blackStarIcon = new String(Character.toChars(0x2605));
 		
-		if (CoreMain.getThisServerName() == null || !CoreMain.getThisServerName().contains("test"))
+		if (CoreMain.getThisServerName() == null || !CoreMain.getThisServerName().contains("test")) // if the main proxy
 		{
 			/**
 			 * The Survival server
@@ -198,7 +198,7 @@ public final class ServerSelectorInventory extends BaseInventory {
 				
 			}
 			
-		} else
+		} else // test server
 		{
 			/**
 			 * The Test1 server

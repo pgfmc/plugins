@@ -2,10 +2,8 @@ package net.pgfmc.proxycore.roles;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 import com.moandjiezana.toml.Toml;
@@ -23,8 +21,6 @@ import net.pgfmc.proxycore.util.Mixins;
 import net.pgfmc.proxycore.util.proxy.PluginMessageType;
 
 public final class RoleManager  {
-	
-	private static final Map<UUID, String> PLAYER_UUID_DISCORD_USER_ID_PAIRS = new HashMap<>();
 	
 	private static final LuckPerms lp = Main.lp;
 	
@@ -46,30 +42,15 @@ public final class RoleManager  {
 	
 	public static final String getDiscordUserIdFromPlayerUuid(final UUID uuid)
 	{
-		if (PLAYER_UUID_DISCORD_USER_ID_PAIRS.containsKey(uuid) && PLAYER_UUID_DISCORD_USER_ID_PAIRS.get(uuid) != null) return PLAYER_UUID_DISCORD_USER_ID_PAIRS.get(uuid);
-		
 		final String discordUserId = GlobalPlayerData.getData(uuid, "discord");
 		
 		if (discordUserId == null || discordUserId.isBlank()) return null;
-		
-		PLAYER_UUID_DISCORD_USER_ID_PAIRS.put(uuid, discordUserId);
 		
 		return discordUserId;
 	}
 	
 	public static final UUID getPlayerUuidFromDiscordUserId(final String discordUserId)
 	{
-		if (PLAYER_UUID_DISCORD_USER_ID_PAIRS.containsValue(discordUserId))
-		{
-			for (Entry<UUID, String> entry : PLAYER_UUID_DISCORD_USER_ID_PAIRS.entrySet()) {
-		        if (Objects.equals(discordUserId, entry.getValue())) {
-		            return entry.getKey();
-		        }
-		        
-		    }
-			
-		}
-		
 		final File playerdataParentFile = Mixins.getFile(Path.of(Main.plugin.configDirectory + File.separator + "playerdata"));
 		
 		for (final File playerdataFile : playerdataParentFile.listFiles())
@@ -88,8 +69,6 @@ public final class RoleManager  {
 	
 	public static final void linkPlayerDiscord(final UUID playerUuid, final String discordUserId)
 	{
-		PLAYER_UUID_DISCORD_USER_ID_PAIRS.put(playerUuid, discordUserId);
-		
 		GlobalPlayerData.setData(playerUuid, "discord", discordUserId);
 		
 		propogatePlayerRole(playerUuid, discordUserId);
@@ -98,8 +77,6 @@ public final class RoleManager  {
 	
 	public static final void unlinkPlayerDiscord(final UUID playerUuid)
 	{
-		PLAYER_UUID_DISCORD_USER_ID_PAIRS.remove(playerUuid);
-		
 		GlobalPlayerData.setData(playerUuid, "discord", null);
 		
 		propogatePlayerRole(playerUuid, null);
@@ -108,9 +85,11 @@ public final class RoleManager  {
 
 	public static final void propogatePlayerRole(final UUID playerUuid, final String discordUserId)
 	{
+		Main.plugin.updateTablist();
+		
 		PGFRole role = PGFRole.MEMBER;
 		
-		if (discordUserId != null)
+		if (discordUserId != null) // may be null
 		{
 			role = Discord.getTopRoleOfMember(
 					Discord.getJda()
@@ -141,7 +120,7 @@ public final class RoleManager  {
 		
 		for (final RegisteredServer server : Main.plugin.proxy.getAllServers())
 		{
-			PluginMessageType.PLAYER_DATA.send(server, playerUuid.toString(), "discord", discordUserId);
+			PluginMessageType.PLAYER_DATA.send(server, playerUuid.toString(), "discord", (String) Optional.ofNullable(discordUserId).orElse(""));
 			PluginMessageType.PLAYER_DATA.send(server, playerUuid.toString(), "role", role.name());
 			
 		}

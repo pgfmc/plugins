@@ -112,10 +112,10 @@ public class CommandMenuInventory implements InventoryHolder {
 				player.openInventory(new ProfileInventory(playerdata).getInventory());
 			});
 			
-			final PGFRole role = playerdata.getData("role");
+			final PGFRole role = playerdata.getRole();
 			
 			setItem(profile, Skull.getHead(playerdata.getUniqueId()))
-					.n(playerdata.getRankedName() + " (" + role.toString() + ")")
+					.n(playerdata.getRankedName() + role.getColor() + " (" + role.toString() + ")")
 					.l(ChatColor.GRAY + "Open Profile.");
 			
 			/* 

@@ -1,9 +1,9 @@
 package net.pgfmc.proxycore.listeners.types;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+import com.google.common.io.ByteArrayDataInput;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ServerConnection;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
@@ -28,9 +28,10 @@ public class ConnectListener extends PluginMessage {
 	 * RESPONSE PLUGIN MESSAGE FORM: Connect, <server name>, <true/false>
 	 */
 	@Override
-	public void onPluginMessageReceived(ServerConnection connection, Player player, List<String> response) {
+	public void onPluginMessageReceived(ServerConnection connection, Player player, ByteArrayDataInput in, final byte[] message) {
+		in.readUTF();
 		// The name of the requested server transfer
-		final String serverName = response.get(1);
+		final String serverName = in.readUTF();
 		
 		if (serverName != null && !serverName.equalsIgnoreCase(connection.getServerInfo().getName()))
 		{
@@ -52,8 +53,8 @@ public class ConnectListener extends PluginMessage {
 					{
 						Logger.debug("Connected " + player.getUsername() + " to server: " + serverName);
 						
-		    			PluginMessageType.CONNECT.send(player, serverName, "true");
-		    			player.getCurrentServer().ifPresent(currentServer -> PluginMessageType.CONNECT.send(currentServer, serverName, "true"));
+		    			PluginMessageType.CONNECT.send(player, serverName, true);
+		    			player.getCurrentServer().ifPresent(currentServer -> PluginMessageType.CONNECT.send(currentServer, serverName, true));
 		    			
 					} else
 					{
@@ -61,7 +62,7 @@ public class ConnectListener extends PluginMessage {
 						Logger.warn(exception.getCause().getMessage());
 						exception.printStackTrace();
 		    			
-		    			player.getCurrentServer().ifPresent(currentServer -> PluginMessageType.CONNECT.send(currentServer, serverName, "false"));
+		    			player.getCurrentServer().ifPresent(currentServer -> PluginMessageType.CONNECT.send(currentServer, serverName, false));
 		    			
 					}});
 				
@@ -76,7 +77,7 @@ public class ConnectListener extends PluginMessage {
 		{
 			Logger.warn("Could not connect to server: " + serverName);
 			
-			player.getCurrentServer().ifPresent(currentServer -> PluginMessageType.CONNECT.send(currentServer, serverName, "false"));
+			player.getCurrentServer().ifPresent(currentServer -> PluginMessageType.CONNECT.send(currentServer, serverName, false));
 			
 		}
 		

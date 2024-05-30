@@ -115,7 +115,7 @@ public class ManagePlayerInventory extends BaseInventory {
 		 * [] [] [] [] [] [] [] [] []
 		 */
 		setAction(14, (player, event) -> {
-			target.setData("nick", null).queue();
+			target.setData("nickname", null).queue();
 			
 			if (target.isOnline())
 			{

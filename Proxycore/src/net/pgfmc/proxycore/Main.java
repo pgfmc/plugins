@@ -2,6 +2,9 @@ package net.pgfmc.proxycore;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 
 import com.google.inject.Inject;
 import com.velocitypowered.api.command.CommandManager;
@@ -13,9 +16,16 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
+import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
+import com.velocitypowered.api.proxy.ServerConnection;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
+import com.velocitypowered.api.proxy.player.TabList;
+import com.velocitypowered.api.proxy.player.TabListEntry;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.pgfmc.proxycore.bot.Bot;
@@ -31,6 +41,7 @@ import net.pgfmc.proxycore.listeners.velocity.OnDisconnect;
 import net.pgfmc.proxycore.listeners.velocity.OnPlayerChat;
 import net.pgfmc.proxycore.listeners.velocity.OnPostLogin;
 import net.pgfmc.proxycore.listeners.velocity.OnServerPostConnect;
+import net.pgfmc.proxycore.util.GlobalPlayerData;
 import net.pgfmc.proxycore.util.Logger;
 
 @Plugin(id = "pgf", name = "Proxycore", version = "0.0.0",
@@ -168,6 +179,52 @@ public class Main {
     public void onProxyShutdown(ProxyShutdownEvent event)
     {
     	Bot.shutdown();
+    }
+    
+    public final void updateTablist()
+    {
+    	
+    	for (final Player player : proxy.getAllPlayers())
+    	{
+    		final TabList tablist = player.getTabList();
+    		final List<TabListEntry> tablistList = new LinkedList<>();
+    		
+    		proxy.getAllPlayers().stream().forEach(other -> {
+    			
+    			final Optional<ServerConnection> serverConnection = player.getCurrentServer();
+    			String serverName = "";
+    			
+    			if (serverConnection.isPresent())
+    			{
+    				serverName = "[" + serverConnection.get().getServerInfo().getName() + "]";
+    			}
+    			
+    			final TabListEntry entry = TabListEntry.builder()
+        				.profile(player.getGameProfile())
+        				.displayName(GlobalPlayerData.getRankedName(player.getUniqueId())
+        						.append(Component.text(" " + serverName)
+        								.color(NamedTextColor.GRAY)))
+        				.gameMode(0)
+        				.listed(true)
+        				.tabList(tablist)
+        				.build();
+    			
+    			tablistList.add(entry);
+    			
+    		});
+    		
+    		tablist.clearAll();
+    		tablist.clearHeaderAndFooter();
+    		
+    		tablist.addEntries(tablistList);
+    		
+    		final Component header = Component.text("PGF").color(NamedTextColor.GOLD).decorate(TextDecoration.BOLD);
+    		final Component footer = Component.text("play.pgfmc.net").color(NamedTextColor.GRAY);
+    		
+    		player.sendPlayerListHeaderAndFooter(header, footer);
+    		
+    	}
+    	
     }
     
 }
