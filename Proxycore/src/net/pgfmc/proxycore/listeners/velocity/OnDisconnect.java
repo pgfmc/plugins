@@ -9,6 +9,8 @@ import com.velocitypowered.api.proxy.Player;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import net.pgfmc.proxycore.Main;
 import net.pgfmc.proxycore.bot.Discord;
 import net.pgfmc.proxycore.bot.util.MessageHandler;
 import net.pgfmc.proxycore.util.GlobalPlayerData;
@@ -18,12 +20,12 @@ public class OnDisconnect extends MessageHandler {
 	@Subscribe
 	public void onPlayerDisconnect(DisconnectEvent e)
 	{
-		//e.setQuitMessage(ChatColor.GRAY + "[" + ChatColor.RED + "-" + ChatColor.GRAY + "]" + ChatColor.RESET + " " + pd.getRankedName());
+		Main.plugin.updateTablist();
 		
 		final Player player = e.getPlayer();
 		final UUID uuid = player.getUniqueId();
-		
-		Discord.sendServerMessage("<:LEAVE:905682349239463957> " + player.getUsername()).queue();
+		final Component displayNameComponent = GlobalPlayerData.getRankedName(uuid);
+		final String displayName = PlainTextComponentSerializer.plainText().serialize(displayNameComponent);
 		
 		final Component component = Component.text()
 				.append(Component.text("[")
@@ -32,10 +34,14 @@ public class OnDisconnect extends MessageHandler {
 						.color(NamedTextColor.RED))
 				.append(Component.text("] ")
 						.color(NamedTextColor.GRAY))
-				.append(GlobalPlayerData.getRankedName(uuid))
+				.append(displayNameComponent)
 				.build();
 		
 		sendToMinecraft(component);
+		
+		Discord.sendServerMessage("<:LEAVE:905682349239463957> " + displayName).queue();
+		
+		Main.plugin.updateTablist();
 		
 	}
 

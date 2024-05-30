@@ -23,7 +23,6 @@ public class GlobalPlayerData {
     
     public static final String dataPath = Main.plugin.configDirectory + File.separator + "playerdata" + File.separator;
     
-    /* PluginMessageType isn't ready for non-strings yet
     @SuppressWarnings("unchecked")
 	public static final <T> T getData(UUID uuid, String key)
     {
@@ -36,33 +35,38 @@ public class GlobalPlayerData {
     	
     	return (T) toml.toMap().get(key);
     }
-    */
     
-	public static final String getData(UUID uuid, String key)
+    public static final void setData(UUID uuid, String key, Object value) // Object value may be null
     {
-    	final Path path = Path.of(dataPath + uuid.toString() + ".toml");
-    	final File file = Mixins.getFile(path);
-    	final Toml toml = new Toml().read(file);
+    	if (uuid == null)
+    	{
+    		Logger.warn("GlobalPlayerData setData got null uuid");
+    		return;
+    	}
     	
-    	if (!toml.contains(key)) return null;
+    	if (key == null)
+    	{
+    		Logger.warn("GlobalPlayerData setData got null key");
+    		return;
+    	}
     	
-    	
-    	return toml.getString(key);
-    }
-    
-    public static final void setData(UUID uuid, String key, String value)
-    {
     	final Path path = Path.of(dataPath + uuid.toString() + ".toml");
     	final File file = Mixins.getFile(path);
     	final Toml toml = new Toml().read(file);
     	final TomlWriter writer = new TomlWriter();
     	final Map<String, Object> data = new HashMap<>();
     	
-    	data.put(key, value);
-    	
     	if (!toml.isEmpty())
     	{
     		data.putAll(toml.toMap());
+    	}
+    	
+    	if (value == null)
+    	{
+    		data.remove(key);
+    	} else
+    	{
+    		data.put(key, value);
     	}
     	
     	try {
@@ -72,10 +76,7 @@ public class GlobalPlayerData {
 			e.printStackTrace();
 		}
     	
-    	for (final RegisteredServer server : Main.plugin.proxy.getAllServers())
-    	{
-    		PluginMessageType.PLAYER_DATA.send(server, uuid.toString(), key, value);
-    	}
+    	propogateGlobalPlayerData(uuid);
     	
     }
     
@@ -99,6 +100,10 @@ public class GlobalPlayerData {
     
     public static final String getNickname(UUID uuid)
     {
+    	final String discordUserId = getData(uuid, "discord");
+    	
+    	if (discordUserId == null || discordUserId.isBlank()) return getUsername(uuid);
+    	
     	final String nickname = getData(uuid, "nickname");
     	
     	if (nickname == null || nickname.isBlank()) return getUsername(uuid);
@@ -111,6 +116,27 @@ public class GlobalPlayerData {
     	final PGFRole role = RoleManager.getRoleFromPlayerUuid(uuid);
     	
     	return Component.text(((role.compareTo(PGFRole.STAFF) <= 0) ? PGFRole.STAFF_DIAMOND : "") + getNickname(uuid)).color(role.getColor());
+    }
+    
+    public static final void propogateGlobalPlayerData(final UUID uuid)
+    {
+    	if (uuid == null)
+    	{
+    		
+    		return;
+    	}
+    	
+    	final Path path = Path.of(dataPath + uuid.toString() + ".toml");
+    	final File file = Mixins.getFile(path);
+    	final Toml toml = new Toml().read(file);
+    	final TomlWriter writer = new TomlWriter();
+    	final String data = writer.write(toml.toMap());
+    	
+    	for (final RegisteredServer server : Main.plugin.proxy.getAllServers())
+    	{
+    		PluginMessageType.PLAYER_DATA.send(server, uuid.toString(), data);
+    	}
+    	
     }
     
     /*

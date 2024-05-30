@@ -1,17 +1,12 @@
 package net.pgfmc.core.util.proxy;
 
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
-import com.google.common.io.CountingInputStream;
+import com.google.common.io.ByteArrayDataInput;
+import com.google.common.io.ByteStreams;
 
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.util.Logger;
@@ -129,7 +124,7 @@ public abstract class PluginMessage implements PluginMessageListener {
 	 * @param sender The player that bridged this connection
 	 * @param response The response
 	 */
-	public abstract void onPluginMessageTypeReceived(final Player sender, final List<String> response);
+	public abstract void onPluginMessageTypeReceived(final Player sender, ByteArrayDataInput in, final byte[] message);
 	
 	@Override
 	public final void onPluginMessageReceived(String channel, Player sender, byte[] message)
@@ -142,44 +137,16 @@ public abstract class PluginMessage implements PluginMessageListener {
 		// channel needs to match
 		if (!channel.equals(this.channel)) return;
 		
-		final InputStream inputStream = new ByteArrayInputStream(message);
-		final CountingInputStream counter = new CountingInputStream(inputStream);
-		final DataInputStream dataIn = new DataInputStream(counter);
-		
-		String subchannel = null;
-		try {
-			subchannel = dataIn.readUTF();
-		} catch (IOException e) {
-			Logger.error("Subchannel not found in PM:");
-			e.printStackTrace();
-		}
+		final ByteArrayDataInput in = ByteStreams.newDataInput(message);
+		final String subchannel = in.readUTF();
 		
 		Logger.debug("Subchannel: " + subchannel);
 		
 		// subchannel needs to match
 		if (!Objects.equals(subchannel, this.subchannel)) return;
 		
-		Logger.debug("Attempting to get response:");
-		
-		// convert response from byte array to string list (for convenience)
-		final List<String> response = new ArrayList<String>();
-		response.add(subchannel);
-		
-		try {
-			while (dataIn.available() != 0)
-			{
-				response.add(dataIn.readUTF());
-			}
-		} catch (IOException e) {
-			Logger.error("Error while trying to get plugin message response: ");
-			
-			e.printStackTrace();
-		}
-		
-		Logger.debug(response.toString());
-		
 		// Call the listeners that have this type
-		onPluginMessageTypeReceived(sender, response); // additional checks happen for PluginMessageType futures
+		onPluginMessageTypeReceived(sender, ByteStreams.newDataInput(message), message); // additional checks happen for PluginMessageType futures
 		
 	}
 

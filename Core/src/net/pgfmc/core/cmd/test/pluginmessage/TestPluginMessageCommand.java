@@ -54,11 +54,11 @@ public class TestPluginMessageCommand extends PlayerCommand {
 		}
 		
 								// new array list is important here, because removing an element also removes the
-		final List<String> argsToSend = new ArrayList<>(Arrays.asList(args)); // element from the String[] args
+		final List<Object> argsToSend = new ArrayList<>(Arrays.asList(args)); // element from the String[] args
 		argsToSend.remove(0);
 		
-		type.send(pd.getPlayer(), argsToSend)
-			.whenComplete((messageArgs, exception) -> {
+		type.sendList(pd.getPlayer(), argsToSend)
+			.whenComplete((in, exception) -> {
 				if (exception != null)
 				{
 					exception.printStackTrace();
@@ -67,7 +67,7 @@ public class TestPluginMessageCommand extends PlayerCommand {
 				
 				if (!pd.isOnline()) return;
 				
-				pd.sendMessage(ChatColor.LIGHT_PURPLE + messageArgs.toString());
+				pd.sendMessage(ChatColor.LIGHT_PURPLE + in.readUTF() + ": " + in.readUTF());
 				
 			});
 		

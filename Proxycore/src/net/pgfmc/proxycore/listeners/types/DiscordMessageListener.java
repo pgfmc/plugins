@@ -1,7 +1,6 @@
 package net.pgfmc.proxycore.listeners.types;
 
-import java.util.List;
-
+import com.google.common.io.ByteArrayDataInput;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ServerConnection;
 
@@ -17,10 +16,11 @@ public class DiscordMessageListener extends PluginMessage {
 	}
 
 	@Override
-	public void onPluginMessageReceived(ServerConnection connection, Player player, List<String> args) {
-		final String message = args.get(1);
+	public void onPluginMessageReceived(ServerConnection connection, Player player, ByteArrayDataInput in, final byte[] message) {
+		in.readUTF();
+		final String discordMessage = in.readUTF();
 		
-		Discord.sendServerMessage(message);
+		Discord.sendServerMessage(discordMessage);
 		
 	}
 

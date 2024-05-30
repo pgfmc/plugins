@@ -8,6 +8,7 @@ import com.velocitypowered.api.proxy.Player;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.pgfmc.proxycore.Main;
 import net.pgfmc.proxycore.util.GlobalPlayerData;
 
 public class NicknameCommand implements SimpleCommand {
@@ -56,6 +57,8 @@ public class NicknameCommand implements SimpleCommand {
 							.color(NamedTextColor.GOLD))
 					.build());
 			
+			Main.plugin.updateTablist();
+			
 			return;
 		}
 		
@@ -68,6 +71,8 @@ public class NicknameCommand implements SimpleCommand {
 				.append(Component.text("!")
 						.color(NamedTextColor.GOLD))
 				.build());
+		
+		Main.plugin.updateTablist();
 		
 		return;
 	}

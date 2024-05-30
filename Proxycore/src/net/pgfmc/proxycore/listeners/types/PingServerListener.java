@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
+import com.google.common.io.ByteArrayDataInput;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ServerConnection;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
@@ -34,8 +34,9 @@ public class PingServerListener extends PluginMessage {
 	 * RESPONSE PLUGIN MESSAGE FORM: PingServer, <server name>, <true/false>
 	 */
 	@Override
-	public void onPluginMessageReceived(ServerConnection connection, Player player, List<String> response) {	
-		final String serverName = response.get(1);
+	public void onPluginMessageReceived(ServerConnection connection, Player player, ByteArrayDataInput in, final byte[] message) {
+		in.readUTF();
+		final String serverName = in.readUTF();
 		final Optional<RegisteredServer> server = Main.plugin.proxy.getServer(serverName);
 		
 		Logger.debug("Checking if server is registered: " + serverName);
@@ -66,7 +67,7 @@ public class PingServerListener extends PluginMessage {
 					exception.printStackTrace();
 				} else
 				{
-	    			PluginMessageType.PING_SERVER.send(connection, serverName, isOnline.toString());
+	    			PluginMessageType.PING_SERVER.send(connection, serverName, isOnline);
 	    			
 				}
 				

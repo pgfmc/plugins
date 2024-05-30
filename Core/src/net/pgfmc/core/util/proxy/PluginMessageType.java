@@ -1,7 +1,5 @@
 package net.pgfmc.core.util.proxy;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
@@ -10,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageRecipient;
 
+import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 
@@ -124,12 +123,13 @@ public enum PluginMessageType {
 	 * 
 	 * CompletableFuture is completed when the listener receives a response
 	 * that matches the sent plugin message.
+	 * @param <T>
 	 * 
 	 * @param player The proxied player to send the plugin message through
 	 * @param args An ordered list of arguments required by the plugin message type (do not include the type in the arguments)
 	 * @return A CompletableFuture that holds an ordered List<String> of the plugin message response (if any)
 	 */
-	public final CompletableFuture<List<String>> send(final PluginMessageRecipient sender, final List<String> args)
+	public final CompletableFuture<ByteArrayDataInput> sendList(final PluginMessageRecipient sender, final List<Object> arguments)
 	{
 		Logger.debug("------------------------------");
 		Logger.log("Sending plugin message and creating a Future.");
@@ -142,17 +142,44 @@ public enum PluginMessageType {
 		out.writeUTF(subchannel);
 		
 		// add any arguments
-		for (final String arg : args)
+		for (final Object arg : arguments)
 		{
-			Logger.log("arg: " + arg);
-			out.writeUTF(arg);
+			
+			if (arg instanceof String) {
+				out.writeUTF((String) arg);
+				
+			} else if (arg instanceof Integer) {
+				out.writeInt((Integer) arg);
+				
+			} else if (arg instanceof Boolean) {
+				out.writeBoolean((Boolean) arg);
+				
+			} else if (arg instanceof Double) {
+				out.writeDouble((Double) arg);
+				
+			} else if (arg instanceof Float) {
+				out.writeFloat((Float) arg);
+				
+			} else if (arg instanceof Long) {
+				out.writeLong((Long) arg);
+				
+			} else if (arg instanceof Short) {
+				out.writeShort((Short) arg);
+				
+			} else
+			{
+				Logger.warn("Cannot send unsupported data type: " + arg.getClass().toString());
+				
+				return new CompletableFuture<ByteArrayDataInput>().orTimeout(1L, TimeUnit.MILLISECONDS);
+			}
+			
 		}
 		
 		// send plugin message
 		sender.sendPluginMessage(CoreMain.plugin, channel, out.toByteArray());
 		
 		// return a completable future
-		return createFuture(this, sender, args);
+		return createFuture(this, sender, arguments);
 	}
 	
 	/**
@@ -164,10 +191,10 @@ public enum PluginMessageType {
 	 * @param originalArgs
 	 * @return A CompletableFuture that holds an ordered List<String> of the plugin message response (if any)
 	 */
-	private static final CompletableFuture<List<String>> createFuture(final PluginMessageType originalType, final PluginMessageRecipient originalSender, final List<String> originalArgs)
+	private static final CompletableFuture<ByteArrayDataInput> createFuture(final PluginMessageType originalType, final PluginMessageRecipient originalSender, final List<Object> originalArgs)
 	{
 		// the future
-		final CompletableFuture<List<String>> future = new CompletableFuture<List<String>>()
+		final CompletableFuture<ByteArrayDataInput> future = new CompletableFuture<ByteArrayDataInput>()
 				.orTimeout(5L, TimeUnit.MINUTES); // default timeout is 5 minutes.
 		
 		// new thread used to asynchronously listen for plugin messages
@@ -176,9 +203,9 @@ public enum PluginMessageType {
 			class FuturePluginMessage extends PluginMessage {
 				
 				final PluginMessageRecipient originalSender;
-				final List<String> originalArgs;
+				final List<Object> originalArgs;
 
-				public FuturePluginMessage(final PluginMessageRecipient originalSender, final List<String> originalArgs) {
+				public FuturePluginMessage(final PluginMessageRecipient originalSender, final List<Object> originalArgs) {
 					super(originalType); // The type to listen for
 					
 					this.originalSender = originalSender;
@@ -186,7 +213,8 @@ public enum PluginMessageType {
 				}
 
 				@Override
-				public void onPluginMessageTypeReceived(final Player sender, final List<String> args) {
+				public void onPluginMessageTypeReceived(final Player sender, final ByteArrayDataInput in, final byte[] message)
+				{
 					
 					switch(originalType.matchType) {
 					case SENDER: // Check original sender against this sender
@@ -194,20 +222,57 @@ public enum PluginMessageType {
 						
 						break;
 					case ARGUMENT: // Check original argument with this argument
-						if (args.size() < 2 || originalArgs.size() < 1)
+						try {
+							
+							if (originalArgs.isEmpty()) // original args size is too small to contain needed argument
+							{
+								// Error here,,, This shouldn't ever happen.
+								Logger.error("Error: PluginMessageType.onPluginMessageReceived has incorrect number of arguments.");
+								Logger.error("Type: " + originalType.name());
+								Logger.error("Original Sender: " + originalSender.toString());
+								Logger.error("Original Arguments: " + originalArgs.toString());
+								Logger.error("Sender: " + sender.getName());
+								
+								return;
+							}
+							
+							in.readUTF(); // read the subchannel so next read is the argument
+							final Object arg = originalArgs.get(0);
+							
+							if (arg instanceof String)
+							{
+								if (!Objects.equals((String) arg, in.readUTF())) return;
+							} else if (arg instanceof Integer) {
+								if (!Objects.equals((Integer) arg, in.readInt())) return;
+							} else if (arg instanceof Boolean) {
+								if (!Objects.equals((Boolean) arg, in.readBoolean())) return;
+							} else if (arg instanceof Double) {
+								if (!Objects.equals((Double) arg, in.readDouble())) return;
+							} else if (arg instanceof Float) {
+								if (!Objects.equals((Float) arg, in.readFloat())) return;
+							} else if (arg instanceof Long) {
+								if (!Objects.equals((Long) arg, in.readLong())) return;
+							} else if (arg instanceof Short) {
+								if (!Objects.equals((Short) arg, in.readShort())) return;
+							} else {
+								Logger.error("Error: PluginMessageType.onPluginMessageReceived has unsupported argument type.");
+								Logger.error("Object Type: " + arg.getClass());
+								Logger.error("Type: " + originalType.name());
+								Logger.error("Original Sender: " + originalSender.toString());
+								Logger.error("Original Arguments: " + originalArgs.toString());
+								Logger.error("Sender: " + sender.getName());
+							}
+							
+						} catch (Exception e)
 						{
-							// Error here,,, This shouldn't ever happen.
-							Logger.error("Error: PluginMessageType.onPluginMessageReceived has incorrect number of arguments.");
+							Logger.error("Error: PluginMessageType.onPluginMessageReceived hit error while reading input stream.");
 							Logger.error("Type: " + originalType.name());
 							Logger.error("Original Sender: " + originalSender.toString());
 							Logger.error("Original Arguments: " + originalArgs.toString());
 							Logger.error("Sender: " + sender.getName());
-							Logger.error("Arguments: " + args.toString());
 							
-							return;
+							e.printStackTrace();
 						}
-						
-						if (!Objects.equals(originalArgs.get(0), args.get(1))) return;
 						
 						break;
 					case NONE: // Only channel and subchannel needs to match
@@ -220,7 +285,7 @@ public enum PluginMessageType {
 					CoreMain.plugin.getServer().getMessenger().unregisterIncomingPluginChannel(CoreMain.plugin, getType().channel, this);
 					
 					// complete future with the response arguments
-					future.complete(args);
+					future.complete(ByteStreams.newDataInput(message));
 				}
 				
 			}
@@ -243,14 +308,14 @@ public enum PluginMessageType {
 				});
 	}
 	
-	public final CompletableFuture<List<String>> send(final PluginMessageRecipient sender, final String... arguments)
+	public final CompletableFuture<ByteArrayDataInput> send(final PluginMessageRecipient sender, final Object... arguments)
 	{
-		return send(sender, Arrays.asList(arguments));
+		return sendList(sender, List.of(arguments));
 	}
 	
-	public final CompletableFuture<List<String>> send(final PluginMessageRecipient sender)
+	public final CompletableFuture<ByteArrayDataInput> send(final PluginMessageRecipient sender)
 	{
-		return send(sender, new ArrayList<String>());
+		return sendList(sender, List.of());
 	}
 
 }

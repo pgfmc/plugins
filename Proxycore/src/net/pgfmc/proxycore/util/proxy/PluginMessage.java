@@ -4,10 +4,10 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
+import com.google.common.io.ByteArrayDataInput;
+import com.google.common.io.ByteStreams;
 import com.google.common.io.CountingInputStream;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PluginMessageEvent;
@@ -73,7 +73,7 @@ public abstract class PluginMessage {
 	 * @param player The player that sent this plugin message
 	 * @param args The arguments
 	 */
-	public abstract void onPluginMessageReceived(final ServerConnection connection, final Player player, final List<String> args);
+	public abstract void onPluginMessageReceived(final ServerConnection connection, final Player player, ByteArrayDataInput in, final byte[] message);
 	
 	@Subscribe
 	public final void onPluginMessageFromPlugin(PluginMessageEvent event)
@@ -109,30 +109,12 @@ public abstract class PluginMessage {
 		Logger.debug("Channel: " + Main.IDENTIFIER);
 		Logger.debug("Sender: " + event.getSource());
 		Logger.debug("Subchannel: " + subchannel);
-		Logger.debug("Attempting to get args:");
-		
-		// Convert the byte array to a string list (for convenience)
-		final List<String> args = new ArrayList<String>();
-		args.add(subchannel); // add subchannel
-		
-		// add any arguments
-		try {
-			while (dataIn.available() != 0)
-			{
-				args.add(dataIn.readUTF());
-			}
-		} catch (IOException e) {
-			Logger.error("Error while trying to get plugin message args: ");
-			
-			e.printStackTrace();
-		}
-		
-		Logger.debug(args.toString());
 		
 		final ServerConnection connection = (ServerConnection) event.getSource();
+		final byte[] message = event.getData();
 		
 		// Everything matches. Call the method
-		onPluginMessageReceived(connection, connection.getPlayer(), args);
+		onPluginMessageReceived(connection, connection.getPlayer(), ByteStreams.newDataInput(message), message);
 		
 	}
 

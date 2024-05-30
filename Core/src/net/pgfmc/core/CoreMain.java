@@ -20,6 +20,7 @@ import org.bukkit.event.server.ServerLoadEvent;
 import org.bukkit.event.server.ServerLoadEvent.LoadType;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.messaging.PluginMessageRecipient;
 
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
@@ -115,17 +116,16 @@ public class CoreMain extends JavaPlugin implements Listener {
 			
 			final FileConfiguration db = pd.getPlayerDataFile();
 			
-			final String nickname = db.getString("nick");
+			final String nickname = db.getString("nickname");
 			
 			if (nickname == null) return;
 			
-			pd.setData("nick", nickname);
+			pd.setData("nickname", nickname);
 			
 		});
 		
 		PlayerDataManager.setInit(pd -> {
-			PluginMessageType.PLAYER_DATA.send(CoreMain.plugin.getServer(), pd.getUniqueId().toString(), "role");
-			PluginMessageType.PLAYER_DATA.send(CoreMain.plugin.getServer(), pd.getUniqueId().toString(), "discord");
+			PluginMessageType.PLAYER_DATA.send(CoreMain.plugin.getServer(), pd.getUniqueId().toString());
 			
 		});
 		//
@@ -226,8 +226,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		
 		final Player player = playerdata.getPlayer();
 		
-		// Updates playerlist, custom name value (spigot/bukkit), and makes the custom name visible to the CLIENT
-		player.setPlayerListName(playerdata.getRankedName());
+		// Updates custom name value (spigot/bukkit) and makes the custom name visible to the CLIENT
 		player.setCustomName(playerdata.getRankedName());
 		player.setCustomNameVisible(true);
 		
@@ -250,32 +249,25 @@ public class CoreMain extends JavaPlugin implements Listener {
 	 */
 	private final void loopForPluginMessages()
 	{
-		/**
-		 * Used to randomly select an online player to send the Plugin Message through.
-		 */
-		final Random random = new Random(System.currentTimeMillis());
+		final Random random = new Random();
+		final PluginMessageRecipient sender = getServer();
 		
-		Bukkit.getScheduler().runTaskTimerAsynchronously(this, new Runnable() {
+		Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
 			
 			@Override
 			public void run() {
 				final Collection<? extends Player> onlinePlayers = Bukkit.getOnlinePlayers();
 				
-				/**
-				 * The server can only connect to the proxy through proxied players.
-				 */
 				if (onlinePlayers.isEmpty()) return;
 				
-				// The randomly selected online player to send the Plugin Message through
-				final Player player = (Player) onlinePlayers.toArray()[random.nextInt(onlinePlayers.size())];
+				getServers();
+				pingServer();
 				
-				getServers(player); // Doesn't require a player, but cannot receive the response without an online player
-				pingServer(player); // Doesn't require a player, but cannot receive the response without an online player
-				
-				// Don't need to check this server's name again
-				// *Might* change during runtime, but eh..
 				if (thisServerName == null || thisServerName.isEmpty())
 				{
+					// The randomly selected online player to send the Plugin Message through
+					final Player player = (Player) onlinePlayers.toArray()[random.nextInt(onlinePlayers.size())];
+					
 					getServer(player);
 				}
 				
@@ -290,10 +282,10 @@ public class CoreMain extends JavaPlugin implements Listener {
 			 * PLUGIN MESSAGE FORM (BungeeCord): GetServers
 			 * 
 			 */
-			private final void getServers(final Player player)
+			private final void getServers()
 			{
-				PluginMessageType.GET_SERVERS.send(player)
-					.whenComplete((args, exception) -> {
+				PluginMessageType.GET_SERVERS.send(sender)
+					.whenComplete((in, exception) -> {
 						if (exception != null)
 						{
 							Logger.error("Exception occurred for plugin message GET_SERVERS:");
@@ -313,7 +305,8 @@ public class CoreMain extends JavaPlugin implements Listener {
 						 * 
 						 * PLUGIN MESSAGE FORM (BungeeCord): GetServers, CSV server names
 						 */
-						final String serverNamesCSV = args.get(1);
+						in.readUTF();
+						final String serverNamesCSV = in.readUTF();
 						
 						Logger.debug("CSV Server Names: " + serverNamesCSV);
 						
@@ -347,12 +340,12 @@ public class CoreMain extends JavaPlugin implements Listener {
 	    	 * 
 	    	 * PLUGIN MESSAGE FORM (pgf:main): PingServer, <server name>
 			 */
-			private final void pingServer(final Player player)
+			private final void pingServer()
 			{
 				for (final String server : REGISTERED_SERVERS.keySet())
 				{
-					PluginMessageType.PING_SERVER.send(player, server)
-						.whenComplete((args, exception) -> {
+					PluginMessageType.PING_SERVER.send(sender, server)
+						.whenComplete((in, exception) -> {
 							if (exception != null)
 							{
 								Logger.error("Exception occurred for plugin message PING_SERVER:");
@@ -367,13 +360,12 @@ public class CoreMain extends JavaPlugin implements Listener {
 					    	 * 
 					    	 * PLUGIN MESSAGE FORM (pgf:main): PingServerResponse, <server name>, <true/false>
 					    	 */
-							final String serverName = args.get(1);
-							final Boolean isOnline = Boolean.parseBoolean(args.get(2));
+							in.readUTF();
+							final String serverName = in.readUTF();
+							final boolean isOnline = in.readBoolean();
 							
 							Logger.debug("Server Name: " + serverName);
 							Logger.debug("Online: " + isOnline);
-							
-							if (serverName == null || isOnline == null) return;
 							
 							REGISTERED_SERVERS.put(serverName, isOnline);
 							
@@ -392,10 +384,10 @@ public class CoreMain extends JavaPlugin implements Listener {
 			 * 
 			 * @param player
 			 */
-			private final void getServer(final Player player)
+			private final void getServer(final Player sender)
 			{
-				PluginMessageType.GET_SERVER.send(player)
-					.whenComplete((args, exception) -> {
+				PluginMessageType.GET_SERVER.send(sender)
+					.whenComplete((in, exception) -> {
 						if (exception != null)
 						{
 							Logger.error("Exception occurred for plugin message GET_SERVER:");
@@ -404,7 +396,8 @@ public class CoreMain extends JavaPlugin implements Listener {
 							return;
 						}
 						
-						final String serverName = args.get(1);
+						in.readUTF();
+						final String serverName = in.readUTF();
 						
 						Logger.debug("This Server Name: " + serverName);
 						

@@ -2,8 +2,8 @@ package net.pgfmc.survival.menu.profile;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Optional;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -48,7 +48,8 @@ public class ProfileInventory extends BaseInventory {
 				
 				setAction(11, (player, event) -> {
 					player.closeInventory();
-					player.performCommand("link");
+					//player.performCommand("link"); // TODO command no work b/c velocity e e e 
+					Bukkit.getServer().dispatchCommand(player, "link");
 					playerdata.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
 					
 				});
@@ -88,7 +89,7 @@ public class ProfileInventory extends BaseInventory {
 		if (playerdata.hasPermission("net.pgfmc.survival.nick"))
 		{
 			setAction(15, (player, event) -> {
-				final String nickname = (String) Optional.ofNullable(playerdata.getData("nick")).orElse(player.getName());
+				final String nickname = playerdata.getDisplayName();
 				
 				Builder builder = new AnvilGUI.Builder();
 				
