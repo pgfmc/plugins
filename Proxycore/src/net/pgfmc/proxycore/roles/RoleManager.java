@@ -63,22 +63,6 @@ public final class RoleManager  {
 		
 		return null;
 	}
-	
-	public static final void linkPlayerDiscord(final UUID playerUuid, final String discordUserId)
-	{
-		GlobalPlayerData.setData(playerUuid, "discord", discordUserId);
-		
-		propogatePlayerRole(playerUuid);
-		
-	}
-	
-	public static final void unlinkPlayerDiscord(final UUID playerUuid)
-	{
-		GlobalPlayerData.setData(playerUuid, "discord", null);
-		
-		propogatePlayerRole(playerUuid);
-		
-	}
 
 	public static final void propogatePlayerRole(final UUID playerUuid)
 	{

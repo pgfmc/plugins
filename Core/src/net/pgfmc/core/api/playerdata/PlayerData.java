@@ -210,19 +210,34 @@ public final class PlayerData extends PlayerDataExtra {
 			this.key = key;
 		}
 		
+
 		/**
-		 * adds this data to the queue
+		 * Queue this mapping to be saved in the playerdata file.
+		 * 
+		 * @return This Queueable
 		 */
 		public final Queueable queue() {
 			queue.add(key);
 			return this;
 		}
 		
+		/**
+		 * Send this mapping to the proxy.
+		 * 
+		 * @return This Queueable
+		 */
 		public final Queueable send() {
 			final TomlWriter writer = new TomlWriter();
-			final String data = writer.write(Map.of(key, getData(key)));
+			Object value = getData(key);
 			
-			PluginMessageType.PLAYER_DATA_SEND.send(CoreMain.plugin.getServer(), getUniqueId().toString(), key, data);
+			if (value == null)
+			{
+				value = "";
+			}
+			
+			final String data = writer.write(Map.of(key, value));
+			
+			PluginMessageType.PLAYER_DATA_SEND.send(CoreMain.plugin.getServer(), getUniqueId().toString(), data);
 			
 			return this;
 		}

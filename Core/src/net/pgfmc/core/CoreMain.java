@@ -35,6 +35,9 @@ import net.pgfmc.core.api.request.RequestType;
 import net.pgfmc.core.api.teleport.SpawnProtect;
 import net.pgfmc.core.bot.minecraft.listeners.OnPlayerAdvancementDone;
 import net.pgfmc.core.bot.minecraft.listeners.OnPlayerDeath;
+import net.pgfmc.core.cmd.LinkCommand;
+import net.pgfmc.core.cmd.NicknameCommand;
+import net.pgfmc.core.cmd.UnlinkCommand;
 import net.pgfmc.core.cmd.serverselector.ConnectCommand;
 import net.pgfmc.core.cmd.test.inventory.TestInventorySizeCommand;
 import net.pgfmc.core.cmd.test.pluginmessage.TestPluginMessageCommand;
@@ -60,9 +63,9 @@ public class CoreMain extends JavaPlugin implements Listener {
 	 */
 	private final static Map<String, Boolean> REGISTERED_SERVERS = new HashMap<>();
 	
-	public static CoreMain plugin;
-	
 	private static String thisServerName;
+	
+	public static CoreMain plugin;
 	
 	/**
 	 * creates all files, loads all worlds, PlayerData, commands and events.
@@ -131,6 +134,9 @@ public class CoreMain extends JavaPlugin implements Listener {
 		 */
 		getCommand("broadcast").setExecutor(new ServerMessage());
 		getCommand("connect").setExecutor(new ConnectCommand());
+		getCommand("link").setExecutor(new LinkCommand());
+		getCommand("unlink").setExecutor(new UnlinkCommand());
+		getCommand("nickname").setExecutor(new NicknameCommand());
 		new DumpCommand();
 		new TagCommand();
 		new PlayerDataSetCommand();

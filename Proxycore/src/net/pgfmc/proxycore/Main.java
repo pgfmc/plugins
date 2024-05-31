@@ -10,7 +10,6 @@ import com.google.inject.Inject;
 import com.velocitypowered.api.command.CommandManager;
 import com.velocitypowered.api.command.CommandMeta;
 import com.velocitypowered.api.command.RawCommand;
-import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
@@ -28,14 +27,13 @@ import net.kyori.adventure.text.format.TextDecoration;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.pgfmc.proxycore.bot.Bot;
-import net.pgfmc.proxycore.commands.LinkCommand;
-import net.pgfmc.proxycore.commands.NicknameCommand;
 import net.pgfmc.proxycore.commands.StopProxyCommand;
-import net.pgfmc.proxycore.commands.UnlinkCommand;
 import net.pgfmc.proxycore.listeners.types.ConnectListener;
 import net.pgfmc.proxycore.listeners.types.DiscordMessageListener;
+import net.pgfmc.proxycore.listeners.types.LinkCodeListener;
 import net.pgfmc.proxycore.listeners.types.PingServerListener;
 import net.pgfmc.proxycore.listeners.types.PlayerDataListener;
+import net.pgfmc.proxycore.listeners.types.PlayerDataSaveListener;
 import net.pgfmc.proxycore.listeners.velocity.OnDisconnect;
 import net.pgfmc.proxycore.listeners.velocity.OnPlayerChat;
 import net.pgfmc.proxycore.listeners.velocity.OnPostLogin;
@@ -119,6 +117,8 @@ public class Main {
     	new PingServerListener();
     	new DiscordMessageListener();
     	new PlayerDataListener();
+    	new PlayerDataSaveListener();
+    	new LinkCodeListener();
     	
     	/**
     	 * Register Commands
@@ -135,40 +135,6 @@ public class Main {
     	final RawCommand stopproxyCommand = new StopProxyCommand();
     	
     	manager.register(stopproxyMeta, stopproxyCommand);
-    	
-    	/**
-    	 * link
-    	 */
-    	final CommandMeta linkMeta = manager.metaBuilder("link")
-    			.plugin(this)
-    			.build();
-    	
-    	final RawCommand linkCommand = new LinkCommand();
-    	
-    	manager.register(linkMeta, linkCommand);
-    	
-    	/**
-    	 * unlink
-    	 */
-    	final CommandMeta unlinkMeta = manager.metaBuilder("unlink")
-    			.plugin(this)
-    			.build();
-    	
-    	final RawCommand unlinkCommand = new UnlinkCommand();
-    	
-    	manager.register(unlinkMeta, unlinkCommand);
-    	
-    	/**
-    	 * unlink
-    	 */
-    	final CommandMeta nicknameMeta = manager.metaBuilder("nickname")
-    			.plugin(this)
-    			.aliases("nick")
-    			.build();
-    	
-    	final SimpleCommand nicknameCommand = new NicknameCommand();
-    	
-    	manager.register(nicknameMeta, nicknameCommand);
     	
     }
     
