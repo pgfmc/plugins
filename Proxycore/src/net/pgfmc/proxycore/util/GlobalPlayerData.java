@@ -21,22 +21,35 @@ import net.pgfmc.proxycore.util.proxy.PluginMessageType;
 
 public class GlobalPlayerData {
     
-    public static final String dataPath = Main.plugin.configDirectory + File.separator + "playerdata" + File.separator;
+    private static final Path dataPath = Path.of(Main.plugin.dataDirectory + File.separator + "playerdata");
     
-    @SuppressWarnings("unchecked")
-	public static final <T> T getData(UUID uuid, String key)
+    private static final Toml getToml(final UUID uuid)
     {
-    	final Path path = Path.of(dataPath + uuid.toString() + ".toml");
+    	final Path path = Path.of(dataPath + File.separator + uuid.toString() + ".toml");
     	final File file = Mixins.getFile(path);
+    	
+    	if (file == null)
+    	{
+    		Logger.error("GlobalPlayerData getToml encountered a null File.");
+    		return null;
+    	}
+    	
     	final Toml toml = new Toml().read(file);
     	
-    	if (!toml.contains(key)) return null;
+    	return toml;
+    }
+    
+    @SuppressWarnings("unchecked")
+	public static final <T> T getData(final UUID uuid, final String key)
+    {
+    	final Toml toml = getToml(uuid);
     	
+    	if (!toml.contains(key)) return null;
     	
     	return (T) toml.toMap().get(key);
     }
     
-    public static final void setData(UUID uuid, String key, Object value) // Object value may be null
+    public static final void setData(final UUID uuid, final String key, final Object value) // Object value may be null
     {
     	if (uuid == null)
     	{
@@ -50,9 +63,29 @@ public class GlobalPlayerData {
     		return;
     	}
     	
-    	final Path path = Path.of(dataPath + uuid.toString() + ".toml");
-    	final File file = Mixins.getFile(path);
-    	final Toml toml = new Toml().read(file);
+    	final TomlWriter writer = new TomlWriter();
+    	final String data = writer.write(Map.of(key, value));
+    	final Toml toml = new Toml().read(data);
+    	
+    	setData(uuid, toml);
+    	
+    }
+    
+    public static final void setData(final UUID uuid, final Toml newToml)
+    {
+    	if (uuid == null)
+    	{
+    		Logger.warn("GlobalPlayerData setData got null uuid");
+    		return;
+    	}
+    	
+    	if (newToml == null)
+    	{
+    		Logger.warn("GlobalPlayerData setData got null TOML");
+    		return;
+    	}
+    	
+    	final Toml toml = getToml(uuid);
     	final TomlWriter writer = new TomlWriter();
     	final Map<String, Object> data = new HashMap<>();
     	
@@ -61,16 +94,20 @@ public class GlobalPlayerData {
     		data.putAll(toml.toMap());
     	}
     	
-    	if (value == null)
-    	{
-    		data.remove(key);
-    	} else
-    	{
-    		data.put(key, value);
-    	}
+    	newToml.toMap().forEach((key, value) -> {
+    		if (value == null)
+        	{
+        		data.remove(key);
+        	} else
+        	{
+        		data.put(key, value);
+        	}
+    	});
     	
     	try {
-    		
+    		final Path path = Path.of(dataPath + File.separator + uuid.toString() + ".toml");
+        	final File file = Mixins.getFile(path);
+        	
 			writer.write(data, file);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -126,9 +163,7 @@ public class GlobalPlayerData {
     		return;
     	}
     	
-    	final Path path = Path.of(dataPath + uuid.toString() + ".toml");
-    	final File file = Mixins.getFile(path);
-    	final Toml toml = new Toml().read(file);
+    	final Toml toml = getToml(uuid);
     	final TomlWriter writer = new TomlWriter();
     	final String data = writer.write(toml.toMap());
     	

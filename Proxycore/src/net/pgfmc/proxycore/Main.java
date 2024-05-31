@@ -15,7 +15,6 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
-import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.ServerConnection;
@@ -68,7 +67,6 @@ public class Main {
     public final ProxyServer proxy;
     public final org.slf4j.Logger logger;
     public final Path dataDirectory;
-    public final Path configDirectory;
     
     /**
      * Automatically injects the ProxyServer, Logger, and Path into the constructor.
@@ -78,12 +76,11 @@ public class Main {
      * @param dataDirectory
      */
     @Inject
-    public Main(ProxyServer proxy, org.slf4j.Logger logger, @DataDirectory Path dataDirectory) {
+    public Main(ProxyServer proxy, org.slf4j.Logger logger) {
     	plugin = this;
         this.proxy = proxy;
         this.logger = logger;
-        this.dataDirectory = dataDirectory;
-        this.configDirectory = Path.of("plugins" + File.separator + "PGF-Proxycore");
+        this.dataDirectory = Path.of("plugins" + File.separator + "PGF-Proxycore");
         
     }
     
@@ -117,11 +114,11 @@ public class Main {
     	proxy.getEventManager().register(this, new OnPlayerChat());
     	proxy.getEventManager().register(this, new OnPostLogin());
     	proxy.getEventManager().register(this, new OnDisconnect());
+    	proxy.getEventManager().register(this, new OnServerPostConnect());
     	new ConnectListener();
     	new PingServerListener();
     	new DiscordMessageListener();
     	new PlayerDataListener();
-    	new OnServerPostConnect();
     	
     	/**
     	 * Register Commands
@@ -183,15 +180,22 @@ public class Main {
     
     public final void updateTablist()
     {
+    	Logger.debug("--------------------");
+    	Logger.debug("Updating tablist");
     	
-    	for (final Player player : proxy.getAllPlayers())
+		for (final Player player : proxy.getAllPlayers())
     	{
+			Logger.debug("Tablist: " + player.getUsername());
+			
     		final TabList tablist = player.getTabList();
     		final List<TabListEntry> tablistList = new LinkedList<>();
     		
+    		// Build tablist entries
     		proxy.getAllPlayers().stream().forEach(other -> {
     			
-    			final Optional<ServerConnection> serverConnection = player.getCurrentServer();
+    			Logger.debug("Tablist Entry: " + other.getUsername());
+    			
+    			final Optional<ServerConnection> serverConnection = other.getCurrentServer();
     			String serverName = "";
     			
     			if (serverConnection.isPresent())
@@ -200,8 +204,8 @@ public class Main {
     			}
     			
     			final TabListEntry entry = TabListEntry.builder()
-        				.profile(player.getGameProfile())
-        				.displayName(GlobalPlayerData.getRankedName(player.getUniqueId())
+        				.profile(other.getGameProfile())
+        				.displayName(GlobalPlayerData.getRankedName(other.getUniqueId())
         						.append(Component.text(" " + serverName)
         								.color(NamedTextColor.GRAY)))
         				.gameMode(0)
@@ -215,6 +219,8 @@ public class Main {
     		
     		tablist.clearAll();
     		tablist.clearHeaderAndFooter();
+    		
+    		Logger.debug("Adding entries.");
     		
     		tablist.addEntries(tablistList);
     		

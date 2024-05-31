@@ -17,7 +17,7 @@ public class OnServerPostConnect {
 	public void onServerPostConnect(ServerPostConnectEvent e)
 	{
 		new CompletableFuture<Void>()
-		.completeOnTimeout(null, 4000L, TimeUnit.MILLISECONDS)
+		.completeOnTimeout(null, 500L, TimeUnit.MILLISECONDS)
 		.whenComplete((nullptr, exception) -> {
 			Main.plugin.updateTablist();
 		});

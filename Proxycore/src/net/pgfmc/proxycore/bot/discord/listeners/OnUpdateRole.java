@@ -26,7 +26,7 @@ public class OnUpdateRole extends ListenerAdapter {
 		
 		if (uuid == null) return; // no linked account found
 		
-		RoleManager.propogatePlayerRole(uuid, discordUserId);
+		RoleManager.propogatePlayerRole(uuid);
 		
 		
 	}

@@ -17,7 +17,8 @@ public enum PluginMessageType {
 	CONNECT("Connect"),
 	PING_SERVER("PingServer"),
 	DISCORD_MESSAGE("DiscordMessage"),
-	PLAYER_DATA("PlayerData");
+	PLAYER_DATA("PlayerData"),
+	PLAYER_DATA_SEND("PlayerDataSend");
 	
 	final String subchannel;
 	

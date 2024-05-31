@@ -19,7 +19,7 @@ public class Bot {
 	
 	public Bot()
 	{
-		final File botConfig = Mixins.getFile(Path.of(Main.plugin.configDirectory + File.separator + "bot.toml"));
+		final File botConfig = Mixins.getFile(Path.of(Main.plugin.dataDirectory + File.separator + "bot.toml"));
 		final Toml toml = new Toml()
 				.read(botConfig);
 		

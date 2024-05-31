@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -17,9 +18,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import com.moandjiezana.toml.TomlWriter;
+
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.PGFRole;
 import net.pgfmc.core.util.files.Mixins;
+import net.pgfmc.core.util.proxy.PluginMessageType;
 
 /**
  * stores dynamic, temporary and non-temporary data for each player.
@@ -133,7 +137,15 @@ public final class PlayerData extends PlayerDataExtra {
 	
 	public PGFRole getRole() {
 		// Returns the player's role, or MEMBER if no role
-		return (PGFRole) Optional.ofNullable(getData("role")).orElse(PGFRole.MEMBER);
+		final String roleName = getData("role");
+		
+		if (roleName == null) return PGFRole.MEMBER;
+		
+		final PGFRole role = PGFRole.get(roleName);
+		
+		if (role == null) return PGFRole.MEMBER;
+		
+		return role;
 	}
 	
 	@Override
@@ -192,17 +204,27 @@ public final class PlayerData extends PlayerDataExtra {
 	 */
 	public class Queueable {
 		
-		private String data;
+		private final String key;
 		
-		Queueable(String n) {
-			data = n;
+		Queueable(final String key) {
+			this.key = key;
 		}
 		
 		/**
 		 * adds this data to the queue
 		 */
-		public void queue() {
-			queue.add(data);
+		public final Queueable queue() {
+			queue.add(key);
+			return this;
+		}
+		
+		public final Queueable send() {
+			final TomlWriter writer = new TomlWriter();
+			final String data = writer.write(Map.of(key, getData(key)));
+			
+			PluginMessageType.PLAYER_DATA_SEND.send(CoreMain.plugin.getServer(), getUniqueId().toString(), key, data);
+			
+			return this;
 		}
 		
 	}
@@ -312,4 +334,5 @@ public final class PlayerData extends PlayerDataExtra {
 		}
 		return set;
 	}
+	
 }
