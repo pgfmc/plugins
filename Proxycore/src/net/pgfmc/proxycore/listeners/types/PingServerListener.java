@@ -1,6 +1,7 @@
 package net.pgfmc.proxycore.listeners.types;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
@@ -62,7 +63,7 @@ public class PingServerListener extends PluginMessage {
 			future.whenComplete((isOnline, exception) -> {
 				Logger.debug("CompletableFuture for PingServer is complete.");
 				
-				if (exception != null)
+				if (exception != null && !(exception instanceof ConnectException))
 				{
 					exception.printStackTrace();
 				} else

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -49,7 +50,7 @@ public class GlobalPlayerData {
     	return (T) toml.toMap().get(key);
     }
     
-    public static final void setData(final UUID uuid, final String key, final Object value) // Object value may be null
+    public static final void setData(final UUID uuid, final String key, final Object value)
     {
     	if (uuid == null)
     	{
@@ -64,7 +65,16 @@ public class GlobalPlayerData {
     	}
     	
     	final TomlWriter writer = new TomlWriter();
-    	final String data = writer.write(Map.of(key, value));
+    	String data = "";
+    	
+    	if (Objects.equals(value, null))
+    	{
+    		writer.write(Map.of(key, ""));
+    	} else
+    	{
+    		writer.write(Map.of(key, value));
+    	}
+    	
     	final Toml toml = new Toml().read(data);
     	
     	setData(uuid, toml);
@@ -95,7 +105,7 @@ public class GlobalPlayerData {
     	}
     	
     	newToml.toMap().forEach((key, value) -> {
-    		if (value == null)
+    		if (Objects.equals(value, ""))
         	{
         		data.remove(key);
         	} else

@@ -1,5 +1,6 @@
 package net.pgfmc.core.listeners;
 
+import java.util.Objects;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -34,7 +35,13 @@ public class PlayerDataResponse extends PluginMessage {
 		
 		toml.toMap().forEach((key, value) -> {
 			
-			playerdata.setData(key, value).queue();
+			if (Objects.equals(value, ""))
+			{
+				playerdata.setData(key, null).queue();
+			} else
+			{
+				playerdata.setData(key, value).queue();
+			}
 			
 		});
 		
