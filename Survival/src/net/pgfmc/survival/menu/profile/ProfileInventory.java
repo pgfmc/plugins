@@ -3,7 +3,6 @@ package net.pgfmc.survival.menu.profile;
 import java.util.Arrays;
 import java.util.Collections;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -31,9 +30,9 @@ public class ProfileInventory extends BaseInventory {
 		 */
 		if (playerdata.hasPermission("net.pgfmc.core.link"))
 		{
-			final String discordID = playerdata.getData("Discord");
+			final String discordUserId = playerdata.getData("discord");
 			
-			if (discordID != null)
+			if (discordUserId != null)
 			{
 				setAction(11, (player, event) -> {
 					player.performCommand("unlink");
@@ -42,14 +41,13 @@ public class ProfileInventory extends BaseInventory {
 					
 				});
 				
-				setItem(11, Material.AMETHYST_SHARD).n(ChatColor.LIGHT_PURPLE + "Unlink Account");
+				setItem(11, Material.AMETHYST_SHARD).n(ChatColor.LIGHT_PURPLE + "Unlink Discord Account");
 			
 			} else {
 				
 				setAction(11, (player, event) -> {
 					player.closeInventory();
-					//player.performCommand("link"); // TODO command no work b/c velocity e e e 
-					Bukkit.getServer().dispatchCommand(player, "link");
+					player.performCommand("link");
 					playerdata.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
 					
 				});

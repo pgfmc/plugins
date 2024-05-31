@@ -24,7 +24,7 @@ public class OnPostLogin extends MessageHandler {
 	public void onJoin(PostLoginEvent e)
 	{
 		new CompletableFuture<Void>()
-		.completeOnTimeout(null, 2000L, TimeUnit.MILLISECONDS)
+		.completeOnTimeout(null, 500L, TimeUnit.MILLISECONDS)
 		.whenComplete((nullptr, exception) -> {
 			Main.plugin.updateTablist();
 		});
@@ -54,7 +54,7 @@ public class OnPostLogin extends MessageHandler {
 		
 		if (discordUserId == null) return;
 		
-		RoleManager.propogatePlayerRole(player.getUniqueId(), discordUserId);
+		RoleManager.propogatePlayerRole(uuid);
 		
 	}
 

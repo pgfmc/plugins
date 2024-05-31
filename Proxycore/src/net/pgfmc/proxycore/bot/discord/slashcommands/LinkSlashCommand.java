@@ -38,7 +38,7 @@ public class LinkSlashCommand {
 		Logger.log("Account linking: Successfully linked (Minecraft)" + player.getUsername() + " and (Discord)" + user.getName());
 		
 		RoleManager.linkPlayerDiscord(player.getUniqueId(), user.getId());
-		RoleManager.propogatePlayerRole(player.getUniqueId(), user.getId());
+		RoleManager.propogatePlayerRole(player.getUniqueId());
 		
 		player.sendMessage(Component.text("Your roles have been updated!").color(NamedTextColor.GREEN));
 		

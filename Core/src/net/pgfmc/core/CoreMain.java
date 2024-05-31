@@ -82,53 +82,49 @@ public class CoreMain extends JavaPlugin implements Listener {
 		/**
 		 * PlayerData initialization
 		 */
-		PlayerDataManager.setInit(pd -> pd.setData("Name", pd.getName()).queue());
-		
-		PlayerDataManager.setInit(pd -> {
-			final FileConfiguration db = pd.getPlayerDataFile();
-			final ConfigurationSection config = db.getConfigurationSection("homes");
+		PlayerDataManager.setInit(playerdata -> {
+			final FileConfiguration db = playerdata.getPlayerDataFile();
 			
-			if (config == null) return;
+			// Save name (for convenience)
+			playerdata.setData("Name", playerdata.getName()).queue();
 			
-			Map<String, Location> homes = new HashMap<>();
+			// Set homes
+			final ConfigurationSection homesSection = db.getConfigurationSection("homes");
 			
-			config.getKeys(false).forEach(home -> {
-				final Location homeLocation = config.getLocation(home);
+			if (homesSection != null)
+			{
+				final Map<String, Location> homes = new HashMap<>();
 				
-				if (homeLocation != null)
-				{
-					homes.put(home, homeLocation);
-				} else
-				{
-					Bukkit.getLogger().warning("Could not load home for " + pd.getName() + ".");
-				}
+				homesSection.getKeys(false).forEach(home -> {
+					final Location homeLocation = homesSection.getLocation(home);
+					
+					if (homeLocation != null)
+					{
+						homes.put(home, homeLocation);
+					} else
+					{
+						Bukkit.getLogger().warning("Could not load home for " + playerdata.getName() + ".");
+					}
+					
+					
+				});
 				
+				playerdata.setData("homes", homes);
 				
-			});
+			}
 			
-			if (homes.isEmpty()) return;
-			
-			pd.setData("homes", homes);
-			
-		});
-		
-		PlayerDataManager.setInit(pd -> {
-			
-			final FileConfiguration db = pd.getPlayerDataFile();
-			
+			// Set nickname
 			final String nickname = db.getString("nickname");
+			playerdata.setData("nickname", nickname);
 			
-			if (nickname == null) return;
+			// Set role
+			final String roleName = db.getString("role");
+			playerdata.setData("role", roleName);
 			
-			pd.setData("nickname", nickname);
+			// Request GlobalPlayerData
+			PluginMessageType.PLAYER_DATA.send(CoreMain.plugin.getServer(), playerdata.getUniqueId().toString());
 			
 		});
-		
-		PlayerDataManager.setInit(pd -> {
-			PluginMessageType.PLAYER_DATA.send(CoreMain.plugin.getServer(), pd.getUniqueId().toString());
-			
-		});
-		//
 		
 		/**
 		 * Register commands

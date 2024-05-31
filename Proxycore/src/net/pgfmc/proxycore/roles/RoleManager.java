@@ -3,11 +3,9 @@ package net.pgfmc.proxycore.roles;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 
 import com.moandjiezana.toml.Toml;
-import com.velocitypowered.api.proxy.server.RegisteredServer;
 
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.user.UserManager;
@@ -18,7 +16,6 @@ import net.pgfmc.proxycore.bot.Discord;
 import net.pgfmc.proxycore.util.GlobalPlayerData;
 import net.pgfmc.proxycore.util.Logger;
 import net.pgfmc.proxycore.util.Mixins;
-import net.pgfmc.proxycore.util.proxy.PluginMessageType;
 
 public final class RoleManager  {
 	
@@ -51,7 +48,7 @@ public final class RoleManager  {
 	
 	public static final UUID getPlayerUuidFromDiscordUserId(final String discordUserId)
 	{
-		final File playerdataParentFile = Mixins.getFile(Path.of(Main.plugin.configDirectory + File.separator + "playerdata"));
+		final File playerdataParentFile = Mixins.getFile(Path.of(Main.plugin.dataDirectory + File.separator + "playerdata"));
 		
 		for (final File playerdataFile : playerdataParentFile.listFiles())
 		{
@@ -71,7 +68,7 @@ public final class RoleManager  {
 	{
 		GlobalPlayerData.setData(playerUuid, "discord", discordUserId);
 		
-		propogatePlayerRole(playerUuid, discordUserId);
+		propogatePlayerRole(playerUuid);
 		
 	}
 	
@@ -79,51 +76,36 @@ public final class RoleManager  {
 	{
 		GlobalPlayerData.setData(playerUuid, "discord", null);
 		
-		propogatePlayerRole(playerUuid, null);
+		propogatePlayerRole(playerUuid);
 		
 	}
 
-	public static final void propogatePlayerRole(final UUID playerUuid, final String discordUserId)
+	public static final void propogatePlayerRole(final UUID playerUuid)
 	{
 		Main.plugin.updateTablist();
 		
-		PGFRole role = PGFRole.MEMBER;
-		
-		if (discordUserId != null) // may be null
-		{
-			role = Discord.getTopRoleOfMember(
-					Discord.getJda()
-					.getGuildById(Discord.GUILD_ID_PGF)
-					.getMemberById(discordUserId));
-		}
-		
-		final PGFRole finalRole = role;
+		final PGFRole role = getRoleFromPlayerUuid(playerUuid);
 		final UserManager userManager = lp.getUserManager();
 		
 		// Remove then add groups, save changes
 		userManager.modifyUser(playerUuid, user -> {
 	        user.data().clear(NodeType.INHERITANCE::matches);
 	        
-	        if (Objects.equals(finalRole.name().toLowerCase(), "member"))
+	        if (Objects.equals(role.name().toLowerCase(), "member"))
 			{
 				final Node node = Node.builder("group.default").build();
 				Logger.debug("Updated roles: " + user.data().add(node).toString());
 				
 			} else
 			{
-	            final Node node = Node.builder("group." + finalRole.name().toLowerCase()).build();
+	            final Node node = Node.builder("group." + role.name().toLowerCase()).build();
 	            Logger.debug("Updated roles: " + user.data().add(node).toString());
 	            
 			}
 	        
 		});
 		
-		for (final RegisteredServer server : Main.plugin.proxy.getAllServers())
-		{
-			PluginMessageType.PLAYER_DATA.send(server, playerUuid.toString(), "discord", (String) Optional.ofNullable(discordUserId).orElse(""));
-			PluginMessageType.PLAYER_DATA.send(server, playerUuid.toString(), "role", role.name());
-			
-		}
+		GlobalPlayerData.setData(playerUuid, "role", role.name());
 		
 	}
 	

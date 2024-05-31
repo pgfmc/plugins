@@ -33,9 +33,12 @@ public class PlayerDataResponse extends PluginMessage {
 		final Toml toml = new Toml().read(data);
 		
 		toml.toMap().forEach((key, value) -> {
+			
 			playerdata.setData(key, value).queue();
 			
 		});
+		
+		
 		
 	}
 
