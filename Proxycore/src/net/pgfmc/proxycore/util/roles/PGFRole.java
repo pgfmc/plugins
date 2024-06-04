@@ -1,4 +1,4 @@
-package net.pgfmc.proxycore.roles;
+package net.pgfmc.proxycore.util.roles;
 
 import net.kyori.adventure.text.format.NamedTextColor;
 

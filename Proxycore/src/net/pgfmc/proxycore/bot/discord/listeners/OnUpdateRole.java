@@ -9,7 +9,7 @@ import net.dv8tion.jda.api.events.guild.member.GenericGuildMemberEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.pgfmc.proxycore.bot.Discord;
-import net.pgfmc.proxycore.roles.RoleManager;
+import net.pgfmc.proxycore.util.roles.RoleManager;
 
 public class OnUpdateRole extends ListenerAdapter {
 
@@ -26,7 +26,7 @@ public class OnUpdateRole extends ListenerAdapter {
 		
 		if (uuid == null) return; // no linked account found
 		
-		RoleManager.propogatePlayerRole(uuid);
+		RoleManager.updatePlayerRole(uuid);
 		
 		
 	}

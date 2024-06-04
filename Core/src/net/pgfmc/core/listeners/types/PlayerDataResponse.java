@@ -1,4 +1,4 @@
-package net.pgfmc.core.listeners;
+package net.pgfmc.core.listeners.types;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import com.google.common.io.ByteArrayDataInput;
 import com.moandjiezana.toml.Toml;
 
+import net.luckperms.api.LuckPermsProvider;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.proxy.PluginMessage;
 import net.pgfmc.core.util.proxy.PluginMessageType;
@@ -33,6 +34,11 @@ public class PlayerDataResponse extends PluginMessage {
 		final PlayerData playerdata = PlayerData.from(player);
 		final Toml toml = new Toml().read(data);
 		
+		if (toml.contains("role"))
+		{
+			LuckPermsProvider.get().runUpdateTask();
+		}
+		
 		toml.toMap().forEach((key, value) -> {
 			
 			if (Objects.equals(value, ""))
@@ -44,8 +50,6 @@ public class PlayerDataResponse extends PluginMessage {
 			}
 			
 		});
-		
-		
 		
 	}
 

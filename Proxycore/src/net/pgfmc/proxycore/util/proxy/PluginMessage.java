@@ -11,8 +11,7 @@ import com.google.common.io.ByteStreams;
 import com.google.common.io.CountingInputStream;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PluginMessageEvent;
-import com.velocitypowered.api.proxy.Player;
-import com.velocitypowered.api.proxy.ServerConnection;
+import com.velocitypowered.api.proxy.messages.ChannelMessageSource;
 
 import net.pgfmc.proxycore.Main;
 import net.pgfmc.proxycore.util.Logger;
@@ -73,12 +72,11 @@ public abstract class PluginMessage {
 	 * @param player The player that sent this plugin message
 	 * @param args The arguments
 	 */
-	public abstract void onPluginMessageReceived(final ServerConnection connection, final Player player, ByteArrayDataInput in, final byte[] message);
+	public abstract void onPluginMessageReceived(ChannelMessageSource source, ByteArrayDataInput in, byte[] message);
 	
 	@Subscribe
 	public final void onPluginMessageFromPlugin(PluginMessageEvent event)
 	{
-		if (!(event.getSource() instanceof ServerConnection)) return;
     	if (event.getIdentifier() != Main.IDENTIFIER) return;
 		
 		final InputStream inputStream = new ByteArrayInputStream(event.getData());
@@ -103,18 +101,17 @@ public abstract class PluginMessage {
 			if (!Objects.equals(type.subchannel, subchannel)) return;
 		}
 		
-		
 		Logger.debug("------------------------------");
 		Logger.debug("Plugin Message received.");
 		Logger.debug("Channel: " + Main.IDENTIFIER);
 		Logger.debug("Sender: " + event.getSource());
 		Logger.debug("Subchannel: " + subchannel);
 		
-		final ServerConnection connection = (ServerConnection) event.getSource();
+		final ChannelMessageSource source = event.getSource();
 		final byte[] message = event.getData();
 		
 		// Everything matches. Call the method
-		onPluginMessageReceived(connection, connection.getPlayer(), ByteStreams.newDataInput(message), message);
+		onPluginMessageReceived(source, ByteStreams.newDataInput(message), message);
 		
 	}
 

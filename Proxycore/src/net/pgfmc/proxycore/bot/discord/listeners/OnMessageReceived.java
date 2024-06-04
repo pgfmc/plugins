@@ -8,13 +8,14 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.proxycore.bot.Discord;
 import net.pgfmc.proxycore.bot.util.MessageHandler;
-import net.pgfmc.proxycore.roles.PGFRole;
+import net.pgfmc.proxycore.util.roles.PGFRole;
 
-public class OnMessageReceived extends MessageHandler {
+public class OnMessageReceived extends ListenerAdapter {
 	
 	@Override
 	public void onMessageReceived(MessageReceivedEvent e)
@@ -65,12 +66,12 @@ public class OnMessageReceived extends MessageHandler {
 					.append(Component.text(((memberRole.compareTo(PGFRole.STAFF) <= 0) ? PGFRole.STAFF_DIAMOND : "") + e.getMember().getEffectiveName())
 						.color(memberRole.getColor()))
 					.append(Component.text(" -|| ")
-							.color(NamedTextColor.DARK_GRAY))
+							.color(NamedTextColor.GRAY))
 					.append(Component.text(message.getContentDisplay()))
-					.color(getExpectedTextColor(user.getEffectiveName()))
+					.color(MessageHandler.getExpectedTextColor(user.getEffectiveName()))
 					.build();
 			
-			sendToMinecraft(component);
+			MessageHandler.sendToMinecraft(component);
 			
 			return;
 		} else { // is reply
@@ -89,12 +90,12 @@ public class OnMessageReceived extends MessageHandler {
             		.append(Component.text(((memberRole.compareTo(PGFRole.STAFF) <= 0) ? PGFRole.STAFF_DIAMOND : "") + replyMember.getEffectiveName())
             				.color(replyRole.getColor()))
             		.append(Component.text(" -|| ")
-            				.color(NamedTextColor.DARK_GRAY))
+            				.color(NamedTextColor.GRAY))
             		.append(Component.text(message.getContentDisplay())
-            				.color(getExpectedTextColor(user.getEffectiveName())))
+            				.color(MessageHandler.getExpectedTextColor(user.getEffectiveName())))
             		.build();
 			
-			sendToMinecraft(component);
+            MessageHandler.sendToMinecraft(component);
             
             return;
 		}

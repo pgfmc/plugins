@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 import com.velocitypowered.api.proxy.Player;
 
@@ -12,9 +14,9 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.proxycore.Main;
-import net.pgfmc.proxycore.roles.RoleManager;
 import net.pgfmc.proxycore.util.GlobalPlayerData;
 import net.pgfmc.proxycore.util.Logger;
+import net.pgfmc.proxycore.util.roles.RoleManager;
 
 public class LinkSlashCommand {
 	
@@ -44,7 +46,13 @@ public class LinkSlashCommand {
 		final UUID uuid = linkCodes.get(inputCode);
 		
 		GlobalPlayerData.setData(uuid, "discord", user.getId());
-		RoleManager.propogatePlayerRole(uuid);
+		RoleManager.updatePlayerRole(uuid);
+		
+		new CompletableFuture<Void>()
+			.completeOnTimeout(null, 400L, TimeUnit.MILLISECONDS)
+			.whenComplete((result, exception) -> {
+				
+			});
 		
 		final Optional<Player> player = Main.plugin.proxy.getPlayer(uuid);
 		

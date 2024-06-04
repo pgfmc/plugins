@@ -41,11 +41,11 @@ import net.pgfmc.core.cmd.UnlinkCommand;
 import net.pgfmc.core.cmd.serverselector.ConnectCommand;
 import net.pgfmc.core.cmd.test.inventory.TestInventorySizeCommand;
 import net.pgfmc.core.cmd.test.pluginmessage.TestPluginMessageCommand;
-import net.pgfmc.core.listeners.ConnectResponse;
-import net.pgfmc.core.listeners.PlayerDataResponse;
 import net.pgfmc.core.listeners.minecraft.OnAsyncPlayerChat;
 import net.pgfmc.core.listeners.minecraft.OnPlayerJoin;
 import net.pgfmc.core.listeners.minecraft.OnPlayerQuit;
+import net.pgfmc.core.listeners.types.ConnectResponse;
+import net.pgfmc.core.listeners.types.PlayerDataResponse;
 import net.pgfmc.core.util.Logger;
 import net.pgfmc.core.util.RestartScheduler;
 import net.pgfmc.core.util.ServerMessage;
@@ -141,6 +141,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		new TagCommand();
 		new PlayerDataSetCommand();
 		new TestInventorySizeCommand("testinventorysize");
+		new TestPluginMessageCommand("testpluginmessage");
 		//
 		
 		/**
@@ -158,7 +159,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(this, this);
 		new ConnectResponse();
 		new PlayerDataResponse();
-		new TestPluginMessageCommand("testpluginmessage");
+		
 		//
 		
 		/**
