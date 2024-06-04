@@ -24,7 +24,6 @@ public enum PluginMessageType {
 	//PLAYER_COUNT(PluginMessage.CHANNEL_BUNGEECORD, "PlayerCount", PluginMessageMatchType.ARGUMENT),
 	PLAYER_LIST(PluginMessage.CHANNEL_BUNGEECORD, "PlayerList", PluginMessageMatchType.ARGUMENT),
 	GET_SERVERS(PluginMessage.CHANNEL_BUNGEECORD, "GetServers", PluginMessageMatchType.NONE),
-	MESSAGE(PluginMessage.CHANNEL_BUNGEECORD, "Message", PluginMessageMatchType.NONE),
 	//MESSAGE_RAW(PluginMessage.CHANNEL_BUNGEECORD, "MessageRaw", PluginMessageMatchType.NONE),
 	GET_SERVER(PluginMessage.CHANNEL_BUNGEECORD, "GetServer", PluginMessageMatchType.SENDER),
 	UUID(PluginMessage.CHANNEL_BUNGEECORD, "UUID", PluginMessageMatchType.SENDER),
@@ -39,7 +38,8 @@ public enum PluginMessageType {
 	DISCORD_MESSAGE(PluginMessage.CHANNEL_PGF, "DiscordMessage", PluginMessageMatchType.NONE),
 	PLAYER_DATA(PluginMessage.CHANNEL_PGF, "PlayerData", PluginMessageMatchType.ARGUMENT),
 	PLAYER_DATA_SEND(PluginMessage.CHANNEL_PGF, "PlayerDataSend", PluginMessageMatchType.ARGUMENT),
-	LINK_CODE(PluginMessage.CHANNEL_PGF, "LinkCode", PluginMessageMatchType.NONE);
+	LINK_CODE(PluginMessage.CHANNEL_PGF, "LinkCode", PluginMessageMatchType.NONE),
+	MESSAGE(PluginMessage.CHANNEL_PGF, "Message", PluginMessageMatchType.NONE);
 	
 	/**
 	 * Determines how to check if the plugin message response matches the original plugin message

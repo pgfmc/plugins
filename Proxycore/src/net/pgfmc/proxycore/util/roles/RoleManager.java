@@ -1,4 +1,4 @@
-package net.pgfmc.proxycore.roles;
+package net.pgfmc.proxycore.util.roles;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -27,7 +27,7 @@ public final class RoleManager  {
 		
 		final String discordUserId = getDiscordUserIdFromPlayerUuid(uuid);
 		
-		if (discordUserId == null) return PGFRole.MEMBER;
+		if (discordUserId == null || discordUserId.isBlank()) return PGFRole.MEMBER;
 		
 		final PGFRole role = Discord.getTopRoleOfMember(
 				Discord.getJda()
@@ -64,7 +64,7 @@ public final class RoleManager  {
 		return null;
 	}
 
-	public static final void propogatePlayerRole(final UUID playerUuid)
+	public static final void updatePlayerRole(final UUID playerUuid)
 	{
 		Main.plugin.updateTablist();
 		
@@ -78,12 +78,14 @@ public final class RoleManager  {
 	        if (Objects.equals(role.name().toLowerCase(), "member"))
 			{
 				final Node node = Node.builder("group.default").build();
-				Logger.debug("Updated roles: " + user.data().add(node).toString());
+				user.data().add(node);
+				Logger.debug("Updated permissions for " + user.getFriendlyName());
 				
 			} else
 			{
 	            final Node node = Node.builder("group." + role.name().toLowerCase()).build();
-	            Logger.debug("Updated roles: " + user.data().add(node).toString());
+	            user.data().add(node);
+	            Logger.debug("Updated permissions for " + user.getFriendlyName());
 	            
 			}
 	        

@@ -27,8 +27,8 @@ import net.pgfmc.proxycore.bot.discord.listeners.OnMessageUpdateAndMessageReceiv
 import net.pgfmc.proxycore.bot.discord.listeners.OnReady;
 import net.pgfmc.proxycore.bot.discord.listeners.OnSlashCommand;
 import net.pgfmc.proxycore.bot.discord.listeners.OnUpdateRole;
-import net.pgfmc.proxycore.roles.PGFRole;
 import net.pgfmc.proxycore.util.Logger;
+import net.pgfmc.proxycore.util.roles.PGFRole;
 
 public final class Discord extends ListenerAdapter {
 	public static final long GUILD_ID_PGF = 579055447437475851L;

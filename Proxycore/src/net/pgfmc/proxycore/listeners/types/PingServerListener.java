@@ -10,8 +10,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 import com.google.common.io.ByteArrayDataInput;
-import com.velocitypowered.api.proxy.Player;
-import com.velocitypowered.api.proxy.ServerConnection;
+import com.velocitypowered.api.proxy.messages.ChannelMessageSink;
+import com.velocitypowered.api.proxy.messages.ChannelMessageSource;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 
 import net.pgfmc.proxycore.Main;
@@ -35,7 +35,7 @@ public class PingServerListener extends PluginMessage {
 	 * RESPONSE PLUGIN MESSAGE FORM: PingServer, <server name>, <true/false>
 	 */
 	@Override
-	public void onPluginMessageReceived(ServerConnection connection, Player player, ByteArrayDataInput in, final byte[] message) {
+	public void onPluginMessageReceived(ChannelMessageSource source, ByteArrayDataInput in, byte[] message) {
 		in.readUTF();
 		final String serverName = in.readUTF();
 		final Optional<RegisteredServer> server = Main.plugin.proxy.getServer(serverName);
@@ -68,7 +68,7 @@ public class PingServerListener extends PluginMessage {
 					exception.printStackTrace();
 				} else
 				{
-	    			PluginMessageType.PING_SERVER.send(connection, serverName, isOnline);
+	    			PluginMessageType.PING_SERVER.send((ChannelMessageSink) source, serverName, isOnline);
 	    			
 				}
 				

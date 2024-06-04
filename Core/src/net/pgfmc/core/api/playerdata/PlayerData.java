@@ -137,6 +137,10 @@ public final class PlayerData extends PlayerDataExtra {
 	
 	public PGFRole getRole() {
 		// Returns the player's role, or MEMBER if no role
+		final String discordUserId = getData("discord");
+		
+		if (discordUserId == null) return PGFRole.MEMBER;
+		
 		final String roleName = getData("role");
 		
 		if (roleName == null) return PGFRole.MEMBER;

@@ -7,8 +7,8 @@ import com.google.common.io.ByteStreams;
 import com.velocitypowered.api.proxy.messages.ChannelMessageSink;
 
 import net.pgfmc.proxycore.Main;
-import net.pgfmc.proxycore.roles.PGFRole;
 import net.pgfmc.proxycore.util.Logger;
+import net.pgfmc.proxycore.util.roles.PGFRole;
 
 /**
  * Used for sending a plugin message
@@ -19,7 +19,8 @@ public enum PluginMessageType {
 	DISCORD_MESSAGE("DiscordMessage"),
 	PLAYER_DATA("PlayerData"),
 	PLAYER_DATA_SEND("PlayerDataSend"),
-	LINK_CODE("LinkCode");
+	LINK_CODE("LinkCode"),
+	MESSAGE("Message");
 	
 	final String subchannel;
 	

@@ -31,11 +31,11 @@ import net.pgfmc.proxycore.commands.StopProxyCommand;
 import net.pgfmc.proxycore.listeners.types.ConnectListener;
 import net.pgfmc.proxycore.listeners.types.DiscordMessageListener;
 import net.pgfmc.proxycore.listeners.types.LinkCodeListener;
+import net.pgfmc.proxycore.listeners.types.MessageListener;
 import net.pgfmc.proxycore.listeners.types.PingServerListener;
 import net.pgfmc.proxycore.listeners.types.PlayerDataListener;
 import net.pgfmc.proxycore.listeners.types.PlayerDataSaveListener;
 import net.pgfmc.proxycore.listeners.velocity.OnDisconnect;
-import net.pgfmc.proxycore.listeners.velocity.OnPlayerChat;
 import net.pgfmc.proxycore.listeners.velocity.OnPostLogin;
 import net.pgfmc.proxycore.listeners.velocity.OnServerPostConnect;
 import net.pgfmc.proxycore.util.GlobalPlayerData;
@@ -109,7 +109,6 @@ public class Main {
     	 * Register listeners
     	 */
     	proxy.getChannelRegistrar().register(IDENTIFIER);
-    	proxy.getEventManager().register(this, new OnPlayerChat());
     	proxy.getEventManager().register(this, new OnPostLogin());
     	proxy.getEventManager().register(this, new OnDisconnect());
     	proxy.getEventManager().register(this, new OnServerPostConnect());
@@ -119,6 +118,7 @@ public class Main {
     	new PlayerDataListener();
     	new PlayerDataSaveListener();
     	new LinkCodeListener();
+    	new MessageListener();
     	
     	/**
     	 * Register Commands

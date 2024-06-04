@@ -16,9 +16,9 @@ import com.velocitypowered.api.proxy.server.RegisteredServer;
 
 import net.kyori.adventure.text.Component;
 import net.pgfmc.proxycore.Main;
-import net.pgfmc.proxycore.roles.PGFRole;
-import net.pgfmc.proxycore.roles.RoleManager;
 import net.pgfmc.proxycore.util.proxy.PluginMessageType;
+import net.pgfmc.proxycore.util.roles.PGFRole;
+import net.pgfmc.proxycore.util.roles.RoleManager;
 
 public class GlobalPlayerData {
     
@@ -69,10 +69,10 @@ public class GlobalPlayerData {
     	
     	if (Objects.equals(value, null))
     	{
-    		writer.write(Map.of(key, ""));
+    		data = writer.write(Map.of(key, ""));
     	} else
     	{
-    		writer.write(Map.of(key, value));
+    		data = writer.write(Map.of(key, value));
     	}
     	
     	final Toml toml = new Toml().read(data);
@@ -104,15 +104,7 @@ public class GlobalPlayerData {
     		data.putAll(toml.toMap());
     	}
     	
-    	newToml.toMap().forEach((key, value) -> {
-    		if (Objects.equals(value, ""))
-        	{
-        		data.remove(key);
-        	} else
-        	{
-        		data.put(key, value);
-        	}
-    	});
+    	data.putAll(newToml.toMap());
     	
     	try {
     		final Path path = Path.of(dataPath + File.separator + uuid.toString() + ".toml");
@@ -127,7 +119,7 @@ public class GlobalPlayerData {
     	
     }
     
-    public static final String getUsername(UUID uuid)
+    private static final String getUsername(UUID uuid)
     {
     	final String username = getData(uuid, "username");
     	
@@ -145,7 +137,7 @@ public class GlobalPlayerData {
     	return username;
     }
     
-    public static final String getNickname(UUID uuid)
+    private static final String getNickname(UUID uuid)
     {
     	final String discordUserId = getData(uuid, "discord");
     	
@@ -184,51 +176,4 @@ public class GlobalPlayerData {
     	
     }
     
-    /*
-    public static String getDiscordID(UUID uuid) {
-
-        Path path = Path.of(dataPath + uuid.toString() + ".toml");
-
-        try {
-            Toml file = new Toml().read(Files.readString(path));
-            return file.getString("discord");
-
-        } catch (IOException ex) {
-            return null;
-        }
-    }
-    */
-    
-    /* sorry
-    public static void setData(UUID uuid, String id, String nick) {
-
-        String path = dataPath + uuid.toString() + ".toml";
-        
-        final Map<String, Object> content = new HashMap<>();
-
-        if (id != null) {
-        	content.put("discord", id);
-        } else
-        {
-        	content.put("discord", "");
-        }
-
-        if (nick != null) {
-        	content.put("nick", nick);
-        } else
-        {
-        	content.put("nick", "");
-        }
-
-        File file = Mixins.getFile(Path.of(path));
-        TomlWriter writer = new TomlWriter();
-
-        try {
-        	writer.write(content, file);
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-    */
 }

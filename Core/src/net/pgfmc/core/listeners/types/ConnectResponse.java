@@ -1,4 +1,4 @@
-package net.pgfmc.core.listeners;
+package net.pgfmc.core.listeners.types;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
