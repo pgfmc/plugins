@@ -1,4 +1,4 @@
-package net.pgfmc.core.bot.minecraft.listeners;
+package net.pgfmc.core.listeners.minecraft;
 
 import org.bukkit.ChatColor;
 import org.bukkit.advancement.Advancement;
@@ -24,16 +24,32 @@ public class OnPlayerAdvancementDone implements Listener {
 		
 		switch (advancement.getDisplay().getType())
 		{
-			case TASK:
-				advancementMessage = "has made the advancement [" + advancement.getDisplay().getTitle() + "]!";
-				break;
 			case GOAL:
 				advancementMessage = "has reached the goal [" + advancement.getDisplay().getTitle() + "]!";
 				break;
 			case CHALLENGE:
 				advancementMessage = "has completed the challenge [" + advancement.getDisplay().getTitle() + "]!";
 				break;
+			case TASK:
+			default:
+				advancementMessage = "has made the advancement [" + advancement.getDisplay().getTitle() + "]!";
+				break;
 		}
+		
+		/*
+		 * No easy way to cancel/set the advancement message
+		 * 
+		final String finalAdvancementMessage = advancementMessage;
+		
+		PluginMessageType.MESSAGE.send(player, playerdata.getRankedName() + " " + advancementMessage)
+		.orTimeout(1000L, TimeUnit.MILLISECONDS) // Should only time out if the proxy isn't online
+		.whenComplete((result, exception) -> {
+			if (exception != null)
+			{
+				CoreMain.plugin.getServer().broadcastMessage(playerdata.getRankedName() + " " + finalAdvancementMessage); // requires final or effectively final
+			}
+		});
+		*/
 		
 		PluginMessageType.DISCORD_MESSAGE.send(player, "<:dwarf:1191762269261017119> " + ChatColor.stripColor(playerdata.getRankedName()) + " " + advancementMessage);
 		

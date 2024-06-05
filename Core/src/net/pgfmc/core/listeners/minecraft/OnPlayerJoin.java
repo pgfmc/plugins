@@ -18,20 +18,7 @@ public class OnPlayerJoin implements Listener {
 		
 		final Player player = e.getPlayer();
 		final PlayerData playerdata = PlayerData.from(player);
-		
-		//final String minecraftJoinMessage = ChatColor.GRAY + "[" + ChatColor.GREEN + "+" + ChatColor.GRAY + "]" + ChatColor.RESET + " " + playerdata.getRankedName();
 		final String discordJoinMessage = "<:JOIN:905023714213625886> " + ChatColor.stripColor(playerdata.getRankedName());
-		
-		PluginMessageType.MESSAGE.send(player, "");
-		/*
-			.orTimeout(1000L, TimeUnit.MILLISECONDS) // Should only time out if the proxy isn't online
-			.whenComplete((result, exception) -> {
-				if (exception != null)
-				{
-					CoreMain.plugin.getServer().broadcastMessage(minecraftJoinMessage);
-				}
-			});
-			*/
 		
 		PluginMessageType.DISCORD_MESSAGE.send(player, discordJoinMessage);
 		

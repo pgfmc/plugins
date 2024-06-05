@@ -13,6 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.playerdata.PlayerDataManager;
 import net.pgfmc.core.util.files.Mixins;
+import net.pgfmc.survival.balance.TameableMobs;
 import net.pgfmc.survival.cmd.Back;
 import net.pgfmc.survival.cmd.Skull;
 import net.pgfmc.survival.cmd.afk.Afk;
@@ -100,6 +101,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new PvpEvent(), this);
 		getServer().getPluginManager().registerEvents(new GiveRewardsListInventory(), this);
 		getServer().getPluginManager().registerEvents(new InventoryBackupScheduler(), this);
+		getServer().getPluginManager().registerEvents(new TameableMobs(), this);
 
 	}
 	

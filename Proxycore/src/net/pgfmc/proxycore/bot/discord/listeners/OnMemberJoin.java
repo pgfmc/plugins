@@ -42,7 +42,7 @@ public class OnMemberJoin extends ListenerAdapter {
 		String welcome_message = "# Welcome to PGF!\r\n"
 				+ lrm + "\r\n"
 				+ "The Minecraft server address is\r\n"
-				+ "## |             pgfmc.net             |\r\n"
+				+ "## |        play.pgfmc.net        |\r\n"
 				+ lrm + "\r\n"
 				+ "* You can join on **Bedrock **or **Java **using the latest version\r\n"
 				+ "* Don't forget to read https://discord.com/channels/579055447437475851/679235215511519244\r\n"
