@@ -38,10 +38,14 @@ public class Claim {
 	
 	// protected String name;
 	private PlayerData placer;
-	
 	private Vector4 vector;
-	
 	private Set<PlayerData> members;
+    public boolean explosionsEnabled;
+    public boolean doorsLocked;
+    public boolean switchesLocked;
+    public boolean inventoriesLocked;
+    public boolean monsterKilling;
+    public boolean livestockKilling;
 	
 	/**
 	 * Defines access states.
@@ -72,30 +76,40 @@ public class Claim {
 		}
 	}
 	
-	
-	public void updateFrom(Claim claim) {
-		this.members = claim.members;
-		this.placer = claim.placer;
+	public void forwardUpdateFrom(Claim claim) {
+        for (Claim clame : getMergedClaims()) {
+            clame.members = claim.members;
+            clame.placer = claim.placer;
+            clame.explosionsEnabled = claim.explosionsEnabled;
+            clame.doorsLocked = claim.doorsLocked;
+            clame.switchesLocked = claim.switchesLocked;
+            clame.inventoriesLocked = claim.inventoriesLocked;
+            clame.monsterKilling = claim.monsterKilling;
+            clame.livestockKilling = claim.livestockKilling;
+        }
 	}
-	
-	public void forwardUpdateFrom(Claim claim, Set<Claim> done) {
-		if (done == null) {
-			done = new HashSet<Claim>();
-		}
-		
-		if (!done.contains(this)) {
-			done.add(this);
-		}
-		
-		updateFrom(claim);
-		
-		for (Claim clame : ClaimsTable.getNearbyClaims(this.getLocation(), Range.MERGE)) {
-			if (!done.contains(clame)) {
-				done.add(clame);
-				clame.forwardUpdateFrom(claim, done);
-			}
-		}
-	}
+
+    public Set<Claim> getMergedClaims() {
+        Set<Claim> claimsOut = new HashSet<Claim>();		
+        claimsOut.add(this);
+        this.appendMergedClaims(claimsOut);
+        return claimsOut;
+    }
+
+    private void appendMergedClaims(Set<Claim> mergedPast) {
+
+        if (!mergedPast.contains(this)) {
+            mergedPast.add(this);
+        }
+
+        for (Claim claim : ClaimsTable.getNearbyClaims(this.getLocation(), Range.MERGE)) {
+            if (!mergedPast.contains(claim)) {
+                mergedPast.add(claim);
+                claim.appendMergedClaims(mergedPast);
+            }
+        }
+    }
+
 	
 	/**
 	 * Removes this ownable.
@@ -149,6 +163,10 @@ public class Claim {
 	}
 	
 	public Security getAccess(PlayerData player) {
+
+        if (player.getPlayer().getGameMode() == GameMode.CREATIVE) {
+            return Security.ADMIN;
+        }
 		
 		if (placer == null) {
 			if (player.getPlayer().getGameMode() == GameMode.CREATIVE) {
@@ -157,7 +175,6 @@ public class Claim {
 				return Security.BLOCKED;
 			}
 		}
-		
 		
 		if (player == placer) {
 			return Security.ADMIN;

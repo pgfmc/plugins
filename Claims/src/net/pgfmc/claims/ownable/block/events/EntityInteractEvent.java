@@ -27,7 +27,7 @@ public class EntityInteractEvent implements Listener {
 			if (claim == null) return; 
 			Security access = claim.getAccess(pd);
 			
-			if (access == Security.BLOCKED) {
+			if (access == Security.BLOCKED && !claim.livestockKilling) {
 				e.setCancelled(true);
 				pd.sendMessage(ChatColor.RED + "This land is claimed!");
 				return;

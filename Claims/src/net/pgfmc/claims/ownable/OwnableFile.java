@@ -54,7 +54,15 @@ public class OwnableFile {
 				}
 				
 				Vector4 vec = Vector4.fromString(key);
-				new Claim(pd, vec, members);
+				Claim claim = new Claim(pd, vec, members);
+
+                claim.doorsLocked = configSec.getBoolean("doors");
+                claim.inventoriesLocked = configSec.getBoolean("inventories");
+                claim.switchesLocked = configSec.getBoolean("switches");
+                claim.monsterKilling = configSec.getBoolean("monsters");
+                claim.livestockKilling = configSec.getBoolean("animals");
+                claim.explosionsEnabled = configSec.getBoolean("explosions");
+
 				amount++;
 			}
 			Bukkit.getLogger().info("Loaded " + amount + " Claim(s).");
@@ -85,6 +93,13 @@ public class OwnableFile {
 				.stream().map(x -> {
 					return x.getUniqueId().toString();
 				}).collect(Collectors.toList()));
+
+        blocc.set("doors", ob.doorsLocked);
+        blocc.set("inventories", ob.inventoriesLocked);
+        blocc.set("switches", ob.switchesLocked);
+        blocc.set("monsters", ob.monsterKilling);
+        blocc.set("animals", ob.livestockKilling);
+        blocc.set("explosions", ob.explosionsEnabled);
 		
 		database.set(id, blocc);
 		
