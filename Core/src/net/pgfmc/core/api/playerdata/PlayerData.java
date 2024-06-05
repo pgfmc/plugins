@@ -121,7 +121,7 @@ public final class PlayerData extends PlayerDataExtra {
 			name = name + ChatColor.GRAY + " " + pvpSwordsIcon;
 		}
 		
-		return name + ChatColor.RESET;
+		return name;
 	}
 	
 	public String getDisplayName()
