@@ -15,7 +15,8 @@ public class ClaimsLogic {
 	public static enum Range {
 		PROTECTED,
 		MERGE,
-		FOREIGN;
+		FOREIGN,
+        PISTONPROTECT;
 		
 		public int getRange() {
 			switch(this) {
@@ -25,6 +26,8 @@ public class ClaimsLogic {
 				return mergeRange;
 			case PROTECTED:
 				return protectedRange;
+            case PISTONPROTECT:
+                return protectedRange + 1;
 			default:
 				return 0;
 			}
