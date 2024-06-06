@@ -5,10 +5,14 @@ import java.util.EnumSet;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
+import org.bukkit.entity.AnimalTamer;
+import org.bukkit.entity.Tameable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import net.pgfmc.claims.ownable.block.Claim;
@@ -100,4 +104,23 @@ public class BlockInteractEvent implements Listener {
     EnumSet<Material> switches = EnumSet.of(Material.LEVER, Material.OAK_BUTTON, Material.SPRUCE_BUTTON, Material.BIRCH_BUTTON, Material.JUNGLE_BUTTON, Material.ACACIA_BUTTON, Material.DARK_OAK_BUTTON, Material.STONE_BUTTON, Material.WARPED_BUTTON, Material.CRIMSON_BUTTON, Material.MANGROVE_BUTTON, Material.CHERRY_BUTTON, Material.BAMBOO_BUTTON, Material.POLISHED_BLACKSTONE_BUTTON, Material.OAK_PRESSURE_PLATE, Material.SPRUCE_PRESSURE_PLATE, Material.BIRCH_PRESSURE_PLATE, Material.JUNGLE_PRESSURE_PLATE, Material.ACACIA_PRESSURE_PLATE, Material.DARK_OAK_PRESSURE_PLATE, Material.MANGROVE_PRESSURE_PLATE, Material.CHERRY_PRESSURE_PLATE, Material.BAMBOO_PRESSURE_PLATE, Material.WARPED_PRESSURE_PLATE, Material.CRIMSON_PRESSURE_PLATE, Material.POLISHED_BLACKSTONE_PRESSURE_PLATE, Material.LIGHT_WEIGHTED_PRESSURE_PLATE, Material.HEAVY_WEIGHTED_PRESSURE_PLATE);
     EnumSet<Material> doors = EnumSet.of(Material.OAK_DOOR, Material.OAK_TRAPDOOR, Material.SPRUCE_DOOR, Material.SPRUCE_TRAPDOOR, Material.BIRCH_DOOR, Material.BIRCH_TRAPDOOR, Material.JUNGLE_DOOR, Material.JUNGLE_TRAPDOOR, Material.ACACIA_DOOR, Material.ACACIA_TRAPDOOR, Material.DARK_OAK_DOOR, Material.DARK_OAK_TRAPDOOR, Material.MANGROVE_DOOR, Material.MANGROVE_TRAPDOOR, Material.CHERRY_DOOR, Material.CHERRY_TRAPDOOR, Material.BAMBOO_DOOR, Material.BAMBOO_TRAPDOOR, Material.WARPED_DOOR, Material.WARPED_TRAPDOOR, Material.CRIMSON_DOOR, Material.CRIMSON_TRAPDOOR, Material.OAK_FENCE_GATE, Material.SPRUCE_FENCE_GATE, Material.BIRCH_FENCE_GATE, Material.JUNGLE_FENCE_GATE, Material.ACACIA_FENCE_GATE, Material.DARK_OAK_FENCE_GATE, Material.MANGROVE_FENCE_GATE, Material.CHERRY_FENCE_GATE, Material.BAMBOO_FENCE_GATE, Material.WARPED_FENCE_GATE, Material.CRIMSON_FENCE_GATE);
     EnumSet<Material> inventories = EnumSet.of(Material.CHEST, Material.FURNACE, Material.SMOKER, Material.BLAST_FURNACE, Material.CAMPFIRE, Material.SOUL_CAMPFIRE, Material.COMPOSTER, Material.JUKEBOX, Material.BREWING_STAND, Material.CAULDRON, Material.BEE_NEST, Material.BEEHIVE, Material.LECTERN, Material.CHISELED_BOOKSHELF, Material.TRAPPED_CHEST, Material.DROPPER, Material.DISPENSER, Material.HOPPER, Material.SHULKER_BOX);
+
+    @EventHandler
+    public void entityInteract(EntityInteractEvent e) {
+        if (!(e.getEntity() instanceof Tameable)) {return;}
+        
+        AnimalTamer at = ((Tameable) e.getEntity()).getOwner();
+        if (!(at instanceof OfflinePlayer)) {return;}
+
+        PlayerData pd = PlayerData.from((OfflinePlayer) at);
+        if (pd.getPlayer().getGameMode() != GameMode.SURVIVAL) {return;}
+
+        Claim claim = ClaimsTable.getClosestClaim(new Vector4(e.getBlock()), Range.PROTECTED);
+        Security security = claim.getAccess(pd);
+        if (security != Security.BLOCKED) {return;}
+
+        if (claim.switchesLocked && switches.contains(e.getBlock().getType())) {
+            e.setCancelled(true);
+        }
+    }
 }

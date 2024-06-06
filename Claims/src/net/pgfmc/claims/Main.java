@@ -11,7 +11,6 @@ import net.pgfmc.claims.ownable.block.events.BPE;
 import net.pgfmc.claims.ownable.block.events.BlockInteractEvent;
 import net.pgfmc.claims.ownable.block.events.BucketEvent;
 import net.pgfmc.claims.ownable.block.events.EntityEvents;
-import net.pgfmc.claims.ownable.block.events.EntityInteractEvent;
 import net.pgfmc.claims.ownable.block.events.HarvestEvent;
 import net.pgfmc.claims.ownable.block.events.ItemFrameBreak;
 import net.pgfmc.claims.ownable.block.events.PhysicsEvent;
@@ -46,7 +45,6 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new BPE(), this);
 		getServer().getPluginManager().registerEvents(new TameEvent(), this);
 		getServer().getPluginManager().registerEvents(new BExEvent(), this);
-		getServer().getPluginManager().registerEvents(new EntityInteractEvent(), this);
 		getServer().getPluginManager().registerEvents(new BucketEvent(), this);
 		getServer().getPluginManager().registerEvents(new HarvestEvent(), this);
 		getServer().getPluginManager().registerEvents(new PhysicsEvent(), this);

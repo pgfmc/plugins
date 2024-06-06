@@ -56,12 +56,12 @@ public class OwnableFile {
 				Vector4 vec = Vector4.fromString(key);
 				Claim claim = new Claim(pd, vec, members);
 
-                claim.doorsLocked = configSec.getBoolean("doors");
-                claim.inventoriesLocked = configSec.getBoolean("inventories");
-                claim.switchesLocked = configSec.getBoolean("switches");
-                claim.monsterKilling = configSec.getBoolean("monsters");
-                claim.livestockKilling = configSec.getBoolean("animals");
-                claim.explosionsEnabled = configSec.getBoolean("explosions");
+                claim.doorsLocked = configSec.getBoolean("doors", true);
+                claim.inventoriesLocked = configSec.getBoolean("inventories", true);
+                claim.switchesLocked = configSec.getBoolean("switches", true);
+                claim.monsterKilling = configSec.getBoolean("monsters", false);
+                claim.livestockKilling = configSec.getBoolean("animals", false);
+                claim.explosionsEnabled = configSec.getBoolean("explosions", false);
 
 				amount++;
 			}
