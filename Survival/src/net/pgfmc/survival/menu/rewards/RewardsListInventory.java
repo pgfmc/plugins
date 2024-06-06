@@ -3,11 +3,13 @@ package net.pgfmc.survival.menu.rewards;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
 import net.pgfmc.core.api.inventory.ListInventory;
 import net.pgfmc.core.api.inventory.extra.Butto;
 import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.ItemWrapper;
 import net.pgfmc.survival.Rewards;
 import net.pgfmc.survival.menu.CommandMenuInventory;
 
@@ -45,7 +47,9 @@ public class RewardsListInventory extends ListInventory<String> {
 
 	@Override
 	protected ItemStack toItem(String entry) {
-		return Rewards.getRewardsMap().get(entry);
+		return new ItemWrapper(Rewards.getRewardsMap().get(entry))
+				.l(ChatColor.GOLD + "Click to claim.")
+				.gi();
 	}
 	
 }

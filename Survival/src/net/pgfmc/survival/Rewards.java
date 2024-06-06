@@ -3,6 +3,7 @@ package net.pgfmc.survival;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,6 +18,7 @@ import org.bukkit.inventory.ItemStack;
 
 import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.ItemWrapper;
 import net.pgfmc.core.util.files.Mixins;
 
 public class Rewards {
@@ -142,9 +144,12 @@ public class Rewards {
 			
 		}
 		
+		final ItemStack rewardItem = new ItemWrapper(rewards.get(reward_id))
+				.l(List.of())
+				.gi();
 		
 		playerdata.addTag(reward_id);
-		player.getInventory().addItem(rewards.get(reward_id));
+		player.getInventory().addItem(rewardItem);
 		
 		playerdata.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
 		
