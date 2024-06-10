@@ -6,7 +6,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 
-import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.teleport.TimedTeleport;
 import net.pgfmc.core.util.commands.PlayerCommand;
@@ -44,9 +43,6 @@ public class Back extends PlayerCommand {
 			
 			if (pd.hasTag("afk")) pd.removeTag("afk");
 			pd.setData("backLoc", null); // wipes back location, dont want this to be too op
-			
-			// Grants advancement
-			PGFAdvancement.CALL_ME_TRACER.grantToPlayer(pd.getPlayer());
 			
 		});
 		

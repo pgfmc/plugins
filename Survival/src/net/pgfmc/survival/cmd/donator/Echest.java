@@ -6,8 +6,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import net.pgfmc.core.PGFAdvancement;
-
 /**
  * Opens an Ender Chest for the player.
  * @author bk
@@ -24,9 +22,6 @@ public class Echest implements CommandExecutor {
 		
 		p.openInventory(p.getEnderChest());
 		p.playSound(p.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1, 0);
-		
-		// Grants advancement
-		PGFAdvancement.ENDER_CHEST_ON_DEMAND.grantToPlayer(p);
 		
 		return true;
 	}

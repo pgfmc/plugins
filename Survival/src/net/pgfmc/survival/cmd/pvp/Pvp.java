@@ -5,7 +5,6 @@ import java.util.List;
 import org.bukkit.ChatColor;
 
 import net.pgfmc.core.CoreMain;
-import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.ServerMessage;
 import net.pgfmc.core.util.commands.PlayerCommand;
@@ -43,13 +42,6 @@ public class Pvp extends PlayerCommand {
 			
 			CoreMain.updatePlayerNameplate(pd);
 		}
-		
-		// Grants advancement
-		//
-		// A side effect of placing this here
-		// is that the advancement is granted on either
-		// enable or disable
-		PGFAdvancement.ENTERING_COMBAT.grantToPlayer(pd.getPlayer());		
 		
 		return true;
 	}
