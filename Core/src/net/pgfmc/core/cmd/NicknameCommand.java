@@ -8,7 +8,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
-import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.Profanity;
 
@@ -65,9 +64,6 @@ public class NicknameCommand implements TabExecutor {
 			playerdata.sendMessage(ChatColor.RED + "Invalid nickname: Contains profanity!");
 			return true;
 		}
-		
-		// Grants advancement
-		PGFAdvancement.IMPERSONATOR.grantToPlayer(player);
 		
 		/*
 		 * If the raw nickname is "off" or "reset" or the player's name

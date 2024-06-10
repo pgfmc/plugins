@@ -16,7 +16,6 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.ItemWrapper;
 import net.pgfmc.core.util.files.Mixins;
@@ -152,14 +151,6 @@ public class Rewards {
 		player.getInventory().addItem(rewardItem);
 		
 		playerdata.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
-		
-		Bukkit.getScheduler().runTask(Main.plugin, new Runnable() {
-			@Override
-			public void run() {
-				// Grants advancement
-				PGFAdvancement.REWARDS.grantToPlayer(player);
-				
-			}});
 		
 		return true;		
 	}

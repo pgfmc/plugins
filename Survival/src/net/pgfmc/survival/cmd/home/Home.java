@@ -8,7 +8,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 
-import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.teleport.TimedTeleport;
 import net.pgfmc.core.util.commands.PlayerCommand;
@@ -55,9 +54,6 @@ public class Home extends PlayerCommand {
 				pd.playSound(Sound.ENTITY_ENDERMAN_TELEPORT);
 				
 				if (pd.hasTag("afk")) pd.removeTag("afk");
-				
-				// Grants advancement
-				PGFAdvancement.HOME_IS_WHERE_THE_BASE_IS.grantToPlayer(pd.getPlayer());
 				
 			});;
 		} else
