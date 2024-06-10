@@ -12,8 +12,9 @@ import net.pgfmc.claims.ownable.block.events.BlockInteractEvent;
 import net.pgfmc.claims.ownable.block.events.BucketEvent;
 import net.pgfmc.claims.ownable.block.events.EntityEvents;
 import net.pgfmc.claims.ownable.block.events.HarvestEvent;
-import net.pgfmc.claims.ownable.block.events.ItemFrameBreak;
 import net.pgfmc.claims.ownable.block.events.PhysicsEvent;
+import net.pgfmc.claims.ownable.block.events.PlayerMove;
+import net.pgfmc.claims.ownable.border.Particles;
 import net.pgfmc.claims.ownable.entities.TameEvent;
 import net.pgfmc.claims.ownable.inspector.ClaimTPCommand;
 import net.pgfmc.claims.ownable.inspector.EditOwnableCommand;
@@ -49,15 +50,17 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new HarvestEvent(), this);
 		getServer().getPluginManager().registerEvents(new PhysicsEvent(), this);
 		getServer().getPluginManager().registerEvents(new EntityEvents(), this);
-		getServer().getPluginManager().registerEvents(new ItemFrameBreak(), this);
+		getServer().getPluginManager().registerEvents(new PlayerMove(), this);
 		
 		new InspectCommand("inspector");
 		new EditOwnableCommand("editownable");
 		new ClaimTPCommand("claimtp");
+
+        new Particles();
 		
 		plugin.getLogger().info("Claims Loaded!");
 		
-		new ActionBarStuff().runTaskTimer(this, 100, 3);
+		new ActionBarStuff().runTaskTimer(this, 100, 2);
 	}
 	
 	@Override

@@ -1,22 +1,26 @@
 package net.pgfmc.claims.ownable.block.table;
 
-import net.pgfmc.claims.Main;
 import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.core.util.vector4.Vector4;
 
 public class ClaimsLogic {
 	
 	public static int CSS  = 256;
-	public static int protectedRange = Main.plugin.getConfig().getInt("claim-range");
-	public static int mergeRange = Main.plugin.getConfig().getInt("claim-merge-range");
-	public static int foreignRange = Main.plugin.getConfig().getInt("foreign-claim-range");
+	public static int protectedRange = 30;
+	public static int mergeRange = protectedRange * 2 + 1;
+	public static int foreignRange = protectedRange * 6 + 2;
 	
 	
 	public static enum Range {
 		PROTECTED,
 		MERGE,
 		FOREIGN,
-        PISTONPROTECT;
+        PISTONPROTECT,
+        PROTECTRENDER,
+        MERGERENDER,
+        FOREIGNRENDER;
+        
+
 		
 		public int getRange() {
 			switch(this) {
@@ -28,6 +32,12 @@ public class ClaimsLogic {
 				return protectedRange;
             case PISTONPROTECT:
                 return protectedRange + 1;
+            case PROTECTRENDER:
+                return protectedRange + 7;
+            case MERGERENDER:
+                return mergeRange + 14;
+            case FOREIGNRENDER:
+                return foreignRange + 21;
 			default:
 				return 0;
 			}

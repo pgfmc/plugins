@@ -65,6 +65,12 @@ public class Claim {
 	public Claim(PlayerData player, Vector4 vec, Set<PlayerData> members) {
 		this.placer = player;
 		this.members = members;
+        this.explosionsEnabled = false;
+        this.doorsLocked = true;
+        this.switchesLocked = true;
+        this.inventoriesLocked = true;
+        this.monsterKilling = true;
+        this.livestockKilling = false;
 		
 		Block block = vec.getBlock();
 		vector = vec;
@@ -103,7 +109,7 @@ public class Claim {
         }
 
         for (Claim claim : ClaimsTable.getNearbyClaims(this.getLocation(), Range.MERGE)) {
-            if (!mergedPast.contains(claim)) {
+            if (!mergedPast.contains(claim) && claim.getPlayer() == mergedPast.stream().findFirst().get().getPlayer()) {
                 mergedPast.add(claim);
                 claim.appendMergedClaims(mergedPast);
             }
