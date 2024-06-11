@@ -57,7 +57,7 @@ public class TameableMobs implements Listener {
 		final Entity entity = e.getRightClicked();
 		
 		if (!(entity instanceof Tameable)) return;
-		if (!(entity instanceof Vehicle)) return;
+		//if (!(entity instanceof Vehicle)) return;
 		if (player.getGameMode() == GameMode.CREATIVE) return;
 		
 		final Tameable tameableEntity = (Tameable) entity;
