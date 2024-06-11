@@ -7,6 +7,7 @@ import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Hanging;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Tameable;
@@ -69,6 +70,8 @@ public class EntityEvents implements Listener {
                 return;
             }
         }
+        
+        if (e.getRightClicked() instanceof Player) return;
 		
 		if (e.getPlayer().getGameMode() == GameMode.SURVIVAL) {
 		    doStuff(e, pd, e.getRightClicked());	
@@ -86,7 +89,7 @@ public class EntityEvents implements Listener {
         Security access = claim.getAccess(pd);
 
         if (access == Security.BLOCKED) {
-            if (entity.getCustomName() != null) {
+            if (entity.getCustomName() != null || entity instanceof Hanging) {
                 pd.sendMessage(ChatColor.RED + "This land is claimed!");
                 e.setCancelled(true);
                 return;

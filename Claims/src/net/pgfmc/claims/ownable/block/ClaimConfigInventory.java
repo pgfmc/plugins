@@ -208,7 +208,7 @@ public class ClaimConfigInventory extends BaseInventory {
 		protected void confirmAction(Player arg0, InventoryClickEvent arg1) {
 			claim.getMembers().add(player);
 			arg0.closeInventory();
-			arg0.sendMessage("Added " + player.getRankedName() + " to your base.");
+			arg0.sendMessage(ChatColor.GOLD + "Added " + player.getRankedName() + ChatColor.GOLD + " to your base.");
 			claim.forwardUpdateFrom(claim);
 			
 		}
@@ -236,7 +236,7 @@ public class ClaimConfigInventory extends BaseInventory {
 		protected void confirmAction(Player arg0, InventoryClickEvent arg1) {
 			claim.getMembers().remove(player);
 			arg0.closeInventory();
-			arg0.sendMessage("Removed " + player.getRankedName() + " from your base.");
+			arg0.sendMessage(ChatColor.GOLD + "Removed " + player.getRankedName() + ChatColor.GOLD + " from your base.");
 			claim.forwardUpdateFrom(claim);
 		}
 	}
