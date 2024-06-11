@@ -6,13 +6,18 @@ import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.AnimalTamer;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Hanging;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityInteractEvent;
+import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import net.pgfmc.claims.ownable.block.Claim;
@@ -41,64 +46,63 @@ public class BlockInteractEvent implements Listener {
 		
 		PlayerData pd = PlayerData.from(e.getPlayer());
 		
-		// Right click not air
-		if ((e.getAction() == Action.RIGHT_CLICK_BLOCK 
-				|| e.getAction() == Action.PHYSICAL
-				|| e.getAction() == Action.LEFT_CLICK_BLOCK
-				) && e.hasBlock()) {
-			Block block = e.getClickedBlock();
-			
-			// Player is in survival mode
-			if (e.getPlayer().getGameMode() == GameMode.SURVIVAL) {
-				
-				Claim claim = ClaimsTable.getClosestClaim(new Vector4(block), Range.PROTECTED);
-				if (claim == null) return; 
-				Security access = claim.getAccess(pd);
-				
-				if (access == Security.BLOCKED) {
-
-                    if ((!claim.inventoriesLocked && inventories.contains(block.getType())) ||
-                            (!claim.switchesLocked && switches.contains(block.getType())) || 
-                            (!claim.doorsLocked && doors.contains(block.getType())))
-                                {
-                        return;
-                    }
-					
-					switch(block.getType()) {
-					
-					case BARREL: pd.sendMessage(ChatColor.RED + "This barrel is claimed!"); break;
-					case BLAST_FURNACE: pd.sendMessage(ChatColor.RED + "This blast furnace is claimed!"); break;
-					case BREWING_STAND: pd.sendMessage(ChatColor.RED + "This brewing stand is claimed!"); break;
-					case CHEST: pd.sendMessage(ChatColor.RED + "This chest is claimed!"); break;
-					case DISPENSER: pd.sendMessage(ChatColor.RED + "This dispenser is claimed!"); break;
-					case DROPPER: pd.sendMessage(ChatColor.RED + "This dropper is claimed!"); break;
-					case FURNACE: pd.sendMessage(ChatColor.RED + "This furnace is claimed!"); break;
-					case HOPPER: pd.sendMessage(ChatColor.RED + "This hopper is claimed!"); break;
-					case SHULKER_BOX: pd.sendMessage(ChatColor.RED + "This shulker box is claimed!"); break;
-					case SMOKER: pd.sendMessage(ChatColor.RED + "This smoker is claimed!"); break;
-					case BEACON: pd.sendMessage(ChatColor.RED + "This beacon is claimed!"); break;
-					default:
-						
-						if (e.getMaterial() == Material.ITEM_FRAME) {
-							pd.sendMessage(ChatColor.RED + "This land is claimed!");
-							e.setCancelled(true);
-							return;
-						}
-					}
-					
-					e.setCancelled(true);
-				}
+		if (e.getAction() != Action.RIGHT_CLICK_BLOCK && e.getAction() != Action.PHYSICAL) return;
+		
+		if (!e.hasBlock()) return;
+	
+		Block block = e.getClickedBlock();
+		
+		if (block != null && block.getType() == Material.LODESTONE) {
+			Claim claim = ClaimsTable.getOwnable(new Vector4(block));
+			if (claim != null && claim.getAccess(pd) == Security.ADMIN) {
+				e.setCancelled(true);
+				pd.getPlayer().openInventory(new ClaimConfigInventory(claim).getInventory());
 			}
 			
-			if (e.getPlayer().isSneaking()) return;
-			if (block != null && block.getType() == Material.LODESTONE) {
-				Claim claim = ClaimsTable.getOwnable(new Vector4(block));
-				if (claim != null && claim.getAccess(pd) == Security.ADMIN || e.getPlayer().getGameMode() == GameMode.CREATIVE) {
-					e.setCancelled(true);
-					pd.getPlayer().openInventory(new ClaimConfigInventory(claim).getInventory());
-				}
-			}
+			return;
 		}
+		
+		if (e.getPlayer().getGameMode() != GameMode.SURVIVAL) return;
+		
+		Claim claim = ClaimsTable.getClosestClaim(new Vector4(block), Range.PROTECTED);
+		
+		if (claim == null) return;
+		
+		Security access = claim.getAccess(pd);
+		
+		if (access != Security.BLOCKED) return;
+
+        if ((!claim.inventoriesLocked && inventories.contains(block.getType())) ||
+                (!claim.switchesLocked && switches.contains(block.getType())) || 
+                (!claim.doorsLocked && doors.contains(block.getType())))
+                    {
+            return;
+        }
+        
+        e.setCancelled(true);
+		
+		switch(block.getType()) {
+		
+		case BARREL: pd.sendMessage(ChatColor.RED + "This barrel is claimed!"); break;
+		case BLAST_FURNACE: pd.sendMessage(ChatColor.RED + "This blast furnace is claimed!"); break;
+		case BREWING_STAND: pd.sendMessage(ChatColor.RED + "This brewing stand is claimed!"); break;
+		case CHEST: pd.sendMessage(ChatColor.RED + "This chest is claimed!"); break;
+		case DISPENSER: pd.sendMessage(ChatColor.RED + "This dispenser is claimed!"); break;
+		case DROPPER: pd.sendMessage(ChatColor.RED + "This dropper is claimed!"); break;
+		case FURNACE: pd.sendMessage(ChatColor.RED + "This furnace is claimed!"); break;
+		case HOPPER: pd.sendMessage(ChatColor.RED + "This hopper is claimed!"); break;
+		case SHULKER_BOX: pd.sendMessage(ChatColor.RED + "This shulker box is claimed!"); break;
+		case SMOKER: pd.sendMessage(ChatColor.RED + "This smoker is claimed!"); break;
+		case BEACON: pd.sendMessage(ChatColor.RED + "This beacon is claimed!"); break;
+		default:
+			
+			if (e.getMaterial() == Material.ITEM_FRAME) {
+				pd.sendMessage(ChatColor.RED + "This land is claimed!");
+				
+			}
+			
+		}
+		
 	}
     
     EnumSet<Material> switches = EnumSet.of(Material.LEVER, Material.OAK_BUTTON, Material.SPRUCE_BUTTON, Material.BIRCH_BUTTON, Material.JUNGLE_BUTTON, Material.ACACIA_BUTTON, Material.DARK_OAK_BUTTON, Material.STONE_BUTTON, Material.WARPED_BUTTON, Material.CRIMSON_BUTTON, Material.MANGROVE_BUTTON, Material.CHERRY_BUTTON, Material.BAMBOO_BUTTON, Material.POLISHED_BLACKSTONE_BUTTON, Material.OAK_PRESSURE_PLATE, Material.SPRUCE_PRESSURE_PLATE, Material.BIRCH_PRESSURE_PLATE, Material.JUNGLE_PRESSURE_PLATE, Material.ACACIA_PRESSURE_PLATE, Material.DARK_OAK_PRESSURE_PLATE, Material.MANGROVE_PRESSURE_PLATE, Material.CHERRY_PRESSURE_PLATE, Material.BAMBOO_PRESSURE_PLATE, Material.WARPED_PRESSURE_PLATE, Material.CRIMSON_PRESSURE_PLATE, Material.POLISHED_BLACKSTONE_PRESSURE_PLATE, Material.LIGHT_WEIGHTED_PRESSURE_PLATE, Material.HEAVY_WEIGHTED_PRESSURE_PLATE);
@@ -123,4 +127,31 @@ public class BlockInteractEvent implements Listener {
             e.setCancelled(true);
         }
     }
+    
+    @EventHandler
+    public void hangingBreak(HangingBreakByEntityEvent e)
+    {
+    	final Hanging hanging = e.getEntity();
+    	final Entity remover = e.getRemover();
+    	
+    	if (!(remover instanceof Player)) return;
+    	
+    	final Player playerRemover = (Player) remover;
+    	final PlayerData playerdata = PlayerData.from(playerRemover);
+    	
+    	final Claim claim = ClaimsTable.getClosestClaim(new Vector4(hanging.getLocation()), Range.PROTECTED);
+    	
+    	if (claim == null) return;
+    	
+    	final Security access = claim.getAccess(playerdata);
+    	
+    	if (access != Security.BLOCKED) return;
+    	
+    	e.setCancelled(true);
+    	
+    	playerdata.sendMessage(ChatColor.RED + "This land is claimed!");
+    	playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+    	
+    }
+    
 }

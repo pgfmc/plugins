@@ -1,5 +1,7 @@
 package net.pgfmc.claims;
 
+import java.util.Optional;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -34,15 +36,21 @@ public class ActionBarStuff extends BukkitRunnable {
 			
 			String ting = " ";
 
-            int enterTimer = playerData.getData("enterTimer");
+            int enterTimer = (int) Optional.ofNullable(playerData.getData("enterTimer")).orElse(0);
 
             if (enterTimer > 0) {
                 playerData.setData("enterTimer", enterTimer - 1);
                 PlayerData claimOwner = playerData.getData("claimOwner");
-                ting = ChatColor.GOLD + "Entering " + claimOwner.getRankedName() + ChatColor.RESET + ChatColor.GOLD + "'s Claim!";
-            } 
-
-            else if (block != null && block.getType() == Material.LODESTONE) {
+                
+                if (claimOwner != null)
+                {
+                	ting = ChatColor.GOLD + "Entering " + claimOwner.getRankedName() + ChatColor.RESET + ChatColor.GOLD + "'s Claim!";
+                } else
+                {
+                	playerData.setData("enterTimer", null);
+                }
+                
+            } else if (block != null && block.getType() == Material.LODESTONE) {
 				Claim claim = ClaimsTable.getOwnable(new Vector4(block));
 				if (claim != null) {
 					

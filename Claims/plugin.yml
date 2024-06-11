@@ -13,11 +13,6 @@ commands:
       usage: /<command>
       permission: net.pgfmc.claims.inspector.activate
       description: toggles Inspector mode if in Creative mode.
-   editownable:
-      aliases: [eown]
-      usage: /<command> <type> <value>
-      permission: net.pgfmc.claims.inspector.edit
-      description: Allows editing values of the latest inspected ownable.
    claimtp:
       aliases: [ctp]
       usage: /<command>
