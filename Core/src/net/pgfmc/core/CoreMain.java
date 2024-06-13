@@ -88,9 +88,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 		PlayerDataManager.setInit(playerdata -> {
 			final FileConfiguration db = playerdata.getPlayerDataFile();
 			
-			// Save name (for convenience)
-			playerdata.setData("Name", playerdata.getName()).queue();
-			
 			// Set homes
 			final ConfigurationSection homesSection = db.getConfigurationSection("homes");
 			
