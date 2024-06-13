@@ -228,7 +228,7 @@ public class ClaimConfigInventory extends BaseInventory {
 
 		@Override
 		protected void cancelAction(Player arg0, InventoryClickEvent arg1) {
-			arg0.openInventory(new PlayerAddInventory(claim).getInventory());
+			arg0.openInventory(new PlayerViewInventory(claim).getInventory());
 			
 		}
 
