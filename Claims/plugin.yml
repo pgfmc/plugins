@@ -4,7 +4,7 @@ api-version: 1.21
 author: [bk, CrimsonDart]
 main: net.pgfmc.claims.Main
 description: implemets the Claims and Locking system
-depend: [PGF-Core, ProtocolLib]
+depend: [PGF-Core]
 prefix: PGF-Claims
 
 commands:

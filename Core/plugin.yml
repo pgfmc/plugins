@@ -5,7 +5,7 @@ authors: [bk, CrimsonDart]
 website: https://www.pgfmc.net
 main: net.pgfmc.core.CoreMain
 description: Core for PGF
-depend: [LuckPerms, ProtocolLib, CoreProtect]
+depend: [LuckPerms, CoreProtect]
 load: POSTWORLD
 prefix: PGF-Core
 

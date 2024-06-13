@@ -23,7 +23,7 @@ import net.pgfmc.core.util.vector4.Vector4;
 public class ClaimSection {
 	
 	/* Claim Section size*/
-	public static int CSS  = 256;
+	public static int CSS  = 512;
 	
 	protected long key;
 	protected int w;
