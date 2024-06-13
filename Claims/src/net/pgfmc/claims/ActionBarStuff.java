@@ -37,12 +37,11 @@ public class ActionBarStuff extends BukkitRunnable {
 			String ting = " ";
 
             int enterTimer = (int) Optional.ofNullable(playerData.getData("enterTimer")).orElse(0);
+            PlayerData claimOwner = playerData.getData("claimOwner");
 
-            if (enterTimer > 0) {
+            if (enterTimer > 0 && claimOwner != null) {
                 playerData.setData("enterTimer", enterTimer - 1);
-                PlayerData claimOwner = playerData.getData("claimOwner");
-                
-                ting = ChatColor.GOLD + "Entering " + claimOwner.getRankedName() + ChatColor.RESET + ChatColor.GOLD + "'s Claim!";
+                ting = ChatColor.GOLD + "Entering " + claimOwner.getRankedName() + ChatColor.GOLD + "'s Claim!";
                 
             } else if (block != null && block.getType() == Material.LODESTONE) {
 				Claim claim = ClaimsTable.getOwnable(new Vector4(block));
