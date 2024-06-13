@@ -171,7 +171,7 @@ public class Main {
     			
     			final TabListEntry entry = TabListEntry.builder()
         				.profile(other.getGameProfile())
-        				.displayName(GlobalPlayerData.getRankedName(other.getUniqueId())
+        				.displayName(GlobalPlayerData.fromUuid(other.getUniqueId()).getRankedName(player)
         						.append(Component.text(" " + serverName)
         								.color(NamedTextColor.GRAY)))
         				.gameMode(0)
@@ -196,7 +196,5 @@ public class Main {
     		player.sendPlayerListHeaderAndFooter(header, footer);
     		
     	}
-    	
     }
-    
 }

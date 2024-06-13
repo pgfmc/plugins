@@ -12,6 +12,7 @@ import net.pgfmc.proxycore.Main;
 import net.pgfmc.proxycore.util.GlobalPlayerData;
 import net.pgfmc.proxycore.util.proxy.PluginMessage;
 import net.pgfmc.proxycore.util.proxy.PluginMessageType;
+import net.pgfmc.proxycore.util.roles.PGFRole;
 import net.pgfmc.proxycore.util.roles.RoleManager;
 
 public class PlayerDataSaveListener extends PluginMessage {
@@ -29,6 +30,21 @@ public class PlayerDataSaveListener extends PluginMessage {
 		final String data = in.readUTF();
 		final UUID playerUuid = UUID.fromString(uuid);
 		final Toml toml = new Toml().read(data);
+
+        GlobalPlayerData playerData = GlobalPlayerData.fromUuid(playerUuid);
+
+        String nickname = toml.getString("nickname");
+        String discord = toml.getString("discord");
+        PGFRole role = PGFRole.get(toml.getString("role"));
+        String username = toml.getString("username");
+
+        if (nickname != null) { playerData.nickname = nickname;}
+        if (discord != null) { playerData.discord = discord;}
+        if (role != null) { playerData.role = role;}
+        if (username != null) { playerData.username = username;}
+
+        playerData.save();
+		RoleManager.updatePlayerRole(playerUuid);
 		
 		if (toml.contains("nickname") || toml.contains("discord") || toml.contains("role"))
 		{
@@ -39,9 +55,6 @@ public class PlayerDataSaveListener extends PluginMessage {
 			});
 			
 		}
-		
-		GlobalPlayerData.setData(playerUuid, toml);
-		RoleManager.updatePlayerRole(playerUuid);
 		
 	}
 

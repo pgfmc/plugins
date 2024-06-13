@@ -9,6 +9,7 @@ import com.velocitypowered.api.proxy.Player;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import net.pgfmc.proxycore.Main;
 import net.pgfmc.proxycore.bot.util.MessageHandler;
 import net.pgfmc.proxycore.util.GlobalPlayerData;
 import net.pgfmc.proxycore.util.roles.RoleManager;
@@ -22,13 +23,17 @@ public class OnPostLogin {
 		new CompletableFuture<Void>()
 		.completeOnTimeout(null, 500L, TimeUnit.MILLISECONDS)
 		.whenComplete((nullptr, exception) -> {
-			Main.plugin.updateTablist();
 		});
 		*/
-		
+
+		Main.plugin.updateTablist();
+
 		final Player player = e.getPlayer();
 		final UUID uuid = player.getUniqueId();
-		final Component rankedNameComponent = GlobalPlayerData.getRankedName(uuid);
+        final GlobalPlayerData playerData = GlobalPlayerData.fromUuid(uuid);
+        playerData.username = player.getUsername();
+		final Component rankedNameComponent = playerData.getRankedName(player);
+        playerData.save();
 		
 		final Component component = Component.text()
 				.append(Component.text("[")
@@ -44,11 +49,9 @@ public class OnPostLogin {
 		
 		MessageHandler.sendToMinecraft(component);
 		MessageHandler.sendToDiscord("<:JOIN:905023714213625886> " + rankedNameNoColor);
-		
-		if (GlobalPlayerData.getData(uuid, "username") == null)
-		{
-			GlobalPlayerData.setData(uuid, "username", player.getUsername());
-		}
+
+        playerData.username = player.getUsername();
+        playerData.save();
 		
 		final String discordUserId = RoleManager.getDiscordUserIdFromPlayerUuid(uuid);
 		
