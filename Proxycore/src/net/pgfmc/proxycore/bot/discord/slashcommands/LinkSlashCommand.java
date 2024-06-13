@@ -44,8 +44,10 @@ public class LinkSlashCommand {
 		}
 		
 		final UUID uuid = linkCodes.get(inputCode);
-		
-		GlobalPlayerData.setData(uuid, "discord", user.getId());
+
+        GlobalPlayerData playerData = GlobalPlayerData.fromUuid(uuid);
+        playerData.discord = user.getId();
+        playerData.save();
 		RoleManager.updatePlayerRole(uuid);
 		
 		new CompletableFuture<Void>()
