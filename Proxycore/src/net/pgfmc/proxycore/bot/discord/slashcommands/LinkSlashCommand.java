@@ -50,12 +50,6 @@ public class LinkSlashCommand {
         playerData.save();
 		RoleManager.updatePlayerRole(uuid);
 		
-		new CompletableFuture<Void>()
-			.completeOnTimeout(null, 400L, TimeUnit.MILLISECONDS)
-			.whenComplete((result, exception) -> {
-				
-			});
-		
 		final Optional<Player> player = Main.plugin.proxy.getPlayer(uuid);
 		
 		if (player.isPresent())
