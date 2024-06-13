@@ -5,7 +5,7 @@ import net.pgfmc.core.CoreMain;
 public interface Logger {
 	
 	public static final java.util.logging.Logger BUKKIT_LOGGER = CoreMain.plugin.getLogger();
-	public static final boolean DEBUG = true; // manually toggle this,,, ;/
+	public static final boolean DEBUG = false; // manually toggle this,,, ;/
 
 	public static void debug(final String message)
 	{

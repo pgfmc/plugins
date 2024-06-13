@@ -77,12 +77,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 		plugin = this;
 		
 		/**
-		 * Create defaults *.yml
-		 */
-		saveDefaultConfig();
-		reloadConfig();
-		
-		/**
 		 * PlayerData initialization
 		 */
 		PlayerDataManager.setInit(playerdata -> {

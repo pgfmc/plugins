@@ -1,6 +1,8 @@
 package net.pgfmc.proxycore.listeners.velocity;
 
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PostLoginEvent;
@@ -19,12 +21,10 @@ public class OnPostLogin {
 	@Subscribe
 	public void onJoin(PostLoginEvent e)
 	{
-		/*
 		new CompletableFuture<Void>()
 		.completeOnTimeout(null, 500L, TimeUnit.MILLISECONDS)
 		.whenComplete((nullptr, exception) -> {
 		});
-		*/
 
 		Main.plugin.updateTablist();
 
@@ -49,9 +49,6 @@ public class OnPostLogin {
 		
 		MessageHandler.sendToMinecraft(component);
 		MessageHandler.sendToDiscord("<:JOIN:905023714213625886> " + rankedNameNoColor);
-
-        playerData.username = player.getUsername();
-        playerData.save();
 		
 		final String discordUserId = RoleManager.getDiscordUserIdFromPlayerUuid(uuid);
 		

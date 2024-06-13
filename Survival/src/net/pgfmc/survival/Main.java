@@ -92,7 +92,6 @@ public class Main extends JavaPlugin {
 		new CommandMenu("menu");
 		new Pvp();
 		new Warp("warp");
-		new Back("back");
 		new Skull();
 		
 		// Listeners
@@ -102,6 +101,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new GiveRewardsListInventory(), this);
 		getServer().getPluginManager().registerEvents(new InventoryBackupScheduler(), this);
 		getServer().getPluginManager().registerEvents(new TameableMobs(), this);
+		getServer().getPluginManager().registerEvents(new Back("back"), this); // Back command + a listener in the same class
 
 	}
 	
