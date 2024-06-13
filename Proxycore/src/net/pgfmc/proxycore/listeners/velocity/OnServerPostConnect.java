@@ -24,9 +24,7 @@ public class OnServerPostConnect {
 		
 		final Player player = e.getPlayer();
 		final UUID uuid = player.getUniqueId();
-		
-		GlobalPlayerData.propogateGlobalPlayerData(uuid);
-		
+        GlobalPlayerData.fromUuid(uuid).propogateGlobalPlayerData();
 	}
 
 }
