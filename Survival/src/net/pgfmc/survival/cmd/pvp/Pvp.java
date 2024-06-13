@@ -7,7 +7,6 @@ import org.bukkit.ChatColor;
 
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.api.playerdata.PlayerData;
-import net.pgfmc.core.util.ServerMessage;
 import net.pgfmc.core.util.commands.PlayerCommand;
 import net.pgfmc.core.util.proxy.PluginMessageType;
 
