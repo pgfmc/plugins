@@ -42,13 +42,7 @@ public class ActionBarStuff extends BukkitRunnable {
                 playerData.setData("enterTimer", enterTimer - 1);
                 PlayerData claimOwner = playerData.getData("claimOwner");
                 
-                if (claimOwner != null)
-                {
-                	ting = ChatColor.GOLD + "Entering " + claimOwner.getRankedName() + ChatColor.RESET + ChatColor.GOLD + "'s Claim!";
-                } else
-                {
-                	playerData.setData("enterTimer", null);
-                }
+                ting = ChatColor.GOLD + "Entering " + claimOwner.getRankedName() + ChatColor.RESET + ChatColor.GOLD + "'s Claim!";
                 
             } else if (block != null && block.getType() == Material.LODESTONE) {
 				Claim claim = ClaimsTable.getOwnable(new Vector4(block));

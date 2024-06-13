@@ -48,7 +48,7 @@ public enum PGFRole {
 			
 		}
 		
-		return null;
+		return MEMBER;
 	}
 	
 }
