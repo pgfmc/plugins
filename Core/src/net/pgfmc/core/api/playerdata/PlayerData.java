@@ -120,6 +120,7 @@ public final class PlayerData extends PlayerDataExtra {
 			// Add the pvp swords icon to the ending of the name
 			name = name + ChatColor.GRAY + " " + pvpSwordsIcon;
 		}
+        name = name + ChatColor.RESET;
 		
 		return name;
 	}
