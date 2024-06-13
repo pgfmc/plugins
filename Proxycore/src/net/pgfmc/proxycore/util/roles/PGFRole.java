@@ -41,13 +41,17 @@ public enum PGFRole {
 	 */
 	public static PGFRole get(final String name)
 	{
+
+        if (name == null) { return MEMBER; }
+
+
 		for (final PGFRole r : PGFRole.values())
 		{
 			if (r.name().equalsIgnoreCase(name)) return r;
 			
 		}
 		
-		return null;
+		return MEMBER;
 	}
 	
 }

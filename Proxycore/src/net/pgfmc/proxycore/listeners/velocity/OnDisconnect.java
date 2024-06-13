@@ -23,7 +23,8 @@ public class OnDisconnect {
 		final Player player = e.getPlayer();
 		final UUID uuid = player.getUniqueId();
 		
-		final Component rankedNameComponent = GlobalPlayerData.getRankedName(uuid);
+        final GlobalPlayerData playerData = GlobalPlayerData.fromUuid(uuid);
+		final Component rankedNameComponent = playerData.getRankedName(player);
 		
 		final Component component = Component.text()
 				.append(Component.text("[")

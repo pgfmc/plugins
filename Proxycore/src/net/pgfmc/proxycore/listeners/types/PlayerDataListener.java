@@ -20,9 +20,8 @@ public class PlayerDataListener extends PluginMessage {
 	public void onPluginMessageReceived(ChannelMessageSource source, ByteArrayDataInput in, byte[] message) {
 		in.readUTF();
 		final UUID uuid = UUID.fromString(in.readUTF());
-		
-		GlobalPlayerData.propogateGlobalPlayerData(uuid);
-		
+
+        GlobalPlayerData.fromUuid(uuid).propogateGlobalPlayerData();
 	}
 
 }

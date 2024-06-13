@@ -90,9 +90,11 @@ public final class RoleManager  {
 			}
 	        
 		});
-		
-		GlobalPlayerData.setData(playerUuid, "role", role.name());
-		
+
+        GlobalPlayerData playerData = GlobalPlayerData.fromUuid(playerUuid);
+        playerData.role = role;
+        playerData.save();
+
+
 	}
-	
 }
