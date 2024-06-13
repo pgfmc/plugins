@@ -72,14 +72,7 @@
 			<version>1.21-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
-		
-		<dependency>
-			<groupId>com.comphenix.protocol</groupId>
-			<artifactId>ProtocolLib</artifactId>
-			<version>5.1.0</version>
-			<scope>provided</scope>
-		</dependency>
-		
+
 		<dependency>
 		  <groupId>com.moandjiezana.toml</groupId>
 		  <artifactId>toml4j</artifactId>

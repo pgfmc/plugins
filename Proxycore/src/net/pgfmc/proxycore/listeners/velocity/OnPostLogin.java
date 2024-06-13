@@ -26,12 +26,13 @@ public class OnPostLogin {
 		.whenComplete((nullptr, exception) -> {
 		});
 
-		Main.plugin.updateTablist();
 
 		final Player player = e.getPlayer();
 		final UUID uuid = player.getUniqueId();
         final GlobalPlayerData playerData = GlobalPlayerData.fromUuid(uuid);
-        playerData.username = player.getUsername();
+        if (player.getUsername() != null) {
+            playerData.username = player.getUsername();
+        }
 		final Component rankedNameComponent = playerData.getRankedName(player);
         playerData.save();
 		
@@ -50,12 +51,8 @@ public class OnPostLogin {
 		MessageHandler.sendToMinecraft(component);
 		MessageHandler.sendToDiscord("<:JOIN:905023714213625886> " + rankedNameNoColor);
 		
-		final String discordUserId = RoleManager.getDiscordUserIdFromPlayerUuid(uuid);
-		
-		if (discordUserId == null || discordUserId.isBlank()) return;
-		
 		RoleManager.updatePlayerRole(uuid);
-		
+		Main.plugin.updateTablist();
 	}
 
 }

@@ -25,9 +25,9 @@ public final class RoleManager  {
 	{
 		if (uuid == null) return PGFRole.MEMBER;
 		
-		final String discordUserId = getDiscordUserIdFromPlayerUuid(uuid);
+		final String discordUserId = GlobalPlayerData.fromUuid(uuid).discord;
 		
-		if (discordUserId == null || discordUserId.isBlank()) return PGFRole.MEMBER;
+		if (discordUserId == null || discordUserId.isBlank() || discordUserId == "") return PGFRole.MEMBER;
 		
 		final PGFRole role = Discord.getTopRoleOfMember(
 				Discord.getJda()
@@ -37,14 +37,6 @@ public final class RoleManager  {
 		return role;
 	}
 	
-	public static final String getDiscordUserIdFromPlayerUuid(final UUID uuid)
-	{
-		final String discordUserId = GlobalPlayerData.getData(uuid, "discord");
-		
-		if (discordUserId == null || discordUserId.isBlank()) return null;
-		
-		return discordUserId;
-	}
 	
 	public static final UUID getPlayerUuidFromDiscordUserId(final String discordUserId)
 	{
@@ -66,7 +58,6 @@ public final class RoleManager  {
 
 	public static final void updatePlayerRole(final UUID playerUuid)
 	{
-		Main.plugin.updateTablist();
 		
 		final PGFRole role = getRoleFromPlayerUuid(playerUuid);
 		final UserManager userManager = lp.getUserManager();
@@ -95,6 +86,6 @@ public final class RoleManager  {
         playerData.role = role;
         playerData.save();
 
-
+		Main.plugin.updateTablist();
 	}
 }

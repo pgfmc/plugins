@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import org.bukkit.ChatColor;
-
 import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
 import com.velocitypowered.api.proxy.Player;
@@ -27,10 +25,10 @@ public class GlobalPlayerData {
 
     public final UUID uuid;
 
-    public String nickname;
-    public String username;
-    public String discord;
-    public PGFRole role;
+    public String nickname = "";
+    public String username = "";
+    public String discord = "";
+    public PGFRole role = PGFRole.MEMBER;
 
     private GlobalPlayerData(UUID uuid) {
         this.uuid = uuid;
@@ -87,12 +85,6 @@ public class GlobalPlayerData {
 
         propogateGlobalPlayerData();
     }
-
-
-
-
-
-
     
     private static final Toml getToml(final UUID uuid)
     {
@@ -109,17 +101,7 @@ public class GlobalPlayerData {
     	
     	return toml;
     }
-    
-    @SuppressWarnings("unchecked")
-	public static final <T> T getData(final UUID uuid, final String key)
-    {
-    	final Toml toml = getToml(uuid);
-    	
-    	if (!toml.contains(key)) return null;
-    	
-    	return (T) toml.toMap().get(key);
-    }
-    
+
 //    public static final void setData(final UUID uuid, final String key, final Object value)
 //    {
 //    	if (uuid == null)

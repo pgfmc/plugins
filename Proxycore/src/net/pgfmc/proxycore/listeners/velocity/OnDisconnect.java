@@ -18,7 +18,6 @@ public class OnDisconnect {
 	@Subscribe
 	public void onPlayerDisconnect(DisconnectEvent e)
 	{
-		Main.plugin.updateTablist();
 		
 		final Player player = e.getPlayer();
 		final UUID uuid = player.getUniqueId();
@@ -41,6 +40,7 @@ public class OnDisconnect {
 		MessageHandler.sendToMinecraft(component);
 		MessageHandler.sendToDiscord("<:LEAVE:905682349239463957> " + rankedNameNoColor);
 		
+		Main.plugin.updateTablist();
 	}
 	
 }
