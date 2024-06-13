@@ -140,6 +140,7 @@ public class Teleports extends BaseInventory {
 
         setAction(spawnWarp, (player, event) -> {
             playerdata.getPlayer().performCommand("warp spawn");
+            player.closeInventory();
         });
 
         setItem(spawnWarp, Material.CHERRY_SAPLING).n(ChatColor.RED + "Warp to Spawn");
