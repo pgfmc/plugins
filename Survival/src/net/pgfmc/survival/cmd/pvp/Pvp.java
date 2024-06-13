@@ -2,6 +2,7 @@ package net.pgfmc.survival.cmd.pvp;
 
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 import net.pgfmc.core.CoreMain;
@@ -27,7 +28,7 @@ public class Pvp extends PlayerCommand {
 		if (pd.hasTag("pvp")) {
 			pd.removeTag("pvp");
 			
-			ServerMessage.sendServerMessage(pd.getRankedName() + ChatColor.GRAY + " disabled PVP");
+			Bukkit.broadcastMessage(pd.getRankedName() + ChatColor.GRAY + " disabled PVP");
 			
 			PluginMessageType.DISCORD_MESSAGE.send(pd.getPlayer(), ChatColor.stripColor(":shield: " + pd.getRankedName() + " disabled PVP"));
 			
@@ -36,7 +37,7 @@ public class Pvp extends PlayerCommand {
 		} else {
 			pd.addTag("pvp");
 			
-			ServerMessage.sendServerMessage(pd.getRankedName() + ChatColor.DARK_RED + " enabled PVP");
+			Bukkit.broadcastMessage(pd.getRankedName() + ChatColor.DARK_RED + " enabled PVP");
 			
 			PluginMessageType.DISCORD_MESSAGE.send(pd.getPlayer(), ChatColor.stripColor(":crossed_swords: " + pd.getRankedName() + " enabled PVP"));
 			
