@@ -1,6 +1,5 @@
 package net.pgfmc.core.cmd.serverselector;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,7 +51,7 @@ public final class ConnectCommand implements TabExecutor {
 			
 			if (CoreMain.getRegisteredServersMap().isEmpty())
 			{
-				player.sendMessage(ChatColor.RED + "" + ChatColor.ITALIC + "Available servers: " + ChatColor.LIGHT_PURPLE + "[test, past, survival]");
+				player.sendMessage(ChatColor.RED + "" + ChatColor.ITALIC + "Available servers: " + ChatColor.LIGHT_PURPLE + "[survival]");
 				
 				return true;
 			}
@@ -141,7 +140,7 @@ public final class ConnectCommand implements TabExecutor {
 		
 		if (CoreMain.getRegisteredServersMap().isEmpty())
 		{
-			return Arrays.asList("test", "past", "survival");
+			return List.of("survival");
 		}
 		
 		final List<String> servers = new HashSet<String>(CoreMain.getRegisteredServersMap().keySet())
