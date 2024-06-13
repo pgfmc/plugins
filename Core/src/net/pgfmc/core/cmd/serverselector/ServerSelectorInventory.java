@@ -72,37 +72,37 @@ public final class ServerSelectorInventory extends BaseInventory {
 			 */
 			if (playerdata.hasPermission("net.pgfmc.proxycore.connect.survival"))
 			{
-				if (CoreMain.getThisServerName() != null && CoreMain.getThisServerName().equals("survival")) // Connected
+				if (CoreMain.getThisServerName() != null && CoreMain.getThisServerName().equals("season13")) // Connected
 				{
 					setItem(i, Material.GRASS_BLOCK)
-					.n(ChatColor.GREEN + blackStarIcon + " Survival (Connected)")
-					.l(Arrays.asList(ChatColor.GRAY + "You are connected to Survival.",
+					.n(ChatColor.GREEN + blackStarIcon + " Season13 (Connected)")
+					.l(Arrays.asList(ChatColor.GRAY + "You are connected to Season13.",
 							ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Claims, homes, tpa, and more."));
 					
 					setAction(i, (player, event) -> {
 						if (playerdata.getPlayer() == null) return;
 						
-						player.sendMessage(ChatColor.RED + "You are already connected to Survival.");
+						player.sendMessage(ChatColor.RED + "You are already connected to Season13.");
 						
 						playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 						
 					});
 					
-				} else if (servers.get("survival") == null || servers.get("survival") == true) // Online
+				} else if (servers.get("season13") == null || servers.get("season13") == true) // Online
 				{
 					setItem(i, Material.GRASS_BLOCK)
-					.n(ChatColor.GREEN + "Survival")
-					.l(Arrays.asList(ChatColor.GRAY + "Click to join Survival.",
+					.n(ChatColor.GREEN + "Season13")
+					.l(Arrays.asList(ChatColor.GRAY + "Click to join Season13.",
 							ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Claims, homes, tpa, and more."));
 					
 					setAction(i, (player, event) -> {
 						if (playerdata.getPlayer() == null) return;
 						
-						player.sendMessage(ChatColor.GREEN + "Attempting to connect to Survival.");
+						player.sendMessage(ChatColor.GREEN + "Attempting to connect to Season13.");
 						
-						CoreMain.plugin.getLogger().info("Attempting to connect " + playerdata.getName() + " to Survival.");
+						CoreMain.plugin.getLogger().info("Attempting to connect " + playerdata.getName() + " to Season13.");
 						
-						PluginMessageType.CONNECT.send(player, "survival");
+						PluginMessageType.CONNECT.send(player, "season13");
 						
 						playerdata.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1F, 2F);
 						
@@ -111,14 +111,14 @@ public final class ServerSelectorInventory extends BaseInventory {
 				} else // Offline
 				{
 					setItem(i, Material.RED_STAINED_GLASS)
-					.n(ChatColor.DARK_RED + "Survival - Offline")
-					.l(Arrays.asList(ChatColor.GRAY + "Click to join Survival.",
+					.n(ChatColor.DARK_RED + "Season13 - Offline")
+					.l(Arrays.asList(ChatColor.GRAY + "Click to join Season13.",
 							ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Claims, homes, tpa, and more."));
 					
 					setAction(i, (player, event) -> {
 						if (playerdata.getPlayer() == null) return;
 						
-						player.sendMessage(ChatColor.RED + "Survival is offline.");
+						player.sendMessage(ChatColor.RED + "Season13 is offline.");
 						
 						playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 						
@@ -126,7 +126,7 @@ public final class ServerSelectorInventory extends BaseInventory {
 					
 				}
 				
-				servers.remove("survival");
+				servers.remove("season13");
 				i--;
 				
 			}
