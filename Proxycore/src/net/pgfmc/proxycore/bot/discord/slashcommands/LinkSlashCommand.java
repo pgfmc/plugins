@@ -48,12 +48,6 @@ public class LinkSlashCommand {
 		GlobalPlayerData.setData(uuid, "discord", user.getId());
 		RoleManager.updatePlayerRole(uuid);
 		
-		new CompletableFuture<Void>()
-			.completeOnTimeout(null, 400L, TimeUnit.MILLISECONDS)
-			.whenComplete((result, exception) -> {
-				
-			});
-		
 		final Optional<Player> player = Main.plugin.proxy.getPlayer(uuid);
 		
 		if (player.isPresent())
