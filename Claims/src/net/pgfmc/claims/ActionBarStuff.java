@@ -83,15 +83,9 @@ public class ActionBarStuff extends BukkitRunnable {
 				}
 			}
 
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ting));
+            if (ting != "") {
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ting));
+            }
 		}
 	}
-
-    private static int getEnterTimer(PlayerData pd) {
-        return pd.getData("enterTimer");
-    }
-
-    private static PlayerData getClaimInsideOwner(PlayerData pd) {
-        return pd.getData("claimOwner");
-    }
 }
