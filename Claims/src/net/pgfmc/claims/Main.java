@@ -3,6 +3,7 @@ package net.pgfmc.claims;
 import java.io.File;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import net.pgfmc.claims.ownable.OwnableFile;
 import net.pgfmc.claims.ownable.block.events.BBEvent;
@@ -59,12 +60,15 @@ public class Main extends JavaPlugin {
 		plugin.getLogger().info("Claims Loaded!");
 		
 		new ActionBarStuff().runTaskTimer(this, 100, 2);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                OwnableFile.saveContainers();
+            }
+        }.runTaskTimer(plugin, 0, 12000);
 	}
 	
-	@Override
-	public void onDisable() {
-		OwnableFile.saveContainers();
-	}
 	
 	public static JavaPlugin getPlugin() {
 		return plugin;
