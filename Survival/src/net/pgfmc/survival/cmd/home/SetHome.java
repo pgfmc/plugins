@@ -68,14 +68,6 @@ public class SetHome extends PlayerCommand {
 		pd.playSound(pd.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
 		pd.setData("homes", homes).queue();
 		
-		
 		return true;
 	}
-	
-	public static void setHome(PlayerData playerdata, String homeName)
-	{
-		
-		
-	}	
-
 }
