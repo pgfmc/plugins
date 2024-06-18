@@ -1,14 +1,11 @@
 package net.pgfmc.core.listeners.minecraft;
 
-import java.util.concurrent.TimeUnit;
-
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.Profanity;
 import net.pgfmc.core.util.proxy.PluginMessageType;
@@ -45,15 +42,7 @@ public class OnAsyncPlayerChat implements Listener {
 		
 		final String chatMessage = playerdata.getRankedName() + ChatColor.GRAY + " -> " + ChatColor.WHITE + message;
 		
-		PluginMessageType.MESSAGE.send(player, chatMessage)
-			.orTimeout(1000L, TimeUnit.MILLISECONDS) // Should only time out if the proxy isn't online
-			.whenComplete((result, exception) -> {
-				if (exception != null)
-				{
-					CoreMain.plugin.getServer().broadcastMessage(chatMessage);
-				}
-				
-			});
+		PluginMessageType.MESSAGE.send(player, chatMessage);
 		
 		PluginMessageType.DISCORD_MESSAGE.send(player, ChatColor.stripColor(playerdata.getRankedName()) + " -> " + message);
 		
