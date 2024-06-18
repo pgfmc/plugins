@@ -81,7 +81,7 @@ public class StaffInventory extends BaseInventory {
 		 * [] [] [] [] [] [] [] [] []
 		 */
 		setAction(14, (player, event) -> {
-			Builder builder = new AnvilGUI.Builder();
+			Builder builder = new AnvilGUI.Builder().plugin(Main.plugin);
 			
 			builder.onClose(stateSnapshot -> {});
 			

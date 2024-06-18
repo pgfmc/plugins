@@ -153,7 +153,7 @@ public class Teleports extends BaseInventory {
 		setItem(tpHome, Material.ENDER_PEARL).n(ChatColor.LIGHT_PURPLE + "Go to Home");
 		
 		setAction(setHome, (player, event) -> {
-			Builder builder = new AnvilGUI.Builder();
+			Builder builder = new AnvilGUI.Builder().plugin(Main.plugin);
 			
 			builder.onClose(stateSnapshot -> {});
 			
