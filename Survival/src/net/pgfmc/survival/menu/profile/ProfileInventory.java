@@ -89,7 +89,7 @@ public class ProfileInventory extends BaseInventory {
 			setAction(15, (player, event) -> {
 				final String nickname = playerdata.getDisplayName();
 				
-				Builder builder = new AnvilGUI.Builder();
+				Builder builder = new AnvilGUI.Builder().plugin(Main.plugin);
 				
 				builder.onClose(stateSnapshot -> {});
 				

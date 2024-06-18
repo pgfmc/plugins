@@ -134,9 +134,9 @@ public enum PluginMessageType {
 	public final CompletableFuture<ByteArrayDataInput> sendList(final PluginMessageRecipient sender, final List<Object> arguments)
 	{
 		Logger.debug("------------------------------");
-		Logger.log("Sending plugin message and creating a Future.");
-		Logger.log("Channel: " + channel);
-		Logger.log("Subchannel: " + subchannel);
+		Logger.debug("Sending plugin message and creating a Future.");
+		Logger.debug("Channel: " + channel);
+		Logger.debug("Subchannel: " + subchannel);
 		
 		final ByteArrayDataOutput out = ByteStreams.newDataOutput();
 		

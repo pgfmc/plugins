@@ -83,11 +83,16 @@
 		<dependency>
     		<groupId>net.wesjd</groupId>
     		<artifactId>anvilgui</artifactId>
-    		<version>1.9.4-SNAPSHOT</version>
+    		<version>1.9.5-SNAPSHOT</version>
     		<scope>compile</scope>
 		</dependency>
 		
 	</dependencies>
+	
+	<!--
+	leave this commented until
+		https://github.com/WesJD/AnvilGUI/pull/331
+	is merged.
 	
 	<repositories>
 		
@@ -97,5 +102,7 @@
 		</repository>
 		
 	</repositories>
+	
+	-->
 	
 </project>
