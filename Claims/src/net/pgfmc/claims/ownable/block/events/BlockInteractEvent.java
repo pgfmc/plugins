@@ -53,6 +53,11 @@ public class BlockInteractEvent implements Listener {
 		Block block = e.getClickedBlock();
 		
 		if (block != null && block.getType() == Material.LODESTONE) {
+
+            if (e.getPlayer().getInventory().getItemInMainHand().getType() == Material.COMPASS) {
+                return;
+            }
+
 			Claim claim = ClaimsTable.getOwnable(new Vector4(block));
 			if (claim != null && claim.getAccess(pd) == Security.ADMIN) {
 				e.setCancelled(true);
