@@ -130,6 +130,7 @@ public class ClaimSection {
 		} else if (zBound > CSS - claimRange) {
 			getClaims(getNeighbor(Neighbor.UP), v, r).forEach(x -> ob.add(x));
 		}
+
 		return ob;
 	}
 	

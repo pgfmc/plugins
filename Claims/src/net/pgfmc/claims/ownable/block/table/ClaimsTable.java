@@ -7,6 +7,7 @@ import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.util.LongHash;
 import net.pgfmc.claims.util.LongHashTable;
+import net.pgfmc.core.util.Logger;
 import net.pgfmc.core.util.vector4.Vector4;
 
 /**
@@ -86,6 +87,7 @@ public class ClaimsTable {
 	 * @return The claim that contains this location. Returns "null" if there is no claim.
 	 */
 	public static Claim getClosestClaim(Vector4 v, Range r) {
+
 		ClaimSection cs = getSection(v);
 		if (cs == null) { // if there is no CS, then it creates a new one for the position v.
 			cs = new ClaimSection(getSectionKey(v), v.w());
@@ -93,11 +95,7 @@ public class ClaimsTable {
 		}
 		
 		Claim ob = cs.getClosestClaim(v, r);
-		if (ob != null) {
-			return ob;
-		}
-		
-		return null;
+        return ob;
 	}
 	
 	public static Set<Claim> getNearbyClaims(Vector4 v, Range r) {
@@ -108,11 +106,7 @@ public class ClaimsTable {
 		}
 		
 		Set<Claim> ob = cs.getNearbyClaims(v, r);
-		if (ob != null) {
-			return ob;
-		}
-		
-		return null;
+        return ob;
 	}
 	
 	/**

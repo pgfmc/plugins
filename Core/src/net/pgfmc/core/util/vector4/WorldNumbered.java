@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.World.Environment;
 
 public class WorldNumbered {
 	
@@ -15,14 +14,12 @@ public class WorldNumbered {
 	 */
 	public static int worldToInt(World world) { // converts a world to an int. returns 3 for all exceptions.
 		
-		if (world.getEnvironment() == Environment.NORMAL) {
-			return 0;
-		} else if (world.getEnvironment() == Environment.NETHER) {
+		if (world.getName().contains("nether")) {
 			return 1;
-		} else if (world.getEnvironment() == Environment.THE_END) {
+		} else if (world.getName().contains("the_end")) {
 			return 2;
 		} else {
-			return 3;
+			return 0;
 		}
 		
 	}
@@ -37,16 +34,11 @@ public class WorldNumbered {
         List<World> worlds = Bukkit.getWorlds();
 
         for (World world : worlds) {
-            Environment env = world.getEnvironment();
-            
-            if ((integer == 0 && env == Environment.NORMAL) || 
-                    (integer == 1 && env == Environment.NETHER) || 
-                    (integer == 2 && env == Environment.THE_END)) 
-            {
+
+            if (worldToInt(world) == integer) {
                 return world;
             }
         }
-	    return null;	
+        return null;
 	}
-
 }

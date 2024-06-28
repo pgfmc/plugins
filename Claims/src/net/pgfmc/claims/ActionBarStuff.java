@@ -28,7 +28,7 @@ public class ActionBarStuff extends BukkitRunnable {
             PlayerData playerData = PlayerData.from(player);
 
 			
-			String ting = " ";
+			String ting = "";
 
             int enterTimer = (int) Optional.ofNullable(playerData.getData("enterTimer")).orElse(0);
             PlayerData claimOwner = playerData.getData("claimOwner");
