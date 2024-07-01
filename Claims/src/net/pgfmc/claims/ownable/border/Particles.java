@@ -1,5 +1,6 @@
 package net.pgfmc.claims.ownable.border;
 
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,11 +18,9 @@ import org.bukkit.scheduler.BukkitScheduler;
 import net.pgfmc.claims.Main;
 import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.Claim.Security;
-import net.pgfmc.claims.ownable.block.table.ClaimsLogic;
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
 import net.pgfmc.core.api.playerdata.PlayerData;
-import net.pgfmc.core.util.Logger;
 import net.pgfmc.core.util.vector4.Vector4;
 
 public class Particles {
@@ -37,63 +36,48 @@ public class Particles {
         SE
     }
 
-
-    private static class BorderBlock {
-        public int x;
-        public int z;
-        public BorderColor color;
-        public Direction direction;
-
-        public BorderBlock(int x, int z, BorderColor color, Direction direction) {
-            this.x = x;
-            this.z = z;
-            this.color = color;
-            this.direction = direction;
-        }
-    }
-
-    private static enum Orientation {
-        X,
-        Z,
-        CORNER;
-    }
-
     private static class BorderParticle {
         public int x;
         public int z;
         public BorderColor color;
-        public int hOverlap = 0;
-        public int vOverlap = 0;
 
-        public BorderParticle(int x, int z, BorderColor color, Orientation orientation) {
+        public EnumSet<Direction> map = EnumSet.noneOf(Direction.class);
+
+        public BorderParticle(int x, int z, BorderColor color, Direction direction) {
             this.x = x;
             this.z = z;
             this.color = color;
-
-            switch(orientation) {
-                case X:
-                    hOverlap = 2;
-                    break;
-                case Z:
-                    vOverlap = 2;
-                    break;
-                case CORNER:
-                    hOverlap = 1;
-                    vOverlap = 1;
-                    break;
-            }
+            map.add(direction);
         }
 
         public boolean add(BorderParticle other) {
             if (this.x == other.x && this.z == other.z) {
                 this.color = this.color.getHigher(other.color);
-                this.vOverlap += other.vOverlap;
-                this.hOverlap += other.hOverlap; 
 
-                Logger.log("x: " + String.valueOf(x) + ", z: " + String.valueOf(z) + ", v: " + String.valueOf(vOverlap) + ", h: " + String.valueOf(hOverlap));
+                for (Direction direction : other.map) {
+                    this.map.add(direction);
+                }
+
                 return true;
             }
             return false;
+        }
+
+        public boolean isRenderable() {
+
+
+            if (map.containsAll(EnumSet.of(Direction.NORTH, Direction.SOUTH))) { return false; }
+            if (map.containsAll(EnumSet.of(Direction.EAST, Direction.WEST))) { return false; }
+
+            if (map.containsAll(EnumSet.of(Direction.NW, Direction.NE, Direction.SE, Direction.SW))) { return false; }
+
+            if (map.containsAll(EnumSet.of(Direction.NORTH, Direction.SE, Direction.SW))) { return false; }
+            if (map.containsAll(EnumSet.of(Direction.SOUTH, Direction.NW, Direction.NE))) { return false; }
+            if (map.containsAll(EnumSet.of(Direction.WEST, Direction.NE, Direction.SE))) { return false; }
+            if (map.containsAll(EnumSet.of(Direction.EAST, Direction.NW, Direction.SW))) { return false; }
+
+            return true;
+
         }
     }
 
@@ -148,13 +132,15 @@ public class Particles {
                     Set<BorderParticle> foreignParticles = new HashSet<BorderParticle>();
 
                     for (Claim claim : merge) {
-                        renderBorder(playerLocation, claim, merge, BorderColor.MERGE, Range.MERGE, mergeParticles);
+                        addParticles(playerLocation, claim, merge, BorderColor.MERGE, Range.MERGE, mergeParticles);
+                        cullParticles(mergeParticles, merge, Range.MERGE);
+                        //renderBorder(playerLocation, claim, merge, BorderColor.MERGE, Range.MERGE, mergeParticles);
                         //Particles.renderBorder(op, playerLocation, claim, BorderColor.MERGE, Range.MERGE, mergeParticles);
                     }
 
                     for (Claim claim : foreign) {
-                        renderBorder(playerLocation, claim, foreign, BorderColor.CLAIMPLACEPREVENTION, Range.FOREIGN, foreignParticles);
-                        //Particles.renderBorder(op, playerLocation, claim, BorderColor.CLAIMPLACEPREVENTION, Range.FOREIGN, foreignParticles);
+                        addParticles(playerLocation, claim, foreign, BorderColor.CLAIMPLACEPREVENTION, Range.FOREIGN, foreignParticles);
+                        cullParticles(foreignParticles, foreign, Range.FOREIGN);
                     }
 
                     renderParticles(op, foreignParticles, playerLocation);
@@ -179,7 +165,8 @@ public class Particles {
                                 color = BorderColor.PROTECTEDNONMEMBER;
                                 break;
                         }
-                        renderBorder(playerLocation, claim, claims, color, Range.PROTECTED, particles);
+                        addParticles(playerLocation, claim, claims, color, Range.PROTECTED, particles);
+                        cullParticles(particles, claims, Range.PROTECTED);
                     }
                     renderParticles(op, particles, playerLocation);
                 }
@@ -188,153 +175,67 @@ public class Particles {
         }, 0, 5);
     }
 
-    private static void renderBorder(Vector4 playerLocation, Claim claim, Set<Claim> claims, BorderColor color, Range range, Set<BorderParticle> particles) {
-        Set<BorderBlock> blocks = new HashSet<BorderBlock>();
-        addBlockBorderOutline(playerLocation, claim, claims, color, range, blocks);
-        blockToParticles(blocks, particles);
-        blockToDryParticles(blocks, particles);
-    }
+    private static void addParticles(Vector4 playerLocation, Claim claim, Set<Claim> claims, BorderColor color, Range range, Set<BorderParticle> particles) {
 
-    private static void addBlockBorderOutline(Vector4 playerLocation, Claim claim, Set<Claim> claims, BorderColor color, Range range, Set<BorderBlock> blocks) {
         int r = range.getRange();
         Vector4 claimLocation = claim.getLocation();
 
-        tryAddBlock(claimLocation.x() - r, claimLocation.z() + r, color, Direction.SW, playerLocation, claim, claims, range, blocks);
-        tryAddBlock(claimLocation.x() - r, claimLocation.z() - r, color, Direction.NW, playerLocation, claim, claims, range, blocks);
-        tryAddBlock(claimLocation.x() + r, claimLocation.z() + r, color, Direction.SE, playerLocation, claim, claims, range, blocks);
-        tryAddBlock(claimLocation.x() + r, claimLocation.z() - r, color, Direction.NE, playerLocation, claim, claims, range, blocks);
+        tryAddParticle(claimLocation.x() - r, claimLocation.z() - r, color, Direction.NW, playerLocation, claim, claims, particles);
+        tryAddParticle(claimLocation.x() + r + 1, claimLocation.z() - r, color, Direction.NE, playerLocation, claim, claims, particles);
+        tryAddParticle(claimLocation.x() - r, claimLocation.z() + r + 1, color, Direction.SW, playerLocation, claim, claims, particles);
+        tryAddParticle(claimLocation.x() + r + 1, claimLocation.z() + r + 1, color, Direction.SE, playerLocation, claim, claims, particles);
 
         int x = -r + 1;
-        while (x <= r-1) {
-            tryAddBlock(claimLocation.x() + x, claimLocation.z() + r, color, Direction.SOUTH, playerLocation, claim, claims, range, blocks);
-            tryAddBlock(claimLocation.x() + x, claimLocation.z() - r, color, Direction.NORTH, playerLocation, claim, claims, range, blocks);
+        while (x <= r) {
+            tryAddParticle(claimLocation.x() + x, claimLocation.z() + r + 1, color, Direction.SOUTH, playerLocation, claim, claims, particles);
+            tryAddParticle(claimLocation.x() + x, claimLocation.z() - r, color, Direction.NORTH, playerLocation, claim, claims, particles);
             x += 1;
         }
 
-
         int z = -r + 1;
-        while (z <= r-1) {
-            tryAddBlock(claimLocation.x() + r, claimLocation.z() + z, color, Direction.EAST, playerLocation, claim, claims, range, blocks);
-            tryAddBlock(claimLocation.x() - r, claimLocation.z() + z, color, Direction.WEST, playerLocation, claim, claims, range, blocks);
+        while (z <= r) {
+            tryAddParticle(claimLocation.x() + r + 1, claimLocation.z() + z, color, Direction.EAST, playerLocation, claim, claims, particles);
+            tryAddParticle(claimLocation.x() - r, claimLocation.z() + z, color, Direction.WEST, playerLocation, claim, claims, particles);
             z += 1;
         }
     }
-
-    private static void tryAddBlock(int x, int z, BorderColor color, Direction direction, Vector4 playerLocation, Claim claim, Set<Claim> claims, Range range, Set<BorderBlock> blocks) {
-
-        if (((x - playerLocation.x()) * (x - playerLocation.x()) + ((z - playerLocation.z()) * (z - playerLocation.z())) > (color.renderDistance) * (color.renderDistance) + 10)) { return;}
-
-        for (Claim tryClaim : claims) {
-            if (tryClaim == claim) { continue; }
-            if (ClaimsLogic.isInRange(tryClaim, new Vector4(x, 0, z, playerLocation.w()), range)) {return;}
-        }
-        blocks.add(new BorderBlock(x, z, color, direction));
-    }
-
-    private static void blockToParticles(Set<BorderBlock> blocks, Set<BorderParticle> particles) {
-
-        for (BorderBlock block : blocks) {
-            Orientation orientation = Orientation.X;
-
-            int x = block.x;
-            int z = block.z;
-            BorderColor color = block.color;
-
-            switch(block.direction) {
-                case NW:
-                    tryAddParticle(x, z, color, Orientation.CORNER, particles);
-                    break;
-                case NORTH:
-                    tryAddParticle(x, z, color, orientation, particles);
-                    break;
-                case SOUTH:
-                    tryAddParticle(x, z + 1, color, orientation, particles);
-                    break;
-                case WEST:
-                    tryAddParticle(x, z, color, Orientation.Z, particles);
-                    break;
-                case EAST:
-                    tryAddParticle(x + 1, z, color, Orientation.Z, particles);
-                    break;
-                case NE:
-                    tryAddParticle(x + 1, z, color, Orientation.CORNER, particles);
-                    tryAddParticle(x, z, color, Orientation.X, particles);
-                    break;
-                case SE:
-                    tryAddParticle(x + 1, z + 1, color, Orientation.CORNER, particles);
-                    tryAddParticle(x + 1, z, color, Orientation.Z, particles);
-                    tryAddParticle(x, z + 1, color, Orientation.X, particles);
-                    break;
-                case SW:
-                    tryAddParticle(x, z + 1, color, Orientation.CORNER, particles);
-                    tryAddParticle(x, z, color, Orientation.Z, particles);
-                    break;
-            }
-        }
-    }
-
-    private static void blockToDryParticles(Set<BorderBlock> blocks, Set<BorderParticle> particles) {
-
-        for (BorderBlock block : blocks) {
-
-            int x = block.x;
-            int z = block.z;
-            BorderColor color = block.color;
-
-            switch(block.direction) {
-                case NORTH:
-                    dryAddParticle(x + 1, z, color, Orientation.X, particles);
-                    break;
-                case SOUTH:
-                    dryAddParticle(x + 1, z + 1, color, Orientation.X, particles);
-                    break;
-                case WEST:
-                    dryAddParticle(x, z + 1, color, Orientation.Z, particles);
-                    break;
-                case EAST:
-                    dryAddParticle(x + 1, z + 1, color, Orientation.Z, particles);
-                    break;
-                default:
-                    break;
-            }
-
-
-        }
-    }
-
-    private static void dryAddParticle(int x, int z, BorderColor color, Orientation orientation, Set<BorderParticle> render) {
-
-        for (BorderParticle p : render) {
-
-            if (p.x == x && p.z == z) {
-                return;
-            }
-        }
-        BorderParticle particle = new BorderParticle(x, z, color, orientation);
-
-        render.add(particle);
-
-    }
     
-    private static void tryAddParticle(int x, int z, BorderColor color, Orientation orientation, Set<BorderParticle> render) {
+    private static void tryAddParticle(int x, int z, BorderColor color, Direction direction, Vector4 playerLocation, Claim claim, Set<Claim> claims, Set<BorderParticle> particles) {
 
-        BorderParticle particle = new BorderParticle(x, z, color, orientation);
+        //int distance = ((x - playerLocation.x()) ^ 2) + ((z - playerLocation.z()) ^ 2);
+        //if (distance > color.renderDistance * color.renderDistance) {return;}
 
-        for (BorderParticle p : render) {
+        BorderParticle particle = new BorderParticle(x, z, color, direction);
+
+        for (BorderParticle p : particles) {
             if (p.add(particle)) {
                 return;
             }
         }
 
-        render.add(particle);
+        particles.add(particle);
+    }
+
+    private static void cullParticles(Set<BorderParticle> particles, Set<Claim> claims, Range range) {
+
+        int min = range.getRange() - 1;
+        int max = range.getRange();
+
+        for (Claim claim : claims) {
+            int claimx = claim.getLocation().x();
+            int claimz = claim.getLocation().z();
+
+            particles.removeIf(p -> {
+                return (p.x >= claimx - min && p.z >= claimz - min && p.x <= max + claimx && p.z <= max + claimz);
+            });
+        }
     }
 
     private static void renderParticles(Player player, Set<BorderParticle> particles, Vector4 playerLocation) {
         for (BorderParticle particle : particles) {
-            if (particle.hOverlap < 4 && particle.vOverlap < 4) {
+            if (particle.isRenderable()) {
                 trySpawnParticle(player, particle.x, particle.z, playerLocation, particle.color);
             }
-            //player.sendMessage("X = " + String.valueOf(particle.x) + ", Z = " + String.valueOf(particle.z) + " | H = " + String.valueOf(particle.hOverlap) + ", V = " + String.valueOf(particle.vOverlap));
         }
     }
 
