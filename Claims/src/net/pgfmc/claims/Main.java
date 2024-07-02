@@ -68,6 +68,11 @@ public class Main extends JavaPlugin {
             }
         }.runTaskTimer(plugin, 0, 12000);
 	}
+
+    @Override
+    public void onDisable() {
+        OwnableFile.saveContainers();
+    }
 	
 	
 	public static JavaPlugin getPlugin() {
