@@ -1,5 +1,9 @@
 package net.pgfmc.proxycore.bot.discord.listeners;
 
+import java.util.List;
+
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -29,6 +33,13 @@ public class OnReady extends ListenerAdapter {
 				Commands.slash("link", "Link your Minecraft account")
 						.addOption(OptionType.INTEGER, "code", "The link code from Minecraft.", true))
 				.queue();
+		final Guild pgfGuild = Discord.getJda().getGuildById(Discord.GUILD_ID_PGF);
+		final List<Member> membersList = pgfGuild.getMembers();
+		
+		for (Member member : membersList)
+		{
+			pgfGuild.addRoleToMember(member, pgfGuild.getRoleById(579062298526875648L)).queue();
+		}
 		
 	}
 
