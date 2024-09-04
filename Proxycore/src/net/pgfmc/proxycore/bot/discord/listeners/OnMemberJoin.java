@@ -33,7 +33,7 @@ public class OnMemberJoin extends ListenerAdapter {
 			final Guild guild = e.getGuild();
 			final Role role = guild.getRoleById(579062298526875648L);
 			
-			guild.addRoleToMember(user, role);
+			guild.addRoleToMember(user, role).queue();
 		}
 		
 		final String partyingFace = new String(Character.toChars(0x1F973));
