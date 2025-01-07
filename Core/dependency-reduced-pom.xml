@@ -18,7 +18,7 @@
     <dependency>
       <groupId>net.coreprotect</groupId>
       <artifactId>coreprotect</artifactId>
-      <version>22.2</version>
+      <version>22.4</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -30,7 +30,7 @@
     <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot-api</artifactId>
-      <version>1.21-R0.1-SNAPSHOT</version>
+      <version>1.21.1-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
