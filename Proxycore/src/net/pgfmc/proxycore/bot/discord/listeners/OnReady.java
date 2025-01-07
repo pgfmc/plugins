@@ -36,8 +36,11 @@ public class OnReady extends ListenerAdapter {
 		final Guild pgfGuild = Discord.getJda().getGuildById(Discord.GUILD_ID_PGF);
 		final List<Member> membersList = pgfGuild.getMembers();
 		
+		// auto role
 		for (Member member : membersList)
 		{
+			if (member.getUser().isBot()) continue;
+			
 			pgfGuild.addRoleToMember(member, pgfGuild.getRoleById(579062298526875648L)).queue();
 		}
 		
