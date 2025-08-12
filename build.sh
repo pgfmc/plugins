@@ -40,4 +40,5 @@ done
 
 
 
-echo ""
+echo "Press enter to continue."
+read

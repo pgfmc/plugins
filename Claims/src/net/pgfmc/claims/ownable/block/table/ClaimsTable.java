@@ -7,7 +7,6 @@ import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.util.LongHash;
 import net.pgfmc.claims.util.LongHashTable;
-import net.pgfmc.core.util.Logger;
 import net.pgfmc.core.util.vector4.Vector4;
 
 /**

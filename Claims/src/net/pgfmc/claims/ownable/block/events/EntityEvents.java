@@ -95,7 +95,8 @@ public class EntityEvents implements Listener {
                 return;
             }
             if ((!claim.livestockKilling && animals.contains(entity.getType())) || 
-                (!claim.monsterKilling && monsters.contains(entity.getType()))) {
+                (!claim.monsterKilling && monsters.contains(entity.getType())) ||
+                (claim.inventoriesLocked && inventory.contains(entity.getType()))) {
 
                 pd.sendMessage(ChatColor.RED + "This land is claimed!");
                 e.setCancelled(true);

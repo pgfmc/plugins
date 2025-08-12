@@ -111,7 +111,7 @@ public class SafeLocation implements Runnable {
 	
 	public Thread getThread()
 	{
-		Bukkit.getLogger().warning("Getting SafeLocation thread..");
+		//Bukkit.getLogger().warning("Getting SafeLocation thread..");
 		return thread;
 	}
 	
