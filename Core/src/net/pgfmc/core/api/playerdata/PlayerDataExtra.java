@@ -110,7 +110,7 @@ abstract class PlayerDataExtra {
 			
 			if (nodes == null || nodes.isEmpty()) throw new NullPointerException("Permission does not exist in LuckPerms.");
 			
-			nodes.forEach(node -> Bukkit.getLogger().warning("Node found: " + node));
+			//nodes.forEach(node -> Bukkit.getLogger().warning("Node found: " + node));
 			
 			List<PGFRole> roles = nodes.stream().map(node -> PGFRole.get(node)).collect(Collectors.toList());
 			
@@ -118,9 +118,9 @@ abstract class PlayerDataExtra {
 						  .collect(Collectors.toList())
 						  .get(roles.size() - 1); // Lowest role with the permission
 			
-			Bukkit.getLogger().warning("Node to role: " + parentRole.name());
-			Bukkit.getLogger().warning("OfflinePlayer's role: " + PlayerData.from(getOfflinePlayer()).getRole().name());
-			Bukkit.getLogger().warning("Comparison: " + PlayerData.from(getOfflinePlayer()).getRole().compareTo(parentRole));
+			//Bukkit.getLogger().warning("Node to role: " + parentRole.name());
+			//Bukkit.getLogger().warning("OfflinePlayer's role: " + PlayerData.from(getOfflinePlayer()).getRole().name());
+			//Bukkit.getLogger().warning("Comparison: " + PlayerData.from(getOfflinePlayer()).getRole().compareTo(parentRole));
 			
 			return (PlayerData.from(getOfflinePlayer()).getRole().compareTo(parentRole) <= 0); // If the OfflinePlayer's role is equal or above the parent role
 			

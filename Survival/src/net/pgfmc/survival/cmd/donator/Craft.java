@@ -5,6 +5,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.InventoryView;
+import org.bukkit.inventory.MenuType;
 
 public class Craft implements CommandExecutor {
 
@@ -18,8 +20,9 @@ public class Craft implements CommandExecutor {
 		}
 		
 		Player p = (Player) sender;
-		
-		p.openWorkbench(null, true);
+
+		InventoryView view = MenuType.CRAFTING.create(p, null);
+		p.openInventory(view);
 		
 		return true;
 	}
