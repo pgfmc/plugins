@@ -37,22 +37,24 @@ public class OnMessageUpdateAndMessageReceived extends ListenerAdapter {
 		// If the event's guild doesn't match the #server guild
 		if (!Objects.equals(e.getGuild(), Discord.getAssociatedGuild())) return;
 		
-		final Message message = Discord.getMessageFromHistory(e.getMessageId());
+		final Message oldMessage = Discord.getMessageFromHistory(e.getMessageId());
+		final Message updatedMessage = e.getMessage();
 		
-		if (message == null) return;
-		if (message.getAuthor().isBot()) return;
+		if (oldMessage == null) return;
+		if (oldMessage.getAuthor().isBot()) return;
+		if (Objects.equals(oldMessage.getContentDisplay(), updatedMessage.getContentDisplay())) return;
 		
-		final User user = message.getAuthor();
+		final User user = oldMessage.getAuthor();
 		final EmbedBuilder builder = new EmbedBuilder()
 			.setColor(new Color(NamedTextColor.BLACK.value()))
 			.setAuthor("A message was updated.", e.getJumpUrl(), user.getEffectiveAvatarUrl())
-			.setDescription(message.getContentRaw())
+			.setDescription(oldMessage.getContentRaw())
 			.setFooter(user.getEffectiveName() + " (@" + user.getName() + ")")
 			.setTimestamp(OffsetDateTime.now());
 		
 		Discord.sendAlertMessageEmbed(builder.build()).queue();
 		
-		final List<Attachment> attachments = message.getAttachments();
+		final List<Attachment> attachments = oldMessage.getAttachments();
 		
 		if (attachments.size() == 0) return;
 		
@@ -62,7 +64,7 @@ public class OnMessageUpdateAndMessageReceived extends ListenerAdapter {
 		}
 		
 		// Update the message in message_history
-		MESSAGE_HISTORY.put(e.getMessageId(), e.getMessage());
+		MESSAGE_HISTORY.put(e.getMessageId(), updatedMessage);
 		
 	}
 	
