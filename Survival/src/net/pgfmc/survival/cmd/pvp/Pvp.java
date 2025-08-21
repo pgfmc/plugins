@@ -2,14 +2,13 @@ package net.pgfmc.survival.cmd.pvp;
 
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
-import net.pgfmc.core.PGFAdvancement;
+import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.api.playerdata.PlayerData;
-import net.pgfmc.core.bot.discord.Discord;
-import net.pgfmc.core.util.ServerMessage;
 import net.pgfmc.core.util.commands.PlayerCommand;
-import net.pgfmc.core.util.roles.RoleManager;
+import net.pgfmc.core.util.proxy.PluginMessageType;
 
 public class Pvp extends PlayerCommand {
 
@@ -28,26 +27,21 @@ public class Pvp extends PlayerCommand {
 		if (pd.hasTag("pvp")) {
 			pd.removeTag("pvp");
 			
-			ServerMessage.sendServerMessage(pd.getRankedName() + ChatColor.GRAY + " disabled PVP");
-			Discord.sendMessage(ChatColor.stripColor(":shield: " + pd.getRankedName() + " disabled PVP")).queue();
+			Bukkit.broadcastMessage(pd.getRankedName() + ChatColor.GRAY + " disabled PVP");
 			
-			RoleManager.updatePlayerNameplate(pd);
+			PluginMessageType.DISCORD_MESSAGE.send(pd.getPlayer(), ChatColor.stripColor(":shield: " + pd.getRankedName() + " disabled PVP"));
+			
+			CoreMain.updatePlayerNameplate(pd);
 			
 		} else {
 			pd.addTag("pvp");
 			
-			ServerMessage.sendServerMessage(pd.getRankedName() + ChatColor.DARK_RED + " enabled PVP");
-			Discord.sendMessage(ChatColor.stripColor(":crossed_swords: " + pd.getRankedName() + " enabled PVP")).queue();
+			Bukkit.broadcastMessage(pd.getRankedName() + ChatColor.DARK_RED + " enabled PVP");
 			
-			RoleManager.updatePlayerNameplate(pd);
+			PluginMessageType.DISCORD_MESSAGE.send(pd.getPlayer(), ChatColor.stripColor(":crossed_swords: " + pd.getRankedName() + " enabled PVP"));
+			
+			CoreMain.updatePlayerNameplate(pd);
 		}
-		
-		// Grants advancement
-		//
-		// A side effect of placing this here
-		// is that the advancement is granted on either
-		// enable or disable
-		PGFAdvancement.ENTERING_COMBAT.grantToPlayer(pd.getPlayer());		
 		
 		return true;
 	}

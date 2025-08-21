@@ -1,34 +1,29 @@
 package net.pgfmc.core;
 
-import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.TimeZone;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerLoadEvent;
 import org.bukkit.event.server.ServerLoadEvent.LoadType;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.messaging.PluginMessageRecipient;
 
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.luckperms.api.LuckPerms;
 import net.pgfmc.core.api.inventory.extra.InventoryPressEvent;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.playerdata.PlayerDataManager;
@@ -38,30 +33,39 @@ import net.pgfmc.core.api.playerdata.cmd.TagCommand;
 import net.pgfmc.core.api.request.RequestEvents;
 import net.pgfmc.core.api.request.RequestType;
 import net.pgfmc.core.api.teleport.SpawnProtect;
-import net.pgfmc.core.bot.Bot;
-import net.pgfmc.core.bot.discord.Discord;
-import net.pgfmc.core.bot.minecraft.cmd.LinkCommand;
-import net.pgfmc.core.bot.minecraft.cmd.UnlinkCommand;
-import net.pgfmc.core.bot.minecraft.listeners.OnAsyncPlayerChat;
-import net.pgfmc.core.bot.minecraft.listeners.OnPlayerAdvancementDone;
-import net.pgfmc.core.bot.minecraft.listeners.OnPlayerDeath;
-import net.pgfmc.core.bot.minecraft.listeners.OnPlayerJoin;
-import net.pgfmc.core.bot.minecraft.listeners.OnPlayerQuit;
-import net.pgfmc.core.bot.util.Colors;
-import net.pgfmc.core.cmd.admin.Skull;
-import net.pgfmc.core.cmd.donator.Nick;
+import net.pgfmc.core.cmd.LinkCommand;
+import net.pgfmc.core.cmd.NicknameCommand;
+import net.pgfmc.core.cmd.UnlinkCommand;
+import net.pgfmc.core.cmd.serverselector.ConnectCommand;
+import net.pgfmc.core.cmd.test.inventory.TestInventorySizeCommand;
+import net.pgfmc.core.cmd.test.pluginmessage.TestPluginMessageCommand;
+import net.pgfmc.core.listeners.minecraft.OnAsyncPlayerChat;
+import net.pgfmc.core.listeners.minecraft.OnPlayerAdvancementDone;
+import net.pgfmc.core.listeners.minecraft.OnPlayerDeath;
+import net.pgfmc.core.listeners.minecraft.OnPlayerJoin;
+import net.pgfmc.core.listeners.minecraft.OnPlayerQuit;
+import net.pgfmc.core.listeners.types.ConnectResponse;
+import net.pgfmc.core.listeners.types.PlayerDataResponse;
+import net.pgfmc.core.util.Logger;
 import net.pgfmc.core.util.RestartScheduler;
 import net.pgfmc.core.util.ServerMessage;
-import net.pgfmc.core.util.roles.RoleManager;
+import net.pgfmc.core.util.proxy.PluginMessageType;
 
 /**
  * @author bk and CrimsonDart
  */
 public class CoreMain extends JavaPlugin implements Listener {
 	
-	public static CoreMain plugin;
+	/**
+	 * Registered servers' names and if they are currently online
+	 * 
+	 * Online status is updated by Main.loopForPluginMessages()
+	 */
+	private final static Map<String, Boolean> REGISTERED_SERVERS = new HashMap<>();
 	
-	public static LuckPerms luckPermsAPI;
+	private static String thisServerName;
+	
+	public static CoreMain plugin;
 	
 	/**
 	 * creates all files, loads all worlds, PlayerData, commands and events.
@@ -70,132 +74,98 @@ public class CoreMain extends JavaPlugin implements Listener {
 	@Override
 	public void onEnable()
 	{
-		// XXX DEBUG CODE
-		//
-		// Tests for any corruption in PlayerData
-		// Will send an alert if there is
-		testForPlayerDataCorruption();
-		
-		/**
-		 * Constants
-		 */
 		plugin = this;
-		
-		/**
-		 * Create defaults *.yml
-		 */
-		saveDefaultConfig();
-		reloadConfig();
-		
-		/**
-		 * LuckPerms API
-		 */
-		final RegisteredServiceProvider<LuckPerms> lpProvider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
-		if (lpProvider != null) {
-		    final LuckPerms lpAPI = lpProvider.getProvider();
-		    luckPermsAPI = lpAPI;
-		    
-		}
 		
 		/**
 		 * PlayerData initialization
 		 */
-		PlayerDataManager.setInit(pd -> pd.setData("Name", pd.getName()).queue());
-		
-		PlayerDataManager.setInit(pd -> {
-			final FileConfiguration db = pd.getPlayerDataFile();
-			final ConfigurationSection config = db.getConfigurationSection("homes");
+		PlayerDataManager.setInit(playerdata -> {
+			final FileConfiguration db = playerdata.getPlayerDataFile();
 			
-			if (config == null) return;
+			// Set homes
+			final ConfigurationSection homesSection = db.getConfigurationSection("homes");
 			
-			Map<String, Location> homes = new HashMap<>();
-			
-			config.getKeys(false).forEach(home -> {
-				final Location homeLocation = config.getLocation(home);
+			if (homesSection != null)
+			{
+				final Map<String, Location> homes = new HashMap<>();
 				
-				if (homeLocation != null)
-				{
-					homes.put(home, homeLocation);
-				} else
-				{
-					Bukkit.getLogger().warning("Could not load home for " + pd.getName() + ".");
-				}
+				homesSection.getKeys(false).forEach(home -> {
+					final Location homeLocation = homesSection.getLocation(home);
+					
+					if (homeLocation != null)
+					{
+						homes.put(home, homeLocation);
+					} else
+					{
+						Bukkit.getLogger().warning("Could not load home for " + playerdata.getName() + ".");
+					}
+					
+					
+				});
 				
+				playerdata.setData("homes", homes);
 				
-			});
+			}
 			
-			if (homes.isEmpty()) return;
+			// Set nickname
+			final String nickname = db.getString("nickname");
+			playerdata.setData("nickname", nickname);
 			
-			pd.setData("homes", homes);
+			// Set role
+			final String roleName = db.getString("role");
+			playerdata.setData("role", roleName);
 			
-		});
-		
-		PlayerDataManager.setInit(pd -> {
+			// Request GlobalPlayerData
+			PluginMessageType.PLAYER_DATA.send(CoreMain.plugin.getServer(), playerdata.getUniqueId().toString());
 			
-			final FileConfiguration db = pd.getPlayerDataFile();
-			
-			final String nickname = db.getString("nick");
-			
-			if (nickname == null) return;
-			
-			pd.setData("nick", nickname);
-			
-		});
-		
-		PlayerDataManager.setInit(pd -> {
-			final FileConfiguration config = pd.getPlayerDataFile();
-			final String discordID = config.getString("Discord");
-			
-			if (discordID == null) return;
-			
-			pd.setData("Discord", discordID);
-			
-		});
-		
-		PlayerDataManager.setPostLoad(x -> {
-			PlayerData.getPlayerDataSet().forEach(pd -> RoleManager.updatePlayerRole(pd));
 		});
 		
 		/**
-		 * Register commands and listeners
-		 */		
-		getCommand("nick").setExecutor(new Nick());
+		 * Register commands
+		 */
 		getCommand("broadcast").setExecutor(new ServerMessage());
+		getCommand("connect").setExecutor(new ConnectCommand());
 		getCommand("link").setExecutor(new LinkCommand());
 		getCommand("unlink").setExecutor(new UnlinkCommand());
+		getCommand("nickname").setExecutor(new NicknameCommand());
+		new DumpCommand();
+		new TagCommand();
+		new PlayerDataSetCommand();
+		new TestInventorySizeCommand("testinventorysize");
+		new TestPluginMessageCommand("testpluginmessage");
+		//
 		
+		/**
+		 * Register listeners
+		 */
 		getServer().getPluginManager().registerEvents(new InventoryPressEvent(), this);
 		getServer().getPluginManager().registerEvents(new PlayerDataManager(), this);
 		getServer().getPluginManager().registerEvents(new SpawnProtect(), this);
 		getServer().getPluginManager().registerEvents(new RequestEvents(), this);
-		
-		getServer().getPluginManager().registerEvents(new OnAsyncPlayerChat(), this);
 		getServer().getPluginManager().registerEvents(new OnPlayerDeath(), this);
+		getServer().getPluginManager().registerEvents(new OnPlayerAdvancementDone(), this);
+		getServer().getPluginManager().registerEvents(new OnAsyncPlayerChat(), this);
 		getServer().getPluginManager().registerEvents(new OnPlayerJoin(), this);
 		getServer().getPluginManager().registerEvents(new OnPlayerQuit(), this);
-		getServer().getPluginManager().registerEvents(new OnPlayerAdvancementDone(), this);
-		
-		getServer().getPluginManager().registerEvents(new RoleManager(), this);
-		
 		getServer().getPluginManager().registerEvents(this, this);
+		new ConnectResponse();
+		new PlayerDataResponse();
+		
+		//
 		
 		/**
-		 * Initialize classes
+		 * Initialize classes, loops, methods
 		 */
-		new Skull();
-		new DumpCommand();
-		new TagCommand();
-		new PlayerDataSetCommand();
-		new Bot();
+		loopForPluginMessages();
+		//
+		
 	}
 	
 	@Override
 	public void onDisable() {
-		Bot.shutdown();
 		PlayerDataManager.saveQ();
 		RequestType.saveRequestsToFile();
 		
-		makeBackupOfPlayerDataToTestForCorruptionLater(); // XXX DEBUG CODE
 	}
 	
 	@EventHandler
@@ -210,30 +180,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 		CoreProtectAPI coreProtectAPI = ((CoreProtect) pluginCoreProtect).getAPI();
 		
 		if (coreProtectAPI != null) { coreProtectAPI.performPurge(1209600); } // 14 days in seconds
-		
-		
-		// XXX DEBUG CODE
-		//
-		// Sends alerts if there are any errors
-		if (errorMessages.isEmpty())
-		{
-			Bukkit.getLogger().warning("(PlayerData Corruption) No errors found with PlayerData!");
-		} else
-		{
-			StringBuilder message = new StringBuilder();
-			errorMessages.forEach(error -> {
-				
-				message.append("* " + error + "\n");
-			});
-			
-			EmbedBuilder embed = Discord.simpleServerEmbed("PlayerData Corruption", "https://cdn.discordapp.com/emojis/883396023601483857.webp?size=44&quality=lossless", Colors.BLACK);
-			embed.setDescription(message.toString());
-			
-			Discord.sendAlert(embed.build()).queue();
-			Bukkit.getLogger().warning("(Playerdata Corruption)\n" + message.toString());
-      
-		}
-	
 		
 	}
 	
@@ -254,109 +200,210 @@ public class CoreMain extends JavaPlugin implements Listener {
 		
 	}
 	
-	// XXX DEBUG CODE
-	//
-	// Error messages for testForPlayerDataCorruption()
-	// These will be sent to #alert on Discord after the Bot is booted
-	private ArrayList<String> errorMessages = new ArrayList<>();
-	
-	// XXX DEBUG CODE
-	//
-	// Tests for file corruption in playerdata directory
-	// logs errors to be reported later
-	private void testForPlayerDataCorruption()
+	public static final String getThisServerName()
 	{
-		// playerdata directory
-		final File playerdataDirectory = new File(getDataFolder() + File.separator + "playerdata");
+		return thisServerName;
+	}
+	
+	public static final Map<String, Boolean> getRegisteredServersMap()
+	{
+		return REGISTERED_SERVERS;
+	}
+	
+	// Updates all player nameplates so that they appear correct
+	// Example: A player changes their nickname: this method should be called
+	//			so that other players can correctly see the new nickname
+	public static final void updatePlayerNameplate(PlayerData playerdata)
+	{
+		// Don't do this if the playerdata is offline
+		if (!playerdata.isOnline()) return;
 		
-		// error if the playerdata directory does not exist
-		if (!playerdataDirectory.exists())
+		final Player player = playerdata.getPlayer();
+		
+		// Updates custom name value (spigot/bukkit) and makes the custom name visible to the CLIENT
+		player.setCustomName(playerdata.getRankedName());
+		player.setCustomNameVisible(true);
+		
+		// Do this for every player
+		for (final Player otherPlayer : Bukkit.getOnlinePlayers())
 		{
-			errorMessages.add("Playerdata directory does not exist.");
-			return;
-		}
-		
-		// array of all files in the playerdata directory
-		// filters out any unwanted files in the subdirectories
-		final File[] playerdataFiles = playerdataDirectory.listFiles(new FilenameFilter() {
-			@Override
-			public boolean accept(File dir, String name) {
-				return playerdataDirectory.toPath().getFileName().equals(dir.toPath().getFileName()) && name.endsWith(".yml");
-			}
-		});
-		
-		// for each file in the playerdata directory..
-		for (final File playerdataFile : playerdataFiles)
-		{
-			// file object that will represent the backup of this file
-			final File backupFile = new File(playerdataDirectory.getPath() + File.separator + "backup" + File.separator + playerdataFile.getName());
+			// Skip this iteration if the players are the same
+			if (otherPlayer == playerdata.getPlayer()) continue;
 			
-			// tests if the backup file and working playerdata file are mismatched
-			// error if they are mismatched
-			try {
-				Files.createDirectories(new File(playerdataDirectory.getPath() + File.separator + "backup").toPath()); // Create backup directory if necessary
-				if (backupFile.createNewFile()) continue; // Create a new blank file if it doesn't exist, skip this playerdata
-				
-				// returns -1L if no mismatch
-				if (Files.mismatch(playerdataFile.toPath(), backupFile.toPath()) == -1L) continue;
-				
-				errorMessages.add("Playerdata file does not match backup: " + playerdataFile.getName());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			// Weird way to update the name of a player for other players to see it
+			player.hidePlayer(CoreMain.plugin, otherPlayer);
+			player.showPlayer(CoreMain.plugin, otherPlayer);
 		}
-		
 		
 	}
 	
-	// XXX DEBUG CODE
-	//
-	// Makes a backup of the playerdata files
-	// The playerdata files on startup will be compared with the backup files
-	// in a different function (testForPlayerDataCorruption())
-	private void makeBackupOfPlayerDataToTestForCorruptionLater()
+	/**
+	 * A loop for operations that require repeatedly
+	 * sending Plugin Messages to the proxy.
+	 */
+	private final void loopForPluginMessages()
 	{
-		// playerdata directory
-		final File playerdataDirectory = new File(getDataFolder() + File.separator + "playerdata");
+		final Random random = new Random();
+		final PluginMessageRecipient sender = getServer();
 		
-		// error if the playerdata directory does not exist
-		if (!playerdataDirectory.exists())
-		{
-			Bukkit.getLogger().warning("(PlayerData Corruption) Could not find playerdata directory on shutdown!");
-			return;
-		}
-		
-		// array of all files in the playerdata directory
-		// filters out any unwanted files in the subdirectories
-		final File[] playerdataFiles = playerdataDirectory.listFiles(new FilenameFilter() {
+		Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
+			
 			@Override
-			public boolean accept(File dir, String name) {
-				return playerdataDirectory.toPath().getFileName().equals(dir.toPath().getFileName()) && name.endsWith(".yml"); // "playerdata" == "playerdata"
-			}
-		});
-		
-		// for each file in the playerdata directory..
-		for (final File playerdataFile : playerdataFiles)
-		{
-			// file object that will represent the backup of this file
-			final File backupFile = new File(playerdataFile.getParent() + File.separator + "backup" + File.separator + playerdataFile.getName());
-			
-			try {
-				Files.createDirectories(backupFile.toPath().getParent()); // Create backup directory
-				Files.copy(playerdataFile.toPath(), backupFile.toPath(), StandardCopyOption.REPLACE_EXISTING); // Copy this file to backup
+			public void run() {
+				final Collection<? extends Player> onlinePlayers = Bukkit.getOnlinePlayers();
 				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				if (onlinePlayers.isEmpty()) return;
+				
+				getServers();
+				pingServer();
+				
+				if (thisServerName == null || thisServerName.isEmpty())
+				{
+					// The randomly selected online player to send the Plugin Message through
+					final Player player = (Player) onlinePlayers.toArray()[random.nextInt(onlinePlayers.size())];
+					
+					getServer(player);
+				}
+				
 			}
 			
+			/**
+			 * [GetServers]
+			 * 
+			 * Use Bungeecord channel to ask for a list of servers. Response
+			 * is handled in the plugin message received listener (in Main).
+			 * 
+			 * PLUGIN MESSAGE FORM (BungeeCord): GetServers
+			 * 
+			 */
+			private final void getServers()
+			{
+				PluginMessageType.GET_SERVERS.send(sender)
+					.whenComplete((in, exception) -> {
+						if (exception != null)
+						{
+							Logger.error("Exception occurred for plugin message GET_SERVERS:");
+							exception.printStackTrace();
+							
+							return;
+						}
+						/**
+						 * BungeeCord (bungeecord:main) is a Channel Identifier
+						 * that is automatically handled by Velocity.
+						 * 
+						 * ------------------
+						 * 
+						 * [GetServers] Response
+						 * 
+						 * Returns a csv list of the registered servers on the proxy
+						 * 
+						 * PLUGIN MESSAGE FORM (BungeeCord): GetServers, CSV server names
+						 */
+						in.readUTF();
+						final String serverNamesCSV = in.readUTF();
+						
+						Logger.debug("CSV Server Names: " + serverNamesCSV);
+						
+						// CSV to Array
+						final String[] servers = serverNamesCSV.toLowerCase().split(", ");
+						final Map<String, Boolean> newRegisteredServers = new HashMap<>();
+						
+						for (final String server : servers)
+						{
+							newRegisteredServers.put(server, REGISTERED_SERVERS.getOrDefault(server, Boolean.TRUE));
+						}
+						
+						/**
+						 * Clear and re-add servers in case the
+						 * registered servers in the velocity.toml changed.
+						 */
+						REGISTERED_SERVERS.clear();
+						REGISTERED_SERVERS.putAll(newRegisteredServers);
+						
+					});
+				
+			}
 			
+			/**
+			 * Updates onlineServers for use throughout the plugin
+			 * by checking the ping of each registered server.
+			 * 
+			 * [PingServer]
+			 * 
+			 * The PingServer subchannel is used for checking if a server is online and reachable by the proxy.
+	    	 * 
+	    	 * PLUGIN MESSAGE FORM (pgf:main): PingServer, <server name>
+			 */
+			private final void pingServer()
+			{
+				for (final String server : REGISTERED_SERVERS.keySet())
+				{
+					PluginMessageType.PING_SERVER.send(sender, server)
+						.whenComplete((in, exception) -> {
+							if (exception != null)
+							{
+								Logger.error("Exception occurred for plugin message PING_SERVER:");
+								exception.printStackTrace();
+								
+								return;
+							}
+							/**
+					    	 * [PingServerResponse]
+					    	 * 
+					    	 * The PingServerResponse says if the proxy could ping the specified server.
+					    	 * 
+					    	 * PLUGIN MESSAGE FORM (pgf:main): PingServerResponse, <server name>, <true/false>
+					    	 */
+							in.readUTF();
+							final String serverName = in.readUTF();
+							final boolean isOnline = in.readBoolean();
+							
+							Logger.debug("Server Name: " + serverName);
+							Logger.debug("Online: " + isOnline);
+							
+							REGISTERED_SERVERS.put(serverName, isOnline);
+							
+						});
+					
+				}
+				
+			}
 			
-		}
-		
-		
+			/**
+			 * [GetServer]
+			 * 
+			 * Gets the server the player is connected to (this server)
+			 * 
+			 * PLUGIN FORM (BungeeCord): GetServer
+			 * 
+			 * @param player
+			 */
+			private final void getServer(final Player sender)
+			{
+				PluginMessageType.GET_SERVER.send(sender)
+					.whenComplete((in, exception) -> {
+						if (exception != null)
+						{
+							Logger.error("Exception occurred for plugin message GET_SERVER:");
+							exception.printStackTrace();
+							
+							return;
+						}
+						
+						in.readUTF();
+						final String serverName = in.readUTF();
+						
+						Logger.debug("This Server Name: " + serverName);
+						
+						thisServerName = serverName;
+						
+					});
+				
+			}
+			
+		}, 200L, 200L); // 10 seconds
 		
 	}
+	
 	
 }

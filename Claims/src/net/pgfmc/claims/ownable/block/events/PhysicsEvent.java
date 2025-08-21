@@ -10,6 +10,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPhysicsEvent;
+import org.bukkit.event.block.BlockPistonExtendEvent;
+import org.bukkit.event.block.BlockPistonRetractEvent;
 
 import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.Claim.Security;
@@ -60,4 +62,32 @@ public class PhysicsEvent implements Listener {
 			return;
 		}
 	}
+
+    @EventHandler
+    public void pistonEvent(BlockPistonExtendEvent e) {
+        Block piston = e.getBlock();
+        Claim pistonClaim = ClaimsTable.getClosestClaim(new Vector4(piston), Range.PROTECTED); 
+
+        for (Block b : e.getBlocks()) {
+            Claim bClaim = ClaimsTable.getClosestClaim(new Vector4(b), Range.PISTONPROTECT);
+            if (bClaim != null && !bClaim.getMergedClaims().contains(pistonClaim)) {
+                e.setCancelled(true);
+                return;
+            } 
+        }
+    }
+
+    @EventHandler
+    public void pistonRetractEvent(BlockPistonRetractEvent e) {
+        Block piston = e.getBlock();
+        Claim pistonClaim = ClaimsTable.getClosestClaim(new Vector4(piston), Range.PROTECTED); 
+
+        for (Block b : e.getBlocks()) {
+            Claim bClaim = ClaimsTable.getClosestClaim(new Vector4(b), Range.PISTONPROTECT);
+            if (bClaim != null && !bClaim.getMergedClaims().contains(pistonClaim)) {
+                e.setCancelled(true);
+                return;
+            } 
+        }
+    }
 }

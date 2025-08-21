@@ -3,8 +3,6 @@ package net.pgfmc.core.api.request.inv;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.bukkit.ChatColor;
-
 import net.pgfmc.core.api.inventory.ButtonInventory;
 import net.pgfmc.core.api.inventory.extra.Buttonable;
 import net.pgfmc.core.api.playerdata.PlayerData;

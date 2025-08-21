@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -17,9 +18,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import com.moandjiezana.toml.TomlWriter;
+
 import net.pgfmc.core.CoreMain;
+import net.pgfmc.core.PGFRole;
 import net.pgfmc.core.util.files.Mixins;
-import net.pgfmc.core.util.roles.PGFRole;
+import net.pgfmc.core.util.proxy.PluginMessageType;
 
 /**
  * stores dynamic, temporary and non-temporary data for each player.
@@ -55,7 +59,7 @@ public final class PlayerData extends PlayerDataExtra {
 		
 		instances.add(this);
 		
-		Bukkit.getLogger().warning("PlayerData loaded for " + p.getName() + "!");
+		Bukkit.getLogger().info("PlayerData loaded for " + p.getName() + "!");
 		
 	}
 	
@@ -87,32 +91,6 @@ public final class PlayerData extends PlayerDataExtra {
 		return null;
 	}
 	
-	/**
-	 * Deprecated; Use UUID
-	 * Gets a PlayerData from a player's real name.s
-	 * @param name The player's real name
-	 * @return PlayerData, null if no matches
-	 */
-	@Deprecated
-	public static PlayerData from(String name)
-	{
-		Set<PlayerData> nameMatches = PlayerData.getPlayerDataSet(pd -> pd.getName().toLowerCase().equals(name.toLowerCase()));
-		
-		if (nameMatches == null || nameMatches.isEmpty() || (PlayerData) nameMatches.toArray()[0] == null) return null;
-		
-		return (PlayerData) nameMatches.toArray()[0];
-	}
-	
-	public static PlayerData fromDiscordId(String discordUserId)
-	{
-		for (PlayerData uid : instances)
-		{
-			if (discordUserId.equals(uid.getData("Discord"))) return uid;
-		}
-		return null;
-		
-	}
-	
 	// getters and setters
 	
 	// This is the pvp swords icon for when a player has pvp enabled
@@ -121,28 +99,30 @@ public final class PlayerData extends PlayerDataExtra {
 	private final String pvpSwordsIcon = new String(Character.toChars(0x2694));
 	
 	public String getRankedName() {
+		if (!hasPermission("net.pgfmc.core.nick")) return getRole().getColor() + getName();
 		
 		// This will use the player's nickname, or, if they don't have a nickname, their regular Minecraft user name
-		String newName = (String) Optional.ofNullable(getData("nick")).orElse(getName());
+		String name = getDisplayName();
 		
 		// If the player's role is STAFF or higher
 		if (getRole().compareTo(PGFRole.STAFF) <= 0)
 		{
 			// Add the staff diamond icon to the beginning of the name
-			newName = getRole().getColor() + PGFRole.STAFF_DIAMOND + newName;
+			name = getRole().getColor() + PGFRole.STAFF_DIAMOND + name;
 		} else
 		{
-			newName = getRole().getColor() + newName;
+			name = getRole().getColor() + name;
 		}
 		
 		// If the player has pvp enabled
 		if (hasTag("pvp"))
 		{
 			// Add the pvp swords icon to the ending of the name
-			newName = newName + ChatColor.GRAY + " " + pvpSwordsIcon;
+			name = name + ChatColor.GRAY + " " + pvpSwordsIcon;
 		}
+        name = name + ChatColor.RESET;
 		
-		return newName + ChatColor.RESET;
+		return name;
 	}
 	
 	public String getDisplayName()
@@ -151,14 +131,26 @@ public final class PlayerData extends PlayerDataExtra {
 		if (!hasPermission("net.pgfmc.core.nick")) return getName();
 		
 		// Returns their nickname, but with no color codes or symbols (or their regular user name if no nickname)
-		return ChatColor.stripColor((String) Optional.ofNullable(getData("nick"))
+		return ChatColor.stripColor((String) Optional.ofNullable(getData("nickname"))
 													.orElse(getName()));
 		
 	}
 	
 	public PGFRole getRole() {
 		// Returns the player's role, or MEMBER if no role
-		return (PGFRole) Optional.ofNullable(getData("role")).orElse(PGFRole.MEMBER);
+		final String discordUserId = getData("discord");
+		
+		if (discordUserId == null) return PGFRole.MEMBER;
+		
+		final String roleName = getData("role");
+		
+		if (roleName == null) return PGFRole.MEMBER;
+		
+		final PGFRole role = PGFRole.get(roleName);
+		
+		if (role == null) return PGFRole.MEMBER;
+		
+		return role;
 	}
 	
 	@Override
@@ -217,17 +209,42 @@ public final class PlayerData extends PlayerDataExtra {
 	 */
 	public class Queueable {
 		
-		private String data;
+		private final String key;
 		
-		Queueable(String n) {
-			data = n;
+		Queueable(final String key) {
+			this.key = key;
+		}
+		
+
+		/**
+		 * Queue this mapping to be saved in the playerdata file.
+		 * 
+		 * @return This Queueable
+		 */
+		public final Queueable queue() {
+			queue.add(key);
+			return this;
 		}
 		
 		/**
-		 * adds this data to the queue
+		 * Send this mapping to the proxy.
+		 * 
+		 * @return This Queueable
 		 */
-		public void queue() {
-			queue.add(data);
+		public final Queueable send() {
+			final TomlWriter writer = new TomlWriter();
+			Object value = getData(key);
+			
+			if (value == null)
+			{
+				value = "";
+			}
+			
+			final String data = writer.write(Map.of(key, value));
+			
+			PluginMessageType.PLAYER_DATA_SEND.send(CoreMain.plugin.getServer(), getUniqueId().toString(), data);
+			
+			return this;
 		}
 		
 	}
@@ -337,4 +354,5 @@ public final class PlayerData extends PlayerDataExtra {
 		}
 		return set;
 	}
+	
 }

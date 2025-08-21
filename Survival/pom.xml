@@ -44,7 +44,7 @@
 			<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.1</version>
+                <version>3.6.0</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -81,16 +81,9 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>net.pgfmc</groupId>
-			<artifactId>Proxycore-Spigot</artifactId>
-			<version>9</version>
-			<scope>provided</scope>
-		</dependency>
-		
-		<dependency>
     		<groupId>net.wesjd</groupId>
     		<artifactId>anvilgui</artifactId>
-    		<version>1.9.4-SNAPSHOT</version>
+    		<version>1.10.8-SNAPSHOT</version>
     		<scope>compile</scope>
 		</dependency>
 		
@@ -104,5 +97,6 @@
 		</repository>
 		
 	</repositories>
+	
 	
 </project>

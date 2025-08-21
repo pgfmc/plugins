@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import net.pgfmc.core.CoreMain;
@@ -38,17 +37,6 @@ public class SpawnProtect implements Listener {
 			p.setInvulnerable(false);
 			
 		}}, ticks);
-	}
-	
-	@EventHandler
-	public void onInteract(PlayerInteractEvent e)
-	{
-		Player p = e.getPlayer();
-		
-		if (p.hasPermission("net.pgfmc.core.modifyworld")) return;
-		
-		//p.sendMessage("cYou do not have permission to do that.");
-		e.setCancelled(true);
 	}
 
 }

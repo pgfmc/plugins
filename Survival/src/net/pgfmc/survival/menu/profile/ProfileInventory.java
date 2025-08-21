@@ -2,7 +2,6 @@ package net.pgfmc.survival.menu.profile;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Optional;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -11,8 +10,6 @@ import org.bukkit.event.inventory.InventoryType;
 
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
-import net.pgfmc.core.bot.discord.Discord;
-import net.pgfmc.core.util.roles.PGFRole;
 import net.pgfmc.survival.Main;
 import net.pgfmc.survival.menu.CommandMenuInventory;
 import net.wesjd.anvilgui.AnvilGUI;
@@ -33,9 +30,9 @@ public class ProfileInventory extends BaseInventory {
 		 */
 		if (playerdata.hasPermission("net.pgfmc.core.link"))
 		{
-			final String discordID = playerdata.getData("Discord");
+			final String discordUserId = playerdata.getData("discord");
 			
-			if (discordID != null)
+			if (discordUserId != null)
 			{
 				setAction(11, (player, event) -> {
 					player.performCommand("unlink");
@@ -44,11 +41,7 @@ public class ProfileInventory extends BaseInventory {
 					
 				});
 				
-				final String discordGlobalName = Discord.JDA.getUserById(discordID).getGlobalName();
-				final PGFRole role = playerdata.getRole();
-				
-				setItem(11, Material.AMETHYST_SHARD).n(ChatColor.LIGHT_PURPLE + "Unlink Account")
-													.l(role.getColor() + discordGlobalName);
+				setItem(11, Material.AMETHYST_SHARD).n(ChatColor.LIGHT_PURPLE + "Unlink Discord Account");
 			
 			} else {
 				
@@ -94,9 +87,9 @@ public class ProfileInventory extends BaseInventory {
 		if (playerdata.hasPermission("net.pgfmc.survival.nick"))
 		{
 			setAction(15, (player, event) -> {
-				final String nickname = (String) Optional.ofNullable(playerdata.getData("nick")).orElse(player.getName());
+				final String nickname = playerdata.getDisplayName();
 				
-				Builder builder = new AnvilGUI.Builder();
+				Builder builder = new AnvilGUI.Builder().plugin(Main.plugin);
 				
 				builder.onClose(stateSnapshot -> {});
 				

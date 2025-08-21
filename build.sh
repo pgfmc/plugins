@@ -13,7 +13,7 @@ echo ""
 sleep 1s
 echo "Exporting jars.."
 
-for name in Core Proxycore-Spigot Claims ModTools Survival Proxycore-Velocity; do
+for name in Core Claims ModTools Survival; do
 	cd $name
 
 	if ! [ -z "$version_number" ]; then
@@ -33,13 +33,12 @@ if ! [ -d "target" ]; then
     mkdir "target"
 fi
 
-for name in Core Proxycore-Spigot Claims ModTools Survival Proxycore-Velocity; do
+for name in Core Claims ModTools Survival Proxycore; do
     cp -f $name/target/$name.jar target/"${name^}".jar
 done
 
 
 
-wait
 
-echo ""
-read -n1 -r -p "Press any key to continue.." key
+echo "Press enter to continue."
+read

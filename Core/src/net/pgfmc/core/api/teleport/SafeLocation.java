@@ -42,7 +42,7 @@ public class SafeLocation implements Runnable {
 			return;
 		}
 		
-		Bukkit.getLogger().warning("Starting thread");
+		Bukkit.getLogger().info("Starting thread");
 		thread.start();
 	}
 	
@@ -69,7 +69,7 @@ public class SafeLocation implements Runnable {
 					if (isSafe(v.world().getBlockAt(v.x() - r + i, y, v.z() + r)))
 					{
 						safeLoc = new Location(v.world(), v.x() - r + i, y, v.z() + r).add(0.5, 0, 0.5);
-						Bukkit.getLogger().warning("Safe location found: " + safeLoc.toString());
+						Bukkit.getLogger().info("Safe location found: " + safeLoc.toString());
 						return;
 					}
 					// Bukkit.getLogger().warning("SOUTHWEST -> SOUTHEAST failed");
@@ -78,7 +78,7 @@ public class SafeLocation implements Runnable {
 					if (isSafe(v.world().getBlockAt(v.x() + r, y, v.z() + r - i)))
 					{
 						safeLoc = new Location(v.world(), v.x() + r, y, v.z() + r - i).add(0.5, 0, 0.5);
-						Bukkit.getLogger().warning("Safe location found: " + safeLoc.toString());
+						Bukkit.getLogger().info("Safe location found: " + safeLoc.toString());
 						return;
 					}
 					// Bukkit.getLogger().warning("SOUTHEAST -> NORTHEAST failed");
@@ -87,7 +87,7 @@ public class SafeLocation implements Runnable {
 					if (isSafe(v.world().getBlockAt(v.x() + r - i, y, v.z() - r)))
 					{
 						safeLoc = new Location(v.world(), v.x() + r - i, y, v.z() - r).add(0.5, 0, 0.5);
-						Bukkit.getLogger().warning("Safe location found: " + safeLoc.toString());
+						Bukkit.getLogger().info("Safe location found: " + safeLoc.toString());
 						return;
 					}
 					// Bukkit.getLogger().warning("NORTHEAST -> NORTHWEST failed");
@@ -96,7 +96,7 @@ public class SafeLocation implements Runnable {
 					if (isSafe(v.world().getBlockAt(v.x() - r, y, v.z() - r + i)))
 					{
 						safeLoc = new Location(v.world(), v.x() - r, y, v.z() - r + i).add(0.5, 0, 0.5);
-						Bukkit.getLogger().warning("Safe location found: " + safeLoc.toString());
+						Bukkit.getLogger().info("Safe location found: " + safeLoc.toString());
 						return;
 					}
 					// Bukkit.getLogger().warning("NORTHWEST -> SOUTHWEST failed");
@@ -111,7 +111,7 @@ public class SafeLocation implements Runnable {
 	
 	public Thread getThread()
 	{
-		Bukkit.getLogger().warning("Getting SafeLocation thread..");
+		//Bukkit.getLogger().warning("Getting SafeLocation thread..");
 		return thread;
 	}
 	

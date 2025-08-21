@@ -7,7 +7,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 
-import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.Profanity;
 import net.pgfmc.core.util.commands.PlayerCommand;
@@ -68,13 +67,6 @@ public class SetHome extends PlayerCommand {
 		pd.sendMessage(ChatColor.GREEN + "Set home " + ChatColor.GOLD + homeName + ChatColor.GREEN + "!");
 		pd.playSound(pd.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
 		pd.setData("homes", homes).queue();
-		
-		// Grants advancement
-		if (homes.size() >= 5)
-		{
-			PGFAdvancement.THEYRE_MY_VACATION_HOMES.grantToPlayer(pd.getPlayer());
-			
-		}
 		
 		
 		return true;

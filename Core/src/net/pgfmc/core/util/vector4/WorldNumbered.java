@@ -1,8 +1,9 @@
 package net.pgfmc.core.util.vector4;
 
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.World.Environment;
 
 public class WorldNumbered {
 	
@@ -13,14 +14,12 @@ public class WorldNumbered {
 	 */
 	public static int worldToInt(World world) { // converts a world to an int. returns 3 for all exceptions.
 		
-		if (world.getEnvironment() == Environment.NORMAL) {
-			return 0;
-		} else if (world.getEnvironment() == Environment.NETHER) {
+		if (world.getName().contains("nether")) {
 			return 1;
-		} else if (world.getEnvironment() == Environment.THE_END) {
+		} else if (world.getName().contains("the_end")) {
 			return 2;
 		} else {
-			return 3;
+			return 0;
 		}
 		
 	}
@@ -30,19 +29,16 @@ public class WorldNumbered {
 	 * @return an integer's associated World
 	 * @param integer any integer 0 - 2
 	 */
-	public static World intToWorld(int integer, String world) { // the inverse operation of worldToInt
-		
-		switch(integer) {
-		case 0:
-			return Bukkit.getWorld(world);
-		case 1:
-			return Bukkit.getWorld(world + "_nether");
-		case 2:
-			return Bukkit.getWorld(world + "_the_end");
-		default:
-			return null;
-		}
-		
-	}
+	public static World intToWorld(int integer) { // the inverse operation of worldToInt
 
+        List<World> worlds = Bukkit.getWorlds();
+
+        for (World world : worlds) {
+
+            if (worldToInt(world) == integer) {
+                return world;
+            }
+        }
+        return null;
+	}
 }

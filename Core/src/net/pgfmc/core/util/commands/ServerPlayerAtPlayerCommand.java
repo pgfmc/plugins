@@ -3,7 +3,9 @@ package net.pgfmc.core.util.commands;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
 
@@ -29,13 +31,14 @@ public abstract class ServerPlayerAtPlayerCommand extends PlayerCommand {
 			return true;
 		}
 		
-		@SuppressWarnings("deprecation")
-		PlayerData pdarg = PlayerData.from(args[0]);
+		final Player player = Bukkit.getPlayer(args[0]);
 		
-		if (pdarg == null) {
+		if (player == null) {
 			pd.sendMessage(ChatColor.RED + "Please input a player's name!");
 			return true;
 		}
+		
+		PlayerData pdarg = PlayerData.from(player);
 		
 		return execute(pd, alias, pdarg);
 	}
