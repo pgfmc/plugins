@@ -5,7 +5,6 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
 
-import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.request.EndBehavior;
 import net.pgfmc.core.api.request.Request;
 import net.pgfmc.core.api.request.RequestType;
@@ -39,9 +38,6 @@ public static final TpHereRequest TH = new TpHereRequest();
 		r.target.sendMessage(ChatColor.GOLD + "Incoming Teleport Here request from " + r.asker.getRankedName() + ChatColor.GOLD + ".");
 		r.target.sendMessage(ChatColor.GOLD + "Use " + ChatColor.AQUA + "/tpha " + ChatColor.GOLD + "to accept!");
 		r.target.playSound(r.target.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
-		
-		// Grants advancement
-		PGFAdvancement.TP_PLEASE.grantToPlayer(r.asker.getPlayer());
 		
 		return true;
 	}

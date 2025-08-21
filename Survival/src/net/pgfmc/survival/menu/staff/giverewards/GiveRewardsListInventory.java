@@ -56,7 +56,7 @@ public class GiveRewardsListInventory extends ListInventory<String> implements L
 		final ItemStack reward = e.getCurrentItem();
 		final Player player = (Player) e.getWhoClicked();
 		final PlayerData playerdata = PlayerData.from(player);
-		Builder builder = new AnvilGUI.Builder();
+		Builder builder = new AnvilGUI.Builder().plugin(Main.plugin);
 		
 		builder.onClose(stateSnapshot -> {});
 		

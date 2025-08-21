@@ -3,8 +3,10 @@ package net.pgfmc.core.api.playerdata.cmd;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.commands.CommandBase;
@@ -23,10 +25,9 @@ public class TagCommand extends CommandBase {
 			return true;
 		}
 		
-		@SuppressWarnings("deprecation")
-		PlayerData pd = PlayerData.from(args[0]);
+		final Player player = Bukkit.getPlayer(args[0]);
 		
-		if (pd == null) {
+		if (player == null) {
 			sender.sendMessage(ChatColor.RED + "Please enter a valid player.");
 			return true;
 		}
@@ -60,6 +61,8 @@ public class TagCommand extends CommandBase {
 			return true;
 		}
 		
+		PlayerData pd = PlayerData.from(player);
+		
 		if (action.equals("list")) {
 			
 			sender.sendMessage(ChatColor.LIGHT_PURPLE + "Listing all tags for " + pd.getRankedName()
@@ -90,8 +93,7 @@ public class TagCommand extends CommandBase {
 		
 		return true;
 	}
-
-	@SuppressWarnings("deprecation")
+	
 	@Override
 	public List<String> tabComplete(CommandSender sender, String alias, String[] args) {
 		
@@ -121,7 +123,14 @@ public class TagCommand extends CommandBase {
 		
 		if (args.length == 3) {
 			if (args[1].equals("remove")) {
-				for (String arg : PlayerData.from(args[0]).getTags()) {
+				
+				final Player player = Bukkit.getPlayer(args[0]);
+				
+				if (player == null) return list;
+				
+				final PlayerData playerdata = PlayerData.from(player);
+				
+				for (String arg : playerdata.getTags()) {
 					if (arg.startsWith(args[1])) {
 						list.add(arg);
 					}

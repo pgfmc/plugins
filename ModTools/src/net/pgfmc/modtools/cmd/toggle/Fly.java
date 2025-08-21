@@ -61,7 +61,6 @@ public class Fly implements CommandExecutor, Listener{
 		if (fly)
 		{
 			p.setAllowFlight(true);
-			p.setFlying(true);
 			p.sendMessage(ChatColor.GREEN + "Enabled flight!");
 		}
 	}

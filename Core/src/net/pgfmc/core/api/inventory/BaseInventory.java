@@ -38,23 +38,64 @@ public abstract class BaseInventory implements InventoryHolder {
 	 */
 	protected Inventory inv;
 	
-	@Deprecated
 	public BaseInventory(int size, String name) {
+		// Chest type size cannot be bigger than 54 (double chest)
+		// Size of 5 is hopper type. Chest type size can be a multiple of 9
+		if ((size > 54) || (size != 5 && size % 9 != 0))
+		{
+			Bukkit.getLogger().warning("Inventory API could not create inventory of size: " + size);
+			
+			return;
+		}
 		
-		if (size != 27 && size != 54 && size != 5 && size != 9) return;
+		final Inventory inventory;
 		
+		switch (size) {
+		case 5:
+			inventory = Bukkit.createInventory(this, InventoryType.HOPPER, name);
+			break;
+		default:
+			inventory = Bukkit.createInventory(this, size, name);
+			break;
+		}
 		
-		this.inv = Bukkit.createInventory(this, size, name);
+		if (inventory == null)
+		{
+			Bukkit.getLogger().warning("Inventory API failed to create inventory: Bukkit.createInventory returned null");
+			
+			return;
+		}
+		
+		this.inv = inventory;
 		
 		buttons = new Butto[size];
 	}
 	
 	public BaseInventory(InventoryType type, String name) {
-	
-		if (type == null || !type.isCreatable()) return;
+		if (type == null)
+		{
+			Bukkit.getLogger().warning("Inventory API could not create inventory type: null");
+			
+			return;
+		}
 		
+		if (!type.isCreatable())
+		{
+			Bukkit.getLogger().warning("Inventory API could not create inventory type: " + type.name() + " (not creatable)");
+			
+			return;
+		}
 		
-		this.inv = Bukkit.createInventory(this, type, name);
+		final Inventory inventory = Bukkit.createInventory(this, type, name);
+		
+		if (inventory == null)
+		{
+			Bukkit.getLogger().warning("Inventory API failed to create inventory: Bukkit.createInventory returned null");
+			
+			return;
+		}
+		 
+		this.inv = inventory;
 		
 		buttons = new Butto[type.getDefaultSize()];
 	}

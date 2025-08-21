@@ -1,12 +1,11 @@
 name: PGF-Survival
-version: 9.0.3
-api-version: 1.20
+version: 9.0.9
+api-version: 1.21
 authors: [bk, CrimsonDart]
 website: play.pgfmc.net
 main: net.pgfmc.survival.Main
 description: Survival for PGF
 depend: [PGF-Core]
-softdepend: [PGF-Proxycore]
 load: POSTWORLD
 prefix: PGF-Survival
 
@@ -29,6 +28,10 @@ commands:
     description: Toggles PvP mode
     usage: /<command>
     permission: net.pgfmc.survival.pvp
+  skull:
+    usage: /<command> [player]
+    description: Obtain a player skull
+    permission: net.pgfmc.core.skull
   menu:
     aliases: [c, m, commands]
     description: Open up the Command Menu

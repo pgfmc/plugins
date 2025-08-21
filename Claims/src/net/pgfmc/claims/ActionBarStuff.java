@@ -1,17 +1,15 @@
 package net.pgfmc.claims;
 
+import java.util.Optional;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
-import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.wrappers.WrappedChatComponent;
-
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.Claim.Security;
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
@@ -27,13 +25,19 @@ public class ActionBarStuff extends BukkitRunnable {
 		for (Player player : Main.plugin.getServer().getOnlinePlayers()) {
 			
 			Block block = player.getTargetBlock(null, 4);
+            PlayerData playerData = PlayerData.from(player);
+
 			
-			ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
-			PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.SET_ACTION_BAR_TEXT);
-			
-			String ting = " ";
-			
-			if (block != null && block.getType() == Material.LODESTONE) {
+			String ting = "";
+
+            int enterTimer = (int) Optional.ofNullable(playerData.getData("enterTimer")).orElse(0);
+            PlayerData claimOwner = playerData.getData("claimOwner");
+
+            if (enterTimer > 0 && claimOwner != null) {
+                playerData.setData("enterTimer", enterTimer - 1);
+                ting = ChatColor.GOLD + "Entering " + claimOwner.getRankedName() + ChatColor.GOLD + "'s Claim!";
+                
+            } else if (block != null && block.getType() == Material.LODESTONE) {
 				Claim claim = ClaimsTable.getOwnable(new Vector4(block));
 				if (claim != null) {
 					
@@ -56,18 +60,18 @@ public class ActionBarStuff extends BukkitRunnable {
 					Claim foreigner = ClaimsTable.getClosestClaim(calcPos, Range.FOREIGN);
 					
 					if (foreigner == null) {
-						ting = ChatColor.GREEN + "Claims a 41x41 block area";
+						ting = ChatColor.GREEN + "Claims a 61x61 block area";
 					} else {
 						
-						Security access = foreigner.getAccess(PlayerData.from(player));
+						Security access = foreigner.getAccess(playerData);
 						if (foreigner != null && (access == Security.MEMBER || access == Security.ADMIN)) {
-							ting = ChatColor.GREEN + "Claims a 41x41 block area";
+							ting = ChatColor.GREEN + "Claims a 61x61 block area";
 						} else {
 							ting = ChatColor.RED + "Cannot place claim here";
 						}
 					}
 				} else {
-					Security access = merger.getAccess(PlayerData.from(player));
+					Security access = merger.getAccess(playerData);
 					
 					if ((access == Security.MEMBER )) {
 						ting = ChatColor.GOLD + "Merge with " + merger.getPlayer().getRankedName() + "'s " + ChatColor.GOLD + "claim" ;
@@ -78,11 +82,10 @@ public class ActionBarStuff extends BukkitRunnable {
 					}
 				}
 			}
-			
-			packet.getChatComponents().write(0, WrappedChatComponent.fromText(ting));
-			
-			
-			protocolManager.sendServerPacket(player, packet);
+
+            if (ting != "") {
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ting));
+            }
 		}
 	}
 }

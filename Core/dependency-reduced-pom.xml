@@ -8,49 +8,6 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>Core</artifactId>
-  <build>
-    <sourceDirectory>src/</sourceDirectory>
-    <resources>
-      <resource>
-        <targetPath>.</targetPath>
-        <filtering>true</filtering>
-        <directory>${basedir}/</directory>
-        <includes>
-          <include>*.yml</include>
-        </includes>
-      </resource>
-    </resources>
-    <finalName>${project.name}</finalName>
-    <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.12.1</version>
-        <configuration>
-          <release>17</release>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-shade-plugin</artifactId>
-        <version>3.5.1</version>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <relocations>
-            <relocation>
-              <pattern>net.dv8tion</pattern>
-              <shadedPattern>net.pgfmc.net.dv8tion</shadedPattern>
-            </relocation>
-          </relocations>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
   <repositories>
     <repository>
       <id>playpro-repo</id>
@@ -61,7 +18,7 @@
     <dependency>
       <groupId>net.coreprotect</groupId>
       <artifactId>coreprotect</artifactId>
-      <version>22.2</version>
+      <version>23.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -73,13 +30,7 @@
     <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot-api</artifactId>
-      <version>1.20.2-R0.1-SNAPSHOT</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.comphenix.protocol</groupId>
-      <artifactId>ProtocolLib</artifactId>
-      <version>5.1.0</version>
+      <version>1.21.8-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>

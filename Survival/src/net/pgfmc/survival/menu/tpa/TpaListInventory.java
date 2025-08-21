@@ -9,9 +9,9 @@ import org.bukkit.inventory.ItemStack;
 import net.pgfmc.core.api.inventory.ListInventory;
 import net.pgfmc.core.api.inventory.extra.Butto;
 import net.pgfmc.core.api.playerdata.PlayerData;
-import net.pgfmc.core.cmd.admin.Skull;
 import net.pgfmc.core.util.ItemWrapper;
-import net.pgfmc.survival.menu.CommandMenuInventory;
+import net.pgfmc.survival.cmd.Skull;
+import net.pgfmc.survival.menu.teleports.Teleports;
 
 public class TpaListInventory extends ListInventory<PlayerData> {
 	
@@ -22,7 +22,7 @@ public class TpaListInventory extends ListInventory<PlayerData> {
 		
 		this.pd = pd;
 		
-		setBack(0, new CommandMenuInventory(pd).getInventory());
+		setBack(0, new Teleports(pd).getInventory());
 	}
 
 	@Override

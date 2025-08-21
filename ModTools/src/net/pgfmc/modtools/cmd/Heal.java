@@ -36,7 +36,7 @@ public class Heal implements CommandExecutor {
 			
 		}
 		
-		target.setHealth(target.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
+		target.setHealth(target.getAttribute(Attribute.MAX_HEALTH).getBaseValue());
 		target.setFoodLevel(20);
 		target.setSaturation(20);
 		

@@ -7,11 +7,15 @@ import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Hanging;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.entity.Tameable;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.Claim.Security;
@@ -25,11 +29,16 @@ public class EntityEvents implements Listener {
 	@EventHandler
 	public void testEvent(EntityDamageByEntityEvent e) {
 		
-		
-		
 		Entity entity = e.getEntity();
 		
 		if (entity instanceof Player) return;
+
+        if (entity instanceof Tameable) {
+            Tameable tameable = (Tameable) entity;
+            if (tameable.getOwner() != null) {
+                return;
+            }
+        }
 		
 		if (e.getDamager() instanceof Player) {
 			
@@ -50,29 +59,49 @@ public class EntityEvents implements Listener {
 			}
 		} else return;
 	}
-	
-	EnumSet<EntityType> protection = EnumSet.of(EntityType.ALLAY, EntityType.ARMOR_STAND, EntityType.AXOLOTL, EntityType.BAT, EntityType.BEE, EntityType.BOAT, EntityType.CAT, 
-			EntityType.CHEST_BOAT, EntityType.CHICKEN, EntityType.COD, EntityType.COW, EntityType.LEASH_HITCH, EntityType.DOLPHIN, EntityType.DONKEY, EntityType.FOX, EntityType.FROG, 
-			EntityType.GLOW_ITEM_FRAME, EntityType.GLOW_SQUID, EntityType.GOAT, EntityType.HORSE, EntityType.IRON_GOLEM, EntityType.ITEM_FRAME, EntityType.LLAMA, EntityType.MINECART, 
-			EntityType.MINECART_CHEST, EntityType.MINECART_COMMAND, EntityType.MINECART_FURNACE, EntityType.MINECART_HOPPER, EntityType.MINECART_MOB_SPAWNER, EntityType.MINECART_TNT, 
-			EntityType.MULE, EntityType.MUSHROOM_COW, EntityType.OCELOT, EntityType.PAINTING, EntityType.PANDA, EntityType.PARROT, EntityType.PIG, EntityType.POLAR_BEAR, EntityType.PUFFERFISH, 
-			EntityType.RABBIT, EntityType.SALMON, EntityType.SHEEP, EntityType.SKELETON_HORSE, EntityType.SNOWMAN, EntityType.SQUID, EntityType.STRIDER, EntityType.TADPOLE, 
-			EntityType.TRADER_LLAMA, EntityType.WANDERING_TRADER, EntityType.TROPICAL_FISH, EntityType.TURTLE, EntityType.VILLAGER, EntityType.WOLF);
-	
-	private void doStuff(EntityDamageByEntityEvent e, PlayerData pd, Entity entity) {
+
+	@EventHandler
+	public void entityEvent(PlayerInteractEntityEvent e) {
+		PlayerData pd = PlayerData.from(e.getPlayer());
+
+        if (e.getRightClicked() instanceof Tameable) {
+            Tameable tameable = (Tameable) e.getRightClicked();
+            if (tameable.getOwner() != null) {
+                return;
+            }
+        }
+        
+        if (e.getRightClicked() instanceof Player) return;
 		
-		
-		if (entity.getCustomName() != null || protection.contains(entity.getType())) {
-			
-			Claim claim = ClaimsTable.getClosestClaim(new Vector4(entity.getLocation()), Range.PROTECTED);
-			if (claim == null) return; 
-			Security access = claim.getAccess(pd);
-			
-			if (access == Security.BLOCKED) {
-				pd.sendMessage(ChatColor.RED + "This land is claimed!");
-				e.setCancelled(true);
-				return;
-			}
+		if (e.getPlayer().getGameMode() == GameMode.SURVIVAL) {
+		    doStuff(e, pd, e.getRightClicked());	
 		}
+	}
+
+    public EnumSet<EntityType> animals = EnumSet.of(EntityType.ARMADILLO, EntityType.GOAT, EntityType.HORSE, EntityType.ALLAY, EntityType.AXOLOTL, EntityType.BAT, EntityType.BEE, EntityType.CAMEL, EntityType.CAT, EntityType.CHICKEN, EntityType.COD, EntityType.COW, EntityType.DOLPHIN, EntityType.DONKEY, EntityType.FROG, EntityType.GLOW_SQUID, EntityType.GOAT, EntityType.IRON_GOLEM, EntityType.LLAMA, EntityType.MOOSHROOM, EntityType.MULE, EntityType.OCELOT, EntityType.PANDA, EntityType.PARROT, EntityType.PIG, EntityType.POLAR_BEAR, EntityType.PUFFERFISH, EntityType.RABBIT, EntityType.SALMON, EntityType.SHEEP, EntityType.SNIFFER, EntityType.SNOW_GOLEM, EntityType.SQUID, EntityType.STRIDER, EntityType.TADPOLE, EntityType.TRADER_LLAMA, EntityType.TROPICAL_FISH, EntityType.TURTLE, EntityType.VILLAGER, EntityType.WANDERING_TRADER, EntityType.WOLF, EntityType.ZOMBIE_HORSE, EntityType.SKELETON_HORSE);
+    public EnumSet<EntityType> inventory = EnumSet.of(EntityType.CHEST_MINECART, EntityType.HOPPER_MINECART, EntityType.ARMOR_STAND, EntityType.ITEM_FRAME);
+    public EnumSet<EntityType> monsters = EnumSet.of(EntityType.BREEZE, EntityType.BLAZE, EntityType.CAVE_SPIDER, EntityType.CREEPER, EntityType.DROWNED, EntityType.ELDER_GUARDIAN, EntityType.HOGLIN, EntityType.HUSK, EntityType.MAGMA_CUBE, EntityType.PHANTOM, EntityType.PIGLIN, EntityType.PIGLIN_BRUTE, EntityType.PILLAGER, EntityType.RAVAGER, EntityType.SHULKER, EntityType.SILVERFISH, EntityType.SKELETON, EntityType.SLIME, EntityType.SPIDER, EntityType.STRAY, EntityType.VEX, EntityType.VINDICATOR, EntityType.WARDEN, EntityType.WITCH, EntityType.WITHER_SKELETON, EntityType.ZOGLIN, EntityType.ZOMBIE, EntityType.ZOMBIE_VILLAGER, EntityType.ZOMBIFIED_PIGLIN);
+	
+	private void doStuff(Cancellable e, PlayerData pd, Entity entity) {
+		
+        Claim claim = ClaimsTable.getClosestClaim(new Vector4(entity.getLocation()), Range.PROTECTED);
+        if (claim == null) return; 
+        Security access = claim.getAccess(pd);
+
+        if (access == Security.BLOCKED) {
+            if (entity.getCustomName() != null || entity instanceof Hanging) {
+                pd.sendMessage(ChatColor.RED + "This land is claimed!");
+                e.setCancelled(true);
+                return;
+            }
+            if ((!claim.livestockKilling && animals.contains(entity.getType())) || 
+                (!claim.monsterKilling && monsters.contains(entity.getType())) ||
+                (claim.inventoriesLocked && inventory.contains(entity.getType()))) {
+
+                pd.sendMessage(ChatColor.RED + "This land is claimed!");
+                e.setCancelled(true);
+                return;
+            }
+        }
 	}
 }

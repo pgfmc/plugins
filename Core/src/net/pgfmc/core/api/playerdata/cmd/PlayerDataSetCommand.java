@@ -3,8 +3,10 @@ package net.pgfmc.core.api.playerdata.cmd;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.commands.CommandBase;
@@ -30,10 +32,9 @@ public class PlayerDataSetCommand extends CommandBase {
 			return true;
 		}
 		
-		@SuppressWarnings("deprecation")
-		PlayerData pd = PlayerData.from(args[0]);
+		final Player player = Bukkit.getPlayer(args[0]);
 			
-		if (pd == null) {
+		if (player == null) {
 			sender.sendMessage(ChatColor.RED + "Player not found.");
 			return true;
 		}
@@ -42,6 +43,8 @@ public class PlayerDataSetCommand extends CommandBase {
 			sender.sendMessage(ChatColor.RED + "Please enter a data value.");
 			return true;
 		}
+		
+		PlayerData pd = PlayerData.from(player);
 		
 		String key = args[1];
 		
@@ -80,9 +83,11 @@ public class PlayerDataSetCommand extends CommandBase {
 		
 		if (args.length == 2) {
 			
-			@SuppressWarnings("deprecation")
-			PlayerData pd = PlayerData.from(args[0]);
-			if (pd == null) return list;
+			final Player player = Bukkit.getPlayer(args[0]);
+			
+			if (player == null) return list;
+			
+			PlayerData pd = PlayerData.from(player);
 			
 			for (String entry : pd.getAllData().keySet()) {
 				if (entry.startsWith(args[1]) && pd.getData(entry) instanceof String) {

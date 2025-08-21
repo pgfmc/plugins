@@ -86,6 +86,7 @@ public class ClaimsTable {
 	 * @return The claim that contains this location. Returns "null" if there is no claim.
 	 */
 	public static Claim getClosestClaim(Vector4 v, Range r) {
+
 		ClaimSection cs = getSection(v);
 		if (cs == null) { // if there is no CS, then it creates a new one for the position v.
 			cs = new ClaimSection(getSectionKey(v), v.w());
@@ -93,11 +94,7 @@ public class ClaimsTable {
 		}
 		
 		Claim ob = cs.getClosestClaim(v, r);
-		if (ob != null) {
-			return ob;
-		}
-		
-		return null;
+        return ob;
 	}
 	
 	public static Set<Claim> getNearbyClaims(Vector4 v, Range r) {
@@ -108,11 +105,7 @@ public class ClaimsTable {
 		}
 		
 		Set<Claim> ob = cs.getNearbyClaims(v, r);
-		if (ob != null) {
-			return ob;
-		}
-		
-		return null;
+        return ob;
 	}
 	
 	/**

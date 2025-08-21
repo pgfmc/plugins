@@ -1,0 +1,123 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	
+	<artifactId>Proxycore</artifactId>
+	<packaging>jar</packaging>
+	<parent>
+		<groupId>net.pgfmc</groupId>
+		<artifactId>parent</artifactId>
+		<version>9</version>
+		<relativePath>../Maven/pom.xml</relativePath>
+	</parent>
+	
+	<build>
+		<finalName>${project.name}</finalName>
+		<sourceDirectory>src/</sourceDirectory>
+		
+		<resources>
+			<resource>
+				<targetPath>.</targetPath>
+				<filtering>true</filtering>
+				<directory>${basedir}/</directory>
+				<includes>
+					<include>*.yml</include>
+				</includes>
+			</resource>
+		</resources>
+		
+		<plugins>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.12.1</version>
+				<configuration>
+					<release>17</release>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.6.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                
+                <configuration>
+	              <relocations>
+					  
+	                <relocation>
+	                  <pattern>net.dv8tion</pattern>
+	                  <shadedPattern>net.pgfmc.proxycore.net.dv8tion</shadedPattern>
+	                </relocation>
+	                
+	                <relocation>
+	                  <pattern>com.moandjiezana.toml</pattern>
+	                  <shadedPattern>net.pgfmc.proxycore.com.moandjiezana.toml</shadedPattern>
+	                </relocation>
+	                
+	              </relocations>
+	            </configuration>
+	            
+            </plugin>
+			
+		</plugins>
+		
+	</build>
+	
+	<repositories>
+        <repository>
+            <id>papermc</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
+        </repository>
+    </repositories>
+	
+	<dependencies>
+		
+		<dependency>
+            <groupId>com.velocitypowered</groupId>
+            <artifactId>velocity-api</artifactId>
+            <version>3.4.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+			<groupId>net.luckperms</groupId>
+			<artifactId>api</artifactId>
+			<version>5.4</version>
+			<scope>provided</scope>
+		</dependency>
+        
+        <dependency>
+			<groupId>net.dv8tion</groupId>
+			<artifactId>JDA</artifactId>
+			<version>5.6.1</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		 <dependency>
+		    <groupId>net.kyori</groupId>
+		    <artifactId>adventure-text-serializer-plain</artifactId>
+		    <version>4.18.0</version>
+		    <scope>compile</scope>
+		 </dependency>
+		 
+		  <dependency>
+		    <groupId>net.kyori</groupId>
+		    <artifactId>adventure-text-serializer-legacy</artifactId>
+		    <version>4.18.0</version>
+		    <scope>compile</scope>
+		 </dependency>
+		
+	</dependencies>
+	
+</project>

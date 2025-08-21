@@ -1,10 +1,10 @@
 name: PGF-Claims
-version: 9.0.3
-api-version: 1.20
+version: 9.0.9
+api-version: 1.21
 author: [bk, CrimsonDart]
 main: net.pgfmc.claims.Main
 description: implemets the Claims and Locking system
-depend: [PGF-Core, ProtocolLib]
+depend: [PGF-Core]
 prefix: PGF-Claims
 
 commands:
@@ -13,11 +13,6 @@ commands:
       usage: /<command>
       permission: net.pgfmc.claims.inspector.activate
       description: toggles Inspector mode if in Creative mode.
-   editownable:
-      aliases: [eown]
-      usage: /<command> <type> <value>
-      permission: net.pgfmc.claims.inspector.edit
-      description: Allows editing values of the latest inspected ownable.
    claimtp:
       aliases: [ctp]
       usage: /<command>

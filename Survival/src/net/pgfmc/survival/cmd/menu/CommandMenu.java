@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.bukkit.entity.Player;
 
-import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.commands.PlayerCommand;
 import net.pgfmc.survival.menu.CommandMenuInventory;
@@ -22,18 +21,14 @@ public class CommandMenu extends PlayerCommand {
 
 	@Override
 	public List<String> tabComplete(PlayerData pd, String alias, String[] args) {
-		return null;
+		return List.of();
 	}
 
 	@Override
 	public boolean execute(PlayerData pd, String alias, String[] args) {
 		Player p = pd.getPlayer();
 		
-		p.closeInventory();
 		p.openInventory(new CommandMenuInventory(pd).getInventory());
-		
-		// Grants advancement
-		PGFAdvancement.EXPERT_EXECUTOR.grantToPlayer(p);
 		
 		return true;
 	}

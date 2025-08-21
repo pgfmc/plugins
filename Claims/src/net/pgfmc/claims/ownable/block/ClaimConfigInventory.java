@@ -10,27 +10,73 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.inventory.ConfirmInventory;
 import net.pgfmc.core.api.inventory.ListInventory;
 import net.pgfmc.core.api.inventory.extra.Butto;
 import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.vector4.Vector4;
 
 public class ClaimConfigInventory extends BaseInventory {
 	
 	public ClaimConfigInventory(Claim claim) {
 		super(27, "Claim Settings");
+
+        int membersList = 10;
+        int addPlayer = 11;
+        int info = 13;
+        int explosions = 15;
+        int foreignPolicy = 16;
 		
-		setItem(11, Material.BOOK).n(ChatColor.GRAY + "Members");
-		setAction(11, (p, e) -> {
+		setItem(membersList, Material.BOOK).n(ChatColor.GRAY + "Members");
+		setAction(membersList, (p, e) -> {
 			p.openInventory(new PlayerViewInventory(claim).getInventory());
 		});
 		
-		setItem(15, Material.PLAYER_HEAD).n(ChatColor.GRAY + "Add member");
-		setAction(15, (p,e) -> {
+		setItem(addPlayer, Material.PLAYER_HEAD).n(ChatColor.GRAY + "Add member");
+		setAction(addPlayer, (p,e) -> {
 			p.openInventory(new PlayerAddInventory(claim).getInventory());
 		});
+
+        Vector4 loc = claim.getLocation();
+
+
+
+        setItem(info, Material.PAPER).n(ChatColor.WHITE + "Claim Info").l(
+                ChatColor.GRAY + 
+                "X " + String.valueOf(loc.x()) + 
+                "\nY " + String.valueOf(loc.y()) +
+                "\nZ " + String.valueOf(loc.z())
+            );
+
+        if (claim.explosionsEnabled) {
+            setItem(explosions, Material.TNT).n(ChatColor.RED + "Allow Explosions? " + ChatColor.GRAY + "(" + ChatColor.GREEN + "yes" + ChatColor.GRAY + ")");
+        } else {
+            setItem(explosions, Material.WATER_BUCKET).n(ChatColor.RED + "Allow Explosions? " + ChatColor.GRAY + "(" + ChatColor.RED + "no" + ChatColor.GRAY + ")");
+        }
+
+        setAction(explosions, (p,e) -> {
+            claim.explosionsEnabled = !claim.explosionsEnabled;
+            claim.forwardUpdateFrom(claim);
+            p.openInventory(new ClaimConfigInventory(claim).getInventory());
+        });
+
+        setItem(foreignPolicy, Material.CREEPER_HEAD).n(ChatColor.YELLOW + "Foreign Policy").l(ChatColor.GRAY + "Control what non-members are\nallowed to do in your claim!");
+        setAction(foreignPolicy, (p,e) -> {
+            p.openInventory(new ForeignPolicyInventory(claim).getInventory());
+        });
+
+
+
+
+
+
+
+
+
+
+
+
 	}
 	
 	public static class PlayerViewInventory extends ListInventory<PlayerData> {
@@ -162,11 +208,8 @@ public class ClaimConfigInventory extends BaseInventory {
 		protected void confirmAction(Player arg0, InventoryClickEvent arg1) {
 			claim.getMembers().add(player);
 			arg0.closeInventory();
-			arg0.sendMessage("Added " + player.getRankedName() + " to your base.");
-			claim.forwardUpdateFrom(claim, null);
-			
-			// Grants advancement
-			PGFAdvancement.MAKE_FRIENDS.grantToPlayer(arg0);
+			arg0.sendMessage(ChatColor.GOLD + "Added " + player.getRankedName() + ChatColor.GOLD + " to your base.");
+			claim.forwardUpdateFrom(claim);
 			
 		}
 		
@@ -185,7 +228,7 @@ public class ClaimConfigInventory extends BaseInventory {
 
 		@Override
 		protected void cancelAction(Player arg0, InventoryClickEvent arg1) {
-			arg0.openInventory(new PlayerAddInventory(claim).getInventory());
+			arg0.openInventory(new PlayerViewInventory(claim).getInventory());
 			
 		}
 
@@ -193,8 +236,8 @@ public class ClaimConfigInventory extends BaseInventory {
 		protected void confirmAction(Player arg0, InventoryClickEvent arg1) {
 			claim.getMembers().remove(player);
 			arg0.closeInventory();
-			arg0.sendMessage("Removed " + player.getRankedName() + " from your base.");
-			claim.forwardUpdateFrom(claim, null);
+			arg0.sendMessage(ChatColor.GOLD + "Removed " + player.getRankedName() + ChatColor.GOLD + " from your base.");
+			claim.forwardUpdateFrom(claim);
 		}
 	}
 }

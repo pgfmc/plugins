@@ -35,24 +35,24 @@ public class Vanish implements CommandExecutor, Listener {
 		Player p = (Player) sender;
 		
 		PlayerData pd = PlayerData.from(p);
-		boolean vanish = pd.hasTag("vanish"); // Gets "invis" from PlayerData, default to false if null, converts to boolean
+		boolean vanish = pd.hasTag("vanish"); // 		
 		
-		
-		p.setInvisible(!vanish); // This is only so the user knows they're in invis mode
+		//p.setInvisible(!vanish); // This is only so the user knows they're in invis mode
 		
 		if (vanish)
 		{
 			Bukkit.getOnlinePlayers().stream().forEach(pl -> pl.showPlayer(Main.plugin, p));
-			p.sendMessage(ChatColor.RED + "Vanish off.");
-			p.performCommand("fakejoin");
 			pd.removeTag("vanish");
-			
+			p.sendMessage(ChatColor.RED + "Vanish off.");
+			p.setInvisible(false);
+			p.setSilent(false);
 			
 		} else {
 			Bukkit.getOnlinePlayers().stream().filter(pl -> !pl.hasPermission("net.pgfmc.modtools.vanish.exempt")).forEach(pl -> pl.hidePlayer(Main.plugin, p));
-			p.sendMessage(ChatColor.GREEN + "Vanished!");
-			p.performCommand("fakeleave");
 			pd.addTag("vanish");
+			p.sendMessage(ChatColor.GREEN + "Vanished!");
+			p.setInvisible(true);
+			p.setSilent(true);
 			
 		}
 		
@@ -70,10 +70,8 @@ public class Vanish implements CommandExecutor, Listener {
 		{
 			p.setInvisible(true);
 			p.setSilent(true);
-			p.sendMessage(ChatColor.GREEN + "aVanish on!");
+			p.sendMessage(ChatColor.GREEN + "Vanished!");
 			
 		}
-		
 	}
-	
 }

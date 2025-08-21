@@ -24,7 +24,7 @@ public interface Mixins {
 		File file = new File(dir);
 		
 		if (!file.exists()) {
-			Bukkit.getLogger().warning("Attempting to create file at " + dir);
+			Bukkit.getLogger().info("Attempting to create file at " + dir);
 			file.getParentFile().mkdirs();
 			try {
 				file.createNewFile();
@@ -35,7 +35,7 @@ public interface Mixins {
 				return null;
 				
 			}
-			Bukkit.getLogger().warning("File created!");
+			Bukkit.getLogger().info("File created!");
 			return file;
 		}
 		

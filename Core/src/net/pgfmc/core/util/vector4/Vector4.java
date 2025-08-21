@@ -28,6 +28,7 @@ public class Vector4 implements Cloneable, Serializable {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+        this.w = w;
 	}
 	
 	/**
@@ -86,7 +87,7 @@ public class Vector4 implements Cloneable, Serializable {
 	 * @return World
 	 */
 	public World world() {
-		return WorldNumbered.intToWorld(w, "survival");
+		return WorldNumbered.intToWorld(w);
 	}
 	
 	/**
