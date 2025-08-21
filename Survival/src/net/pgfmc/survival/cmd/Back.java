@@ -5,8 +5,11 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 
-import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.teleport.TimedTeleport;
 import net.pgfmc.core.util.commands.PlayerCommand;
@@ -15,7 +18,7 @@ import net.pgfmc.core.util.commands.PlayerCommand;
  * Command to teleport the player to their last death location.
  * @author bk
  */
-public class Back extends PlayerCommand {
+public class Back extends PlayerCommand implements Listener {
 	
 	public Back(String name) {
 		super(name);
@@ -45,12 +48,19 @@ public class Back extends PlayerCommand {
 			if (pd.hasTag("afk")) pd.removeTag("afk");
 			pd.setData("backLoc", null); // wipes back location, dont want this to be too op
 			
-			// Grants advancement
-			PGFAdvancement.CALL_ME_TRACER.grantToPlayer(pd.getPlayer());
-			
 		});
 		
 		return true;
+	}
+	
+	@EventHandler
+	public void onPlayerDeath(PlayerDeathEvent e)
+	{
+		final Player player = e.getEntity();
+		final PlayerData playerdata = PlayerData.from(player);
+		
+		playerdata.setData("backLoc", player.getLocation());
+		
 	}
 
 }

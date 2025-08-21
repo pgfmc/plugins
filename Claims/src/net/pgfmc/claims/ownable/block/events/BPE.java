@@ -15,7 +15,6 @@ import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.Claim.Security;
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
-import net.pgfmc.core.PGFAdvancement;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.vector4.Vector4;
 
@@ -43,20 +42,15 @@ public class BPE implements Listener {
 			Claim merger = ClaimsTable.getClosestClaim(new Vector4(block), Range.MERGE);
 			Claim foreign = ClaimsTable.getClosestClaim(new Vector4(block), Range.FOREIGN);
 			
-			
-			
 			// Within Merge claim range
 			if (merger != null && (merger.getMembers().contains(pd) || merger.getPlayer() == pd)) {
 				
-				new Claim(merger.getPlayer(), new Vector4(block), merger.getMembers());
+				Claim c = new Claim(merger.getPlayer(), new Vector4(block), merger.getMembers());
+                c.forwardUpdateFrom(merger);
 				
 				pd.sendMessage(ChatColor.GREEN + "Surrounding land claimed!");
 				pd.sendMessage(ChatColor.GOLD + "Claim merged with the nearby claim.");
 				pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
-				
-				// Grants advancement
-				PGFAdvancement.TOWN_CENTER.grantToPlayer(pd.getPlayer());
-				PGFAdvancement.COLONIZATION.grantToPlayer(pd.getPlayer());
 				
 				
 			// Within Foreign claim range	
@@ -77,9 +71,6 @@ public class BPE implements Listener {
 				
 				pd.sendMessage(ChatColor.GREEN + "Surrounding land claimed!");
 				pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
-				
-				// Grants advancement
-				PGFAdvancement.TOWN_CENTER.grantToPlayer(pd.getPlayer());
 				
 			}
 			return;

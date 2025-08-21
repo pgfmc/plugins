@@ -7,3 +7,4 @@
 /.metadata/
 target
 test_upload.sh
+server_upload.sh

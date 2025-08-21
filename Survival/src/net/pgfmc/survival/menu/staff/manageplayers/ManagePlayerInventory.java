@@ -7,10 +7,10 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.InventoryType;
 
+import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.teleport.TimedTeleport;
-import net.pgfmc.core.util.roles.RoleManager;
 import net.pgfmc.survival.menu.staff.inventorybackups.InventoryBackupListInventory;
 import net.pgfmc.survival.menu.staff.inventorysee.InventorySeeSelectInventory;
 
@@ -115,12 +115,12 @@ public class ManagePlayerInventory extends BaseInventory {
 		 * [] [] [] [] [] [] [] [] []
 		 */
 		setAction(14, (player, event) -> {
-			target.setData("nick", null).queue();
+			target.setData("nickname", null).queue();
 			
 			if (target.isOnline())
 			{
 				target.sendMessage(ChatColor.GOLD + "Your nickname has been reset by an admin to " + target.getRankedName() + ChatColor.GOLD + ".");
-				RoleManager.updatePlayerNameplate(target);
+				CoreMain.updatePlayerNameplate(target);
 				
 				target.playSound(target.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
 				

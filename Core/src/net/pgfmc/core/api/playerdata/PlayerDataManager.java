@@ -13,7 +13,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import net.pgfmc.core.CoreMain;
-import net.pgfmc.core.util.roles.RoleManager;
 
 public class PlayerDataManager implements Listener {
 
@@ -28,7 +27,7 @@ public class PlayerDataManager implements Listener {
 	public static void setInit(Consumer<PlayerData> consoom) {
 		pdInit.add(consoom);
 		
-		Bukkit.getLogger().warning("PlayerData init function created!");
+		Bukkit.getLogger().info("PlayerData init function created!");
 		
 	}
 	
@@ -40,7 +39,7 @@ public class PlayerDataManager implements Listener {
 	public static void setPostLoad(Consumer<Void> consoom) {
 		postLoad.add(consoom);
 		
-		Bukkit.getLogger().warning("PlayerData post-load function created!");
+		Bukkit.getLogger().info("PlayerData post-load function created!");
 		
 	}
 	
@@ -57,12 +56,12 @@ public class PlayerDataManager implements Listener {
 			
 		}
 		
-		Bukkit.getLogger().warning("PlayerData init functions ran!");
-		Bukkit.getLogger().warning("PlayerData tags added!");
+		Bukkit.getLogger().info("PlayerData init functions ran!");
+		Bukkit.getLogger().info("PlayerData tags added!");
 		
 		postLoad.stream().forEach(consoomer -> consoomer.accept(null));
 		
-		Bukkit.getLogger().warning("PlayerData post-load functions ran!");
+		Bukkit.getLogger().info("PlayerData post-load functions ran!");
 		
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(CoreMain.plugin, new Runnable() {
 			@Override
@@ -100,7 +99,7 @@ public class PlayerDataManager implements Listener {
 			pd = new PlayerData(p);
 		}
 		
-		RoleManager.updatePlayerNameplate(pd);
+		CoreMain.updatePlayerNameplate(pd);
 		
 	}
 

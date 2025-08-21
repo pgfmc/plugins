@@ -76,7 +76,7 @@ public class AfkEvents implements Listener {
 			pd.removeTag("afk");
 		} else if (!isAfk)
 		{
-			if (p.getHealth() < p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue())
+			if (p.getHealth() < p.getAttribute(Attribute.MAX_HEALTH).getValue())
 			{
 				p.sendMessage(ChatColor.RED + "You must be full health to activate AFK.");
 				
