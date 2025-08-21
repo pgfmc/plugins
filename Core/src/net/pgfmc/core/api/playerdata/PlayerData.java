@@ -59,7 +59,7 @@ public final class PlayerData extends PlayerDataExtra {
 		
 		instances.add(this);
 		
-		Bukkit.getLogger().warning("PlayerData loaded for " + p.getName() + "!");
+		Bukkit.getLogger().info("PlayerData loaded for " + p.getName() + "!");
 		
 	}
 	
