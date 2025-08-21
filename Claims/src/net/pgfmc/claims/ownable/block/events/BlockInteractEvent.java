@@ -55,7 +55,7 @@ public class BlockInteractEvent implements Listener {
 	
 		Block block = e.getClickedBlock();
 		
-		if (block != null && block.getType() == Material.LODESTONE) {
+		if (block.getType() == Material.LODESTONE) {
 
             if (e.getPlayer().getInventory().getItemInMainHand().getType() == Material.COMPASS) {
                 return;
