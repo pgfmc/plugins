@@ -1,4 +1,9 @@
-
+.project
 bin/
 .settings/
 /target/
+dependency-reduced-pom.xml
+.idea/
+.classpath
+.factorypath
+.metadata
