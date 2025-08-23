@@ -5,7 +5,7 @@ import net.pgfmc.core.util.vector4.Vector4;
 
 public class ClaimsLogic {
 	
-	public static int CSS  = 512;
+	public static int CSS  = 256;
 	public static int protectedRange = 30;
 	public static int mergeRange = protectedRange * 2 + 1;
 	public static int foreignRange = protectedRange * 6 + 2;
