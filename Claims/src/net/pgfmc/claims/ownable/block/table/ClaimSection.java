@@ -95,41 +95,20 @@ public class ClaimSection {
 	}
 	
 	public Set<Claim> getNearbyClaims(Vector4 v, Range r) {
-		
+
 		final Set<Claim> ob = getClaims(this, v, r);
-		
 		int claimRange = r.getRange();
-		int xBound = v.x()%CSS;
-		int zBound = v.z()%CSS;
-		
-		if (xBound < claimRange) {
-			
-			getClaims(getNeighbor(Neighbor.LEFT), v, r).forEach(x -> ob.add(x));
-			
-			
-			if (zBound < claimRange) {
-				
-				getClaims(getNeighbor(Neighbor.DOWN), v, r).forEach(x -> ob.add(x));
-				getClaims(getNeighbor(Neighbor.DOWNLEFT), v, r).forEach(x -> ob.add(x));
-			} else if (zBound > CSS - claimRange) {
-				getClaims(getNeighbor(Neighbor.UP), v, r).forEach(x -> ob.add(x));
-				getClaims(getNeighbor(Neighbor.UPLEFT), v, r).forEach(x -> ob.add(x));
-			}
-		} else if (xBound > CSS - claimRange) {
-			
-			getClaims(getNeighbor(Neighbor.RIGHT), v, r).forEach(x -> ob.add(x));
-			if (zBound < claimRange) {
-				getClaims(getNeighbor(Neighbor.DOWN), v, r).forEach(x -> ob.add(x));
-				getClaims(getNeighbor(Neighbor.DOWNRIGHT), v, r).forEach(x -> ob.add(x));
-			} else if (zBound > CSS - claimRange) {
-				getClaims(getNeighbor(Neighbor.UP), v, r).forEach(x -> ob.add(x));
-				getClaims(getNeighbor(Neighbor.UPRIGHT), v, r).forEach(x -> ob.add(x));
-			}
-		} else if (zBound < claimRange) { // move left
-			getClaims(getNeighbor(Neighbor.DOWN), v, r).forEach(x -> ob.add(x));
-		} else if (zBound > CSS - claimRange) {
-			getClaims(getNeighbor(Neighbor.UP), v, r).forEach(x -> ob.add(x));
-		}
+
+        final int[][] possible_locations = {
+            {v.x() + claimRange, v.z() + claimRange},
+            {v.x() - claimRange, v.z() + claimRange},
+            {v.x() + claimRange, v.z() - claimRange},
+            {v.x() - claimRange, v.z() - claimRange},
+        };
+
+        for (int[] pair : possible_locations) {
+            getClaims(ClaimsTable.getSection(pair[0], pair[1], this.w), v, r).forEach(x -> ob.add(x));
+        }
 
 		return ob;
 	}
