@@ -1,6 +1,7 @@
 package net.pgfmc.claims.ownable.block.events;
 
 import java.util.EnumSet;
+import java.util.UUID;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -10,11 +11,11 @@ import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Hanging;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Tameable;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
@@ -62,7 +63,10 @@ public class BlockInteractEvent implements Listener {
 		
 		if (block.getType() == Material.LODESTONE) {
 
-            if (e.getPlayer().getInventory().getItemInMainHand().getType() == Material.COMPASS) {
+            if (
+                    e.getPlayer().getInventory().getItemInMainHand().getType() == Material.COMPASS ||
+                    e.getPlayer().isSneaking()
+                ) {
                 return;
             }
 
@@ -128,32 +132,53 @@ public class BlockInteractEvent implements Listener {
 
     @EventHandler
     public void arrowHitTargetEvent(ProjectileHitEvent e ) {
-        arrowHitPressurePlate(e, e.getHitBlock(), e.getEntity());
+        projectileHitPressurePlate(e, e.getHitBlock(), e.getEntity());
     }
 
-    public void arrowHitPressurePlate(Cancellable e, Block b, Entity entity) {
-        if (b == null) {return;}
-        if (!switches.contains(b.getType()) || entity.getType() != EntityType.ARROW) {return;}
-
-        Arrow arrow = (Arrow) entity;
-        ProjectileSource shooter = arrow.getShooter();
+    public void projectileHitPressurePlate(Cancellable e, Block b, Projectile p) {
+        ProjectileSource shooter = p.getShooter();
         if (!(shooter instanceof OfflinePlayer)) {return;}
         PlayerData pd = PlayerData.from((OfflinePlayer) shooter);
 
         Claim claim = ClaimsTable.getClosestClaim(new Vector4(b), Range.PROTECTED);
         if (claim == null) {return;}
+        if (!claim.switchesLocked) { return;}
 
         if (claim.getAccess(pd) == Security.BLOCKED) {
-            arrow.remove();
             e.setCancelled(true);
         }
     }
+
+    //public void itemHitPressurePlate(Cancellable e, Block b, Item i) {
+    //    if (b == null) {return;}
+    //    if (!switches.contains(b.getType())) {return;}
+
+    //    UUID thrower = i.getThrower();
+    //    PlayerData pd = PlayerData.from(thrower);
+    //    if (pd == null) {return;}
+
+    //    Claim claim = ClaimsTable.getClosestClaim(new Vector4(b), Range.PROTECTED);
+    //    if (claim == null) {return;}
+    //    if (!claim.switchesLocked) { return;}
+
+    //    if (claim.getAccess(pd) == Security.BLOCKED) {
+    //        e.setCancelled(true);
+    //    }
+    //}
 
     @EventHandler
     public void entityInteract(EntityInteractEvent e) {
         Block b = e.getBlock();
         Entity entity = e.getEntity();
-        arrowHitPressurePlate(e, b, entity);
+        if (entity instanceof Projectile) {
+            projectileHitPressurePlate(e, b, (Projectile) entity);
+            return;
+        }
+
+        //if (entity instanceof Item) {
+        //    itemHitPressurePlate(e, b, (Item) entity);
+        //}
+
         if (!(entity instanceof Tameable)) {return;}
         
         AnimalTamer at = ((Tameable) entity).getOwner();
