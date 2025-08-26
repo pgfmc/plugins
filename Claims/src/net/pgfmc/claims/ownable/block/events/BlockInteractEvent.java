@@ -73,7 +73,7 @@ public class BlockInteractEvent implements Listener {
 			if (claim != null) {
 				e.setCancelled(true);
 
-                if (claim.getAccess(pd) == Security.ADMIN) {
+                if (claim.getAccess(pd) == Security.ADMIN || pd.getPlayer().getGameMode() == GameMode.CREATIVE) {
 				    pd.getPlayer().openInventory(new ClaimConfigInventory(claim).getInventory());
                 } else {
                     pd.getPlayer().openInventory(new ClaimReadInventory(claim).getInventory());
