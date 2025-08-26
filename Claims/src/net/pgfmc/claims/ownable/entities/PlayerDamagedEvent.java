@@ -24,6 +24,4 @@ public class PlayerDamagedEvent implements Listener {
             e.setDamage(0);
         }
     }
-
-
 }
