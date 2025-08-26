@@ -63,17 +63,29 @@ public class Claim {
 	}
 	
 	public Claim(PlayerData player, Vector4 vec, Set<PlayerData> members) {
-		this.placer = player;
-		this.members = members;
-        this.explosionsEnabled = false;
-        this.doorsLocked = true;
-        this.switchesLocked = true;
-        this.inventoriesLocked = true;
-        this.monsterKilling = true;
-        this.livestockKilling = false;
-		
+
 		Block block = vec.getBlock();
 		vector = vec;
+        Claim copyFrom = ClaimsTable.getClosestClaim(vec, Range.MERGE);
+        if (copyFrom == null) {
+		    this.placer = player;
+		    this.members = members;
+            this.explosionsEnabled = false;
+            this.doorsLocked = true;
+            this.switchesLocked = true;
+            this.inventoriesLocked = true;
+            this.monsterKilling = true;
+            this.livestockKilling = false;
+        } else {
+            this.placer = copyFrom.placer;
+            this.members = copyFrom.members;
+            this.explosionsEnabled = copyFrom.explosionsEnabled;
+            this.doorsLocked = copyFrom.doorsLocked;
+            this.switchesLocked = copyFrom.switchesLocked;
+            this.inventoriesLocked = copyFrom.inventoriesLocked;
+            this.monsterKilling = copyFrom.monsterKilling;
+            this.livestockKilling = copyFrom.livestockKilling;
+        }
 		
 		if (block.getType() == Material.LODESTONE) {
 			
