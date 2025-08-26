@@ -1,6 +1,8 @@
 package net.pgfmc.claims.ownable.entities;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Tameable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -14,14 +16,20 @@ public class PlayerDamagedEvent implements Listener {
 
     @EventHandler
     public void playerDamagedEvent(EntityDamageEvent e) {
-        if (e.getEntityType() != EntityType.PLAYER) {
-            return;
-        }
-
-        Vector4 position = new Vector4(e.getEntity().getLocation());
-        Claim c = ClaimsTable.getClosestClaim(position, Range.PROTECTED);
-        if (c.getPlayer() == null) {
-            e.setDamage(0);
+        if (e.getEntityType() == EntityType.PLAYER) {
+            Vector4 position = new Vector4(e.getEntity().getLocation());
+            Claim c = ClaimsTable.getClosestClaim(position, Range.PROTECTED);
+            if (c.getPlayer() == null) {
+                e.setDamage(0);
+            }
+        } else if (e.getEntity() instanceof Tameable) {
+            Tameable pet = (Tameable) e.getEntity();
+            if (pet.getOwner() == null || !(pet.getOwner() instanceof OfflinePlayer)) { return;}
+            Vector4 position = new Vector4(e.getEntity().getLocation());
+            Claim c = ClaimsTable.getClosestClaim(position, Range.PROTECTED);
+            if (c.getPlayer() == null) {
+                e.setDamage(0);
+            }
         }
     }
 }
