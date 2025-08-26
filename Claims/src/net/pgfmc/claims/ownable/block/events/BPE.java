@@ -43,27 +43,23 @@ public class BPE implements Listener {
 			Claim foreign = ClaimsTable.getClosestClaim(new Vector4(block), Range.FOREIGN);
 			
 			// Within Merge claim range
-			if (merger != null) {
-                if (merger.getPlayer() == pd) {
-			        new Claim(merger.getPlayer(), new Vector4(block), merger.getMembers());
-				    
-				    pd.sendMessage(ChatColor.GREEN + "Surrounding land claimed!");
-				    pd.sendMessage(ChatColor.GOLD + "Claim merged with the nearby claim.");
-				    pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
-                } else {
-				    pd.sendMessage(ChatColor.GOLD + "If you want to help expand your Admin's Claim,");
-				    pd.sendMessage(ChatColor.GOLD + "Give your Lodestone to them, instead.");
-				    pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
-                    e.setCancelled(true);
-                }
+			if (merger != null && merger.getPlayer() == pd) {
+			    new Claim(merger.getPlayer(), new Vector4(block), merger.getMembers());
 				
-				
+				pd.sendMessage(ChatColor.GREEN + "Surrounding land claimed!");
+				pd.sendMessage(ChatColor.GOLD + "Claim merged with the nearby claim.");
+				pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
 				
 			// Within Foreign claim range	
-			} else if (foreign != null && foreign.getAccess(pd) == Security.BLOCKED) {
+			} else if (foreign != null) {
+                if (foreign.getAccess(pd) == Security.BLOCKED) {
+				    pd.sendMessage(ChatColor.RED + "Cannot claim land that would overlap another claim.");
+                } else if (foreign.getAccess(pd) == Security.MEMBER) {
+				    pd.sendMessage(ChatColor.GOLD + "If you want to help expand your Admin's Claim,");
+				    pd.sendMessage(ChatColor.GOLD + "Give your Lodestone to them, instead.");
+                }
+
 				e.setCancelled(true);
-				pd.sendMessage(ChatColor.RED + "Cannot claim land that would overlap another claim.");
-				
 				pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 				
 			// not within any range
