@@ -15,6 +15,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 import net.pgfmc.claims.ownable.block.Claim;
@@ -78,9 +79,29 @@ public class EntityEvents implements Listener {
 		}
 	}
 
-    public EnumSet<EntityType> animals = EnumSet.of(EntityType.ARMADILLO, EntityType.GOAT, EntityType.HORSE, EntityType.ALLAY, EntityType.AXOLOTL, EntityType.BAT, EntityType.BEE, EntityType.CAMEL, EntityType.CAT, EntityType.CHICKEN, EntityType.COD, EntityType.COW, EntityType.DOLPHIN, EntityType.DONKEY, EntityType.FROG, EntityType.GLOW_SQUID, EntityType.GOAT, EntityType.IRON_GOLEM, EntityType.LLAMA, EntityType.MOOSHROOM, EntityType.MULE, EntityType.OCELOT, EntityType.PANDA, EntityType.PARROT, EntityType.PIG, EntityType.POLAR_BEAR, EntityType.PUFFERFISH, EntityType.RABBIT, EntityType.SALMON, EntityType.SHEEP, EntityType.SNIFFER, EntityType.SNOW_GOLEM, EntityType.SQUID, EntityType.STRIDER, EntityType.TADPOLE, EntityType.TRADER_LLAMA, EntityType.TROPICAL_FISH, EntityType.TURTLE, EntityType.VILLAGER, EntityType.WANDERING_TRADER, EntityType.WOLF, EntityType.ZOMBIE_HORSE, EntityType.SKELETON_HORSE);
+    @EventHandler
+    public void dogAggroEvent(EntityTargetEvent e) {
+
+        Claim claim = ClaimsTable.getClosestClaim(new Vector4(e.getTarget().getLocation()), Range.PROTECTED);
+        if (claim == null) {return;}
+
+        if (!(e.getEntity() instanceof Tameable)) {return;}
+        Tameable animal = (Tameable) e.getEntity();
+
+        if (!(animal.getOwner() instanceof OfflinePlayer)) {return;}
+        PlayerData pd = PlayerData.from((OfflinePlayer) animal.getOwner());
+
+        if ((!claim.livestockKilling && animals.contains(e.getTarget().getType())) || 
+            (!claim.monsterKilling && monsters.contains(e.getTarget().getType())) || 
+            e.getTarget() instanceof Player) {
+
+            e.setCancelled(true);
+        }
+    }
+
+    public EnumSet<EntityType> animals = EnumSet.of(EntityType.ARMADILLO, EntityType.GOAT, EntityType.HORSE, EntityType.ALLAY, EntityType.AXOLOTL, EntityType.BAT, EntityType.BEE, EntityType.CAMEL, EntityType.CAT, EntityType.CHICKEN, EntityType.COD, EntityType.COW, EntityType.DOLPHIN, EntityType.DONKEY, EntityType.FROG, EntityType.GLOW_SQUID, EntityType.GOAT, EntityType.IRON_GOLEM, EntityType.LLAMA, EntityType.MOOSHROOM, EntityType.MULE, EntityType.OCELOT, EntityType.PANDA, EntityType.PARROT, EntityType.PIG, EntityType.POLAR_BEAR, EntityType.PUFFERFISH, EntityType.RABBIT, EntityType.SALMON, EntityType.SHEEP, EntityType.SNIFFER, EntityType.SNOW_GOLEM, EntityType.SQUID, EntityType.STRIDER, EntityType.TADPOLE, EntityType.TRADER_LLAMA, EntityType.TROPICAL_FISH, EntityType.TURTLE, EntityType.VILLAGER, EntityType.WANDERING_TRADER, EntityType.WOLF, EntityType.ZOMBIE_HORSE, EntityType.SKELETON_HORSE, EntityType.HAPPY_GHAST);
     public EnumSet<EntityType> inventory = EnumSet.of(EntityType.CHEST_MINECART, EntityType.HOPPER_MINECART, EntityType.ARMOR_STAND, EntityType.ITEM_FRAME);
-    public EnumSet<EntityType> monsters = EnumSet.of(EntityType.BREEZE, EntityType.BLAZE, EntityType.CAVE_SPIDER, EntityType.CREEPER, EntityType.DROWNED, EntityType.ELDER_GUARDIAN, EntityType.HOGLIN, EntityType.HUSK, EntityType.MAGMA_CUBE, EntityType.PHANTOM, EntityType.PIGLIN, EntityType.PIGLIN_BRUTE, EntityType.PILLAGER, EntityType.RAVAGER, EntityType.SHULKER, EntityType.SILVERFISH, EntityType.SKELETON, EntityType.SLIME, EntityType.SPIDER, EntityType.STRAY, EntityType.VEX, EntityType.VINDICATOR, EntityType.WARDEN, EntityType.WITCH, EntityType.WITHER_SKELETON, EntityType.ZOGLIN, EntityType.ZOMBIE, EntityType.ZOMBIE_VILLAGER, EntityType.ZOMBIFIED_PIGLIN);
+    public EnumSet<EntityType> monsters = EnumSet.of(EntityType.CREAKING, EntityType.BOGGED,  EntityType.BREEZE, EntityType.BLAZE, EntityType.CAVE_SPIDER, EntityType.CREEPER, EntityType.DROWNED, EntityType.ELDER_GUARDIAN, EntityType.HOGLIN, EntityType.HUSK, EntityType.MAGMA_CUBE, EntityType.PHANTOM, EntityType.PIGLIN, EntityType.PIGLIN_BRUTE, EntityType.PILLAGER, EntityType.RAVAGER, EntityType.SHULKER, EntityType.SILVERFISH, EntityType.SKELETON, EntityType.SLIME, EntityType.SPIDER, EntityType.STRAY, EntityType.VEX, EntityType.VINDICATOR, EntityType.WARDEN, EntityType.WITCH, EntityType.WITHER_SKELETON, EntityType.ZOGLIN, EntityType.ZOMBIE, EntityType.ZOMBIE_VILLAGER, EntityType.ZOMBIFIED_PIGLIN);
 	
 	private void doStuff(Cancellable e, PlayerData pd, Entity entity) {
 		
