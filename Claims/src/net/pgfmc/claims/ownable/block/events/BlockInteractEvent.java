@@ -1,7 +1,6 @@
 package net.pgfmc.claims.ownable.block.events;
 
 import java.util.EnumSet;
-import java.util.UUID;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -13,7 +12,6 @@ import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Hanging;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Tameable;
@@ -32,6 +30,7 @@ import org.bukkit.projectiles.ProjectileSource;
 import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.Claim.Security;
 import net.pgfmc.claims.ownable.block.ClaimConfigInventory;
+import net.pgfmc.claims.ownable.block.ClaimReadInventory;
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
 import net.pgfmc.core.api.playerdata.PlayerData;
@@ -71,9 +70,14 @@ public class BlockInteractEvent implements Listener {
             }
 
 			Claim claim = ClaimsTable.getOwnable(new Vector4(block));
-			if (claim != null && claim.getAccess(pd) == Security.ADMIN) {
+			if (claim != null) {
 				e.setCancelled(true);
-				pd.getPlayer().openInventory(new ClaimConfigInventory(claim).getInventory());
+
+                if (claim.getAccess(pd) == Security.ADMIN) {
+				    pd.getPlayer().openInventory(new ClaimConfigInventory(claim).getInventory());
+                } else {
+                    pd.getPlayer().openInventory(new ClaimReadInventory(claim).getInventory());
+                }
 			}
 			
 			return;

@@ -40,14 +40,28 @@ public class ClaimConfigInventory extends BaseInventory {
 
         Vector4 loc = claim.getLocation();
 
+        String name = "";
 
+        if (claim.getPlayer() == null) {
+            name = ChatColor.LIGHT_PURPLE + "Creative"; 
+        } else {
+            name = ChatColor.WHITE + "Owned by " + claim.getPlayer().getRankedName() + ChatColor.RESET;
+        }
 
         setItem(info, Material.PAPER).n(ChatColor.WHITE + "Claim Info").l(
+                name + 
                 ChatColor.GRAY + 
-                "X " + String.valueOf(loc.x()) + 
+                "\nX " + String.valueOf(loc.x()) + 
                 "\nY " + String.valueOf(loc.y()) +
-                "\nZ " + String.valueOf(loc.z())
+                "\nZ " + String.valueOf(loc.z()) +
+                ChatColor.ITALIC + ChatColor.WHITE + "\nClick to open list of " + ChatColor.GOLD + "Merged Claims" + ChatColor.WHITE + "!"
             );
+
+        setAction(info, (p,e) -> {
+            ClaimViewInventory cvi = new ClaimViewInventory(claim);
+            cvi.setBack(0, new ClaimConfigInventory(claim).getInventory());
+            p.openInventory(cvi.getInventory());
+        });
 
         if (claim.explosionsEnabled) {
             setItem(explosions, Material.TNT).n(ChatColor.RED + "Allow Explosions? " + ChatColor.GRAY + "(" + ChatColor.GREEN + "yes" + ChatColor.GRAY + ")");
@@ -65,19 +79,8 @@ public class ClaimConfigInventory extends BaseInventory {
         setAction(foreignPolicy, (p,e) -> {
             p.openInventory(new ForeignPolicyInventory(claim).getInventory());
         });
-
-
-
-
-
-
-
-
-
-
-
-
 	}
+
 	
 	public static class PlayerViewInventory extends ListInventory<PlayerData> {
 		
