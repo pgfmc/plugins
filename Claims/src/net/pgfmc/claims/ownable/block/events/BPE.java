@@ -43,14 +43,20 @@ public class BPE implements Listener {
 			Claim foreign = ClaimsTable.getClosestClaim(new Vector4(block), Range.FOREIGN);
 			
 			// Within Merge claim range
-			if (merger != null && (merger.getMembers().contains(pd) || merger.getPlayer() == pd)) {
+			if (merger != null) {
+                if (merger.getPlayer() == pd) {
+			        new Claim(merger.getPlayer(), new Vector4(block), merger.getMembers());
+				    
+				    pd.sendMessage(ChatColor.GREEN + "Surrounding land claimed!");
+				    pd.sendMessage(ChatColor.GOLD + "Claim merged with the nearby claim.");
+				    pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
+                } else {
+				    pd.sendMessage(ChatColor.GOLD + "If you want to help expand your Admin's Claim,");
+				    pd.sendMessage(ChatColor.GOLD + "Give your Lodestone to them, instead.");
+				    pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+                    e.setCancelled(true);
+                }
 				
-				Claim c = new Claim(merger.getPlayer(), new Vector4(block), merger.getMembers());
-                c.forwardUpdateFrom(merger);
-				
-				pd.sendMessage(ChatColor.GREEN + "Surrounding land claimed!");
-				pd.sendMessage(ChatColor.GOLD + "Claim merged with the nearby claim.");
-				pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
 				
 				
 			// Within Foreign claim range	
