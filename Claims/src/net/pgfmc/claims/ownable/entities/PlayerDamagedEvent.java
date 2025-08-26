@@ -19,6 +19,7 @@ public class PlayerDamagedEvent implements Listener {
         if (e.getEntityType() == EntityType.PLAYER) {
             Vector4 position = new Vector4(e.getEntity().getLocation());
             Claim c = ClaimsTable.getClosestClaim(position, Range.PROTECTED);
+            if (c == null) {return;}
             if (c.getPlayer() == null) {
                 e.setDamage(0);
             }
@@ -27,6 +28,7 @@ public class PlayerDamagedEvent implements Listener {
             if (pet.getOwner() == null || !(pet.getOwner() instanceof OfflinePlayer)) { return;}
             Vector4 position = new Vector4(e.getEntity().getLocation());
             Claim c = ClaimsTable.getClosestClaim(position, Range.PROTECTED);
+            if (c == null) {return;}
             if (c.getPlayer() == null) {
                 e.setDamage(0);
             }

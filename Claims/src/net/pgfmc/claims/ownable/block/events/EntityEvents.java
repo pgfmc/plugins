@@ -82,6 +82,8 @@ public class EntityEvents implements Listener {
     @EventHandler
     public void dogAggroEvent(EntityTargetEvent e) {
 
+        if (e.getTarget() == null) {return;}
+
         Claim claim = ClaimsTable.getClosestClaim(new Vector4(e.getTarget().getLocation()), Range.PROTECTED);
         if (claim == null) {return;}
 

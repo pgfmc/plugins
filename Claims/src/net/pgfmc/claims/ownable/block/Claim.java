@@ -181,10 +181,6 @@ public class Claim {
 	}
 	
 	public Security getAccess(PlayerData player) {
-
-        if (player.getPlayer().getGameMode() == GameMode.CREATIVE) {
-            return Security.ADMIN;
-        }
 		
 		if (placer == null) {
 			if (player.getPlayer().getGameMode() == GameMode.CREATIVE) {
