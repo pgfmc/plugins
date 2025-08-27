@@ -152,7 +152,6 @@ public class Claim {
 	 */
 	public static Claim getOwnable(Block block) { // gets a container from block
 		
-		
 		if (block.getType() == Material.LODESTONE) 
 			return ClaimsTable.getOwnable(new Vector4(block));
 		else return null;
@@ -182,12 +181,12 @@ public class Claim {
 	
 	public Security getAccess(PlayerData player) {
 		
+        if (player.getPlayer().getGameMode() == GameMode.CREATIVE) {
+            return Security.ADMIN;
+        }
+
 		if (placer == null) {
-			if (player.getPlayer().getGameMode() == GameMode.CREATIVE) {
-				return Security.ADMIN;
-			} else {
-				return Security.BLOCKED;
-			}
+			return Security.BLOCKED;
 		}
 		
 		if (player == placer) {
