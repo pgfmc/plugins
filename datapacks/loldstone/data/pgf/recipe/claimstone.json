@@ -14,12 +14,10 @@
     "count": 1,
     "id": "minecraft:lodestone",
     "components": {
-        "custom_data": {
-            "claim": 1
-        },
         "custom_name": {
             "text": "Claimstone"
-        }
+        },
+        "rarity": "epic"
     }
   }
 }

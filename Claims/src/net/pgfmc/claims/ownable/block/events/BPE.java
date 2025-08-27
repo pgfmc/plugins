@@ -43,7 +43,7 @@ public class BPE implements Listener {
 			Claim foreign = ClaimsTable.getClosestClaim(new Vector4(block), Range.FOREIGN);
 			
 			// Within Merge claim range
-			if (merger != null && (merger.getPlayer() == pd || (merger.getPlayer() == null && pd.getPlayer().getGameMode() == GameMode.CREATIVE))) {
+			if (merger != null && merger.getAccess(pd) == Security.ADMIN) {
 			    new Claim(merger.getPlayer(), new Vector4(block), merger.getMembers());
 				
 				pd.sendMessage(ChatColor.GREEN + "Surrounding land claimed!");

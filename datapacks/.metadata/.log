@@ -1,0 +1,1194 @@
+!SESSION 2025-08-27 17:15:15.627 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=21.0.8
+java.vendor=Arch Linux
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -data /home/james/Library/pgf/plugins/datapacks
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:15:16.684
+!MESSAGE class org.eclipse.jdt.ls.core.internal.JavaLanguageServerPlugin is started
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:15:16.800
+!MESSAGE Main thread is waiting
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:15:16.819
+!MESSAGE >> initialize
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:15:16.821
+!MESSAGE Initializing Java Language Server 1.36.0.202405231430
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:15:16.822
+!MESSAGE Started org.eclipse.m2e.core 0ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:15:17.434
+!MESSAGE ProjectRegistryRefreshJob finished 612ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:15:17.447
+!MESSAGE Started org.eclipse.buildship.core 12ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:15:17.453
+!MESSAGE Static Commands: []
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:15:17.453
+!MESSAGE Non-Static Commands: [java.project.import, java.project.changeImportedProjects, java.navigate.openTypeHierarchy, java.project.resolveStackTraceLocation, java.edit.handlePasteEvent, java.edit.stringFormatting, java.project.getSettings, java.project.resolveWorkspaceSymbol, java.project.upgradeGradle, java.project.createModuleInfo, java.vm.getAllInstalls, java.edit.organizeImports, java.project.refreshDiagnostics, java.project.removeFromSourcePath, java.project.listSourcePaths, java.project.updateSettings, java.project.getAll, java.reloadBundles, java.project.isTestFile, java.project.resolveText, java.project.getClasspaths, java.navigate.resolveTypeHierarchy, java.edit.smartSemicolonDetection, java.project.updateSourceAttachment, java.project.updateClassPaths, java.decompile, java.protobuf.generateSources, java.project.resolveSourceAttachment, java.project.updateJdk, java.project.addToSourcePath, java.completion.onDidSelect]
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:15:17.466
+!MESSAGE >> initialized
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:15:17.473
+!MESSAGE RepositoryRegistryUpdateJob finished 11ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:15:17.549
+!MESSAGE Importing Maven project(s)
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:15:18.981
+!MESSAGE Workspace initialized in 1519ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:15:19.017
+!MESSAGE >> initialization job finished
+
+!ENTRY org.eclipse.jdt.ls.core 4 0 2025-08-27 17:15:19.226
+!MESSAGE Command _java.reloadBundles.command not supported on client
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:15:19.634
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:15:20.403
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:15:20.406
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:15:20.412
+!MESSAGE Validated 1. Took 133 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:15:21.450
+!MESSAGE >> build jobs finished
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:15:21.450
+!MESSAGE >> registerWatchers'
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:15:32.958
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:15:33.429
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:15:33.430
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:15:33.430
+!MESSAGE Validated 1. Took 22 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:01.501
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:01.929
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:01.930
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:01.949
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:01.949
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:01.950
+!MESSAGE Validated 2. Took 48 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:02.046
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:02.206
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:02.681
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:02.682
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:02.682
+!MESSAGE Validated 1. Took 25 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:03.912
+!MESSAGE Reconciled 1. Took 7 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:04.387
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:04.388
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:04.418
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:04.418
+!MESSAGE 3 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:04.421
+!MESSAGE Validated 2. Took 58 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:04.514
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:04.519
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:04.578
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:04.605
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:04.647
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:04.822
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:04.866
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:04.921
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:04.966
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:04.981
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:05.026
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:05.166
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:05.170
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:05.631
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:05.631
+!MESSAGE 3 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:05.632
+!MESSAGE Validated 1. Took 15 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:05.746
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:05.898
+!MESSAGE Reconciled 1. Took 5 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:06.044
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:06.461
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:06.461
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:06.476
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:06.476
+!MESSAGE 3 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:06.477
+!MESSAGE Validated 2. Took 33 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:06.606
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:06.826
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:06.979
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:07.127
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:07.274
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:07.423
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:07.574
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:07.785
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:07.807
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:08.122
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:08.166
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:08.180
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:08.186
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:08.300
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:08.346
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:08.539
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:08.586
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:08.737
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:08.889
+!MESSAGE Reconciled 1. Took 4 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:09.035
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:09.291
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:09.706
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:09.706
+!MESSAGE 3 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:09.706
+!MESSAGE Validated 1. Took 15 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:19.337
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:19.386
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:19.538
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:19.687
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:19.834
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:20.249
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:20.249
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:20.263
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:20.263
+!MESSAGE 3 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:20.264
+!MESSAGE Validated 2. Took 30 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:20.338
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:20.385
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:20.535
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:20.585
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:20.754
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:20.786
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:21.086
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:21.188
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:21.355
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:21.556
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:22.019
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:22.019
+!MESSAGE 3 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:22.020
+!MESSAGE Validated 1. Took 13 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:22.186
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:22.347
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:22.495
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:22.646
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:22.795
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:23.127
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:23.285
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:23.435
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:23.751
+!MESSAGE Reconciled 1. Took 4 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:23.905
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:24.057
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:24.160
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:24.624
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:24.625
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:24.638
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:24.638
+!MESSAGE 3 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:24.639
+!MESSAGE Validated 2. Took 28 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:26.588
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:26.738
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:27.202
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:27.202
+!MESSAGE 4 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:27.203
+!MESSAGE Validated 1. Took 15 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:30.208
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:30.356
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:30.390
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:30.446
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:30.857
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:31.055
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:31.206
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:31.250
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:31.308
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:31.546
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:31.695
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:31.730
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:31.786
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:32.203
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:32.203
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:32.217
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:32.217
+!MESSAGE 4 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:32.217
+!MESSAGE Validated 2. Took 31 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:32.279
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:32.325
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:32.399
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:32.446
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:32.595
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:32.744
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:32.966
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:33.146
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:33.315
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:33.468
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:33.933
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:33.933
+!MESSAGE 2 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:33.933
+!MESSAGE Validated 1. Took 14 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:35.225
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:35.689
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:35.690
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:35.701
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:35.701
+!MESSAGE 1 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:35.701
+!MESSAGE Validated 2. Took 25 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:37.406
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:37.868
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:37.868
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:37.868
+!MESSAGE Validated 1. Took 12 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:37.970
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:38.025
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:38.272
+!MESSAGE Reconciled 1. Took 8 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:38.350
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:38.409
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:38.625
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:38.779
+!MESSAGE Reconciled 1. Took 4 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:39.005
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:39.156
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:39.526
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:39.992
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:39.992
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:40.004
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:40.004
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:40.004
+!MESSAGE Validated 2. Took 27 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:40.306
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:40.360
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:40.431
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:40.487
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:40.552
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:40.607
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:40.945
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:41.081
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:41.124
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:41.138
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:41.159
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:41.207
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:41.621
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:41.621
+!MESSAGE 3 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:41.622
+!MESSAGE Validated 1. Took 14 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:41.866
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:42.016
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:42.130
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:42.165
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:42.629
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:42.629
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:42.642
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:42.642
+!MESSAGE 2 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:42.642
+!MESSAGE Validated 2. Took 26 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:42.660
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:42.705
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:42.831
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:42.868
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:42.996
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:43.448
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:43.666
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:43.764
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:43.963
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:44.112
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:44.226
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:44.241
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:44.486
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:44.686
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:44.867
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:45.147
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:45.268
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:45.565
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:45.669
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:45.864
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:46.016
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:46.164
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:46.315
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:46.461
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:46.784
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:47.247
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:47.247
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:47.248
+!MESSAGE Validated 1. Took 12 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:50.727
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:51.141
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:51.141
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:51.153
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:51.154
+!MESSAGE 4 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:51.154
+!MESSAGE Validated 2. Took 27 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:51.484
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:51.947
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:51.947
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:51.948
+!MESSAGE Validated 1. Took 13 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:52.101
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:52.107
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:52.574
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:52.574
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:52.587
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:52.587
+!MESSAGE 1 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:52.588
+!MESSAGE Validated 2. Took 30 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:52.664
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:52.824
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:53.290
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:53.290
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:16:53.291
+!MESSAGE Validated 1. Took 16 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:17:09.104
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:17:09.567
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:17:09.568
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:17:09.579
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:17:09.579
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:17:09.579
+!MESSAGE Validated 2. Took 24 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:17:23.130
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:17:23.600
+!MESSAGE begin problem for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:17:23.600
+!MESSAGE 0 problems reported for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:17:23.600
+!MESSAGE Validated 1. Took 19 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:23.774
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:24.183
+!MESSAGE begin problem for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:24.183
+!MESSAGE 1 problems reported for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:24.195
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:24.195
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:24.208
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:24.208
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:24.209
+!MESSAGE Validated 3. Took 34 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:25.263
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:25.304
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:25.419
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:25.463
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:25.518
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:25.564
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:25.693
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:25.892
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:25.984
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:26.003
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:26.455
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:26.614
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:26.763
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:26.924
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:27.283
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:27.433
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:27.682
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:28.083
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:28.565
+!MESSAGE begin problem for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:28.565
+!MESSAGE 1 problems reported for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:28.566
+!MESSAGE Validated 1. Took 32 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:28.783
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:28.935
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:29.086
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:29.138
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:29.149
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:29.259
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:29.303
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:29.483
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:29.786
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:29.823
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:30.063
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:30.346
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:30.383
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:30.533
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:30.685
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:31.043
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:31.324
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:31.424
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:31.622
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:31.803
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:31.954
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:32.203
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:32.680
+!MESSAGE begin problem for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:32.681
+!MESSAGE 7 problems reported for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:32.694
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:32.694
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:32.705
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:32.705
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:32.706
+!MESSAGE Validated 3. Took 51 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:33.743
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:33.783
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:33.837
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:33.884
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:34.183
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:34.644
+!MESSAGE begin problem for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:34.644
+!MESSAGE 1 problems reported for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:34.644
+!MESSAGE Validated 1. Took 10 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:34.808
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:34.813
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:34.995
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:35.193
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:35.208
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:35.264
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:35.723
+!MESSAGE begin problem for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:35.723
+!MESSAGE 1 problems reported for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:35.735
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:35.736
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:35.747
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:35.747
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:35.747
+!MESSAGE Validated 3. Took 33 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:36.841
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:36.882
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:37.039
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:37.085
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:37.213
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:37.443
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:37.592
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:37.803
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:37.952
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:38.283
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:38.433
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:38.803
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:38.953
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:39.105
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:39.565
+!MESSAGE begin problem for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:39.565
+!MESSAGE 1 problems reported for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:39.565
+!MESSAGE Validated 1. Took 10 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:39.581
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:39.622
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:39.923
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:40.397
+!MESSAGE begin problem for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:40.397
+!MESSAGE 1 problems reported for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:40.409
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:40.409
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:40.420
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:40.420
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:40.420
+!MESSAGE Validated 3. Took 46 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:40.643
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:40.853
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:41.053
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:41.202
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:41.663
+!MESSAGE begin problem for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:41.664
+!MESSAGE 0 problems reported for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:18:41.664
+!MESSAGE Validated 1. Took 12 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:19:17.854
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:19:18.330
+!MESSAGE begin problem for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:19:18.330
+!MESSAGE 0 problems reported for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:19:18.346
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:19:18.347
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:19:18.363
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:19:18.363
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:19:18.364
+!MESSAGE Validated 3. Took 60 ms
