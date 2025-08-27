@@ -28,7 +28,10 @@ public class ClaimViewInventory extends ListInventory<Claim> {
                 return list;
             }
 
+            list.add(this.claim);
+
             for (Claim c : claim.getMergedClaims()) {
+                if (c == this.claim) { continue;}
                 list.add(c);
             }
             return list;
@@ -42,10 +45,16 @@ public class ClaimViewInventory extends ListInventory<Claim> {
         @Override
         protected ItemStack toItem(Claim arg0) {
 
+            String name = ChatColor.GOLD + "Merged Claim";
+
+            if (arg0 == this.claim) {
+                name = ChatColor.DARK_BLUE + "This Claim";
+            }
+
             Vector4 loc = arg0.getLocation();
 
             return new ItemWrapper(Material.LODESTONE)
-                .n(ChatColor.GOLD + "Merged Claim")
+                .n(name)
                 .l(
                     ChatColor.GRAY + 
                     "X " + String.valueOf(loc.x()) + 

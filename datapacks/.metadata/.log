@@ -1,0 +1,1554 @@
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:06.224
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:06.713
+!MESSAGE begin problem for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:06.713
+!MESSAGE 0 problems reported for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:06.725
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:06.725
+!MESSAGE 1 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:06.725
+!MESSAGE Validated 2. Took 51 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:06.990
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:07.214
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:07.220
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:07.621
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:07.699
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:07.757
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:07.758
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:07.758
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:07.764
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:08.240
+!MESSAGE begin problem for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:08.241
+!MESSAGE 0 problems reported for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:08.253
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:08.253
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:08.263
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:08.263
+!MESSAGE 1 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:08.276
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:08.276
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:08.276
+!MESSAGE Validated 4. Took 61 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:08.796
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:08.810
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:08.896
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:08.947
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:09.106
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:09.582
+!MESSAGE begin problem for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:09.582
+!MESSAGE 0 problems reported for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:09.592
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:09.592
+!MESSAGE 2 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:09.592
+!MESSAGE Validated 2. Took 35 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:09.858
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:10.090
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:10.155
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:10.212
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:10.614
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:11.111
+!MESSAGE begin problem for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:11.111
+!MESSAGE 0 problems reported for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:11.123
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:11.123
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:11.133
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:11.133
+!MESSAGE 6 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:11.145
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:11.145
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:11.145
+!MESSAGE Validated 4. Took 80 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:11.230
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:11.269
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:11.297
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:11.347
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:11.510
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:11.691
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:11.954
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:11.960
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:12.227
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:12.380
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:12.395
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:12.453
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:12.620
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:12.647
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:12.725
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:12.768
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:12.918
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:13.069
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:13.496
+!MESSAGE begin problem for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:13.497
+!MESSAGE 0 problems reported for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:13.509
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:13.509
+!MESSAGE 1 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:13.509
+!MESSAGE Validated 2. Took 40 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:14.169
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:14.368
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:14.517
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:14.709
+!MESSAGE Reconciled 1. Took 4 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:15.074
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:15.113
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:15.271
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:15.309
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:15.343
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:15.391
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:15.538
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:15.647
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:15.687
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:15.888
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:16.038
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:16.188
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:16.335
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:16.508
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:16.513
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:16.518
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:16.924
+!MESSAGE Reconciled 1. Took 6 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:16.996
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:17.052
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:17.267
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:17.368
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:17.649
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:17.797
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:18.027
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:18.500
+!MESSAGE begin problem for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:18.500
+!MESSAGE 0 problems reported for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:18.511
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:18.511
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:18.522
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:18.522
+!MESSAGE 1 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:18.533
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:18.533
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:18.533
+!MESSAGE Validated 4. Took 56 ms
+
+!ENTRY org.eclipse.jdt.core 4 4 2025-08-27 17:37:19.035
+!MESSAGE Failed to save JDT index: Index for /Claims
+!STACK 0
+java.io.FileNotFoundException: /home/james/Library/pgf/plugins/datapacks/.metadata/.plugins/org.eclipse.jdt.core/2891194656.index (No such file or directory)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:213)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:152)
+	at org.eclipse.jdt.internal.core.index.FileIndexLocation.getInputStream(FileIndexLocation.java:84)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readAllDocumentNames(DiskIndex.java:624)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:527)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:228)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1147)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1190)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:832)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.indexerLoop(JobManager.java:509)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+!ENTRY org.eclipse.jdt.core 4 0 2025-08-27 17:37:19.035
+!MESSAGE Failed to update qualified index.
+!STACK 0
+java.io.FileNotFoundException: /home/james/Library/pgf/plugins/datapacks/.metadata/.plugins/org.eclipse.jdt.core/1865797976.index (No such file or directory)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:213)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:152)
+	at org.eclipse.jdt.internal.core.index.FileIndexLocation.getInputStream(FileIndexLocation.java:84)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readAllDocumentNames(DiskIndex.java:624)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:527)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:228)
+	at org.eclipse.jdt.internal.core.index.MetaIndex.save(MetaIndex.java:99)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveMetaIndex(IndexManager.java:1239)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1215)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:832)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.indexerLoop(JobManager.java:509)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:19.293
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:19.632
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:19.689
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:19.756
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:19.812
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:19.871
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:19.928
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:20.016
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:20.071
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:20.341
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:20.366
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:20.396
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:20.447
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:20.596
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:20.733
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:20.749
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:20.991
+!MESSAGE Reconciled 1. Took 4 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:21.135
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:21.580
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:21.715
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:21.772
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:22.244
+!MESSAGE begin problem for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:22.245
+!MESSAGE 0 problems reported for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:22.254
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:22.255
+!MESSAGE 7 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:22.255
+!MESSAGE Validated 2. Took 32 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:25.312
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:25.348
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:25.575
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:25.628
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:25.780
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:25.930
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:26.179
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:26.659
+!MESSAGE begin problem for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:26.659
+!MESSAGE 0 problems reported for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:26.670
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:26.670
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:26.680
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:26.681
+!MESSAGE 3 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:26.691
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:26.691
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:26.691
+!MESSAGE Validated 4. Took 61 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:26.747
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:27.233
+!MESSAGE begin problem for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:27.233
+!MESSAGE 0 problems reported for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:27.243
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:27.243
+!MESSAGE 3 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:27.243
+!MESSAGE Validated 2. Took 46 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:27.509
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:27.669
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:27.819
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:27.983
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:28.026
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:28.520
+!MESSAGE begin problem for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:28.520
+!MESSAGE 0 problems reported for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:28.531
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:28.531
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:28.541
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:28.541
+!MESSAGE 7 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:28.551
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:28.552
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:28.552
+!MESSAGE Validated 4. Took 76 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:28.596
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:28.829
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:29.008
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:29.435
+!MESSAGE begin problem for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:29.435
+!MESSAGE 0 problems reported for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:29.445
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:29.445
+!MESSAGE 3 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:29.445
+!MESSAGE Validated 2. Took 37 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:29.707
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:30.179
+!MESSAGE begin problem for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:30.179
+!MESSAGE 0 problems reported for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:30.190
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:30.191
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:30.200
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:30.200
+!MESSAGE 3 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:30.211
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:30.211
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:30.211
+!MESSAGE Validated 4. Took 53 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:30.608
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:30.768
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:31.238
+!MESSAGE begin problem for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:31.239
+!MESSAGE 0 problems reported for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:31.250
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:31.250
+!MESSAGE 3 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:31.250
+!MESSAGE Validated 2. Took 31 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:32.071
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:32.126
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:32.408
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:32.454
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:32.510
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:32.769
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:33.199
+!MESSAGE begin problem for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:33.199
+!MESSAGE 0 problems reported for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:33.210
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:33.210
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:33.214
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:33.268
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:33.619
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:33.818
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:33.895
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:33.949
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:34.142
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:34.189
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:34.368
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:34.518
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:34.828
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:34.977
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:35.457
+!MESSAGE begin problem for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:35.457
+!MESSAGE 0 problems reported for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:35.465
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:35.465
+!MESSAGE 1 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:35.475
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:35.475
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:35.475
+!MESSAGE Validated 3. Took 47 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:35.791
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:36.268
+!MESSAGE begin problem for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:36.268
+!MESSAGE 0 problems reported for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:36.280
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:36.280
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:36.289
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:36.289
+!MESSAGE 1 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:36.289
+!MESSAGE Validated 3. Took 47 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:38.947
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:39.421
+!MESSAGE begin problem for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:39.421
+!MESSAGE 0 problems reported for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:39.431
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:39.431
+!MESSAGE 1 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:39.442
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:39.442
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:39.442
+!MESSAGE Validated 3. Took 44 ms
+
+!ENTRY org.eclipse.jdt.core 4 4 2025-08-27 17:37:40.058
+!MESSAGE Failed to save JDT index: Index for /Claims
+!STACK 0
+java.io.FileNotFoundException: /home/james/Library/pgf/plugins/datapacks/.metadata/.plugins/org.eclipse.jdt.core/2891194656.index (No such file or directory)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:213)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:152)
+	at org.eclipse.jdt.internal.core.index.FileIndexLocation.getInputStream(FileIndexLocation.java:84)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readAllDocumentNames(DiskIndex.java:624)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:527)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:228)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1147)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1190)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:832)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.indexerLoop(JobManager.java:509)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+!ENTRY org.eclipse.jdt.core 4 0 2025-08-27 17:37:40.059
+!MESSAGE Failed to update qualified index.
+!STACK 0
+java.io.FileNotFoundException: /home/james/Library/pgf/plugins/datapacks/.metadata/.plugins/org.eclipse.jdt.core/1865797976.index (No such file or directory)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:213)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:152)
+	at org.eclipse.jdt.internal.core.index.FileIndexLocation.getInputStream(FileIndexLocation.java:84)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readAllDocumentNames(DiskIndex.java:624)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:527)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:228)
+	at org.eclipse.jdt.internal.core.index.MetaIndex.save(MetaIndex.java:99)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveMetaIndex(IndexManager.java:1239)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1215)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:832)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.indexerLoop(JobManager.java:509)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:40.306
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:40.778
+!MESSAGE begin problem for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:40.778
+!MESSAGE 0 problems reported for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:40.791
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:40.791
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:40.800
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:40.801
+!MESSAGE 1 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:40.801
+!MESSAGE Validated 3. Took 45 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:45.366
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:45.827
+!MESSAGE begin problem for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:45.828
+!MESSAGE 0 problems reported for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:45.837
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:45.837
+!MESSAGE 1 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:45.847
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:45.848
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:45.848
+!MESSAGE Validated 3. Took 32 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:51.675
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:51.708
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:51.739
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:51.787
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:51.937
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:52.087
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:52.581
+!MESSAGE begin problem for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:52.581
+!MESSAGE 0 problems reported for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:52.592
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:52.592
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:52.601
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:52.601
+!MESSAGE 0 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:52.602
+!MESSAGE Validated 3. Took 64 ms
+
+!ENTRY org.eclipse.jdt.core 4 4 2025-08-27 17:37:52.709
+!MESSAGE Failed to save JDT index: Index for /Claims
+!STACK 0
+java.io.FileNotFoundException: /home/james/Library/pgf/plugins/datapacks/.metadata/.plugins/org.eclipse.jdt.core/2891194656.index (No such file or directory)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:213)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:152)
+	at org.eclipse.jdt.internal.core.index.FileIndexLocation.getInputStream(FileIndexLocation.java:84)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readAllDocumentNames(DiskIndex.java:624)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:527)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:228)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1147)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1190)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:832)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.indexerLoop(JobManager.java:509)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+!ENTRY org.eclipse.jdt.core 4 0 2025-08-27 17:37:52.709
+!MESSAGE Failed to update qualified index.
+!STACK 0
+java.io.FileNotFoundException: /home/james/Library/pgf/plugins/datapacks/.metadata/.plugins/org.eclipse.jdt.core/1865797976.index (No such file or directory)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:213)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:152)
+	at org.eclipse.jdt.internal.core.index.FileIndexLocation.getInputStream(FileIndexLocation.java:84)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readAllDocumentNames(DiskIndex.java:624)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:527)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:228)
+	at org.eclipse.jdt.internal.core.index.MetaIndex.save(MetaIndex.java:99)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveMetaIndex(IndexManager.java:1239)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1215)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:832)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.indexerLoop(JobManager.java:509)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:52.938
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:53.398
+!MESSAGE begin problem for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:53.398
+!MESSAGE 0 problems reported for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:53.407
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:53.407
+!MESSAGE 0 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:53.418
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:53.419
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:37:53.419
+!MESSAGE Validated 3. Took 31 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:50.207
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:50.435
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:50.438
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:50.907
+!MESSAGE begin problem for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:50.907
+!MESSAGE 0 problems reported for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:50.919
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:50.919
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:50.929
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:50.929
+!MESSAGE 0 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:50.929
+!MESSAGE Validated 3. Took 42 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:53.462
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:53.467
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:53.545
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:53.631
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:53.671
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:53.819
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:53.932
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:54.025
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:54.228
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:54.689
+!MESSAGE begin problem for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:54.689
+!MESSAGE 0 problems reported for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:54.698
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:54.698
+!MESSAGE 3 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:54.708
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:54.708
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:54.708
+!MESSAGE Validated 3. Took 29 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:54.787
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:55.127
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:55.600
+!MESSAGE begin problem for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:55.600
+!MESSAGE 0 problems reported for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:55.611
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:55.611
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:55.622
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:55.622
+!MESSAGE 3 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:55.623
+!MESSAGE Validated 3. Took 44 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:55.844
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:55.887
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:55.972
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:56.008
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:56.161
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:56.262
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:56.288
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:56.587
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:56.737
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:56.885
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:57.035
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:57.267
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:57.742
+!MESSAGE begin problem for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:57.742
+!MESSAGE 0 problems reported for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:57.751
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:57.751
+!MESSAGE 1 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:57.760
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:57.760
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:57.760
+!MESSAGE Validated 3. Took 42 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:58.285
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:58.706
+!MESSAGE begin problem for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:58.706
+!MESSAGE 0 problems reported for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:58.716
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:58.717
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:58.726
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:58.726
+!MESSAGE 0 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:58.726
+!MESSAGE Validated 3. Took 41 ms
+
+!ENTRY org.eclipse.jdt.core 4 4 2025-08-27 17:38:58.981
+!MESSAGE Failed to save JDT index: Index for /Claims
+!STACK 0
+java.io.FileNotFoundException: /home/james/Library/pgf/plugins/datapacks/.metadata/.plugins/org.eclipse.jdt.core/2891194656.index (No such file or directory)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:213)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:152)
+	at org.eclipse.jdt.internal.core.index.FileIndexLocation.getInputStream(FileIndexLocation.java:84)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readAllDocumentNames(DiskIndex.java:624)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:527)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:228)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1147)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1190)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:832)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.indexerLoop(JobManager.java:509)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+!ENTRY org.eclipse.jdt.core 4 0 2025-08-27 17:38:58.982
+!MESSAGE Failed to update qualified index.
+!STACK 0
+java.io.FileNotFoundException: /home/james/Library/pgf/plugins/datapacks/.metadata/.plugins/org.eclipse.jdt.core/1865797976.index (No such file or directory)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:213)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:152)
+	at org.eclipse.jdt.internal.core.index.FileIndexLocation.getInputStream(FileIndexLocation.java:84)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readAllDocumentNames(DiskIndex.java:624)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:527)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:228)
+	at org.eclipse.jdt.internal.core.index.MetaIndex.save(MetaIndex.java:99)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveMetaIndex(IndexManager.java:1239)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1215)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:832)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.indexerLoop(JobManager.java:509)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:38:59.985
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:00.135
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:00.285
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:00.387
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:00.432
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:00.433
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:00.443
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:00.904
+!MESSAGE begin problem for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:00.904
+!MESSAGE 0 problems reported for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:00.913
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:00.913
+!MESSAGE 1 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:00.923
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:00.923
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:00.923
+!MESSAGE Validated 3. Took 29 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:01.506
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:02.003
+!MESSAGE begin problem for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:02.003
+!MESSAGE 0 problems reported for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:02.014
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:02.014
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:02.024
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:02.024
+!MESSAGE 1 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:02.024
+!MESSAGE Validated 3. Took 67 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:02.198
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:02.215
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:02.333
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:02.388
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:02.587
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:02.736
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:02.770
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:02.826
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:03.302
+!MESSAGE begin problem for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:03.303
+!MESSAGE 0 problems reported for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:03.314
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:03.366
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:03.382
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:03.429
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:03.579
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:03.672
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:03.705
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:03.905
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:04.057
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:04.206
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:04.355
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:04.528
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:05.003
+!MESSAGE begin problem for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:05.004
+!MESSAGE 0 problems reported for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:05.014
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:05.014
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:05.023
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:05.024
+!MESSAGE 0 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:05.033
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:05.033
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:05.033
+!MESSAGE Validated 4. Took 54 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:05.312
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:05.368
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:05.589
+!MESSAGE Reconciled 1. Took 4 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:05.654
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:05.709
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:05.964
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:05.985
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:06.159
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:06.210
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:06.218
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:06.269
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:06.413
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:06.464
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:06.626
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:06.777
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:06.863
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:07.062
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:07.315
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:07.686
+!MESSAGE Reconciled 1. Took 2 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:08.138
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:08.423
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:08.898
+!MESSAGE begin problem for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:08.899
+!MESSAGE 0 problems reported for /BPE.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:08.908
+!MESSAGE begin problem for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:08.908
+!MESSAGE 0 problems reported for /ClaimViewInventory.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 17:39:08.908
+!MESSAGE Validated 2. Took 34 ms
+
+!ENTRY org.eclipse.jdt.core 4 4 2025-08-27 17:39:09.453
+!MESSAGE Failed to save JDT index: Index for /Claims
+!STACK 0
+java.io.FileNotFoundException: /home/james/Library/pgf/plugins/datapacks/.metadata/.plugins/org.eclipse.jdt.core/2891194656.index (No such file or directory)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:213)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:152)
+	at org.eclipse.jdt.internal.core.index.FileIndexLocation.getInputStream(FileIndexLocation.java:84)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readAllDocumentNames(DiskIndex.java:624)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:527)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:228)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1147)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1190)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:832)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.indexerLoop(JobManager.java:509)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+!ENTRY org.eclipse.jdt.core 4 0 2025-08-27 17:39:09.454
+!MESSAGE Failed to update qualified index.
+!STACK 0
+java.io.FileNotFoundException: /home/james/Library/pgf/plugins/datapacks/.metadata/.plugins/org.eclipse.jdt.core/1865797976.index (No such file or directory)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:213)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:152)
+	at org.eclipse.jdt.internal.core.index.FileIndexLocation.getInputStream(FileIndexLocation.java:84)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readAllDocumentNames(DiskIndex.java:624)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:527)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:228)
+	at org.eclipse.jdt.internal.core.index.MetaIndex.save(MetaIndex.java:99)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveMetaIndex(IndexManager.java:1239)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1215)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:832)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.indexerLoop(JobManager.java:509)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+!ENTRY org.eclipse.jdt.launching 4 4 2025-08-27 17:42:06.044
+!MESSAGE No such file or directory
+!STACK 0
+java.io.IOException: No such file or directory
+	at java.base/java.io.UnixFileSystem.createFileExclusively0(Native Method)
+	at java.base/java.io.UnixFileSystem.createFileExclusively(UnixFileSystem.java:258)
+	at java.base/java.io.File.createNewFile(File.java:1045)
+	at org.eclipse.jdt.internal.launching.LaunchingPlugin.writeInstallInfo(LaunchingPlugin.java:1109)
+	at org.eclipse.jdt.internal.launching.LaunchingPlugin$1.saving(LaunchingPlugin.java:576)
+	at org.eclipse.core.internal.resources.SaveManager.executeLifecycle(SaveManager.java:453)
+	at org.eclipse.core.internal.resources.SaveManager$1.run(SaveManager.java:269)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.core.internal.resources.SaveManager.broadcastLifecycle(SaveManager.java:272)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1226)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1205)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:51)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.core.resources 4 2 2025-08-27 17:42:06.044
+!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.core.resources".
+!STACK 1
+org.eclipse.core.runtime.CoreException: Problems while saving variables and containers
+	at org.eclipse.jdt.internal.core.JavaModelManager.saveVariablesAndContainers(JavaModelManager.java:4518)
+	at org.eclipse.jdt.internal.core.JavaModelManager.savingTimed(JavaModelManager.java:4783)
+	at org.eclipse.jdt.internal.core.JavaModelManager.saving(JavaModelManager.java:4769)
+	at org.eclipse.core.internal.resources.SaveManager.executeLifecycle(SaveManager.java:453)
+	at org.eclipse.core.internal.resources.SaveManager$1.run(SaveManager.java:269)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.core.internal.resources.SaveManager.broadcastLifecycle(SaveManager.java:272)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1226)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1205)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:51)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: java.io.FileNotFoundException: /home/james/Library/pgf/plugins/datapacks/.metadata/.plugins/org.eclipse.jdt.core/variablesAndContainers.dat (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:289)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:230)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:179)
+	at org.eclipse.jdt.internal.core.JavaModelManager.saveVariablesAndContainers(JavaModelManager.java:4513)
+	... 10 more
+!SUBENTRY 1 org.eclipse.jdt.core 4 4 2025-08-27 17:42:06.045
+!MESSAGE Problems while saving variables and containers
+!STACK 0
+java.io.FileNotFoundException: /home/james/Library/pgf/plugins/datapacks/.metadata/.plugins/org.eclipse.jdt.core/variablesAndContainers.dat (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:289)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:230)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:179)
+	at org.eclipse.jdt.internal.core.JavaModelManager.saveVariablesAndContainers(JavaModelManager.java:4513)
+	at org.eclipse.jdt.internal.core.JavaModelManager.savingTimed(JavaModelManager.java:4783)
+	at org.eclipse.jdt.internal.core.JavaModelManager.saving(JavaModelManager.java:4769)
+	at org.eclipse.core.internal.resources.SaveManager.executeLifecycle(SaveManager.java:453)
+	at org.eclipse.core.internal.resources.SaveManager$1.run(SaveManager.java:269)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.core.internal.resources.SaveManager.broadcastLifecycle(SaveManager.java:272)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1226)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1205)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:51)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SUBENTRY 1 org.eclipse.jdt.core 4 4 2025-08-27 17:42:06.045
+!MESSAGE Problems while saving variables and containers
+!STACK 0
+java.io.FileNotFoundException: /home/james/Library/pgf/plugins/datapacks/.metadata/.plugins/org.eclipse.jdt.core/variablesAndContainers.dat (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:289)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:230)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:179)
+	at org.eclipse.jdt.internal.core.JavaModelManager.saveVariablesAndContainers(JavaModelManager.java:4513)
+	at org.eclipse.jdt.internal.core.JavaModelManager.savingTimed(JavaModelManager.java:4783)
+	at org.eclipse.jdt.internal.core.JavaModelManager.saving(JavaModelManager.java:4769)
+	at org.eclipse.core.internal.resources.SaveManager.executeLifecycle(SaveManager.java:453)
+	at org.eclipse.core.internal.resources.SaveManager$1.run(SaveManager.java:269)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.core.internal.resources.SaveManager.broadcastLifecycle(SaveManager.java:272)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1226)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1205)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:51)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.core.resources 4 568 2025-08-27 17:42:06.066
+!MESSAGE Could not write metadata for '/'.
+!STACK 0
+java.io.FileNotFoundException: /home/james/Library/pgf/plugins/datapacks/.metadata/.plugins/org.eclipse.core.resources/.root/.markers.snap (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:289)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:230)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:150)
+	at org.eclipse.core.internal.localstore.SafeChunkyOutputStream.<init>(SafeChunkyOutputStream.java:52)
+	at org.eclipse.core.internal.localstore.SafeChunkyOutputStream.<init>(SafeChunkyOutputStream.java:48)
+	at org.eclipse.core.internal.resources.SaveManager.visitAndSnap(SaveManager.java:1859)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1264)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1205)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:51)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 18:17:24.682
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 18:17:25.106
+!MESSAGE begin problem for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 18:17:25.106
+!MESSAGE 0 problems reported for /Particles.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 18:17:25.119
+!MESSAGE begin problem for /EntityEvents.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 18:17:25.119
+!MESSAGE 1 problems reported for /EntityEvents.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 18:17:25.131
+!MESSAGE begin problem for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 18:17:25.132
+!MESSAGE 0 problems reported for /ActionBarStuff.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 18:17:25.142
+!MESSAGE begin problem for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 18:17:25.143
+!MESSAGE 0 problems reported for /Claim.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-27 18:17:25.143
+!MESSAGE Validated 4. Took 61 ms
