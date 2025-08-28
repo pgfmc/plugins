@@ -5,12 +5,10 @@
 .metadata/.log
 .metadata/defender.check
 .metadata/version.ini
-/.metadata/
+*.metadata/
 target
 test_upload.sh
 server_upload.sh
 .project
 plugins.iml
 .factorypath
-./datapacks/loldstone.zip
-./datapacks/.metadata

@@ -1,5 +1,6 @@
 package net.pgfmc.claims.ownable.block.events;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import org.bukkit.ChatColor;
@@ -87,5 +88,9 @@ public class BPE implements Listener {
 			pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 			return;
 		}
+
+        if (block.getType() == Material.BEACON) {
+            claim.beacons.add(new Vector4(block));
+        }
 	}
 }
