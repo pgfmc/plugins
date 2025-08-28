@@ -34,6 +34,7 @@ import net.pgfmc.claims.ownable.block.ClaimReadInventory;
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
 import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.ItemWrapper;
 import net.pgfmc.core.util.vector4.Vector4;
 
 /**

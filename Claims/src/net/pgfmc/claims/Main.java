@@ -5,6 +5,7 @@ import java.io.File;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import net.pgfmc.claims.ownable.BeaconSchedule;
 import net.pgfmc.claims.ownable.OwnableFile;
 import net.pgfmc.claims.ownable.block.events.BBEvent;
 import net.pgfmc.claims.ownable.block.events.BExEvent;
@@ -62,6 +63,7 @@ public class Main extends JavaPlugin {
 		plugin.getLogger().info("Claims Loaded!");
 		
 		new ActionBarStuff().runTaskTimer(this, 100, 2);
+        new BeaconSchedule().runTaskTimer(this, 100, 100);
 
         new BukkitRunnable() {
             @Override

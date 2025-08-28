@@ -1,11 +1,14 @@
 package net.pgfmc.claims.ownable.block;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.block.Beacon;
 import org.bukkit.block.Block;
+import org.bukkit.potion.PotionEffect;
 
 import net.pgfmc.claims.ownable.block.table.ClaimSection;
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
@@ -40,12 +43,13 @@ public class Claim {
 	private PlayerData placer;
 	private Vector4 vector;
 	private Set<PlayerData> members;
-    public boolean explosionsEnabled;
-    public boolean doorsLocked;
-    public boolean switchesLocked;
-    public boolean inventoriesLocked;
-    public boolean monsterKilling;
-    public boolean livestockKilling;
+    public boolean explosionsEnabled = false;
+    public boolean doorsLocked = true;
+    public boolean switchesLocked = true;
+    public boolean inventoriesLocked = true;
+    public boolean monsterKilling = true;
+    public boolean livestockKilling = false;
+    public ArrayList<Vector4> beacons = new ArrayList<Vector4>();
 	
 	/**
 	 * Defines access states.
@@ -70,12 +74,6 @@ public class Claim {
         if (copyFrom == null) {
 		    this.placer = player;
 		    this.members = members;
-            this.explosionsEnabled = false;
-            this.doorsLocked = true;
-            this.switchesLocked = true;
-            this.inventoriesLocked = true;
-            this.monsterKilling = true;
-            this.livestockKilling = false;
         } else {
             this.placer = copyFrom.placer;
             this.members = copyFrom.members;
@@ -107,6 +105,8 @@ public class Claim {
         }
 	}
 
+
+
     public Set<Claim> getMergedClaims() {
         Set<Claim> claimsOut = new HashSet<Claim>();		
         claimsOut.add(this);
@@ -126,6 +126,24 @@ public class Claim {
                 claim.appendMergedClaims(mergedPast);
             }
         }
+    }
+
+    public ArrayList<PotionEffect> getBuffs() {
+
+        ArrayList<PotionEffect> effects = new ArrayList();
+        Set<Claim> claims = getMergedClaims();
+        
+        for (Claim claim : claims) {
+            for (Vector4 pos : claim.beacons) {
+                Block block = pos.getBlock();
+                if (block == null || !(block instanceof Beacon)) {continue;}
+                Beacon beacon = (Beacon) block;
+                effects.add(beacon.getPrimaryEffect());
+                effects.add(beacon.getSecondaryEffect());
+            }
+        }
+
+        return effects;
     }
 
 	

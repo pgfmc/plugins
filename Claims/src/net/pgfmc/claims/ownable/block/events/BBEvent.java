@@ -1,7 +1,11 @@
 package net.pgfmc.claims.ownable.block.events;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -63,16 +67,25 @@ public class BBEvent implements Listener {
 			
 			return;
 		}
+
+        if (e.getBlock().getType() == Material.BEACON) {
+            Set<Claim> claims = ClaimsTable.getNearbyClaims(new Vector4(e.getBlock()), Range.PROTECTED);
+            for (Claim claim : claims) {
+                claim.beacons.removeIf(x -> (new Vector4(e.getBlock()).equals(x))); 
+            }
+        }
 		
 		Claim claim = ClaimsTable.getClosestClaim(new Vector4(e.getBlock()), Range.PROTECTED);
 		
 		if (claim == null) return;
 		
-		if (claim.getAccess(pd) != Security.BLOCKED) return;
+		if (claim.getAccess(pd) == Security.BLOCKED) {
+		    pd.sendMessage(ChatColor.RED + "This land is claimed.");
+		    e.setCancelled(true);
+		    pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+        }
+
 		
-		pd.sendMessage(ChatColor.RED + "This land is claimed.");
-		e.setCancelled(true);
-		pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 		
 	}
 	
