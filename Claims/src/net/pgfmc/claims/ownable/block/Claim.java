@@ -130,16 +130,22 @@ public class Claim {
 
     public ArrayList<PotionEffect> getBuffs() {
 
-        ArrayList<PotionEffect> effects = new ArrayList();
+        ArrayList<PotionEffect> effects = new ArrayList<>();
         Set<Claim> claims = getMergedClaims();
         
         for (Claim claim : claims) {
             for (Vector4 pos : claim.beacons) {
                 Block block = pos.getBlock();
-                if (block == null || !(block instanceof Beacon)) {continue;}
-                Beacon beacon = (Beacon) block;
-                effects.add(beacon.getPrimaryEffect());
-                effects.add(beacon.getSecondaryEffect());
+                if (block == null || !(block.getType() == Material.BEACON)) {continue;}
+                Beacon beacon = (Beacon) block.getState();
+
+                if (beacon.getPrimaryEffect() != null) {
+                    effects.add(beacon.getPrimaryEffect());
+                }
+
+                if (beacon.getSecondaryEffect() != null) {
+                    effects.add(beacon.getSecondaryEffect());
+                }
             }
         }
 
