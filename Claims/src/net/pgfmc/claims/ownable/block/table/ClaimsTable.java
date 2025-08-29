@@ -93,9 +93,23 @@ public class ClaimsTable {
 			getWorldTable(v.w()).put(getSectionKey(v), cs);
 		}
 		
-		Claim ob = cs.getClosestClaim(v, r);
+		Claim ob = getClosestClaim(v, cs.getNearbyClaims(v, r));
         return ob;
 	}
+
+    public static Claim getClosestClaim(Vector4 v, Set<Claim> claims) {
+		return claims.stream().reduce( (x, y) -> {
+			
+			double d1 = Math.abs(Math.sqrt((v.x() - x.getLocation().x()) + (v.y() - x.getLocation().y())));
+			double d2 = Math.abs(Math.sqrt((v.x() - y.getLocation().x()) + (v.y() - y.getLocation().y())));
+			
+			if (d1 > d2) {
+				return y;
+			} else {
+				return x;
+			}
+		}).orElse(null);
+    }
 	
 	public static Set<Claim> getNearbyClaims(Vector4 v, Range r) {
 		ClaimSection cs = getSection(v);

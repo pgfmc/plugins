@@ -17,8 +17,8 @@ public class BeaconSchedule extends BukkitRunnable {
 		for (Player player : Main.plugin.getServer().getOnlinePlayers()) {
 
             Claim claim = ClaimsTable.getClosestClaim(new Vector4(player.getLocation()), Range.PROTECTED);
+            if (claim == null) { continue;}
             player.addPotionEffects(claim.getBuffs());
-
         }
     }
 }

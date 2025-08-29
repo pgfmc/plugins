@@ -1,7 +1,7 @@
 package net.pgfmc.claims.ownable.block.events;
 
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -78,10 +78,13 @@ public class BPE implements Listener {
 			}
 			return;
 		}
+
+        Vector4 location = new Vector4(block);
+
+        Set<Claim> claims = ClaimsTable.getNearbyClaims(location, Range.PROTECTED);
+        Claim closestClaim = ClaimsTable.getClosestClaim(location, claims);
 		
-		Claim claim = ClaimsTable.getClosestClaim(new Vector4(block), Range.PROTECTED);
-		
-		if (claim != null && claim.getAccess(pd) == Security.BLOCKED) {
+		if (closestClaim != null && closestClaim.getAccess(pd) == Security.BLOCKED) {
 			
 			pd.sendMessage(ChatColor.RED + "Cannot place blocks in claimed land.");
 			e.setCancelled(true);
@@ -89,8 +92,10 @@ public class BPE implements Listener {
 			return;
 		}
 
-        if (block.getType() == Material.BEACON) {
-            claim.beacons.add(new Vector4(block));
+        for (Claim claim : claims) {
+            if (block.getType() == Material.BEACON) {
+                claim.beacons.add(new Vector4(block));
+            }
         }
 	}
 }
