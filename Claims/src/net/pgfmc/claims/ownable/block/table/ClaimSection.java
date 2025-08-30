@@ -28,7 +28,6 @@ public class ClaimSection {
 	protected long key;
 	protected int w;
 	
-	private Map<Neighbor, ClaimSection> neighbors = new EnumMap<Neighbor, ClaimSection>(Neighbor.class);
 	private Set<Claim> claims = new HashSet<>();
 	
 	public ClaimSection(long key, int w) {
@@ -73,6 +72,7 @@ public class ClaimSection {
 		return null;
 	}
 	
+	
 	public Set<Claim> getNearbyClaims(Vector4 v, Range r) {
 
 		final Set<Claim> ob = getClaims(this, v, r);
@@ -109,16 +109,5 @@ public class ClaimSection {
 	
 	public void remove(Claim ob) {
 		claims.remove(ob);
-	}
-	
-	public ClaimSection getNeighbor(Neighbor n) {
-		ClaimSection cs = neighbors.get(n);
-		if (cs != null) {
-			return cs;
-		}
-		
-		cs = ClaimsTable.getSection(LongHash.msw(key) + n.x(), LongHash.lsw(key) + n.z(), w);
-		neighbors.put(n, cs);
-		return cs;
 	}
 }

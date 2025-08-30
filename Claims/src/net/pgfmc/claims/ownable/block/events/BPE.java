@@ -40,12 +40,13 @@ public class BPE implements Listener {
 			
 			// logic for merging claims: 
 			
-			Claim merger = ClaimsTable.getClosestClaim(new Vector4(block), Range.MERGE);
+            Claim merger = ClaimsTable.getClosestClaim(new Vector4(block), Range.MERGE);
 			Claim foreign = ClaimsTable.getClosestClaim(new Vector4(block), Range.FOREIGN);
 			
 			// Within Merge claim range
 			if (merger != null && merger.getAccess(pd) == Security.ADMIN) {
-			    new Claim(merger.getPlayer(), new Vector4(block), merger.getMembers());
+			    Claim noob = new Claim(merger.getPlayer(), new Vector4(block), merger.getMembers());
+                noob.calculateNetwork(true);
 				
 				pd.sendMessage(ChatColor.GREEN + "Surrounding land claimed!");
 				pd.sendMessage(ChatColor.GOLD + "Claim merged with the nearby claim.");
@@ -58,7 +59,7 @@ public class BPE implements Listener {
                 } else if (foreign.getAccess(pd) == Security.MEMBER) {
 				    pd.sendMessage(ChatColor.GOLD + "If you want to help expand your Admin's Claim,");
 				    pd.sendMessage(ChatColor.GOLD + "Give your Lodestone to them, instead.");
-                }
+                } else { return;}
 
 				e.setCancelled(true);
 				pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);

@@ -72,6 +72,18 @@ public class OwnableFile {
 
 				amount++;
 			}
+
+            Set<Claim> claims = ClaimsTable.getAllClaims();
+
+            for (Claim claim : claims) {
+                if (!claim.calculated) {
+                    claim.calculateNetwork(false);
+                }
+            }
+            for (Claim claim : claims) {
+                claim.calculated = false;
+            }
+
 			Bukkit.getLogger().info("Loaded " + amount + " Claim(s).");
 		}
 	}

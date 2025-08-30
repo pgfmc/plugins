@@ -31,7 +31,7 @@ public class ClaimViewInventory extends ListInventory<Claim> {
 
             list.add(this.claim);
 
-            for (Claim c : claim.getMergedClaims()) {
+            for (Claim c : claim.getNetwork()) {
                 if (c == this.claim) { continue;}
                 list.add(c);
             }

@@ -70,7 +70,7 @@ public class PhysicsEvent implements Listener {
 
         for (Block b : e.getBlocks()) {
             Claim bClaim = ClaimsTable.getClosestClaim(new Vector4(b), Range.PISTONPROTECT);
-            if (bClaim != null && !bClaim.getMergedClaims().contains(pistonClaim)) {
+            if (bClaim != null && !bClaim.getNetwork().contains(pistonClaim)) {
                 e.setCancelled(true);
                 return;
             } 
@@ -84,7 +84,7 @@ public class PhysicsEvent implements Listener {
 
         for (Block b : e.getBlocks()) {
             Claim bClaim = ClaimsTable.getClosestClaim(new Vector4(b), Range.PISTONPROTECT);
-            if (bClaim != null && !bClaim.getMergedClaims().contains(pistonClaim)) {
+            if (bClaim != null && !bClaim.getNetwork().contains(pistonClaim)) {
                 e.setCancelled(true);
                 return;
             } 

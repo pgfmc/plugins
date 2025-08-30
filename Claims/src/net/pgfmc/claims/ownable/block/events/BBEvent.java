@@ -1,7 +1,6 @@
 package net.pgfmc.claims.ownable.block.events;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -51,9 +50,13 @@ public class BBEvent implements Listener {
 				{
 					pd.getPlayer().openInventory(new ClaimConfigInventory(cont, false).getInventory());
 					e.setCancelled(true);
-				} else
-				{
+				} else {
+                    Set<Claim> nearby = ClaimsTable.getNearbyClaims(cont.getLocation(), Range.MERGE);
 					cont.remove();
+                    for (Claim claim : nearby) {
+                        claim.calculateNetwork(true);
+                    }
+
 					pd.sendMessage(ChatColor.GREEN + "Claim Removed!");
 				}
 				
