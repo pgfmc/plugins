@@ -1,6 +1,7 @@
 package net.pgfmc.claims.ownable.block.events;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -43,21 +44,23 @@ public class BPE implements Listener {
 			Claim foreign = ClaimsTable.getClosestClaim(new Vector4(block), Range.FOREIGN);
 			
 			// Within Merge claim range
-			if (merger != null && (merger.getMembers().contains(pd) || merger.getPlayer() == pd)) {
-				
-				Claim c = new Claim(merger.getPlayer(), new Vector4(block), merger.getMembers());
-                c.forwardUpdateFrom(merger);
+			if (merger != null && merger.getAccess(pd) == Security.ADMIN) {
+			    new Claim(merger.getPlayer(), new Vector4(block), merger.getMembers());
 				
 				pd.sendMessage(ChatColor.GREEN + "Surrounding land claimed!");
 				pd.sendMessage(ChatColor.GOLD + "Claim merged with the nearby claim.");
 				pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
 				
-				
 			// Within Foreign claim range	
-			} else if (foreign != null && foreign.getAccess(pd) == Security.BLOCKED) {
+			} else if (foreign != null) {
+                if (foreign.getAccess(pd) == Security.BLOCKED) {
+				    pd.sendMessage(ChatColor.RED + "Cannot claim land that would overlap another claim.");
+                } else if (foreign.getAccess(pd) == Security.MEMBER) {
+				    pd.sendMessage(ChatColor.GOLD + "If you want to help expand your Admin's Claim,");
+				    pd.sendMessage(ChatColor.GOLD + "Give your Lodestone to them, instead.");
+                }
+
 				e.setCancelled(true);
-				pd.sendMessage(ChatColor.RED + "Cannot claim land that would overlap another claim.");
-				
 				pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 				
 			// not within any range
@@ -75,15 +78,24 @@ public class BPE implements Listener {
 			}
 			return;
 		}
+
+        Vector4 location = new Vector4(block);
+
+        Set<Claim> claims = ClaimsTable.getNearbyClaims(location, Range.PROTECTED);
+        Claim closestClaim = ClaimsTable.getClosestClaim(location, claims);
 		
-		Claim claim = ClaimsTable.getClosestClaim(new Vector4(block), Range.PROTECTED);
-		
-		if (claim != null && claim.getAccess(pd) == Security.BLOCKED) {
+		if (closestClaim != null && closestClaim.getAccess(pd) == Security.BLOCKED) {
 			
 			pd.sendMessage(ChatColor.RED + "Cannot place blocks in claimed land.");
 			e.setCancelled(true);
 			pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 			return;
 		}
+
+        for (Claim claim : claims) {
+            if (block.getType() == Material.BEACON) {
+                claim.beacons.add(new Vector4(block));
+            }
+        }
 	}
 }

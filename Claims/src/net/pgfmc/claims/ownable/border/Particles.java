@@ -121,11 +121,11 @@ public class Particles {
 
                     Set<Claim> merge = ClaimsTable.getNearbyClaims(playerLocation, Range.MERGERENDER).stream().filter((x) -> {
                         Security security = x.getAccess(playerData);
-                        return (security == Security.ADMIN || security == Security.MEMBER);
+                        return (security == Security.ADMIN);
                     }).collect(Collectors.toSet());
 
                     Set<Claim> foreign = ClaimsTable.getNearbyClaims(playerLocation, Range.FOREIGNRENDER).stream().filter((x) -> {
-                        return (x.getAccess(playerData) == Security.BLOCKED);
+                        return (x.getAccess(playerData) == Security.BLOCKED || x.getAccess(playerData) == Security.MEMBER);
                     }).collect(Collectors.toSet());
 
                     Set<BorderParticle> mergeParticles = new HashSet<BorderParticle>();

@@ -1,11 +1,14 @@
 package net.pgfmc.claims.ownable.block;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.block.Beacon;
 import org.bukkit.block.Block;
+import org.bukkit.potion.PotionEffect;
 
 import net.pgfmc.claims.ownable.block.table.ClaimSection;
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
@@ -40,12 +43,13 @@ public class Claim {
 	private PlayerData placer;
 	private Vector4 vector;
 	private Set<PlayerData> members;
-    public boolean explosionsEnabled;
-    public boolean doorsLocked;
-    public boolean switchesLocked;
-    public boolean inventoriesLocked;
-    public boolean monsterKilling;
-    public boolean livestockKilling;
+    public boolean explosionsEnabled = false;
+    public boolean doorsLocked = true;
+    public boolean switchesLocked = true;
+    public boolean inventoriesLocked = true;
+    public boolean monsterKilling = true;
+    public boolean livestockKilling = false;
+    public ArrayList<Vector4> beacons = new ArrayList<Vector4>();
 	
 	/**
 	 * Defines access states.
@@ -63,17 +67,23 @@ public class Claim {
 	}
 	
 	public Claim(PlayerData player, Vector4 vec, Set<PlayerData> members) {
-		this.placer = player;
-		this.members = members;
-        this.explosionsEnabled = false;
-        this.doorsLocked = true;
-        this.switchesLocked = true;
-        this.inventoriesLocked = true;
-        this.monsterKilling = true;
-        this.livestockKilling = false;
-		
+
 		Block block = vec.getBlock();
 		vector = vec;
+        Claim copyFrom = ClaimsTable.getClosestClaim(vec, Range.MERGE);
+        if (copyFrom == null) {
+		    this.placer = player;
+		    this.members = members;
+        } else {
+            this.placer = copyFrom.placer;
+            this.members = copyFrom.members;
+            this.explosionsEnabled = copyFrom.explosionsEnabled;
+            this.doorsLocked = copyFrom.doorsLocked;
+            this.switchesLocked = copyFrom.switchesLocked;
+            this.inventoriesLocked = copyFrom.inventoriesLocked;
+            this.monsterKilling = copyFrom.monsterKilling;
+            this.livestockKilling = copyFrom.livestockKilling;
+        }
 		
 		if (block.getType() == Material.LODESTONE) {
 			
@@ -95,6 +105,8 @@ public class Claim {
         }
 	}
 
+
+
     public Set<Claim> getMergedClaims() {
         Set<Claim> claimsOut = new HashSet<Claim>();		
         claimsOut.add(this);
@@ -115,6 +127,117 @@ public class Claim {
             }
         }
     }
+
+    public Pair getBeaconInfo() {
+        ArrayList<Vector4> beacons = new ArrayList<>();
+        ArrayList<PotionEffect> effects = new ArrayList<>();
+        Set<Claim> claims = getMergedClaims();
+
+        for (Claim claim : claims) {
+            for (Vector4 pos : claim.beacons) {
+                Block block = pos.getBlock();
+                if (block == null || !(block.getType() == Material.BEACON)) {continue;}
+
+                boolean allow = true;
+                for (Vector4 beacon : beacons) {
+                    if (beacon.equals(pos)) {
+                        allow = false;
+                        break;
+                    }
+                }
+
+                if (!allow) {continue;}
+
+                beacons.add(pos);
+                Beacon beacon = (Beacon) block.getState();
+                
+                if (beacon.getPrimaryEffect() != null) {
+                    addEffect(effects, beacon.getPrimaryEffect());
+                }
+                if (beacon.getSecondaryEffect() != null) {
+                    addEffect(effects, beacon.getSecondaryEffect());
+                }
+            }
+        }
+
+        return new Pair(effects, beacons.size()); 
+    }
+
+    private static void addEffect(ArrayList<PotionEffect> effects, PotionEffect effect) {
+        for (int i = 0; i < effects.size(); i++) {
+            PotionEffect comp = effects.get(i);
+
+            if (comp.getType() != effect.getType()) {continue;}
+            if (comp.getAmplifier() >= effect.getAmplifier()) {return;}
+            effects.set(i, effect);
+            return;
+        }
+        effects.add(effect);
+    }
+
+    public void addEffectsFromClaim(ArrayList<PotionEffect> effects) {
+        for (Vector4 pos : this.beacons) {
+            Block block = pos.getBlock();
+            if (block == null || !(block.getType() == Material.BEACON)) {continue;}
+            Beacon beacon = (Beacon) block.getState();
+            if (beacon.getPrimaryEffect() != null) {
+                addEffect(effects, beacon.getPrimaryEffect());
+            }
+            if (beacon.getSecondaryEffect() != null) {
+                addEffect(effects, beacon.getSecondaryEffect());
+            }
+        }
+    }
+    
+    //public int countMergedBeacons() {
+
+    //    Set<Claim> claims = getMergedClaims();
+    //    ArrayList<Vector4> beacons = new ArrayList<>();
+    //    
+    //    for (Claim claim : claims) {
+    //        for (Vector4 pos : claim.beacons) {
+    //            Block block = pos.getBlock();
+    //            if (block == null || !(block.getType() == Material.BEACON)) {continue;}
+
+    //            boolean allow = true;
+    //            for (Vector4 beacon : beacons) {
+    //                if (beacon.equals(pos)) {
+    //                    allow = false;
+    //                    break;
+    //                }
+    //            }
+    //            if (allow) {
+    //                beacons.add(pos);
+    //            }
+    //        }
+    //    }
+
+    //    return beacons.size();
+    //}
+
+    //public ArrayList<PotionEffect> getBuffs() {
+
+    //    ArrayList<PotionEffect> effects = new ArrayList<>();
+    //    Set<Claim> claims = getMergedClaims();
+    //    
+    //    for (Claim claim : claims) {
+    //        for (Vector4 pos : claim.beacons) {
+    //            Block block = pos.getBlock();
+    //            if (block == null || !(block.getType() == Material.BEACON)) {continue;}
+    //            Beacon beacon = (Beacon) block.getState();
+
+    //            if (beacon.getPrimaryEffect() != null) {
+    //                effects.add(beacon.getPrimaryEffect());
+    //            }
+
+    //            if (beacon.getSecondaryEffect() != null) {
+    //                effects.add(beacon.getSecondaryEffect());
+    //            }
+    //        }
+    //    }
+
+    //    return effects;
+    //}
 
 	
 	/**
@@ -139,7 +262,6 @@ public class Claim {
 	 * @return The block's ownable.
 	 */
 	public static Claim getOwnable(Block block) { // gets a container from block
-		
 		
 		if (block.getType() == Material.LODESTONE) 
 			return ClaimsTable.getOwnable(new Vector4(block));
@@ -169,17 +291,13 @@ public class Claim {
 	}
 	
 	public Security getAccess(PlayerData player) {
-
+		
         if (player.getPlayer().getGameMode() == GameMode.CREATIVE) {
             return Security.ADMIN;
         }
-		
+
 		if (placer == null) {
-			if (player.getPlayer().getGameMode() == GameMode.CREATIVE) {
-				return Security.ADMIN;
-			} else {
-				return Security.BLOCKED;
-			}
+			return Security.BLOCKED;
 		}
 		
 		if (player == placer) {

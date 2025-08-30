@@ -7,10 +7,10 @@ import net.pgfmc.core.api.inventory.BaseInventory;
 
 public class ForeignPolicyInventory extends BaseInventory {
 
-    public ForeignPolicyInventory(Claim claim) {
+    public ForeignPolicyInventory(Claim claim, boolean read) {
         super(27, ChatColor.YELLOW + "Settings for Foreign Players");
 
-        setBack(0, new ClaimConfigInventory(claim).getInventory());
+        setBack(0, new ClaimConfigInventory(claim, read).getInventory());
         int door = 11;
         int lever = 12;
         int chest = 13;
@@ -23,16 +23,13 @@ public class ForeignPolicyInventory extends BaseInventory {
             setItem(door, Material.OAK_DOOR).n(ChatColor.YELLOW + "Doors" + ChatColor.GRAY + ": " + ChatColor.GREEN + "Unlocked.");
         }
 
-        setAction(door, (p,e) -> {
-            claim.doorsLocked = !claim.doorsLocked;
-            claim.forwardUpdateFrom(claim);
-            p.openInventory(new ForeignPolicyInventory(claim).getInventory());
-        });
-        
-
-
-
-
+        if (!read) {
+            setAction(door, (p,e) -> {
+                claim.doorsLocked = !claim.doorsLocked;
+                claim.forwardUpdateFrom(claim);
+                p.openInventory(new ForeignPolicyInventory(claim, read).getInventory());
+            });
+        }
 
         if (claim.switchesLocked) {
             setItem(lever, Material.HEAVY_WEIGHTED_PRESSURE_PLATE).n(ChatColor.YELLOW + "Switches" + ChatColor.GRAY + ": " + ChatColor.RED + "Locked.");
@@ -40,13 +37,13 @@ public class ForeignPolicyInventory extends BaseInventory {
             setItem(lever, Material.OAK_PRESSURE_PLATE).n(ChatColor.YELLOW + "Switches" + ChatColor.GRAY + ": " + ChatColor.GREEN + "Unlocked.");
         }
 
-        setAction(lever, (p,e) -> {
-            claim.switchesLocked = !claim.switchesLocked;
-            claim.forwardUpdateFrom(claim);
-            p.openInventory(new ForeignPolicyInventory(claim).getInventory());
-        });
-
-
+        if (!read) {
+            setAction(lever, (p,e) -> {
+                claim.switchesLocked = !claim.switchesLocked;
+                claim.forwardUpdateFrom(claim);
+                p.openInventory(new ForeignPolicyInventory(claim, read).getInventory());
+            });
+        }
 
         if (claim.inventoriesLocked) {
             setItem(chest, Material.TRIPWIRE_HOOK).n(ChatColor.YELLOW + "Inventories" + ChatColor.GRAY + ": " + ChatColor.RED + "Locked.");
@@ -54,12 +51,13 @@ public class ForeignPolicyInventory extends BaseInventory {
             setItem(chest, Material.CHEST).n(ChatColor.YELLOW + "Inventories" + ChatColor.GRAY + ": " + ChatColor.GREEN + "Unlocked.");
         }
 
-        setAction(chest, (p,e) -> {
-            claim.inventoriesLocked = !claim.inventoriesLocked;
-            claim.forwardUpdateFrom(claim);
-            p.openInventory(new ForeignPolicyInventory(claim).getInventory());
-        });
-
+        if (!read) {
+            setAction(chest, (p,e) -> {
+                claim.inventoriesLocked = !claim.inventoriesLocked;
+                claim.forwardUpdateFrom(claim);
+                p.openInventory(new ForeignPolicyInventory(claim, read).getInventory());
+            });
+        }
 
         if (claim.monsterKilling) {
             setItem(enemy, Material.ZOMBIE_HEAD).n(ChatColor.YELLOW + "Monster Interactions" + ChatColor.GRAY + ": " + ChatColor.RED + "Allowed.");
@@ -67,12 +65,13 @@ public class ForeignPolicyInventory extends BaseInventory {
             setItem(enemy, Material.SKELETON_SKULL).n(ChatColor.YELLOW + "Monster Interactions" + ChatColor.GRAY + ": " + ChatColor.GREEN + "Disallowed.");
         }
 
-        setAction(enemy, (p,e) -> {
-            claim.monsterKilling = !claim.monsterKilling;
-            claim.forwardUpdateFrom(claim);
-            p.openInventory(new ForeignPolicyInventory(claim).getInventory());
-        });
-
+        if (!read) {
+            setAction(enemy, (p,e) -> {
+                claim.monsterKilling = !claim.monsterKilling;
+                claim.forwardUpdateFrom(claim);
+                p.openInventory(new ForeignPolicyInventory(claim, read).getInventory());
+            });
+        }
 
         if (claim.livestockKilling) {
             setItem(animal, Material.PORKCHOP).n(ChatColor.YELLOW + "Animal Interactions" + ChatColor.GRAY + ": " + ChatColor.RED + "Allowed.");
@@ -80,10 +79,12 @@ public class ForeignPolicyInventory extends BaseInventory {
             setItem(animal, Material.COOKED_PORKCHOP).n(ChatColor.YELLOW + "Animal Interactions" + ChatColor.GRAY + ": " + ChatColor.GREEN + "Disallowed.");
         }
 
-        setAction(animal, (p,e) -> {
-            claim.livestockKilling = !claim.livestockKilling;
-            claim.forwardUpdateFrom(claim);
-            p.openInventory(new ForeignPolicyInventory(claim).getInventory());
-        });
+        if (!read) {
+            setAction(animal, (p,e) -> {
+                claim.livestockKilling = !claim.livestockKilling;
+                claim.forwardUpdateFrom(claim);
+                p.openInventory(new ForeignPolicyInventory(claim, read).getInventory());
+            });
+        }
     }
 }

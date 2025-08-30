@@ -64,7 +64,7 @@ public class ActionBarStuff extends BukkitRunnable {
 					} else {
 						
 						Security access = foreigner.getAccess(playerData);
-						if (foreigner != null && (access == Security.MEMBER || access == Security.ADMIN)) {
+						if (foreigner != null && (access == Security.ADMIN)) {
 							ting = ChatColor.GREEN + "Claims a 61x61 block area";
 						} else {
 							ting = ChatColor.RED + "Cannot place claim here";
@@ -73,9 +73,7 @@ public class ActionBarStuff extends BukkitRunnable {
 				} else {
 					Security access = merger.getAccess(playerData);
 					
-					if ((access == Security.MEMBER )) {
-						ting = ChatColor.GOLD + "Merge with " + merger.getPlayer().getRankedName() + "'s " + ChatColor.GOLD + "claim" ;
-					} else if (access == Security.ADMIN) {
+				    if (access == Security.ADMIN) {
 						ting = ChatColor.GOLD + "Merge with nearby claim";
 					} else {
 						ting = ChatColor.RED + "Cannot place claim here";

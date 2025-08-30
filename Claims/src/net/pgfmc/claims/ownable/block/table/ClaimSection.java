@@ -73,27 +73,6 @@ public class ClaimSection {
 		return null;
 	}
 	
-	public Claim getClosestClaim(Vector4 v, Range r) {
-		
-		
-		
-		Set<Claim> claimes = this.getNearbyClaims(v, r);
-		
-		
-		
-		return claimes.stream().reduce( (x, y) -> {
-			
-			double d1 = Math.abs(Math.sqrt((v.x() - x.getLocation().x()) + (v.y() - x.getLocation().y())));
-			double d2 = Math.abs(Math.sqrt((v.x() - y.getLocation().x()) + (v.y() - y.getLocation().y())));
-			
-			if (d1 > d2) {
-				return y;
-			} else {
-				return x;
-			}
-		}).orElse(null);
-	}
-	
 	public Set<Claim> getNearbyClaims(Vector4 v, Range r) {
 
 		final Set<Claim> ob = getClaims(this, v, r);

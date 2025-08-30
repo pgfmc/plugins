@@ -9,18 +9,22 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
+import net.pgfmc.claims.Main;
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.inventory.ConfirmInventory;
 import net.pgfmc.core.api.inventory.ListInventory;
 import net.pgfmc.core.api.inventory.extra.Butto;
 import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.ItemWrapper;
 import net.pgfmc.core.util.vector4.Vector4;
 
 public class ClaimConfigInventory extends BaseInventory {
 	
-	public ClaimConfigInventory(Claim claim) {
-		super(27, "Claim Settings");
+	public ClaimConfigInventory(Claim claim, boolean read) {
+        super(27, (read) ? "Claim View" : "Claim Settings");
 
         int membersList = 10;
         int addPlayer = 11;
@@ -30,24 +34,46 @@ public class ClaimConfigInventory extends BaseInventory {
 		
 		setItem(membersList, Material.BOOK).n(ChatColor.GRAY + "Members");
 		setAction(membersList, (p, e) -> {
-			p.openInventory(new PlayerViewInventory(claim).getInventory());
+			p.openInventory(new PlayerViewInventory(claim, read).getInventory());
 		});
 		
-		setItem(addPlayer, Material.PLAYER_HEAD).n(ChatColor.GRAY + "Add member");
-		setAction(addPlayer, (p,e) -> {
-			p.openInventory(new PlayerAddInventory(claim).getInventory());
-		});
+        if (!read) {
+		    setItem(addPlayer, Material.PLAYER_HEAD).n(ChatColor.GRAY + "Add member");
+		    setAction(addPlayer, (p,e) -> {
+		    	p.openInventory(new PlayerAddInventory(claim).getInventory());
+		    });
+        }
 
         Vector4 loc = claim.getLocation();
+        String name = "";
 
+        if (claim.getPlayer() == null) {
+            name = ChatColor.LIGHT_PURPLE + "Creative"; 
+        } else {
+            name = ChatColor.WHITE + "Owned by " + claim.getPlayer().getRankedName() + ChatColor.RESET;
+        }
+
+        Pair beaconInfo = claim.getBeaconInfo();
+        int selfBeacons = claim.beacons.size();
 
 
         setItem(info, Material.PAPER).n(ChatColor.WHITE + "Claim Info").l(
+                name + 
                 ChatColor.GRAY + 
-                "X " + String.valueOf(loc.x()) + 
+                "\nX " + String.valueOf(loc.x()) + 
                 "\nY " + String.valueOf(loc.y()) +
-                "\nZ " + String.valueOf(loc.z())
+                "\nZ " + String.valueOf(loc.z()) +
+                "\nBeacons Linked to this Claim: " + ChatColor.AQUA + String.valueOf(selfBeacons) +
+                ChatColor.GRAY + "\nTotal Beacons in Network: " + ChatColor.AQUA + String.valueOf(beaconInfo.beaconCount) +
+                displayEffects(beaconInfo.effects) +
+                ChatColor.WHITE + "\nClick to open list of " + ChatColor.GOLD + "Merged Claims" + ChatColor.WHITE + "!"
             );
+
+        setAction(info, (p,e) -> {
+            ClaimViewInventory cvi = new ClaimViewInventory(claim);
+            cvi.setBack(0, new ClaimConfigInventory(claim, read).getInventory());
+            p.openInventory(cvi.getInventory());
+        });
 
         if (claim.explosionsEnabled) {
             setItem(explosions, Material.TNT).n(ChatColor.RED + "Allow Explosions? " + ChatColor.GRAY + "(" + ChatColor.GREEN + "yes" + ChatColor.GRAY + ")");
@@ -55,40 +81,31 @@ public class ClaimConfigInventory extends BaseInventory {
             setItem(explosions, Material.WATER_BUCKET).n(ChatColor.RED + "Allow Explosions? " + ChatColor.GRAY + "(" + ChatColor.RED + "no" + ChatColor.GRAY + ")");
         }
 
-        setAction(explosions, (p,e) -> {
-            claim.explosionsEnabled = !claim.explosionsEnabled;
-            claim.forwardUpdateFrom(claim);
-            p.openInventory(new ClaimConfigInventory(claim).getInventory());
-        });
+        if (!read) {
+            setAction(explosions, (p,e) -> {
+                claim.explosionsEnabled = !claim.explosionsEnabled;
+                claim.forwardUpdateFrom(claim);
+                p.openInventory(new ClaimConfigInventory(claim, read).getInventory());
+            });
+        }
 
         setItem(foreignPolicy, Material.CREEPER_HEAD).n(ChatColor.YELLOW + "Foreign Policy").l(ChatColor.GRAY + "Control what non-members are\nallowed to do in your claim!");
         setAction(foreignPolicy, (p,e) -> {
-            p.openInventory(new ForeignPolicyInventory(claim).getInventory());
+            p.openInventory(new ForeignPolicyInventory(claim, read).getInventory());
         });
-
-
-
-
-
-
-
-
-
-
-
-
 	}
 	
 	public static class PlayerViewInventory extends ListInventory<PlayerData> {
 		
 		Claim claim;
+        boolean read;
 
-		public PlayerViewInventory(Claim claim) {
+		public PlayerViewInventory(Claim claim, boolean read) {
 			super(27, "Allowed Players");
 			this.claim = claim;
+            this.read = read;
 			
-			setBack(0, new ClaimConfigInventory(claim).getInventory());
-			
+			setBack(0, new ClaimConfigInventory(claim, read).getInventory());
 		}
 
 		@Override
@@ -108,9 +125,14 @@ public class ClaimConfigInventory extends BaseInventory {
 
 		@Override
 		protected Butto toAction(PlayerData arg0) {
-			return (p, e) -> {
-				p.openInventory(new RemovePlayerInventory(claim, arg0).getInventory());
-			};
+
+            return (this.read) ? 
+
+                Butto.defaultButto 
+                :
+			    (p, e) -> {
+			    	p.openInventory(new RemovePlayerInventory(claim, arg0).getInventory());
+			    };
 		}
 
 		@Override
@@ -118,18 +140,13 @@ public class ClaimConfigInventory extends BaseInventory {
 			 
 			// copied from cmd.skull lol
 			
-			ItemStack item = new ItemStack(Material.PLAYER_HEAD); // Create a new ItemStack of the Player Head type.
+            ItemStack item = new ItemWrapper(Material.PLAYER_HEAD).n(arg0.getRankedName()).gi();
 			SkullMeta meta = (SkullMeta) item.getItemMeta(); // Get the created item's ItemMeta and cast it to SkullMeta so we can access the skull properties
 			meta.setOwningPlayer(arg0.getOfflinePlayer()); // Set the skull's owner so it will adapt the skin of the provided username (case sensitive).
-			
-			
 			item.setItemMeta(meta); // Apply the modified meta to the initial created item
 			
 			return item;
 		}
-		
-		
-		
 	}
 
 	public static class PlayerAddInventory extends ListInventory<PlayerData> {
@@ -140,8 +157,7 @@ public class ClaimConfigInventory extends BaseInventory {
 			super(27, "Add Players");
 			this.claim = claim;
 			
-			setBack(0, new ClaimConfigInventory(claim).getInventory());
-			
+			setBack(0, new ClaimConfigInventory(claim, false).getInventory());
 		}
 
 		@Override
@@ -172,18 +188,13 @@ public class ClaimConfigInventory extends BaseInventory {
 			 
 			// copied from cmd.skull lol
 			
-			ItemStack item = new ItemStack(Material.PLAYER_HEAD); // Create a new ItemStack of the Player Head type.
+            ItemStack item = new ItemWrapper(Material.PLAYER_HEAD).n(arg0.getRankedName()).gi();
 			SkullMeta meta = (SkullMeta) item.getItemMeta(); // Get the created item's ItemMeta and cast it to SkullMeta so we can access the skull properties
 			meta.setOwningPlayer(arg0.getOfflinePlayer()); // Set the skull's owner so it will adapt the skin of the provided username (case sensitive).
-			
-			
 			item.setItemMeta(meta); // Apply the modified meta to the initial created item
 			
 			return item;
 		}
-		
-		
-		
 	}
 	
 	public static class AddPlayerConfirm extends ConfirmInventory {
@@ -201,7 +212,6 @@ public class ClaimConfigInventory extends BaseInventory {
 		@Override
 		protected void cancelAction(Player arg0, InventoryClickEvent arg1) {
 			arg0.openInventory(new PlayerAddInventory(claim).getInventory());
-			
 		}
 
 		@Override
@@ -210,9 +220,7 @@ public class ClaimConfigInventory extends BaseInventory {
 			arg0.closeInventory();
 			arg0.sendMessage(ChatColor.GOLD + "Added " + player.getRankedName() + ChatColor.GOLD + " to your base.");
 			claim.forwardUpdateFrom(claim);
-			
 		}
-		
 	}
 	
 	public static class RemovePlayerInventory extends ConfirmInventory {
@@ -228,8 +236,7 @@ public class ClaimConfigInventory extends BaseInventory {
 
 		@Override
 		protected void cancelAction(Player arg0, InventoryClickEvent arg1) {
-			arg0.openInventory(new PlayerViewInventory(claim).getInventory());
-			
+			arg0.openInventory(new PlayerViewInventory(claim, false).getInventory());
 		}
 
 		@Override
@@ -240,4 +247,41 @@ public class ClaimConfigInventory extends BaseInventory {
 			claim.forwardUpdateFrom(claim);
 		}
 	}
+
+    public static String displayEffects(ArrayList<PotionEffect> effects) {
+        String acc = "";
+        if (effects.size() > 0) {
+            acc = ChatColor.LIGHT_PURPLE + "\nEffects:";
+            for (PotionEffect effect : effects) {
+
+                PotionEffectType type = effect.getType();
+
+                acc += ChatColor.GRAY + "\n - ";
+
+                // I have to yanderedev code because its coded as seperate constants, not an enum lmao
+                if (type.equals(PotionEffectType.STRENGTH)) {
+                    acc += ChatColor.GOLD + "Strength";
+                } else if (type.equals(PotionEffectType.JUMP_BOOST)) {
+                    acc += ChatColor.YELLOW + "Jump Boost";
+                } else if (type.equals(PotionEffectType.SPEED)) {
+                    acc += ChatColor.AQUA + "Speed";
+                } else if (type.equals(PotionEffectType.HASTE)) {
+                    acc += ChatColor.GOLD + "Haste";
+                } else if (type.equals(PotionEffectType.REGENERATION)) {
+                    acc += ChatColor.RED + "Regeneration";
+                } else if (type.equals(PotionEffectType.RESISTANCE)) {
+                    acc += ChatColor.LIGHT_PURPLE + "Resistance";
+                } else {
+                    Main.getPlugin().getLogger().info("Invalid Buff passed to displayEffects: " + type.toString());
+                    continue;
+                }
+
+                if (effect.getAmplifier() == 1) {
+                    acc += " II";
+                }
+            }
+        }
+
+        return acc;
+    }
 }
