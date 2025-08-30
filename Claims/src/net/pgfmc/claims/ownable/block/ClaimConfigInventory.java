@@ -188,11 +188,9 @@ public class ClaimConfigInventory extends BaseInventory {
 			 
 			// copied from cmd.skull lol
 			
-			ItemStack item = new ItemStack(Material.PLAYER_HEAD); // Create a new ItemStack of the Player Head type.
+            ItemStack item = new ItemWrapper(Material.PLAYER_HEAD).n(arg0.getRankedName()).gi();
 			SkullMeta meta = (SkullMeta) item.getItemMeta(); // Get the created item's ItemMeta and cast it to SkullMeta so we can access the skull properties
 			meta.setOwningPlayer(arg0.getOfflinePlayer()); // Set the skull's owner so it will adapt the skin of the provided username (case sensitive).
-			
-			
 			item.setItemMeta(meta); // Apply the modified meta to the initial created item
 			
 			return item;
