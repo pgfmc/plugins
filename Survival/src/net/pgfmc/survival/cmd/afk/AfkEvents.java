@@ -2,7 +2,6 @@ package net.pgfmc.survival.cmd.afk;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,6 +11,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.SoundEffect;
 
 public class AfkEvents implements Listener {
 	
@@ -71,7 +71,7 @@ public class AfkEvents implements Listener {
 		{
 			p.setInvulnerable(false);
 			p.sendMessage(ChatColor.RED + "AFK mode off.");
-			pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+			SoundEffect.ERROR.play(pd);
 			
 			pd.removeTag("afk");
 		} else if (!isAfk)
@@ -89,14 +89,14 @@ public class AfkEvents implements Listener {
 			  || p.isSwimming() || p.isClimbing())
 			{
 				p.sendMessage(ChatColor.RED + "You cannot activate AFK right now.");
-				pd.playSound(Sound.ENTITY_VILLAGER_NO);
+				SoundEffect.DENY.play(pd);
 				
 				return;
 			}
 			
 			p.sendMessage(ChatColor.GREEN + "AFK mode on.");
 			p.setInvulnerable(true);
-			pd.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
+			SoundEffect.PING.play(pd);
 			
 			pd.addTag("afk");
 			

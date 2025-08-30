@@ -4,13 +4,13 @@ import java.util.Arrays;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.event.inventory.InventoryType;
 
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.teleport.TimedTeleport;
+import net.pgfmc.core.util.SoundEffect;
 import net.pgfmc.survival.menu.staff.inventorybackups.InventoryBackupListInventory;
 import net.pgfmc.survival.menu.staff.inventorysee.InventorySeeSelectInventory;
 
@@ -38,7 +38,7 @@ public class ManagePlayerInventory extends BaseInventory {
 		{
 			setAction(11, (player, event) -> {
 				player.sendMessage(ChatColor.RED + "Player is offline: cannot perform command.");
-				playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+				SoundEffect.ERROR.play(playerdata);
 				
 			});
 			
@@ -65,7 +65,7 @@ public class ManagePlayerInventory extends BaseInventory {
 		{
 			setAction(12, (player, event) -> {
 				player.sendMessage(ChatColor.RED + "Player is offline: cannot perform command.");
-				playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+				SoundEffect.ERROR.play(playerdata);
 				
 			});
 			
@@ -86,7 +86,7 @@ public class ManagePlayerInventory extends BaseInventory {
 			setAction(13, (player, event) -> {
 				new TimedTeleport(player, target.getPlayer().getLocation(), 0, 0, true).setAct(VOID -> {
 					player.sendMessage(ChatColor.GREEN + "Poof!");
-					playerdata.playSound(Sound.ENTITY_ENDERMAN_TELEPORT);
+					SoundEffect.TELEPORT.play(playerdata);
 					
 				});
 				
@@ -98,7 +98,7 @@ public class ManagePlayerInventory extends BaseInventory {
 		{
 			setAction(13, (player, event) -> {
 				player.sendMessage(ChatColor.RED + "Player is offline: cannot perform command.");
-				playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+				SoundEffect.ERROR.play(playerdata);
 				
 			});
 			
@@ -122,12 +122,12 @@ public class ManagePlayerInventory extends BaseInventory {
 				target.sendMessage(ChatColor.GOLD + "Your nickname has been reset by an admin to " + target.getRankedName() + ChatColor.GOLD + ".");
 				CoreMain.updatePlayerNameplate(target);
 				
-				target.playSound(target.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
+				SoundEffect.PING.play(target);
 				
 			}
 			
 			player.sendMessage(ChatColor.GOLD + "Player's nickname successfully reset to " + target.getRankedName() + ChatColor.GOLD + ".");
-			player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
+			SoundEffect.PING.play(player);
 			
 		});
 		
@@ -146,7 +146,7 @@ public class ManagePlayerInventory extends BaseInventory {
 			setAction(15, (player, event) -> {
 				player.performCommand("heal " + target.getName());
 				player.sendMessage(ChatColor.GREEN + target.getRankedName() + ChatColor.GREEN + " was healed!");
-				playerdata.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
+				SoundEffect.PING.play(playerdata);
 				
 			});
 			
@@ -154,7 +154,7 @@ public class ManagePlayerInventory extends BaseInventory {
 		{
 			setAction(15, (player, event) -> {
 				player.sendMessage(ChatColor.RED + "Player is offline: cannot perform command.");
-				playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+				SoundEffect.ERROR.play(playerdata);
 				
 			});
 			

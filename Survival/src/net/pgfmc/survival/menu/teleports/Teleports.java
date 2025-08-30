@@ -7,7 +7,6 @@ import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.event.inventory.InventoryType;
 
 import net.pgfmc.core.api.inventory.BaseInventory;
@@ -15,6 +14,7 @@ import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.request.Request;
 import net.pgfmc.core.api.request.RequestType;
 import net.pgfmc.core.api.request.inv.RequestListInventory;
+import net.pgfmc.core.util.SoundEffect;
 import net.pgfmc.survival.Main;
 import net.pgfmc.survival.menu.CommandMenuInventory;
 import net.pgfmc.survival.menu.back.BackConfirmInventory;
@@ -63,7 +63,7 @@ public class Teleports extends BaseInventory {
                     .l(ChatColor.RED + "No Players Online");
 
             setAction(tpaMenu, (player, event) -> {
-                playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+                SoundEffect.ERROR.play(playerdata);
             });
         }
 
@@ -79,7 +79,7 @@ public class Teleports extends BaseInventory {
         if (playerdata.getData("backLoc") == null)
         {
             setAction(back, (player, event) -> {
-                playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+                SoundEffect.ERROR.play(playerdata);
             });
             
             setItem(back, Material.ARROW).n(ChatColor.DARK_GREEN + "Teleport Back")
@@ -110,7 +110,7 @@ public class Teleports extends BaseInventory {
         if (requests == null || requests.isEmpty()) // no incoming requests
         {
             setAction(requestMenu, (player, event) -> {
-                playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+                SoundEffect.ERROR.play(playerdata);
             });
 
             setItem(requestMenu, Material.BOOK).n(ChatColor.DARK_RED + "Requests Menu")

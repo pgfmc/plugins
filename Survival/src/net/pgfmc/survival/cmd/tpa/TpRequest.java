@@ -2,7 +2,6 @@ package net.pgfmc.survival.cmd.tpa;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
 
 import net.pgfmc.core.api.request.EndBehavior;
@@ -10,6 +9,7 @@ import net.pgfmc.core.api.request.Request;
 import net.pgfmc.core.api.request.RequestType;
 import net.pgfmc.core.api.teleport.TimedTeleport;
 import net.pgfmc.core.util.ItemWrapper;
+import net.pgfmc.core.util.SoundEffect;
 
 public class TpRequest extends RequestType {
 	
@@ -37,7 +37,7 @@ public class TpRequest extends RequestType {
 		r.asker.sendMessage(ChatColor.GOLD + "Teleport request sent to " + r.target.getRankedName() + ChatColor.GOLD + "!");
 		r.target.sendMessage(ChatColor.GOLD + "Incoming Teleport request from " + r.asker.getRankedName() + ChatColor.GOLD + ".");
 		r.target.sendMessage(ChatColor.GOLD + "Use " + ChatColor.AQUA + "/tpaccept " + ChatColor.GOLD + "to accept!");
-		r.target.playSound(r.target.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
+		SoundEffect.PING.play(r.target);
 		
 		return true;
 	}
@@ -48,12 +48,12 @@ public class TpRequest extends RequestType {
 		case ACCEPT:
 			
 			r.asker.sendMessage(ChatColor.GOLD + "Teleporting to " + r.target.getRankedName() + ChatColor.GOLD + " in 5 seconds");
-			r.asker.playSound(r.asker.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
+			SoundEffect.PING.play(r.asker);
 			r.target.sendMessage(ChatColor.GOLD + "Teleporting "+ r.asker.getRankedName() + ChatColor.GOLD + " here in 5 seconds");
 			
 			new TimedTeleport(r.asker.getPlayer(), r.target.getPlayer(), 5, 40, true).setAct(v -> {
 				r.asker.sendMessage(ChatColor.GREEN + "Poof!");
-				r.asker.playSound(Sound.ENTITY_ENDERMAN_TELEPORT);
+				SoundEffect.TELEPORT.play(r.asker);
 				if (r.target.hasTag("afk")) r.target.removeTag("afk");
 			});
 			break;

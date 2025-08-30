@@ -1,12 +1,12 @@
 package net.pgfmc.survival.menu.staff.inventorybackups;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import net.pgfmc.core.api.inventory.ConfirmInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.SoundEffect;
 import net.pgfmc.survival.menu.staff.inventorybackups.noninv.InventoryBackup;
 import net.pgfmc.survival.menu.staff.inventorybackups.noninv.InventoryBackupScheduler;
 
@@ -32,8 +32,8 @@ public class InventoryBackupConfirmInventory extends ConfirmInventory {
 			p.sendMessage(ChatColor.GREEN + "Inventory restored.");
 			target.getPlayer().sendMessage(ChatColor.GREEN + "A moderator has restored your inventory.");
 			
-			PlayerData.from(p).playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
-			target.playSound(target.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
+			SoundEffect.PING.play(p);
+			SoundEffect.PING.play(target);
 			
 			p.openInventory(new InventoryBackupListInventory(playerdata, target).getInventory());
 			
@@ -41,14 +41,14 @@ public class InventoryBackupConfirmInventory extends ConfirmInventory {
 		}
 		
 		p.sendMessage(ChatColor.RED + "Inventory could not be restored.");
-		playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+		SoundEffect.ERROR.play(playerdata);
 		p.openInventory(new InventoryBackupListInventory(playerdata, target).getInventory());
 		
 	}
 
 	@Override
 	protected void cancelAction(Player p, InventoryClickEvent e) {
-		playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+		SoundEffect.ERROR.play(playerdata);
 		p.openInventory(new InventoryBackupListInventory(playerdata, target).getInventory());
 		
 	}

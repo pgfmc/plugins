@@ -9,7 +9,6 @@ import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -18,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.ItemWrapper;
+import net.pgfmc.core.util.SoundEffect;
 import net.pgfmc.core.util.files.Mixins;
 
 public class Rewards {
@@ -117,13 +117,13 @@ public class Rewards {
 		if (!rewards.containsKey(reward_id) && REWARDS.containsKey(reward_id))
 		{
 			playerdata.sendMessage(ChatColor.RED + "You already claimed this item!");
-			playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+			SoundEffect.ERROR.play(playerdata);
 			
 			return false;
 		} else if (!rewards.containsKey(reward_id) && !REWARDS.containsKey(reward_id))
 		{
 			playerdata.sendMessage(ChatColor.RED + "Reward doesn't exist (error)!");
-			playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+			SoundEffect.ERROR.play(playerdata);
 			
 			return false;
 		}
@@ -137,7 +137,7 @@ public class Rewards {
 		if (playerInventoryCopy.addItem(rewards.get(reward_id)).size() > 0)
 		{
 			playerdata.sendMessage(ChatColor.RED + "Could not claim item. Not enough inventory space!");
-			playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+			SoundEffect.ERROR.play(playerdata);
 			
 			return false;
 			
@@ -150,7 +150,7 @@ public class Rewards {
 		playerdata.addTag(reward_id);
 		player.getInventory().addItem(rewardItem);
 		
-		playerdata.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
+		SoundEffect.PING.play(playerdata);
 		
 		return true;		
 	}

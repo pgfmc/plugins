@@ -5,11 +5,11 @@ import java.util.Collections;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.event.inventory.InventoryType;
 
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.SoundEffect;
 import net.pgfmc.survival.Main;
 import net.pgfmc.survival.menu.CommandMenuInventory;
 import net.wesjd.anvilgui.AnvilGUI;
@@ -36,7 +36,7 @@ public class ProfileInventory extends BaseInventory {
 			{
 				setAction(11, (player, event) -> {
 					player.performCommand("unlink");
-					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+					SoundEffect.ERROR.play(playerdata);
 					player.openInventory(new ProfileInventory(playerdata).getInventory());
 					
 				});
@@ -48,7 +48,7 @@ public class ProfileInventory extends BaseInventory {
 				setAction(11, (player, event) -> {
 					player.closeInventory();
 					player.performCommand("link");
-					playerdata.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
+					SoundEffect.PING.play(playerdata);
 					
 				});
 				
@@ -70,7 +70,7 @@ public class ProfileInventory extends BaseInventory {
 			playerdata.sendMessage(ChatColor.LIGHT_PURPLE + "Website: " + ChatColor.BLUE + ChatColor.ITALIC + ChatColor.UNDERLINE + "https://www.pgfmc.net");
 			playerdata.sendMessage(ChatColor.LIGHT_PURPLE + "Discord Server: " + ChatColor.BLUE + ChatColor.ITALIC + ChatColor.UNDERLINE + "https://discord.gg/zdxeREe");
 			playerdata.sendMessage(ChatColor.LIGHT_PURPLE + "Talk to bk about becoming a donator! :)");
-			playerdata.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
+			SoundEffect.PING.play(playerdata);
 			
 		});
 		
@@ -99,7 +99,7 @@ public class ProfileInventory extends BaseInventory {
 			        final String newNickname = stateSnapshot.getText();
 			        stateSnapshot.getPlayer().performCommand("nick " + newNickname);
 			        
-			        playerdata.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
+			        SoundEffect.PING.play(playerdata);
 			        
 			        return Arrays.asList(AnvilGUI.ResponseAction.run(new Runnable() {
 
@@ -119,7 +119,7 @@ public class ProfileInventory extends BaseInventory {
 		} else
 		{
 			setAction(15, (player, event) -> {
-				playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+				SoundEffect.ERROR.play(playerdata);
 				playerdata.sendMessage(ChatColor.RED + "Only donators can use this command.");
 				
 			});
