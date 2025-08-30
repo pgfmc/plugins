@@ -127,7 +127,7 @@ public class ClaimsTable {
 	 * @return
 	 */
 	private static long getSectionKey(Vector4 v) {
-		return LongHash.toLong(v.x()/256, v.z()/256);
+		return LongHash.toLong(v.x()/512, v.z()/512);
 	}
 	
 	public static Set<Claim> getAllClaims() {
