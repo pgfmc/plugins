@@ -9,7 +9,10 @@ import org.bukkit.Material;
 import org.bukkit.block.Beacon;
 import org.bukkit.block.Block;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.scheduler.BukkitRunnable;
 
+
+import net.pgfmc.claims.Main;
 import net.pgfmc.claims.ownable.block.table.ClaimSection;
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
@@ -42,7 +45,7 @@ public class Claim {
 	// protected String name;
 	private PlayerData placer;
 	private Vector4 vector;
-	private Set<PlayerData> members;
+	private Set<PlayerData> members = new HashSet<>();
     public boolean explosionsEnabled = false;
     public boolean doorsLocked = true;
     public boolean switchesLocked = true;
@@ -50,6 +53,9 @@ public class Claim {
     public boolean monsterKilling = true;
     public boolean livestockKilling = false;
     public ArrayList<Vector4> beacons = new ArrayList<Vector4>();
+    private ArrayList<Claim> network = new ArrayList<Claim>();
+
+    public boolean calculated = false; // Wether or not this claim's network has been calculated this tick.
 	
 	/**
 	 * Defines access states.
@@ -67,35 +73,26 @@ public class Claim {
 	}
 	
 	public Claim(PlayerData player, Vector4 vec, Set<PlayerData> members) {
+		vector = vec;
+
+        //if (player == null) {return;}
+        //if (vec == null) {return;}
 
 		Block block = vec.getBlock();
-		vector = vec;
-        Claim copyFrom = ClaimsTable.getClosestClaim(vec, Range.MERGE);
-        if (copyFrom == null) {
-		    this.placer = player;
-		    this.members = members;
-        } else {
-            this.placer = copyFrom.placer;
-            this.members = copyFrom.members;
-            this.explosionsEnabled = copyFrom.explosionsEnabled;
-            this.doorsLocked = copyFrom.doorsLocked;
-            this.switchesLocked = copyFrom.switchesLocked;
-            this.inventoriesLocked = copyFrom.inventoriesLocked;
-            this.monsterKilling = copyFrom.monsterKilling;
-            this.livestockKilling = copyFrom.livestockKilling;
-        }
-		
+
 		if (block.getType() == Material.LODESTONE) {
-			
 			ClaimsTable.put(this);
 			return;
 		}
+
+		this.placer = player;
+        this.members = members;
 	}
 	
 	public void forwardUpdateFrom(Claim claim) {
-        for (Claim clame : getMergedClaims()) {
-            clame.members = claim.members;
+        for (Claim clame : getNetwork()) {
             clame.placer = claim.placer;
+            clame.members = claim.members;
             clame.explosionsEnabled = claim.explosionsEnabled;
             clame.doorsLocked = claim.doorsLocked;
             clame.switchesLocked = claim.switchesLocked;
@@ -105,25 +102,43 @@ public class Claim {
         }
 	}
 
-
-
-    public Set<Claim> getMergedClaims() {
-        Set<Claim> claimsOut = new HashSet<Claim>();		
-        claimsOut.add(this);
-        this.appendMergedClaims(claimsOut);
-        return claimsOut;
+    // Adding a claim to this claim's network, will add it to all in the network.
+    private boolean addMerge(Claim add) {
+        if (!add.calculated) {
+            this.network.add(add);
+            add.network = this.network;
+            add.forwardUpdateFrom(this);
+            add.calculated = true;
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    private void appendMergedClaims(Set<Claim> mergedPast) {
+    public ArrayList<Claim> getNetwork() {
+        return this.network;
+    }
 
-        if (!mergedPast.contains(this)) {
-            mergedPast.add(this);
+    public void calculateNetwork(boolean reset) {
+        ArrayList<Claim> network = new ArrayList<>(); 
+
+        network.add(this);
+        this.network = network;
+        this.calculated = true;
+        appendMergedClaims(network);
+
+        if (reset) {
+            for (Claim claim : network) {
+                claim.calculated = false;
+            }
         }
+    }
+
+    private void appendMergedClaims(ArrayList<Claim> network) {
 
         for (Claim claim : ClaimsTable.getNearbyClaims(this.getLocation(), Range.MERGE)) {
-            if (!mergedPast.contains(claim) && claim.getPlayer() == mergedPast.stream().findFirst().get().getPlayer()) {
-                mergedPast.add(claim);
-                claim.appendMergedClaims(mergedPast);
+            if (this.addMerge(claim) && claim.getPlayer() == network.get(0).getPlayer()) {
+                claim.appendMergedClaims(network);
             }
         }
     }
@@ -131,7 +146,7 @@ public class Claim {
     public Pair getBeaconInfo() {
         ArrayList<Vector4> beacons = new ArrayList<>();
         ArrayList<PotionEffect> effects = new ArrayList<>();
-        Set<Claim> claims = getMergedClaims();
+        ArrayList<Claim> claims = getNetwork();
 
         for (Claim claim : claims) {
             for (Vector4 pos : claim.beacons) {
