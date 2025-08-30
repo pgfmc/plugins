@@ -2,7 +2,6 @@ package net.pgfmc.claims.ownable.block.events;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
-import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -13,6 +12,7 @@ import net.pgfmc.claims.ownable.block.ClaimConfigInventory;
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
 import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.SoundEffect;
 import net.pgfmc.core.util.vector4.Vector4;
 
 /**
@@ -72,7 +72,7 @@ public class BBEvent implements Listener {
 		
 		pd.sendMessage(ChatColor.RED + "This land is claimed.");
 		e.setCancelled(true);
-		pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+		SoundEffect.ERROR.play(pd);
 		
 	}
 	
