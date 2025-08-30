@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -14,6 +13,7 @@ import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.cmd.serverselector.ServerSelectorInventory;
 import net.pgfmc.core.util.Lang;
+import net.pgfmc.core.util.SoundEffect;
 import net.pgfmc.survival.Rewards;
 import net.pgfmc.survival.cmd.Skull;
 import net.pgfmc.survival.menu.profile.ProfileInventory;
@@ -133,7 +133,7 @@ public class CommandMenuInventory implements InventoryHolder {
 			} else
 			{
 				setAction(23, (player, event) -> {
-					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+					SoundEffect.ERROR.play(playerdata);
 					playerdata.sendMessage(ChatColor.RED + "Only donators can use this command.");
 				});
 				
@@ -158,7 +158,7 @@ public class CommandMenuInventory implements InventoryHolder {
 			} else
 			{
 				setAction(crafting, (player, event) -> {
-					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+					SoundEffect.ERROR.play(playerdata);
 					playerdata.sendMessage(ChatColor.RED + "Only donators can use this command.");
 				});
 				
@@ -182,7 +182,7 @@ public class CommandMenuInventory implements InventoryHolder {
 		//	{
 		//		setAction(5, (player, event) -> {
 		//			playerdata.sendMessage(ChatColor.RED + "There are no incoming requests.");
-		//			playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+		//			SoundEffect.ERROR.play(playerdata);
 		//			
 		//		});
 		//		
@@ -220,7 +220,7 @@ public class CommandMenuInventory implements InventoryHolder {
 					setAction(pvp, (player, event) -> {
 						player.performCommand("pvp");
 						player.openInventory(new CommandMenuInventory(playerdata).getInventory());
-						playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+						SoundEffect.ERROR.play(playerdata);
 					});
 					
 					setItem(pvp, Material.DIAMOND_SWORD).n(ChatColor.GRAY + "PVP: " + ChatColor.DARK_RED + "Enabled")
@@ -230,7 +230,7 @@ public class CommandMenuInventory implements InventoryHolder {
 					setAction(pvp, (player, event) -> {
 						player.performCommand("pvp");
 						player.openInventory(new CommandMenuInventory(playerdata).getInventory());
-						playerdata.playSound(playerdata.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
+						SoundEffect.PING.play(playerdata);
 					});
 					
 					setItem(pvp, Material.WOODEN_SWORD).n(ChatColor.GRAY + "PVP: Disabled")
@@ -253,7 +253,7 @@ public class CommandMenuInventory implements InventoryHolder {
 			{
 				setAction(rewards, (player, event) -> {
 					playerdata.sendMessage(ChatColor.RED + "There are no rewards currently.");
-					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+					SoundEffect.ERROR.play(playerdata);
 				});
 				
 				setItem(rewards, Material.CHISELED_BOOKSHELF).n(ChatColor.YELLOW + "Rewards (" + numberOfRewards + ")");
@@ -319,7 +319,7 @@ public class CommandMenuInventory implements InventoryHolder {
 						playerdata.setData("particle_effect", null).queue();
 					}
 					
-					playerdata.playSound(player.getLocation(), Sound.BLOCK_LEVER_CLICK, 1.0F, 1.5F);
+					SoundEffect.CLICK.play(playerdata);
 					player.openInventory(new CommandMenuInventory(playerdata).getInventory()); // refresh
 					
 				});
@@ -347,7 +347,7 @@ public class CommandMenuInventory implements InventoryHolder {
 						playerdata.setData("particle_effect", null).queue();
 					}
 					
-					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+					SoundEffect.ERROR.play(playerdata);
 					playerdata.sendMessage(Lang.PERMISSION_DENIED.getLang());
 					
 				});

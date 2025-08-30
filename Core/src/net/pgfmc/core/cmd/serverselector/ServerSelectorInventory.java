@@ -6,12 +6,12 @@ import java.util.Map;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.event.inventory.InventoryType;
 
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.SoundEffect;
 import net.pgfmc.core.util.proxy.PluginMessageType;
 
 /**
@@ -84,7 +84,7 @@ public final class ServerSelectorInventory extends BaseInventory {
 						
 						player.sendMessage(ChatColor.RED + "You are already connected to Season13.");
 						
-						playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+						SoundEffect.ERROR.play(playerdata);
 						
 					});
 					
@@ -104,7 +104,7 @@ public final class ServerSelectorInventory extends BaseInventory {
 						
 						PluginMessageType.CONNECT.send(player, "season13");
 						
-						playerdata.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1F, 2F);
+						SoundEffect.WORKING.play(playerdata);
 						
 					});
 					
@@ -120,7 +120,7 @@ public final class ServerSelectorInventory extends BaseInventory {
 						
 						player.sendMessage(ChatColor.RED + "Season13 is offline.");
 						
-						playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+						SoundEffect.ERROR.play(playerdata);
 						
 					});
 					
@@ -154,7 +154,7 @@ public final class ServerSelectorInventory extends BaseInventory {
 					
 					player.sendMessage(ChatColor.RED + "You are already connected to " + serverNamePronounified + ".");
 					
-					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+					SoundEffect.ERROR.play(playerdata);
 					
 				});
 				
@@ -173,7 +173,7 @@ public final class ServerSelectorInventory extends BaseInventory {
 					
 					PluginMessageType.CONNECT.send(player, server);
 					
-					playerdata.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1F, 2F);
+					SoundEffect.WORKING.play(playerdata);
 					
 				});
 				
@@ -188,7 +188,7 @@ public final class ServerSelectorInventory extends BaseInventory {
 					
 					player.sendMessage(ChatColor.RED + serverNamePronounified + " is offline.");
 					
-					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+					SoundEffect.ERROR.play(playerdata);
 					
 				});
 				

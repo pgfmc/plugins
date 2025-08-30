@@ -5,10 +5,10 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Sound;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.teleport.TimedTeleport;
+import net.pgfmc.core.util.SoundEffect;
 import net.pgfmc.core.util.commands.PlayerCommand;
 
 public class Warp extends PlayerCommand {
@@ -55,7 +55,7 @@ public class Warp extends PlayerCommand {
 		
 		new TimedTeleport(pd.getPlayer(), loc, 5, 40, true).setAct(v -> {
 			pd.sendMessage(ChatColor.GREEN + "Poof!");
-			pd.playSound(Sound.ENTITY_ENDERMAN_TELEPORT);
+			SoundEffect.TELEPORT.play(pd);
 			if (pd.hasTag("afk")) pd.removeTag("afk");
 		});
 		
