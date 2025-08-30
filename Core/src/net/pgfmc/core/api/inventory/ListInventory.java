@@ -8,6 +8,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import net.pgfmc.core.api.inventory.extra.Butto;
+import net.pgfmc.core.util.Logger;
 
 public abstract class ListInventory<T> extends BaseInventory {
 	
@@ -90,22 +91,14 @@ public abstract class ListInventory<T> extends BaseInventory {
 	}
 	
 	/**
-	 * Input the entry slot number, and the function will return the appropriate inventory slot number (only for SMALL inventories)
+	 * Input the entry slot number, and the function will return the appropriate inventory slot number for any size list inventory
 	 * @param index The index of the item in the given page.
-	 * @return Returns the Respective slot for the given "index" in a 27 slot inventory.
+	 * @return Returns the respective slot for the given "index" for any size list inventory
 	 */
 	private int entryToSlot(int index) {
-		
-		if (index >= 0 && index < 7) {
-			return index + 2;
-		} else if (index >= 7 && index < 14) {
-			return index + 4;
-		} else if (index >= 14 && index < 21) {
-			return index + 6;
-		} else {
-			new Exception("input \"index\" is out of bounds!");
-			return -1;
-		}
+		final double rowNumber = Math.ceil((index + 1.0) / 7.0);
+		final double shiftAmount = 2.0;
+		return (int) (rowNumber * shiftAmount + index);
 	}
 	
 	public void flipPage(int flips) {
@@ -162,9 +155,9 @@ public abstract class ListInventory<T> extends BaseInventory {
 			for (int i = 0;
 					i < 36;
 					i++) {
-				int enty = entryToSlot(i);
 				if (currentPage[i] == null) continue;
 				
+				int enty = entryToSlot(i);
 				setAction(enty, toAction(currentPage[i]));
 				setItem(enty, toItem(currentPage[i]));
 			}
@@ -204,9 +197,9 @@ public abstract class ListInventory<T> extends BaseInventory {
 			for (int i = 0;
 					i < 21;
 					i++) {
-				int enty = entryToSlot(i);
 				if (currentPage[i] == null) continue;
-				
+
+				int enty = entryToSlot(i);
 				setAction(enty, toAction(currentPage[i]));
 				setItem(enty, toItem(currentPage[i]));
 			}
