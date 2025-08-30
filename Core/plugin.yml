@@ -1,5 +1,5 @@
 name: PGF-Core
-version: 9.0.10
+version: 9.0.12
 api-version: 1.21
 authors: [bk, CrimsonDart]
 website: https://www.pgfmc.net
@@ -53,5 +53,9 @@ commands:
   testpluginmessage:
     usage: /<command> subchannel [arguments]
     description: Send test plugin messages
+    permission: group.admin
+  pgfversion:
+    usage: /<command>
+    description: Get the version of the PGF plugins
     permission: group.admin
     
