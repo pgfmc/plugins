@@ -35,6 +35,7 @@ import net.pgfmc.core.api.request.RequestType;
 import net.pgfmc.core.api.teleport.SpawnProtect;
 import net.pgfmc.core.cmd.LinkCommand;
 import net.pgfmc.core.cmd.NicknameCommand;
+import net.pgfmc.core.cmd.PGFVersionCommand;
 import net.pgfmc.core.cmd.UnlinkCommand;
 import net.pgfmc.core.cmd.serverselector.ConnectCommand;
 import net.pgfmc.core.cmd.test.inventory.TestInventorySizeCommand;
@@ -128,6 +129,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		getCommand("link").setExecutor(new LinkCommand());
 		getCommand("unlink").setExecutor(new UnlinkCommand());
 		getCommand("nickname").setExecutor(new NicknameCommand());
+		getCommand("pgfversion").setExecutor(new PGFVersionCommand());
 		new DumpCommand();
 		new TagCommand();
 		new PlayerDataSetCommand();
