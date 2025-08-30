@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 
 import net.pgfmc.core.api.inventory.ListInventory;
 import net.pgfmc.core.api.inventory.extra.Butto;
@@ -48,8 +49,11 @@ public class ClaimViewInventory extends ListInventory<Claim> {
             String name = ChatColor.GOLD + "Merged Claim";
 
             if (arg0 == this.claim) {
-                name = ChatColor.DARK_BLUE + "This Claim";
+                name = ChatColor.AQUA + "This Claim";
             }
+
+            ArrayList<PotionEffect> effects = new ArrayList<>();
+            arg0.addEffectsFromClaim(effects);
 
             Vector4 loc = arg0.getLocation();
 
@@ -59,7 +63,9 @@ public class ClaimViewInventory extends ListInventory<Claim> {
                     ChatColor.GRAY + 
                     "X " + String.valueOf(loc.x()) + 
                     "\nY " + String.valueOf(loc.y()) +
-                    "\nZ " + String.valueOf(loc.z())
+                    "\nZ " + String.valueOf(loc.z()) +
+                    ChatColor.GRAY + "\nBeacons Linked to this Claim: " + ChatColor.AQUA + String.valueOf(arg0.beacons.size()) +
+                    ClaimConfigInventory.displayEffects(effects)
                   ).gi();
         }
     }

@@ -128,29 +128,116 @@ public class Claim {
         }
     }
 
-    public ArrayList<PotionEffect> getBuffs() {
-
+    public Pair getBeaconInfo() {
+        ArrayList<Vector4> beacons = new ArrayList<>();
         ArrayList<PotionEffect> effects = new ArrayList<>();
         Set<Claim> claims = getMergedClaims();
-        
+
         for (Claim claim : claims) {
             for (Vector4 pos : claim.beacons) {
                 Block block = pos.getBlock();
                 if (block == null || !(block.getType() == Material.BEACON)) {continue;}
-                Beacon beacon = (Beacon) block.getState();
 
-                if (beacon.getPrimaryEffect() != null) {
-                    effects.add(beacon.getPrimaryEffect());
+                boolean allow = true;
+                for (Vector4 beacon : beacons) {
+                    if (beacon.equals(pos)) {
+                        allow = false;
+                        break;
+                    }
                 }
 
+                if (!allow) {continue;}
+
+                beacons.add(pos);
+                Beacon beacon = (Beacon) block.getState();
+                
+                if (beacon.getPrimaryEffect() != null) {
+                    addEffect(effects, beacon.getPrimaryEffect());
+                }
                 if (beacon.getSecondaryEffect() != null) {
-                    effects.add(beacon.getSecondaryEffect());
+                    addEffect(effects, beacon.getSecondaryEffect());
                 }
             }
         }
 
-        return effects;
+        return new Pair(effects, beacons.size()); 
     }
+
+    private static void addEffect(ArrayList<PotionEffect> effects, PotionEffect effect) {
+        for (int i = 0; i < effects.size(); i++) {
+            PotionEffect comp = effects.get(i);
+
+            if (comp.getType() != effect.getType()) {continue;}
+            if (comp.getAmplifier() >= effect.getAmplifier()) {return;}
+            effects.set(i, effect);
+            return;
+        }
+        effects.add(effect);
+    }
+
+    public void addEffectsFromClaim(ArrayList<PotionEffect> effects) {
+        for (Vector4 pos : this.beacons) {
+            Block block = pos.getBlock();
+            if (block == null || !(block.getType() == Material.BEACON)) {continue;}
+            Beacon beacon = (Beacon) block.getState();
+            if (beacon.getPrimaryEffect() != null) {
+                addEffect(effects, beacon.getPrimaryEffect());
+            }
+            if (beacon.getSecondaryEffect() != null) {
+                addEffect(effects, beacon.getSecondaryEffect());
+            }
+        }
+    }
+    
+    //public int countMergedBeacons() {
+
+    //    Set<Claim> claims = getMergedClaims();
+    //    ArrayList<Vector4> beacons = new ArrayList<>();
+    //    
+    //    for (Claim claim : claims) {
+    //        for (Vector4 pos : claim.beacons) {
+    //            Block block = pos.getBlock();
+    //            if (block == null || !(block.getType() == Material.BEACON)) {continue;}
+
+    //            boolean allow = true;
+    //            for (Vector4 beacon : beacons) {
+    //                if (beacon.equals(pos)) {
+    //                    allow = false;
+    //                    break;
+    //                }
+    //            }
+    //            if (allow) {
+    //                beacons.add(pos);
+    //            }
+    //        }
+    //    }
+
+    //    return beacons.size();
+    //}
+
+    //public ArrayList<PotionEffect> getBuffs() {
+
+    //    ArrayList<PotionEffect> effects = new ArrayList<>();
+    //    Set<Claim> claims = getMergedClaims();
+    //    
+    //    for (Claim claim : claims) {
+    //        for (Vector4 pos : claim.beacons) {
+    //            Block block = pos.getBlock();
+    //            if (block == null || !(block.getType() == Material.BEACON)) {continue;}
+    //            Beacon beacon = (Beacon) block.getState();
+
+    //            if (beacon.getPrimaryEffect() != null) {
+    //                effects.add(beacon.getPrimaryEffect());
+    //            }
+
+    //            if (beacon.getSecondaryEffect() != null) {
+    //                effects.add(beacon.getSecondaryEffect());
+    //            }
+    //        }
+    //    }
+
+    //    return effects;
+    //}
 
 	
 	/**
