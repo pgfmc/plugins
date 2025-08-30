@@ -49,7 +49,7 @@ public class BBEvent implements Listener {
 			case ADMIN:
 				if (pd.getPlayer().getGameMode() == GameMode.CREATIVE && !pd.getPlayer().isSneaking())
 				{
-					pd.getPlayer().openInventory(new ClaimConfigInventory(cont).getInventory());
+					pd.getPlayer().openInventory(new ClaimConfigInventory(cont, false).getInventory());
 					e.setCancelled(true);
 				} else
 				{
