@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,6 +17,7 @@ import net.pgfmc.core.api.inventory.ListInventory;
 import net.pgfmc.core.api.inventory.extra.Butto;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.ItemWrapper;
+import net.pgfmc.core.util.SoundEffect;
 import net.pgfmc.survival.Main;
 import net.pgfmc.survival.Rewards;
 import net.pgfmc.survival.menu.staff.StaffInventory;
@@ -72,7 +72,7 @@ public class GiveRewardsListInventory extends ListInventory<String> implements L
 	        	return Arrays.asList(AnvilGUI.ResponseAction.run(new Runnable() {
 	        		@Override
 	        		public void run() {
-	        			playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+	        			SoundEffect.ERROR.play(playerdata);
 	        			player.openInventory(new GiveRewardsListInventory(playerdata).getInventory());
 	        			
 	 				}}));
@@ -84,7 +84,7 @@ public class GiveRewardsListInventory extends ListInventory<String> implements L
 	        return Arrays.asList(AnvilGUI.ResponseAction.run(new Runnable() {
 				@Override
 				public void run() {
-					playerdata.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
+					SoundEffect.PING.play(playerdata);
 					player.openInventory(new GiveRewardsListInventory(playerdata).getInventory());
 					
 				}}));

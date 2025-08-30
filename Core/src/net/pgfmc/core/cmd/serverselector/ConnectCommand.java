@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -17,6 +16,7 @@ import com.google.common.io.ByteStreams;
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.Lang;
+import net.pgfmc.core.util.SoundEffect;
 
 /**
  * ConnectCommand is used to connect to another server.
@@ -101,7 +101,7 @@ public final class ConnectCommand implements TabExecutor {
 		if (!CoreMain.getRegisteredServersMap().keySet().isEmpty() && !CoreMain.getRegisteredServersMap().containsKey(server))
 		{
 			playerdata.sendMessage(ChatColor.RED + "This server does not exist. To see available servers, use: /connect");
-			playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+			SoundEffect.ERROR.play(playerdata);
 			
 			return true;
 		}
@@ -109,7 +109,7 @@ public final class ConnectCommand implements TabExecutor {
 		if (!CoreMain.getRegisteredServersMap().isEmpty() && !CoreMain.getRegisteredServersMap().get(server))
 		{
 			playerdata.sendMessage(ChatColor.RED + "This server is offline.");
-			playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+			SoundEffect.ERROR.play(playerdata);
 			
 			return true;
 		}
@@ -117,13 +117,13 @@ public final class ConnectCommand implements TabExecutor {
 		if (!CoreMain.getRegisteredServersMap().isEmpty() && server.equals(CoreMain.getThisServerName()))
 		{
 			playerdata.sendMessage(ChatColor.RED + "You are already connected to " + serverNamePronounified);
-			playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+			SoundEffect.ERROR.play(playerdata);
 			
 			return true;
 		}
 		
 		player.sendMessage(ChatColor.GREEN + "Attempting to connect to " + serverNamePronounified + ".");
-		playerdata.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1F, 2F);
+		SoundEffect.WORKING.play(playerdata);
 		
 		CoreMain.plugin.getLogger().info("Attempting to connect " + playerdata.getName() + " to " + serverNamePronounified + ".");
 		

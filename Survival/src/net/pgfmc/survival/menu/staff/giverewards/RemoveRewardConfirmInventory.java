@@ -1,13 +1,13 @@
 package net.pgfmc.survival.menu.staff.giverewards;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import net.pgfmc.core.api.inventory.ConfirmInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.ItemWrapper;
+import net.pgfmc.core.util.SoundEffect;
 import net.pgfmc.survival.Rewards;
 
 public class RemoveRewardConfirmInventory extends ConfirmInventory {
@@ -28,14 +28,14 @@ public class RemoveRewardConfirmInventory extends ConfirmInventory {
 	@Override
 	protected void confirmAction(Player p, InventoryClickEvent e) {
 		Rewards.removeRewardFromList(reward_id);
-		playerdata.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
+		SoundEffect.PING.play(playerdata);
 		p.openInventory(new GiveRewardsListInventory(playerdata).getInventory());
 		
 	}
 
 	@Override
 	protected void cancelAction(Player p, InventoryClickEvent e) {
-		playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+		SoundEffect.ERROR.play(playerdata);
 		p.openInventory(new GiveRewardsListInventory(playerdata).getInventory());
 		
 	}

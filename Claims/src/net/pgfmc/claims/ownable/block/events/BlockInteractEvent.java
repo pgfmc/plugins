@@ -6,7 +6,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.ArmorStand;
@@ -29,6 +28,7 @@ import net.pgfmc.claims.ownable.block.ClaimConfigInventory;
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
 import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.SoundEffect;
 import net.pgfmc.core.util.vector4.Vector4;
 
 /**
@@ -156,7 +156,7 @@ public class BlockInteractEvent implements Listener {
     	e.setCancelled(true);
     	
     	playerdata.sendMessage(ChatColor.RED + "This land is claimed!");
-    	playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+    	SoundEffect.ERROR.play(playerdata);
 	}
     
     @EventHandler
@@ -181,7 +181,7 @@ public class BlockInteractEvent implements Listener {
     	e.setCancelled(true);
     	
     	playerdata.sendMessage(ChatColor.RED + "This land is claimed!");
-    	playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+    	SoundEffect.ERROR.play(playerdata);
     	
     }
 
@@ -202,7 +202,7 @@ public class BlockInteractEvent implements Listener {
     	e.setCancelled(true);
     	
     	playerdata.sendMessage(ChatColor.RED + "This land is claimed!");
-    	playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
+    	SoundEffect.ERROR.play(playerdata);
 	}
     
 }
