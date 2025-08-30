@@ -9,7 +9,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
+import net.pgfmc.claims.Main;
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.inventory.ConfirmInventory;
 import net.pgfmc.core.api.inventory.ListInventory;
@@ -50,13 +53,20 @@ public class ClaimConfigInventory extends BaseInventory {
             name = ChatColor.WHITE + "Owned by " + claim.getPlayer().getRankedName() + ChatColor.RESET;
         }
 
+        Pair beaconInfo = claim.getBeaconInfo();
+        int selfBeacons = claim.beacons.size();
+
+
         setItem(info, Material.PAPER).n(ChatColor.WHITE + "Claim Info").l(
                 name + 
                 ChatColor.GRAY + 
                 "\nX " + String.valueOf(loc.x()) + 
                 "\nY " + String.valueOf(loc.y()) +
                 "\nZ " + String.valueOf(loc.z()) +
-                ChatColor.ITALIC + ChatColor.WHITE + "\nClick to open list of " + ChatColor.GOLD + "Merged Claims" + ChatColor.WHITE + "!"
+                "\nBeacons Linked to this Claim: " + ChatColor.AQUA + String.valueOf(selfBeacons) +
+                ChatColor.GRAY + "\nTotal Beacons in Network: " + ChatColor.AQUA + String.valueOf(beaconInfo.beaconCount) +
+                displayEffects(beaconInfo.effects) +
+                ChatColor.WHITE + "\nClick to open list of " + ChatColor.GOLD + "Merged Claims" + ChatColor.WHITE + "!"
             );
 
         setAction(info, (p,e) -> {
@@ -239,4 +249,41 @@ public class ClaimConfigInventory extends BaseInventory {
 			claim.forwardUpdateFrom(claim);
 		}
 	}
+
+    public static String displayEffects(ArrayList<PotionEffect> effects) {
+        String acc = "";
+        if (effects.size() > 0) {
+            acc = ChatColor.LIGHT_PURPLE + "\nEffects:";
+            for (PotionEffect effect : effects) {
+
+                PotionEffectType type = effect.getType();
+
+                acc += ChatColor.GRAY + "\n - ";
+
+                // I have to yanderedev code because its coded as seperate constants, not an enum lmao
+                if (type.equals(PotionEffectType.STRENGTH)) {
+                    acc += ChatColor.GOLD + "Strength";
+                } else if (type.equals(PotionEffectType.JUMP_BOOST)) {
+                    acc += ChatColor.YELLOW + "Jump Boost";
+                } else if (type.equals(PotionEffectType.SPEED)) {
+                    acc += ChatColor.AQUA + "Speed";
+                } else if (type.equals(PotionEffectType.HASTE)) {
+                    acc += ChatColor.GOLD + "Haste";
+                } else if (type.equals(PotionEffectType.REGENERATION)) {
+                    acc += ChatColor.RED + "Regeneration";
+                } else if (type.equals(PotionEffectType.RESISTANCE)) {
+                    acc += ChatColor.LIGHT_PURPLE + "Resistance";
+                } else {
+                    Main.getPlugin().getLogger().info("Invalid Buff passed to displayEffects: " + type.toString());
+                    continue;
+                }
+
+                if (effect.getAmplifier() == 1) {
+                    acc += " II";
+                }
+            }
+        }
+
+        return acc;
+    }
 }

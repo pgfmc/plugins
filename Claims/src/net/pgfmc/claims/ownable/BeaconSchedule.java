@@ -1,7 +1,6 @@
 package net.pgfmc.claims.ownable;
 
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import net.pgfmc.claims.Main;
@@ -18,7 +17,7 @@ public class BeaconSchedule extends BukkitRunnable {
 
             Claim claim = ClaimsTable.getClosestClaim(new Vector4(player.getLocation()), Range.PROTECTED);
             if (claim == null) { continue;}
-            player.addPotionEffects(claim.getBuffs());
+            player.addPotionEffects(claim.getBeaconInfo().effects);
         }
     }
 }
