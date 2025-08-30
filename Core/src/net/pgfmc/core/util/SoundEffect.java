@@ -5,6 +5,8 @@ import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
+import net.pgfmc.core.api.playerdata.PlayerData;
+
 public enum SoundEffect {
     ERROR(Sound.BLOCK_NOTE_BLOCK_BASS, 1.0F, 1.0F),
     DING(Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 1.0F),
@@ -32,6 +34,12 @@ public enum SoundEffect {
         if (!player.isOnline()) return;
 
         player.playSound(player.getLocation(), this.sound, this.volume, this.pitch);
+    }
+
+    public void play(PlayerData player)
+    {
+        if (!player.isOnline()) return;
+        this.play(player.getPlayer());
     }
 
     public void play(Location location)
