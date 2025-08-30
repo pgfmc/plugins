@@ -1,6 +1,7 @@
 package net.pgfmc.claims.ownable.block.events;
 
 import java.util.EnumSet;
+import java.util.Set;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -81,15 +82,19 @@ public class BlockInteractEvent implements Listener {
 			
 			return;
 		}
+
+		Set<Claim> claims = ClaimsTable.getNearbyClaims(new Vector4(block), Range.PROTECTED);
+        Claim claim = ClaimsTable.getClosestClaim(new Vector4(block), claims);
+
+        for (Claim clame : claims) {
+            if (block.getType() == Material.BEACON) {
+                clame.beacons.add(new Vector4(block));
+            }
+        }
 		
 		if (e.getPlayer().getGameMode() != GameMode.SURVIVAL) return;
-		
-		Claim claim = ClaimsTable.getClosestClaim(new Vector4(block), Range.PROTECTED);
-		
 		if (claim == null) return;
-		
 		Security access = claim.getAccess(pd);
-		
 		if (access != Security.BLOCKED) return;
 
         if ((!claim.inventoriesLocked && inventories.contains(block.getType())) ||
