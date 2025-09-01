@@ -272,29 +272,19 @@ public class Particles {
     private static void trySpawnParticle(Player player, int particlex, int particlez, Vector4 playerLocation, BorderColor borderColor) {
 
         float particleSize = 0.5f;
-        double particleRender = borderColor.renderDistance;
-
-        Location particleLocation = new Vector4(particlex, playerLocation.y() + 1, particlez, playerLocation.w()).toLocation();
+        int y = playerLocation.y();
+        Location particleLocation = new Vector4(particlex, y + 1, particlez, playerLocation.w()).toLocation();
 
         double distance = player.getLocation().distanceSquared(particleLocation);
         if (distance > borderColor.renderDistance * borderColor.renderDistance) {return;}
 
-        player.spawnParticle(Particle.DUST, particleLocation, 1, new Particle.DustOptions(borderColor.color, particleSize));
+        double wallHeight = (borderColor == BorderColor.MERGEALIGN) ? 7 : 2; 
 
-        double distanceInverse = (distance - particleRender * particleRender) / -particleRender;
-
-        if (distanceInverse < 1) { return; }
-
-        double counter = 0;
-        while (counter <= distanceInverse) {
-            Location upper = particleLocation.clone();
-            upper.setY(particleLocation.getY() + counter);
-            Location lower = particleLocation.clone();
-            lower.setY(particleLocation.getY() - counter);
-
-            player.spawnParticle(Particle.DUST, upper, 1, new Particle.DustOptions(borderColor.color, particleSize));
-            player.spawnParticle(Particle.DUST, lower, 1, new Particle.DustOptions(borderColor.color, particleSize));
-            counter += 1;
+        double yOffset = -wallHeight;
+        while (yOffset <= wallHeight) {
+            particleLocation.setY((double) y + yOffset);
+            player.spawnParticle(Particle.DUST, particleLocation, 1, new Particle.DustOptions(borderColor.color, particleSize));
+            yOffset += 1;
         }
     }
 }

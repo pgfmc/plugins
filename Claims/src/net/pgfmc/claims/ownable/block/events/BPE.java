@@ -93,8 +93,8 @@ public class BPE implements Listener {
 			return;
 		}
 
-        for (Claim claim : claims) {
-            if (block.getType() == Material.BEACON) {
+        if (block.getType() == Material.BEACON) {
+            for (Claim claim : claims) {
                 claim.beacons.add(new Vector4(block));
             }
         }
