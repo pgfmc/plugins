@@ -9,10 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Beacon;
 import org.bukkit.block.Block;
 import org.bukkit.potion.PotionEffect;
-import org.bukkit.scheduler.BukkitRunnable;
 
-
-import net.pgfmc.claims.Main;
 import net.pgfmc.claims.ownable.block.table.ClaimSection;
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
 import net.pgfmc.claims.ownable.block.table.ClaimsTable;
@@ -74,16 +71,12 @@ public class Claim {
 	
 	public Claim(PlayerData player, Vector4 vec, Set<PlayerData> members) {
 		vector = vec;
-
-        //if (player == null) {return;}
-        //if (vec == null) {return;}
-
 		Block block = vec.getBlock();
 
-		if (block.getType() == Material.LODESTONE) {
-			ClaimsTable.put(this);
+		if (block.getType() != Material.LODESTONE) {
 			return;
 		}
+		ClaimsTable.put(this);
 
 		this.placer = player;
         this.members = members;

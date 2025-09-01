@@ -51,8 +51,8 @@ public class BBEvent implements Listener {
 					pd.getPlayer().openInventory(new ClaimConfigInventory(cont, false).getInventory());
 					e.setCancelled(true);
 				} else {
-                    Set<Claim> nearby = ClaimsTable.getNearbyClaims(cont.getLocation(), Range.MERGE);
 					cont.remove();
+                    Set<Claim> nearby = ClaimsTable.getNearbyClaims(cont.getLocation(), Range.MERGE);
                     for (Claim claim : nearby) {
                         claim.calculateNetwork(true);
                     }
