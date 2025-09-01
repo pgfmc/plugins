@@ -53,13 +53,13 @@ public class BPE implements Listener {
 				pd.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
 				
 			// Within Foreign claim range	
-			} else if (foreign != null) {
+			} else if (foreign != null && foreign.getAccess(pd) != Security.ADMIN) {
                 if (foreign.getAccess(pd) == Security.BLOCKED) {
 				    pd.sendMessage(ChatColor.RED + "Cannot claim land that would overlap another claim.");
                 } else if (foreign.getAccess(pd) == Security.MEMBER) {
 				    pd.sendMessage(ChatColor.GOLD + "If you want to help expand your Admin's Claim,");
 				    pd.sendMessage(ChatColor.GOLD + "Give your Lodestone to them, instead.");
-                } else { return;}
+                }
 
 				e.setCancelled(true);
 				pd.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
