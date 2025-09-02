@@ -77,6 +77,7 @@ public class Claim {
 			return;
 		}
 		ClaimsTable.put(this);
+        this.network.add(this);
 
 		this.placer = player;
         this.members = members;

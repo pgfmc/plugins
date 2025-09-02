@@ -88,7 +88,18 @@ public class BlockInteractEvent implements Listener {
 
         for (Claim clame : claims) {
             if (block.getType() == Material.BEACON) {
-                clame.beacons.add(new Vector4(block));
+                Vector4 blocc = new Vector4(block);
+                boolean contains = false;
+                for (Vector4 beacon : clame.beacons) {
+                    if (beacon.equals(blocc)) {
+                        contains = true;
+                        break;
+                    }
+                }
+
+                if (!contains) {
+                    clame.beacons.add(new Vector4(block));
+                }
             }
         }
 		
