@@ -46,6 +46,7 @@ public class BPE implements Listener {
 			// Within Merge claim range
 			if (merger != null && merger.getAccess(pd) == Security.ADMIN) {
 			    Claim noob = new Claim(merger.getPlayer(), new Vector4(block), merger.getMembers());
+                noob.forwardUpdateFrom(merger);
                 noob.calculateNetwork(true);
 				
 				pd.sendMessage(ChatColor.GREEN + "Surrounding land claimed!");
