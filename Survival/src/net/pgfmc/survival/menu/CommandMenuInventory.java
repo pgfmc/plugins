@@ -1,6 +1,7 @@
 package net.pgfmc.survival.menu;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -14,7 +15,7 @@ import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.cmd.serverselector.ServerSelectorInventory;
 import net.pgfmc.core.util.Lang;
-import net.pgfmc.survival.Rewards;
+import net.pgfmc.survival.Reward;
 import net.pgfmc.survival.cmd.Skull;
 import net.pgfmc.survival.menu.profile.ProfileInventory;
 import net.pgfmc.survival.menu.rewards.RewardsListInventory;
@@ -240,31 +241,32 @@ public class CommandMenuInventory implements InventoryHolder {
 				
 			}
 			
-            final int rewards = 16;
+            final int rewards_slot = 16;
 			/* 
 			 * Rewards
 			 * [] [] [] [] [] [] [] [] []
 			 * [] [] [] [] [] [] XX [] []
 			 * [] [] [] [] [] [] [] [] []
 			 */
-			final int numberOfRewards = Rewards.getPlayerRewardsMap(playerdata).size();
+			final List<Reward> rewards = playerdata.getData("rewards");
+			final int numberOfRewards = rewards.size();
 			
 			if (numberOfRewards == 0)
 			{
-				setAction(rewards, (player, event) -> {
+				setAction(rewards_slot, (player, event) -> {
 					playerdata.sendMessage(ChatColor.RED + "There are no rewards currently.");
 					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 				});
 				
-				setItem(rewards, Material.CHISELED_BOOKSHELF).n(ChatColor.YELLOW + "Rewards (" + numberOfRewards + ")");
+				setItem(rewards_slot, Material.CHISELED_BOOKSHELF).n(ChatColor.YELLOW + "Rewards (" + numberOfRewards + ")");
 				
 			} else
 			{
-				setAction(rewards, (player, event) -> {
+				setAction(rewards_slot, (player, event) -> {
 					player.openInventory(new RewardsListInventory(playerdata).getInventory());
 				});
 				
-				setItem(rewards, Material.BOOKSHELF).n(ChatColor.YELLOW + "Rewards (" + numberOfRewards + ")");
+				setItem(rewards_slot, Material.BOOKSHELF).n(ChatColor.YELLOW + "Rewards (" + numberOfRewards + ")");
 				
 			}
 			
