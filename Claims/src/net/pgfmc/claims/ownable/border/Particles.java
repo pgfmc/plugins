@@ -272,8 +272,8 @@ public class Particles {
     private static void trySpawnParticle(Player player, int particlex, int particlez, Vector4 playerLocation, BorderColor borderColor) {
 
         float particleSize = 0.5f;
-        int y = playerLocation.y();
-        Location particleLocation = new Vector4(particlex, y + 1, particlez, playerLocation.w()).toLocation();
+        int y = playerLocation.y() + 1;
+        Location particleLocation = new Vector4(particlex, y, particlez, playerLocation.w()).toLocation();
 
         double distance = player.getLocation().distanceSquared(particleLocation);
         if (distance > borderColor.renderDistance * borderColor.renderDistance) {return;}
