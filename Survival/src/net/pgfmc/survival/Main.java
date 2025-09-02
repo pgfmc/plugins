@@ -51,7 +51,6 @@ public class Main extends JavaPlugin {
 		// Creates rewards.yml for the player rewards
 		// If it doesn't exist
 		Mixins.getDatabase(getDataFolder() + File.separator + "rewards.yml");
-		Rewards.loadRewardsFile();
 		
 		// Create warps section in config.yml if it doesn't exist
 		if (getConfig().getConfigurationSection("warps") == null)
