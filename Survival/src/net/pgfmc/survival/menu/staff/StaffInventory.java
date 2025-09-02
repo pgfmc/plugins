@@ -15,8 +15,8 @@ import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.ServerMessage;
 import net.pgfmc.survival.Main;
 import net.pgfmc.survival.menu.CommandMenuInventory;
-import net.pgfmc.survival.menu.staff.giverewards.GiveRewardsListInventory;
 import net.pgfmc.survival.menu.staff.manageplayers.ManagePlayersListInventory;
+import net.pgfmc.survival.menu.staff.managerewards.ManageRewardsListInventory;
 import net.wesjd.anvilgui.AnvilGUI;
 import net.wesjd.anvilgui.AnvilGUI.Builder;
 
@@ -119,10 +119,10 @@ public class StaffInventory extends BaseInventory {
 		 * [] [] [] [] [] [] [] [] []
 		 */
 		setAction(15, (player, event) -> {
-			player.openInventory(new GiveRewardsListInventory(playerdata).getInventory());
+			player.openInventory(new ManageRewardsListInventory(playerdata).getInventory());
 		});
 		
-		setItem(15, Material.BOOKSHELF).n(ChatColor.YELLOW + "Give Rewards").l(ChatColor.GRAY + "Add a reward to all players.");
+		setItem(15, Material.BUNDLE).n(ChatColor.YELLOW + "Manage Rewards").l(ChatColor.GRAY + "Create or edit rewards.");
 		
 	}
 
