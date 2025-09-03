@@ -46,6 +46,14 @@ public class Reward {
         this.giftBox = giftBox;
     }
 
+    @Override
+    public boolean equals(Object o)
+    {
+        if (!(o instanceof Reward)) return false;
+        if (!((Reward) o).uuid.equals(this.uuid)) return false;
+        return true;
+    }
+
     public static List<Reward> getAllRewards()
     {
         final List<Reward> allRewards = List.of();
