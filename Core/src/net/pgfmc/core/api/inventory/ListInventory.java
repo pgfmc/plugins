@@ -122,33 +122,37 @@ public abstract class ListInventory<T> extends BaseInventory {
 		page = newPage;
 		
 		if (inv.getSize() == 54) {
+
+            //int back = 0;
+            int prev = 3;
+            int next = 5;
 			
 			// sets the Previous page button, if appropriate.
 			if (page > 1) {
-				setAction(48, (x, e) -> {
+				setAction(prev, (x, e) -> {
 					flipPage(-1);
 				});
 				
-				setItem(48, Material.IRON_HOE).n("Previous Page");
+				setItem(prev, Material.IRON_HOE).n("Previous Page");
 				
 				
 			} else {
-				setItem(48, Material.AIR);
-				setAction(48, null);
+				setItem(prev, Material.AIR);
+				setAction(prev, null);
 			}
 			
 			// sets the next page button, if apropriate.
 			if (page < pages.length) {
 				
-				setAction(50, (x, e) -> {
+				setAction(next, (x, e) -> {
 					flipPage(+1);
 				});
 				
-				setItem(50, Material.ARROW).n("Next Page");
+				setItem(next, Material.ARROW).n("Next Page");
 				
 			} else {
-				setItem(50, Material.AIR);
-				setAction(50, null);
+				setItem(next, Material.AIR);
+				setAction(next, null);
 			}
 			
 			T[] currentPage = pages[page -1];
@@ -157,7 +161,7 @@ public abstract class ListInventory<T> extends BaseInventory {
 					i++) {
 				if (currentPage[i] == null) continue;
 				
-				int enty = entryToSlot(i);
+				int enty = i + 18;
 				setAction(enty, toAction(currentPage[i]));
 				setItem(enty, toItem(currentPage[i]));
 			}

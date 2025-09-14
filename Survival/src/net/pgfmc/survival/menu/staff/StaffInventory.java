@@ -67,7 +67,7 @@ public class StaffInventory extends BaseInventory {
 		 * [] [] [] [] [] [] [] [] []
 		 */
 		setAction(13, (player, event) -> {
-			player.openInventory(new ManagePlayersListInventory(playerdata).getInventory());
+			player.openInventory(new ManagePlayersListInventory(playerdata, true).getInventory());
 		});
 		
 		setItem(13, Material.PLAYER_HEAD).n(ChatColor.YELLOW + "Online Players").l(ChatColor.GRAY + "Commands for managing individual players.");

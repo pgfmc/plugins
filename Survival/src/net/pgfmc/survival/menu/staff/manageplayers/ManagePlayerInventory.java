@@ -19,7 +19,7 @@ public class ManagePlayerInventory extends BaseInventory {
 	public ManagePlayerInventory(final PlayerData playerdata, final PlayerData target) {
 		super(InventoryType.CHEST, "Manage Player");
 		
-		setBack(0, new ManagePlayersListInventory(playerdata).getInventory());
+		setBack(0, new ManagePlayersListInventory(playerdata, true).getInventory());
 		
 		/* 
 		 * Inventory Backups
