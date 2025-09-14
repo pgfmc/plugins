@@ -185,7 +185,6 @@ public class ClaimConfigInventory extends BaseInventory {
 
 		@Override
 		protected ItemStack toItem(PlayerData arg0) {
-			 
 			// copied from cmd.skull lol
 			
             ItemStack item = new ItemWrapper(Material.PLAYER_HEAD).n(arg0.getRankedName()).gi();

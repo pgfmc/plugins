@@ -19,61 +19,37 @@ public class ManagePlayersListInventory extends ListInventory<PlayerData> {
 	
 	private PlayerData playerdata;
 	private boolean showOnlinePlayersOnly = true;
-
-	public ManagePlayersListInventory(final PlayerData playerdata) {
-		super(InventoryType.CHEST.getDefaultSize() * 2, "Manage Players");
-		
-		this.playerdata = playerdata;
-		
-		setBack(0, new StaffInventory(playerdata).getInventory());
-		
-		/* 
-		 * Player Toggle (Online/Offline)
-		 * [] [] [] [] [] [] [] [] []
-		 * [] [] [] [] [] [] [] [] []
-		 * XX [] [] [] [] [] [] [] []
-		 * [] [] [] [] [] [] [] [] []
-		 * [] [] [] [] [] [] [] [] []
-		 * [] [] [] [] [] [] [] [] []
-		 */
-		setAction(18, (player, event) -> {
-			player.openInventory(new ManagePlayersListInventory(playerdata, !showOnlinePlayersOnly).getInventory());
-			
-		});
-		
-		setItem(18, Material.SLIME_BALL).n(ChatColor.GREEN + "Showing: Online Players").l(ChatColor.GRAY + "Click to show offline players only.");
-		
-	}
 	
 	public ManagePlayersListInventory(final PlayerData playerdata, boolean showOnlinePlayersOnly) {
-		super(InventoryType.CHEST.getDefaultSize() * 2, "Manage Players");
+		super(54, "Manage Players");
 		
 		this.playerdata = playerdata;
 		this.showOnlinePlayersOnly = showOnlinePlayersOnly;
+        int offlineOnlineToggle = 2;
 		
 		setBack(0, new StaffInventory(playerdata).getInventory());
 		
 		/* 
 		 * Player Toggle (Online/Offline)
+		 * [] [] XX [] [] [] [] [] []
 		 * [] [] [] [] [] [] [] [] []
 		 * [] [] [] [] [] [] [] [] []
-		 * XX [] [] [] [] [] [] [] []
 		 * [] [] [] [] [] [] [] [] []
 		 * [] [] [] [] [] [] [] [] []
 		 * [] [] [] [] [] [] [] [] []
 		 */
-		setAction(18, (player, event) -> {
+		setAction(offlineOnlineToggle, (player, event) -> {
 			player.openInventory(new ManagePlayersListInventory(playerdata, !showOnlinePlayersOnly).getInventory());
 			
 		});
 		
 		if (showOnlinePlayersOnly)
 		{
-			setItem(18, Material.SLIME_BALL).n(ChatColor.GOLD + "Showing: " + ChatColor.GREEN + "Online Players").l(ChatColor.GRAY + "Click to show offline players only.");
+			setItem(offlineOnlineToggle, Material.SLIME_BALL).n(ChatColor.GOLD + "Showing: " + ChatColor.GREEN + "Online Players").l(ChatColor.GRAY + "Click to show offline players only.");
 			
 		} else
 		{
-			setItem(18, Material.FIRE_CHARGE).n(ChatColor.GOLD + "Showing: " + ChatColor.DARK_GRAY + "Offline Players").l(ChatColor.GRAY + "Click to show online players only.");
+			setItem(offlineOnlineToggle, Material.FIRE_CHARGE).n(ChatColor.GOLD + "Showing: " + ChatColor.DARK_GRAY + "Offline Players").l(ChatColor.GRAY + "Click to show online players only.");
 			
 		}
 		
