@@ -91,7 +91,7 @@ public class EntityEvents implements Listener {
         Tameable animal = (Tameable) e.getEntity();
 
         if (!(animal.getOwner() instanceof OfflinePlayer)) {return;}
-        PlayerData pd = PlayerData.from((OfflinePlayer) animal.getOwner());
+        //PlayerData pd = PlayerData.from((OfflinePlayer) animal.getOwner());
 
         if ((!claim.livestockKilling && animals.contains(e.getTarget().getType())) || 
             (!claim.monsterKilling && monsters.contains(e.getTarget().getType())) || 

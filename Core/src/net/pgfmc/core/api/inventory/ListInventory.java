@@ -8,7 +8,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import net.pgfmc.core.api.inventory.extra.Butto;
-import net.pgfmc.core.util.Logger;
 
 public abstract class ListInventory<T> extends BaseInventory {
 	
