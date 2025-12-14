@@ -3,7 +3,6 @@ package net.pgfmc.survival.cmd.pvp;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Tameable;
-import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
