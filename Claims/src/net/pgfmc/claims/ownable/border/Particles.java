@@ -82,11 +82,12 @@ public class Particles {
     }
 
      private enum BorderColor {
-         MERGE(Color.YELLOW, 14, 2),
+         MERGEALIGN(Color.ORANGE, 14, 2),
+         MERGE(Color.YELLOW, 14, 3),
          CLAIMPLACEPREVENTION(Color.RED, 21, 1),
-         PROTECTEDNONMEMBER(Color.RED, 7, 3),
-         PROTECTEDMEMBER(Color.AQUA, 7, 4),
-         PROTECTEDADMIN(Color.BLUE, 7, 5);
+         PROTECTEDNONMEMBER(Color.RED, 7, 4),
+         PROTECTEDMEMBER(Color.AQUA, 7, 5),
+         PROTECTEDADMIN(Color.BLUE, 7, 6);
 
          public Color color;
          public double renderDistance;
@@ -121,11 +122,11 @@ public class Particles {
 
                     Set<Claim> merge = ClaimsTable.getNearbyClaims(playerLocation, Range.MERGERENDER).stream().filter((x) -> {
                         Security security = x.getAccess(playerData);
-                        return (security == Security.ADMIN || security == Security.MEMBER);
+                        return (security == Security.ADMIN);
                     }).collect(Collectors.toSet());
 
                     Set<Claim> foreign = ClaimsTable.getNearbyClaims(playerLocation, Range.FOREIGNRENDER).stream().filter((x) -> {
-                        return (x.getAccess(playerData) == Security.BLOCKED);
+                        return (x.getAccess(playerData) == Security.BLOCKED || x.getAccess(playerData) == Security.MEMBER);
                     }).collect(Collectors.toSet());
 
                     Set<BorderParticle> mergeParticles = new HashSet<BorderParticle>();
@@ -133,7 +134,8 @@ public class Particles {
 
                     for (Claim claim : merge) {
                         addParticles(playerLocation, claim, merge, BorderColor.MERGE, Range.MERGE, mergeParticles);
-                        cullParticles(mergeParticles, merge, Range.MERGE);
+                        //cullParticles(mergeParticles, merge, Range.MERGE);
+                        //Cull particles removed for merging claims, so you can make sure you're putting the claimstone perfectly inbetween two claims.
                         //renderBorder(playerLocation, claim, merge, BorderColor.MERGE, Range.MERGE, mergeParticles);
                         //Particles.renderBorder(op, playerLocation, claim, BorderColor.MERGE, Range.MERGE, mergeParticles);
                     }
@@ -185,6 +187,34 @@ public class Particles {
         tryAddParticle(claimLocation.x() - r, claimLocation.z() + r + 1, color, Direction.SW, playerLocation, claim, claims, particles);
         tryAddParticle(claimLocation.x() + r + 1, claimLocation.z() + r + 1, color, Direction.SE, playerLocation, claim, claims, particles);
 
+
+        if (color == BorderColor.MERGE) {
+            int x = -r + 1;
+            while (x <= r) {
+                BorderColor tempcolor = BorderColor.MERGE;
+                if (x == 0 || x == 1) {
+                    tempcolor = BorderColor.MERGEALIGN;
+                }
+
+                tryAddParticle(claimLocation.x() + x, claimLocation.z() + r + 1, tempcolor, Direction.SOUTH, playerLocation, claim, claims, particles);
+                tryAddParticle(claimLocation.x() + x, claimLocation.z() - r, tempcolor, Direction.NORTH, playerLocation, claim, claims, particles);
+                x += 1;
+            }
+
+            int z = -r + 1;
+            while (z <= r) {
+                BorderColor tempcolor = BorderColor.MERGE;
+                if (z == 0 || z == 1) {
+                    tempcolor = BorderColor.MERGEALIGN;
+                }
+
+                tryAddParticle(claimLocation.x() + r + 1, claimLocation.z() + z, tempcolor, Direction.EAST, playerLocation, claim, claims, particles);
+                tryAddParticle(claimLocation.x() - r, claimLocation.z() + z, tempcolor, Direction.WEST, playerLocation, claim, claims, particles);
+                z += 1;
+            }
+            return;
+        }
+
         int x = -r + 1;
         while (x <= r) {
             tryAddParticle(claimLocation.x() + x, claimLocation.z() + r + 1, color, Direction.SOUTH, playerLocation, claim, claims, particles);
@@ -202,8 +232,8 @@ public class Particles {
     
     private static void tryAddParticle(int x, int z, BorderColor color, Direction direction, Vector4 playerLocation, Claim claim, Set<Claim> claims, Set<BorderParticle> particles) {
 
-        //int distance = ((x - playerLocation.x()) ^ 2) + ((z - playerLocation.z()) ^ 2);
-        //if (distance > color.renderDistance * color.renderDistance) {return;}
+        int distance = ((x - playerLocation.x()) ^ 2) + ((z - playerLocation.z()) ^ 2);
+        if (distance > color.renderDistance * color.renderDistance) {return;}
 
         BorderParticle particle = new BorderParticle(x, z, color, direction);
 
@@ -242,29 +272,19 @@ public class Particles {
     private static void trySpawnParticle(Player player, int particlex, int particlez, Vector4 playerLocation, BorderColor borderColor) {
 
         float particleSize = 0.5f;
-        double particleRender = borderColor.renderDistance;
-
-        Location particleLocation = new Vector4(particlex, playerLocation.y() + 1, particlez, playerLocation.w()).toLocation();
+        int y = playerLocation.y() + 1;
+        Location particleLocation = new Vector4(particlex, y, particlez, playerLocation.w()).toLocation();
 
         double distance = player.getLocation().distanceSquared(particleLocation);
         if (distance > borderColor.renderDistance * borderColor.renderDistance) {return;}
 
-        player.spawnParticle(Particle.DUST, particleLocation, 1, new Particle.DustOptions(borderColor.color, particleSize));
+        double wallHeight = (borderColor == BorderColor.MERGEALIGN) ? 7 : 2; 
 
-        double distanceInverse = (distance - particleRender * particleRender) / -particleRender;
-
-        if (distanceInverse < 1) { return; }
-
-        double counter = 0;
-        while (counter <= distanceInverse) {
-            Location upper = particleLocation.clone();
-            upper.setY(particleLocation.getY() + counter);
-            Location lower = particleLocation.clone();
-            lower.setY(particleLocation.getY() - counter);
-
-            player.spawnParticle(Particle.DUST, upper, 1, new Particle.DustOptions(borderColor.color, particleSize));
-            player.spawnParticle(Particle.DUST, lower, 1, new Particle.DustOptions(borderColor.color, particleSize));
-            counter += 1;
+        double yOffset = -wallHeight;
+        while (yOffset <= wallHeight) {
+            particleLocation.setY((double) y + yOffset);
+            player.spawnParticle(Particle.DUST, particleLocation, 1, new Particle.DustOptions(borderColor.color, particleSize));
+            yOffset += 1;
         }
     }
 }

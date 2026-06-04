@@ -5,6 +5,7 @@ import java.io.File;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import net.pgfmc.claims.ownable.BeaconSchedule;
 import net.pgfmc.claims.ownable.OwnableFile;
 import net.pgfmc.claims.ownable.block.events.BBEvent;
 import net.pgfmc.claims.ownable.block.events.BExEvent;
@@ -16,6 +17,7 @@ import net.pgfmc.claims.ownable.block.events.HarvestEvent;
 import net.pgfmc.claims.ownable.block.events.PhysicsEvent;
 import net.pgfmc.claims.ownable.block.events.PlayerMove;
 import net.pgfmc.claims.ownable.border.Particles;
+import net.pgfmc.claims.ownable.entities.PlayerDamagedEvent;
 import net.pgfmc.claims.ownable.entities.TameEvent;
 import net.pgfmc.claims.ownable.inspector.ClaimTPCommand;
 import net.pgfmc.claims.ownable.inspector.InspectCommand;
@@ -51,6 +53,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new PhysicsEvent(), this);
 		getServer().getPluginManager().registerEvents(new EntityEvents(), this);
 		getServer().getPluginManager().registerEvents(new PlayerMove(), this);
+		getServer().getPluginManager().registerEvents(new PlayerDamagedEvent(), this);
 		
 		new InspectCommand("inspector");
 		new ClaimTPCommand("claimtp");
@@ -60,6 +63,7 @@ public class Main extends JavaPlugin {
 		plugin.getLogger().info("Claims Loaded!");
 		
 		new ActionBarStuff().runTaskTimer(this, 100, 2);
+        new BeaconSchedule().runTaskTimer(this, 100, 100);
 
         new BukkitRunnable() {
             @Override

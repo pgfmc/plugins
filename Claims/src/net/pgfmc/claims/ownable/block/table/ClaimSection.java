@@ -1,13 +1,10 @@
 package net.pgfmc.claims.ownable.block.table;
 
-import java.util.EnumMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import net.pgfmc.claims.ownable.block.Claim;
 import net.pgfmc.claims.ownable.block.table.ClaimsLogic.Range;
-import net.pgfmc.claims.util.LongHash;
 import net.pgfmc.core.util.vector4.Vector4;
 
 /**
@@ -28,7 +25,6 @@ public class ClaimSection {
 	protected long key;
 	protected int w;
 	
-	private Map<Neighbor, ClaimSection> neighbors = new EnumMap<Neighbor, ClaimSection>(Neighbor.class);
 	private Set<Claim> claims = new HashSet<>();
 	
 	public ClaimSection(long key, int w) {
@@ -73,26 +69,6 @@ public class ClaimSection {
 		return null;
 	}
 	
-	public Claim getClosestClaim(Vector4 v, Range r) {
-		
-		
-		
-		Set<Claim> claimes = this.getNearbyClaims(v, r);
-		
-		
-		
-		return claimes.stream().reduce( (x, y) -> {
-			
-			double d1 = Math.abs(Math.sqrt((v.x() - x.getLocation().x()) + (v.y() - x.getLocation().y())));
-			double d2 = Math.abs(Math.sqrt((v.x() - y.getLocation().x()) + (v.y() - y.getLocation().y())));
-			
-			if (d1 > d2) {
-				return y;
-			} else {
-				return x;
-			}
-		}).orElse(null);
-	}
 	
 	public Set<Claim> getNearbyClaims(Vector4 v, Range r) {
 
@@ -130,16 +106,5 @@ public class ClaimSection {
 	
 	public void remove(Claim ob) {
 		claims.remove(ob);
-	}
-	
-	public ClaimSection getNeighbor(Neighbor n) {
-		ClaimSection cs = neighbors.get(n);
-		if (cs != null) {
-			return cs;
-		}
-		
-		cs = ClaimsTable.getSection(LongHash.msw(key) + n.x(), LongHash.lsw(key) + n.z(), w);
-		neighbors.put(n, cs);
-		return cs;
 	}
 }
