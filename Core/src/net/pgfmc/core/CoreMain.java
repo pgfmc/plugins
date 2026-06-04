@@ -177,11 +177,15 @@ public class CoreMain extends JavaPlugin implements Listener {
 		PlayerDataManager.initializePlayerData();
 		startRestartThread();
 		
-		// Purge CoreProtect data of 14 days or older
-		Plugin pluginCoreProtect = plugin.getServer().getPluginManager().getPlugin("CoreProtect");
-		CoreProtectAPI coreProtectAPI = ((CoreProtect) pluginCoreProtect).getAPI();
-		
-		if (coreProtectAPI != null) { coreProtectAPI.performPurge(1209600); } // 14 days in seconds
+		try {
+			// Purge CoreProtect data of 14 days or older
+			Plugin pluginCoreProtect = plugin.getServer().getPluginManager().getPlugin("CoreProtect");
+			CoreProtectAPI coreProtectAPI = ((CoreProtect) pluginCoreProtect).getAPI();
+			
+			if (coreProtectAPI != null) { coreProtectAPI.performPurge(1209600); } // 14 days in seconds
+		} catch (Exception coreprotectException) {
+			coreprotectException.printStackTrace();
+		}
 		
 	}
 	

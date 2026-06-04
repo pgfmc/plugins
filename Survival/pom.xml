@@ -83,7 +83,7 @@
 		<dependency>
     		<groupId>net.wesjd</groupId>
     		<artifactId>anvilgui</artifactId>
-    		<version>1.10.8-SNAPSHOT</version>
+    		<version>1.10.11-SNAPSHOT</version>
     		<scope>compile</scope>
 		</dependency>
 		
@@ -92,8 +92,8 @@
 	<repositories>
 		
 		<repository>
-    		<id>codemc-snapshots</id>
-    		<url>https://repo.codemc.io/repository/maven-snapshots/</url>
+			<id>mvn-wesjd-net</id>
+			<url>https://mvn.wesjd.net/</url>
 		</repository>
 		
 	</repositories>
