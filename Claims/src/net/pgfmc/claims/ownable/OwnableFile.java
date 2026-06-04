@@ -2,7 +2,6 @@ package net.pgfmc.claims.ownable;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
