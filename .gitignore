@@ -5,10 +5,14 @@
 .metadata/.log
 .metadata/defender.check
 .metadata/version.ini
+.metadata/
 *.metadata/
 target
+**/target/
 test_upload.sh
 server_upload.sh
 .project
 plugins.iml
 .factorypath
+.plugins/
+*.jar
