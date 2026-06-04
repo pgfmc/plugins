@@ -1,11 +1,5 @@
-.metadata/.bak_0.log
-.metadata/.lock
-.metadata/.log
-.metadata/defender.check
-.metadata/version.ini
 .metadata/
 *.metadata/
-**/target/
 test_upload.sh
 server_upload.sh
 plugins.iml
@@ -28,7 +22,7 @@ replay_pid*
 ##############################
 ## Maven
 ##############################
-target/
+**/target/
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
@@ -48,7 +42,7 @@ build/
 .gradle
 .gradletasknamecache
 gradle-app.setting
-!gradle-wrapper.jar
+!**/gradle/wrapper/gradle-wrapper.jar
 
 ##############################
 ## IntelliJ
