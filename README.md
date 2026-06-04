@@ -9,7 +9,7 @@ Has all of the plugins used on the PGF server.
 
 Run the `build.sh` to build the jar files. Files will be output to `target`.
 
-Compile using JDK 21
+Compile using JDK 25
 
 
 ## Core
