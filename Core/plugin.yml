@@ -1,6 +1,6 @@
 name: PGF-Core
-version: 9.0.13
-api-version: 1.21
+version: 9.0.14
+api-version: 26.1
 authors: [bk, CrimsonDart]
 website: https://www.pgfmc.net
 main: net.pgfmc.core.CoreMain

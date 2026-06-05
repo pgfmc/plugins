@@ -1,6 +1,6 @@
 name: PGF-Survival
-version: 9.0.13
-api-version: 1.21
+version: 9.0.14
+api-version: 26.1
 authors: [bk, CrimsonDart]
 website: play.pgfmc.net
 main: net.pgfmc.survival.Main

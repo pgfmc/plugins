@@ -1,6 +1,6 @@
 name: PGF-Claims
-version: 9.0.13
-api-version: 1.21
+version: 9.0.14
+api-version: 26.1
 author: [bk, CrimsonDart]
 main: net.pgfmc.claims.Main
 description: implemets the Claims and Locking system
