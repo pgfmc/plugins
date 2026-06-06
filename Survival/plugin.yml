@@ -101,4 +101,10 @@ commands:
     description: Delete a warp
     usage: /<command> [name]
     permission: net.pgfmc.survival.warp.delwarp
+
+  gift:
+    description: Claim and Give Gifts to other players
+    usage: /<command> [name] [helditem|<item> <amount>]
+    permission: net.pgfmc.survival.gift
+    # The user has different functionality in creative mode; when using /gift [name] helditem, it won't consume the held item.
     
