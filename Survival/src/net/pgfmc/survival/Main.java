@@ -67,6 +67,7 @@ public class Main extends JavaPlugin {
 		
 		// PlayerData Inits
 		PlayerDataManager.setInit(playerdata -> {
+
 			final FileConfiguration config = playerdata.getPlayerDataFile();
 
 			// Load homes
