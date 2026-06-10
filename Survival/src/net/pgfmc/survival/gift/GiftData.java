@@ -1,6 +1,7 @@
 package net.pgfmc.survival.gift;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.inventory.ItemStack;
 
@@ -23,12 +24,8 @@ public final class GiftData {
     }
 
     public static final void giveGift(PlayerData playerData, ItemStack item) {
-        getGifts(playerData).add(item);
+        final List<ItemStack> gifts = getGifts(playerData);
+        gifts.add(item);
+        playerData.setData(GIFTS, gifts).queue();
     }
-    
-
-
-
-
-
 }
