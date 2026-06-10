@@ -83,30 +83,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 		PlayerDataManager.setInit(playerdata -> {
 			final FileConfiguration db = playerdata.getPlayerDataFile();
 			
-			// Set homes
-			final ConfigurationSection homesSection = db.getConfigurationSection("homes");
-			
-			if (homesSection != null)
-			{
-				final Map<String, Location> homes = new HashMap<>();
-				
-				homesSection.getKeys(false).forEach(home -> {
-					final Location homeLocation = homesSection.getLocation(home);
-					
-					if (homeLocation != null)
-					{
-						homes.put(home, homeLocation);
-					} else
-					{
-						Bukkit.getLogger().warning("Could not load home for " + playerdata.getName() + ".");
-					}
-					
-					
-				});
-				
-				playerdata.setData("homes", homes);
-				
-			}
 			
 			// Set nickname
 			final String nickname = db.getString("nickname");
