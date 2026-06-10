@@ -12,6 +12,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
@@ -68,7 +69,7 @@ public class Main extends JavaPlugin {
 		PlayerDataManager.setInit(playerdata -> {
 			final FileConfiguration config = playerdata.getPlayerDataFile();
 
-			// Set homes
+			// Load homes
 			final ConfigurationSection homesSection = config.getConfigurationSection("homes");
 			
 			if (homesSection != null)
@@ -93,12 +94,19 @@ public class Main extends JavaPlugin {
 				
 			}
 			
-            // Set Particles
+            // Load Particles
 			final String particle = config.getString("particle_effect");
             if (particle != null) {
 			    playerdata.setData("particle_effect", particle);
             }
-			
+
+            // Load Gifts
+            final List<ItemStack> gifts = (List<ItemStack>) config.getList("gifts");
+            if (gifts != null) {
+                playerdata.setData("gifts", gifts);
+            } else {
+                playerdata.setData("gifts", new ArrayList<>());
+            }
 		});
 		
 		// Other Inits
