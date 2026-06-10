@@ -2,11 +2,15 @@ package net.pgfmc.survival;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -63,11 +67,37 @@ public class Main extends JavaPlugin {
 		// PlayerData Inits
 		PlayerDataManager.setInit(playerdata -> {
 			final FileConfiguration config = playerdata.getPlayerDataFile();
+
+			// Set homes
+			final ConfigurationSection homesSection = config.getConfigurationSection("homes");
 			
-			if (config.get("particle_effect") == null) return;
+			if (homesSection != null)
+			{
+				final Map<String, Location> homes = new HashMap<>();
+				
+				homesSection.getKeys(false).forEach(home -> {
+					final Location homeLocation = homesSection.getLocation(home);
+					
+					if (homeLocation != null)
+					{
+						homes.put(home, homeLocation);
+					} else
+					{
+						Bukkit.getLogger().warning("Could not load home for " + playerdata.getName() + ".");
+					}
+					
+					
+				});
+				
+				playerdata.setData("homes", homes);
+				
+			}
 			
+            // Set Particles
 			final String particle = config.getString("particle_effect");
-			playerdata.setData("particle_effect", particle);			
+            if (particle != null) {
+			    playerdata.setData("particle_effect", particle);
+            }
 			
 		});
 		

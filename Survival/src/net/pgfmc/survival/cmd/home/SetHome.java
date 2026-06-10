@@ -71,11 +71,4 @@ public class SetHome extends PlayerCommand {
 		
 		return true;
 	}
-	
-	public static void setHome(PlayerData playerdata, String homeName)
-	{
-		
-		
-	}	
-
 }
