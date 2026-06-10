@@ -100,7 +100,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 		PlayerDataManager.setInit(playerdata -> {
 			final FileConfiguration db = playerdata.getPlayerDataFile();
 			
-			
 			// Set nickname
 			final String nickname = db.getString("nickname");
 			playerdata.setData("nickname", nickname);

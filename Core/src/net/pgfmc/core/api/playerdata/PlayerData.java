@@ -12,6 +12,8 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.function.Predicate;
 
+import javax.management.relation.Role;
+
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -45,6 +47,17 @@ public final class PlayerData extends PlayerDataExtra {
 	private HashMap<String, Object> data = new HashMap<String, Object>();
 	protected Set<String> tags = new HashSet<>();
 	protected List<String> queue = new LinkedList<String>();
+
+    
+
+    
+
+
+
+
+
+
+
 	
 	/**
 	 * Creates a new PlayerData for anyone who joins the server for the first time.

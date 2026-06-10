@@ -71,7 +71,6 @@ public class Main extends JavaPlugin {
 
 			// Set homes
 			final ConfigurationSection homesSection = config.getConfigurationSection("homes");
-
 			if (homesSection != null)
 			{
 				final Map<String, Location> homes = new HashMap<>();
@@ -91,14 +90,13 @@ public class Main extends JavaPlugin {
 				});
 				
 				playerdata.setData("homes", homes);
+				
 			}
-
 			
             // Set Particles
-			
 			final String particle = config.getString("particle_effect");
             if (particle != null) {
-			    playerdata.setData("particle_effect", particle);			
+			    playerdata.setData("particle_effect", particle);
             }
 			
 		});
