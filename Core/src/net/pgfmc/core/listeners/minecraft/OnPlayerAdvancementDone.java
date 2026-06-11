@@ -22,17 +22,17 @@ public class OnPlayerAdvancementDone implements Listener {
 		final Advancement advancement = e.getAdvancement();
 		String advancementMessage = "";
 		
-		switch (advancement.getDisplay().getType())
+		switch (advancement.getDisplay().frame())
 		{
 			case GOAL:
-				advancementMessage = "has reached the goal [" + advancement.getDisplay().getTitle() + "]!";
+				advancementMessage = "has reached the goal [" + advancement.getDisplay().title() + "]!";
 				break;
 			case CHALLENGE:
-				advancementMessage = "has completed the challenge [" + advancement.getDisplay().getTitle() + "]!";
+				advancementMessage = "has completed the challenge [" + advancement.getDisplay().title() + "]!";
 				break;
 			case TASK:
 			default:
-				advancementMessage = "has made the advancement [" + advancement.getDisplay().getTitle() + "]!";
+				advancementMessage = "has made the advancement [" + advancement.getDisplay().title() + "]!";
 				break;
 		}
 		

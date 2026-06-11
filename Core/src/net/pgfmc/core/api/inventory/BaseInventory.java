@@ -3,7 +3,6 @@ package net.pgfmc.core.api.inventory;
 import java.util.function.Consumer;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -12,6 +11,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.api.inventory.extra.Butto;
 import net.pgfmc.core.api.inventory.extra.Buttonable;
@@ -85,8 +85,10 @@ public abstract class BaseInventory implements InventoryHolder {
 			
 			return;
 		}
+
+        final Inventory inventory = CoreMain.plugin.getServer().createInventory(this, type, name);
 		
-		final Inventory inventory = Bukkit.createInventory(this, type, name);
+		//final Inventory inventory = Bukkit.createInventory(this, type, name);
 		
 		if (inventory == null)
 		{
@@ -155,7 +157,7 @@ public abstract class BaseInventory implements InventoryHolder {
 			p.openInventory(inventory);
 		});
 		
-		setItem(slot, Material.FEATHER).n(ChatColor.GRAY + "Back");
+		setItem(slot, Material.FEATHER).n(NamedTextColor.GRAY + "Back");
 	}
 	
 	/*
