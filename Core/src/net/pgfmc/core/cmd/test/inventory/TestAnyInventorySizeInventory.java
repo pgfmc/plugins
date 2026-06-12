@@ -2,11 +2,12 @@ package net.pgfmc.core.cmd.test.inventory;
 
 import org.bukkit.event.inventory.InventoryType;
 
+import net.kyori.adventure.text.Component;
 import net.pgfmc.core.api.inventory.BaseInventory;
 
 public class TestAnyInventorySizeInventory extends BaseInventory {
 
-	public TestAnyInventorySizeInventory(int size, String name) {
+	public TestAnyInventorySizeInventory(int size, Component name) {
 		super(size, name);
 		
 		if (size > 0)
@@ -16,7 +17,7 @@ public class TestAnyInventorySizeInventory extends BaseInventory {
 		
 	}
 	
-	public TestAnyInventorySizeInventory(InventoryType type, String name)
+	public TestAnyInventorySizeInventory(InventoryType type, Component name)
 	{
 		super(type, name);
 		

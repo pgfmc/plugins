@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.bukkit.ChatColor;
-
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.commands.PlayerCommand;
 import net.pgfmc.core.util.proxy.PluginMessageType;
@@ -41,7 +40,7 @@ public class TestPluginMessageCommand extends PlayerCommand {
 	public boolean execute(PlayerData pd, String alias, String[] args) {
 		if (args.length == 0)
 		{
-			pd.sendMessage(ChatColor.RED + "Incorrect command usage: please provide an argument.");
+			pd.sendMessage(NamedTextColor.RED + "Incorrect command usage: please provide an argument.");
 			return true;
 		}
 		
@@ -49,7 +48,7 @@ public class TestPluginMessageCommand extends PlayerCommand {
 		
 		if (type == null)
 		{
-			pd.sendMessage(ChatColor.RED + "Invalid plugin message type: " + args[0]);
+			pd.sendMessage(NamedTextColor.RED + "Invalid plugin message type: " + args[0]);
 			return true;
 		}
 		
@@ -67,7 +66,7 @@ public class TestPluginMessageCommand extends PlayerCommand {
 				
 				if (!pd.isOnline()) return;
 				
-				pd.sendMessage(ChatColor.LIGHT_PURPLE + in.readUTF() + ": " + in.readUTF());
+				pd.sendMessage(NamedTextColor.LIGHT_PURPLE + in.readUTF() + ": " + in.readUTF());
 				
 			});
 		

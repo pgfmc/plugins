@@ -203,7 +203,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		final Player player = playerdata.getPlayer();
 		
 		// Updates custom name value (spigot/bukkit) and makes the custom name visible to the CLIENT
-		player.setCustomName(playerdata.getRankedName());
+		player.customName(playerdata.getRankedName());
 		player.setCustomNameVisible(true);
 		
 		// Do this for every player

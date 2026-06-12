@@ -8,6 +8,8 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import net.kyori.adventure.text.Component;
+
 public class ItemWrapper {
 	
 	protected ItemStack item;
@@ -29,67 +31,81 @@ public class ItemWrapper {
 		this.item = new ItemStack(mat);
 	}
 	
-	public ItemWrapper a(int a) {
+	public ItemWrapper amount(int a) {
 		item.setAmount(a);
 		return this;
 	}
 	
-	public ItemWrapper n(String name) {
+	public ItemWrapper name(Component name) {
 		ItemMeta imeta = item.getItemMeta();
-		imeta.setDisplayName(ChatColor.RESET + name);
+		imeta.displayName(name);
 		item.setItemMeta(imeta);
 		return this;
 	}
 	
-	public ItemWrapper l(String lore) {
-		return l(Arrays.asList(lore.split("\n")));
-	}
+	//public ItemWrapper l(String lore) {
+	//	return l(Arrays.asList(lore.split("\n")));
+	//}
 	
-	public ItemWrapper l(List<String> lore)
+	public ItemWrapper lore(List<Component> lore)
 	{
-		for (int i = 0; i < lore.size(); i++)
-		{
-			if (i > 0)
-			{
-				lore.set(i, ChatColor.RESET + ChatColor.getLastColors(lore.get(i - 1)) + lore.get(i));
-				
-			} else
-			{
-				lore.set(i, ChatColor.RESET + lore.get(i));
-				
-			}
-			
-		}
+
+        // This goes through each line, and makes sure that its color matches the color of the line before.
+        // With components though, you'd be fighting uphill.
+
+		//for (int i = 0; i < lore.size(); i++)
+		//{
+		//	if (i > 0)
+		//	{
+		//		lore.set(i, ChatColor.RESET + ChatColor.getLastColors(lore.get(i - 1)) + lore.get(i));
+		//		
+		//	} else
+		//	{
+		//		lore.set(i, ChatColor.RESET + lore.get(i));
+		//		
+		//	}
+		//	
+		//}
 		
 		ItemMeta imeta = item.getItemMeta();
-		imeta.setLore(null); // clear lore first
-		imeta.setLore(lore);
+		imeta.lore(null); // clear lore first
+		imeta.lore(lore);
 		item.setItemMeta(imeta);
 		return this;
 	}
 	
-	public ItemWrapper m(Material mat) {
-		item.setType(mat);
+	public ItemWrapper material(Material mat) {
+
+        int amount = amount();
+        Component name = name();
+        List<Component> lore = lore();
+
+        this.item = new ItemStack(mat);
+
+        amount(amount);
+        name(name);
+        lore(lore);
+
 		return this;
 	}
 	
-	public ItemStack gi() {
+	public ItemStack item() {
 		return item;
 	}
 	
-	public int ga() {
+	public int amount() {
 		return item.getAmount();
 	}
 	
-	public String gn() {
-		return item.getItemMeta().getDisplayName();
+	public Component name() {
+		return item.getItemMeta().displayName();
 	}
 	
-	public List<String> gl() {
-		return item.getItemMeta().getLore();
+	public List<Component> lore() {
+		return item.getItemMeta().lore();
 	}
 	
-	public Material gm() {
+	public Material material() {
 		return item.getType();
 	}
 }

@@ -8,18 +8,18 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Predicate;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import com.moandjiezana.toml.TomlWriter;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.PGFRole;
 import net.pgfmc.core.util.files.Mixins;
@@ -98,43 +98,53 @@ public final class PlayerData extends PlayerDataExtra {
 	// Used in getRankedName()
 	private final String pvpSwordsIcon = new String(Character.toChars(0x2694));
 	
-	public String getRankedName() {
-		if (!hasPermission("net.pgfmc.core.nick")) return getRole().getColor() + getName();
-		
-		// This will use the player's nickname, or, if they don't have a nickname, their regular Minecraft user name
-		String name = getDisplayName();
-		
-		// If the player's role is STAFF or higher
-		if (getRole().compareTo(PGFRole.STAFF) <= 0)
-		{
-			// Add the staff diamond icon to the beginning of the name
-			name = getRole().getColor() + PGFRole.STAFF_DIAMOND + name;
-		} else
-		{
-			name = getRole().getColor() + name;
-		}
+	public Component getRankedName() {
+
+        NamedTextColor color = getRole().getColor();
+
+        Component rankedName = Component.empty(); 
+
+
+		if (getRole().compareTo(PGFRole.STAFF) <= 0) {
+            rankedName.append(Component.text(PGFRole.STAFF_DIAMOND, color));
+		} 
+
+        rankedName.append(Component.text(getWorkingName(), color));
 		
 		// If the player has pvp enabled
-		if (hasTag("pvp"))
-		{
+		if (hasTag("pvp")) {
 			// Add the pvp swords icon to the ending of the name
-			name = name + ChatColor.GRAY + " " + pvpSwordsIcon;
+            rankedName.append(Component.text(pvpSwordsIcon, NamedTextColor.GRAY));
 		}
-        name = name + ChatColor.RESET;
-		
-		return name;
+
+		return rankedName;
 	}
 	
-	public String getDisplayName()
-	{
-		// Returns their regular Minecraft user name if the player isn't a donator
-		if (!hasPermission("net.pgfmc.core.nick")) return getName();
-		
-		// Returns their nickname, but with no color codes or symbols (or their regular user name if no nickname)
-		return ChatColor.stripColor((String) Optional.ofNullable(getData("nickname"))
-													.orElse(getName()));
-		
+    // Used only when sending messages to Discord
+	public String getDisplayName() {
+        String displayName = getWorkingName();
+
+		if (getRole().compareTo(PGFRole.STAFF) <= 0) {
+            displayName = PGFRole.STAFF_DIAMOND + displayName;
+		} 
+
+		if (hasTag("pvp")) {
+            displayName = displayName + pvpSwordsIcon;
+		}
+
+        return displayName;
 	}
+
+    // Returns the Unstyled Name, without Colors or Emojis. Use this in Command Arguments.
+    public String getWorkingName() {
+        String nickname = getData("nickname");
+
+        if (hasPermission("net.pgfmc.core.nick") && nickname != null) {
+            return nickname;
+        }
+
+        return getName();
+    }
 	
 	public PGFRole getRole() {
 		// Returns the player's role, or MEMBER if no role
