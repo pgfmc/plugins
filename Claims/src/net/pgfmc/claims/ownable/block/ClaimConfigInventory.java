@@ -59,7 +59,11 @@ public class ClaimConfigInventory extends BaseInventory {
         Pair beaconInfo = claim.getBeaconInfo();
         int selfBeacons = claim.beacons.size();
 
-        List<Component> infoLore = Arrays.asList(
+
+
+        List<Component> infoLore = new ArrayList<>();
+
+        infoLore.addAll(Arrays.asList(
                 name,
                 Component.text("X " + String.valueOf(loc.x()), NamedTextColor.GRAY),
                 Component.text("Y " + String.valueOf(loc.y()), NamedTextColor.GRAY),
@@ -68,7 +72,7 @@ public class ClaimConfigInventory extends BaseInventory {
                     .append(Component.text(String.valueOf(selfBeacons), NamedTextColor.AQUA)),
                 Component.text("Total Beacons in Network: ", NamedTextColor.GRAY)
                     .append(Component.text(String.valueOf(beaconInfo.beaconCount), NamedTextColor.AQUA))
-                );
+                ));
         infoLore.addAll(displayEffects(beaconInfo.effects));
 
         infoLore.add(Component.text("Click to open list of ", NamedTextColor.WHITE)

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -60,13 +59,14 @@ public class ClaimViewInventory extends ListInventory<Claim> {
 
             Vector4 loc = arg0.getLocation();
 
-            List<Component> claimLore = Arrays.asList(
+            List<Component> claimLore = new ArrayList<>();
+            claimLore.addAll(Arrays.asList(
                     Component.text("X " + String.valueOf(loc.x()), NamedTextColor.GRAY),
                     Component.text("Y " + String.valueOf(loc.y()), NamedTextColor.GRAY),
                     Component.text("Z " + String.valueOf(loc.z()), NamedTextColor.GRAY),
                     Component.text("Beacons Linked to this Claim: ", NamedTextColor.GRAY)
                     .append(Component.text(arg0.beacons.size(), NamedTextColor.AQUA))
-                    );
+                    ));
             claimLore.addAll(ClaimConfigInventory.displayEffects(effects));
 
 
