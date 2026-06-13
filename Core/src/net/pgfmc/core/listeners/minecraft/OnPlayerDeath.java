@@ -1,12 +1,14 @@
 package net.pgfmc.core.listeners.minecraft;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextReplacementConfig;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.proxy.PluginMessageType;
 
@@ -17,8 +19,18 @@ public class OnPlayerDeath implements Listener {
 	{
 		final Player player = e.getEntity();
 		final PlayerData playerdata = PlayerData.from(player);
-		String deathMessage = ChatColor.GOLD + e.getDeathMessage()
-				.replaceAll(player.getName(), ChatColor.RESET + playerdata.getRankedName() + ChatColor.RESET + ChatColor.GOLD);
+		Component deathMessage = e.deathMessage();
+
+        deathMessage.color(NamedTextColor.GOLD);
+
+        deathMessage.replaceText(
+                TextReplacementConfig.builder()
+                .match(player.getName())
+                .replacement(playerdata.getRankedName())
+                .build());
+
+
+
 		
 		final Entity causingEntity = e.getDamageSource().getCausingEntity();
 		
@@ -26,24 +38,18 @@ public class OnPlayerDeath implements Listener {
 		{
 			final Player causingEntityPlayer = (Player) causingEntity;
 			final PlayerData causingEntityPlayerPlayerdata = PlayerData.from(causingEntityPlayer);
-			
-			if (causingEntityPlayerPlayerdata.isOnline())
-			{
-				deathMessage = deathMessage
-						.replaceAll(causingEntityPlayer.getName(), ChatColor.RESET
-																 + causingEntityPlayerPlayerdata.getRankedName()
-																 + ChatColor.RESET + ChatColor.GOLD);
-				
-			}
-			
+
+            deathMessage.replaceText(
+                    TextReplacementConfig.builder()
+                    .match(causingEntityPlayer.getName())
+                    .replacement(causingEntityPlayerPlayerdata.getRankedName())
+                    .build());
 		}
 
 		PluginMessageType.MESSAGE.send(player, deathMessage);
 		
-		PluginMessageType.DISCORD_MESSAGE.send(playerdata.getPlayer(), "<:DEATH:907865162558636072> " + ChatColor.stripColor(deathMessage));
+		PluginMessageType.DISCORD_MESSAGE.send(playerdata.getPlayer(), "<:DEATH:907865162558636072> " + deathMessage);
 		
-		e.setDeathMessage(null);
-		
+		e.deathMessage(null);
 	}
-
 }

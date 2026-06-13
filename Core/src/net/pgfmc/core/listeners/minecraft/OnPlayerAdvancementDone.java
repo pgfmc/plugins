@@ -1,6 +1,5 @@
 package net.pgfmc.core.listeners.minecraft;
 
-import org.bukkit.ChatColor;
 import org.bukkit.advancement.Advancement;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -51,7 +50,7 @@ public class OnPlayerAdvancementDone implements Listener {
 		});
 		*/
 		
-		PluginMessageType.DISCORD_MESSAGE.send(player, "<:dwarf:1191762269261017119> " + ChatColor.stripColor(playerdata.getRankedName()) + " " + advancementMessage);
+		PluginMessageType.DISCORD_MESSAGE.send(player, "<:dwarf:1191762269261017119> " + playerdata.getDisplayName() + " " + advancementMessage);
 		
 	}
 	

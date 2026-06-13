@@ -12,7 +12,7 @@ public class TestAnyInventorySizeInventory extends BaseInventory {
 		
 		if (size > 0)
 		{
-			setBack(0, new TestInventorySizeInventory(27, "Size: 27").getInventory());
+			setBack(0, new TestInventorySizeInventory(27, Component.text("Size: 27")).getInventory());
 		}
 		
 	}
@@ -23,7 +23,7 @@ public class TestAnyInventorySizeInventory extends BaseInventory {
 		
 		if (type.getDefaultSize() > 0)
 		{
-			setBack(0, new TestInventorySizeInventory(27, "Size: 27").getInventory());
+			setBack(0, new TestInventorySizeInventory(27, Component.text("Size: 27")).getInventory());
 		}
 		
 	}

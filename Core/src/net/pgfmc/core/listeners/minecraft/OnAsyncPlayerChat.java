@@ -41,12 +41,9 @@ public class OnAsyncPlayerChat implements Listener {
 			return;
 		}
 		
-		final String chatMessage = playerdata.getRankedName() + NamedTextColor.GRAY + " -> " + NamedTextColor.WHITE + message;
-		
+        final Component chatMessage = playerdata.getRankedName().append(Component.text(" -> ", NamedTextColor.GRAY)).append(message.color(NamedTextColor.WHITE));
+
 		PluginMessageType.MESSAGE.send(player, chatMessage);
-		
 		PluginMessageType.DISCORD_MESSAGE.send(player, playerdata.getDisplayName() + " -> " + message);
-		
 	}
-	
 }

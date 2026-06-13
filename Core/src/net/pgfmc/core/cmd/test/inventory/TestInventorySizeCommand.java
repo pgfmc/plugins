@@ -5,6 +5,7 @@ import java.util.List;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.commands.PlayerCommand;
@@ -31,7 +32,7 @@ public class TestInventorySizeCommand extends PlayerCommand {
 		pd.sendMessage(NamedTextColor.GREEN + "Opening inventory for testing the sizes.");
 		pd.playSound(pd.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1F, 2F);
 		
-		player.openInventory(new TestInventorySizeInventory(27, "Size: 27").getInventory());
+		player.openInventory(new TestInventorySizeInventory(27, Component.text("Size: 27")).getInventory());
 		
 		return true;
 	}
