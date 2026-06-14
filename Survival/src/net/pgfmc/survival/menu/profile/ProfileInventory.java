@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.InventoryType;
 
+import net.kyori.adventure.text.Component;
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.survival.Main;
@@ -18,7 +19,7 @@ import net.wesjd.anvilgui.AnvilGUI.Builder;
 public class ProfileInventory extends BaseInventory {
 
 	public ProfileInventory(PlayerData playerdata) {
-		super(InventoryType.CHEST, "Profile");
+		super(InventoryType.CHEST, Component.text("Profile"));
 		
 		setBack(0, new CommandMenuInventory(playerdata).getInventory());
 		

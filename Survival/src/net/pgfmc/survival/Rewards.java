@@ -2,8 +2,8 @@ package net.pgfmc.survival;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -144,8 +144,8 @@ public class Rewards {
 		}
 		
 		final ItemStack rewardItem = new ItemWrapper(rewards.get(reward_id))
-				.l(List.of())
-				.gi();
+				.lore(Arrays.asList())
+				.item();
 		
 		playerdata.addTag(reward_id);
 		player.getInventory().addItem(rewardItem);

@@ -3,13 +3,14 @@ package net.pgfmc.survival.menu.staff;
 import java.util.Arrays;
 import java.util.Collections;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionType;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.ServerMessage;
@@ -23,7 +24,7 @@ import net.wesjd.anvilgui.AnvilGUI.Builder;
 public class StaffInventory extends BaseInventory {
 
 	public StaffInventory (final PlayerData playerdata) {
-		super(InventoryType.CHEST, "Staff Commands");
+		super(InventoryType.CHEST, Component.text("Staff Commands"));
 		
 		setBack(0, new CommandMenuInventory(playerdata).getInventory());
 		
@@ -42,7 +43,13 @@ public class StaffInventory extends BaseInventory {
 		meta.setBasePotionType(PotionType.INVISIBILITY);
 		potion.setItemMeta(meta);
 		
-		setItem(11, potion).n(ChatColor.YELLOW + "Vanish").l(ChatColor.GRAY + "Enable/disable vanish mode.");
+		setItem(11, potion)
+			.name(Component
+					.text("Vanish")
+					.color(NamedTextColor.YELLOW))
+			.lore(Arrays.asList(Component
+					.text("Enable/disable vanish mode.")
+					.color(NamedTextColor.GRAY)));
 		
 		
 		
@@ -56,7 +63,13 @@ public class StaffInventory extends BaseInventory {
 			player.performCommand("fly");
 		});
 		
-		setItem(12, Material.ELYTRA).n(ChatColor.YELLOW + "Fly").l(ChatColor.GRAY + "Enable/disable fly mode.");
+		setItem(12, Material.ELYTRA)
+			.name(Component
+					.text("Fly")
+					.color(NamedTextColor.YELLOW))
+			.lore(Arrays.asList(Component
+					.text("Enable/disable fly mode.")
+					.color(NamedTextColor.GRAY)));
 		
 		
 		
@@ -70,7 +83,13 @@ public class StaffInventory extends BaseInventory {
 			player.openInventory(new ManagePlayersListInventory(playerdata, true).getInventory());
 		});
 		
-		setItem(13, Material.PLAYER_HEAD).n(ChatColor.YELLOW + "Online Players").l(ChatColor.GRAY + "Commands for managing individual players.");
+		setItem(13, Material.PLAYER_HEAD)
+			.name(Component
+					.text("Online Players")
+					.color(NamedTextColor.YELLOW))
+			.lore(Arrays.asList(Component
+					.text("Commands for managing individual players.")
+					.color(NamedTextColor.GRAY)));
 		
 		
 		
@@ -105,9 +124,19 @@ public class StaffInventory extends BaseInventory {
 			
 		});
 		
-		setItem(14, Material.GOAT_HORN).n(ChatColor.YELLOW + "Broadcast").l(Arrays.asList(ChatColor.GRAY + "Send a server message."
-																											, "50 characters max. For a longer message,"
-																											, "use /broadcast <message>"));
+		setItem(14, Material.GOAT_HORN)
+			.name(Component
+					.text("Broadcast")
+					.color(NamedTextColor.YELLOW))
+			.lore(Arrays.asList(Component
+						.text("Send a server message.")
+						.color(NamedTextColor.GRAY),
+					Component
+						.text("50 characters max. For a longer message,")
+						.color(NamedTextColor.GRAY),
+					Component
+						.text("use /broadcast <message>")
+						.color(NamedTextColor.GRAY)));
 		
 		
 		
@@ -122,7 +151,13 @@ public class StaffInventory extends BaseInventory {
 			player.openInventory(new GiveRewardsListInventory(playerdata).getInventory());
 		});
 		
-		setItem(15, Material.BOOKSHELF).n(ChatColor.YELLOW + "Give Rewards").l(ChatColor.GRAY + "Add a reward to all players.");
+		setItem(15, Material.BOOKSHELF)
+			.name(Component
+					.text("Give Rewards")
+					.color(NamedTextColor.YELLOW))
+			.lore(Arrays.asList(Component
+					.text("Add a reward to all players.")
+					.color(NamedTextColor.GRAY)));
 		
 	}
 

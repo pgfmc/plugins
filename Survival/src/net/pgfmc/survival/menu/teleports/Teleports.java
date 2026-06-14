@@ -5,11 +5,12 @@ import java.util.Collections;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.InventoryType;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.request.Request;
@@ -27,7 +28,7 @@ import net.wesjd.anvilgui.AnvilGUI.Builder;
 public class Teleports extends BaseInventory {
     
     public Teleports(PlayerData playerdata) {
-		super(InventoryType.CHEST, "Teleport Menu");
+		super(InventoryType.CHEST, Component.text("Teleport Menu"));
 
 		setBack(0, new CommandMenuInventory(playerdata).getInventory());
 
@@ -51,16 +52,28 @@ public class Teleports extends BaseInventory {
         int playeramount = Bukkit.getOnlinePlayers().size();
         
         if (playeramount > 1) {
-            setItem(tpaMenu, Material.PLAYER_HEAD).n(ChatColor.DARK_PURPLE + "Teleport Menu")
-                .l(ChatColor.GREEN + String.valueOf(playeramount) + " Players Online");
+            setItem(tpaMenu, Material.PLAYER_HEAD)
+            	.name(Component
+            			.text("Teleport Menu")
+            			.color(NamedTextColor.DARK_PURPLE))
+                .lore(Arrays.asList(Component
+                		.text(playeramount)
+                		.color(NamedTextColor.GREEN)
+                		.append(Component
+                				.text(" Players Online"))));
 
             setAction(tpaMenu, (player, event) -> {
                 player.openInventory(new TpaListInventory(playerdata).getInventory());
             });
 
         } else {
-            setItem(tpaMenu, Material.SKELETON_SKULL).n(ChatColor.DARK_PURPLE + "Teleport Menu")
-                    .l(ChatColor.RED + "No Players Online");
+            setItem(tpaMenu, Material.SKELETON_SKULL)
+            	.name(Component
+            			.text("Teleport Menu")
+            			.color(NamedTextColor.DARK_PURPLE))
+                .lore(Arrays.asList(Component
+                		.text("No Players Online")
+                		.color(NamedTextColor.RED)));
 
             setAction(tpaMenu, (player, event) -> {
                 playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
@@ -82,16 +95,26 @@ public class Teleports extends BaseInventory {
                 playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
             });
             
-            setItem(back, Material.ARROW).n(ChatColor.DARK_GREEN + "Teleport Back")
-                .l(ChatColor.GRAY + "No back Location available.");
+            setItem(back, Material.ARROW)
+            	.name(Component
+            			.text("Teleport Back")
+            			.color(NamedTextColor.DARK_GREEN))
+                .lore(Arrays.asList(Component
+                			.text("No back Location available.")
+                			.color(NamedTextColor.GRAY)));
 
         } else {
             setAction(back, (player, event) -> {
                 player.openInventory(new BackConfirmInventory(playerdata).getInventory());
             });
 
-            setItem(back, Material.SPECTRAL_ARROW).n(ChatColor.DARK_GREEN + "Teleport Back")
-                .l(ChatColor.GRAY + "Go back to where you teleported from.");
+            setItem(back, Material.SPECTRAL_ARROW)
+            	.name(Component
+            			.text("Teleport Back")
+            			.color(NamedTextColor.DARK_GREEN))
+                .lore(Arrays.asList(Component
+                		.text("Go back to where you teleported from.")
+                		.color(NamedTextColor.GRAY)));
 
         }
 
@@ -113,8 +136,13 @@ public class Teleports extends BaseInventory {
                 playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
             });
 
-            setItem(requestMenu, Material.BOOK).n(ChatColor.DARK_RED + "Requests Menu")
-                .l(ChatColor.RED + "No Requests Available.");
+            setItem(requestMenu, Material.BOOK)
+            	.name(Component
+            			.text("Requests Menu")
+            			.color(NamedTextColor.DARK_RED))
+                .lore(Arrays.asList(Component
+                		.text("No Requests Available.")
+                		.color(NamedTextColor.RED)));
 
         } else // there are incoming requests
         {
@@ -127,8 +155,13 @@ public class Teleports extends BaseInventory {
                 player.openInventory(inv.getInventory());
             });
 
-            setItem(requestMenu, Material.WRITABLE_BOOK).n(ChatColor.DARK_RED + "Requests Menu")
-                .l(ChatColor.DARK_GRAY + "Requests: (" + requestsCount + ")");
+            setItem(requestMenu, Material.WRITABLE_BOOK)
+            	.name(Component
+            			.text("Requests Menu")
+            			.color(NamedTextColor.DARK_RED))
+                .lore(Arrays.asList(Component
+                		.text("Requests: (" + requestsCount + ")")
+                		.color(NamedTextColor.DARK_GRAY)));
         }
 
         // Code for SPAWN WARP
@@ -143,14 +176,20 @@ public class Teleports extends BaseInventory {
             player.closeInventory();
         });
 
-        setItem(spawnWarp, Material.CHERRY_SAPLING).n(ChatColor.RED + "Warp to Spawn");
+        setItem(spawnWarp, Material.CHERRY_SAPLING)
+        	.name(Component
+        			.text("Warp to Spawn")
+        			.color(NamedTextColor.RED));
 
 		
 		setAction(tpHome, (player, event) -> {
 			player.openInventory(new HomeSelectListInventory(playerdata).getInventory());
 		});
 		
-		setItem(tpHome, Material.ENDER_PEARL).n(ChatColor.LIGHT_PURPLE + "Go to Home");
+		setItem(tpHome, Material.ENDER_PEARL)
+			.name(Component
+					.text("Go to Home")
+					.color(NamedTextColor.LIGHT_PURPLE));
 		
 		setAction(setHome, (player, event) -> {
 			Builder builder = new AnvilGUI.Builder().plugin(Main.plugin);
@@ -176,13 +215,19 @@ public class Teleports extends BaseInventory {
 			
 		});
 		
-		setItem(setHome, Material.RED_BED).n(ChatColor.GREEN + "Set Home");
+		setItem(setHome, Material.RED_BED)
+			.name(Component
+					.text("Set Home")
+					.color(NamedTextColor.GREEN));
 		
 		setAction(removeHome, (player, event) -> {
 			player.openInventory(new HomeDeleteListInventory(playerdata).getInventory());
 		});
 		
-		setItem(removeHome, Material.BARRIER).n(ChatColor.RED + "Delete Home");
+		setItem(removeHome, Material.BARRIER)
+			.name(Component
+					.text("Delete Home")
+					.color(NamedTextColor.RED));
 		
     }
 }

@@ -5,6 +5,8 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.api.request.EndBehavior;
 import net.pgfmc.core.api.request.Request;
 import net.pgfmc.core.api.request.RequestType;
@@ -29,7 +31,12 @@ public class TpRequest extends RequestType {
 
 	@Override
 	public ItemStack toItem(Request r) {
-		return new ItemWrapper(Material.ENDER_PEARL).n(ChatColor.LIGHT_PURPLE + "Teleport request from " + r.asker.getRankedName()).gi();
+		return new ItemWrapper(Material.ENDER_PEARL)
+				.name(Component
+						.text("Teleport request from ")
+						.color(NamedTextColor.LIGHT_PURPLE)
+						.append(r.asker.getRankedName()))
+				.item();
 	}
 
 	@Override
