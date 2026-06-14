@@ -15,10 +15,12 @@ import java.util.function.Predicate;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.jspecify.annotations.NonNull;
 
 import com.moandjiezana.toml.TomlWriter;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.PGFRole;
@@ -102,7 +104,7 @@ public final class PlayerData extends PlayerDataExtra {
 
         NamedTextColor color = getRole().getColor();
 
-        Component rankedName = Component.empty(); 
+        TextComponent.@NonNull Builder rankedName = Component.text(); 
 
 
 		if (getRole().compareTo(PGFRole.STAFF) <= 0) {
@@ -117,7 +119,7 @@ public final class PlayerData extends PlayerDataExtra {
             rankedName.append(Component.text(pvpSwordsIcon, NamedTextColor.GRAY));
 		}
 
-		return rankedName;
+		return rankedName.build();
 	}
 	
     // Used only when sending messages to Discord
