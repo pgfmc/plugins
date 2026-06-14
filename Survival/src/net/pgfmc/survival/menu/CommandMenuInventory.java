@@ -2,13 +2,14 @@ package net.pgfmc.survival.menu;
 
 import java.util.Arrays;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.PGFRole;
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
@@ -35,7 +36,7 @@ public class CommandMenuInventory implements InventoryHolder {
 		
 		public Homepage()
 		{
-			super(InventoryType.CHEST, "Command Menu");
+			super(InventoryType.CHEST, Component.text("Command Menu"));
 
             
 			final int afk_location = 3;
@@ -55,8 +56,11 @@ public class CommandMenuInventory implements InventoryHolder {
 						
 					});
 					
-					setItem(afk_location, Material.BLUE_ICE).n(ChatColor.GRAY + "AFK: " + ChatColor.GREEN + "Enabled")
-												.l(ChatColor.GRAY + "Take no damage while enabled.");
+					setItem(afk_location, Material.BLUE_ICE)
+                        .name(Component.text()
+                                .append(Component.text("AFK: ", NamedTextColor.GRAY))
+                                .append(Component.text("Enabled", NamedTextColor.GREEN)).build())
+						.lore(Component.text("Take no damage while enabled.", NamedTextColor.GRAY));
 					
 				} else if (!playerdata.hasTag("afk")) {
 					setAction(afk_location, (player, event) -> {
@@ -64,11 +68,14 @@ public class CommandMenuInventory implements InventoryHolder {
 						player.openInventory(new CommandMenuInventory(playerdata).getInventory());
 						
 					});
-					
-					setItem(afk_location, Material.GLASS).n(ChatColor.GRAY + "AFK: " + ChatColor.RED + "Disabled")
-											.l(ChatColor.GRAY + "Take no damage while enabled.");
+
+
+					setItem(afk_location, Material.BLUE_ICE)
+                        .name(Component.text()
+                                .append(Component.text("AFK: ", NamedTextColor.GRAY))
+                                .append(Component.text("Disabled", NamedTextColor.RED)).build())
+						.lore(Component.text("Take no damage while enabled.", NamedTextColor.GRAY));
 				}
-				
 			}
 
 			/* 
@@ -81,7 +88,7 @@ public class CommandMenuInventory implements InventoryHolder {
 			//	player.openInventory(new HomeHomepageInventory(playerdata).getInventory());
 			//});
 			//		
-			//setItem(20, Material.RED_BED).n(ChatColor.YELLOW + "Home Menu");
+			//setItem(20, Material.RED_BED).n(NamedTextColor.YELLOW + "Home Menu");
 			
 			
             final int teleports = 13;
@@ -98,8 +105,9 @@ public class CommandMenuInventory implements InventoryHolder {
                 player.openInventory(new Teleports(playerdata).getInventory());
             });
 
-            setItem(teleports, Material.ENDER_PEARL).n(ChatColor.DARK_PURPLE + "Teleport Menu")
-                .l(ChatColor.GRAY + "Different ways to get around.");
+            setItem(teleports, Material.ENDER_PEARL)
+                .name(Component.text("Teleport Menu", NamedTextColor.DARK_PURPLE))
+                .lore(Component.text("Different ways to get around", NamedTextColor.GRAY));
 			
             final int profile = 5;
 			/* 
@@ -115,8 +123,10 @@ public class CommandMenuInventory implements InventoryHolder {
 			final PGFRole role = playerdata.getRole();
 			
 			setItem(profile, Skull.getHead(playerdata.getUniqueId()))
-					.n(playerdata.getRankedName() + role.getColor() + " (" + role.toString() + ")")
-					.l(ChatColor.GRAY + "Open Profile.");
+					.name(Component.text()
+                            .append(playerdata.getRankedName())
+                            .append(Component.text("(" + role.toString() + ")", role.getColor())).build())
+					.lore(Component.text("Open Profile.", NamedTextColor.GRAY));
 			
 			/* 
 			 * Ender Chest
@@ -134,13 +144,14 @@ public class CommandMenuInventory implements InventoryHolder {
 			{
 				setAction(23, (player, event) -> {
 					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
-					playerdata.sendMessage(ChatColor.RED + "Only donators can use this command.");
+					playerdata.sendMessage(NamedTextColor.RED + "Only donators can use this command.");
 				});
 				
 			}
 			
-			setItem(23, Material.ENDER_CHEST).n(ChatColor.DARK_AQUA + "Ender Chest")
-											.l(ChatColor.BLUE + "Open an Ender Chest. Donator perk!");
+			setItem(23, Material.ENDER_CHEST)
+                .name(Component.text("Ender Chest", NamedTextColor.DARK_AQUA))
+				.lore(Component.text("Open an Ender Chest. Donator perk!", NamedTextColor.BLUE));
 			
             final int crafting = 22;
 			/* 
@@ -159,13 +170,14 @@ public class CommandMenuInventory implements InventoryHolder {
 			{
 				setAction(crafting, (player, event) -> {
 					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
-					playerdata.sendMessage(ChatColor.RED + "Only donators can use this command.");
+					playerdata.sendMessage(NamedTextColor.RED + "Only donators can use this command.");
 				});
 				
 			}
 			
-			setItem(crafting, Material.CRAFTING_TABLE).n(ChatColor.DARK_AQUA + "Crafting Table")
-											.l(ChatColor.BLUE + "Open a Crafting Table. Donator perk!");
+			setItem(crafting, Material.CRAFTING_TABLE)
+                .name(Component.text("Crafting Table", NamedTextColor.DARK_AQUA))
+			    .lore(Component.text("Open a Crafting Table. Donator perk!", NamedTextColor.BLUE));
 			
 			
 			/* 
@@ -181,12 +193,12 @@ public class CommandMenuInventory implements InventoryHolder {
 		//	if (requests == null || requests.isEmpty()) // no incoming requests
 		//	{
 		//		setAction(5, (player, event) -> {
-		//			playerdata.sendMessage(ChatColor.RED + "There are no incoming requests.");
+		//			playerdata.sendMessage(NamedTextColor.RED + "There are no incoming requests.");
 		//			playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 		//			
 		//		});
 		//		
-		//		setItem(5, Material.BOOK).n(ChatColor.DARK_RED + "Requests Menu (0)");
+		//		setItem(5, Material.BOOK).n(NamedTextColor.DARK_RED + "Requests Menu (0)");
 		//		
 		//	} else // there are incoming requests
 		//	{
@@ -201,7 +213,7 @@ public class CommandMenuInventory implements InventoryHolder {
 		//			
 		//		});
 		//		
-		//		setItem(5, Material.WRITABLE_BOOK).n(ChatColor.DARK_RED + "Requests Menu (" + requestsCount + ")");
+		//		setItem(5, Material.WRITABLE_BOOK).n(NamedTextColor.DARK_RED + "Requests Menu (" + requestsCount + ")");
 		//		
 		//	}
 			
@@ -223,8 +235,11 @@ public class CommandMenuInventory implements InventoryHolder {
 						playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 					});
 					
-					setItem(pvp, Material.DIAMOND_SWORD).n(ChatColor.GRAY + "PVP: " + ChatColor.DARK_RED + "Enabled")
-														.l(ChatColor.GRAY + "Fight other players while enabled.");
+					setItem(pvp, Material.DIAMOND_SWORD)
+                        .name(Component.text()
+                                .append(Component.text("PVP: ", NamedTextColor.GRAY))
+                                .append(Component.text("Enabled", NamedTextColor.DARK_RED)).build())
+						.lore(Component.text("Fight other players while enabled.", NamedTextColor.GRAY));
 					
 				} else {
 					setAction(pvp, (player, event) -> {
@@ -233,11 +248,12 @@ public class CommandMenuInventory implements InventoryHolder {
 						playerdata.playSound(playerdata.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
 					});
 					
-					setItem(pvp, Material.WOODEN_SWORD).n(ChatColor.GRAY + "PVP: Disabled")
-													.l(ChatColor.GRAY + "Fight other players while enabled.");
-					
+					setItem(pvp, Material.DIAMOND_SWORD)
+                        .name(Component.text()
+                                .append(Component.text("PVP: ", NamedTextColor.GRAY))
+                                .append(Component.text("Disabled", NamedTextColor.GRAY)).build())
+						.lore(Component.text("Fight other players while enabled.", NamedTextColor.GRAY));
 				}
-				
 			}
 			
             final int rewards = 16;
@@ -249,23 +265,22 @@ public class CommandMenuInventory implements InventoryHolder {
 			 */
 			final int numberOfRewards = Rewards.getPlayerRewardsMap(playerdata).size();
 			
-			if (numberOfRewards == 0)
-			{
+			if (numberOfRewards == 0) {
 				setAction(rewards, (player, event) -> {
-					playerdata.sendMessage(ChatColor.RED + "There are no rewards currently.");
+					playerdata.sendMessage(NamedTextColor.RED + "There are no rewards currently.");
 					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 				});
 				
-				setItem(rewards, Material.CHISELED_BOOKSHELF).n(ChatColor.YELLOW + "Rewards (" + numberOfRewards + ")");
+				setItem(rewards, Material.CHISELED_BOOKSHELF)
+                    .name(Component.text("Rewards (" + numberOfRewards + ")", NamedTextColor.YELLOW));
 				
-			} else
-			{
+			} else {
 				setAction(rewards, (player, event) -> {
 					player.openInventory(new RewardsListInventory(playerdata).getInventory());
 				});
 				
-				setItem(rewards, Material.BOOKSHELF).n(ChatColor.YELLOW + "Rewards (" + numberOfRewards + ")");
-				
+				setItem(rewards, Material.BOOKSHELF)
+                    .name(Component.text("Rewards (" + numberOfRewards + ")", NamedTextColor.YELLOW));
 			}
 			
 			
@@ -283,11 +298,8 @@ public class CommandMenuInventory implements InventoryHolder {
 					
 				});
 				
-				setItem(staff, Material.SPYGLASS).n(ChatColor.LIGHT_PURPLE + "Staff Commands");
-				
+				setItem(staff, Material.SPYGLASS).name(Component.text("staff Commands", NamedTextColor.LIGHT_PURPLE));
 			}
-			
-			
 			
 			
             final int particles = 21;
@@ -328,12 +340,16 @@ public class CommandMenuInventory implements InventoryHolder {
 				
 				if (particle == null)
 				{
-					setItem(particles, Material.GLASS_BOTTLE).n(ChatColor.DARK_RED + "Particle Effects").l(Arrays.asList(ChatColor.RED + "Off"
-							, ChatColor.GRAY + "Click to cycle particle effects. Donator perk!"));
-				} else
-				{
-					setItem(particles, Material.DRAGON_BREATH).n(ChatColor.DARK_RED + "Particle Effects").l(Arrays.asList(ChatColor.RED + "" + particle.name()
-							, ChatColor.GRAY + "Click to cycle particle effects. Donator perk!"));
+					setItem(particles, Material.GLASS_BOTTLE)
+                        .name(Component.text("Particle Effects", NamedTextColor.DARK_RED))
+                        .lore(Component.text("Off", NamedTextColor.RED),
+                            Component.text("Click to cycle particle effects. Donator perk!", NamedTextColor.GRAY));
+				} else {
+
+					setItem(particles, Material.DRAGON_BREATH)
+                        .name(Component.text("Particle Effects", NamedTextColor.DARK_RED))
+                        .lore(Component.text(particle.name(), NamedTextColor.RED),
+                            Component.text("Click to cycle particle effects. Donator perk!", NamedTextColor.GRAY));
 				}
 				
 			} else // No permission
@@ -352,9 +368,10 @@ public class CommandMenuInventory implements InventoryHolder {
 					
 				});
 				
-				setItem(particles, Material.GLASS_BOTTLE).n(ChatColor.DARK_RED + "Particle Effects").l(Arrays.asList(ChatColor.RED + "Off"
-						, ChatColor.GRAY + "Click to cycle particle effects. Donator perk!"));
-				
+                setItem(particles, Material.GLASS_BOTTLE)
+                    .name(Component.text("Particle Effects", NamedTextColor.DARK_RED))
+                    .lore(Component.text("Off", NamedTextColor.RED),
+                        Component.text("Click to cycle particle effects. Donator perk!", NamedTextColor.GRAY));
 			}
 			
 
@@ -368,8 +385,8 @@ public class CommandMenuInventory implements InventoryHolder {
 			if (playerdata.hasPermission("net.pgfmc.proxycore.connect"))
 			{
 				setItem(servers, Material.COMPASS)
-					.n(ChatColor.GOLD + "Server Selector")
-					.l(ChatColor.GRAY + "Connect to another server on the network.");
+					.name(Component.text("Server Selector", NamedTextColor.GOLD))
+					.lore(Component.text("Connect to another server on the network.", NamedTextColor.GRAY));
 				
 				setAction(servers, (player, event) -> {
 					final BaseInventory serverSelector = new ServerSelectorInventory(playerdata);

@@ -13,6 +13,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 
+import net.kyori.adventure.text.Component;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.node.matcher.NodeMatcher;
 import net.pgfmc.core.PGFRole;
@@ -65,6 +66,12 @@ abstract class PlayerDataExtra {
 		
 		getPlayer().sendMessage(message);
 	}
+
+    public void sendMessage(Component message) {
+        if (getPlayer() == null) return;
+
+        getPlayer().sendMessage(message);
+    }
 	
 	public boolean isOnline() {
 		return getOfflinePlayer().isOnline();

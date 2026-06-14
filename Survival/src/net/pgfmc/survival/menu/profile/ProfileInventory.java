@@ -3,12 +3,13 @@ package net.pgfmc.survival.menu.profile;
 import java.util.Arrays;
 import java.util.Collections;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.InventoryType;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.survival.Main;
@@ -42,7 +43,8 @@ public class ProfileInventory extends BaseInventory {
 					
 				});
 				
-				setItem(11, Material.AMETHYST_SHARD).n(ChatColor.LIGHT_PURPLE + "Unlink Discord Account");
+				setItem(11, Material.AMETHYST_SHARD)
+                    .name(Component.text("Unlink Discord Account", NamedTextColor.LIGHT_PURPLE));
 			
 			} else {
 				
@@ -53,8 +55,9 @@ public class ProfileInventory extends BaseInventory {
 					
 				});
 				
-				setItem(11, Material.QUARTZ).n(ChatColor.LIGHT_PURPLE + "Link Account")
-				.l(ChatColor.GRAY + "Click to get a link code.");
+				setItem(11, Material.QUARTZ)
+                    .name(Component.text("Link Account", NamedTextColor.LIGHT_PURPLE))
+				.lore(Component.text("Click to get a link code.", NamedTextColor.GRAY));
 				
 			}
 			
@@ -68,15 +71,20 @@ public class ProfileInventory extends BaseInventory {
 		 * [] [] [] [] [] [] [] [] []
 		 */
 		setAction(13, (player, event) -> {
-			playerdata.sendMessage(ChatColor.LIGHT_PURPLE + "Website: " + ChatColor.BLUE + ChatColor.ITALIC + ChatColor.UNDERLINE + "https://www.pgfmc.net");
-			playerdata.sendMessage(ChatColor.LIGHT_PURPLE + "Discord Server: " + ChatColor.BLUE + ChatColor.ITALIC + ChatColor.UNDERLINE + "https://discord.gg/zdxeREe");
-			playerdata.sendMessage(ChatColor.LIGHT_PURPLE + "Talk to bk about becoming a donator! :)");
+			playerdata.sendMessage(Component.text()
+                    .append(Component.text("Website: ", NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text("https://www.pgfmc.net", NamedTextColor.BLUE, TextDecoration.ITALIC, TextDecoration.UNDERLINED)).build());
+			playerdata.sendMessage(Component.text()
+                    .append(Component.text("Discord Server: ", NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text("https://discord.gg/zdxeREe", NamedTextColor.BLUE, TextDecoration.ITALIC, TextDecoration.UNDERLINED)).build());
+			playerdata.sendMessage(NamedTextColor.LIGHT_PURPLE + "Talk to bk about becoming a donator! :)");
 			playerdata.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
 			
 		});
 		
-		setItem(13, Material.FLOWER_BANNER_PATTERN).n(ChatColor.LIGHT_PURPLE + "Server Info")
-												.l(ChatColor.GRAY + "Click to see Discord, website, and donation info.");
+		setItem(13, Material.FLOWER_BANNER_PATTERN)
+            .name(Component.text("Server Info", NamedTextColor.LIGHT_PURPLE))
+			.lore(Component.text("Click to see Discord, website, and donation info.", NamedTextColor.GRAY));
 		
 		
 		/* 
@@ -121,15 +129,14 @@ public class ProfileInventory extends BaseInventory {
 		{
 			setAction(15, (player, event) -> {
 				playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
-				playerdata.sendMessage(ChatColor.RED + "Only donators can use this command.");
+				playerdata.sendMessage(NamedTextColor.RED + "Only donators can use this command.");
 				
 			});
 			
 		}
 		
-		setItem(15, Material.NAME_TAG).n(ChatColor.LIGHT_PURPLE + "Change Nickname")
-		.l(playerdata.getRankedName());
-		
+		setItem(15, Material.NAME_TAG)
+            .name(Component.text("Change Nickname", NamedTextColor.LIGHT_PURPLE))
+		    .lore(playerdata.getRankedName());
 	}
-
 }

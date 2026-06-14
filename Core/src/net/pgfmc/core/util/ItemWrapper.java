@@ -1,5 +1,6 @@
 package net.pgfmc.core.util;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.Material;
@@ -45,32 +46,18 @@ public class ItemWrapper {
 	//	return l(Arrays.asList(lore.split("\n")));
 	//}
 	
-	public ItemWrapper lore(List<Component> lore)
-	{
-
-        // This goes through each line, and makes sure that its color matches the color of the line before.
-        // With components though, you'd be fighting uphill.
-
-		//for (int i = 0; i < lore.size(); i++)
-		//{
-		//	if (i > 0)
-		//	{
-		//		lore.set(i, ChatColor.RESET + ChatColor.getLastColors(lore.get(i - 1)) + lore.get(i));
-		//		
-		//	} else
-		//	{
-		//		lore.set(i, ChatColor.RESET + lore.get(i));
-		//		
-		//	}
-		//	
-		//}
-		
+	public ItemWrapper lore(List<Component> lore) {
 		ItemMeta imeta = item.getItemMeta();
 		imeta.lore(null); // clear lore first
 		imeta.lore(lore);
 		item.setItemMeta(imeta);
 		return this;
 	}
+
+    public ItemWrapper lore(Component... arguments) {
+        this.lore(Arrays.asList(arguments));
+        return this;
+    }
 	
 	public ItemWrapper material(Material mat) {
 

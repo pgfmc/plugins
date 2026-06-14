@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,6 +13,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.api.inventory.ListInventory;
 import net.pgfmc.core.api.inventory.extra.Butto;
 import net.pgfmc.core.api.playerdata.PlayerData;
@@ -29,7 +30,7 @@ public class GiveRewardsListInventory extends ListInventory<String> implements L
 	private PlayerData playerdata;
 
 	public GiveRewardsListInventory(final PlayerData playerdata) {
-		super(27, "Give Rewards");
+		super(27, Component.text("Give Rewards"));
 		
 		setBack(0, new StaffInventory(playerdata).getInventory());
 		
@@ -43,7 +44,7 @@ public class GiveRewardsListInventory extends ListInventory<String> implements L
 	 */
 	public GiveRewardsListInventory()
 	{
-		super(27, "Give Rewards");
+		super(27, Component.text("Give Rewards"));
 	}
 	
 	@EventHandler
@@ -67,7 +68,7 @@ public class GiveRewardsListInventory extends ListInventory<String> implements L
 	        
 	        if (Rewards.getRewardsMap().containsKey(tag_id))
 	        {
-	        	playerdata.sendMessage(ChatColor.RED + "Reward identification exists already.");
+	        	playerdata.sendMessage(NamedTextColor.RED + "Reward identification exists already.");
 	        	
 	        	return Arrays.asList(AnvilGUI.ResponseAction.run(new Runnable() {
 	        		@Override
@@ -111,7 +112,8 @@ public class GiveRewardsListInventory extends ListInventory<String> implements L
 
 	@Override
 	protected ItemStack toItem(String entry) {
-		return new ItemWrapper(Rewards.getRewardsMap().get(entry)).l(ChatColor.GRAY + entry).gi();
+		return new ItemWrapper(Rewards.getRewardsMap().get(entry))
+            .lore(Component.text(entry, NamedTextColor.GRAY)).item();
 	}
 
 }
