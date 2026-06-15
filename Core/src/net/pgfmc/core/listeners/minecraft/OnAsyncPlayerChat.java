@@ -6,6 +6,7 @@ import org.bukkit.event.Listener;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.Profanity;
@@ -44,6 +45,6 @@ public class OnAsyncPlayerChat implements Listener {
         final Component chatMessage = Component.text().append(playerdata.getRankedName()).append(Component.text(" -> ", NamedTextColor.GRAY)).append(message.color(NamedTextColor.WHITE)).build();
 
 		PluginMessageType.MESSAGE.send(player, chatMessage);
-		PluginMessageType.DISCORD_MESSAGE.send(player, playerdata.getDisplayName() + " -> " + message);
+		PluginMessageType.DISCORD_MESSAGE.send(player, playerdata.getDisplayName() + " -> " + ((TextComponent) message).content());
 	}
 }

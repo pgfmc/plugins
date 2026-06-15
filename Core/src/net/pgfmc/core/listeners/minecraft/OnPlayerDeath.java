@@ -6,10 +6,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextReplacementConfig;
+import net.kyori.adventure.text.TranslatableComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.Logger;
 import net.pgfmc.core.util.proxy.PluginMessageType;
 
 public class OnPlayerDeath implements Listener {
@@ -19,7 +20,9 @@ public class OnPlayerDeath implements Listener {
 	{
 		final Player player = e.getEntity();
 		final PlayerData playerdata = PlayerData.from(player);
-		Component deathMessage = e.deathMessage();
+		TranslatableComponent deathMessage = (TranslatableComponent) e.deathMessage();
+
+        Logger.warn(deathMessage.arguments().toString());
 
         deathMessage.color(NamedTextColor.GOLD);
 
@@ -48,7 +51,7 @@ public class OnPlayerDeath implements Listener {
 
 		PluginMessageType.MESSAGE.send(player, deathMessage);
 		
-		PluginMessageType.DISCORD_MESSAGE.send(playerdata.getPlayer(), "<:DEATH:907865162558636072> " + deathMessage);
+		PluginMessageType.DISCORD_MESSAGE.send(playerdata.getPlayer(), "<:DEATH:907865162558636072> " + ((TranslatableComponent) deathMessage).fallback());
 		
 		e.deathMessage(null);
 	}
