@@ -1,7 +1,5 @@
 package net.pgfmc.survival.menu;
 
-import java.util.Arrays;
-
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.InventoryType;
@@ -248,7 +246,7 @@ public class CommandMenuInventory implements InventoryHolder {
 						playerdata.playSound(playerdata.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
 					});
 					
-					setItem(pvp, Material.DIAMOND_SWORD)
+					setItem(pvp, Material.IRON_SWORD)
                         .name(Component.text()
                                 .append(Component.text("PVP: ", NamedTextColor.GRAY))
                                 .append(Component.text("Disabled", NamedTextColor.GRAY)).build())
@@ -298,7 +296,7 @@ public class CommandMenuInventory implements InventoryHolder {
 					
 				});
 				
-				setItem(staff, Material.SPYGLASS).name(Component.text("staff Commands", NamedTextColor.LIGHT_PURPLE));
+				setItem(staff, Material.SPYGLASS).name(Component.text("Staff Commands", NamedTextColor.LIGHT_PURPLE));
 			}
 			
 			

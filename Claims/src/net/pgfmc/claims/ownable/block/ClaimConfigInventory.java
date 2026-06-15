@@ -11,8 +11,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.jspecify.annotations.NonNull;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.claims.Main;
 import net.pgfmc.core.api.inventory.BaseInventory;
@@ -219,7 +221,7 @@ public class ClaimConfigInventory extends BaseInventory {
 		protected ItemStack toItem(PlayerData arg0) {
 			// copied from cmd.skull lol
 			
-            ItemStack item = new ItemWrapper(Material.PLAYER_HEAD).name(arg0.getRankedName()).item();
+            ItemStack item = new ItemWrapper(Material.PLAYER_HEAD).name(arg0.getRankedName()).lore(Component.empty()).item();
 			SkullMeta meta = (SkullMeta) item.getItemMeta(); // Get the created item's ItemMeta and cast it to SkullMeta so we can access the skull properties
 			meta.setOwningPlayer(arg0.getOfflinePlayer()); // Set the skull's owner so it will adapt the skin of the provided username (case sensitive).
 			item.setItemMeta(meta); // Apply the modified meta to the initial created item
@@ -254,7 +256,11 @@ public class ClaimConfigInventory extends BaseInventory {
 		protected void confirmAction(Player arg0, InventoryClickEvent arg1) {
 			claim.getMembers().add(player);
 			arg0.closeInventory();
-			arg0.sendMessage(NamedTextColor.GOLD + "Added " + player.getRankedName() + NamedTextColor.GOLD + " to your base.");
+			arg0.sendMessage(Component.text()
+                    .append(Component.text("Added ", NamedTextColor.GOLD))
+                    .append(player.getRankedName())
+                    .append(Component.text(" to your base", NamedTextColor.GOLD)).build());
+
 			claim.forwardUpdateFrom(claim);
 		}
 	}
@@ -284,7 +290,11 @@ public class ClaimConfigInventory extends BaseInventory {
 		protected void confirmAction(Player arg0, InventoryClickEvent arg1) {
 			claim.getMembers().remove(player);
 			arg0.closeInventory();
-			arg0.sendMessage(NamedTextColor.GOLD + "Removed " + player.getRankedName() + NamedTextColor.GOLD + " from your base.");
+
+			arg0.sendMessage(Component.text()
+                    .append(Component.text("Removed ", NamedTextColor.GOLD))
+                    .append(player.getRankedName())
+                    .append(Component.text(" from your base", NamedTextColor.GOLD)).build());
 			claim.forwardUpdateFrom(claim);
 		}
 	}
@@ -296,7 +306,8 @@ public class ClaimConfigInventory extends BaseInventory {
             for (PotionEffect effect : effects) {
 
                 PotionEffectType type = effect.getType();
-                Component entry = Component.text(" - ", NamedTextColor.GRAY);
+                TextComponent.@NonNull Builder entry = Component.text();
+                entry.append(Component.text(" - ", NamedTextColor.GRAY));
 
                 String suffix = "";
                 if (effect.getAmplifier() == 1) {
@@ -317,11 +328,12 @@ public class ClaimConfigInventory extends BaseInventory {
                 } else if (type.equals(PotionEffectType.RESISTANCE)) {
                     entry.append(Component.text("Resistance" + suffix, NamedTextColor.LIGHT_PURPLE));
                 } else {
+                    entry.append(Component.text(type.toString()));
                     Main.getPlugin().getLogger().info("Invalid Buff passed to displayEffects: " + type.toString());
                     continue;
                 }
 
-                acc.add(entry);
+                acc.add(entry.build());
             }
         }
 
