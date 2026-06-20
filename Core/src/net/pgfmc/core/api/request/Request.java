@@ -1,10 +1,11 @@
 package net.pgfmc.core.api.request;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.api.inventory.ConfirmInventory;
 import net.pgfmc.core.api.inventory.extra.Butto;
 import net.pgfmc.core.api.inventory.extra.Buttonable;
@@ -56,7 +57,18 @@ public final class Request implements Buttonable {
 		Request r = this;
 		return (p, e) -> {
 			
-			ConfirmInventory conf = new ConfirmInventory("Accept " + parent.name + " Request from " + ChatColor.stripColor(r.asker.getRankedName()) + "?", ChatColor.RESET + "" + ChatColor.GREEN + "Accept", ChatColor.RESET + "" + ChatColor.RED + "Reject") {
+			//ConfirmInventory conf = new ConfirmInventory("Accept " + parent.name + " Request from " + NamedTextColor.stripColor(r.asker.getRankedName()) + "?", NamedTextColor.RESET + "" + NamedTextColor.GREEN + "Accept", NamedTextColor.RESET + "" + NamedTextColor.RED + "Reject") {
+
+			ConfirmInventory conf = new ConfirmInventory(
+                    Component.text("Accept ")
+                    .append(Component.text(parent.name))
+                    .append(Component.text(" Request from "))
+                    .append(r.asker.getRankedName())
+                    .append(Component.text("?"))
+                        ,
+                    Component.text("Accept", NamedTextColor.GREEN)
+                    ,
+                    Component.text("Reject", NamedTextColor.RED)) {
 				
 				@Override
 				protected void confirmAction(Player p, InventoryClickEvent e) {

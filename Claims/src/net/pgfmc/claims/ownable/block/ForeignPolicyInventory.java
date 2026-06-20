@@ -2,13 +2,14 @@ package net.pgfmc.claims.ownable.block;
 
 import org.bukkit.Material;
 
-import net.md_5.bungee.api.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.api.inventory.BaseInventory;
 
 public class ForeignPolicyInventory extends BaseInventory {
 
     public ForeignPolicyInventory(Claim claim, boolean read) {
-        super(27, ChatColor.YELLOW + "Settings for Foreign Players");
+        super(27, Component.text("Settings for Foreign Players", NamedTextColor.YELLOW));
 
         setBack(0, new ClaimConfigInventory(claim, read).getInventory());
         int door = 11;
@@ -17,11 +18,11 @@ public class ForeignPolicyInventory extends BaseInventory {
         int enemy = 14;
         int animal = 15;
 
-        if (claim.doorsLocked) {
-            setItem(door, Material.IRON_DOOR).n(ChatColor.YELLOW + "Doors" + ChatColor.GRAY + ": " + ChatColor.RED + "Locked.");
-        } else {
-            setItem(door, Material.OAK_DOOR).n(ChatColor.YELLOW + "Doors" + ChatColor.GRAY + ": " + ChatColor.GREEN + "Unlocked.");
-        }
+        setItem(door, (claim.doorsLocked) ? Material.IRON_DOOR : Material.OAK_DOOR)
+            .name(Component.text("Doors", NamedTextColor.YELLOW)
+            .append(Component.text(": ", NamedTextColor.GRAY))
+            .append((claim.doorsLocked) ? Component.text("Locked.", NamedTextColor.RED) : Component.text("Unlocked.", NamedTextColor.GREEN))
+            );
 
         if (!read) {
             setAction(door, (p,e) -> {
@@ -31,11 +32,11 @@ public class ForeignPolicyInventory extends BaseInventory {
             });
         }
 
-        if (claim.switchesLocked) {
-            setItem(lever, Material.HEAVY_WEIGHTED_PRESSURE_PLATE).n(ChatColor.YELLOW + "Switches" + ChatColor.GRAY + ": " + ChatColor.RED + "Locked.");
-        } else {
-            setItem(lever, Material.OAK_PRESSURE_PLATE).n(ChatColor.YELLOW + "Switches" + ChatColor.GRAY + ": " + ChatColor.GREEN + "Unlocked.");
-        }
+        setItem(lever, (claim.switchesLocked) ? Material.HEAVY_WEIGHTED_PRESSURE_PLATE : Material.OAK_PRESSURE_PLATE)
+            .name(Component.text("Switches", NamedTextColor.YELLOW)
+            .append(Component.text(": ", NamedTextColor.GRAY))
+            .append((claim.switchesLocked) ? Component.text("Locked.", NamedTextColor.RED) : Component.text("Unlocked.", NamedTextColor.GREEN))
+            );
 
         if (!read) {
             setAction(lever, (p,e) -> {
@@ -45,11 +46,11 @@ public class ForeignPolicyInventory extends BaseInventory {
             });
         }
 
-        if (claim.inventoriesLocked) {
-            setItem(chest, Material.TRIPWIRE_HOOK).n(ChatColor.YELLOW + "Inventories" + ChatColor.GRAY + ": " + ChatColor.RED + "Locked.");
-        } else {
-            setItem(chest, Material.CHEST).n(ChatColor.YELLOW + "Inventories" + ChatColor.GRAY + ": " + ChatColor.GREEN + "Unlocked.");
-        }
+        setItem(chest, (claim.inventoriesLocked) ? Material.TRIPWIRE_HOOK : Material.CHEST)
+            .name(Component.text("Inventories", NamedTextColor.YELLOW)
+            .append(Component.text(": ", NamedTextColor.GRAY))
+            .append((claim.inventoriesLocked) ? Component.text("Locked.", NamedTextColor.RED) : Component.text("Unlocked.", NamedTextColor.GREEN))
+            );
 
         if (!read) {
             setAction(chest, (p,e) -> {
@@ -59,11 +60,11 @@ public class ForeignPolicyInventory extends BaseInventory {
             });
         }
 
-        if (claim.monsterKilling) {
-            setItem(enemy, Material.ZOMBIE_HEAD).n(ChatColor.YELLOW + "Monster Interactions" + ChatColor.GRAY + ": " + ChatColor.RED + "Allowed.");
-        } else {
-            setItem(enemy, Material.SKELETON_SKULL).n(ChatColor.YELLOW + "Monster Interactions" + ChatColor.GRAY + ": " + ChatColor.GREEN + "Disallowed.");
-        }
+        setItem(enemy, (claim.monsterKilling) ? Material.ZOMBIE_HEAD : Material.SKELETON_SKULL)
+            .name(Component.text("Monster Interactions", NamedTextColor.YELLOW)
+            .append(Component.text(": ", NamedTextColor.GRAY))
+            .append((claim.monsterKilling) ? Component.text("Allowed", NamedTextColor.RED) : Component.text("Disallowed", NamedTextColor.GREEN))
+            );
 
         if (!read) {
             setAction(enemy, (p,e) -> {
@@ -73,11 +74,11 @@ public class ForeignPolicyInventory extends BaseInventory {
             });
         }
 
-        if (claim.livestockKilling) {
-            setItem(animal, Material.PORKCHOP).n(ChatColor.YELLOW + "Animal Interactions" + ChatColor.GRAY + ": " + ChatColor.RED + "Allowed.");
-        } else {
-            setItem(animal, Material.COOKED_PORKCHOP).n(ChatColor.YELLOW + "Animal Interactions" + ChatColor.GRAY + ": " + ChatColor.GREEN + "Disallowed.");
-        }
+        setItem(animal, (claim.livestockKilling) ? Material.PORKCHOP : Material.COOKED_PORKCHOP)
+            .name(Component.text("Animal Interactions", NamedTextColor.YELLOW)
+            .append(Component.text(": ", NamedTextColor.GRAY))
+            .append((claim.livestockKilling) ? Component.text("Allowed", NamedTextColor.RED) : Component.text("Disallowed", NamedTextColor.GREEN))
+            );
 
         if (!read) {
             setAction(animal, (p,e) -> {

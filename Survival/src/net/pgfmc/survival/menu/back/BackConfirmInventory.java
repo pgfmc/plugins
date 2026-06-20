@@ -1,9 +1,10 @@
 package net.pgfmc.survival.menu.back;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.api.inventory.ConfirmInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.survival.menu.teleports.Teleports;
@@ -14,7 +15,9 @@ public class BackConfirmInventory extends ConfirmInventory {
 	
 	public BackConfirmInventory(PlayerData pd)
 	{
-		super("Teleport Back", ChatColor.DARK_GREEN + "Continue", ChatColor.GRAY + "Cancel");
+		super(Component.text("Teleport Back"),
+                Component.text("Continue", NamedTextColor.DARK_GREEN),
+                Component.text("Cancel", NamedTextColor.GRAY));
 		
 		this.pd = pd;
 	}

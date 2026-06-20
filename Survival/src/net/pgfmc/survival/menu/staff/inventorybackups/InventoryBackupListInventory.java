@@ -6,10 +6,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.api.inventory.ListInventory;
 import net.pgfmc.core.api.inventory.extra.Butto;
 import net.pgfmc.core.api.playerdata.PlayerData;
@@ -24,7 +25,8 @@ public class InventoryBackupListInventory extends ListInventory<InventoryBackup>
 	PlayerData target;
 
 	public InventoryBackupListInventory(PlayerData playerdata, PlayerData target) {
-		super(target.getRankedName() + "'s Inventories");
+		super(Component.text().append(target.getRankedName())
+                .append(Component.text("'s Inventories")).build());
 		
 		this.playerdata = playerdata;
 		this.target = target;
@@ -57,37 +59,34 @@ public class InventoryBackupListInventory extends ListInventory<InventoryBackup>
 		final int totalItemStackCount = inventoryContents.size();
 		
 		Material itemDyeColor = Material.BARRIER;
-		ChatColor itemColor = ChatColor.WHITE;
+		NamedTextColor itemColor = NamedTextColor.WHITE;
 		
 		if (totalItemStackCount == 0) {
 			itemDyeColor = Material.WHITE_DYE;
-			itemColor = ChatColor.WHITE;
+			itemColor = NamedTextColor.WHITE;
 			
 		} else if (totalItemStackCount <= 9) {
 			itemDyeColor = Material.GRAY_DYE;
-			itemColor = ChatColor.GRAY;
+			itemColor = NamedTextColor.GRAY;
 			
 		} else if (totalItemStackCount <= 18) {
 			itemDyeColor = Material.YELLOW_DYE;
-			itemColor = ChatColor.YELLOW;
+			itemColor = NamedTextColor.YELLOW;
 			
 		} else if (totalItemStackCount < 27) {
 			itemDyeColor = Material.ORANGE_DYE;
-			itemColor = ChatColor.GOLD;
+			itemColor = NamedTextColor.GOLD;
 			
 		} else if (totalItemStackCount == 27) {
 			itemDyeColor = Material.RED_DYE;
-			itemColor = ChatColor.RED;
+			itemColor = NamedTextColor.RED;
 			
 		}
 		
-		List<String> inventoryContentsAsStrings = inventoryContents.stream().map(item -> item.getType().toString()).collect(Collectors.toList());
-		inventoryContentsAsStrings.add(0, ChatColor.GRAY + "");
+		List<Component> inventoryContentsAsStrings = inventoryContents.stream().map(item -> Component.text(item.getType().toString(), NamedTextColor.GRAY)).collect(Collectors.toList());
 		
-		return new ItemWrapper(itemDyeColor).n(itemColor + "(Cause: " + entry.getCause().name() + ") " + InventoryBackupScheduler.INVENTORY_DATE_FORMAT.format(entry.getDate()))
-				.l(inventoryContentsAsStrings).gi();
-		
-		
+		return new ItemWrapper(itemDyeColor)
+            .name(Component.text("(Cause: " + entry.getCause().name() + ") " + InventoryBackupScheduler.INVENTORY_DATE_FORMAT.format(entry.getDate()), itemColor))
+			.lore(inventoryContentsAsStrings).item();
 	}
-
 }

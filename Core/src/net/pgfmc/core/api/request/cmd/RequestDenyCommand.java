@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.request.EndBehavior;
 import net.pgfmc.core.api.request.Request;
@@ -50,7 +50,7 @@ public class RequestDenyCommand extends PlayerCommand {
 			
 			if (player == null)
 			{
-				pd.sendMessage(ChatColor.RED + "No request found for " + args[0]);
+				pd.sendMessage(NamedTextColor.RED + "No request found for " + args[0]);
 				return true;
 			}
 			
@@ -63,14 +63,14 @@ public class RequestDenyCommand extends PlayerCommand {
 				}
 			}
 			
-			pd.sendMessage(ChatColor.RED + "No request found for " + args[0]);
+			pd.sendMessage(NamedTextColor.RED + "No request found for " + args[0]);
 			return true;
 		}
 		
 		Set<Request> set = rt.findRequests(pd);
 		
 		if (set.size() == 0) {
-			pd.sendMessage(ChatColor.RED + "No requests to Deny!");
+			pd.sendMessage(NamedTextColor.RED + "No requests to Deny!");
 			return true;
 		} else if (set.size() == 1) {
 			for (Request r : set) {
@@ -81,10 +81,10 @@ public class RequestDenyCommand extends PlayerCommand {
 		} else {
 			
 			for (Request r : set) {
-				pd.sendMessage(ChatColor.GOLD + rt.name + " Request from " + r.asker + ".");
+				pd.sendMessage(NamedTextColor.GOLD + rt.name + " Request from " + r.asker + ".");
 				
 			}
-			pd.sendMessage(ChatColor.GOLD + "You have " + set.size() + " Requests.");
+			pd.sendMessage(NamedTextColor.GOLD + "You have " + set.size() + " Requests.");
 		}
 		return true;
 	}

@@ -1,5 +1,6 @@
 package net.pgfmc.core;
 
+import java.io.File;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Calendar;
@@ -22,6 +23,9 @@ import org.bukkit.plugin.messaging.PluginMessageRecipient;
 
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.translation.TranslationStore;
 import net.pgfmc.core.api.inventory.extra.InventoryPressEvent;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.playerdata.PlayerDataManager;
@@ -45,10 +49,12 @@ import net.pgfmc.core.listeners.minecraft.OnPlayerJoin;
 import net.pgfmc.core.listeners.minecraft.OnPlayerQuit;
 import net.pgfmc.core.listeners.types.ConnectResponse;
 import net.pgfmc.core.listeners.types.PlayerDataResponse;
+import net.pgfmc.core.util.LoadJson;
 import net.pgfmc.core.util.Logger;
 import net.pgfmc.core.util.RestartScheduler;
 import net.pgfmc.core.util.ServerMessage;
 import net.pgfmc.core.util.proxy.PluginMessageType;
+
 
 /**
  * @author bk and CrimsonDart
@@ -73,6 +79,23 @@ public class CoreMain extends JavaPlugin implements Listener {
 	@Override
 	public void onEnable()
 	{
+
+        // Does Translator Initialization
+
+        LoadJson.createTranslator(CoreMain.plugin.getDataFolder() + File.separator + "en_us.json");
+
+
+
+        final TranslationStore<Component> store = TranslationStore.component(Key.key("pgf:translations"));
+
+
+
+
+
+
+
+
+
 		plugin = this;
 		
 		/**
@@ -201,7 +224,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		final Player player = playerdata.getPlayer();
 		
 		// Updates custom name value (spigot/bukkit) and makes the custom name visible to the CLIENT
-		player.setCustomName(playerdata.getRankedName());
+		player.customName(playerdata.getRankedName());
 		player.setCustomNameVisible(true);
 		
 		// Do this for every player
@@ -214,7 +237,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 			player.hidePlayer(CoreMain.plugin, otherPlayer);
 			player.showPlayer(CoreMain.plugin, otherPlayer);
 		}
-		
 	}
 	
 	/**

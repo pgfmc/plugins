@@ -4,7 +4,10 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Server;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.commands.PlayerCommand;
@@ -27,7 +30,10 @@ public class Pvp extends PlayerCommand {
 		if (pd.hasTag("pvp")) {
 			pd.removeTag("pvp");
 			
-			Bukkit.broadcastMessage(pd.getRankedName() + ChatColor.GRAY + " disabled PVP");
+			Bukkit.getServer().broadcast(pd.getRankedName()
+						.append(Component
+							.text(" disabled PVP")
+							.color(NamedTextColor.GRAY)));
 			
 			PluginMessageType.DISCORD_MESSAGE.send(pd.getPlayer(), ChatColor.stripColor(":shield: " + pd.getRankedName() + " disabled PVP"));
 			
@@ -36,7 +42,10 @@ public class Pvp extends PlayerCommand {
 		} else {
 			pd.addTag("pvp");
 			
-			Bukkit.broadcastMessage(pd.getRankedName() + ChatColor.DARK_RED + " enabled PVP");
+			Bukkit.getServer().broadcast(pd.getRankedName()
+							.append(Component
+									.text(" enabled PVP")
+									.color(NamedTextColor.DARK_RED)));
 			
 			PluginMessageType.DISCORD_MESSAGE.send(pd.getPlayer(), ChatColor.stripColor(":crossed_swords: " + pd.getRankedName() + " enabled PVP"));
 			

@@ -4,11 +4,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.InventoryType;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
@@ -34,7 +36,7 @@ import net.pgfmc.core.util.proxy.PluginMessageType;
 public final class ServerSelectorInventory extends BaseInventory {
 
 	public ServerSelectorInventory(final PlayerData playerdata) {
-		super(InventoryType.HOPPER, "Server Selector");
+		super(InventoryType.HOPPER, Component.text("Server Selector"));
 		
 		/**
 		 * The hopper is filled in right to left.
@@ -75,14 +77,15 @@ public final class ServerSelectorInventory extends BaseInventory {
 				if (CoreMain.getThisServerName() != null && CoreMain.getThisServerName().equals("season13")) // Connected
 				{
 					setItem(i, Material.GRASS_BLOCK)
-					.n(ChatColor.GREEN + blackStarIcon + " Season13 (Connected)")
-					.l(Arrays.asList(ChatColor.GRAY + "You are connected to Season13.",
-							ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Claims, homes, tpa, and more."));
+					.name(Component.text(blackStarIcon + " Season13 (Connected)", NamedTextColor.GREEN))
+					.lore(
+                        Arrays.asList((Component.text("You are connected to Season13.", NamedTextColor.GRAY)),
+                            Component.text(blackRightPointingPointerIcon + "Claims, Homes, tpa, and more.", NamedTextColor.GRAY, TextDecoration.ITALIC)));
 					
 					setAction(i, (player, event) -> {
 						if (playerdata.getPlayer() == null) return;
 						
-						player.sendMessage(ChatColor.RED + "You are already connected to Season13.");
+						player.sendMessage(NamedTextColor.RED + "You are already connected to Season13.");
 						
 						playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 						
@@ -91,14 +94,15 @@ public final class ServerSelectorInventory extends BaseInventory {
 				} else if (servers.get("season13") == null || servers.get("season13") == true) // Online
 				{
 					setItem(i, Material.GRASS_BLOCK)
-					.n(ChatColor.GREEN + "Season13")
-					.l(Arrays.asList(ChatColor.GRAY + "Click to join Season13.",
-							ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Claims, homes, tpa, and more."));
+					.name(Component.text("Season13", NamedTextColor.GREEN))
+					.lore(
+                        Arrays.asList((Component.text("Click to join Season13.", NamedTextColor.GRAY)),
+                            Component.text(blackRightPointingPointerIcon + "Claims, Homes, tpa, and more.", NamedTextColor.GRAY, TextDecoration.ITALIC)));
 					
 					setAction(i, (player, event) -> {
 						if (playerdata.getPlayer() == null) return;
 						
-						player.sendMessage(ChatColor.GREEN + "Attempting to connect to Season13.");
+						player.sendMessage(NamedTextColor.GREEN + "Attempting to connect to Season13.");
 						
 						CoreMain.plugin.getLogger().info("Attempting to connect " + playerdata.getName() + " to Season13.");
 						
@@ -111,14 +115,15 @@ public final class ServerSelectorInventory extends BaseInventory {
 				} else // Offline
 				{
 					setItem(i, Material.RED_STAINED_GLASS)
-					.n(ChatColor.DARK_RED + "Season13 - Offline")
-					.l(Arrays.asList(ChatColor.GRAY + "Click to join Season13.",
-							ChatColor.GRAY + blackRightPointingPointerIcon + " " + ChatColor.ITALIC + "Claims, homes, tpa, and more."));
+					.name(Component.text("Season13 - Offline", NamedTextColor.DARK_RED))
+					.lore(
+                        Arrays.asList((Component.text("Click to join Season13.", NamedTextColor.GRAY)),
+                            Component.text(blackRightPointingPointerIcon + "Claims, Homes, tpa, and more.", NamedTextColor.GRAY, TextDecoration.ITALIC)));
 					
 					setAction(i, (player, event) -> {
 						if (playerdata.getPlayer() == null) return;
 						
-						player.sendMessage(ChatColor.RED + "Season13 is offline.");
+						player.sendMessage(NamedTextColor.RED + "Season13 is offline.");
 						
 						playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 						
@@ -146,13 +151,13 @@ public final class ServerSelectorInventory extends BaseInventory {
 			if (CoreMain.getThisServerName() != null && CoreMain.getThisServerName().equals(server)) // Connected
 			{
 				setItem(i, Material.SAND)
-				.n(ChatColor.GREEN + blackStarIcon + " " + serverNamePronounified + " (Connected)")
-				.l(ChatColor.GRAY + "You are connected to " + serverNamePronounified + ".");
+				.name(Component.text(blackStarIcon + " " + serverNamePronounified + " (Connected)", NamedTextColor.GREEN))
+				.lore(Arrays.asList(Component.text("You are connectd to " + serverNamePronounified + ".", NamedTextColor.GRAY)));
 				
 				setAction(i, (player, event) -> {
 					if (playerdata.getPlayer() == null) return;
 					
-					player.sendMessage(ChatColor.RED + "You are already connected to " + serverNamePronounified + ".");
+					player.sendMessage(NamedTextColor.RED + "You are already connected to " + serverNamePronounified + ".");
 					
 					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 					
@@ -161,13 +166,13 @@ public final class ServerSelectorInventory extends BaseInventory {
 			} else if (servers.get(server)) // Online
 			{
 				setItem(i, Material.SAND)
-				.n(ChatColor.GREEN + serverNamePronounified)
-				.l(ChatColor.GRAY + "Click to join " + serverNamePronounified + ".");
+				.name(Component.text(serverNamePronounified, NamedTextColor.GREEN))
+				.lore(Arrays.asList(Component.text("Click to join " + serverNamePronounified + ".", NamedTextColor.GRAY)));
 				
 				setAction(i, (player, event) -> {
 					if (playerdata.getPlayer() == null) return;
 					
-					player.sendMessage(ChatColor.GREEN + "Attempting to connect to " + serverNamePronounified + ".");
+					player.sendMessage(NamedTextColor.GREEN + "Attempting to connect to " + serverNamePronounified + ".");
 					
 					CoreMain.plugin.getLogger().info("Attempting to connect " + playerdata.getName() + " to " + serverNamePronounified + ".");
 					
@@ -180,24 +185,19 @@ public final class ServerSelectorInventory extends BaseInventory {
 			} else // Offline
 			{
 				setItem(i, Material.GRAVEL)
-				.n(ChatColor.DARK_RED + serverNamePronounified + " - Offline")
-				.l(ChatColor.GRAY + "Click to join " + serverNamePronounified + ".");
+				.name(Component.text(serverNamePronounified + " - Offline", NamedTextColor.DARK_RED))
+				.lore(Arrays.asList(Component.text("Click to join " + serverNamePronounified + ".", NamedTextColor.GRAY)));
 				
 				setAction(i, (player, event) -> {
 					if (playerdata.getPlayer() == null) return;
 					
-					player.sendMessage(ChatColor.RED + serverNamePronounified + " is offline.");
+					player.sendMessage(NamedTextColor.RED + serverNamePronounified + " is offline.");
 					
 					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 					
 				});
-				
 			}
-			
 			i--;
-			
 		}
-		
 	}
-
 }

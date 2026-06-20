@@ -7,6 +7,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import net.kyori.adventure.text.Component;
 import net.pgfmc.core.api.inventory.extra.Butto;
 
 public abstract class ListInventory<T> extends BaseInventory {
@@ -53,7 +54,7 @@ public abstract class ListInventory<T> extends BaseInventory {
 	 * @param name Name displayed at the top of the inventory's interface.
 	 * @param itemController The function that is ran per entry in "entries"; itemController must return a button Object, with the entry itself as the input.
 	 */
-	public ListInventory(int size, String name) {
+	public ListInventory(int size, Component name) {
 		super(size, name);
 		
 		if (size == 9 || size == 5) {
@@ -62,7 +63,7 @@ public abstract class ListInventory<T> extends BaseInventory {
 		
 	}
 	
-	public ListInventory(String name)
+	public ListInventory(Component name)
 	{
 		super (InventoryType.CHEST, name);
 		
@@ -132,7 +133,7 @@ public abstract class ListInventory<T> extends BaseInventory {
 					flipPage(-1);
 				});
 				
-				setItem(prev, Material.IRON_HOE).n("Previous Page");
+				setItem(prev, Material.IRON_HOE).name(Component.text("Previous Page"));
 				
 				
 			} else {
@@ -147,7 +148,7 @@ public abstract class ListInventory<T> extends BaseInventory {
 					flipPage(+1);
 				});
 				
-				setItem(next, Material.ARROW).n("Next Page");
+				setItem(next, Material.ARROW).name(Component.text("Next Page"));
 				
 			} else {
 				setItem(next, Material.AIR);
@@ -174,7 +175,7 @@ public abstract class ListInventory<T> extends BaseInventory {
 					flipPage(-1);
 				});
 				
-				setItem(9, Material.IRON_HOE).n("Previous Page");
+				setItem(9, Material.IRON_HOE).name(Component.text("Previous Page"));
 				
 			} else {
 				setItem(9, Material.AIR);
@@ -188,7 +189,7 @@ public abstract class ListInventory<T> extends BaseInventory {
 					flipPage(+1);
 				});
 				
-				setItem(18, Material.ARROW).n("Next Page");
+				setItem(18, Material.ARROW).name(Component.text("Next Page"));
 				
 				
 			} else {

@@ -18,7 +18,6 @@ import net.pgfmc.core.api.playerdata.PlayerData;
 public class InventoryPressEvent implements Listener {
 	
 	private static Set<InventoryAction> disallowedActions = EnumSet.of(
-			InventoryAction.HOTBAR_MOVE_AND_READD,
 			InventoryAction.HOTBAR_SWAP,
 			InventoryAction.MOVE_TO_OTHER_INVENTORY,
 			InventoryAction.COLLECT_TO_CURSOR,
