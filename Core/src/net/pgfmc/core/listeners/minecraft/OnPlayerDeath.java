@@ -50,7 +50,6 @@ public class OnPlayerDeath implements Listener {
 		}
 
 		PluginMessageType.MESSAGE.send(player, deathMessage);
-		
 		PluginMessageType.DISCORD_MESSAGE.send(playerdata.getPlayer(), "<:DEATH:907865162558636072> " + ((TranslatableComponent) deathMessage).fallback());
 		
 		e.deathMessage(null);

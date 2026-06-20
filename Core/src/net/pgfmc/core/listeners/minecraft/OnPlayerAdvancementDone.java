@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerAdvancementDoneEvent;
 
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.TranslatableComponent;
 import net.kyori.adventure.translation.GlobalTranslator;
@@ -30,8 +31,6 @@ public class OnPlayerAdvancementDone implements Listener {
 
         Logger.log(advancement.displayName().toString());
 
-        Logger.log(advancement.displayName().toString());
-
 
 
         Logger.log(GlobalTranslator.translator().translate(((TranslatableComponent) advancement.displayName()), Locale.US).toString());
@@ -40,8 +39,11 @@ public class OnPlayerAdvancementDone implements Listener {
 
 
 
-        TextComponent translated = (TextComponent) GlobalTranslator.translator().translate(((TranslatableComponent) advancement.displayName()).key(), Locale.US);
+        //TextComponent translated = (TextComponent) GlobalTranslator.translator().translate(((TranslatableComponent) advancement.displayName()).key(), Locale.US);
+        //
 
+
+        TextComponent translated = Component.text("A");
 
 
 		String advancementMessage = "";
