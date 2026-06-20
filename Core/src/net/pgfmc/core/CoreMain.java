@@ -1,5 +1,6 @@
 package net.pgfmc.core;
 
+import java.io.File;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Calendar;
@@ -48,6 +49,7 @@ import net.pgfmc.core.listeners.minecraft.OnPlayerJoin;
 import net.pgfmc.core.listeners.minecraft.OnPlayerQuit;
 import net.pgfmc.core.listeners.types.ConnectResponse;
 import net.pgfmc.core.listeners.types.PlayerDataResponse;
+import net.pgfmc.core.util.LoadJson;
 import net.pgfmc.core.util.Logger;
 import net.pgfmc.core.util.RestartScheduler;
 import net.pgfmc.core.util.ServerMessage;
@@ -78,9 +80,15 @@ public class CoreMain extends JavaPlugin implements Listener {
 	public void onEnable()
 	{
 
+        // Does Translator Initialization
+
+        LoadJson.createTranslator(CoreMain.plugin.getDataFolder() + File.separator + "en_us.json");
+
 
 
         final TranslationStore<Component> store = TranslationStore.component(Key.key("pgf:translations"));
+
+
 
 
 
@@ -229,7 +237,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 			player.hidePlayer(CoreMain.plugin, otherPlayer);
 			player.showPlayer(CoreMain.plugin, otherPlayer);
 		}
-		
 	}
 	
 	/**
