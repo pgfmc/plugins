@@ -1,20 +1,17 @@
 package net.pgfmc.core.listeners.minecraft;
 
-import java.util.Locale;
-
 import org.bukkit.advancement.Advancement;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerAdvancementDoneEvent;
 
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.TranslatableComponent;
 import net.kyori.adventure.translation.GlobalTranslator;
 import net.pgfmc.core.api.playerdata.PlayerData;
-import net.pgfmc.core.util.Logger;
+import net.pgfmc.core.util.Translation;
 import net.pgfmc.core.util.proxy.PluginMessageType;
+import net.pgfmc.core.util.Logger;
 
 public class OnPlayerAdvancementDone implements Listener {
 	
@@ -28,22 +25,16 @@ public class OnPlayerAdvancementDone implements Listener {
 		final Advancement advancement = e.getAdvancement();
 
         //String advancementComponent = ((TextComponent) advancement.getDisplay().title()).content();
-
-        Logger.log(advancement.displayName().toString());
-
-
-
-        Logger.log(GlobalTranslator.translator().translate(((TranslatableComponent) advancement.displayName()), Locale.US).toString());
-
-        player.sendMessage(advancement.displayName());
+        //Logger.log(advancement.displayName().toString());
+        //Logger.log(GlobalTranslator.translator().translate(((TranslatableComponent) advancement.displayName()), Locale.US).toString());
 
 
 
-        //TextComponent translated = (TextComponent) GlobalTranslator.translator().translate(((TranslatableComponent) advancement.displayName()).key(), Locale.US);
-        //
+
+        TextComponent translated = (TextComponent) GlobalTranslator.render(advancement.getDisplay().title(), Translation.DISCORD_LOCALE);
 
 
-        TextComponent translated = Component.text("A");
+        Logger.log(translated.toString());
 
 
 		String advancementMessage = "";
@@ -51,14 +42,14 @@ public class OnPlayerAdvancementDone implements Listener {
 		switch (advancement.getDisplay().frame())
 		{
 			case GOAL:
-				advancementMessage = " has reached the goal [" + translated.content() + "]!";
+				advancementMessage = " has reached the goal [" + translated.content() + "]";
 				break;
 			case CHALLENGE:
-				advancementMessage = " has completed the challenge [" + translated.content() + "]!";
+				advancementMessage = " has completed the challenge [" + translated.content() + "]";
 				break;
 			case TASK:
 			default:
-				advancementMessage = " has made the advancement [" + translated.content() + "]!";
+				advancementMessage = " has made the advancement [" + translated.content() + "]";
 				break;
 		}
 		

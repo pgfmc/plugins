@@ -15,7 +15,6 @@ import java.util.function.Predicate;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.jspecify.annotations.NonNull;
 
 import com.moandjiezana.toml.TomlWriter;
 
@@ -104,7 +103,7 @@ public final class PlayerData extends PlayerDataExtra {
 
         NamedTextColor color = getRole().getColor();
 
-        TextComponent.@NonNull Builder rankedName = Component.text(); 
+        TextComponent.Builder rankedName = Component.text(); 
 
 
 		if (getRole().compareTo(PGFRole.STAFF) <= 0) {

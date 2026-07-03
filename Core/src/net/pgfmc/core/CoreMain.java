@@ -1,6 +1,7 @@
 package net.pgfmc.core;
 
 import java.io.File;
+import java.text.MessageFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Calendar;
@@ -23,8 +24,6 @@ import org.bukkit.plugin.messaging.PluginMessageRecipient;
 
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
-import net.kyori.adventure.key.Key;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.translation.TranslationStore;
 import net.pgfmc.core.api.inventory.extra.InventoryPressEvent;
 import net.pgfmc.core.api.playerdata.PlayerData;
@@ -49,11 +48,11 @@ import net.pgfmc.core.listeners.minecraft.OnPlayerJoin;
 import net.pgfmc.core.listeners.minecraft.OnPlayerQuit;
 import net.pgfmc.core.listeners.types.ConnectResponse;
 import net.pgfmc.core.listeners.types.PlayerDataResponse;
-import net.pgfmc.core.util.LoadJson;
 import net.pgfmc.core.util.Logger;
 import net.pgfmc.core.util.RestartScheduler;
 import net.pgfmc.core.util.ServerMessage;
 import net.pgfmc.core.util.proxy.PluginMessageType;
+import net.pgfmc.core.util.Translation;
 
 
 /**
@@ -71,6 +70,8 @@ public class CoreMain extends JavaPlugin implements Listener {
 	private static String thisServerName;
 	
 	public static CoreMain plugin;
+
+    public static TranslationStore<MessageFormat> translationStore;
 	
 	/**
 	 * creates all files, loads all worlds, PlayerData, commands and events.
@@ -79,24 +80,12 @@ public class CoreMain extends JavaPlugin implements Listener {
 	@Override
 	public void onEnable()
 	{
-
-        // Does Translator Initialization
-
-        LoadJson.createTranslator(CoreMain.plugin.getDataFolder() + File.separator + "en_us.json");
-
-
-
-        final TranslationStore<Component> store = TranslationStore.component(Key.key("pgf:translations"));
-
-
-
-
-
-
-
-
-
 		plugin = this;
+        
+        Translation.createTranslator(CoreMain.plugin.getDataFolder() + File.separator + "en_us.json");
+
+
+
 		
 		/**
 		 * PlayerData initialization
