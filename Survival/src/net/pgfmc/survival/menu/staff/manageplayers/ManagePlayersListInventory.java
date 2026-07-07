@@ -3,10 +3,11 @@ package net.pgfmc.survival.menu.staff.manageplayers;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.api.inventory.ListInventory;
 import net.pgfmc.core.api.inventory.extra.Butto;
 import net.pgfmc.core.api.playerdata.PlayerData;
@@ -20,7 +21,7 @@ public class ManagePlayersListInventory extends ListInventory<PlayerData> {
 	private boolean showOnlinePlayersOnly = true;
 	
 	public ManagePlayersListInventory(final PlayerData playerdata, boolean showOnlinePlayersOnly) {
-		super(54, "Manage Players");
+		super(54, Component.text("Manage Players"));
 		
 		this.playerdata = playerdata;
 		this.showOnlinePlayersOnly = showOnlinePlayersOnly;
@@ -44,14 +45,19 @@ public class ManagePlayersListInventory extends ListInventory<PlayerData> {
 		
 		if (showOnlinePlayersOnly)
 		{
-			setItem(offlineOnlineToggle, Material.SLIME_BALL).n(ChatColor.GOLD + "Showing: " + ChatColor.GREEN + "Online Players").l(ChatColor.GRAY + "Click to show offline players only.");
+			setItem(offlineOnlineToggle, Material.SLIME_BALL)
+                .name(Component.text()
+                        .append(Component.text("Showing: ", NamedTextColor.GOLD))
+                        .append(Component.text("Online Players", NamedTextColor.GREEN)).build())
+                .lore(Component.text("Click to show offline players only.", NamedTextColor.GRAY));
 			
-		} else
-		{
-			setItem(offlineOnlineToggle, Material.FIRE_CHARGE).n(ChatColor.GOLD + "Showing: " + ChatColor.DARK_GRAY + "Offline Players").l(ChatColor.GRAY + "Click to show online players only.");
-			
+		} else {
+			setItem(offlineOnlineToggle, Material.SLIME_BALL)
+                .name(Component.text()
+                        .append(Component.text("Showing: ", NamedTextColor.GOLD))
+                        .append(Component.text("Offline Players", NamedTextColor.DARK_GRAY)).build())
+                .lore(Component.text("Click to show offline players only.", NamedTextColor.GRAY));
 		}
-		
 	}
 
 	@Override
@@ -77,9 +83,8 @@ public class ManagePlayersListInventory extends ListInventory<PlayerData> {
 
 	@Override
 	protected ItemStack toItem(PlayerData entry) {
-		return new ItemWrapper(Skull.getHead(entry.getUniqueId())).n(entry.getRankedName()).l(ChatColor.GRAY + "Click to manage.").gi();
+		return new ItemWrapper(Skull.getHead(entry.getUniqueId()))
+            .name(entry.getRankedName())
+            .lore(Component.text("Click to manage.", NamedTextColor.GRAY)).item();
 	}
-	
-	
-
 }

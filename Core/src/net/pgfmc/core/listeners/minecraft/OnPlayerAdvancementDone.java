@@ -1,14 +1,17 @@
 package net.pgfmc.core.listeners.minecraft;
 
-import org.bukkit.ChatColor;
 import org.bukkit.advancement.Advancement;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerAdvancementDoneEvent;
 
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.translation.GlobalTranslator;
 import net.pgfmc.core.api.playerdata.PlayerData;
+import net.pgfmc.core.util.Translation;
 import net.pgfmc.core.util.proxy.PluginMessageType;
+import net.pgfmc.core.util.Logger;
 
 public class OnPlayerAdvancementDone implements Listener {
 	
@@ -20,19 +23,33 @@ public class OnPlayerAdvancementDone implements Listener {
 		final Player player = e.getPlayer();
 		final PlayerData playerdata = PlayerData.from(player);
 		final Advancement advancement = e.getAdvancement();
+
+        //String advancementComponent = ((TextComponent) advancement.getDisplay().title()).content();
+        //Logger.log(advancement.displayName().toString());
+        //Logger.log(GlobalTranslator.translator().translate(((TranslatableComponent) advancement.displayName()), Locale.US).toString());
+
+
+
+
+        TextComponent translated = (TextComponent) GlobalTranslator.render(advancement.getDisplay().title(), Translation.DISCORD_LOCALE);
+
+
+        Logger.log(translated.toString());
+
+
 		String advancementMessage = "";
 		
 		switch (advancement.getDisplay().frame())
 		{
 			case GOAL:
-				advancementMessage = "has reached the goal [" + advancement.getDisplay().title() + "]!";
+				advancementMessage = " has reached the goal [" + translated.content() + "]";
 				break;
 			case CHALLENGE:
-				advancementMessage = "has completed the challenge [" + advancement.getDisplay().title() + "]!";
+				advancementMessage = " has completed the challenge [" + translated.content() + "]";
 				break;
 			case TASK:
 			default:
-				advancementMessage = "has made the advancement [" + advancement.getDisplay().title() + "]!";
+				advancementMessage = " has made the advancement [" + translated.content() + "]";
 				break;
 		}
 		
@@ -51,8 +68,7 @@ public class OnPlayerAdvancementDone implements Listener {
 		});
 		*/
 		
-		PluginMessageType.DISCORD_MESSAGE.send(player, "<:dwarf:1191762269261017119> " + ChatColor.stripColor(playerdata.getRankedName()) + " " + advancementMessage);
-		
+		//PluginMessageType.DISCORD_MESSAGE.send(player, "<:dwarf:1191762269261017119> " + playerdata.getDisplayName() + " " + translated);
+		PluginMessageType.DISCORD_MESSAGE.send(player, "<:dwarf:1191762269261017119> " + playerdata.getDisplayName() + advancementMessage);
 	}
-	
 }

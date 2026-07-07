@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.request.RequestType;
 import net.pgfmc.core.util.commands.PlayerCommand;
@@ -24,22 +24,22 @@ public class RequestSendCommand extends PlayerCommand {
 	public boolean execute(PlayerData pd, String alias, String[] args) {
 		
 		if (args.length < 1) {
-			pd.sendMessage(ChatColor.RED + "Please enter a player!");
+			pd.sendMessage(NamedTextColor.RED + "Please enter a player!");
 			return true;
 		}
 		
 		final Player player = Bukkit.getPlayer(args[0]);
 		
 		if (player == null) {
-			pd.sendMessage(ChatColor.RED + "Player not found");
+			pd.sendMessage(NamedTextColor.RED + "Player not found");
 			return true;
 			
 		} else if (!player.isOnline() && rt.endsOnQuit()) {
-			pd.sendMessage(ChatColor.RED + "Player is not online to receive reqeust.");
+			pd.sendMessage(NamedTextColor.RED + "Player is not online to receive reqeust.");
 			return true;
 			
 		} else if (pd.getPlayer() == player) {
-			pd.sendMessage(ChatColor.RED + "You can't send a request to yourself!");
+			pd.sendMessage(NamedTextColor.RED + "You can't send a request to yourself!");
 			return true;
 			
 		}

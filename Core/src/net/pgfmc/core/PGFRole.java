@@ -1,24 +1,24 @@
 package net.pgfmc.core;
 
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 
 public enum PGFRole {
-	FOUNDER(ChatColor.AQUA),
-	ADMIN(ChatColor.RED),
-	DEVELOPER(ChatColor.DARK_GREEN),
-	MODERATOR(ChatColor.LIGHT_PURPLE),
-	TRAINEE(ChatColor.DARK_PURPLE),
-	STAFF(ChatColor.GOLD),
-	DOOKIE(ChatColor.GOLD),
-	DONATOR(ChatColor.YELLOW),
-	VETERAN(ChatColor.BLUE),
-	MEMBER(ChatColor.GOLD);
+	FOUNDER(NamedTextColor.AQUA),
+	ADMIN(NamedTextColor.RED),
+	DEVELOPER(NamedTextColor.DARK_GREEN),
+	MODERATOR(NamedTextColor.LIGHT_PURPLE),
+	TRAINEE(NamedTextColor.DARK_PURPLE),
+	STAFF(NamedTextColor.GOLD),
+	DOOKIE(NamedTextColor.GOLD),
+	DONATOR(NamedTextColor.YELLOW),
+	VETERAN(NamedTextColor.BLUE),
+	MEMBER(NamedTextColor.GOLD);
 	
-	private ChatColor color;
+	private NamedTextColor color;
 	
 	public static String STAFF_DIAMOND = new String(Character.toChars(0x2726)); // 0x2726 is the staff star Unicode
 	
-	PGFRole(ChatColor color)
+	PGFRole(NamedTextColor color)
 	{
 		this.color = color;
 		
@@ -30,7 +30,7 @@ public enum PGFRole {
 		return name().substring(0,1) + name().substring(1).toLowerCase();
 	}
 	
-	public ChatColor getColor() {
+	public NamedTextColor getColor() {
 		return color;
 		
 	}

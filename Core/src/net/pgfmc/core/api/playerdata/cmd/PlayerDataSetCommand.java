@@ -4,10 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.commands.CommandBase;
 
@@ -22,25 +22,25 @@ public class PlayerDataSetCommand extends CommandBase {
 		
 		if (args.length == 0) {
 			
-			sender.sendMessage(ChatColor.RED + "Please enter a player.");
+			sender.sendMessage(NamedTextColor.RED + "Please enter a player.");
 			return true;
 		}
 		
 		if (args.length == 1)
 		{
-			sender.sendMessage(ChatColor.RED + "Please enter a key.");
+			sender.sendMessage(NamedTextColor.RED + "Please enter a key.");
 			return true;
 		}
 		
 		final Player player = Bukkit.getPlayer(args[0]);
 			
 		if (player == null) {
-			sender.sendMessage(ChatColor.RED + "Player not found.");
+			sender.sendMessage(NamedTextColor.RED + "Player not found.");
 			return true;
 		}
 		
 		if (args.length == 2) {
-			sender.sendMessage(ChatColor.RED + "Please enter a data value.");
+			sender.sendMessage(NamedTextColor.RED + "Please enter a data value.");
 			return true;
 		}
 		
@@ -56,12 +56,12 @@ public class PlayerDataSetCommand extends CommandBase {
 		}
 		
 		if (!(obj instanceof String)) {
-			sender.sendMessage(ChatColor.RED + "Data wasn't a string, couldn't set.");
+			sender.sendMessage(NamedTextColor.RED + "Data wasn't a string, couldn't set.");
 			return true;
 		}
 		
 		pd.setData(key, data);
-		sender.sendMessage(ChatColor.GREEN + "Set " + ChatColor.AQUA + key + " " + ChatColor.GREEN + "to " + ChatColor.AQUA + data + ChatColor.GREEN + ".");
+		sender.sendMessage(NamedTextColor.GREEN + "Set " + NamedTextColor.AQUA + key + " " + NamedTextColor.GREEN + "to " + NamedTextColor.AQUA + data + NamedTextColor.GREEN + ".");
 		
 		return true;
 	}

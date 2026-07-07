@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.api.inventory.ListInventory;
 import net.pgfmc.core.api.inventory.extra.Butto;
 import net.pgfmc.core.api.playerdata.PlayerData;
@@ -18,7 +20,7 @@ public class TpaListInventory extends ListInventory<PlayerData> {
 	private PlayerData pd;
 
 	public TpaListInventory(PlayerData pd) {
-		super(27, "Teleport Menu");
+		super(27, Component.text("Teleport Menu"));
 		
 		this.pd = pd;
 		
@@ -44,7 +46,7 @@ public class TpaListInventory extends ListInventory<PlayerData> {
 	
 	@Override
 	protected ItemStack toItem(PlayerData entry) {
-		return new ItemWrapper(Skull.getHead(entry.getUniqueId())).n(ChatColor.GREEN + entry.getRankedName()).gi();
+		return new ItemWrapper(Skull.getHead(entry.getUniqueId())).name(entry.getRankedName().color(NamedTextColor.GREEN)).item();
 	}
 	
 }

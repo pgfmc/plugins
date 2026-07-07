@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -14,6 +13,9 @@ import org.bukkit.entity.Player;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.Lang;
@@ -47,11 +49,14 @@ public final class ConnectCommand implements TabExecutor {
 		
 		if (args.length == 0)
 		{
-			player.sendMessage(ChatColor.RED + "Please specify a server to connect to.");
+			player.sendMessage(NamedTextColor.RED + "Please specify a server to connect to.");
 			
 			if (CoreMain.getRegisteredServersMap().isEmpty())
 			{
-				player.sendMessage(ChatColor.RED + "" + ChatColor.ITALIC + "Available servers: " + ChatColor.LIGHT_PURPLE + "[survival]");
+                player.sendMessage(
+                        Component.text("Available Servers:", NamedTextColor.RED, TextDecoration.ITALIC)
+                        .append(Component.text("[survival]", NamedTextColor.LIGHT_PURPLE, TextDecoration.ITALIC))
+                        );
 				
 				return true;
 			}
@@ -82,7 +87,10 @@ public final class ConnectCommand implements TabExecutor {
 					})
 					.collect(Collectors.toList());
 			
-			player.sendMessage(ChatColor.RED + "" + ChatColor.ITALIC + "Available servers: " + ChatColor.LIGHT_PURPLE + servers.toString());
+			player.sendMessage(
+                    Component.text("Available Servers:", NamedTextColor.RED, TextDecoration.ITALIC)
+                    .append(Component.text(servers.toString(), NamedTextColor.LIGHT_PURPLE, TextDecoration.ITALIC))
+                    );
 			
 			return true;
 		}
@@ -100,7 +108,7 @@ public final class ConnectCommand implements TabExecutor {
 		
 		if (!CoreMain.getRegisteredServersMap().keySet().isEmpty() && !CoreMain.getRegisteredServersMap().containsKey(server))
 		{
-			playerdata.sendMessage(ChatColor.RED + "This server does not exist. To see available servers, use: /connect");
+			playerdata.sendMessage(NamedTextColor.RED + "This server does not exist. To see available servers, use: /connect");
 			playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 			
 			return true;
@@ -108,7 +116,7 @@ public final class ConnectCommand implements TabExecutor {
 		
 		if (!CoreMain.getRegisteredServersMap().isEmpty() && !CoreMain.getRegisteredServersMap().get(server))
 		{
-			playerdata.sendMessage(ChatColor.RED + "This server is offline.");
+			playerdata.sendMessage(NamedTextColor.RED + "This server is offline.");
 			playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 			
 			return true;
@@ -116,13 +124,13 @@ public final class ConnectCommand implements TabExecutor {
 		
 		if (!CoreMain.getRegisteredServersMap().isEmpty() && server.equals(CoreMain.getThisServerName()))
 		{
-			playerdata.sendMessage(ChatColor.RED + "You are already connected to " + serverNamePronounified);
+			playerdata.sendMessage(NamedTextColor.RED + "You are already connected to " + serverNamePronounified);
 			playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 			
 			return true;
 		}
 		
-		player.sendMessage(ChatColor.GREEN + "Attempting to connect to " + serverNamePronounified + ".");
+		player.sendMessage(NamedTextColor.GREEN + "Attempting to connect to " + serverNamePronounified + ".");
 		playerdata.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1F, 2F);
 		
 		CoreMain.plugin.getLogger().info("Attempting to connect " + playerdata.getName() + " to " + serverNamePronounified + ".");

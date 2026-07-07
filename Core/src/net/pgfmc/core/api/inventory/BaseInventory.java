@@ -11,6 +11,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.api.inventory.extra.Butto;
@@ -38,7 +39,7 @@ public abstract class BaseInventory implements InventoryHolder {
 	 */
 	protected Inventory inv;
 	
-	public BaseInventory(int size, String name) {
+	public BaseInventory(int size, Component name) {
 		// Chest type size cannot be bigger than 54 (double chest)
 		// Size of 5 is hopper type. Chest type size can be a multiple of 9
 		if ((size > 54) || (size != 5 && size % 9 != 0))
@@ -71,7 +72,7 @@ public abstract class BaseInventory implements InventoryHolder {
 		buttons = new Butto[size];
 	}
 	
-	public BaseInventory(InventoryType type, String name) {
+	public BaseInventory(InventoryType type, Component name) {
 		if (type == null)
 		{
 			Bukkit.getLogger().warning("Inventory API could not create inventory type: null");
@@ -126,7 +127,7 @@ public abstract class BaseInventory implements InventoryHolder {
 		ItemWrapper iw = new ItemWrapper(itemS);
 		
 		Bukkit.getScheduler().runTaskLater(CoreMain.plugin, x -> {
-			inv.setItem(slot, iw.gi());
+			inv.setItem(slot, iw.item());
 		}, 0);
 		
 		return iw;
@@ -137,7 +138,7 @@ public abstract class BaseInventory implements InventoryHolder {
 		
 		ItemWrapper iw = new ItemWrapper(mat);
 		Bukkit.getScheduler().runTaskLater(CoreMain.plugin, x -> {
-			inv.setItem(slot, iw.gi());
+			inv.setItem(slot, iw.item());
 		}, 0);
 		
 		return iw;
@@ -157,7 +158,7 @@ public abstract class BaseInventory implements InventoryHolder {
 			p.openInventory(inventory);
 		});
 		
-		setItem(slot, Material.FEATHER).n(NamedTextColor.GRAY + "Back");
+		setItem(slot, Material.FEATHER).name(Component.text("Back", NamedTextColor.GRAY));
 	}
 	
 	/*

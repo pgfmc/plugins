@@ -5,16 +5,17 @@ import java.util.List;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 
+import net.kyori.adventure.text.Component;
 import net.pgfmc.core.api.inventory.extra.Butto;
 import net.pgfmc.core.api.inventory.extra.Buttonable;
 
 public abstract class ButtonInventory extends ListInventory<Buttonable> {
 
-	public ButtonInventory(int size, String name) {
+	public ButtonInventory(int size, Component name) {
 		super(size, name);
 	}
 	
-	public ButtonInventory(InventoryType type, String name) {
+	public ButtonInventory(InventoryType type, Component name) {
 		super(type.getDefaultSize(), name);
 	}
 
