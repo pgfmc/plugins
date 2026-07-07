@@ -51,8 +51,9 @@ import net.pgfmc.core.listeners.types.PlayerDataResponse;
 import net.pgfmc.core.util.Logger;
 import net.pgfmc.core.util.RestartScheduler;
 import net.pgfmc.core.util.ServerMessage;
-import net.pgfmc.core.util.proxy.PluginMessageType;
 import net.pgfmc.core.util.Translation;
+import net.pgfmc.core.util.files.Mixins;
+import net.pgfmc.core.util.proxy.PluginMessageType;
 
 
 /**
@@ -68,6 +69,10 @@ public class CoreMain extends JavaPlugin implements Listener {
 	private final static Map<String, Boolean> REGISTERED_SERVERS = new HashMap<>();
 	
 	private static String thisServerName;
+
+
+    // Used for Death Messages, so we know what server the player died on.
+    private static String serverDisplayName;
 	
 	public static CoreMain plugin;
 
@@ -83,6 +88,8 @@ public class CoreMain extends JavaPlugin implements Listener {
 		plugin = this;
         
         Translation.createTranslator(CoreMain.plugin.getDataFolder() + File.separator + "en_us.json");
+
+        loadServerNameFromFile();
 
 
 
@@ -163,17 +170,27 @@ public class CoreMain extends JavaPlugin implements Listener {
 		PlayerDataManager.initializePlayerData();
 		startRestartThread();
 		
-		try {
-			// Purge CoreProtect data of 14 days or older
-			Plugin pluginCoreProtect = plugin.getServer().getPluginManager().getPlugin("CoreProtect");
-			CoreProtectAPI coreProtectAPI = ((CoreProtect) pluginCoreProtect).getAPI();
-			
-			if (coreProtectAPI != null) { coreProtectAPI.performPurge(1209600); } // 14 days in seconds
-		} catch (Exception coreprotectException) {
-			coreprotectException.printStackTrace();
-		}
+		//try {
+		//	// Purge CoreProtect data of 14 days or older
+		//	Plugin pluginCoreProtect = plugin.getServer().getPluginManager().getPlugin("CoreProtect");
+		//	CoreProtectAPI coreProtectAPI = ((CoreProtect) pluginCoreProtect).getAPI();
+		//	
+		//	if (coreProtectAPI != null) { coreProtectAPI.performPurge(1209600); } // 14 days in seconds
+		//} catch (Exception coreprotectException) {
+		//	coreprotectException.printStackTrace();
+		//}
 		
 	}
+
+    private void loadServerNameFromFile() {
+
+        FileConfiguration coreFile = Mixins.getDatabase(CoreMain.plugin.getDataFolder() + File.separator + "config.yml");
+        serverDisplayName = coreFile.getString("server-name");
+    }
+
+    public String serverDisplayName() {
+        return serverDisplayName;
+    }
 	
 	private void startRestartThread()
 	{
