@@ -3,6 +3,7 @@ package net.pgfmc.core.api.request.inv;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.kyori.adventure.text.Component;
 import net.pgfmc.core.api.inventory.ButtonInventory;
 import net.pgfmc.core.api.inventory.extra.Buttonable;
 import net.pgfmc.core.api.playerdata.PlayerData;
@@ -15,7 +16,7 @@ public class RequestListInventory extends ButtonInventory {
 	private PlayerData pd;
 	
 	public RequestListInventory(PlayerData pd) {
-		super(27, "Requests Menu");
+		super(27, Component.text("Requests Menu"));
 		this.pd = pd;
 		
 	}

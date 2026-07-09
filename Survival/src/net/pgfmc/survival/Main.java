@@ -39,7 +39,9 @@ import net.pgfmc.survival.cmd.warp.DelWarp;
 import net.pgfmc.survival.cmd.warp.SetWarp;
 import net.pgfmc.survival.cmd.warp.Warp;
 import net.pgfmc.survival.cmd.warp.Warps;
+import net.pgfmc.survival.gift.GiftClaim;
 import net.pgfmc.survival.gift.GiftCommand;
+import net.pgfmc.survival.gift.GiftList;
 import net.pgfmc.survival.menu.staff.giverewards.GiveRewardsListInventory;
 import net.pgfmc.survival.menu.staff.inventorybackups.noninv.InventoryBackup;
 import net.pgfmc.survival.menu.staff.inventorybackups.noninv.InventoryBackupScheduler;
@@ -134,6 +136,8 @@ public class Main extends JavaPlugin {
 		new Warp("warp");
 		new Skull();
         new GiftCommand();
+        new GiftList();
+        new GiftClaim();
 		
 		// Listeners
 		getServer().getPluginManager().registerEvents(new CommandMenuBookInput(), this);

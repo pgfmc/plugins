@@ -6,10 +6,10 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.commands.CommandBase;
 
@@ -45,15 +45,15 @@ public class DumpCommand extends CommandBase {
 	public boolean execute(CommandSender sender, String alias, String[] args) {
 		
 		if (args.length == 0) {
-			sender.sendMessage(ChatColor.RED + "Please enter a player.");
+			sender.sendMessage(NamedTextColor.RED + "Please enter a player.");
 			return true;
 		}
 		
 		final Player player = Bukkit.getPlayer(args[0]);
 		
-		if (player == null)
+		if (player == null)https://docs.papermc.io/adventure/text/
 		{
-			sender.sendMessage(ChatColor.RED + "Player not found.");
+			sender.sendMessage(NamedTextColor.RED + "Player not found.");
 			return true;
 		}
 		
@@ -62,23 +62,23 @@ public class DumpCommand extends CommandBase {
 		for (Entry<String, Object> entry : pd.getAllData().entrySet()) {
 			
 			if (entry.getValue() == null) {
-				sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.AQUA + entry.getKey() + ChatColor.WHITE + "]: " + ChatColor.LIGHT_PURPLE + "null");
+				sender.sendMessage(NamedTextColor.WHITE + "[" + NamedTextColor.AQUA + entry.getKey() + NamedTextColor.WHITE + "]: " + NamedTextColor.LIGHT_PURPLE + "null");
 				
 				continue;
 			}
 			
-			sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.AQUA + entry.getKey() + ChatColor.WHITE + "]: " + ChatColor.LIGHT_PURPLE + entry.getValue().toString());
+			sender.sendMessage(NamedTextColor.WHITE + "[" + NamedTextColor.AQUA + entry.getKey() + NamedTextColor.WHITE + "]: " + NamedTextColor.LIGHT_PURPLE + entry.getValue().toString());
 		}
 		
 		// tag list
 		
-		sender.sendMessage(ChatColor.AQUA + "Listing all tags for " + pd.getRankedName());
+		sender.sendMessage(NamedTextColor.AQUA + "Listing all tags for " + pd.getRankedName());
 		
 		Set<String> tags = pd.getTags();
 		int length = tags.size();
 		
 		int iit = 0;
-		String list = String.valueOf(ChatColor.LIGHT_PURPLE);
+		String list = String.valueOf(NamedTextColor.LIGHT_PURPLE);
 		for (String tag : tags)
 		{
 			list = list + tag;
@@ -87,7 +87,7 @@ public class DumpCommand extends CommandBase {
 				break;
 			}
 			
-			list = list + ChatColor.WHITE + "," +  ChatColor.LIGHT_PURPLE;
+			list = list + NamedTextColor.WHITE + "," +  NamedTextColor.LIGHT_PURPLE;
 			
 			if (iit % 3 == 2) {
 				list = list + "\n";
@@ -95,7 +95,7 @@ public class DumpCommand extends CommandBase {
 		}
 		
 		if (length > 25) {
-			list = list + "\n" + ChatColor.AQUA + "Player has " + ChatColor.LIGHT_PURPLE + String.valueOf(length) + " " + ChatColor.LIGHT_PURPLE + "tags.";
+			list = list + "\n" + NamedTextColor.AQUA + "Player has " + NamedTextColor.LIGHT_PURPLE + String.valueOf(length) + " " + NamedTextColor.LIGHT_PURPLE + "tags.";
 		}
 		sender.sendMessage(list);
 		

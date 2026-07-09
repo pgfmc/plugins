@@ -5,14 +5,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 
+import net.kyori.adventure.text.Component;
+
 public abstract class ConfirmInventory extends BaseInventory {
 
-	protected ConfirmInventory(String name, String confirm, String cancel) {
+	protected ConfirmInventory(Component name, Component confirm, Component cancel) {
 		super(InventoryType.CHEST, name);
 		
 		
-		setItem(11, Material.GREEN_CONCRETE).n(confirm);
-		setItem(15, Material.RED_CONCRETE).n(cancel);
+		setItem(11, Material.GREEN_CONCRETE).name(confirm);
+		setItem(15, Material.RED_CONCRETE).name(cancel);
 		setAction(11, (p, e) -> confirmAction(p, e));
 		setAction(15, (p, e) -> cancelAction(p, e));
 	}

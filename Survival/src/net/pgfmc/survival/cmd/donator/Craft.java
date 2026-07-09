@@ -1,12 +1,13 @@
 package net.pgfmc.survival.cmd.donator;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.MenuType;
+
+import net.kyori.adventure.text.format.NamedTextColor;
 
 public class Craft implements CommandExecutor {
 
@@ -15,13 +16,13 @@ public class Craft implements CommandExecutor {
 		
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage(ChatColor.RED + "Only players can execute this command.");
+			sender.sendMessage(NamedTextColor.RED + "Only players can execute this command.");
 			return true;
 		}
 		
 		Player p = (Player) sender;
 
-		InventoryView view = MenuType.CRAFTING.create(p, null);
+		InventoryView view = MenuType.CRAFTING.create(p);
 		p.openInventory(view);
 		
 		return true;

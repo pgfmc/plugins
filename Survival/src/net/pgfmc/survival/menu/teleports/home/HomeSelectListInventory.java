@@ -4,11 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.api.inventory.ListInventory;
 import net.pgfmc.core.api.inventory.extra.Butto;
 import net.pgfmc.core.api.playerdata.PlayerData;
@@ -23,7 +24,7 @@ public class HomeSelectListInventory extends ListInventory<String> {
 	
 	public HomeSelectListInventory(PlayerData pd)
 	{
-		super(27, "Home Select");
+		super(27, Component.text("Home Select"));
 		
 		this.pd = pd;
 		this.homes = Homes.getHomes(pd);
@@ -42,7 +43,7 @@ public class HomeSelectListInventory extends ListInventory<String> {
 		if (!pd.hasPermission("net.pgfmc.survival.home.home"))
 		{
 			return (player, event) -> {
-				pd.sendMessage(ChatColor.RED + "You don't have permission to execute this command.");
+				pd.sendMessage(NamedTextColor.RED + "You don't have permission to execute this command.");
 			};
 			
 		}
@@ -50,7 +51,7 @@ public class HomeSelectListInventory extends ListInventory<String> {
 		if (homes.size() == 0)
 		{
 			return (player, event) -> {
-				pd.sendMessage(ChatColor.RED + "You do not have any homes.");
+				pd.sendMessage(NamedTextColor.RED + "You do not have any homes.");
 			};
 			
 		}
@@ -64,7 +65,8 @@ public class HomeSelectListInventory extends ListInventory<String> {
 	
 	@Override
 	protected ItemStack toItem(String entry) {
-		return new ItemWrapper(Material.PAPER).n(ChatColor.GOLD + entry).gi();
+		return new ItemWrapper(Material.PAPER)
+            .name(Component.text(entry, NamedTextColor.GOLD)).item();
 	}
 	
 }

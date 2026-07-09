@@ -12,6 +12,8 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.util.Logger;
 
@@ -149,7 +151,9 @@ public enum PluginMessageType {
 			
 			if (arg instanceof String) {
 				out.writeUTF((String) arg);
-				
+			} else if (arg instanceof Component) {
+				final String componentAsJson = GsonComponentSerializer.gson().serialize((Component) arg);
+				out.writeUTF(componentAsJson);
 			} else if (arg instanceof Integer) {
 				out.writeInt((Integer) arg);
 				
