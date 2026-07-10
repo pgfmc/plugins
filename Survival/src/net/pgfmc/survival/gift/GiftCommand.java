@@ -33,21 +33,7 @@ public class GiftCommand extends PlayerCommand {
 					list.add(pd.getName());
 				}
 			}
-		} else if (args.length == 2) {
-            if ("held_item".startsWith(args[1])) {
-                list.add("held_item");
-            }
-            for (Material mat : Material.values()) {
-                if (mat.isItem()) {
-                    String matName = mat.toString();
-                    if (matName.startsWith(args[1])) {
-                        list.add(matName);
-                    }
-                }
-            }
-        } else if (args.length == 3 && !(args[2].equals("held_item"))) {
-            list.add("[amount]");
-        }
+		}
 
 		return list;
 	}
@@ -55,7 +41,7 @@ public class GiftCommand extends PlayerCommand {
     @Override
     public boolean execute(PlayerData pd, String alias, String[] args) {
 
-        if (args.length < 2) {
+        if (args.length != 1) {
             return false;
         }
 
@@ -72,6 +58,7 @@ public class GiftCommand extends PlayerCommand {
             return true;
         }
 
+<<<<<<< HEAD
         ItemStack gift = null;
 
         if (args[1].equals("held_item")) {
@@ -98,10 +85,17 @@ public class GiftCommand extends PlayerCommand {
                 }
             }
             gift = mat.asItemType().createItemStack(amount);
+=======
+        ItemStack hand = pd.getPlayer().getInventory().getItemInMainHand(); 
+        if (hand == null || hand.getType() == Material.AIR) {
+            pd.sendMessage(Component.text().content("Make sure there is an item in your hand.").color(NamedTextColor.RED).build());
+            return true;
+>>>>>>> 8aa09a9 (simplified some gift code.)
         }
-
-        if (gift == null) {
-            return false;
+        ItemStack gift = hand.clone();
+        
+        if (pd.getPlayer().getGameMode() != GameMode.CREATIVE) {
+            pd.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.AIR));
         }
 
         pd.sendMessage(ChatColor.GREEN + "Sent Player " + ChatColor.RESET + gift.effectiveName() + " " + ChatColor.DARK_PURPLE + "x" + String.valueOf(gift.getAmount()));

@@ -11,6 +11,6 @@ prefix: PGF-Hardcore
 
 commands:
   registergift:
-    description: Give Gifts to other players
-    usage: /<command> [name] [helditem|<item> <amount>]
-    permission: net.pgfmc.survival.gift
+    description: Registers your held item as a gift to be given, when a player gets an advancement. 
+    usage: /<command> [advancement]
+    permission: net.pgfmc.hardcore.giftregister

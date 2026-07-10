@@ -103,8 +103,13 @@ commands:
     permission: net.pgfmc.survival.warp.delwarp
 
   gift:
+<<<<<<< HEAD
     description: Claim and Give Gifts to other players
     usage: /<command> [name] [helditem|<item> <amount>]
+=======
+    description: Gifts your held item to another player.
+    usage: /<command> [name]
+>>>>>>> 8aa09a9 (simplified some gift code.)
     permission: net.pgfmc.survival.gift
     # The user has different functionality in creative mode; when using /gift [name] helditem, it won't consume the held item.
     
