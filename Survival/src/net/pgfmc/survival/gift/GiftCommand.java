@@ -34,21 +34,7 @@ public class GiftCommand extends PlayerCommand {
 					list.add(pd.getName());
 				}
 			}
-		} else if (args.length == 2) {
-            if ("held_item".startsWith(args[1])) {
-                list.add("held_item");
-            }
-            for (Material mat : Material.values()) {
-                if (mat.isItem()) {
-                    String matName = mat.toString();
-                    if (matName.startsWith(args[1])) {
-                        list.add(matName);
-                    }
-                }
-            }
-        } else if (args.length == 3 && !(args[2].equals("held_item"))) {
-            list.add("[amount]");
-        }
+		}
 
 		return list;
 	}
@@ -56,7 +42,7 @@ public class GiftCommand extends PlayerCommand {
     @Override
     public boolean execute(PlayerData pd, String alias, String[] args) {
 
-        if (args.length < 2) {
+        if (args.length != 1) {
             return false;
         }
 
@@ -73,39 +59,15 @@ public class GiftCommand extends PlayerCommand {
             return true;
         }
 
-        ItemStack gift = null;
-
-        if (args[1].equals("held_item")) {
-            ItemStack hand = pd.getPlayer().getInventory().getItemInMainHand(); 
-            if (hand == null || hand.getType() == Material.AIR) {
-
-                pd.sendMessage(Component.text().content("Make sure there is an item in your hand before using 'held_item'.").color(NamedTextColor.RED).build());
-                return true;
-            }
-            gift = hand.clone();
-        } else {
-            Material mat = Material.getMaterial(args[1]);
-            if (mat == null || mat == Material.AIR) {
-                pd.sendMessage(Component.text().content("Item not found.").color(NamedTextColor.RED).build());
-                return true;
-            } 
-
-            int amount = 1;
-
-            if (args.length >= 3) {
-                amount = Integer.valueOf(args[2]).intValue();
-                if (amount < 1 || amount > mat.getMaxStackSize()) {
-                    pd.sendMessage(Component.text()
-                            .content("Amount invalid! Use an amount between 1-." + String.valueOf(mat.getMaxStackSize()))
-                            .color(NamedTextColor.RED).build());
-                    return true;
-                }
-            }
-            gift = mat.asItemType().createItemStack(amount);
+        ItemStack hand = pd.getPlayer().getInventory().getItemInMainHand(); 
+        if (hand == null || hand.getType() == Material.AIR) {
+            pd.sendMessage(Component.text().content("Make sure there is an item in your hand.").color(NamedTextColor.RED).build());
+            return true;
         }
-
-        if (gift == null) {
-            return false;
+        ItemStack gift = hand.clone();
+        
+        if (pd.getPlayer().getGameMode() != GameMode.CREATIVE) {
+            pd.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.AIR));
         }
 
         pd.sendMessage(Component.text()
