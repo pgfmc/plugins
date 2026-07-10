@@ -9,3 +9,8 @@ depend: [PGF-Core]
 load: POSTWORLD
 prefix: PGF-Hardcore
 
+commands:
+  registergift:
+    description: Give Gifts to other players
+    usage: /<command> [name] [helditem|<item> <amount>]
+    permission: net.pgfmc.survival.gift
