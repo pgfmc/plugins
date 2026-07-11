@@ -20,7 +20,9 @@ public enum PluginMessageType {
 	PLAYER_DATA("PlayerData"),
 	PLAYER_DATA_SEND("PlayerDataSend"),
 	LINK_CODE("LinkCode"),
-	MESSAGE("Message");
+	MESSAGE("Message"),
+	GET_GIFTS("GetGifts"),
+	SEND_GIFT("SendGift");
 	
 	final String subchannel;
 	
