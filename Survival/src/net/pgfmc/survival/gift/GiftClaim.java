@@ -20,7 +20,7 @@ public class GiftClaim extends PlayerCommand {
 	@Override
 	public List<String> tabComplete(PlayerData pd, String alias, String[] args) {
 
-        ArrayList<ItemStack> gifts = GiftData.getGifts(pd);
+        List<ItemStack> gifts = GiftData.getGifts(pd);
 
         
 		List<String> list = new ArrayList<>();
@@ -42,7 +42,7 @@ public class GiftClaim extends PlayerCommand {
         }
 
         int gift = Integer.valueOf(args[0]);
-        ArrayList<ItemStack> giftList = GiftData.getGifts(pd);
+        List<ItemStack> giftList = GiftData.getGifts(pd);
 
         if (gift > giftList.size()) {
             pd.sendMessage(Component.text("Index is out of Bounds.").color(NamedTextColor.RED));
@@ -58,7 +58,7 @@ public class GiftClaim extends PlayerCommand {
             return true;
         }
 
-        ItemStack item = GiftData.getGifts(pd).remove(gift -1);
+        ItemStack item = GiftData.removeGift(pd, gift -1);
         pd.sendMessage(Component.text()
                 .content("Claimed ").color(NamedTextColor.AQUA)
                 .append(GiftData.getItemStackName(item))

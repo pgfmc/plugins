@@ -16,7 +16,6 @@ import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.util.ServerMessage;
 import net.pgfmc.survival.Main;
 import net.pgfmc.survival.menu.CommandMenuInventory;
-import net.pgfmc.survival.menu.staff.giverewards.GiveRewardsListInventory;
 import net.pgfmc.survival.menu.staff.manageplayers.ManagePlayersListInventory;
 import net.wesjd.anvilgui.AnvilGUI;
 import net.wesjd.anvilgui.AnvilGUI.Builder;
@@ -139,26 +138,5 @@ public class StaffInventory extends BaseInventory {
 						.color(NamedTextColor.GRAY)));
 		
 		
-		
-		
-		/* 
-		 * Give Rewards
-		 * [] [] [] [] [] [] [] [] []
-		 * [] [] [] [] [] [] XX [] []
-		 * [] [] [] [] [] [] [] [] []
-		 */
-		setAction(15, (player, event) -> {
-			player.openInventory(new GiveRewardsListInventory(playerdata).getInventory());
-		});
-		
-		setItem(15, Material.BOOKSHELF)
-			.name(Component
-					.text("Give Rewards")
-					.color(NamedTextColor.YELLOW))
-			.lore(Arrays.asList(Component
-					.text("Add a reward to all players.")
-					.color(NamedTextColor.GRAY)));
-		
 	}
-
 }
