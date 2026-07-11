@@ -13,10 +13,9 @@ import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.cmd.serverselector.ServerSelectorInventory;
 import net.pgfmc.core.util.Lang;
-import net.pgfmc.survival.Rewards;
 import net.pgfmc.survival.cmd.Skull;
+import net.pgfmc.survival.gift.GiftData;
 import net.pgfmc.survival.menu.profile.ProfileInventory;
-import net.pgfmc.survival.menu.rewards.RewardsListInventory;
 import net.pgfmc.survival.menu.staff.StaffInventory;
 import net.pgfmc.survival.menu.teleports.Teleports;
 import net.pgfmc.survival.particleeffects.HaloEffect.HaloParticle;
@@ -254,31 +253,31 @@ public class CommandMenuInventory implements InventoryHolder {
 				}
 			}
 			
-            final int rewards = 16;
+            final int gifts = 16;
 			/* 
 			 * Rewards
 			 * [] [] [] [] [] [] [] [] []
 			 * [] [] [] [] [] [] XX [] []
 			 * [] [] [] [] [] [] [] [] []
 			 */
-			final int numberOfRewards = Rewards.getPlayerRewardsMap(playerdata).size();
+			final int giftAmount = GiftData.getGifts(playerdata).size();
 			
-			if (numberOfRewards == 0) {
-				setAction(rewards, (player, event) -> {
-					playerdata.sendMessage(NamedTextColor.RED + "There are no rewards currently.");
+			if (giftAmount == 0) {
+				setAction(gifts, (player, event) -> {
+					playerdata.sendMessage(Component.text("There are no rewards currently.").color(NamedTextColor.RED));
 					playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 				});
 				
-				setItem(rewards, Material.CHISELED_BOOKSHELF)
-                    .name(Component.text("Rewards (" + numberOfRewards + ")", NamedTextColor.YELLOW));
+				setItem(gifts, Material.CHISELED_BOOKSHELF)
+                    .name(Component.text("Gifts (" + giftAmount + ")", NamedTextColor.YELLOW));
 				
 			} else {
-				setAction(rewards, (player, event) -> {
-					player.openInventory(new RewardsListInventory(playerdata).getInventory());
+				setAction(gifts, (player, event) -> {
+					player.openInventory(new GiftInventory(playerdata).getInventory());
 				});
 				
-				setItem(rewards, Material.BOOKSHELF)
-                    .name(Component.text("Rewards (" + numberOfRewards + ")", NamedTextColor.YELLOW));
+				setItem(gifts, Material.BOOKSHELF)
+                    .name(Component.text("Gifts (" + giftAmount + ")", NamedTextColor.YELLOW));
 			}
 			
 			
