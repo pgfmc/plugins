@@ -4,8 +4,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+<<<<<<< HEAD
+=======
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemContainerContents;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.NamedTextColor;
+>>>>>>> fb8c2dc (added packing)
 import net.pgfmc.core.api.playerdata.PlayerData;
 
 // Easy Methods for using gifts
@@ -41,6 +50,25 @@ public final class GiftData {
         ItemStack removed = gifts.remove(index);
         playerdata.setData(GIFTS, gifts).queue();
         return removed;
+    }
+
+    // returns null if there arent enough items to make a pack out of (27)
+    public static final ItemStack removePack(PlayerData playerdata) {
+        ArrayList<ItemStack> gifts = playerdata.getData(GIFTS);
+        
+        if (gifts.size() < 27) {return null;}
+
+        ArrayList<ItemStack> buffer = new ArrayList<>();
+
+        for (int i = gifts.size() - 27; i < 27; i++) {
+            buffer.add(gifts.remove(i));
+        }
+
+        ItemContainerContents contents = ItemContainerContents.containerContents(buffer);
+        ItemStack out = new ItemStack(Material.CHEST);
+        out.setData(DataComponentTypes.CONTAINER, contents);
+        playerdata.setData(GIFTS, gifts).queue();
+        return out;
     }
 
 
