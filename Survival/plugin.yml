@@ -107,12 +107,4 @@ commands:
     usage: /<command> [name]
     permission: net.pgfmc.survival.gift
     # The user has different functionality in creative mode; when using /gift [name] helditem, it won't consume the held item.
-  gifts:
-    description: View all unclaimed gifts you have
-    usage: /<command>
-    permission: net.pgfmc.survival.gifts
-  claimgift:
-    description: Claim a Gift you were given
-    usage: /<command> [gift index]
-    permission: net.pgfmc.survival.giftclaim
     

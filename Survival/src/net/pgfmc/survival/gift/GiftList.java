@@ -19,7 +19,7 @@ public class GiftList extends PlayerCommand {
 	@Override
 	public List<String> tabComplete(PlayerData pd, String alias, String[] args) {
 
-        ArrayList<ItemStack> gifts = GiftData.getGifts(pd);
+        List<ItemStack> gifts = GiftData.getGifts(pd);
 		List<String> list = new ArrayList<>();
 		
 		if (args.length <= 1) {
@@ -35,7 +35,7 @@ public class GiftList extends PlayerCommand {
     public boolean execute(PlayerData pd, String alias, String[] args) {
 
 
-        ArrayList<ItemStack> gifts = GiftData.getGifts(pd);
+        List<ItemStack> gifts = GiftData.getGifts(pd);
         int page = 0;
 
         if (args.length >= 1) {
@@ -67,4 +67,3 @@ public class GiftList extends PlayerCommand {
 
 
 }
-

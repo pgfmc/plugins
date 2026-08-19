@@ -12,8 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerAdvancementDoneEvent;
 import org.bukkit.inventory.ItemStack;
 
-import net.pgfmc.core.api.playerdata.PlayerData;
-import net.pgfmc.core.util.proxy.PluginMessageType;
+import net.pgfmc.core.util.proxy.PluginMessageType;O
 
 public class OnAdvancementDoneEvent implements Listener {
 
