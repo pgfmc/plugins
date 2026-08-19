@@ -72,6 +72,5 @@ public final class GiftData {
         return Component.text()
                 .append(item.effectiveName())
                 .append(Component.text(" x" + String.valueOf(item.getAmount())).color(NamedTextColor.DARK_PURPLE)).build();
-
     }
 }
