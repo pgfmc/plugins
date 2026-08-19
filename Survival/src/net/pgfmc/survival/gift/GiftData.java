@@ -7,14 +7,11 @@ import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-<<<<<<< HEAD
-=======
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemContainerContents;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
->>>>>>> fb8c2dc (added packing)
 import net.pgfmc.core.api.playerdata.PlayerData;
 
 // Easy Methods for using gifts
@@ -36,8 +33,6 @@ public final class GiftData {
         final List<ItemStack> gifts = playerData.getData(GIFTS);
         gifts.add(item);
         playerData.setData(GIFTS, gifts).queue();
-<<<<<<< HEAD
-=======
         playerData.sendMessage(Component.text()
                 .content("You have been sent a gift: ").color(NamedTextColor.AQUA)
                 .append(getItemStackName(item))
@@ -77,7 +72,5 @@ public final class GiftData {
         return Component.text()
                 .append(item.effectiveName())
                 .append(Component.text(" x" + String.valueOf(item.getAmount())).color(NamedTextColor.DARK_PURPLE)).build();
-
->>>>>>> 01ae369 (Added Gifts inventory. (WIP))
     }
 }
