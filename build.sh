@@ -24,7 +24,7 @@ for name in Core Claims ModTools Survival Hardcore; do
 done
 
 cd "Maven"
-mvn -e -U clean install
+mvn -e -U clean install -X
 cd ../
 
 wait

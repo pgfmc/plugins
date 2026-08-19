@@ -18,12 +18,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerLoadEvent;
 import org.bukkit.event.server.ServerLoadEvent.LoadType;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageRecipient;
 
-import net.coreprotect.CoreProtect;
-import net.coreprotect.CoreProtectAPI;
 import net.kyori.adventure.translation.TranslationStore;
 import net.pgfmc.core.api.inventory.extra.InventoryPressEvent;
 import net.pgfmc.core.api.playerdata.PlayerData;

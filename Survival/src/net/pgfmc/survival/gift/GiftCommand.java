@@ -3,7 +3,6 @@ package net.pgfmc.survival.gift;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -54,7 +53,7 @@ public class GiftCommand extends PlayerCommand {
         }
 
         if (giftee == null) {
-			pd.sendMessage(ChatColor.RED + "Player not found.");
+            pd.sendMessage(Component.text().content("Player not found").color(NamedTextColor.RED).build());
             return true;
         }
 
@@ -69,7 +68,11 @@ public class GiftCommand extends PlayerCommand {
             pd.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.AIR));
         }
 
-        pd.sendMessage(ChatColor.GREEN + "Sent Player " + ChatColor.RESET + gift.effectiveName() + " " + ChatColor.DARK_PURPLE + "x" + String.valueOf(gift.getAmount()));
+        pd.sendMessage(Component.text()
+                .content("Sent Player ").color(NamedTextColor.GREEN)
+                .append(GiftData.getItemStackName(gift))
+                .build()
+            );
         GiftData.giveGift(giftee, gift);
         
         return true;
