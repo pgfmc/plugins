@@ -1,0 +1,16 @@
+name: PGF-Hardcore
+version: UHC-update:gifts
+api-version: 26.1
+authors: [bk, CrimsonDart]
+website: play.pgfmc.net
+main: net.pgfmc.hardcore.Main
+description: Additional UHC Functionality for PGF
+depend: [PGF-Core]
+load: POSTWORLD
+prefix: PGF-Hardcore
+
+commands:
+  registergift:
+    description: Give Gifts to other players
+    usage: /<command> [name] [helditem|<item> <amount>]
+    permission: net.pgfmc.survival.gift
