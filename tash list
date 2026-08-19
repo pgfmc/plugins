@@ -1,0 +1,279 @@
+[38;2;190;132;255mGIT-STASH[0m[38;2;249;38;114m([0m[38;2;230;219;116m1[0m[38;2;249;38;114m)[0m[38;2;248;248;242m                                                                                                                                             [0m[38;2;253;151;31mGit[0m[38;2;253;151;31m [0m[38;2;253;151;31mManual[0m[38;2;248;248;242m                                                                                                                                            [0m[38;2;190;132;255mGIT-STASH[0m[38;2;249;38;114m([0m[38;2;230;219;116m1[0m[38;2;249;38;114m)[0m
+
+[38;2;253;151;31mNAME[0m
+[38;2;248;248;242m     git-stash - Stash the changes in a dirty working directory away[0m
+
+[38;2;253;151;31mSYNOPSIS[0m
+[38;2;248;248;242m     git stash list [0m[38;2;248;248;242m[[0m[38;2;248;248;242m<log-options>[0m[38;2;248;248;242m][0m
+[38;2;248;248;242m     git stash show [0m[38;2;248;248;242m[[0m[38;2;166;226;46m-u[0m[38;2;248;248;242m [0m[38;2;249;38;114m|[0m[38;2;248;248;242m [0m[38;2;166;226;46m--include-untracked[0m[38;2;248;248;242m [0m[38;2;249;38;114m|[0m[38;2;248;248;242m [0m[38;2;166;226;46m--only-untracked[0m[38;2;248;248;242m][0m[38;2;248;248;242m [0m[38;2;248;248;242m[[0m[38;2;248;248;242m<diff-options>[0m[38;2;248;248;242m][0m[38;2;248;248;242m [0m[38;2;248;248;242m[[0m[38;2;248;248;242m<stash>[0m[38;2;248;248;242m][0m
+[38;2;248;248;242m     git stash drop [0m[38;2;248;248;242m[[0m[38;2;166;226;46m-q[0m[38;2;248;248;242m [0m[38;2;249;38;114m|[0m[38;2;248;248;242m [0m[38;2;166;226;46m--quiet[0m[38;2;248;248;242m][0m[38;2;248;248;242m [0m[38;2;248;248;242m[[0m[38;2;248;248;242m<stash>[0m[38;2;248;248;242m][0m
+[38;2;248;248;242m     git stash pop [0m[38;2;248;248;242m[[0m[38;2;166;226;46m--index[0m[38;2;248;248;242m][0m[38;2;248;248;242m [0m[38;2;248;248;242m[[0m[38;2;166;226;46m-q[0m[38;2;248;248;242m [0m[38;2;249;38;114m|[0m[38;2;248;248;242m [0m[38;2;166;226;46m--quiet[0m[38;2;248;248;242m][0m[38;2;248;248;242m [0m[38;2;248;248;242m[[0m[38;2;248;248;242m<stash>[0m[38;2;248;248;242m][0m
+[38;2;248;248;242m     git stash apply [0m[38;2;248;248;242m[[0m[38;2;166;226;46m--index[0m[38;2;248;248;242m][0m[38;2;248;248;242m [0m[38;2;248;248;242m[[0m[38;2;166;226;46m-q[0m[38;2;248;248;242m [0m[38;2;249;38;114m|[0m[38;2;248;248;242m [0m[38;2;166;226;46m--quiet[0m[38;2;248;248;242m][0m[38;2;248;248;242m [0m[38;2;248;248;242m[[0m[38;2;166;226;46m--label-ours[0m[38;2;249;38;114m=[0m[38;2;248;248;242m<[0m[38;2;253;151;31mlabel[0m[38;2;248;248;242m>[0m[38;2;248;248;242m][0m[38;2;248;248;242m [0m[38;2;248;248;242m[[0m[38;2;166;226;46m--label-theirs[0m[38;2;249;38;114m=[0m[38;2;248;248;242m<[0m[38;2;253;151;31mlabel[0m[38;2;248;248;242m>[0m[38;2;248;248;242m][0m[38;2;248;248;242m [0m[38;2;248;248;242m[[0m[38;2;166;226;46m--label-base[0m[38;2;249;38;114m=[0m[38;2;248;248;242m<[0m[38;2;253;151;31mlabel[0m[38;2;248;248;242m>[0m[38;2;248;248;242m][0m[38;2;248;248;242m [0m[38;2;248;248;242m[[0m[38;2;248;248;242m<stash>[0m[38;2;248;248;242m][0m
+[38;2;248;248;242m     git stash branch <branchname> [0m[38;2;248;248;242m[[0m[38;2;248;248;242m<stash>[0m[38;2;248;248;242m][0m
+[38;2;248;248;242m     git stash [0m[38;2;248;248;242m[[0m[38;2;248;248;242mpush[0m[38;2;248;248;242m][0m[38;2;248;248;242m [0m[38;2;248;248;242m[[0m[38;2;166;226;46m-p[0m[38;2;248;248;242m [0m[38;2;249;38;114m|[0m[38;2;248;248;242m [0m[38;2;166;226;46m--patch[0m[38;2;248;248;242m][0m[38;2;248;248;242m [0m[38;2;248;248;242m[[0m[38;2;166;226;46m-S[0m[38;2;248;248;242m [0m[38;2;249;38;114m|[0m[38;2;248;248;242m [0m[38;2;166;226;46m--staged[0m[38;2;248;248;242m][0m[38;2;248;248;242m [0m[38;2;248;248;242m[[0m[38;2;166;226;46m-k[0m[38;2;248;248;242m [0m[38;2;249;38;114m|[0m[38;2;248;248;242m [0m[38;2;166;226;46m--[0m[38;2;166;226;46m[no-][0m[38;2;166;226;46mkeep-index[0m[38;2;248;248;242m][0m[38;2;248;248;242m [0m[38;2;248;248;242m[[0m[38;2;166;226;46m-q[0m[38;2;248;248;242m [0m[38;2;249;38;114m|[0m[38;2;248;248;242m [0m[38;2;166;226;46m--quiet[0m[38;2;248;248;242m][0m
+[38;2;248;248;242m                  [0m[38;2;248;248;242m[[0m[38;2;166;226;46m-u[0m[38;2;248;248;242m [0m[38;2;249;38;114m|[0m[38;2;248;248;242m [0m[38;2;166;226;46m--include-untracked[0m[38;2;248;248;242m][0m[38;2;248;248;242m [0m[38;2;248;248;242m[[0m[38;2;166;226;46m-a[0m[38;2;248;248;242m [0m[38;2;249;38;114m|[0m[38;2;248;248;242m [0m[38;2;166;226;46m--all[0m[38;2;248;248;242m][0m[38;2;248;248;242m [0m[38;2;248;248;242m[[0m[38;2;248;248;242m([0m[38;2;166;226;46m-m[0m[38;2;248;248;242m [0m[38;2;249;38;114m|[0m[38;2;248;248;242m [0m[38;2;166;226;46m--message[0m[38;2;248;248;242m) [0m[38;2;248;248;242m<[0m[38;2;253;151;31mmessage[0m[38;2;248;248;242m>[0m[38;2;248;248;242m][0m
+[38;2;248;248;242m                  [0m[38;2;248;248;242m[[0m[38;2;166;226;46m--pathspec-from-file[0m[38;2;249;38;114m=[0m[38;2;248;248;242m<[0m[38;2;253;151;31mfile[0m[38;2;248;248;242m>[0m[38;2;248;248;242m [0m[38;2;248;248;242m[[0m[38;2;253;151;31m--pathspec-file-nul[0m[38;2;248;248;242m][0m[38;2;248;248;242m][0m
+[38;2;248;248;242m                  [0m[38;2;248;248;242m[[0m[38;2;166;226;46m--[0m[38;2;248;248;242m][0m[38;2;248;248;242m [0m[38;2;248;248;242m[[0m[38;2;248;248;242m<pathspec>...[0m[38;2;248;248;242m][0m
+[38;2;248;248;242m     git stash save [0m[38;2;248;248;242m[[0m[38;2;166;226;46m-p[0m[38;2;248;248;242m [0m[38;2;249;38;114m|[0m[38;2;248;248;242m [0m[38;2;166;226;46m--patch[0m[38;2;248;248;242m][0m[38;2;248;248;242m [0m[38;2;248;248;242m[[0m[38;2;166;226;46m-S[0m[38;2;248;248;242m [0m[38;2;249;38;114m|[0m[38;2;248;248;242m [0m[38;2;166;226;46m--staged[0m[38;2;248;248;242m][0m[38;2;248;248;242m [0m[38;2;248;248;242m[[0m[38;2;166;226;46m-k[0m[38;2;248;248;242m [0m[38;2;249;38;114m|[0m[38;2;248;248;242m [0m[38;2;166;226;46m--[0m[38;2;166;226;46m[no-][0m[38;2;166;226;46mkeep-index[0m[38;2;248;248;242m][0m[38;2;248;248;242m [0m[38;2;248;248;242m[[0m[38;2;166;226;46m-q[0m[38;2;248;248;242m [0m[38;2;249;38;114m|[0m[38;2;248;248;242m [0m[38;2;166;226;46m--quiet[0m[38;2;248;248;242m][0m
+[38;2;248;248;242m                [0m[38;2;248;248;242m[[0m[38;2;166;226;46m-u[0m[38;2;248;248;242m [0m[38;2;249;38;114m|[0m[38;2;248;248;242m [0m[38;2;166;226;46m--include-untracked[0m[38;2;248;248;242m][0m[38;2;248;248;242m [0m[38;2;248;248;242m[[0m[38;2;166;226;46m-a[0m[38;2;248;248;242m [0m[38;2;249;38;114m|[0m[38;2;248;248;242m [0m[38;2;166;226;46m--all[0m[38;2;248;248;242m][0m[38;2;248;248;242m [0m[38;2;248;248;242m[[0m[38;2;248;248;242m<message>[0m[38;2;248;248;242m][0m
+[38;2;248;248;242m     git stash clear[0m
+[38;2;248;248;242m     git stash create [0m[38;2;248;248;242m[[0m[38;2;248;248;242m<message>[0m[38;2;248;248;242m][0m
+[38;2;248;248;242m     git stash store [0m[38;2;248;248;242m[[0m[38;2;248;248;242m([0m[38;2;166;226;46m-m[0m[38;2;248;248;242m [0m[38;2;249;38;114m|[0m[38;2;248;248;242m [0m[38;2;166;226;46m--message[0m[38;2;248;248;242m) [0m[38;2;248;248;242m<[0m[38;2;253;151;31mmessage[0m[38;2;248;248;242m>[0m[38;2;248;248;242m][0m[38;2;248;248;242m [0m[38;2;248;248;242m[[0m[38;2;166;226;46m-q[0m[38;2;248;248;242m [0m[38;2;249;38;114m|[0m[38;2;248;248;242m [0m[38;2;166;226;46m--quiet[0m[38;2;248;248;242m][0m[38;2;248;248;242m <commit>[0m
+[38;2;248;248;242m     git stash export ([0m[38;2;166;226;46m--print[0m[38;2;248;248;242m | [0m[38;2;166;226;46m--to-ref[0m[38;2;248;248;242m <ref>) [0m[38;2;248;248;242m[[0m[38;2;248;248;242m<stash>...[0m[38;2;248;248;242m][0m
+[38;2;248;248;242m     git stash import <commit>[0m
+
+[38;2;253;151;31mDESCRIPTION[0m
+[38;2;248;248;242m     Use git stash when you want to record the current state of the working directory and the index, but want to go back to a clean working directory. The command saves your local modifications away and reverts the working directory to match the HEAD commit.[0m
+
+[38;2;248;248;242m     The  modifications  stashed  away  by  this  command  can be listed with git stash list, inspected with git stash show, and restored (potentially on top of a different commit) with git stash apply. Calling git stash without any arguments is equivalent to git stash push. A stash is by default listed as "WIP on[0m
+[38;2;248;248;242m     <branchname> ...", but you can give a more descriptive message on the command line when you create one.[0m
+
+[38;2;248;248;242m     The latest stash you created is stored in refs/stash; older stashes are found in the reflog of this reference and can be named using the usual reflog syntax (e.g. stash@{0} is the most recently created stash, stash@{1} is the one before it, stash@{2.hours.ago} is also possible). Stashes may also be referenced[0m
+[38;2;248;248;242m     by specifying just the stash index (e.g. the integer <n> is equivalent to stash@{<n>}).[0m
+
+[38;2;253;151;31mCOMMANDS[0m
+[38;2;248;248;242m     push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-u | --include-untracked] [ -a | --all] [-q | --quiet] [(-m|--message) <message>] [--pathspec-from-file=<file> [--pathspec-file-nul]] [--] [<pathspec>...][0m
+[38;2;248;248;242m         Save your local modifications to a new stash entry and roll them back to HEAD (in the working tree and in the index). The <message> part is optional and gives the description along with the stashed state.[0m
+
+[38;2;248;248;242m         For quickly making a snapshot, you can omit "push". In this mode, pathspec elements are only allowed after a double hyphen -- to prevent a misspelled subcommand from making an unwanted stash entry.[0m
+
+[38;2;248;248;242m     save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-u | --include-untracked] [-a | --all] [-q | --quiet] [<message>][0m
+[38;2;248;248;242m         This option is deprecated in favour of git stash push. It differs from "stash push" in that it cannot take pathspec. Instead, all non-option arguments are concatenated to form the stash message.[0m
+
+[38;2;248;248;242m     list [<log-options>][0m
+[38;2;248;248;242m         List the stash entries that you currently have. Each stash entry is listed with its name (e.g.  stash@{0} is the latest entry, stash@{1} is the one before, etc.), the name of the branch that was current when the entry was made, and a short description of the commit the entry was based on.[0m
+
+[38;2;248;248;242m             stash@{0}: WIP on submit: 6ebd0e2... Update git-stash documentation[0m
+[38;2;248;248;242m             stash@{1}: On master: 9cc0589... Add git-stash[0m
+
+[38;2;248;248;242m         The command takes options applicable to the git log command to control what is shown and how. See git-log(1).[0m
+
+[38;2;248;248;242m     show [-u | --include-untracked | --only-untracked] [<diff-options>] [<stash>][0m
+[38;2;248;248;242m         Show the changes recorded in the stash entry as a diff between the stashed contents and the commit back when the stash entry was first created. By default, the command shows the diffstat, but it will accept any format known to git diff (e.g., git stash show -p stash@{1} to view the second most recent  en‐[0m
+[38;2;248;248;242m         try in patch form). If no <diff-option> is provided, the default behavior will be given by the stash.showStat, and stash.showPatch config variables. You can also use stash.showIncludeUntracked to set whether --include-untracked is enabled by default.[0m
+
+[38;2;248;248;242m     pop [--index] [-q | --quiet] [<stash>][0m
+[38;2;248;248;242m         Remove a single stashed state from the stash list and apply it on top of the current working tree state, i.e., do the inverse operation of git stash push. The working directory must match the index.[0m
+
+[38;2;248;248;242m         Applying the state can fail with conflicts; in this case, it is not removed from the stash list. You need to resolve the conflicts by hand and call git stash drop manually afterwards.[0m
+
+[38;2;248;248;242m     apply [--index] [-q | --quiet] [<stash>][0m
+[38;2;248;248;242m         Like pop, but do not remove the state from the stash list. Unlike pop, <stash> may be any commit that looks like a commit created by stash push or stash create.[0m
+
+[38;2;248;248;242m     branch <branchname> [<stash>][0m
+[38;2;248;248;242m         Creates and checks out a new branch named <branchname> starting from the commit at which the <stash> was originally created, applies the changes recorded in <stash> to the new working tree and index. If that succeeds, and <stash> is a reference of the form stash@{<revision>}, it then drops the <stash>.[0m
+
+[38;2;248;248;242m         This is useful if the branch on which you ran git stash push has changed enough that git stash apply fails due to conflicts. Since the stash entry is applied on top of the commit that was HEAD at the time git stash was run, it restores the originally stashed state with no conflicts.[0m
+
+[38;2;248;248;242m     clear[0m
+[38;2;248;248;242m         Remove all the stash entries. Note that those entries will then be subject to pruning, and may be impossible to recover (see EXAMPLES below for a possible strategy).[0m
+
+[38;2;248;248;242m     drop [-q | --quiet] [<stash>][0m
+[38;2;248;248;242m         Remove a single stash entry from the list of stash entries.[0m
+
+[38;2;248;248;242m     create[0m
+[38;2;248;248;242m         Create a stash entry (which is a regular commit object) and return its object name, without storing it anywhere in the ref namespace. This is intended to be useful for scripts. It is probably not the command you want to use; see "push" above.[0m
+
+[38;2;248;248;242m     store[0m
+[38;2;248;248;242m         Store a given stash created via git stash create (which is a dangling merge commit) in the stash ref, updating the stash reflog. This is intended to be useful for scripts. It is probably not the command you want to use; see "push" above.[0m
+
+[38;2;248;248;242m     export ( --print | --to-ref <ref> ) [<stash>...][0m
+[38;2;248;248;242m         Export the specified stashes, or all of them if none are specified, to a chain of commits which can be transferred using the normal fetch and push mechanisms, then imported using the import subcommand.[0m
+
+[38;2;248;248;242m     import <commit>[0m
+[38;2;248;248;242m         Import the specified stashes from the specified commit, which must have been created by export, and add them to the list of stashes. To replace the existing stashes, use clear first.[0m
+
+[38;2;253;151;31mOPTIONS[0m
+[38;2;248;248;242m     [0m[38;2;166;226;46m-a[0m[38;2;248;248;242m, [0m[38;2;166;226;46m--all[0m
+[38;2;248;248;242m         This option is only valid for push and save commands.[0m
+
+[38;2;248;248;242m         All ignored and untracked files are also stashed and then cleaned up with git clean.[0m
+
+[38;2;248;248;242m     [0m[38;2;166;226;46m-u[0m[38;2;248;248;242m, [0m[38;2;166;226;46m--include-untracked[0m[38;2;248;248;242m, [0m[38;2;166;226;46m--no-include-untracked[0m
+[38;2;248;248;242m         When used with the push and save commands, all untracked files are also stashed and then cleaned up with git clean.[0m
+
+[38;2;248;248;242m         When used with the show command, show the untracked files in the stash entry as part of the diff.[0m
+
+[38;2;248;248;242m     [0m[38;2;166;226;46m--only-untracked[0m
+[38;2;248;248;242m         This option is only valid for the show command.[0m
+
+[38;2;248;248;242m         Show only the untracked files in the stash entry as part of the diff.[0m
+
+[38;2;248;248;242m     [0m[38;2;166;226;46m--index[0m
+[38;2;248;248;242m         This option is only valid for pop and apply commands.[0m
+
+[38;2;248;248;242m         Tries to reinstate not only the working tree’s changes, but also the index’s ones. However, this can fail, when you have conflicts (which are stored in the index, where you therefore can no longer apply the changes as they were originally).[0m
+
+[38;2;248;248;242m     [0m[38;2;166;226;46m--label-ours[0m[38;2;249;38;114m=[0m[38;2;253;151;31m<label>[0m[38;2;248;248;242m, [0m[38;2;166;226;46m--label-theirs[0m[38;2;249;38;114m=[0m[38;2;253;151;31m<label>[0m[38;2;248;248;242m, [0m[38;2;166;226;46m--label-base[0m[38;2;249;38;114m=[0m[38;2;253;151;31m<label>[0m
+[38;2;248;248;242m         These options are only valid for the apply command.[0m
+
+[38;2;248;248;242m         Use the given labels in conflict markers instead of the default "Updated upstream", "Stashed changes", and "Stash base".  [0m[38;2;166;226;46m--label-base[0m[38;2;248;248;242m only has an effect with merge.conflictStyle=diff3.[0m
+
+[38;2;248;248;242m     [0m[38;2;166;226;46m-k[0m[38;2;248;248;242m, [0m[38;2;166;226;46m--keep-index[0m[38;2;248;248;242m, [0m[38;2;166;226;46m--no-keep-index[0m
+[38;2;248;248;242m         This option is only valid for push and save commands.[0m
+
+[38;2;248;248;242m         All changes already added to the index are left intact.[0m
+
+[38;2;248;248;242m     [0m[38;2;166;226;46m-p[0m[38;2;248;248;242m, [0m[38;2;166;226;46m--patch[0m
+[38;2;248;248;242m         This option is only valid for push and save commands.[0m
+
+[38;2;248;248;242m         Interactively  select hunks from the diff between HEAD and the working tree to be stashed. The stash entry is constructed such that its index state is the same as the index state of your repository, and its worktree contains only the changes you selected interactively. The selected changes are then rolled[0m
+[38;2;248;248;242m         back from your worktree. See the “Interactive Mode” section of [0m[38;2;166;226;46mgit-add[0m[38;2;249;38;114m([0m[38;2;190;132;255m1[0m[38;2;249;38;114m)[0m[38;2;248;248;242m to learn how to operate the [0m[38;2;166;226;46m--patch[0m[38;2;248;248;242m mode.[0m
+
+[38;2;248;248;242m         The [0m[38;2;166;226;46m--patch[0m[38;2;248;248;242m option implies [0m[38;2;166;226;46m--keep-index[0m[38;2;248;248;242m. You can use [0m[38;2;166;226;46m--no-keep-index[0m[38;2;248;248;242m to override this.[0m
+
+[38;2;248;248;242m     [0m[38;2;166;226;46m-U[0m[38;2;248;248;242m<n>, [0m[38;2;166;226;46m--unified[0m[38;2;249;38;114m=[0m[38;2;253;151;31m<n>[0m
+[38;2;248;248;242m         Generate diffs with <n> lines of context. The number of context lines defaults to diff.context or 3 if the configuration variable is unset. ([0m[38;2;166;226;46m-U[0m[38;2;248;248;242m without <n> is silently accepted as a synonym for [0m[38;2;166;226;46m-p[0m[38;2;248;248;242m due to a historical accident).[0m
+
+[38;2;248;248;242m     [0m[38;2;166;226;46m--inter-hunk-context[0m[38;2;249;38;114m=[0m[38;2;253;151;31m<n>[0m
+[38;2;248;248;242m         Show the context between diff hunks, up to the specified <number> of lines, thereby fusing hunks that are close to each other. Defaults to diff.interHunkContext or 0 if the config option is unset.[0m
+
+[38;2;248;248;242m     [0m[38;2;166;226;46m-S[0m[38;2;248;248;242m, [0m[38;2;166;226;46m--staged[0m
+[38;2;248;248;242m         This option is only valid for push and save commands.[0m
+
+[38;2;248;248;242m         Stash only the changes that are currently staged. This is similar to basic git commit except the state is committed to the stash instead of current branch.[0m
+
+[38;2;248;248;242m         The [0m[38;2;166;226;46m--patch[0m[38;2;248;248;242m option has priority over this one.[0m
+
+[38;2;248;248;242m     [0m[38;2;166;226;46m--pathspec-from-file[0m[38;2;249;38;114m=[0m[38;2;253;151;31m<file>[0m
+[38;2;248;248;242m         This option is only valid for push command.[0m
+
+[38;2;248;248;242m         Pathspec is passed in <file> instead of commandline args. If <file> is exactly - then standard input is used. Pathspec elements are separated by LF or CR/LF. Pathspec elements can be quoted as explained for the configuration variable core.quotePath (see [0m[38;2;166;226;46mgit-config[0m[38;2;249;38;114m([0m[38;2;190;132;255m1[0m[38;2;249;38;114m)[0m[38;2;248;248;242m).  See  also  [0m[38;2;166;226;46m--pathspec-file-nul[0m[38;2;248;248;242m  and[0m
+[38;2;248;248;242m         global [0m[38;2;166;226;46m--literal-pathspecs[0m[38;2;248;248;242m.[0m
+
+[38;2;248;248;242m     [0m[38;2;166;226;46m--pathspec-file-nul[0m
+[38;2;248;248;242m         This option is only valid for push command.[0m
+
+[38;2;248;248;242m         Only meaningful with [0m[38;2;166;226;46m--pathspec-from-file[0m[38;2;248;248;242m. Pathspec elements are separated with NUL character and all other characters are taken literally (including newlines and quotes).[0m
+
+[38;2;248;248;242m     [0m[38;2;166;226;46m-q[0m[38;2;248;248;242m, [0m[38;2;166;226;46m--quiet[0m
+[38;2;248;248;242m         This option is only valid for apply, drop, pop, push, save, store commands.[0m
+
+[38;2;248;248;242m         Quiet, suppress feedback messages.[0m
+
+[38;2;248;248;242m     [0m[38;2;166;226;46m--print[0m
+[38;2;248;248;242m         This option is only valid for the export command.[0m
+
+[38;2;248;248;242m         Create the chain of commits representing the exported stashes without storing it anywhere in the ref namespace and print the object ID to standard output. This is designed for scripts.[0m
+
+[38;2;248;248;242m     [0m[38;2;166;226;46m--to-ref[0m
+[38;2;248;248;242m         This option is only valid for the export command.[0m
+
+[38;2;248;248;242m         Create the chain of commits representing the exported stashes and store it to the specified ref.[0m
+
+[38;2;248;248;242m     --[0m
+[38;2;248;248;242m         This option is only valid for push command.[0m
+
+[38;2;248;248;242m         Separates pathspec from options for disambiguation purposes.[0m
+
+[38;2;248;248;242m     <pathspec>...[0m
+[38;2;248;248;242m         This option is only valid for push command.[0m
+
+[38;2;248;248;242m         The new stash entry records the modified states only for the files that match the pathspec. The index entries and working tree files are then rolled back to the state in HEAD only for these files, too, leaving files that do not match the pathspec intact.[0m
+
+[38;2;248;248;242m         For more details, see the pathspec entry in [0m[38;2;166;226;46mgitglossary[0m[38;2;249;38;114m([0m[38;2;190;132;255m7[0m[38;2;249;38;114m)[0m[38;2;248;248;242m.[0m
+
+[38;2;248;248;242m     <stash>[0m
+[38;2;248;248;242m         This option is only valid for apply, branch, drop, pop, show, and export commands.[0m
+
+[38;2;248;248;242m         A reference of the form stash@{<revision>}. When no <stash> is given, the latest stash is assumed (that is, stash@{0}).[0m
+
+[38;2;253;151;31mDISCUSSION[0m
+[38;2;248;248;242m     A  stash  entry  is represented as a commit whose tree records the state of the working directory, and its first parent is the commit at HEAD when the entry was created. The tree of the second parent records the state of the index when the entry is made, and it is made a child of the HEAD commit. The ancestry[0m
+[38;2;248;248;242m     graph looks like this:[0m
+
+[38;2;248;248;242m                .----W[0m
+[38;2;248;248;242m               /    /[0m
+[38;2;248;248;242m         -----H----I[0m
+
+[38;2;248;248;242m     where H is the HEAD commit, I is a commit that records the state of the index, and W is a commit that records the state of the working tree.[0m
+
+[38;2;253;151;31mEXAMPLES[0m
+[38;2;248;248;242m     Pulling into a dirty tree[0m
+[38;2;248;248;242m         When you are in the middle of something, you learn that there are upstream changes that are possibly relevant to what you are doing. When your local changes do not conflict with the changes in the upstream, a simple git pull will let you move forward.[0m
+
+[38;2;248;248;242m         However, there are cases in which your local changes do conflict with the upstream changes, and git pull refuses to overwrite your changes. In such a case, you can stash your changes away, perform a pull, and then unstash, like this:[0m
+
+[38;2;248;248;242m             $ git pull[0m
+[38;2;248;248;242m              ...[0m
+[38;2;248;248;242m             file foobar not up to date, cannot merge.[0m
+[38;2;248;248;242m             $ git stash[0m
+[38;2;248;248;242m             $ git pull[0m
+[38;2;248;248;242m             $ git stash pop[0m
+
+[38;2;248;248;242m     Interrupted workflow[0m
+[38;2;248;248;242m         When you are in the middle of something, your boss comes in and demands that you fix something immediately. Traditionally, you would make a commit to a temporary branch to store your changes away, and return to your original branch to make the emergency fix, like this:[0m
+
+[38;2;248;248;242m             # ... hack hack hack ...[0m
+[38;2;248;248;242m             $ git switch [0m[38;2;166;226;46m-c[0m[38;2;248;248;242m my_wip[0m
+[38;2;248;248;242m             $ git commit [0m[38;2;166;226;46m-a[0m[38;2;248;248;242m [0m[38;2;166;226;46m-m[0m[38;2;248;248;242m "WIP"[0m
+[38;2;248;248;242m             $ git switch master[0m
+[38;2;248;248;242m             $ edit emergency fix[0m
+[38;2;248;248;242m             $ git commit [0m[38;2;166;226;46m-a[0m[38;2;248;248;242m [0m[38;2;166;226;46m-m[0m[38;2;248;248;242m "Fix in a hurry"[0m
+[38;2;248;248;242m             $ git switch my_wip[0m
+[38;2;248;248;242m             $ git reset [0m[38;2;166;226;46m--soft[0m[38;2;248;248;242m HEAD^[0m
+[38;2;248;248;242m             # ... continue hacking ...[0m
+
+[38;2;248;248;242m         You can use git stash to simplify the above, like this:[0m
+
+[38;2;248;248;242m             # ... hack hack hack ...[0m
+[38;2;248;248;242m             $ git stash[0m
+[38;2;248;248;242m             $ edit emergency fix[0m
+[38;2;248;248;242m             $ git commit [0m[38;2;166;226;46m-a[0m[38;2;248;248;242m [0m[38;2;166;226;46m-m[0m[38;2;248;248;242m "Fix in a hurry"[0m
+[38;2;248;248;242m             $ git stash pop[0m
+[38;2;248;248;242m             # ... continue hacking ...[0m
+
+[38;2;248;248;242m     Testing partial commits[0m
+[38;2;248;248;242m         You can use git stash push [0m[38;2;166;226;46m--keep-index[0m[38;2;248;248;242m when you want to make two or more commits out of the changes in the work tree, and you want to test each change before committing:[0m
+
+[38;2;248;248;242m             # ... hack hack hack ...[0m
+[38;2;248;248;242m             $ git add [0m[38;2;166;226;46m--patch[0m[38;2;248;248;242m foo            # add just first part to the index[0m
+[38;2;248;248;242m             $ git stash push [0m[38;2;166;226;46m--keep-index[0m[38;2;248;248;242m    # save all other changes to the stash[0m
+[38;2;248;248;242m             $ edit/build/test first part[0m
+[38;2;248;248;242m             $ git commit [0m[38;2;166;226;46m-m[0m[38;2;248;248;242m 'First part'     # commit fully tested change[0m
+[38;2;248;248;242m             $ git stash pop                  # prepare to work on all other changes[0m
+[38;2;248;248;242m             # ... repeat above five steps until one commit remains ...[0m
+[38;2;248;248;242m             $ edit/build/test remaining parts[0m
+[38;2;248;248;242m             $ git commit foo [0m[38;2;166;226;46m-m[0m[38;2;248;248;242m 'Remaining parts'[0m
+
+[38;2;248;248;242m     Saving unrelated changes for future use[0m
+[38;2;248;248;242m         When you are in the middle of massive changes and you find some unrelated issue that you don’t want to forget to fix, you can do the [0m[38;2;166;226;46mchange[0m[38;2;249;38;114m([0m[38;2;190;132;255ms[0m[38;2;249;38;114m)[0m[38;2;248;248;242m, stage them, and use git stash push [0m[38;2;166;226;46m--staged[0m[38;2;248;248;242m to stash them out for future use. This is similar to committing the staged changes, only the commit ends-up  being  in[0m
+[38;2;248;248;242m         the stash and not on the current branch.[0m
+
+[38;2;248;248;242m             # ... hack hack hack ...[0m
+[38;2;248;248;242m             $ git add [0m[38;2;166;226;46m--patch[0m[38;2;248;248;242m foo           # add unrelated changes to the index[0m
+[38;2;248;248;242m             $ git stash push [0m[38;2;166;226;46m--staged[0m[38;2;248;248;242m       # save these changes to the stash[0m
+[38;2;248;248;242m             # ... hack hack hack, finish current changes ...[0m
+[38;2;248;248;242m             $ git commit [0m[38;2;166;226;46m-m[0m[38;2;248;248;242m 'Massive'       # commit fully tested changes[0m
+[38;2;248;248;242m             $ git switch fixup-branch       # switch to another branch[0m
+[38;2;248;248;242m             $ git stash pop                 # to finish work on the saved changes[0m
+
+[38;2;248;248;242m     Recovering stash entries that were cleared/dropped erroneously[0m
+[38;2;248;248;242m         If you mistakenly drop or clear stash entries, they cannot be recovered through the normal safety mechanisms. However, you can try the following incantation to get a list of stash entries that are still in your repository, but not reachable any more:[0m
+
+[38;2;248;248;242m             git fsck [0m[38;2;166;226;46m--unreachable[0m[38;2;248;248;242m |[0m
+[38;2;248;248;242m             grep commit | cut [0m[38;2;166;226;46m-d[0m[38;2;248;248;242m\  [0m[38;2;166;226;46m-f3[0m[38;2;248;248;242m |[0m
+[38;2;248;248;242m             xargs git log [0m[38;2;166;226;46m--merges[0m[38;2;248;248;242m [0m[38;2;166;226;46m--no-walk[0m[38;2;248;248;242m [0m[38;2;166;226;46m--grep[0m[38;2;249;38;114m=[0m[38;2;253;151;31mWIP[0m
+
+[38;2;253;151;31mCONFIGURATION[0m
+[38;2;248;248;242m     Everything below this line in this section is selectively included from the [0m[38;2;166;226;46mgit-config[0m[38;2;249;38;114m([0m[38;2;190;132;255m1[0m[38;2;249;38;114m)[0m[38;2;248;248;242m documentation. The content is the same as what’s found there:[0m
+
+[38;2;248;248;242m     stash.index[0m
+[38;2;248;248;242m         If this is set to true, git stash apply and git stash pop will behave as if [0m[38;2;166;226;46m--index[0m[38;2;248;248;242m was supplied. Defaults to false.[0m
+
+[38;2;248;248;242m     stash.showIncludeUntracked[0m
+[38;2;248;248;242m         If this is set to true, the git stash show command will show the untracked files of a stash entry. Defaults to false.[0m
+
+[38;2;248;248;242m     stash.showPatch[0m
+[38;2;248;248;242m         If this is set to true, the git stash show command without an option will show the stash entry in patch form. Defaults to false.[0m
+
+[38;2;248;248;242m     stash.showStat[0m
+[38;2;248;248;242m         If this is set to true, the git stash show command without an option will show a diffstat of the stash entry. Defaults to true.[0m
+
+[38;2;253;151;31mSEE ALSO[0m
+[38;2;248;248;242m     [0m[38;2;166;226;46mgit-checkout[0m[38;2;249;38;114m([0m[38;2;190;132;255m1[0m[38;2;249;38;114m)[0m[38;2;248;248;242m, [0m[38;2;166;226;46mgit-commit[0m[38;2;249;38;114m([0m[38;2;190;132;255m1[0m[38;2;249;38;114m)[0m[38;2;248;248;242m, [0m[38;2;166;226;46mgit-reflog[0m[38;2;249;38;114m([0m[38;2;190;132;255m1[0m[38;2;249;38;114m)[0m[38;2;248;248;242m, [0m[38;2;166;226;46mgit-reset[0m[38;2;249;38;114m([0m[38;2;190;132;255m1[0m[38;2;249;38;114m)[0m[38;2;248;248;242m, [0m[38;2;166;226;46mgit-switch[0m[38;2;249;38;114m([0m[38;2;190;132;255m1[0m[38;2;249;38;114m)[0m
+
+[38;2;253;151;31mGIT[0m
+[38;2;248;248;242m     Part of the [0m[38;2;166;226;46mgit[0m[38;2;249;38;114m([0m[38;2;190;132;255m1[0m[38;2;249;38;114m)[0m[38;2;248;248;242m suite[0m
+
+[38;2;253;151;31mGit 2.55.0                                                                                                                                               2026-06-29                                                                                                                                            GIT-STASH(1)[0m

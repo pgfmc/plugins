@@ -21,7 +21,6 @@ public class GiftCommand extends PlayerCommand {
 
 	@Override
 	public List<String> tabComplete(PlayerData pd, String alias, String[] args) {
-
         
 		List<String> list = new ArrayList<>();
 		
@@ -42,7 +41,6 @@ public class GiftCommand extends PlayerCommand {
 
     @Override
     public boolean execute(PlayerData pd, String alias, String[] args) {
-
         if (args.length != 1) {
             return false;
         }
