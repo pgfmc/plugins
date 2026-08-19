@@ -18,6 +18,7 @@
 		<module>../ModTools</module>
 		<module>../Survival</module>
 		<module>../Proxycore</module>
+		<module>../Hardcore</module>
 	</modules>
 	
 	<build>

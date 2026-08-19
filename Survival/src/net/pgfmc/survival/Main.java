@@ -38,11 +38,6 @@ import net.pgfmc.survival.cmd.warp.SetWarp;
 import net.pgfmc.survival.cmd.warp.Warp;
 import net.pgfmc.survival.cmd.warp.Warps;
 import net.pgfmc.survival.gift.GiftCommand;
-<<<<<<< HEAD
-import net.pgfmc.survival.menu.staff.giverewards.GiveRewardsListInventory;
-=======
-import net.pgfmc.survival.gift.GiftList;
->>>>>>> 01ae369 (Added Gifts inventory. (WIP))
 import net.pgfmc.survival.menu.staff.inventorybackups.noninv.InventoryBackup;
 import net.pgfmc.survival.menu.staff.inventorybackups.noninv.InventoryBackupScheduler;
 import net.pgfmc.survival.particleeffects.HaloEffect;
