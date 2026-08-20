@@ -17,7 +17,7 @@ public class OnAdvancementDoneEvent implements Listener {
         NamespacedKey key = adv.getKey();
         final Player player = e.getPlayer();
 
-        final String yamlPayload = ""; // TODO Get gift from advancement and create YML string
+        final String yamlPayload = ""; // TODO Get gift from advancement and create YAML string
         
         PluginMessageType.GIFT.send(player, yamlPayload, "survival");
          

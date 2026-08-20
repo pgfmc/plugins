@@ -25,6 +25,7 @@ public class GiftListener extends PluginMessage {
 			giftYamlConfiguration.loadFromString(giftYml);
 			
 			// TODO save gift to giftee's playerdata
+			// Something like?:
 			//final String uuid = giftYamlConfiguration.getString("player_uuid");
 			//final PlayerData playerdata = PlayerData.from(UUID.fromString(uuid));
 			
