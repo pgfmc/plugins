@@ -67,6 +67,7 @@ public class Main extends JavaPlugin {
 
 			// Load homes
 			final ConfigurationSection homesSection = config.getConfigurationSection("homes");
+			
 			if (homesSection != null)
 			{
 				final Map<String, Location> homes = new HashMap<>();

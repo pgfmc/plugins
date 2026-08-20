@@ -20,7 +20,8 @@ public enum PluginMessageType {
 	PLAYER_DATA("PlayerData"),
 	PLAYER_DATA_SEND("PlayerDataSend"),
 	LINK_CODE("LinkCode"),
-	MESSAGE("Message");
+	MESSAGE("Message"),
+	GIFT("Gift");
 	
 	final String subchannel;
 	
@@ -57,7 +58,7 @@ public enum PluginMessageType {
 	 * @param sender A Player or a ServerConnection
 	 * @param args The arguments. Do not include the subchannel
 	 */
-	private final void sendPluginMessage(final ChannelMessageSink sender, final List<Object> arguments)
+	private final boolean sendPluginMessage(final ChannelMessageSink sender, final List<Object> arguments)
 	{
 		Logger.debug("------------------------------");
 		Logger.debug("Sending plugin message.");
@@ -100,23 +101,22 @@ public enum PluginMessageType {
 			} else
 			{
 				Logger.warn("Cannot send unsupported data type: " + arg.getClass().toString());
-				return;
+				return false;
 			}
 			
 		}
 		
-		sender.sendPluginMessage(Main.IDENTIFIER, out.toByteArray());
-		
+		return sender.sendPluginMessage(Main.IDENTIFIER, out.toByteArray());
 	}
 	
-	public final void send(final ChannelMessageSink sender, final Object... arguments)
+	public final boolean send(final ChannelMessageSink sender, final Object... arguments)
 	{
-		sendPluginMessage(sender, List.of(arguments));
+		return sendPluginMessage(sender, List.of(arguments));
 	}
 	
-	public final void send(final ChannelMessageSink sender)
+	public final boolean send(final ChannelMessageSink sender)
 	{
-		sendPluginMessage(sender, List.of());
+		return sendPluginMessage(sender, List.of());
 	}
 	
 }

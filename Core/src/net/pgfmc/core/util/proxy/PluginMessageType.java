@@ -41,7 +41,8 @@ public enum PluginMessageType {
 	PLAYER_DATA(PluginMessage.CHANNEL_PGF, "PlayerData", PluginMessageMatchType.ARGUMENT),
 	PLAYER_DATA_SEND(PluginMessage.CHANNEL_PGF, "PlayerDataSend", PluginMessageMatchType.ARGUMENT),
 	LINK_CODE(PluginMessage.CHANNEL_PGF, "LinkCode", PluginMessageMatchType.NONE),
-	MESSAGE(PluginMessage.CHANNEL_PGF, "Message", PluginMessageMatchType.NONE);
+	MESSAGE(PluginMessage.CHANNEL_PGF, "Message", PluginMessageMatchType.NONE),
+	GIFT(PluginMessage.CHANNEL_PGF, "Gift", PluginMessageMatchType.NONE);
 	
 	/**
 	 * Determines how to check if the plugin message response matches the original plugin message
