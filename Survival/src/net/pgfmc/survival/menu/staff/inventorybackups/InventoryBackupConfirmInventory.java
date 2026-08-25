@@ -1,10 +1,11 @@
 package net.pgfmc.survival.menu.staff.inventorybackups;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.core.api.inventory.ConfirmInventory;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.survival.menu.staff.inventorybackups.noninv.InventoryBackup;
@@ -17,7 +18,9 @@ public class InventoryBackupConfirmInventory extends ConfirmInventory {
 	private InventoryBackup inventory;
 
 	public InventoryBackupConfirmInventory(PlayerData playerdata, PlayerData target, InventoryBackup inventory) {
-		super(InventoryBackupScheduler.INVENTORY_DATE_FORMAT.format(inventory.getDate()) + " - " + inventory.getCause().name(), ChatColor.GREEN + "Rollback", ChatColor.RED + "Cancel");
+		super(Component.text(InventoryBackupScheduler.INVENTORY_DATE_FORMAT.format(inventory.getDate()) + " - " + inventory.getCause().name()),
+              Component.text("Rollback", NamedTextColor.GREEN ),
+              Component.text("Cancel", NamedTextColor.RED));
 		
 		this.playerdata = playerdata;
 		this.target = target;
@@ -29,8 +32,8 @@ public class InventoryBackupConfirmInventory extends ConfirmInventory {
 		
 		if (target.isOnline() && inventory.restore())
 		{
-			p.sendMessage(ChatColor.GREEN + "Inventory restored.");
-			target.getPlayer().sendMessage(ChatColor.GREEN + "A moderator has restored your inventory.");
+			p.sendMessage(NamedTextColor.GREEN + "Inventory restored.");
+			target.getPlayer().sendMessage(NamedTextColor.GREEN + "A moderator has restored your inventory.");
 			
 			PlayerData.from(p).playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
 			target.playSound(target.getPlayer().getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 2.0F);
@@ -40,7 +43,7 @@ public class InventoryBackupConfirmInventory extends ConfirmInventory {
 			return;
 		}
 		
-		p.sendMessage(ChatColor.RED + "Inventory could not be restored.");
+		p.sendMessage(NamedTextColor.RED + "Inventory could not be restored.");
 		playerdata.playSound(Sound.BLOCK_NOTE_BLOCK_BASS);
 		p.openInventory(new InventoryBackupListInventory(playerdata, target).getInventory());
 		

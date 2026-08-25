@@ -1,5 +1,7 @@
 package net.pgfmc.core;
 
+import java.io.File;
+import java.text.MessageFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Calendar;
@@ -10,20 +12,16 @@ import java.util.Random;
 import java.util.TimeZone;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerLoadEvent;
 import org.bukkit.event.server.ServerLoadEvent.LoadType;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageRecipient;
 
-import net.coreprotect.CoreProtect;
-import net.coreprotect.CoreProtectAPI;
+import net.kyori.adventure.translation.TranslationStore;
 import net.pgfmc.core.api.inventory.extra.InventoryPressEvent;
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.playerdata.PlayerDataManager;
@@ -50,7 +48,10 @@ import net.pgfmc.core.listeners.types.PlayerDataResponse;
 import net.pgfmc.core.util.Logger;
 import net.pgfmc.core.util.RestartScheduler;
 import net.pgfmc.core.util.ServerMessage;
+import net.pgfmc.core.util.Translation;
+import net.pgfmc.core.util.files.Mixins;
 import net.pgfmc.core.util.proxy.PluginMessageType;
+
 
 /**
  * @author bk and CrimsonDart
@@ -65,8 +66,14 @@ public class CoreMain extends JavaPlugin implements Listener {
 	private final static Map<String, Boolean> REGISTERED_SERVERS = new HashMap<>();
 	
 	private static String thisServerName;
+
+
+    // Used for Death Messages, so we know what server the player died on.
+    private static String serverDisplayName;
 	
 	public static CoreMain plugin;
+
+    public static TranslationStore<MessageFormat> translationStore;
 	
 	/**
 	 * creates all files, loads all worlds, PlayerData, commands and events.
@@ -76,13 +83,19 @@ public class CoreMain extends JavaPlugin implements Listener {
 	public void onEnable()
 	{
 		plugin = this;
+        
+        Translation.createTranslator(CoreMain.plugin.getDataFolder() + File.separator + "en_us.json");
+
+        loadServerNameFromFile();
+
+
+
 		
 		/**
 		 * PlayerData initialization
 		 */
 		PlayerDataManager.setInit(playerdata -> {
 			final FileConfiguration db = playerdata.getPlayerDataFile();
-			
 			
 			// Set nickname
 			final String nickname = db.getString("nickname");
@@ -153,17 +166,27 @@ public class CoreMain extends JavaPlugin implements Listener {
 		PlayerDataManager.initializePlayerData();
 		startRestartThread();
 		
-		try {
-			// Purge CoreProtect data of 14 days or older
-			Plugin pluginCoreProtect = plugin.getServer().getPluginManager().getPlugin("CoreProtect");
-			CoreProtectAPI coreProtectAPI = ((CoreProtect) pluginCoreProtect).getAPI();
-			
-			if (coreProtectAPI != null) { coreProtectAPI.performPurge(1209600); } // 14 days in seconds
-		} catch (Exception coreprotectException) {
-			coreprotectException.printStackTrace();
-		}
+		//try {
+		//	// Purge CoreProtect data of 14 days or older
+		//	Plugin pluginCoreProtect = plugin.getServer().getPluginManager().getPlugin("CoreProtect");
+		//	CoreProtectAPI coreProtectAPI = ((CoreProtect) pluginCoreProtect).getAPI();
+		//	
+		//	if (coreProtectAPI != null) { coreProtectAPI.performPurge(1209600); } // 14 days in seconds
+		//} catch (Exception coreprotectException) {
+		//	coreprotectException.printStackTrace();
+		//}
 		
 	}
+
+    private void loadServerNameFromFile() {
+
+        FileConfiguration coreFile = Mixins.getDatabase(CoreMain.plugin.getDataFolder() + File.separator + "config.yml");
+        serverDisplayName = coreFile.getString("server-name");
+    }
+
+    public String serverDisplayName() {
+        return serverDisplayName;
+    }
 	
 	private void startRestartThread()
 	{
@@ -203,7 +226,7 @@ public class CoreMain extends JavaPlugin implements Listener {
 		final Player player = playerdata.getPlayer();
 		
 		// Updates custom name value (spigot/bukkit) and makes the custom name visible to the CLIENT
-		player.setCustomName(playerdata.getRankedName());
+		player.customName(playerdata.getRankedName());
 		player.setCustomNameVisible(true);
 		
 		// Do this for every player
@@ -216,7 +239,6 @@ public class CoreMain extends JavaPlugin implements Listener {
 			player.hidePlayer(CoreMain.plugin, otherPlayer);
 			player.showPlayer(CoreMain.plugin, otherPlayer);
 		}
-		
 	}
 	
 	/**

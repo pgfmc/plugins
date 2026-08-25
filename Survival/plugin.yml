@@ -1,5 +1,5 @@
 name: PGF-Survival
-version: 9.0.14
+version: UHC-update:gifts
 api-version: 26.1
 authors: [bk, CrimsonDart]
 website: play.pgfmc.net
@@ -107,4 +107,8 @@ commands:
     usage: /<command> [name] [helditem|<item> <amount>]
     permission: net.pgfmc.survival.gift
     # The user has different functionality in creative mode; when using /gift [name] helditem, it won't consume the held item.
+  claimgift:
+    description: Claim a Gift you were given
+    usage: /<command> [gift index]
+    permission: net.pgfmc.survival.giftclaim
     

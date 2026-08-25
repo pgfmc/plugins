@@ -13,7 +13,7 @@ echo ""
 sleep 1s
 echo "Exporting jars.."
 
-for name in Core Claims ModTools Survival; do
+for name in Core Claims ModTools Survival Hardcore; do
 	cd $name
 
 	if ! [ -z "$version_number" ]; then
@@ -24,7 +24,7 @@ for name in Core Claims ModTools Survival; do
 done
 
 cd "Maven"
-mvn -e clean install
+mvn -e -U clean install -X
 cd ../
 
 wait
@@ -33,7 +33,7 @@ if ! [ -d "target" ]; then
     mkdir "target"
 fi
 
-for name in Core Claims ModTools Survival Proxycore; do
+for name in Core Claims ModTools Survival Proxycore Hardcore; do
     cp -f $name/target/$name.jar target/"${name^}".jar
 done
 

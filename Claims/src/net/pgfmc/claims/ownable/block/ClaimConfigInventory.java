@@ -1,9 +1,9 @@
 package net.pgfmc.claims.ownable.block;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -11,7 +11,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.jspecify.annotations.NonNull;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.pgfmc.claims.Main;
 import net.pgfmc.core.api.inventory.BaseInventory;
 import net.pgfmc.core.api.inventory.ConfirmInventory;
@@ -24,7 +28,7 @@ import net.pgfmc.core.util.vector4.Vector4;
 public class ClaimConfigInventory extends BaseInventory {
 	
 	public ClaimConfigInventory(Claim claim, boolean read) {
-        super(27, (read) ? "Claim View" : "Claim Settings");
+        super(27, (read) ? Component.text("Claim View") : Component.text("Claim Settings"));
 
         int membersList = 10;
         int addPlayer = 11;
@@ -32,42 +36,55 @@ public class ClaimConfigInventory extends BaseInventory {
         int explosions = 15;
         int foreignPolicy = 16;
 		
-		setItem(membersList, Material.BOOK).n(ChatColor.GRAY + "Members");
+		setItem(membersList, Material.BOOK).name(Component.text("Members", NamedTextColor.GRAY));
 		setAction(membersList, (p, e) -> {
 			p.openInventory(new PlayerViewInventory(claim, read).getInventory());
 		});
 		
         if (!read) {
-		    setItem(addPlayer, Material.PLAYER_HEAD).n(ChatColor.GRAY + "Add member");
+		    setItem(addPlayer, Material.PLAYER_HEAD).name(Component.text("Add member", NamedTextColor.GRAY));
 		    setAction(addPlayer, (p,e) -> {
 		    	p.openInventory(new PlayerAddInventory(claim).getInventory());
 		    });
         }
 
         Vector4 loc = claim.getLocation();
-        String name = "";
+        Component name;
 
         if (claim.getPlayer() == null) {
-            name = ChatColor.LIGHT_PURPLE + "Creative"; 
+            name = Component.text("Creative", NamedTextColor.LIGHT_PURPLE); 
         } else {
-            name = ChatColor.WHITE + "Owned by " + claim.getPlayer().getRankedName() + ChatColor.RESET;
+            name = Component.text("Owned by ", NamedTextColor.WHITE)
+                .append(claim.getPlayer().getRankedName());
         }
 
         Pair beaconInfo = claim.getBeaconInfo();
         int selfBeacons = claim.beacons.size();
 
 
-        setItem(info, Material.PAPER).n(ChatColor.WHITE + "Claim Info").l(
-                name + 
-                ChatColor.GRAY + 
-                "\nX " + String.valueOf(loc.x()) + 
-                "\nY " + String.valueOf(loc.y()) +
-                "\nZ " + String.valueOf(loc.z()) +
-                "\nBeacons Linked to this Claim: " + ChatColor.AQUA + String.valueOf(selfBeacons) +
-                ChatColor.GRAY + "\nTotal Beacons in Network: " + ChatColor.AQUA + String.valueOf(beaconInfo.beaconCount) +
-                displayEffects(beaconInfo.effects) +
-                ChatColor.WHITE + "\nClick to open list of " + ChatColor.GOLD + "Merged Claims" + ChatColor.WHITE + "!"
-            );
+
+        List<Component> infoLore = new ArrayList<>();
+
+        infoLore.addAll(Arrays.asList(
+                name,
+                Component.text("X " + String.valueOf(loc.x()), NamedTextColor.GRAY),
+                Component.text("Y " + String.valueOf(loc.y()), NamedTextColor.GRAY),
+                Component.text("Z " + String.valueOf(loc.z()), NamedTextColor.GRAY),
+                Component.text("Beacons Linked to this Claim: ")
+                    .append(Component.text(String.valueOf(selfBeacons), NamedTextColor.AQUA)),
+                Component.text("Total Beacons in Network: ", NamedTextColor.GRAY)
+                    .append(Component.text(String.valueOf(beaconInfo.beaconCount), NamedTextColor.AQUA))
+                ));
+        infoLore.addAll(displayEffects(beaconInfo.effects));
+
+        infoLore.add(Component.text("Click to open list of ", NamedTextColor.WHITE)
+                .append(Component.text("Merged Claims", NamedTextColor.GOLD))
+                .append(Component.text("!", NamedTextColor.WHITE)));
+
+
+        setItem(info, Material.PAPER)
+            .name(Component.text("Claim Info", NamedTextColor.WHITE))
+            .lore(infoLore);
 
         setAction(info, (p,e) -> {
             ClaimViewInventory cvi = new ClaimViewInventory(claim);
@@ -76,9 +93,19 @@ public class ClaimConfigInventory extends BaseInventory {
         });
 
         if (claim.explosionsEnabled) {
-            setItem(explosions, Material.TNT).n(ChatColor.RED + "Allow Explosions? " + ChatColor.GRAY + "(" + ChatColor.GREEN + "yes" + ChatColor.GRAY + ")");
+            setItem(explosions, Material.TNT)
+                .name(Component.text("Allow Explosions? ", NamedTextColor.RED)
+                        .append(Component.text("(", NamedTextColor.GRAY))
+                        .append(Component.text("yes", NamedTextColor.GREEN))
+                        .append(Component.text(")", NamedTextColor.GRAY))
+                     );
         } else {
-            setItem(explosions, Material.WATER_BUCKET).n(ChatColor.RED + "Allow Explosions? " + ChatColor.GRAY + "(" + ChatColor.RED + "no" + ChatColor.GRAY + ")");
+            setItem(explosions, Material.TNT)
+                .name(Component.text("Allow Explosions? ", NamedTextColor.RED)
+                        .append(Component.text("(", NamedTextColor.GRAY))
+                        .append(Component.text("no", NamedTextColor.RED))
+                        .append(Component.text(")", NamedTextColor.GRAY))
+                     );
         }
 
         if (!read) {
@@ -89,7 +116,14 @@ public class ClaimConfigInventory extends BaseInventory {
             });
         }
 
-        setItem(foreignPolicy, Material.CREEPER_HEAD).n(ChatColor.YELLOW + "Foreign Policy").l(ChatColor.GRAY + "Control what non-members are\nallowed to do in your claim!");
+        setItem(foreignPolicy, Material.CREEPER_HEAD)
+            .name(Component.text("Foreign Policy", NamedTextColor.YELLOW))
+            .lore(Arrays.asList(
+                        Component.text("Control what non-members are", NamedTextColor.GRAY),
+                        Component.text("allowed to do in your claim!", NamedTextColor.GRAY)
+                        )
+                 );
+                    
         setAction(foreignPolicy, (p,e) -> {
             p.openInventory(new ForeignPolicyInventory(claim, read).getInventory());
         });
@@ -101,7 +135,7 @@ public class ClaimConfigInventory extends BaseInventory {
         boolean read;
 
 		public PlayerViewInventory(Claim claim, boolean read) {
-			super(27, "Allowed Players");
+			super(27, Component.text("Allowed Players"));
 			this.claim = claim;
             this.read = read;
 			
@@ -140,7 +174,7 @@ public class ClaimConfigInventory extends BaseInventory {
 			 
 			// copied from cmd.skull lol
 			
-            ItemStack item = new ItemWrapper(Material.PLAYER_HEAD).n(arg0.getRankedName()).gi();
+            ItemStack item = new ItemWrapper(Material.PLAYER_HEAD).name(arg0.getRankedName()).item();
 			SkullMeta meta = (SkullMeta) item.getItemMeta(); // Get the created item's ItemMeta and cast it to SkullMeta so we can access the skull properties
 			meta.setOwningPlayer(arg0.getOfflinePlayer()); // Set the skull's owner so it will adapt the skin of the provided username (case sensitive).
 			item.setItemMeta(meta); // Apply the modified meta to the initial created item
@@ -154,7 +188,7 @@ public class ClaimConfigInventory extends BaseInventory {
 		Claim claim;
 
 		public PlayerAddInventory(Claim claim) {
-			super(27, "Add Players");
+			super(27, Component.text("Add Players"));
 			this.claim = claim;
 			
 			setBack(0, new ClaimConfigInventory(claim, false).getInventory());
@@ -187,7 +221,7 @@ public class ClaimConfigInventory extends BaseInventory {
 		protected ItemStack toItem(PlayerData arg0) {
 			// copied from cmd.skull lol
 			
-            ItemStack item = new ItemWrapper(Material.PLAYER_HEAD).n(arg0.getRankedName()).gi();
+            ItemStack item = new ItemWrapper(Material.PLAYER_HEAD).name(arg0.getRankedName()).lore(Component.empty()).item();
 			SkullMeta meta = (SkullMeta) item.getItemMeta(); // Get the created item's ItemMeta and cast it to SkullMeta so we can access the skull properties
 			meta.setOwningPlayer(arg0.getOfflinePlayer()); // Set the skull's owner so it will adapt the skin of the provided username (case sensitive).
 			item.setItemMeta(meta); // Apply the modified meta to the initial created item
@@ -202,7 +236,12 @@ public class ClaimConfigInventory extends BaseInventory {
 		PlayerData player;
 		
 		public AddPlayerConfirm(Claim claim, PlayerData player) {
-			super("Add " + player.getDisplayName() + "?", "Add Player", "Cancel");
+			super(
+                    Component.text("Add ")
+                    .append(player.getRankedName())
+                    .append(Component.text("?")),
+                    Component.text("Add Player"),
+                    Component.text("Cancel"));
 			this.claim = claim;
 			this.player = player;
 			
@@ -217,7 +256,11 @@ public class ClaimConfigInventory extends BaseInventory {
 		protected void confirmAction(Player arg0, InventoryClickEvent arg1) {
 			claim.getMembers().add(player);
 			arg0.closeInventory();
-			arg0.sendMessage(ChatColor.GOLD + "Added " + player.getRankedName() + ChatColor.GOLD + " to your base.");
+			arg0.sendMessage(Component.text()
+                    .append(Component.text("Added ", NamedTextColor.GOLD))
+                    .append(player.getRankedName())
+                    .append(Component.text(" to your base", NamedTextColor.GOLD)).build());
+
 			claim.forwardUpdateFrom(claim);
 		}
 	}
@@ -228,7 +271,12 @@ public class ClaimConfigInventory extends BaseInventory {
 		PlayerData player;
 		
 		public RemovePlayerInventory(Claim claim, PlayerData player) {
-			super("Remove " + player.getDisplayName() + "?", "Remove Player", "Cancel");
+			super(
+                    Component.text("Remove ")
+                    .append(player.getRankedName())
+                    .append(Component.text("?")),
+                    Component.text("Remove Player"),
+                    Component.text("Cancel"));
 			this.claim = claim;
 			this.player = player;
 		}
@@ -242,42 +290,50 @@ public class ClaimConfigInventory extends BaseInventory {
 		protected void confirmAction(Player arg0, InventoryClickEvent arg1) {
 			claim.getMembers().remove(player);
 			arg0.closeInventory();
-			arg0.sendMessage(ChatColor.GOLD + "Removed " + player.getRankedName() + ChatColor.GOLD + " from your base.");
+
+			arg0.sendMessage(Component.text()
+                    .append(Component.text("Removed ", NamedTextColor.GOLD))
+                    .append(player.getRankedName())
+                    .append(Component.text(" from your base", NamedTextColor.GOLD)).build());
 			claim.forwardUpdateFrom(claim);
 		}
 	}
 
-    public static String displayEffects(ArrayList<PotionEffect> effects) {
-        String acc = "";
+    public static List<Component> displayEffects(ArrayList<PotionEffect> effects) {
+        List<Component> acc = new ArrayList<>(); 
         if (effects.size() > 0) {
-            acc = ChatColor.LIGHT_PURPLE + "\nEffects:";
+            acc.add(Component.text("Effects:", NamedTextColor.LIGHT_PURPLE));
             for (PotionEffect effect : effects) {
 
                 PotionEffectType type = effect.getType();
+                TextComponent.@NonNull Builder entry = Component.text();
+                entry.append(Component.text(" - ", NamedTextColor.GRAY));
 
-                acc += ChatColor.GRAY + "\n - ";
+                String suffix = "";
+                if (effect.getAmplifier() == 1) {
+                    suffix = " II";
+                }
 
                 // I have to yanderedev code because its coded as seperate constants, not an enum lmao
                 if (type.equals(PotionEffectType.STRENGTH)) {
-                    acc += ChatColor.GOLD + "Strength";
+                    entry.append(Component.text("Strength" + suffix, NamedTextColor.GOLD));
                 } else if (type.equals(PotionEffectType.JUMP_BOOST)) {
-                    acc += ChatColor.YELLOW + "Jump Boost";
+                    entry.append(Component.text("Jump Boost" + suffix, NamedTextColor.YELLOW));
                 } else if (type.equals(PotionEffectType.SPEED)) {
-                    acc += ChatColor.AQUA + "Speed";
+                    entry.append(Component.text("Speed" + suffix, NamedTextColor.AQUA));
                 } else if (type.equals(PotionEffectType.HASTE)) {
-                    acc += ChatColor.GOLD + "Haste";
+                    entry.append(Component.text("Haste" + suffix, NamedTextColor.GOLD));
                 } else if (type.equals(PotionEffectType.REGENERATION)) {
-                    acc += ChatColor.RED + "Regeneration";
+                    entry.append(Component.text("Regeneration" + suffix, NamedTextColor.RED));
                 } else if (type.equals(PotionEffectType.RESISTANCE)) {
-                    acc += ChatColor.LIGHT_PURPLE + "Resistance";
+                    entry.append(Component.text("Resistance" + suffix, NamedTextColor.LIGHT_PURPLE));
                 } else {
+                    entry.append(Component.text(type.toString()));
                     Main.getPlugin().getLogger().info("Invalid Buff passed to displayEffects: " + type.toString());
                     continue;
                 }
 
-                if (effect.getAmplifier() == 1) {
-                    acc += " II";
-                }
+                acc.add(entry.build());
             }
         }
 

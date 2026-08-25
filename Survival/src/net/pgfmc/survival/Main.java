@@ -1,6 +1,5 @@
 package net.pgfmc.survival;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,11 +11,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.pgfmc.core.api.playerdata.PlayerData;
 import net.pgfmc.core.api.playerdata.PlayerDataManager;
-import net.pgfmc.core.util.files.Mixins;
 import net.pgfmc.survival.balance.TameableMobs;
 import net.pgfmc.survival.cmd.Back;
 import net.pgfmc.survival.cmd.Skull;
@@ -38,7 +37,9 @@ import net.pgfmc.survival.cmd.warp.DelWarp;
 import net.pgfmc.survival.cmd.warp.SetWarp;
 import net.pgfmc.survival.cmd.warp.Warp;
 import net.pgfmc.survival.cmd.warp.Warps;
-import net.pgfmc.survival.menu.staff.giverewards.GiveRewardsListInventory;
+import net.pgfmc.survival.gift.GiftClaim;
+import net.pgfmc.survival.gift.GiftCommand;
+import net.pgfmc.survival.gift.GiftList;
 import net.pgfmc.survival.menu.staff.inventorybackups.noninv.InventoryBackup;
 import net.pgfmc.survival.menu.staff.inventorybackups.noninv.InventoryBackupScheduler;
 import net.pgfmc.survival.particleeffects.HaloEffect;
@@ -52,11 +53,6 @@ public class Main extends JavaPlugin {
 	{
 		plugin = this;
 		
-		// Creates rewards.yml for the player rewards
-		// If it doesn't exist
-		Mixins.getDatabase(getDataFolder() + File.separator + "rewards.yml");
-		Rewards.loadRewardsFile();
-		
 		// Create warps section in config.yml if it doesn't exist
 		if (getConfig().getConfigurationSection("warps") == null)
 		{
@@ -69,9 +65,9 @@ public class Main extends JavaPlugin {
 
 			final FileConfiguration config = playerdata.getPlayerDataFile();
 
-			// Set homes
+			// Load homes
 			final ConfigurationSection homesSection = config.getConfigurationSection("homes");
-
+			
 			if (homesSection != null)
 			{
 				final Map<String, Location> homes = new HashMap<>();
@@ -91,16 +87,22 @@ public class Main extends JavaPlugin {
 				});
 				
 				playerdata.setData("homes", homes);
+				
 			}
-
 			
-            // Set Particles
-			
+            // Load Particles
 			final String particle = config.getString("particle_effect");
             if (particle != null) {
-			    playerdata.setData("particle_effect", particle);			
+			    playerdata.setData("particle_effect", particle);
             }
-			
+
+            // Load Gifts
+            final List<ItemStack> gifts = (List<ItemStack>) config.getList("gifts");
+            if (gifts != null) {
+                playerdata.setData("gifts", gifts);
+            } else {
+                playerdata.setData("gifts", new ArrayList<>());
+            }
 		});
 		
 		// Other Inits
@@ -125,12 +127,14 @@ public class Main extends JavaPlugin {
 		new Pvp();
 		new Warp("warp");
 		new Skull();
+        new GiftCommand();
+        new GiftList();
+        new GiftClaim();
 		
 		// Listeners
 		getServer().getPluginManager().registerEvents(new CommandMenuBookInput(), this);
 		getServer().getPluginManager().registerEvents(new AfkEvents(), this);
 		getServer().getPluginManager().registerEvents(new PvpEvent(), this);
-		getServer().getPluginManager().registerEvents(new GiveRewardsListInventory(), this);
 		getServer().getPluginManager().registerEvents(new InventoryBackupScheduler(), this);
 		getServer().getPluginManager().registerEvents(new TameableMobs(), this);
 		getServer().getPluginManager().registerEvents(new Back("back"), this); // Back command + a listener in the same class

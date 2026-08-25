@@ -14,6 +14,7 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
+import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.ServerConnection;
@@ -28,8 +29,10 @@ import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.pgfmc.proxycore.bot.Bot;
 import net.pgfmc.proxycore.commands.StopProxyCommand;
+import net.pgfmc.proxycore.controllers.Gifts;
 import net.pgfmc.proxycore.listeners.types.ConnectListener;
 import net.pgfmc.proxycore.listeners.types.DiscordMessageListener;
+import net.pgfmc.proxycore.listeners.types.GiftListener;
 import net.pgfmc.proxycore.listeners.types.LinkCodeListener;
 import net.pgfmc.proxycore.listeners.types.MessageListener;
 import net.pgfmc.proxycore.listeners.types.PingServerListener;
@@ -74,12 +77,11 @@ public class Main {
      * @param dataDirectory
      */
     @Inject
-    public Main(ProxyServer proxy, org.slf4j.Logger logger) {
+    public Main(ProxyServer proxy, org.slf4j.Logger logger, @DataDirectory Path dataDirectory) {
     	plugin = this;
         this.proxy = proxy;
         this.logger = logger;
-        this.dataDirectory = Path.of("plugins" + File.separator + "PGF-Proxycore");
-        
+        this.dataDirectory = dataDirectory;
     }
     
     /**
@@ -112,6 +114,7 @@ public class Main {
     	proxy.getEventManager().register(this, new OnPostLogin());
     	proxy.getEventManager().register(this, new OnDisconnect());
     	proxy.getEventManager().register(this, new OnServerPostConnect());
+    	proxy.getEventManager().register(this, new Gifts());
     	new ConnectListener();
     	new PingServerListener();
     	new DiscordMessageListener();
@@ -119,6 +122,7 @@ public class Main {
     	new PlayerDataSaveListener();
     	new LinkCodeListener();
     	new MessageListener();
+    	new GiftListener();
     	
     	/**
     	 * Register Commands

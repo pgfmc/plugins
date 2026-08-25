@@ -12,6 +12,8 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.pgfmc.core.CoreMain;
 import net.pgfmc.core.util.Logger;
 
@@ -39,7 +41,8 @@ public enum PluginMessageType {
 	PLAYER_DATA(PluginMessage.CHANNEL_PGF, "PlayerData", PluginMessageMatchType.ARGUMENT),
 	PLAYER_DATA_SEND(PluginMessage.CHANNEL_PGF, "PlayerDataSend", PluginMessageMatchType.ARGUMENT),
 	LINK_CODE(PluginMessage.CHANNEL_PGF, "LinkCode", PluginMessageMatchType.NONE),
-	MESSAGE(PluginMessage.CHANNEL_PGF, "Message", PluginMessageMatchType.NONE);
+	MESSAGE(PluginMessage.CHANNEL_PGF, "Message", PluginMessageMatchType.NONE),
+	GIFT(PluginMessage.CHANNEL_PGF, "Gift", PluginMessageMatchType.NONE);
 	
 	/**
 	 * Determines how to check if the plugin message response matches the original plugin message
@@ -149,7 +152,9 @@ public enum PluginMessageType {
 			
 			if (arg instanceof String) {
 				out.writeUTF((String) arg);
-				
+			} else if (arg instanceof Component) {
+				final String componentAsJson = GsonComponentSerializer.gson().serialize((Component) arg);
+				out.writeUTF(componentAsJson);
 			} else if (arg instanceof Integer) {
 				out.writeInt((Integer) arg);
 				
