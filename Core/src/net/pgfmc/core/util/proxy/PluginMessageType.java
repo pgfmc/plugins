@@ -181,6 +181,9 @@ public enum PluginMessageType {
 			}
 			
 		}
+
+		final byte[] data = out.toByteArray();
+		
 		
 		// send plugin message
 		sender.sendPluginMessage(CoreMain.plugin, channel, out.toByteArray());
